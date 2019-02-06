@@ -34,6 +34,7 @@ class Label{
 
 class Project{
     private:
+//        QString name;
         Label labels[maxNumLabels];
 
     public:
@@ -46,7 +47,14 @@ class Project{
             labels[index] = lb;
         }
 
-        // Need to return the whole labels data structure
+//        QString getName(){
+//            return name;
+//        }
+
+//        void setName(QString nme){
+//            name = nme;
+//        }
+
 };
 
 namespace Ui {

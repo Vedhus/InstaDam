@@ -50,7 +50,7 @@ Project InstaDam::on_actionNew_triggered()
     ////////////////////////////////////////////////////////////////////
         // Saving the file
         QString outFileName = QFileDialog::getSaveFileName(this,
-               tr("save project"), "../", tr("instadam files (.idam));; All Files (*)"));
+               tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
 
     //    if (outFileName.isEmpty()){
     //            return currentProject;
@@ -82,7 +82,7 @@ Project InstaDam::on_actionOpen_triggered()
 
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("open project"), "../", tr("instadam files (.idam));; All Files (*)"));
+        tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
 
     if (fileName.isEmpty()){
             return currentProject; // remove that part and add an alert
@@ -125,7 +125,7 @@ void InstaDam::on_actionSave_triggered()
     Project currentProject;  // check how to feed the current project to this function
     // Saving a file
     QString outFileName = QFileDialog::getSaveFileName(this,
-           tr("save project"), "../", tr("instadam files (.idam));; All Files (*)"));
+           tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
 
     if (outFileName.isEmpty()){
             return;
