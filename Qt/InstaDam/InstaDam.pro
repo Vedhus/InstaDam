@@ -26,10 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        instadam.cpp
+        instadam.cpp \
+    label.cpp \
+    project.cpp
 
 HEADERS += \
-        instadam.h
+        instadam.h \
+    label.h \
+    project.h
 
 FORMS += \
         instadam.ui

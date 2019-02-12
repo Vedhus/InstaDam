@@ -6,56 +6,10 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
+#include "project.h"
 
 int static const maxNumLabels = 20;
 
-class Label{
-  private:
-    QColor color;
-    QString text;
-
-  public:
-    QColor getColor(){
-        return color;
-    }
-
-    void setColor(QColor col){
-        color = col;
-    }
-
-    QString getText(){
-        return text;
-    }
-
-    void setText(QString tx){
-        text = tx;
-    }
-};
-
-class Project{
-    private:
-//        QString name;
-        Label labels[maxNumLabels];
-
-    public:
-
-        Label getLabel(int index){
-            return labels[index];
-        }
-
-        void setLabel(int index, Label lb){
-            labels[index] = lb;
-        }
-
-//        QString getName(){
-//            return name;
-//        }
-
-//        void setName(QString nme){
-//            name = nme;
-//        }
-
-};
 
 namespace Ui {
 class InstaDam;
@@ -76,8 +30,11 @@ private slots:
 
     void on_actionSave_triggered();
 
+
+
 private:
     Ui::InstaDam *ui;
+    Project currentProject;
 };
 
 

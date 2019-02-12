@@ -23,11 +23,7 @@ Project InstaDam::on_actionNew_triggered()
 
     // int const maxNumLabels = 3; // defined in the headers file as static const.
 
-    Project currentProject;
-
-//    Label labelSet[maxNumLabels];
-    int i = 0;
-    while(i < maxNumLabels-17){
+    while(currentProject.numLabels() < 3){
         // label names is working
         QString text = QInputDialog::getText(this, tr("Add a new label"),
                                              tr("New Label"), QLineEdit::Normal, "cracks");
@@ -38,9 +34,7 @@ Project InstaDam::on_actionNew_triggered()
         lb.setText(text);
         lb.setColor(color);
 
-        currentProject.setLabel(i,lb);
-//        labelSet[i] = lb;
-        i++;
+        currentProject.addLabel(lb);
         // printing out to the console
         QTextStream(stdout) << text << endl;
         QTextStream(stdout) << color.name() << endl;
@@ -58,16 +52,13 @@ Project InstaDam::on_actionNew_triggered()
     //    else {
         QFile outFile(outFileName);
         outFile.open(QIODevice::ReadWrite);
-        int j=0;
-        while(j<maxNumLabels){
-            Label lb = currentProject.getLabel(j);
+        for(int i=0; i<currentProject.numLabels(); i++)
+        {
+            Label lb = currentProject.getLabel(i);
             QTextStream(&outFile) << lb.getText();
             QTextStream(&outFile) << "~%";
             QTextStream(&outFile) << lb.getColor().name() << endl;
-        j++;
         }
-    //     }
-    //////////////////////////////////////////////////////////
 
    return currentProject;
 }
@@ -77,9 +68,7 @@ Project InstaDam::on_actionNew_triggered()
 Project InstaDam::on_actionOpen_triggered()
 {
     QString doc;
-    Project currentProject;
-    int ind = 0;
-
+    int i = 0;
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
@@ -87,28 +76,30 @@ Project InstaDam::on_actionOpen_triggered()
     if (fileName.isEmpty()){
             return currentProject; // remove that part and add an alert
     }
-    else {
+    else
+    {
        QFile file(fileName);
        QStringList list;
        file.open(QIODevice::ReadWrite);
        QTextStream fileStream(&file);
 
-       while(! fileStream.atEnd()){
-       QString line = file.readLine(); // to be updated to read all the labels and the colors
-       list = line.split("~%");
+       while(!fileStream.atEnd()){
+           QString line = file.readLine(); // to be updated to read all the labels and the colors
+           QTextStream(stdout) << line;
 
-       QTextStream(stdout) << list.size() << endl;
-       if(list.size()>=2){
-           Label lb;
-           lb.setText(list[0]);
-           lb.setColor(QColor(list[1]));
-           QTextStream(stdout) << list[0] << endl;
-           QTextStream(stdout) << list[1] << endl;
+           list = line.split("~%");
 
-           currentProject.setLabel(ind, lb);
-           ind++;
+           QTextStream(stdout) << list.size() << endl;
+           if(list.size()==2){
+               Label lb;
+               lb.setText(list[0]);
+               lb.setColor(QColor(list[1]));
+               QTextStream(stdout) << list[0] << endl;
+               QTextStream(stdout) << list[1] << endl;
 
-       }
+               currentProject.addLabel(lb);
+               i++;
+          }
       }
     }
 
