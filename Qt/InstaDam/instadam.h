@@ -7,8 +7,11 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include "project.h"
-
-int static const maxNumLabels = 20;
+#include <QDialog>
+#include <QGraphicsItem>
+#include <QObject>
+#include <QMenuBar>
+#include <QMenu>
 
 
 namespace Ui {
@@ -22,6 +25,10 @@ class InstaDam : public QMainWindow
 public:
     explicit InstaDam(QWidget *parent = nullptr);
     ~InstaDam();
+    void fileOpen();
+
+private slots:
+    void on_actionOpen_File_triggered();
 
 private slots:
     Project on_actionNew_triggered();
@@ -35,6 +42,7 @@ private slots:
 private:
     Ui::InstaDam *ui;
     Project currentProject;
+    QGraphicsScene *scene;
 };
 
 

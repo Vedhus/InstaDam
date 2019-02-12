@@ -3,6 +3,9 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QInputDialog>
+#include <iostream>
+#include <string>
+#include <stdio.h>
 
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
@@ -124,11 +127,19 @@ void InstaDam::on_actionSave_triggered()
     else {
         QFile outFile(outFileName);
         outFile.open(QIODevice::ReadWrite);
-        for(int i=0; i<maxNumLabels; i++){
+        for(int i=0; i<3; i++){
             Label lb = currentProject.getLabel(i);
             QTextStream(&outFile) << lb.getText();
             QTextStream(&outFile) << "~%";
             QTextStream(&outFile) << lb.getColor().name() << endl;
         }
      }
+}
+
+void InstaDam::on_actionOpen_File_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName();
+    QPixmap im = QPixmap(filename);
+    ui->IdmPhotoViewer->setPhoto(im);
+
 }

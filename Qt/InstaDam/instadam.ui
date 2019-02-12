@@ -2,16 +2,29 @@
 <ui version="4.0">
  <class>InstaDam</class>
  <widget class="QMainWindow" name="InstaDam">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1556</width>
-    <height>1128</height>
-   </rect>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="tabletTracking">
+   <bool>true</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -54,68 +67,6 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
-        <widget class="QFrame" name="frame_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QPushButton" name="pushButton_11">
-            <property name="text">
-             <string>Pan</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_12">
-            <property name="text">
-             <string>Round</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_13">
-            <property name="text">
-             <string>Square</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Brush Size</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="spinBox"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_14">
-            <property name="text">
-             <string>Filter Options</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item>
         <widget class="QSplitter" name="splitter">
          <property name="orientation">
@@ -179,8 +130,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>148</width>
-                 <height>770</height>
+                 <width>125</width>
+                 <height>192</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -279,8 +230,8 @@
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
-                 <widget class="QGraphicsView" name="graphicsView"/>
-                 <widget class="QGraphicsView" name="graphicsView_2"/>
+                 <widget class="PhotoViewer" name="IdmPhotoViewer"/>
+                 <widget class="MaskViewer" name="IdmMaskViewer"/>
                 </widget>
                </item>
               </layout>
@@ -289,6 +240,68 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="pushButton_11">
+            <property name="text">
+             <string>Pan</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="text">
+             <string>Round</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_13">
+            <property name="text">
+             <string>Square</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Brush Size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_14">
+            <property name="text">
+             <string>Filter Options</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -303,7 +316,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -347,7 +360,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1550</width>
+             <width>978</width>
              <height>198</height>
             </rect>
            </property>
@@ -460,7 +473,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1550</width>
+             <width>978</width>
              <height>198</height>
             </rect>
            </property>
@@ -538,20 +551,31 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1556</width>
-     <height>20</height>
+     <width>986</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
     <addaction name="action_Open"/>
+    <addaction name="actionOpen_File"/>
     <addaction name="action_Save"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -566,16 +590,23 @@
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuProject"/>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menuEdit"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Open">
    <property name="text">
-    <string>&amp;Open</string>
+    <string>Open Project</string>
    </property>
   </action>
   <action name="action_Save">
    <property name="text">
-    <string>&amp;Save</string>
+    <string>Save</string>
    </property>
   </action>
   <action name="actionExit">
@@ -598,7 +629,29 @@
     <string>Save</string>
    </property>
   </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionOpen_File">
+   <property name="text">
+    <string>Open File</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PhotoViewer</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">photoviewer.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MaskViewer</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">maskviewer.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
