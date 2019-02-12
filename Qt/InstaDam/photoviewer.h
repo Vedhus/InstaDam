@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <QWheelEvent>
 
 
 namespace Ui {
@@ -19,6 +20,7 @@ class PhotoViewer : public QGraphicsView
 
 public:
     bool hasPhoto;
+    int zoom;
     QGraphicsPixmapItem *photo;
     incrementI();
     QGraphicsScene *scene;
@@ -29,6 +31,7 @@ public:
     void setPhoto(QPixmap pixmap);
     void testPixmap();
     void fitInView(bool);
+    virtual void wheelEvent(QWheelEvent* ) override;
 
 
 //    void resetBrush(int size = 10, int capStyle = 0);
@@ -39,7 +42,7 @@ public:
 //    void getMaskFromMaskView();
 //    void modifyMaskThreshold(int val = 0);
 //    void zoomedInADifferentView(int zoom, int factor, QPoint point);
-//    void wheelEvent(QWheelEvent *event) override;
+
 //    void setPanMode();
 //    void setBrushMode(int brushType);
 //    void setBrushShape(int brushShape, QRect *rect);
