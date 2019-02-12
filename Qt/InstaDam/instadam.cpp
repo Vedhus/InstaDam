@@ -75,7 +75,6 @@ Project InstaDam::on_actionOpen_triggered()
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
-
     if (fileName.isEmpty()){
             return currentProject; // remove that part and add an alert
     }
