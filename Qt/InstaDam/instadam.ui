@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>InstaDam</class>
  <widget class="QMainWindow" name="InstaDam">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>595</width>
+    <height>378</height>
+   </rect>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -130,8 +138,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>125</width>
-                 <height>192</height>
+                 <width>75</width>
+                 <height>190</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -264,21 +272,21 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QPushButton" name="pushButton_11">
+           <widget class="QPushButton" name="panButton">
             <property name="text">
              <string>Pan</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="roundBrush">
             <property name="text">
              <string>Round</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_13">
+           <widget class="QPushButton" name="squareBrush">
             <property name="text">
              <string>Square</string>
             </property>
@@ -360,8 +368,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>978</width>
-             <height>198</height>
+             <width>587</width>
+             <height>70</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -473,8 +481,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>978</width>
-             <height>198</height>
+             <width>587</width>
+             <height>70</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -560,7 +568,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>986</width>
+     <width>595</width>
      <height>21</height>
     </rect>
    </property>
@@ -588,14 +596,13 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
    </widget>
-   <addaction name="menu_File"/>
-   <addaction name="menuProject"/>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Edit</string>
     </property>
     <addaction name="actionUndo"/>
    </widget>
+   <addaction name="menuProject"/>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
   </widget>

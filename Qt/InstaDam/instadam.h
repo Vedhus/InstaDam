@@ -39,6 +39,12 @@ private slots:
 
 
 
+    void on_panButton_clicked();
+
+    void on_roundBrush_clicked();
+
+    void on_squareBrush_clicked();
+
 private:
     Ui::InstaDam *ui;
     Project currentProject;

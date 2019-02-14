@@ -142,3 +142,19 @@ void InstaDam::on_actionOpen_File_triggered()
     ui->IdmPhotoViewer->setPhoto(im);
 
 }
+
+void InstaDam::on_panButton_clicked()
+{
+    ui->IdmPhotoViewer->setPanMode();
+}
+
+void InstaDam::on_roundBrush_clicked()
+{
+    qInfo("Round");
+    ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
+}
+
+void InstaDam::on_squareBrush_clicked()
+{
+    ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
+}

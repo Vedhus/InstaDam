@@ -30,7 +30,8 @@ SOURCES += \
         label.cpp \
         project.cpp \
         maskviewer.cpp \
-        photoviewer.cpp
+        photoviewer.cpp \
+    pixmapops.cpp
 
 HEADERS += \
         instadam.h \
@@ -38,6 +39,7 @@ HEADERS += \
         project.h \
         photoviewer.h \
         maskviewer.h \
+    pixmapops.h
 
 
 FORMS += \

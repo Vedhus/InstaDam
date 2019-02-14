@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\instadam.o
+./release\label.o
+./release\project.o
+./release\maskviewer.o
+./release\photoviewer.o
+./release\pixmapops.o
+./release\moc_instadam.o
+./release\moc_photoviewer.o
+./release\moc_maskviewer.o
+);
