@@ -90,8 +90,8 @@ public:
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu_File;
-    QMenu *menuProject;
     QMenu *menuEdit;
+    QMenu *menuProject;
 
     void setupUi(QMainWindow *InstaDam)
     {
@@ -381,24 +381,23 @@ public:
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
-        menuProject = new QMenu(menubar);
-        menuProject->setObjectName(QStringLiteral("menuProject"));
         menuEdit = new QMenu(menubar);
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
+        menuProject = new QMenu(menubar);
+        menuProject->setObjectName(QStringLiteral("menuProject"));
         InstaDam->setMenuBar(menubar);
 
         menubar->addAction(menuProject->menuAction());
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
-        menu_File->addAction(action_Open);
         menu_File->addAction(actionOpen_File);
         menu_File->addAction(action_Save);
         menu_File->addSeparator();
         menu_File->addAction(actionExit);
+        menuEdit->addAction(actionUndo);
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
-        menuEdit->addAction(actionUndo);
 
         retranslateUi(InstaDam);
 
@@ -412,7 +411,7 @@ public:
     {
         InstaDam->setWindowTitle(QApplication::translate("InstaDam", "MainWindow", nullptr));
         action_Open->setText(QApplication::translate("InstaDam", "Open Project", nullptr));
-        action_Save->setText(QApplication::translate("InstaDam", "Save", nullptr));
+        action_Save->setText(QApplication::translate("InstaDam", "Save File", nullptr));
         actionExit->setText(QApplication::translate("InstaDam", "Exit", nullptr));
         actionNew->setText(QApplication::translate("InstaDam", "New", nullptr));
         actionOpen->setText(QApplication::translate("InstaDam", "Open", nullptr));
@@ -437,8 +436,8 @@ public:
         pushButton_10->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("InstaDam", "Tab 2", nullptr));
         menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
-        menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
+        menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
     } // retranslateUi
 
 };

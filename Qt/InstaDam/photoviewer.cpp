@@ -2,6 +2,7 @@
 #include "pixmapops.h"
 #include <math.h>
 
+
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
     viewerType = PHOTO_VIEWER_TYPE;
@@ -42,9 +43,28 @@ void PhotoViewer::testPixmap()
 
 void PhotoViewer::setPhoto(QPixmap pixmap)
 {
-    this->photo->setPixmap(pixmap);
-    hasPhoto = true;
-    this->fitInView(true);
+
+
+
+    QPixmap white = QPixmap(pixmap.size());
+    QPixmap white_temp = QPixmap(pixmap.size());
+    QColor whiteColor = QColor(0,0,0,0);
+    white.fill(whiteColor);
+    white_temp.fill(whiteColor);
+
+    if (pixmap.isNull() == 0)
+    {
+        if (this->viewerType == PHOTO_VIEWER_TYPE)
+        {
+                this->photo->setPixmap(pixmap);
+                this->labels->setPixmap(white);
+                this->labelsTemp->setPixmap(white_temp);
+                this->hasPhoto = true;
+
+        }
+        this->fitInView(true);
+
+    }
 }
 
 
@@ -157,19 +177,19 @@ void PhotoViewer::wheelEvent(QWheelEvent* event)
 
 }
 
-    
+
 
 void PhotoViewer::mousePressEvent(QMouseEvent* event)
 {
+
     if (hasPhoto)
     {
         if (photo->isUnderMouse())
         {
-            qInfo("Photo Under Mouse");
             emit photoClicked(QPoint(event->pos()));
         }
         if (dragMode() == QGraphicsView::NoDrag)
-        {   
+        {
             resetBrush(brushSize, capStyle);
             lastPos = event->pos();
             currentMap = labelsTemp->pixmap();
@@ -178,21 +198,22 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event)
             paintMode = true;
             update();
         }
-        
+
     }
     QGraphicsView::mousePressEvent(event);
 }
-            
+
 
 void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
 {
+
     if(hasPhoto)
     {
         if (paintMode)
         {
-            QPainter *p = new QPainter(&currentMap);
-            p->setPen(pen);
-            p->drawLine(mapToScene(lastPos), mapToScene(event->pos()));
+            QPainter p(&currentMap);
+            p.setPen(pen);
+            p.drawLine(mapToScene(lastPos), mapToScene(event->pos()));
             QPointF endPoint = mapToScene(event->pos());
             path.moveTo(mapToScene(lastPos));
             path.lineTo(endPoint);
@@ -205,8 +226,6 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
             QPointF point = this->mapToScene(viewrect.width()/2.0, round((viewrect.height()+1)/2.0));
             emit zoomed(zoom, 1, point);
         }
-
-
 
     }
     QGraphicsView::mouseMoveEvent(event);
@@ -223,7 +242,6 @@ void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
             if (viewerType == PHOTO_VIEWER_TYPE)
             {
                 this->labels->setPixmap(directPixmaps(labels->pixmap(),currentMap, brushType));
-
             }
             else if (viewerType == MASK_VIEWER_TYPE)
                 this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
@@ -237,7 +255,7 @@ void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
 
 
     }
-    QGraphicsView::mouseReleaseEvent(event);
+   QGraphicsView::mouseReleaseEvent(event);
 
 
 }
