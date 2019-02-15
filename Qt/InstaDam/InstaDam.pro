@@ -31,7 +31,8 @@ SOURCES += \
         project.cpp \
         maskviewer.cpp \
         photoviewer.cpp \
-    pixmapops.cpp
+        pixmapops.cpp \
+        newproject.cpp
 
 HEADERS += \
         instadam.h \
@@ -39,11 +40,13 @@ HEADERS += \
         project.h \
         photoviewer.h \
         maskviewer.h \
-    pixmapops.h
+        pixmapops.h \
+        newproject.h
 
 
 FORMS += \
-        instadam.ui
+        instadam.ui \
+        newproject.ui
 
 
 # more correct variant, how set includepath and libs for mingw

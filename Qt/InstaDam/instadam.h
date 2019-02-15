@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include "project.h"
+#include "newproject.h"
 #include <QDialog>
 #include <QGraphicsItem>
 #include <QObject>
@@ -38,15 +39,17 @@ private slots:
     void on_actionSave_triggered();
 
 
-
     void on_panButton_clicked();
 
     void on_roundBrush_clicked();
 
     void on_squareBrush_clicked();
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::InstaDam *ui;
+    newproject *newProject;
     Project currentProject;
     QGraphicsScene *scene;
 };
