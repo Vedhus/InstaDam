@@ -27,6 +27,44 @@ Project InstaDam::on_actionNew_triggered()
     newProject->setModal(true);
     newProject->exec();
     currentProject = newProject->newPr;
+    for(int i=0; i<currentProject.numLabels(); i++){
+        if(i==0){
+          ui->pushButton_4->setText(currentProject.getLabel(i).getText());
+          QPalette pal = ui->pushButton_4->palette();
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          ui->pushButton_4->setAutoFillBackground(true);
+          ui->pushButton_4->setPalette(pal);
+          ui->pushButton_4->update();
+        }
+
+        if(i==1){
+          ui->pushButton_5->setText(currentProject.getLabel(i).getText());
+          QPalette pal = ui->pushButton_5->palette();
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          ui->pushButton_5->setAutoFillBackground(true);
+          ui->pushButton_5->setPalette(pal);
+          ui->pushButton_5->update();
+        }
+
+        if(i==2){
+          ui->pushButton_6->setText(currentProject.getLabel(i).getText());
+          QPalette pal = ui->pushButton_6->palette();
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          ui->pushButton_6->setAutoFillBackground(true);
+          ui->pushButton_6->setPalette(pal);
+          ui->pushButton_6->update();
+        }
+
+        if(i==3){
+          ui->pushButton_7->setText(currentProject.getLabel(i).getText());
+          QPalette pal = ui->pushButton_7->palette();
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          ui->pushButton_7->setAutoFillBackground(true);
+          ui->pushButton_7->setPalette(pal);
+          ui->pushButton_7->update();
+        }
+    }
+
    return currentProject;
 }
 
@@ -71,8 +109,6 @@ Project InstaDam::on_actionOpen_triggered()
 
     return currentProject;
 }
-
-
 
 
 void InstaDam::on_actionSave_triggered()
@@ -121,3 +157,4 @@ void InstaDam::on_pushButton_4_clicked()
 {
 
 }
+

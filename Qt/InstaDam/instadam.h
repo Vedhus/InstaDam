@@ -38,7 +38,6 @@ private slots:
 
     void on_actionSave_triggered();
 
-
     void on_panButton_clicked();
 
     void on_roundBrush_clicked();
@@ -46,6 +45,7 @@ private slots:
     void on_squareBrush_clicked();
 
     void on_pushButton_4_clicked();
+
 
 private:
     Ui::InstaDam *ui;
