@@ -57,6 +57,14 @@ public:
     QPushButton *pushButton_5;
     QPushButton *pushButton_6;
     QPushButton *pushButton_7;
+    QPushButton *pushButton_11;
+    QPushButton *pushButton_12;
+    QPushButton *pushButton_13;
+    QPushButton *pushButton_19;
+    QPushButton *pushButton_18;
+    QPushButton *pushButton_17;
+    QPushButton *pushButton_16;
+    QPushButton *pushButton_15;
     QFrame *frame_3;
     QHBoxLayout *horizontalLayout_2;
     QSplitter *splitter_3;
@@ -163,7 +171,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 80, 188));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -130, 80, 318));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -194,6 +202,46 @@ public:
         pushButton_7->setSizePolicy(sizePolicy);
 
         verticalLayout_3->addWidget(pushButton_7);
+
+        pushButton_11 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_11->setObjectName(QString::fromUtf8("pushButton_11"));
+
+        verticalLayout_3->addWidget(pushButton_11);
+
+        pushButton_12 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_12->setObjectName(QString::fromUtf8("pushButton_12"));
+
+        verticalLayout_3->addWidget(pushButton_12);
+
+        pushButton_13 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_13->setObjectName(QString::fromUtf8("pushButton_13"));
+
+        verticalLayout_3->addWidget(pushButton_13);
+
+        pushButton_19 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_19->setObjectName(QString::fromUtf8("pushButton_19"));
+
+        verticalLayout_3->addWidget(pushButton_19);
+
+        pushButton_18 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_18->setObjectName(QString::fromUtf8("pushButton_18"));
+
+        verticalLayout_3->addWidget(pushButton_18);
+
+        pushButton_17 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_17->setObjectName(QString::fromUtf8("pushButton_17"));
+
+        verticalLayout_3->addWidget(pushButton_17);
+
+        pushButton_16 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_16->setObjectName(QString::fromUtf8("pushButton_16"));
+
+        verticalLayout_3->addWidget(pushButton_16);
+
+        pushButton_15 = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton_15->setObjectName(QString::fromUtf8("pushButton_15"));
+
+        verticalLayout_3->addWidget(pushButton_15);
 
         scrollArea_2->setWidget(scrollAreaWidgetContents_2);
         splitter_2->addWidget(scrollArea_2);
@@ -422,6 +470,14 @@ public:
         pushButton_5->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
         pushButton_6->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
         pushButton_7->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_11->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_12->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_13->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_19->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_18->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_17->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_16->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_15->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
         roundBrush->setText(QApplication::translate("InstaDam", "Round", nullptr));
         squareBrush->setText(QApplication::translate("InstaDam", "Square", nullptr));
