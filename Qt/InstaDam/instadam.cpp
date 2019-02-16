@@ -31,6 +31,7 @@ Project InstaDam::on_actionNew_triggered()
         if(i==0){
           ui->pushButton_4->setText(currentProject.getLabel(i).getText());
           QPalette pal = ui->pushButton_4->palette();
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
           pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
           ui->pushButton_4->setAutoFillBackground(true);
           ui->pushButton_4->setPalette(pal);
@@ -40,6 +41,7 @@ Project InstaDam::on_actionNew_triggered()
         if(i==1){
           ui->pushButton_5->setText(currentProject.getLabel(i).getText());
           QPalette pal = ui->pushButton_5->palette();
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
           pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
           ui->pushButton_5->setAutoFillBackground(true);
           ui->pushButton_5->setPalette(pal);
@@ -49,6 +51,7 @@ Project InstaDam::on_actionNew_triggered()
         if(i==2){
           ui->pushButton_6->setText(currentProject.getLabel(i).getText());
           QPalette pal = ui->pushButton_6->palette();
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
           pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
           ui->pushButton_6->setAutoFillBackground(true);
           ui->pushButton_6->setPalette(pal);
@@ -58,6 +61,7 @@ Project InstaDam::on_actionNew_triggered()
         if(i==3){
           ui->pushButton_7->setText(currentProject.getLabel(i).getText());
           QPalette pal = ui->pushButton_7->palette();
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
           pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
           ui->pushButton_7->setAutoFillBackground(true);
           ui->pushButton_7->setPalette(pal);

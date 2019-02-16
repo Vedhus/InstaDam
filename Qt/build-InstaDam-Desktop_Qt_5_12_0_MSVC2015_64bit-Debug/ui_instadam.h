@@ -418,10 +418,10 @@ public:
         actionSave->setText(QApplication::translate("InstaDam", "Save", nullptr));
         actionUndo->setText(QApplication::translate("InstaDam", "Undo", nullptr));
         actionOpen_File->setText(QApplication::translate("InstaDam", "Open File", nullptr));
-        pushButton_4->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_5->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_6->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_7->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
+        pushButton_4->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_5->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_6->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
+        pushButton_7->setText(QApplication::translate("InstaDam", "NoLabel", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
         roundBrush->setText(QApplication::translate("InstaDam", "Round", nullptr));
         squareBrush->setText(QApplication::translate("InstaDam", "Square", nullptr));
