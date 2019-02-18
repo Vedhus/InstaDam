@@ -31,6 +31,11 @@ SOURCES += \
         project.cpp \
         maskviewer.cpp \
         photoviewer.cpp \
+        Selector/photoScene.cpp \
+        Selector/commands.cpp \
+        Selector/ellipseSelect.cpp \
+        Selector/rectangleSelect.cpp \
+        Selector/selectItem.cpp \
     pixmapops.cpp
 
 HEADERS += \
@@ -39,6 +44,11 @@ HEADERS += \
         project.h \
         photoviewer.h \
         maskviewer.h \
+        Selector/photoScene.h \
+        Selector/commands.h \
+        Selector/ellipseSelect.h \
+        Selector/rectangleSelect.h \
+        Selector/selectItem.h \
     pixmapops.h
 
 

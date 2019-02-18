@@ -7,11 +7,39 @@
 #include <string>
 #include <stdio.h>
 
+#include "Selector/selectItem.h"
+#include "Selector/ellipseSelect.h"
+#include "Selector/rectangleSelect.h"
+#include "Selector/commands.h"
+
+
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
 {
     ui->setupUi(this);
+    undoStack = new QUndoStack(this);
+    type = Ellipse;
+    std::cout << "HERE" << std::endl;
+    scene = ui->IdmPhotoViewer->scene;
+    connect(scene, SIGNAL(pointClicked(QPointF)), this,
+            SLOT(newItem(QPointF)));
+    std::cout << "HERE" << std::endl;
+    connect(scene, SIGNAL(itemSelected(SelectItem*, QPointF)), this,
+            SLOT(selected(SelectItem*, QPointF)));
+    std::cout << "HERE" << std::endl;
+    connect(scene, SIGNAL(movedPoint(QPointF)), this,
+            SLOT(movePoint(QPointF)));
+    std::cout << "HERE" << std::endl;
+    connect(scene, SIGNAL(addNewItem(QPointF, QPointF)), this,
+            SLOT(addItem(QPointF, QPointF)));
+    std::cout << "HERE" << std::endl;
+    connect(scene, SIGNAL(doRefresh()), this,
+            SLOT(myupdate()));
+    std::cout << "HERE" << std::endl;
+    connect(scene, SIGNAL(deleteObject(SelectItem*)), this,
+            SLOT(deleteItem(SelectItem*)));
+    std::cout << "HERE" << std::endl;
 }
 
 InstaDam::~InstaDam()
@@ -148,6 +176,18 @@ void InstaDam::on_panButton_clicked()
     ui->IdmPhotoViewer->setPanMode();
 }
 
+void InstaDam::on_boxButton_clicked(){
+    type = Rect;
+}
+
+void InstaDam::on_ellipseButton_clicked(){
+    type = Ellipse;
+}
+
+void InstaDam::on_freeDrawButton_clicked(){
+    type = Free;
+}
+
 void InstaDam::on_roundBrush_clicked()
 {
     qInfo("Round");
@@ -157,4 +197,85 @@ void InstaDam::on_roundBrush_clicked()
 void InstaDam::on_squareBrush_clicked()
 {
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
+}
+
+void InstaDam::newItem(QPointF pos){
+    //cout << "NEW" << endl;
+    switch(type){
+        case Rect:
+           {
+            //cout << "RECT" << endl;
+            RectangleSelect *temp = new RectangleSelect(pos);
+            scene->addItem(temp);
+            item = temp;
+            scene->update();
+            //cout << "UPDATE" << endl;
+            }
+            break;
+        case Ellipse:
+            {
+            //cout << "RECT" << endl;
+            EllipseSelect *temp = new EllipseSelect(pos);
+            scene->addItem(temp);
+            item = temp;
+            scene->update();
+            //cout << "UPDATE" << endl;
+            }
+            break;
+        case Generic:
+            break;
+        case Polygon:
+            break;
+        case Free:
+            break;
+    }
+}
+
+void InstaDam::movePoint(QPointF pos){
+    //cout << "  MP" << endl;
+    item->addPoint(pos);
+    scene->update();
+}
+
+void InstaDam::addItem(QPointF oldPos, QPointF newPos)
+{
+    //cout << "ADD ITEM" << endl;
+    if(item){
+        //cout << "C1" << endl;
+        QUndoCommand *addCommand = new AddCommand(item, scene);
+        undoStack->push(addCommand);
+        item = nullptr;
+    }
+    else if(selectedItem){
+        if(selectedItem->wasMoved()){
+            //cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
+            QUndoCommand *moveCommand = new MoveCommand(selectedItem, oldPos, newPos);
+            undoStack->push(moveCommand);
+        }
+        else{
+            //cout << "RMS" << endl;
+            QUndoCommand *resizeCommand = new ResizeCommand(selectedItem, oldPos, newPos, selectedItem->getActiveCorner());
+            undoStack->push(resizeCommand);
+        }
+        selectedItem->resetState();
+    }
+}
+
+void InstaDam::deleteItem(SelectItem *item){
+    QUndoCommand *deleteCommand = new DeleteCommand(item, scene);
+    undoStack->push(deleteCommand);
+
+}
+void InstaDam::selected(SelectItem* selected, QPointF pos){
+    if(item){
+        scene->removeItem(item);
+        item = nullptr;
+    }
+    selectedItem = selected;
+    selected->clickPoint(pos);
+    scene->update();
+}
+
+void InstaDam::myupdate(){
+    scene->update();
 }

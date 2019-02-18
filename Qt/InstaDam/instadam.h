@@ -12,7 +12,9 @@
 #include <QObject>
 #include <QMenuBar>
 #include <QMenu>
+#include <QUndoStack>
 
+#include "Selector/photoScene.h"
 
 namespace Ui {
 class InstaDam;
@@ -29,6 +31,15 @@ public:
 
 private slots:
     void on_actionOpen_File_triggered();
+    void on_boxButton_clicked();
+    void on_ellipseButton_clicked();
+    void on_freeDrawButton_clicked();
+    void newItem(QPointF pos);
+    void movePoint(QPointF pos);
+    void selected(SelectItem* selected, QPointF pos);
+    void addItem(QPointF oldPos, QPointF newPos);
+    void myupdate();
+    void deleteItem(SelectItem* item);
 
 private slots:
     Project on_actionNew_triggered();
@@ -48,7 +59,12 @@ private slots:
 private:
     Ui::InstaDam *ui;
     Project currentProject;
-    QGraphicsScene *scene;
+    PhotoScene *scene;
+    QUndoStack *undoStack;
+    SelectType type;
+    SelectItem *item;
+    SelectItem *selectedItem;
+
 };
 
 

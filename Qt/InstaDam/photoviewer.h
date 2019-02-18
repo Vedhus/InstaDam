@@ -4,7 +4,7 @@
 #include <QFrame>
 #include <QGraphicsView>
 #include <QMainWindow>
-#include <QGraphicsScene>
+//#include <QGraphicsScene>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QWheelEvent>
@@ -12,7 +12,7 @@
 #include <QBitmap>
 #include <QPainter>
 
-
+#include "Selector/photoScene.h"
 
 namespace Ui {
 class PhotoViewer;
@@ -42,7 +42,7 @@ public:
     QGraphicsPixmapItem *photo;
     QPixmap imMask;
 
-    QGraphicsScene *scene;
+    PhotoScene *scene;
     QGraphicsPixmapItem *labels;
     QGraphicsPixmapItem *labelsTemp;
     QGraphicsPixmapItem *filterIm;

@@ -1,12 +1,13 @@
 #include "photoviewer.h"
 #include "pixmapops.h"
+#include "Selector/photoScene.h"
 #include <math.h>
 
 
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
     viewerType = PHOTO_VIEWER_TYPE;
-    scene = new QGraphicsScene(this);
+    scene = new PhotoScene(this);
     photo = new QGraphicsPixmapItem();
     labelsTemp = new QGraphicsPixmapItem();
     labels = new QGraphicsPixmapItem();
