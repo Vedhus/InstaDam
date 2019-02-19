@@ -20,26 +20,19 @@ InstaDam::InstaDam(QWidget *parent) :
     ui->setupUi(this);
     undoStack = new QUndoStack(this);
     type = Ellipse;
-    std::cout << "HERE" << std::endl;
     scene = ui->IdmPhotoViewer->scene;
     connect(scene, SIGNAL(pointClicked(QPointF)), this,
             SLOT(newItem(QPointF)));
-    std::cout << "HERE" << std::endl;
     connect(scene, SIGNAL(itemSelected(SelectItem*, QPointF)), this,
             SLOT(selected(SelectItem*, QPointF)));
-    std::cout << "HERE" << std::endl;
     connect(scene, SIGNAL(movedPoint(QPointF)), this,
             SLOT(movePoint(QPointF)));
-    std::cout << "HERE" << std::endl;
     connect(scene, SIGNAL(addNewItem(QPointF, QPointF)), this,
             SLOT(addItem(QPointF, QPointF)));
-    std::cout << "HERE" << std::endl;
     connect(scene, SIGNAL(doRefresh()), this,
             SLOT(myupdate()));
-    std::cout << "HERE" << std::endl;
     connect(scene, SIGNAL(deleteObject(SelectItem*)), this,
             SLOT(deleteItem(SelectItem*)));
-    std::cout << "HERE" << std::endl;
 }
 
 InstaDam::~InstaDam()
