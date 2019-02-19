@@ -33,6 +33,12 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(myupdate()));
     connect(scene, SIGNAL(deleteObject(SelectItem*)), this,
             SLOT(deleteItem(SelectItem*)));
+    undoAction = undoStack->createUndoAction(this, tr("&Undo"));
+    undoAction->setShortcuts(QKeySequence::Undo);
+    redoAction = undoStack->createRedoAction(this, tr("&Redo"));
+    redoAction->setShortcuts(QKeySequence::Redo);
+    ui->menuEdit->addAction(undoAction);
+    ui->menuEdit->addAction(redoAction);
 }
 
 InstaDam::~InstaDam()

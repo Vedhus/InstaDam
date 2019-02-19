@@ -48,8 +48,6 @@ private slots:
 
     void on_actionSave_triggered();
 
-
-
     void on_panButton_clicked();
 
     void on_roundBrush_clicked();
@@ -64,6 +62,8 @@ private:
     SelectType type;
     SelectItem *item;
     SelectItem *selectedItem;
+    QAction *undoAction;
+    QAction *redoAction;
 
 };
 
