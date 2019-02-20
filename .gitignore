@@ -1,4 +1,5 @@
 Qt/InstaDam/InstaDam.pro.user
 Qt/build-InstaDam-Desktop_Qt_5_12_0_MinGW_64_bit-Debug
-Qt/build-InstaDam-Desktop_Qt_5_11_-_MinGW_32bit-Profile
+Qt/build-InstaDam-Desktop_Qt_5_11_0_MinGW_32bit-Debug
 *.idpro
+*.idam

@@ -137,10 +137,42 @@ void InstaDam::on_actionSave_triggered()
 
 void InstaDam::on_actionOpen_File_triggered()
 {
-    QString filename = QFileDialog::getOpenFileName();
-    QPixmap im = QPixmap(filename);
-    ui->IdmPhotoViewer->setPhoto(im);
+    QString filename = QFileDialog::getOpenFileName(this, tr("open image/idam file"), "../", tr("instadam files (.idam));; All Files (*)"));
+    QFileInfo file(filename);
+    QString ext = file.suffix();
+    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
+    {
+        QTextStream(stdout) << "image attempted to be opened";
+        QPixmap im = QPixmap(filename);
+        ui->IdmPhotoViewer->setPhoto(im);
+    }
+    else if(!ext.compare("idam"))
+    {
+        QTextStream(stdout) << "idam attempted to be opened";
+        QFile file(filename);
+        file.open(QIODevice::ReadOnly);
+        QDataStream in(&file);
+        QPixmap photoPixmap, labelPixmap;
+        in >> photoPixmap >> labelPixmap;
+        ui->IdmPhotoViewer->photo->setPixmap(photoPixmap);
+        ui->IdmPhotoViewer->labels->setPixmap(labelPixmap);
+    }
+    else{
+        QTextStream(stdout) << "something other than an image or idam being opened, need to throw error to user here";
+    }
 
+}
+
+void InstaDam::on_actionSave_File_triggered()
+{
+    QTextStream(stdout) << "saving current canvas as idamfile format";
+    QString outFileName = QFileDialog::getSaveFileName(this, tr("save images"), "../", tr("instadam files (.idam));; All Files (*)"));
+    QFile outFile(outFileName);
+    outFile.open(QIODevice::WriteOnly);
+    //actually write to the file here
+    QDataStream out(&outFile);
+    out << ui->IdmPhotoViewer->photo->pixmap() << ui->IdmPhotoViewer->labels->pixmap();
+    outFile.close();
 }
 
 void InstaDam::on_panButton_clicked()
