@@ -152,7 +152,10 @@ void InstaDam::on_actionOpen_File_triggered()
         QFile file(filename);
         file.open(QIODevice::ReadOnly);
         QDataStream in(&file);
-        //in >> ui->IdmMaskViewer->labels;
+        QPixmap photoPixmap, labelPixmap;
+        in >> photoPixmap >> labelPixmap;
+        ui->IdmPhotoViewer->photo->setPixmap(photoPixmap);
+        ui->IdmPhotoViewer->labels->setPixmap(labelPixmap);
     }
     else{
         QTextStream(stdout) << "something other than an image or idam being opened, need to throw error to user here";
@@ -168,7 +171,7 @@ void InstaDam::on_actionSave_File_triggered()
     outFile.open(QIODevice::WriteOnly);
     //actually write to the file here
     QDataStream out(&outFile);
-    out << ui->IdmPhotoViewer->labels;
+    out << ui->IdmPhotoViewer->photo->pixmap() << ui->IdmPhotoViewer->labels->pixmap();
     outFile.close();
 }
 
