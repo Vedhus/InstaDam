@@ -21,6 +21,7 @@ InstaDam::InstaDam(QWidget *parent) :
     undoStack = new QUndoStack(this);
     type = Ellipse;
     scene = ui->IdmPhotoViewer->scene;
+    item = nullptr;
     connect(scene, SIGNAL(pointClicked(QPointF)), this,
             SLOT(newItem(QPointF)));
     connect(scene, SIGNAL(itemSelected(SelectItem*, QPointF)), this,
@@ -200,6 +201,13 @@ void InstaDam::on_squareBrush_clicked()
 
 void InstaDam::newItem(QPointF pos){
     //cout << "NEW" << endl;
+    if(item){
+        if(item->type() == Polygon){
+            item->addPoint(pos);
+            scene->update();
+            return;
+        }
+    }
     switch(type){
         case Rect:
            {
@@ -224,7 +232,13 @@ void InstaDam::newItem(QPointF pos){
         case Generic:
             break;
         case Polygon:
-            break;
+            {
+            PolygonSelect *temp = new PolygonSelect(pos);
+            scene->addItem(temp);
+            item = temp;
+            scene->update();
+            }
+        break;
         case Free:
             break;
     }
@@ -240,10 +254,12 @@ void InstaDam::addItem(QPointF oldPos, QPointF newPos)
 {
     //cout << "ADD ITEM" << endl;
     if(item){
-        //cout << "C1" << endl;
-        QUndoCommand *addCommand = new AddCommand(item, scene);
-        undoStack->push(addCommand);
-        item = nullptr;
+        if(item->type() != Polygon){
+            //cout << "C1" << endl;
+            QUndoCommand *addCommand = new AddCommand(item, scene);
+            undoStack->push(addCommand);
+            item = nullptr;
+        }
     }
     else if(selectedItem){
         if(selectedItem->wasMoved()){
@@ -253,8 +269,8 @@ void InstaDam::addItem(QPointF oldPos, QPointF newPos)
         }
         else{
             //cout << "RMS" << endl;
-            QUndoCommand *resizeCommand = new ResizeCommand(selectedItem, oldPos, newPos, selectedItem->getActiveCorner());
-            undoStack->push(resizeCommand);
+            QUndoCommand *moveVertexCommand = new MoveVertexCommand(selectedItem, oldPos, newPos, selectedItem->getActiveVertex());
+            undoStack->push(moveVertexCommand);
         }
         selectedItem->resetState();
     }
