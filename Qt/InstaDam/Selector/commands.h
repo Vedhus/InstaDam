@@ -4,6 +4,7 @@
 #include <QUndoCommand>
 
 #include "selectItem.h"
+#include "polygonSelect.h"
 #include "photoScene.h"
 
 
@@ -52,17 +53,18 @@ private:
     bool init = false;
 };
 
-class ResizeCommand : public QUndoCommand{
+class MoveVertexCommand : public QUndoCommand{
 public:
-    ResizeCommand(SelectItem *item, const QPointF oldPos, const QPointF newPos,
-                  const unsigned char corner, QUndoCommand *parent = nullptr);
+    MoveVertexCommand(SelectItem *item, const QPointF oldPos, const QPointF newPos,
+                  const int vertex, QUndoCommand *parent = nullptr);
     void undo() override;
     void redo() override;
 private:
     SelectItem *myItem;
     QPointF myoldPos, mynewPos;
-    unsigned char myCorner;
+    int myVertex;
     bool init = false;
 };
+
 #endif /* COMMANDS_H */
 

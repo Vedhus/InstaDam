@@ -7,15 +7,16 @@ using namespace std;
 #include "selectItem.h"
 #include "ellipseSelect.h"
 #include "rectangleSelect.h"
+#include "polygonSelect.h"
 #include "commands.h"
 
 MainWindow::MainWindow()
 {
     undoStack = new QUndoStack(this);
-    type = Ellipse;
+    type = Polygon;
     createActions();
     createMenus();
-
+    item = nullptr;
     //createUndoView();
 
     diagramScene = new PhotoScene();
@@ -88,6 +89,13 @@ void MainWindow::createMenus()
 
 void MainWindow::newItem(QPointF pos){
     //cout << "NEW" << endl;
+    if(item){
+        if(item->type() == Polygon){
+            item->addPoint(pos);
+            diagramScene->update();
+            return;
+        }
+    }
     switch(type){
         case Rect:
            {
@@ -111,7 +119,15 @@ void MainWindow::newItem(QPointF pos){
             break;
         case Generic:
             break;
+        case Free:
+            break;
         case Polygon:
+            {
+            PolygonSelect *temp = new PolygonSelect(pos);
+            diagramScene->addItem(temp);
+            item = temp;
+            diagramScene->update();
+            }
             break;
         //default:
         //    break;
@@ -132,20 +148,22 @@ void MainWindow::addItem(QPointF oldPos, QPointF newPos)
 {
     //cout << "ADD ITEM" << endl;
     if(item){
-        //cout << "C1" << endl;
-        QUndoCommand *addCommand = new AddCommand(item, diagramScene);
-        undoStack->push(addCommand);
-        item = nullptr;
+        if(item->type() != Polygon){
+            //cout << "C1" << endl;
+            QUndoCommand *addCommand = new AddCommand(item, diagramScene);
+            undoStack->push(addCommand);
+            item = nullptr;
+        }
     }
     else if(selectedItem){
         if(selectedItem->wasMoved()){
-            //cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
+            cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
             QUndoCommand *moveCommand = new MoveCommand(selectedItem, oldPos, newPos);
             undoStack->push(moveCommand);
         }
         else{
             //cout << "RMS" << endl;
-            QUndoCommand *resizeCommand = new ResizeCommand(selectedItem, oldPos, newPos, selectedItem->getActiveCorner());
+            QUndoCommand *resizeCommand = new MoveVertexCommand(selectedItem, oldPos, newPos, selectedItem->getActiveVertex());
             undoStack->push(resizeCommand);
         }
         selectedItem->resetState();
@@ -158,6 +176,7 @@ void MainWindow::deleteItem(SelectItem *item){
 
 }
 void MainWindow::selected(SelectItem* selected, QPointF pos){
+    cout << "SELECTED" << endl;
     if(item){
         diagramScene->removeItem(item);
         item = nullptr;

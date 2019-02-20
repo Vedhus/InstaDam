@@ -6,39 +6,39 @@
 using namespace std;
 
 
-qreal SelectItem::cornerSize = 10.;
-QPointF SelectItem::xoffset = QPointF(SelectItem::cornerSize, 0.);
-QPointF SelectItem::yoffset = QPointF(0., SelectItem::cornerSize);
+qreal SelectItem::vertexSize = 10.;
+QPointF SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
+QPointF SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
 
 SelectType SelectItem::getType(){
     return selectType;
 }
 
-void SelectItem::setCornerSize(qreal size){
-    SelectItem::cornerSize = size;
-    SelectItem::xoffset = QPointF(SelectItem::cornerSize, 0.);
-    SelectItem::yoffset = QPointF(0., SelectItem::cornerSize);
+void SelectItem::setVertexSize(qreal size){
+    SelectItem::vertexSize = size;
+    SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
+    SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
 }
 
-SelectItem::SelectItem(qreal corner, QGraphicsItem *item) : QGraphicsItem(item){
-    SelectItem::setCornerSize(corner);
+SelectItem::SelectItem(qreal vertSize, QGraphicsItem *item) : QGraphicsItem(item){
+    SelectItem::setVertexSize(vertSize);
 }
 
 SelectItem::SelectItem(QGraphicsItem *item) : QGraphicsItem(item){
-    SelectItem::setCornerSize(10.);
+    SelectItem::setVertexSize(10.);
 }
 
 void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint){
-    if(activeCorner & TOP){
-        if(activeCorner & LEFT){
+    if(activeVertex & TOP){
+        if(activeVertex & LEFT){
             rect.setTopLeft(newPoint);
         }
         else{
             rect.setTopRight(newPoint);
         }
     }
-    else if(activeCorner & BOTTOM){
-        if(activeCorner & RIGHT){
+    else if(activeVertex & BOTTOM){
+        if(activeVertex & RIGHT){
             rect.setBottomRight(newPoint);
         }
         else{
@@ -78,7 +78,6 @@ QGraphicsScene* SelectItem::scene(){
 }
 
 QGraphicsItem* SelectItem::getParentItem(){
-    cout << "    L  " << parentItem() << "  " << QGraphicsItem::parentItem() << endl;
     return parentItem();
 }
 

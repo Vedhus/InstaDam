@@ -79,14 +79,14 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
 }
 
 void MoveCommand::undo(){
-    myItem->setActiveCorner(0);
+    myItem->setActiveVertex(0);
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
 }
 
 void MoveCommand::redo(){
     if(init){
-        myItem->setActiveCorner(0);
+        myItem->setActiveVertex(0);
         myItem->moveItem(myoldPos, mynewPos);
         myItem->scene()->update();
     }
@@ -95,24 +95,25 @@ void MoveCommand::redo(){
     }
 }
 
-ResizeCommand::ResizeCommand(SelectItem *item, const QPointF oldPos, const QPointF newPos,
-                             const unsigned char corner, QUndoCommand *parent) : QUndoCommand(parent){
+MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos, const QPointF newPos,
+                             const int vertex, QUndoCommand *parent) : QUndoCommand(parent){
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
-    myCorner = corner;
+    myVertex = vertex;
 }
 
-void ResizeCommand::undo(){
-    myItem->resizeItem(myCorner, myoldPos);
+void MoveVertexCommand::undo(){
+    myItem->resizeItem(myVertex, myoldPos);
     myItem->scene()->update();
 }
-void ResizeCommand::redo(){
+void MoveVertexCommand::redo(){
     if(init){
-        myItem->resizeItem(myCorner, mynewPos);
+        myItem->resizeItem(myVertex, mynewPos);
         myItem->scene()->update();
     }
     else{
         init = true;
     }
 }
+

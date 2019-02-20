@@ -33,8 +33,8 @@ QGraphicsScene* RectangleSelect::scene(){
     return SelectItem::scene();
 }
 
-void RectangleSelect::resizeItem(unsigned char corner, QPointF &newPos){
-    setActiveCorner(corner);
+void RectangleSelect::resizeItem(int vertex, QPointF &newPos){
+    setActiveVertex(vertex);
     addPoint(newPos);
 }
 //void RectangleSelect::setScene(){
@@ -54,7 +54,7 @@ void RectangleSelect::addPoint(QPointF &point){
 }
 
 void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    if(activeCorner != 0){
+    if(activeVertex != 0){
         //cout << "RESIZE" << endl;
         addPoint(newPos);
     }
@@ -70,19 +70,19 @@ void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
 void RectangleSelect::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
-        setActiveCorner(TOP, LEFT);
+        setActiveVertex(TOP, LEFT);
     }
     else if(isInsideRect(tr, point)){
-        setActiveCorner(TOP, RIGHT);
+        setActiveVertex(TOP, RIGHT);
     }
     else if(isInsideRect(bl, point)){
-        setActiveCorner(BOTTOM, LEFT);
+        setActiveVertex(BOTTOM, LEFT);
     }
     else if(isInsideRect(br, point)){
-        setActiveCorner(BOTTOM, RIGHT);
+        setActiveVertex(BOTTOM, RIGHT);
     }
     else{
-        setActiveCorner(0, 0);
+        setActiveVertex(0, 0);
     }
     //cout << "  CLIK POINT" << endl;
 }

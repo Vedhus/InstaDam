@@ -19,10 +19,10 @@
 
 enum SelectType:int {Generic=50, Rect=51, Ellipse=52,Polygon=53, Free=54};
 //enum Side:int {NONE=0, TOP=1, BOTTOM=2, LEFT=4, RIGHT=8};
-const unsigned char TOP = 0x1;
-const unsigned char BOTTOM = 0x2;
-const unsigned char LEFT = 0x4;
-const unsigned char RIGHT = 0x8;
+const int TOP = 0x1;
+const int BOTTOM = 0x2;
+const int LEFT = 0x4;
+const int RIGHT = 0x8;
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 class QGraphicsScene;
@@ -34,15 +34,15 @@ QT_END_NAMESPACE
 class SelectItem : public QGraphicsItem
 {
     public:
-        static qreal cornerSize;
+        static qreal vertexSize;
         static QPointF xoffset;
         static QPointF yoffset;
 
-        SelectItem(qreal corner = 10., QGraphicsItem *item = nullptr);
+        SelectItem(qreal vertSize = 10., QGraphicsItem *item = nullptr);
         SelectItem(QGraphicsItem *item = nullptr);
         virtual void addPoint(QPointF &point) = 0;
         virtual void moveItem(QPointF &oldPos, QPointF &newPos) = 0;
-        virtual void resizeItem(unsigned char corner, QPointF &shift) = 0;
+        virtual void resizeItem(int vertex, QPointF &shift) = 0;
         virtual void clickPoint(QPointF &point) = 0;
         virtual bool isInside(QPointF &point) = 0;
         //virtual void setScene() = 0;
@@ -51,41 +51,27 @@ class SelectItem : public QGraphicsItem
         int type() const override;
         void setActive(){active = true;}
         void setInactive(){active = false;}
-        static void setCornerSize(qreal size);
+        static void setVertexSize(qreal size);
         QGraphicsScene* scene();
         QGraphicsItem* getParentItem();
         bool wasResized(){return resized;}
         bool wasMoved(){return moved;}
-        unsigned char getActiveCorner(){return activeCorner;}
+        int getActiveVertex(){return activeVertex;}
         void resetState(){
             moved = false;
             resized = false;
         }
-        void setActiveCorner(unsigned char h, unsigned char v = 0){
+        void setActiveVertex(int h, int v = 0){
             //activeH = h;
             //activeV = v;
-            activeCorner = 0;
-            activeCorner = (h | v);
+            activeVertex = 0;
+            activeVertex = (h | v);
         }
-        //void setActiveH(unsigned char h){setActiveCorner(h, activeV);}
-        //void setActiveV(unsigned char v){setActiveCorner(activeH, v);}
         void flipH(){
-            activeCorner ^= (TOP | BOTTOM);
-            //if(activeH == TOP){
-            //    setActiveH(BOTTOM);
-            //}
-            //else{
-            //    setActiveH(TOP);
-            //}
+            activeVertex ^= (TOP | BOTTOM);
         }
         void flipV(){
-            activeCorner ^= (LEFT | RIGHT);
-            //if(activeV == LEFT){
-            //    setActiveV(RIGHT);
-            //}
-            //else{
-            //    setActiveV(LEFT);
-            //}
+            activeVertex ^= (LEFT | RIGHT);
         }
 
     protected:
@@ -93,13 +79,14 @@ class SelectItem : public QGraphicsItem
         QPointF selectedPoint;
         int mytype = Generic;
         bool active = false;
-        unsigned char activeV = RIGHT;
-        unsigned char activeH = BOTTOM;
-        unsigned char activeCorner = (activeV | activeH);
+        int activeV = RIGHT;
+        int activeH = BOTTOM;
+        int activeVertex = (activeV | activeH);
         bool isInsideRect(QRectF &rect, QPointF &point);
         void checkBoundaries(QPointF &shift, QRectF &rect);
         bool resized = false;
         bool moved = false;
+        QRectF myRect;
 };
 
 

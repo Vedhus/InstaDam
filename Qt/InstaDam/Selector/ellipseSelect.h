@@ -7,10 +7,10 @@ class EllipseSelect : public QGraphicsEllipseItem, public SelectItem
 {
     public:
         EllipseSelect(QPointF point, QGraphicsItem *item = nullptr);
-        //void updateCorner(QPointF point);
+
         void addPoint(QPointF &point) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
-        void resizeItem(unsigned char corner, QPointF &shift) override;
+        void resizeItem(int vertex, QPointF &shift) override;
         void clickPoint(QPointF &point) override;
         QRectF boundingRect() const override;
         bool isInside(QPointF &point) override;
@@ -19,7 +19,6 @@ class EllipseSelect : public QGraphicsEllipseItem, public SelectItem
 
     private:
         void calcCorners();
-        QRectF myRect;
         QRectF tl, bl, tr, br;
 };
 #endif // ELLIPSE_SELECT_H

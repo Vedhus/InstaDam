@@ -16,19 +16,19 @@ void EllipseSelect::calcCorners(){
 void EllipseSelect::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
-        setActiveCorner(TOP, LEFT);
+        setActiveVertex(TOP, LEFT);
     }
     else if(isInsideRect(tr, point)){
-        setActiveCorner(TOP, RIGHT);
+        setActiveVertex(TOP, RIGHT);
     }
     else if(isInsideRect(bl, point)){
-        setActiveCorner(BOTTOM, LEFT);
+        setActiveVertex(BOTTOM, LEFT);
     }
     else if(isInsideRect(br, point)){
-        setActiveCorner(BOTTOM, RIGHT);
+        setActiveVertex(BOTTOM, RIGHT);
     }
     else{
-        setActiveCorner(0, 0);
+        setActiveVertex(0, 0);
     }
     //cout << "  CLIK POINT" << endl;
 }
@@ -68,7 +68,7 @@ void EllipseSelect::addPoint(QPointF &point){
 
 void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     //std::cout << "MI " << activeCorner << std::endl;
-    if(activeCorner != 0){
+    if(activeVertex != 0){
         //std::cout << "RESIZE" << std::endl;
         addPoint(newPos);
         resized = true;
@@ -84,9 +84,9 @@ void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     setRect(myRect);
 }
 
-void EllipseSelect::resizeItem(unsigned char corner, QPointF &newPos){
+void EllipseSelect::resizeItem(int vertex, QPointF &newPos){
     //std::cout << "RRSZ" << std::endl;
-    setActiveCorner(corner);
+    setActiveVertex(vertex);
     addPoint(newPos);
 }
 

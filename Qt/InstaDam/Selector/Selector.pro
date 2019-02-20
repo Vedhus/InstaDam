@@ -9,7 +9,8 @@ HEADERS = \
    $$PWD/photoScene.h \
    $$PWD/mainwindow.h \
    $$PWD/rectangleSelect.h \
-   $$PWD/ellipseSelect.h
+   $$PWD/ellipseSelect.h \
+    polygonSelect.h
 
 SOURCES = \
    $$PWD/commands.cpp \
@@ -18,7 +19,8 @@ SOURCES = \
    $$PWD/main.cpp \
    $$PWD/mainwindow.cpp \
    $$PWD/rectangleSelect.cpp \
-   $$PWD/ellipseSelect.cpp
+   $$PWD/ellipseSelect.cpp \
+    polygonSelect.cpp
 
 INCLUDEPATH = \
     $$PWD/. \
