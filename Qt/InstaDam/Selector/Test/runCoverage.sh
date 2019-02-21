@@ -4,7 +4,7 @@
 
 LCOV=lcov
 GENHTML=genhtml
-BROWSER="/usr/bin/opera"
+#BROWSER="/usr/bin/opera"
 
 SRC_DIR="${1}"
 HTML_RESULTS="${1}/html"
@@ -28,5 +28,5 @@ mkdir -p ${HTML_RESULTS}
 "${LCOV}" -d "${SRC_DIR}" -z
 
 # open in browser and bring to front
-"${BROWSER}" "${HTML_RESULTS}/index.html"
-open "${BROWSER}"
+#"${BROWSER}" "${HTML_RESULTS}/index.html"
+#open "${BROWSER}"
