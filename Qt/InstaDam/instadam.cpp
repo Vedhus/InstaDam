@@ -1,17 +1,19 @@
 #include "instadam.h"
 #include "ui_instadam.h"
-#include <QFileDialog>
-#include <QColorDialog>
-#include <QInputDialog>
-#include <iostream>
-#include <string>
-#include <stdio.h>
+#include "pixmapops.h"
+#include "filtercontrols.h"
 
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
 {
     ui->setupUi(this);
+    filterControl = new filterControls();
+    connectFilters();
+    ui->IdmPhotoViewer->setFilterControls(filterControl);
+    ui->IdmMaskViewer->setFilterControls(filterControl);
+
+
 }
 
 InstaDam::~InstaDam()
@@ -111,6 +113,45 @@ Project InstaDam::on_actionOpen_triggered()
 
 
 
+void InstaDam::connectFilters()
+{
+    connect(ui->IdmPhotoViewer, SIGNAL(changedMask(maskTypes)), ui->IdmMaskViewer, SLOT(setImMask(maskTypes)));
+
+    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
+    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+    ui->blur_label->setMaskType(BLUR);
+
+    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+
+
+    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
+    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+    ui->canny_label->setMaskType(CANNY);
+    ui->canny_label->manualSelect();
+    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+
+
+    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
+    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
+    ui->threshold_label->setMaskType(THRESHOLD);
+
+    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+
+    connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
+    connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
+
+    connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this, SLOT(resetPixmapButtons()));
+}
+void InstaDam::resetPixmapButtons()
+{
+    cv::Mat thumbnail = ui->IdmPhotoViewer->cvThumb;
+    ui->blur_label->resetPixmaps(filterControl->thumb2pixmap(thumbnail, BLUR));
+    qInfo("1");
+    ui->canny_label->resetPixmaps(filterControl->thumb2pixmap(thumbnail, CANNY));
+    qInfo("2");
+    ui->threshold_label->resetPixmaps(filterControl->thumb2pixmap( thumbnail, THRESHOLD));
+    qInfo("3");
+}
 
 void InstaDam::on_actionSave_triggered()
 {
@@ -137,56 +178,36 @@ void InstaDam::on_actionSave_triggered()
 
 void InstaDam::on_actionOpen_File_triggered()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("open image/idam file"), "../", tr("instadam files (.idam));; All Files (*)"));
-    QFileInfo file(filename);
-    QString ext = file.suffix();
-    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
-    {
-        QTextStream(stdout) << "image attempted to be opened";
-        QPixmap im = QPixmap(filename);
-        ui->IdmPhotoViewer->setPhoto(im);
-    }
-    else if(!ext.compare("idam"))
-    {
-        QTextStream(stdout) << "idam attempted to be opened";
-        QFile file(filename);
-        file.open(QIODevice::ReadOnly);
-        QDataStream in(&file);
-        QPixmap photoPixmap, labelPixmap;
-        in >> photoPixmap >> labelPixmap;
-        ui->IdmPhotoViewer->photo->setPixmap(photoPixmap);
-        ui->IdmPhotoViewer->labels->setPixmap(labelPixmap);
-    }
-    else{
-        QTextStream(stdout) << "something other than an image or idam being opened, need to throw error to user here";
-    }
+    QString filename = QFileDialog::getOpenFileName();
 
-}
+    ui->IdmPhotoViewer->setPhoto(filename);
+    ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 
-void InstaDam::on_actionSave_File_triggered()
-{
-    QTextStream(stdout) << "saving current canvas as idamfile format";
-    QString outFileName = QFileDialog::getSaveFileName(this, tr("save images"), "../", tr("instadam files (.idam));; All Files (*)"));
-    QFile outFile(outFileName);
-    outFile.open(QIODevice::WriteOnly);
-    //actually write to the file here
-    QDataStream out(&outFile);
-    out << ui->IdmPhotoViewer->photo->pixmap() << ui->IdmPhotoViewer->labels->pixmap();
-    outFile.close();
+
+
 }
 
 void InstaDam::on_panButton_clicked()
 {
     ui->IdmPhotoViewer->setPanMode();
+    ui->IdmMaskViewer->setPanMode();
 }
 
 void InstaDam::on_roundBrush_clicked()
 {
-    qInfo("Round");
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
+    ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
 }
 
 void InstaDam::on_squareBrush_clicked()
 {
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
+    ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
+}
+
+void InstaDam::on_pushButton_14_clicked()
+{
+
+    filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask, filterControl, ui->IdmPhotoViewer);
+    dialogs->show();
 }

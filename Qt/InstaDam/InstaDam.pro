@@ -31,7 +31,13 @@ SOURCES += \
         project.cpp \
         maskviewer.cpp \
         photoviewer.cpp \
-    pixmapops.cpp
+    pixmapops.cpp \
+    filterproperty.cpp \
+    filters.cpp \
+    picpushbutton.cpp \
+    maskobjects.cpp \
+    filtercontrols.cpp \
+    fslider.cpp
 
 HEADERS += \
         instadam.h \
@@ -39,11 +45,27 @@ HEADERS += \
         project.h \
         photoviewer.h \
         maskviewer.h \
-    pixmapops.h
+    pixmapops.h \
+    filterproperty.h \
+    filters.h \
+    picpushbutton.h \
+    maskobjects.h \
+    filtercontrols.h \
+    filterproperty.h \
+    fslider.h
 
 
 FORMS += \
         instadam.ui
+
+INCLUDEPATH += D:\opencv\opencv\build\include
+
+LIBS += D:\opencv\opencv-build\bin\libopencv_core320.dll
+LIBS += D:\opencv\opencv-build\bin\libopencv_highgui320.dll
+LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs320.dll
+LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc320.dll
+LIBS += D:\opencv\opencv-build\bin\libopencv_features2d320.dll
+LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d320.dll
 
 
 # more correct variant, how set includepath and libs for mingw

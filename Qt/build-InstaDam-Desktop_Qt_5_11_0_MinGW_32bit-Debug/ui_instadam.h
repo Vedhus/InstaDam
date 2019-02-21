@@ -28,6 +28,7 @@
 #include <QtWidgets/QWidget>
 #include <maskviewer.h>
 #include <photoviewer.h>
+#include "picpushbutton.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -46,6 +47,17 @@ public:
     QVBoxLayout *verticalLayout;
     QFrame *frame;
     QVBoxLayout *verticalLayout_2;
+    QFrame *frame_4;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *panButton;
+    QPushButton *roundBrush;
+    QPushButton *squareBrush;
+    QLabel *label;
+    QSpinBox *spinBox;
+    QPushButton *pushButton_14;
+    QSplitter *splitter_4;
+    QWidget *horizontalLayoutWidget_3;
+    QHBoxLayout *horizontalLayout_5;
     QSplitter *splitter;
     QFrame *frame_2;
     QVBoxLayout *verticalLayout_4;
@@ -62,31 +74,23 @@ public:
     QSplitter *splitter_3;
     PhotoViewer *IdmPhotoViewer;
     MaskViewer *IdmMaskViewer;
-    QFrame *frame_4;
-    QHBoxLayout *horizontalLayout_4;
-    QPushButton *panButton;
-    QPushButton *roundBrush;
-    QPushButton *squareBrush;
-    QLabel *label;
-    QSpinBox *spinBox;
-    QPushButton *pushButton_14;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QVBoxLayout *verticalLayout_5;
+    QHBoxLayout *horizontalLayout_3;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
-    QHBoxLayout *horizontalLayout;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QWidget *tab_2;
+    QVBoxLayout *verticalLayout_7;
     QVBoxLayout *verticalLayout_6;
-    QScrollArea *scrollArea_3;
-    QWidget *scrollAreaWidgetContents_3;
-    QHBoxLayout *horizontalLayout_3;
-    QPushButton *pushButton_8;
-    QPushButton *pushButton_9;
-    QPushButton *pushButton_10;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label_6;
+    QLabel *label_5;
+    QLabel *label_4;
+    QHBoxLayout *horizontalLayout_7;
+    PicPushButton *blur_label;
+    PicPushButton *canny_label;
+    PicPushButton *threshold_label;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu_File;
@@ -97,7 +101,7 @@ public:
     {
         if (InstaDam->objectName().isEmpty())
             InstaDam->setObjectName(QStringLiteral("InstaDam"));
-        InstaDam->resize(595, 378);
+        InstaDam->resize(857, 396);
         InstaDam->setMouseTracking(true);
         InstaDam->setTabletTracking(true);
         InstaDam->setAcceptDrops(true);
@@ -135,15 +139,76 @@ public:
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        splitter = new QSplitter(frame);
+        frame_4 = new QFrame(frame);
+        frame_4->setObjectName(QStringLiteral("frame_4"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(frame_4->sizePolicy().hasHeightForWidth());
+        frame_4->setSizePolicy(sizePolicy);
+        frame_4->setMaximumSize(QSize(16777215, 70));
+        frame_4->setFrameShape(QFrame::StyledPanel);
+        frame_4->setFrameShadow(QFrame::Raised);
+        horizontalLayout_4 = new QHBoxLayout(frame_4);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        panButton = new QPushButton(frame_4);
+        panButton->setObjectName(QStringLiteral("panButton"));
+
+        horizontalLayout_4->addWidget(panButton);
+
+        roundBrush = new QPushButton(frame_4);
+        roundBrush->setObjectName(QStringLiteral("roundBrush"));
+
+        horizontalLayout_4->addWidget(roundBrush);
+
+        squareBrush = new QPushButton(frame_4);
+        squareBrush->setObjectName(QStringLiteral("squareBrush"));
+
+        horizontalLayout_4->addWidget(squareBrush);
+
+        label = new QLabel(frame_4);
+        label->setObjectName(QStringLiteral("label"));
+
+        horizontalLayout_4->addWidget(label);
+
+        spinBox = new QSpinBox(frame_4);
+        spinBox->setObjectName(QStringLiteral("spinBox"));
+
+        horizontalLayout_4->addWidget(spinBox);
+
+        pushButton_14 = new QPushButton(frame_4);
+        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Maximum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(pushButton_14->sizePolicy().hasHeightForWidth());
+        pushButton_14->setSizePolicy(sizePolicy1);
+#ifndef QT_NO_ACCESSIBILITY
+        pushButton_14->setAccessibleName(QStringLiteral(""));
+#endif // QT_NO_ACCESSIBILITY
+        pushButton_14->setAutoFillBackground(false);
+        pushButton_14->setText(QStringLiteral("Filter Options"));
+        pushButton_14->setIconSize(QSize(200, 200));
+
+        horizontalLayout_4->addWidget(pushButton_14);
+
+
+        verticalLayout_2->addWidget(frame_4);
+
+        splitter_4 = new QSplitter(frame);
+        splitter_4->setObjectName(QStringLiteral("splitter_4"));
+        splitter_4->setOrientation(Qt::Vertical);
+        horizontalLayoutWidget_3 = new QWidget(splitter_4);
+        horizontalLayoutWidget_3->setObjectName(QStringLiteral("horizontalLayoutWidget_3"));
+        horizontalLayout_5 = new QHBoxLayout(horizontalLayoutWidget_3);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
+        splitter = new QSplitter(horizontalLayoutWidget_3);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setOrientation(Qt::Vertical);
         splitter->setHandleWidth(10);
         frame_2 = new QFrame(splitter);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
         frame_2->setSizePolicy(sizePolicy);
         frame_2->setFrameShape(QFrame::StyledPanel);
@@ -163,7 +228,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 75, 190));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 108, 181));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -207,12 +272,15 @@ public:
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         splitter_3 = new QSplitter(frame_3);
         splitter_3->setObjectName(QStringLiteral("splitter_3"));
+        splitter_3->setMinimumSize(QSize(729, 0));
         splitter_3->setOrientation(Qt::Horizontal);
         IdmPhotoViewer = new PhotoViewer(splitter_3);
         IdmPhotoViewer->setObjectName(QStringLiteral("IdmPhotoViewer"));
+        IdmPhotoViewer->setMinimumSize(QSize(20, 10));
         splitter_3->addWidget(IdmPhotoViewer);
         IdmMaskViewer = new MaskViewer(splitter_3);
         IdmMaskViewer->setObjectName(QStringLiteral("IdmMaskViewer"));
+        IdmMaskViewer->setMinimumSize(QSize(20, 10));
         splitter_3->addWidget(IdmMaskViewer);
 
         horizontalLayout_2->addWidget(splitter_3);
@@ -223,151 +291,90 @@ public:
 
         splitter->addWidget(frame_2);
 
-        verticalLayout_2->addWidget(splitter);
+        horizontalLayout_5->addWidget(splitter);
 
-        frame_4 = new QFrame(frame);
-        frame_4->setObjectName(QStringLiteral("frame_4"));
-        sizePolicy.setHeightForWidth(frame_4->sizePolicy().hasHeightForWidth());
-        frame_4->setSizePolicy(sizePolicy);
-        frame_4->setMaximumSize(QSize(16777215, 70));
-        frame_4->setFrameShape(QFrame::StyledPanel);
-        frame_4->setFrameShadow(QFrame::Raised);
-        horizontalLayout_4 = new QHBoxLayout(frame_4);
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        panButton = new QPushButton(frame_4);
-        panButton->setObjectName(QStringLiteral("panButton"));
-
-        horizontalLayout_4->addWidget(panButton);
-
-        roundBrush = new QPushButton(frame_4);
-        roundBrush->setObjectName(QStringLiteral("roundBrush"));
-
-        horizontalLayout_4->addWidget(roundBrush);
-
-        squareBrush = new QPushButton(frame_4);
-        squareBrush->setObjectName(QStringLiteral("squareBrush"));
-
-        horizontalLayout_4->addWidget(squareBrush);
-
-        label = new QLabel(frame_4);
-        label->setObjectName(QStringLiteral("label"));
-
-        horizontalLayout_4->addWidget(label);
-
-        spinBox = new QSpinBox(frame_4);
-        spinBox->setObjectName(QStringLiteral("spinBox"));
-
-        horizontalLayout_4->addWidget(spinBox);
-
-        pushButton_14 = new QPushButton(frame_4);
-        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
-
-        horizontalLayout_4->addWidget(pushButton_14);
-
-
-        verticalLayout_2->addWidget(frame_4);
-
-
-        verticalLayout->addWidget(frame);
-
-        tabWidget = new QTabWidget(centralwidget);
+        splitter_4->addWidget(horizontalLayoutWidget_3);
+        horizontalLayoutWidget = new QWidget(splitter_4);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setSizeConstraint(QLayout::SetMaximumSize);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        tabWidget = new QTabWidget(horizontalLayoutWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setMaximumSize(QSize(16777215, 240));
-        tabWidget->setDocumentMode(false);
+        tabWidget->setMaximumSize(QSize(16777215, 300));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
-        verticalLayout_5 = new QVBoxLayout(tab);
-        verticalLayout_5->setSpacing(0);
-        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3 = new QHBoxLayout(tab);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         scrollArea = new QScrollArea(tab);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
-        scrollArea->setMaximumSize(QSize(16777215, 200));
         scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 587, 70));
-        sizePolicy.setHeightForWidth(scrollAreaWidgetContents->sizePolicy().hasHeightForWidth());
-        scrollAreaWidgetContents->setSizePolicy(sizePolicy);
-        scrollAreaWidgetContents->setMaximumSize(QSize(16777215, 200));
-        horizontalLayout = new QHBoxLayout(scrollAreaWidgetContents);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton = new QPushButton(scrollAreaWidgetContents);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy);
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 827, 70));
+        verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        label_6 = new QLabel(scrollAreaWidgetContents);
+        label_6->setObjectName(QStringLiteral("label_6"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout_8->addWidget(label_6, 0, Qt::AlignHCenter|Qt::AlignVCenter);
 
-        pushButton_2 = new QPushButton(scrollAreaWidgetContents);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        sizePolicy.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
-        pushButton_2->setSizePolicy(sizePolicy);
+        label_5 = new QLabel(scrollAreaWidgetContents);
+        label_5->setObjectName(QStringLiteral("label_5"));
 
-        horizontalLayout->addWidget(pushButton_2);
+        horizontalLayout_8->addWidget(label_5, 0, Qt::AlignHCenter);
 
-        pushButton_3 = new QPushButton(scrollAreaWidgetContents);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        sizePolicy.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
-        pushButton_3->setSizePolicy(sizePolicy);
+        label_4 = new QLabel(scrollAreaWidgetContents);
+        label_4->setObjectName(QStringLiteral("label_4"));
 
-        horizontalLayout->addWidget(pushButton_3);
+        horizontalLayout_8->addWidget(label_4, 0, Qt::AlignHCenter);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_8);
+
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        blur_label = new PicPushButton(scrollAreaWidgetContents);
+        blur_label->setObjectName(QStringLiteral("blur_label"));
+
+        horizontalLayout_7->addWidget(blur_label, 0, Qt::AlignHCenter);
+
+        canny_label = new PicPushButton(scrollAreaWidgetContents);
+        canny_label->setObjectName(QStringLiteral("canny_label"));
+
+        horizontalLayout_7->addWidget(canny_label, 0, Qt::AlignHCenter);
+
+        threshold_label = new PicPushButton(scrollAreaWidgetContents);
+        threshold_label->setObjectName(QStringLiteral("threshold_label"));
+
+        horizontalLayout_7->addWidget(threshold_label, 0, Qt::AlignHCenter);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_7);
+
+
+        verticalLayout_7->addLayout(verticalLayout_6);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        verticalLayout_5->addWidget(scrollArea);
+        horizontalLayout_3->addWidget(scrollArea);
 
         tabWidget->addTab(tab, QString());
-        tab_2 = new QWidget();
-        tab_2->setObjectName(QStringLiteral("tab_2"));
-        verticalLayout_6 = new QVBoxLayout(tab_2);
-        verticalLayout_6->setSpacing(0);
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
-        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        scrollArea_3 = new QScrollArea(tab_2);
-        scrollArea_3->setObjectName(QStringLiteral("scrollArea_3"));
-        scrollArea_3->setMaximumSize(QSize(16777215, 200));
-        scrollArea_3->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        scrollArea_3->setWidgetResizable(true);
-        scrollAreaWidgetContents_3 = new QWidget();
-        scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 587, 70));
-        sizePolicy.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
-        scrollAreaWidgetContents_3->setSizePolicy(sizePolicy);
-        scrollAreaWidgetContents_3->setMaximumSize(QSize(16777215, 200));
-        horizontalLayout_3 = new QHBoxLayout(scrollAreaWidgetContents_3);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        pushButton_8 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
-        sizePolicy.setHeightForWidth(pushButton_8->sizePolicy().hasHeightForWidth());
-        pushButton_8->setSizePolicy(sizePolicy);
 
-        horizontalLayout_3->addWidget(pushButton_8);
+        horizontalLayout->addWidget(tabWidget);
 
-        pushButton_9 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
-        sizePolicy.setHeightForWidth(pushButton_9->sizePolicy().hasHeightForWidth());
-        pushButton_9->setSizePolicy(sizePolicy);
+        splitter_4->addWidget(horizontalLayoutWidget);
 
-        horizontalLayout_3->addWidget(pushButton_9);
+        verticalLayout_2->addWidget(splitter_4);
 
-        pushButton_10 = new QPushButton(scrollAreaWidgetContents_3);
-        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
-        sizePolicy.setHeightForWidth(pushButton_10->sizePolicy().hasHeightForWidth());
-        pushButton_10->setSizePolicy(sizePolicy);
 
-        horizontalLayout_3->addWidget(pushButton_10);
-
-        scrollArea_3->setWidget(scrollAreaWidgetContents_3);
-
-        verticalLayout_6->addWidget(scrollArea_3);
-
-        tabWidget->addTab(tab_2, QString());
-
-        verticalLayout->addWidget(tabWidget);
+        verticalLayout->addWidget(frame);
 
         InstaDam->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(InstaDam);
@@ -376,7 +383,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 595, 21));
+        menubar->setGeometry(QRect(0, 0, 857, 21));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -418,23 +425,21 @@ public:
         actionSave->setText(QApplication::translate("InstaDam", "Save", nullptr));
         actionUndo->setText(QApplication::translate("InstaDam", "Undo", nullptr));
         actionOpen_File->setText(QApplication::translate("InstaDam", "Open File", nullptr));
-        pushButton_4->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_5->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_6->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_7->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
         roundBrush->setText(QApplication::translate("InstaDam", "Round", nullptr));
         squareBrush->setText(QApplication::translate("InstaDam", "Square", nullptr));
         label->setText(QApplication::translate("InstaDam", "Brush Size", nullptr));
-        pushButton_14->setText(QApplication::translate("InstaDam", "Filter Options", nullptr));
-        pushButton->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_2->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_3->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Tab 1", nullptr));
-        pushButton_8->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_9->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        pushButton_10->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("InstaDam", "Tab 2", nullptr));
+        pushButton_4->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
+        pushButton_5->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
+        pushButton_6->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
+        pushButton_7->setText(QApplication::translate("InstaDam", "PushButton", nullptr));
+        label_6->setText(QApplication::translate("InstaDam", "Blur", nullptr));
+        label_5->setText(QApplication::translate("InstaDam", "Canny", nullptr));
+        label_4->setText(QApplication::translate("InstaDam", "Threshold", nullptr));
+        blur_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
+        canny_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
+        threshold_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Filters", nullptr));
         menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
         menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));

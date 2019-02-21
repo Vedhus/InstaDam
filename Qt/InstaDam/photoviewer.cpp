@@ -10,6 +10,7 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
     photo = new QGraphicsPixmapItem();
     labelsTemp = new QGraphicsPixmapItem();
     labels = new QGraphicsPixmapItem();
+    filterIm = new QGraphicsPixmapItem();
 
     hasPhoto = false;
 
@@ -32,6 +33,8 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
     setFrameShape(QFrame::NoFrame);
     setDragMode(QGraphicsView::NoDrag);
     resetBrush(10, Qt::RoundCap);
+    maskObject = new maskObjects();
+    selectedMask = CANNY;
 
 }
 
@@ -41,10 +44,19 @@ void PhotoViewer::testPixmap()
     this->photo->setPixmap(pixmap2);
 }
 
-void PhotoViewer::setPhoto(QPixmap pixmap)
+void PhotoViewer::setFilterControls(filterControls *fc)
+{
+    filterControl = fc;
+}
+
+void PhotoViewer::setPhoto(QString filename)
 {
 
 
+    QPixmap pixmap = QPixmap(filename);
+
+    cvImage = cv::imread(filename.toLocal8Bit().constData(), CV_LOAD_IMAGE_COLOR);
+    cv::resize(cvImage, cvThumb,cv::Size(200,200) , CV_INTER_LINEAR);
 
     QPixmap white = QPixmap(pixmap.size());
     QPixmap white_temp = QPixmap(pixmap.size());
@@ -62,14 +74,70 @@ void PhotoViewer::setPhoto(QPixmap pixmap)
                 this->hasPhoto = true;
 
         }
-        this->fitInView(true);
+
+    QRect viewrect = viewport()->rect();
+    setImMask(CANNY);
+    qInfo("imMask set!");
+    this->fitInView();
+    qInfo("fit In View!");
+    emit zoomed( zoom, 1,  mapToScene(viewrect.width()/2.0, round((viewrect.height()+1)/2.0)));
+    emit loadedPhoto();
 
     }
 }
 
 
-void PhotoViewer::fitInView(bool scale = true)
+
+void PhotoViewer::setImMask(maskTypes filterName, threshold_or_filter thof)
 {
+    selectedMask = filterName;
+    qInfo("SettingMask");
+    if (hasPhoto == true)
+    {
+        switch(thof)
+        {case FILTER:
+           filterControl->filtAndGeneratePixmaps(cvImage, selectedMask);
+            break;
+        case THRESH:
+            qInfo("Case Threshold");
+            filterControl->im2pixmap(selectedMask);
+            break;
+        }
+        pixmapFilt = filterControl->qImg;
+        imMask = filterControl->qAlpha;
+        filterIm->setPixmap(pixmapFilt);
+        emit changedMask(selectedMask);
+    }
+
+}
+
+
+
+
+void PhotoViewer::zoomedInADifferentView(int zoom_input, float factor, QPointF point)
+{
+    zoom = zoom_input;
+
+    if (zoom > 0)
+    {
+        scale(factor, factor);
+    }
+    else if(zoom ==0)
+    {
+        fitInView();
+    }
+    else {
+        zoom = 0;
+    }
+    centerOn(point);
+}
+
+
+
+
+void PhotoViewer::fitInView()
+{
+    int MAX = 100;
     QRectF rect = QRectF(photo->pixmap().rect());
     if (!rect.isNull())
     {
@@ -77,12 +145,18 @@ void PhotoViewer::fitInView(bool scale = true)
         if (this->hasPhoto)
         {
             QRectF unity = transform().mapRect(QRectF(0,0,1,1));
-            this->scale(1.0/unity.width(), 1.0/unity.height());
+            if (1.0/unity.width() > MAX || 1.0/unity.height() >MAX)
+                    QGraphicsView::fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+            else
+                this->scale(1.0/unity.width(), 1.0/unity.height());
             QRect viewrect = this->viewport()->rect();
-            QRectF scenerect = transform().mapRect(viewrect);
+            QRectF scenerect = transform().mapRect(rect);
 
             float factor = fmin(viewrect.width() / scenerect.width(), viewrect.height() / scenerect.height());
-            this->scale(factor, factor);
+            if (factor>MAX)
+                     QGraphicsView::fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+            else
+                this->scale(factor, factor);
 
         }
         this->zoom = 0;
@@ -128,15 +202,6 @@ void PhotoViewer::setBrushMode(Qt::PenCapStyle cap)
 
 
 
-void PhotoViewer::setImMask(maskTypes filterName, QRect *rect)
-{
-    if (hasPhoto)
-    {
-        selectedMask = filterName;
-
-    }
-}
-
 
 void PhotoViewer::wheelEvent(QWheelEvent* event)
 
@@ -164,17 +229,25 @@ void PhotoViewer::wheelEvent(QWheelEvent* event)
 
         else if (zoom == 0)
         {
-            this->fitInView(true);
+            this->fitInView();
         }
         else
         {
             zoom = 0;
         }
 
-        QPointF point = this->mapToScene(viewrect.width()/2.0, round((viewrect.height()+1)/2.0));
+        QPointF point = this->mapToScene(round(viewrect.width()/2.0), round((viewrect.height())/2.0));
+        emit zoomed(zoom, factor, point);
 
     }
 
+}
+
+void PhotoViewer::resizeEvent(QResizeEvent *event)
+{
+
+    fitInView();
+    QGraphicsView::resizeEvent(event);
 }
 
 
@@ -223,7 +296,7 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
         else
         {
             QRect viewrect = viewport()->rect();
-            QPointF point = this->mapToScene(viewrect.width()/2.0, round((viewrect.height()+1)/2.0));
+            QPointF point = this->mapToScene(round(viewrect.width()/2.0), round(viewrect.height()/2.0));
             emit zoomed(zoom, 1, point);
         }
 

@@ -1,25 +1,18 @@
 #ifndef PHOTOVIEWER_H
 #define PHOTOVIEWER_H
 
-#include <QFrame>
-#include <QGraphicsView>
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QGraphicsPixmapItem>
-#include <QWheelEvent>
-#include <QtCore>
-#include <QBitmap>
-#include <QPainter>
-
-
-
+#include "instadam.h"
+#include "filters.h"
+#include "maskobjects.h"
+#include "filtercontrols.h"
+class maskObjects;
+class filterControls;
 namespace Ui {
 class PhotoViewer;
 }
 
 enum viewerTypes{PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE};
-enum maskTypes{CANNY, THRESHOLD, BLUR, OTHER};
+
 enum brushTypes {PAINTBRUSH, ERASER, PAN};
 
 class PhotoViewer : public QGraphicsView
@@ -32,6 +25,10 @@ public:
     int zoom;
     Qt::PenCapStyle capStyle;
     int brushSize;
+    cv::Mat cvImage;
+    cv::Mat cvThumb;
+    maskObjects *maskObject;
+    filterControls *filterControl;
 
     brushTypes brushType;
     maskTypes selectedMask;
@@ -46,41 +43,44 @@ public:
     QGraphicsPixmapItem *labels;
     QGraphicsPixmapItem *labelsTemp;
     QGraphicsPixmapItem *filterIm;
+
     QPoint lastPos;
     QPixmap currentMap;
+    QPixmap pixmapFilt;
+
 
 
     viewerTypes viewerType;
     PhotoViewer(QWidget *parent = 0);
-    void setPhoto(QPixmap pixmap);
+    void setPhoto(QString);
     void testPixmap();
-    void fitInView(bool);
+    void fitInView();
     virtual void wheelEvent(QWheelEvent* ) override;
     virtual void mousePressEvent(QMouseEvent*) override;
     virtual void mouseMoveEvent(QMouseEvent*) override;
     virtual void mouseReleaseEvent(QMouseEvent*) override;
+    virtual void resizeEvent(QResizeEvent *event) override;
+    void setFilterControls(filterControls *);
     void setPanMode();
     void resetBrush(int, Qt::PenCapStyle);
     void setBrushMode(Qt::PenCapStyle);
-    void setImMask(maskTypes, QRect *);
+
+    void setMaskPixmap();
+
+
 
 
 signals:
     void photoClicked(QPoint);
     void zoomed(int, float, QPointF);
-    void loadedPhoto(bool);
+    void changedMask(maskTypes);
+    void loadedPhoto();
+
+public slots:
+    void zoomedInADifferentView(int , float, QPointF );
+    void setImMask(maskTypes, threshold_or_filter thof = FILTER);
 
 
-
-
-
-
-
-//    QPixmap *getThumbPixmap(int maskType = 0);
-//    void setPicButtonTumbnails();
-//    void getMaskFromMaskView();
-//    void modifyMaskThreshold(int val = 0);
-//    void zoomedInADifferentView(int zoom, int factor, QPoint point);
 
 
 

@@ -12,7 +12,32 @@
 #include <QObject>
 #include <QMenuBar>
 #include <QMenu>
+#include <QColorDialog>
+#include <QInputDialog>
+#include <QFrame>
+#include <QGraphicsView>
+#include <QMainWindow>
+#include <QGraphicsScene>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QWheelEvent>
+#include <QtCore>
+#include <QBitmap>
+#include <QPainter>
 
+#include <iostream>
+#include <string>
+#include <stdio.h>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include "opencv2/imgproc.hpp"
+
+class filterControls;
+
+enum maskTypes{CANNY, THRESHOLD, BLUR, OTHER};
+enum threshold_or_filter{THRESH, FILTER};
 
 namespace Ui {
 class InstaDam;
@@ -26,6 +51,8 @@ public:
     explicit InstaDam(QWidget *parent = nullptr);
     ~InstaDam();
     void fileOpen();
+    void connectFilters();
+    filterControls * filterControl;
 
 private slots:
     void on_actionOpen_File_triggered();
@@ -38,13 +65,18 @@ private slots:
     void on_actionSave_triggered();
 
 
-    void on_actionSave_File_triggered();
 
     void on_panButton_clicked();
 
     void on_roundBrush_clicked();
 
     void on_squareBrush_clicked();
+
+    void on_pushButton_14_clicked();
+
+public slots:
+    void resetPixmapButtons();
+
 
 private:
     Ui::InstaDam *ui;

@@ -6,7 +6,16 @@ INPUT(
 ./debug\maskviewer.o
 ./debug\photoviewer.o
 ./debug\pixmapops.o
+./debug\filterproperty.o
+./debug\filters.o
+./debug\picpushbutton.o
+./debug\maskobjects.o
+./debug\filtercontrols.o
+./debug\fslider.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o
+./debug\moc_picpushbutton.o
+./debug\moc_filtercontrols.o
+./debug\moc_fslider.o
 );
