@@ -10,9 +10,6 @@ qreal SelectItem::vertexSize = 10.;
 QPointF SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
 QPointF SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
 
-SelectType SelectItem::getType(){
-    return selectType;
-}
 
 void SelectItem::setVertexSize(qreal size){
     SelectItem::vertexSize = size;

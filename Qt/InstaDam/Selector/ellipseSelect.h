@@ -2,12 +2,16 @@
 #define ELLIPSE_SELECT_H
 
 #include "selectItem.h"
+#ifdef TEST
+class TestSelect;
+
+#endif
 
 class EllipseSelect : public QGraphicsEllipseItem, public SelectItem
 {
     public:
         EllipseSelect(QPointF point, QGraphicsItem *item = nullptr);
-
+        EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *item = nullptr);
         void addPoint(QPointF &point) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         void resizeItem(int vertex, QPointF &shift) override;
@@ -18,6 +22,9 @@ class EllipseSelect : public QGraphicsEllipseItem, public SelectItem
         QGraphicsScene* scene();
 
     private:
+#ifdef TEST
+        friend TestSelect;
+#endif
         void calcCorners();
         QRectF tl, bl, tr, br;
 };

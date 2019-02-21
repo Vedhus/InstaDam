@@ -4,23 +4,23 @@
 #TARGET = Selector
 
 HEADERS = \
-   $$PWD/commands.h \
-   $$PWD/selectItem.h \
-   $$PWD/photoScene.h \
-   $$PWD/mainwindow.h \
-   $$PWD/rectangleSelect.h \
-   $$PWD/ellipseSelect.h \
-    polygonSelect.h
+    $$PWD/polygonSelect.h \
+    $$PWD/commands.h \
+    $$PWD/ellipseSelect.h \
+    $$PWD/mainwindow.h \
+    $$PWD/photoScene.h \
+    $$PWD/rectangleSelect.h \
+    $$PWD/selectItem.h
 
 SOURCES = \
-   $$PWD/commands.cpp \
-   $$PWD/selectItem.cpp \
-   $$PWD/photoScene.cpp \
-   $$PWD/main.cpp \
-   $$PWD/mainwindow.cpp \
-   $$PWD/rectangleSelect.cpp \
-   $$PWD/ellipseSelect.cpp \
-    polygonSelect.cpp
+    $$PWD/polygonSelect.cpp \
+    $$PWD/commands.cpp \
+    $$PWD/ellipseSelect.cpp \
+    $$PWD/main.cpp \
+    $$PWD/mainwindow.cpp \
+    $$PWD/photoScene.cpp \
+    $$PWD/rectangleSelect.cpp \
+    $$PWD/selectItem.cpp
 
 INCLUDEPATH = \
     $$PWD/. \

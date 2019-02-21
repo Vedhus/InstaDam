@@ -11,6 +11,29 @@ void RectangleSelect::calcCorners(){
     br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
 
 }
+
+RectangleSelect::~RectangleSelect(){
+
+}
+
+RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *item)
+    : SelectItem(vertSize,item), QGraphicsRectItem(item)
+{
+    myRect.setTopLeft(point);
+    myRect.setBottomRight(point);
+    calcCorners();
+    setRect(myRect);
+    mytype = Rect;
+    //myRect = rect;
+    active = true;
+    //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
+    QPen pen(Qt::blue);
+    pen.setWidth(5);
+    setPen(pen);
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
+
 RectangleSelect::RectangleSelect(QPointF point, QGraphicsItem *item)
     : SelectItem(item), QGraphicsRectItem(item)
 {

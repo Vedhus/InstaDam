@@ -52,6 +52,24 @@ EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
+EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), SelectItem(vertexSize, item)
+{
+
+    myRect.setTopLeft(point);
+    myRect.setBottomRight(point);
+    calcCorners();
+    setRect(myRect);
+    mytype = Ellipse;
+    //myRect = rect;
+    active = true;
+    //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
+    QPen pen(Qt::red);
+    pen.setWidth(5);
+    setPen(pen);
+    QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
 
 void EllipseSelect::addPoint(QPointF &point){
     //myRect.setBottomRight(point);

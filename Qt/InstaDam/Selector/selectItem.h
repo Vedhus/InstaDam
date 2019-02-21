@@ -47,9 +47,9 @@ class SelectItem : public QGraphicsItem
         virtual bool isInside(QPointF &point) = 0;
         //virtual void setScene() = 0;
         void sortCorners(QRectF &rect, QPointF &newPoint);
-        SelectType getType();
         int type() const override;
-        void setActive(){active = true;}
+        bool isItemActive(){return active == true;}
+        void setItemActive(){active = true;}
         void setInactive(){active = false;}
         static void setVertexSize(qreal size);
         QGraphicsScene* scene();
