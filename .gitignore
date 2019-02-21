@@ -8,3 +8,6 @@ moc_*
 *.user
 Makefile
 Qt/InstaDam/Selector/Selector
+*.info
+*.gcno
+Qt/InstaDam/Selector/Test/html
