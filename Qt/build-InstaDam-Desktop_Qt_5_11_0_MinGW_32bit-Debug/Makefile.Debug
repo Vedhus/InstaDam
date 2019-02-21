@@ -13,7 +13,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -W -Wextra $(DEFINES)
-CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
+CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
 INCPATH       = -I..\InstaDam -I. -ID:\opencv\opencv\build\include -IC:\Qt\Qt511_32\5.11.0\mingw53_32\include -IC:\Qt\Qt511_32\5.11.0\mingw53_32\include\QtWidgets -IC:\Qt\Qt511_32\5.11.0\mingw53_32\include\QtGui -IC:\Qt\Qt511_32\5.11.0\mingw53_32\include\QtANGLE -IC:\Qt\Qt511_32\5.11.0\mingw53_32\include\QtCore -Idebug -I. -IC:\Qt\Qt511_32\5.11.0\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
@@ -153,7 +153,7 @@ compiler_moc_predefs_make_all: debug/moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) debug\moc_predefs.h
 debug/moc_predefs.h: C:/Qt/Qt511_32/5.11.0/mingw53_32/mkspecs/features/data/dummy.cpp
-	g++ -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -dM -E -o debug\moc_predefs.h C:\Qt\Qt511_32\5.11.0\mingw53_32\mkspecs\features\data\dummy.cpp
+	g++ -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -W -Wextra -dM -E -o debug\moc_predefs.h C:\Qt\Qt511_32\5.11.0\mingw53_32\mkspecs\features\data\dummy.cpp
 
 compiler_moc_header_make_all: debug/moc_instadam.cpp debug/moc_photoviewer.cpp debug/moc_maskviewer.cpp debug/moc_picpushbutton.cpp debug/moc_filtercontrols.cpp debug/moc_fslider.cpp
 compiler_moc_header_clean:

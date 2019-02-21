@@ -54,6 +54,18 @@ public:
     void connectFilters();
     filterControls * filterControl;
 
+    int fileId= 0;
+    QFileInfo file;
+    QString filename;
+    QString labelFile;
+    QStringList imagesList;
+    QDir path;
+    void openFile_and_labels();
+    void generateLabelFileName();
+    void assertError(std::string errorMessage);
+    void saveFile();
+
+
 private slots:
     void on_actionOpen_File_triggered();
 
@@ -73,6 +85,10 @@ private slots:
     void on_squareBrush_clicked();
 
     void on_pushButton_14_clicked();
+
+    void on_actionSave_File_triggered();
+
+    void on_saveAndNext_clicked();
 
 public slots:
     void resetPixmapButtons();

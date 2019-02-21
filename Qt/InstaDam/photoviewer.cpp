@@ -15,7 +15,7 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
     hasPhoto = false;
 
     labelsTemp->setOpacity(0);
-    labels->setOpacity(1);
+    labels->setOpacity(0.5);
 
     scene->addItem(labelsTemp);
     scene->addItem(photo);
@@ -49,34 +49,67 @@ void PhotoViewer::setFilterControls(filterControls *fc)
     filterControl = fc;
 }
 
-void PhotoViewer::setPhoto(QString filename)
+void PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
 {
 
-
+    QColor whiteColor = QColor(0,0,0,0);
     QPixmap pixmap = QPixmap(filename);
-
     cvImage = cv::imread(filename.toLocal8Bit().constData(), CV_LOAD_IMAGE_COLOR);
+
+
+    QPixmap labelMap;
+    if (labelname.isNull())
+    {
+        labelMap = QPixmap(pixmap.size());
+        labelMap.fill(whiteColor);
+
+    }
+    else
+        labelMap = QPixmap(labelname);
+
+    QPixmap white_temp = QPixmap(pixmap.size());
+    white_temp.fill(whiteColor);
+    setPhoto(pixmap, labelMap, white_temp);
+
+
+}
+
+
+
+
+
+
+void PhotoViewer::setPhotoFromPixmap(QPixmap px, QPixmap lpx)
+{
+    cvImage = QPixmap2Mat(px);
+
+    QPixmap white_temp = QPixmap(px.size());
+    QColor whiteColor = QColor(0,0,0,0);
+    white_temp.fill(whiteColor);
+    setPhoto(px, lpx, white_temp);
+
+}
+
+void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsTempPixmap)
+{
+
     cv::resize(cvImage, cvThumb,cv::Size(200,200) , CV_INTER_LINEAR);
 
-    QPixmap white = QPixmap(pixmap.size());
-    QPixmap white_temp = QPixmap(pixmap.size());
-    QColor whiteColor = QColor(0,0,0,0);
-    white.fill(whiteColor);
-    white_temp.fill(whiteColor);
+
 
     if (pixmap.isNull() == 0)
     {
         if (this->viewerType == PHOTO_VIEWER_TYPE)
         {
                 this->photo->setPixmap(pixmap);
-                this->labels->setPixmap(white);
-                this->labelsTemp->setPixmap(white_temp);
+                this->labels->setPixmap(labelsPixmap);
+                this->labelsTemp->setPixmap(labelsTempPixmap);
                 this->hasPhoto = true;
 
         }
 
     QRect viewrect = viewport()->rect();
-    setImMask(CANNY);
+    setImMask(selectedMask);
     qInfo("imMask set!");
     this->fitInView();
     qInfo("fit In View!");
@@ -86,7 +119,22 @@ void PhotoViewer::setPhoto(QString filename)
     }
 }
 
+cv::Mat PhotoViewer::QImage2Mat(QImage const& src)
+{
+     cv::Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
+     cv::Mat result; // deep copy just in case (my lack of knowledge with open cv)
+     cvtColor(tmp, result,CV_BGR2RGB);
+     return result;
+}
 
+cv::Mat PhotoViewer::QPixmap2Mat(QPixmap px)
+{
+     QImage src = px.toImage();
+     cv::Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
+     cv::Mat result; // deep copy just in case (my lack of knowledge with open cv)
+     cvtColor(tmp, result,CV_BGR2RGB);
+     return result;
+}
 
 void PhotoViewer::setImMask(maskTypes filterName, threshold_or_filter thof)
 {
@@ -173,8 +221,11 @@ void PhotoViewer::setPanMode()
 
 void PhotoViewer::resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt::RoundCap)
 {
+
     brushSize = size;
+
     scene->removeItem(brush);
+    delete brush;
     pen = QPen();
 
     pen.setColor(QColor(255,0,255,255));
@@ -183,6 +234,7 @@ void PhotoViewer::resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt:
     capStyle = capStyle_input;
     pen.setCapStyle(capStyle);
     path = QPainterPath();
+    brush = new QGraphicsPathItem();
     brush->setPen(pen);
     scene->addItem(brush);
     paintMode = false;

@@ -36,7 +36,7 @@ class Ui_InstaDam
 {
 public:
     QAction *action_Open;
-    QAction *action_Save;
+    QAction *actionSave_File;
     QAction *actionExit;
     QAction *actionNew;
     QAction *actionOpen;
@@ -111,8 +111,8 @@ public:
         InstaDam->setUnifiedTitleAndToolBarOnMac(true);
         action_Open = new QAction(InstaDam);
         action_Open->setObjectName(QStringLiteral("action_Open"));
-        action_Save = new QAction(InstaDam);
-        action_Save->setObjectName(QStringLiteral("action_Save"));
+        actionSave_File = new QAction(InstaDam);
+        actionSave_File->setObjectName(QStringLiteral("actionSave_File"));
         actionExit = new QAction(InstaDam);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionNew = new QAction(InstaDam);
@@ -228,7 +228,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 108, 181));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 78, 181));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -398,7 +398,7 @@ public:
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
         menu_File->addAction(actionOpen_File);
-        menu_File->addAction(action_Save);
+        menu_File->addAction(actionSave_File);
         menu_File->addSeparator();
         menu_File->addAction(actionExit);
         menuEdit->addAction(actionUndo);
@@ -418,7 +418,7 @@ public:
     {
         InstaDam->setWindowTitle(QApplication::translate("InstaDam", "MainWindow", nullptr));
         action_Open->setText(QApplication::translate("InstaDam", "Open Project", nullptr));
-        action_Save->setText(QApplication::translate("InstaDam", "Save File", nullptr));
+        actionSave_File->setText(QApplication::translate("InstaDam", "Save File", nullptr));
         actionExit->setText(QApplication::translate("InstaDam", "Exit", nullptr));
         actionNew->setText(QApplication::translate("InstaDam", "New", nullptr));
         actionOpen->setText(QApplication::translate("InstaDam", "Open", nullptr));

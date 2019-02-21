@@ -2,6 +2,11 @@
 #include "ui_instadam.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
+#include <string>
+#include <iostream>
+
+
+
 
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
@@ -67,7 +72,6 @@ Project InstaDam::on_actionNew_triggered()
 
    return currentProject;
 }
-
 
 
 Project InstaDam::on_actionOpen_triggered()
@@ -176,16 +180,139 @@ void InstaDam::on_actionSave_triggered()
      }
 }
 
+
+// File open opens a dialog window and allows a user to pick an image file to open. Subsequently,
+// a list of images in the directory is established and the image fileId in the list is established
+// The function then calls open file and labels
+
 void InstaDam::on_actionOpen_File_triggered()
 {
-    QString filename = QFileDialog::getOpenFileName();
+    QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+    QString ext = QFileInfo(filename_temp).suffix();
+    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
+    {
+        this->filename = filename_temp;
+        this->file = QFileInfo(filename);
+        this->path = file.dir();
+        this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
 
-    ui->IdmPhotoViewer->setPhoto(filename);
-    ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
-
+        if (imagesList.empty())
+                assertError("That doesn't seem to be a valid image file.");
+        else
+        {
+            int counter = 0;
+            foreach(QString filename, imagesList) {
+               if (file.completeBaseName()==filename)
+                   break;
+                counter++;
+            }
+            fileId = counter;
+            openFile_and_labels();
+        }
+    }
+    else {
+       assertError("That doesn't seem to be a valid image file.");
+    }
 
 
 }
+
+// Generates the file name for the next file in the folder
+
+void InstaDam::on_saveAndNext_clicked()
+{
+
+    if (imagesList.empty())
+            assertError("No file loaded! Please go to File->Open File and select an image to open");
+    else
+    {
+        saveFile();
+        int newId = (fileId+1)%imagesList.size();
+        if (newId)
+        {
+            fileId = newId;
+            this->filename = path.absolutePath()+"/"+imagesList[fileId];
+            this->file = QFileInfo(this->filename);
+            openFile_and_labels();
+
+        }
+
+    }
+
+}
+
+void InstaDam::saveFile()
+{
+
+    QFile file(labelFile);
+    file.open(QIODevice::WriteOnly);
+    ui->IdmPhotoViewer->labels->pixmap().save(&file, "PNG");
+}
+
+
+
+void InstaDam::assertError(std::string errorMessage)
+{
+    QMessageBox *messageBox = new QMessageBox;
+    messageBox->critical(0,"Error",QString::fromStdString(errorMessage));
+    messageBox->setFixedSize(500,200);
+
+}
+
+// Uses name of current file and generates name of label image.
+void InstaDam::generateLabelFileName()
+{
+
+    QString baseName = this->file.baseName();
+    QString labelName = baseName+"_label.png";
+    QString labelPath = this->path.absolutePath()+"/labels/";
+    if (!QDir(labelPath).exists())
+    {
+        QDir().mkdir(labelPath);
+    }
+
+    this->labelFile = labelPath+labelName;
+    this->path = file.dir();
+
+}
+
+// This function uses the defined QStringList of images in the path as well as the id of the current file
+// and opens the file. If labels exist, the labels are opened
+void InstaDam::openFile_and_labels()
+{
+
+    QString ext = file.suffix();
+    QString labelNameTemp = QString::null;
+
+    //Open labels
+    generateLabelFileName();
+    if (QFileInfo(labelFile).isFile())
+    {
+        labelNameTemp = labelFile;
+        qInfo(labelNameTemp.toUtf8().constData());
+        qInfo("I will open the labels!");
+    }
+    ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
+    ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
+}
+
+//    else if(!ext.compare("idam"))
+//    {
+//        QTextStream(stdout) << "idam attempted to be opened";
+//        QFile file(filename);
+//        file.open(QIODevice::ReadOnly);
+//        QDataStream in(&file);
+//        QPixmap photoPixmap, labelPixmap;
+//        in >> photoPixmap >> labelPixmap;
+//        ui->IdmPhotoViewer->setPhotoFromPixmap(photoPixmap, labelPixmap);
+//    }
+//    else{
+//        QTextStream(stdout) << "something other than an image or idam being opened, need to throw error to user here";
+//    }
+
+
+
+
 
 void InstaDam::on_panButton_clicked()
 {
@@ -211,3 +338,19 @@ void InstaDam::on_pushButton_14_clicked()
     filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask, filterControl, ui->IdmPhotoViewer);
     dialogs->show();
 }
+
+void InstaDam::on_actionSave_File_triggered()
+{
+    saveFile();
+//    QTextStream(stdout) << "saving current canvas as idamfile format";
+//    QString outFileName = QFileDialog::getSaveFileName(this, tr("save images"), "../", tr("instadam files (.idam));; All Files (*)"));
+//    QFile outFile(outFileName);
+//    outFile.open(QIODevice::WriteOnly);
+//    //actually write to the file here
+//    QDataStream out(&outFile);
+//    out << ui->IdmPhotoViewer->photo->pixmap() << ui->IdmPhotoViewer->labels->pixmap();
+//    outFile.close();
+}
+
+
+

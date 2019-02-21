@@ -52,7 +52,11 @@ public:
 
     viewerTypes viewerType;
     PhotoViewer(QWidget *parent = 0);
-    void setPhoto(QString);
+    void setPhotoFromFile(QString filename, QString labelname);
+    void setPhotoFromPixmap(QPixmap, QPixmap );
+
+    void setPhoto(QPixmap , QPixmap , QPixmap );
+
     void testPixmap();
     void fitInView();
     virtual void wheelEvent(QWheelEvent* ) override;
@@ -66,6 +70,11 @@ public:
     void setBrushMode(Qt::PenCapStyle);
 
     void setMaskPixmap();
+
+    cv::Mat QImage2Mat(QImage const& src);
+
+    cv::Mat QPixmap2Mat(QPixmap src);
+
 
 
 
