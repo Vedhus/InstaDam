@@ -23,7 +23,13 @@ void Project::addLabel(Label lb)
     labels.append(lb);
 }
 
+void Project::resetLabels()
+{
+    QVector<Label> labels;
+}
+
 int Project::numLabels()
 {
     return labels.size();
 }
+

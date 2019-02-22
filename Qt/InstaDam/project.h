@@ -1,7 +1,7 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 #include "label.h"
-#include <Qvector>
+#include <QVector>
 
 class Project{
     private:
@@ -18,6 +18,8 @@ class Project{
         void setLabel(int index, Label lb);
 
         void addLabel(Label lb);
+
+        void resetLabels();
 
         int numLabels();
 
