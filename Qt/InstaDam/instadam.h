@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QMenuBar>
 #include <QMenu>
+#include <QtGlobal>
 
 
 namespace Ui {
