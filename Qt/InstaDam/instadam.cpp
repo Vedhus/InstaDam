@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include <QtGlobal>
 
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
