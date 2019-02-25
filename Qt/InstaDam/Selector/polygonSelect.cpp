@@ -3,7 +3,7 @@
 #include <QGraphicsScene>
 #include <algorithm>
 #include <iostream>
-
+using namespace std;
 PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     : SelectItem(item), QGraphicsPolygonItem(item){
     std::cout << "INIT" << std::endl;
@@ -36,43 +36,62 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
 
 
 void PolygonSelect::removeVertex(int vertex){
+    //cout << "REMOVING " << vertex << endl;
     if(vertex == UNSELECTED){
-        vertex = myPoints.size() - 2;
+        vertex = myPoints.size() - 1;
+        //cout << " CHOICE " << vertex << endl;
         if(vertex < 0){
             vertex = 0;
         }
     }
     myPoints.removeAt(vertex);
     myVertices.removeAt(vertex);
+    refresh();
     setActiveVertex(UNSELECTED);
 }
+
+void PolygonSelect::refresh(){
+    //cout << "REFRESH" << endl;
+    polygon.clear();
+    for(int i = 0; i < myPoints.size(); i++){
+        cout << myPoints[i].x() << "," << myPoints[i].y() << endl;
+        polygon << myPoints[i];
+    }
+    if(myPoints.size() > 1)
+        polygon << myPoints[0];
+    setPolygon(polygon);
+}
+
 //void updateCorner(QPointF point);
 void PolygonSelect::addPoint(QPointF &point, int vertex){
     if(vertex != UNSELECTED){
+        //std::cout << "ADD NEW" << std::endl;
         myPoints.insert(vertex, point);
         myVertices.insert(vertex, makeVertex(point));
         setActiveVertex(vertex);
     }
     else if(getActiveVertex() != UNSELECTED){
-        std::cout << "MOVE POINT" << std::endl;
+        //std::cout << "MOVE POINT" << std::endl;
         movePoint(point);
         activePoint = point;
     }
     else{
         active = true;
-        std::cout << "NEW POINT " << point.x() << "," << point.y() << std::endl;
-    //std::cout << "S1 " << myPoints.size() << std::endl;
+        //std::cout << "NEW POINT " << point.x() << "," << point.y() << std::endl;
+        lastPointAdded = false;
+        //cout << "  LVA1 " << lastPointAdded << endl;
+        //std::cout << "S1 " << myPoints.size() << std::endl;
         activeVertex = myPoints.size();
         activePoint = point;
         myPoints.push_back(point);
-    //std::cout << "S2 " << myPoints.size() << std::endl;
+        //std::cout << "S2 " << myPoints.size() << std::endl;
 
         polygon << polygon[0];
         polygon[activeVertex] = point;
     //std::cout << myPoints.size() << std::endl;
-    for(int i = 0; i < myPoints.size(); i++){
-        std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << "  " << myPoints.size() << std::endl;
-    }
+        //for(int i = 0; i < myPoints.size(); i++){
+        //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << "  " << myPoints.size() << std::endl;
+        //}
     //for(int i = 0; i < polygon.size(); i++){
     //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
     //}
@@ -91,14 +110,15 @@ QGraphicsScene* PolygonSelect::scene(){
 }
 
 void PolygonSelect::checkPoint(QPointF &point){
-    std::cout << "CHECKPOINT" << std::endl;
+    //std::cout << "CHECKPOINT" << std::endl;
     point.setX(std::min(std::max(0., point.x()), scene()->width()));
     point.setY(std::min(std::max(0., point.y()), scene()->height()));
 }
 
 void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    std::cout << "MOVED" << std::endl;
+    //std::cout << "MOVED" << std::endl;
     if(activeVertex == UNSELECTED){
+        moved = true;
         QPointF shift = newPos - oldPos;
         QPointF tlcShift = boundingRect().topLeft() + shift;
         QPointF brcShift = boundingRect().bottomRight() + shift;
@@ -127,13 +147,17 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
         setPolygon(polygon);
     }
     else{
+        resized = lastPointAdded;
         checkPoint(newPos);
         movePoint(newPos);
     }
 }
 
+void PolygonSelect::resetActiveVertex(){
+    setActiveVertex(UNSELECTED);
+}
 void PolygonSelect::movePoint(QPointF &point){
-    std::cout << "MOVE P " << std::endl;
+    //std::cout << "MOVE P " << std::endl;
     myPoints[activeVertex] = point;
     activePoint = point;
     myVertices[activeVertex] = makeVertex(point);
@@ -146,13 +170,13 @@ void PolygonSelect::movePoint(QPointF &point){
 }
 
 void PolygonSelect::resizeItem(int vertex, QPointF &point){
-    std::cout << "RESIZEITEM" << std::endl;
+    //std::cout << "RESIZEITEM" << std::endl;
     setActiveVertex(vertex);
     movePoint(point);
 }
 
 void PolygonSelect::clickPoint(QPointF &point){
-    std::cout << "CLICKPOINT" << std::endl;
+    //std::cout << "CLICKPOINT" << std::endl;
     active = true;
     selected = true;
     activeVertex = UNSELECTED;
@@ -160,7 +184,7 @@ void PolygonSelect::clickPoint(QPointF &point){
     for(int i = 0; i < myVertices.size(); i++){
         if(isInsideRect(myVertices[i], point)){
             activeVertex = i;
-            std::cout << "AV " << i << std::endl;
+            lastPointAdded = true;
             break;
         }
     }

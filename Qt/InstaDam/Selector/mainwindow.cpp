@@ -13,7 +13,7 @@ using namespace std;
 MainWindow::MainWindow()
 {
     undoStack = new QUndoStack(this);
-    type = Rect;
+    type = Polygon;
     createActions();
     createMenus();
     currentItem = nullptr;
@@ -28,12 +28,10 @@ MainWindow::MainWindow()
 
     connect(diagramScene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
             SLOT(processPointClicked(SelectItem*, QPointF)));
-
     connect(diagramScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
     connect(diagramScene, SIGNAL(leftMouseReleased(QPointF, QPointF)), this,
             SLOT(processLeftMouseReleased(QPointF, QPointF)));
-
     connect(diagramScene, SIGNAL(keyPressed(const int)), this,
             SLOT(processKeyPressed(const int)));
     setWindowTitle("Undo Framework");
@@ -128,7 +126,6 @@ void MainWindow::processPointClicked(SelectItem *item, QPointF pos){
         //default:
         //    break;
     //case Generic:
-    //case Polygon:
 
 
         }
@@ -143,12 +140,12 @@ void MainWindow::processPointClicked(SelectItem *item, QPointF pos){
 
 void MainWindow::processMouseMoved(QPointF fromPos, QPointF toPos){
     if(currentItem){
-        if(currentItem->type() == Polygon){
-            currentItem->addPoint(toPos);
-        }
-        else{
+        //if(currentItem->type() == Polygon){
+        //    currentItem->addPoint(toPos);
+        //}
+        //else{
             currentItem->moveItem(fromPos, toPos);
-        }
+        //}
         diagramScene->update();
     }
 }
@@ -157,46 +154,59 @@ void MainWindow::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
 {
     //cout << "ADD ITEM" << endl;
     if(currentItem && !currentItem->isItemAdded()){
-        if(currentItem->type() != Polygon){
-            cout << "C1" << endl;
+        //if(currentItem->type() != Polygon){
+            //cout << "C1" << endl;
             QUndoCommand *addCommand = new AddCommand(currentItem, diagramScene);
             undoStack->push(addCommand);
-            currentItem = nullptr;
-        }
-        else{
-            cout << "C2" << endl;
-            currentItem->setActiveVertex(UNSELECTED);
-        }
+            if(currentItem->type() != Polygon){
+                currentItem = nullptr;
+            }
+            else{
+                //cout << "C3" << endl;
+                currentItem->setActiveVertex(UNSELECTED);
+            }
+        //}
+        //else{
+        //    cout << "C2" << endl;
+        //    currentItem->setActiveVertex(UNSELECTED);
+        //}
     }
-    else if(currentItem){
+    else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized())){
         //cout << "C2" << endl;
         if(currentItem->wasMoved()){
-            cout << "MC" << endl;
+            //cout << "MC" << endl;
             //cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
             QUndoCommand *moveCommand = new MoveCommand(currentItem, oldPos, newPos);
             undoStack->push(moveCommand);
         }
         else{
-            cout << "RMS" << endl;
+            //cout << "RMS" << endl;
             QUndoCommand *resizeCommand = new MoveVertexCommand(currentItem, oldPos, newPos, currentItem->getActiveVertex());
             undoStack->push(resizeCommand);
         }
         currentItem->resetState();
     }
+    else if(currentItem && currentItem->type() == Polygon){
+        //cout << "C2" << endl;
+        QUndoCommand *addVertexCommand = new AddVertexCommand(currentItem, newPos);
+        undoStack->push(addVertexCommand);
+        currentItem->setActiveVertex(UNSELECTED);
+    }
 }
 
 void MainWindow::processKeyPressed(const int key){
+    //cout << key << "   " << Qt::Key_Delete << "  " << Qt::Key_Backspace <<endl;
     if(!currentItem){
 
     }
     else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
-        cout << "DEL" << endl;
+        //cout << "DEL " << (currentItem->type() == Polygon) << "  " << currentItem->getActiveVertex() << endl;
         if(currentItem->type() == Polygon && currentItem->getActiveVertex() != UNSELECTED){
             QUndoCommand *deleteVertexCommand = new DeleteVertexCommand(currentItem);
             undoStack->push(deleteVertexCommand);
         }
         else{
-            cout << "DD" << endl;
+            //cout << "DD" << endl;
             QUndoCommand *deleteCommand = new DeleteCommand(currentItem, diagramScene);
             undoStack->push(deleteCommand);
         }

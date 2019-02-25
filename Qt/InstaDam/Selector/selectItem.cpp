@@ -72,9 +72,6 @@ bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
     return false;
 }
 
-void SelectItem::removeVertex(int vertex){
-
-}
 
 QGraphicsScene* SelectItem::scene(){
     //cout << "SCENE2" << endl;

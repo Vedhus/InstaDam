@@ -85,7 +85,7 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
 
 void MoveCommand::undo(){
     //cout << "UM" << endl;
-    myItem->setActiveVertex(0);
+    myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
 }
@@ -93,7 +93,7 @@ void MoveCommand::undo(){
 void MoveCommand::redo(){
     //cout << "RM" << endl;
     if(init){
-        myItem->setActiveVertex(0);
+        myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
         myItem->scene()->update();
     }
@@ -115,6 +115,7 @@ void MoveVertexCommand::undo(){
     myItem->scene()->update();
 }
 void MoveVertexCommand::redo(){
+    //cout << "MVC" << endl;
     if(init){
         myItem->resizeItem(myVertex, mynewPos);
         myItem->scene()->update();
@@ -128,15 +129,23 @@ AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point, QUndoC
     : QUndoCommand(parent){
     myItem = item;
     myPoint = point;
+    init = false;
 }
 void AddVertexCommand::undo(){
-    myItem->setActiveVertex(UNSELECTED);
-    myItem->addPoint(myPoint);
+    //cout << "RVC" << endl;
+    myItem->removeVertex();
     myItem->scene()->update();
 }
 void AddVertexCommand::redo(){
-    myItem->removeVertex();
-    myItem->scene()->update();
+    if(init){
+        //cout << "AVC" << endl;
+        myItem->setActiveVertex(UNSELECTED);
+        myItem->addPoint(myPoint);
+        myItem->scene()->update();
+    }
+    else{
+        init = true;
+    }
 }
 
 DeleteVertexCommand::DeleteVertexCommand(SelectItem *item, QUndoCommand *parent)

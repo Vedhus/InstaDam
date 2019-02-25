@@ -59,11 +59,13 @@ class SelectItem : public QGraphicsItem
         bool wasResized(){return resized;}
         bool wasMoved(){return moved;}
         int getActiveVertex(){return activeVertex;}
-        void removeVertex(int vertex = UNSELECTED);
+        virtual void removeVertex(int vertex = UNSELECTED) = 0;
+        virtual void resetActiveVertex() = 0;
         QPointF getActivePoint(){return activePoint;}
         void resetState(){
             moved = false;
             resized = false;
+            setActiveVertex(UNSELECTED);
         }
         void setActiveVertex(int h, int v = 0){
             activeVertex = 0;

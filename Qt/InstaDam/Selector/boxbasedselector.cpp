@@ -19,6 +19,14 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QGraphicsItem 
     pen = QPen(Qt::blue);
     pen.setWidth(5);
 }
+
+void BoxBasedSelector::resetActiveVertex(){
+    setActiveVertex(0);
+}
+
+void BoxBasedSelector::removeVertex(int vertex){
+
+}
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
