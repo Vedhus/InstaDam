@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 
-void RectangleSelect::calcCorners(){
+/*void RectangleSelect::calcCorners(){
     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() + SelectItem::yoffset);
@@ -12,42 +12,56 @@ void RectangleSelect::calcCorners(){
 
 }
 
+void RectangleSelect::clickPoint(QPointF &point){
+    active = true;
+    if(isInsideRect(tl, point)){
+        setActiveVertex(TOP, LEFT);
+        activePoint = myRect.topLeft();
+    }
+    else if(isInsideRect(tr, point)){
+        setActiveVertex(TOP, RIGHT);
+        activePoint = myRect.topRight();
+    }
+    else if(isInsideRect(bl, point)){
+        setActiveVertex(BOTTOM, LEFT);
+        activePoint = myRect.bottomLeft();
+    }
+    else if(isInsideRect(br, point)){
+        setActiveVertex(BOTTOM, RIGHT);
+        activePoint = myRect.bottomRight();
+    }
+    else{
+        setActiveVertex(0, 0);
+    }
+    //cout << "  CLIK POINT" << endl;
+}
+
+*/
 RectangleSelect::~RectangleSelect(){
 
 }
 
+//void RectangleSelect::resizeItem(int vertex, QPointF &newPos){
+//    setActiveVertex(vertex);
+//    addPoint(newPos);
+//}
 RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *item)
-    : SelectItem(vertSize,item), QGraphicsRectItem(item)
+    : BoxBasedSelector(point, vertSize,item), QGraphicsRectItem(item)
 {
-    myRect.setTopLeft(point);
-    myRect.setBottomRight(point);
-    calcCorners();
     setRect(myRect);
     mytype = Rect;
-    //myRect = rect;
-    active = true;
     //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
-    QPen pen(Qt::blue);
-    pen.setWidth(5);
-    setPen(pen);
+    setPen(BoxBasedSelector::pen);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 RectangleSelect::RectangleSelect(QPointF point, QGraphicsItem *item)
-    : SelectItem(item), QGraphicsRectItem(item)
+    : BoxBasedSelector(point,item), QGraphicsRectItem(item)
 {
-    myRect.setTopLeft(point);
-    myRect.setBottomRight(point);
-    calcCorners();
     setRect(myRect);
     mytype = Rect;
-    //myRect = rect;
-    active = true;
-    //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
-    QPen pen(Qt::blue);
-    pen.setWidth(5);
-    setPen(pen);
+    setPen(BoxBasedSelector::pen);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
@@ -56,16 +70,12 @@ QGraphicsScene* RectangleSelect::scene(){
     return SelectItem::scene();
 }
 
-void RectangleSelect::resizeItem(int vertex, QPointF &newPos){
-    setActiveVertex(vertex);
-    addPoint(newPos);
-}
+
 //void RectangleSelect::setScene(){
 //    QGraphicsRectItem::d_ptr->scene = SelectItem::scene();
 //}
 
-
-void RectangleSelect::addPoint(QPointF &point){
+void RectangleSelect::addPoint(QPointF &point, int vertex){
     //myRect.setBottomRight(point);
     //cout << "ADD POINT " << point.x() << "," << point.y() << endl;
 
@@ -76,12 +86,15 @@ void RectangleSelect::addPoint(QPointF &point){
     setRect(myRect);
 }
 
+
 void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     if(activeVertex != 0){
+        resized = true;
         //cout << "RESIZE" << endl;
         addPoint(newPos);
     }
     else{
+        moved = true;
         QPointF shift = newPos - oldPos;
         checkBoundaries(shift, myRect);
     }
@@ -90,28 +103,10 @@ void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     setRect(myRect);
 }
 
-void RectangleSelect::clickPoint(QPointF &point){
-    active = true;
-    if(isInsideRect(tl, point)){
-        setActiveVertex(TOP, LEFT);
-    }
-    else if(isInsideRect(tr, point)){
-        setActiveVertex(TOP, RIGHT);
-    }
-    else if(isInsideRect(bl, point)){
-        setActiveVertex(BOTTOM, LEFT);
-    }
-    else if(isInsideRect(br, point)){
-        setActiveVertex(BOTTOM, RIGHT);
-    }
-    else{
-        setActiveVertex(0, 0);
-    }
-    //cout << "  CLIK POINT" << endl;
-}
 
 bool RectangleSelect::isInside(QPointF &point){
-    return isInsideRect(myRect, point);
+    return QGraphicsRectItem::contains(point);
+    //return isInsideRect(myRect, point);
 }
 
 QRectF RectangleSelect::boundingRect() const{

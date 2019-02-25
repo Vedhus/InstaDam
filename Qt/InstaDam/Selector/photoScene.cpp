@@ -30,120 +30,50 @@ void PhotoScene::addItem(SelectItem* item){
 
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){
-    //cout << "KEY " << event->key() << "  " << Qt::Key_Delete << "  " << Qt::Key_Backspace << endl;
-    if(currentItem && (event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace)){
-        //cout << "EMIT" << endl;
-        emit deleteObject(currentItem);
-        //cout << "NULL" << endl;
-        currentItem = nullptr;
-        //cout << "INVAL" << endl;
-        inactiveAll();
-    }
-
+    emit keyPressed(event->key());
     QGraphicsScene::keyPressEvent(event);
 }
 
 void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    //cout << "BUTTON" << endl;
     if(event->button() == Qt::LeftButton){
-        //cout << "   LEFT" << endl;
         mousePressed = true;
-        //cout << "X" << endl;
         QPointF mousePos(event->buttonDownScenePos(Qt::LeftButton).x(),
                          event->buttonDownScenePos(Qt::LeftButton).y());
-        //QTransform transform = QTransform();
-        //cout << "Y" << endl;
         SelectItem *item = itemAt(mousePos);
-        //cout << "TYPE " << item->type() << endl;
-        //cout << "X" << endl;
 
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            //cout << "1" << endl;
-            switch(item->type()){
-                case Rect:
-                    currentItem = (RectangleSelect *)item;
-                    break;
-                case Ellipse:
-                    currentItem = (EllipseSelect *)item;
-                    break;
-            }
-            //if((SelectItem *)item != currentItem){
-            //    inactiveAll();
-            //    currentItem = (SelectItem *)item;
-                //cout << typeid(item).name() << endl;
-                //int mytype = item->type();
-                //cout << "H" << mytype<< endl;
-                inactiveAll();
-                emit itemSelected(currentItem, mousePos);
-            //}
+            cout << "1" << endl;
+            emit pointClicked(item, mousePos);
         }
         else{
-            //cout << "0" << endl;
-            inactiveAll();
-            currentItem = nullptr;
-            emit pointClicked(mousePos);
+            cout << "0" << endl;
+            emit pointClicked(nullptr, mousePos);
         }
-        //myRect.setTopLeft(mousePos);
-        //myRect.setBottomRight(mousePos);
-        //emit itemAdded(mousePose);
-    /*QPointF mousePos(event->buttonDownScenePos(Qt::LeftButton).x(),
-                     event->buttonDownScenePos(Qt::LeftButton).y());
-    const QList<QGraphicsItem *> itemList = items(mousePos);
-    movingItem = itemList.isEmpty() ? 0 : itemList.first();
 
-    if (movingItem != 0 && event->button() == Qt::LeftButton) {
-        oldPos = movingItem->pos();
-    }
-
-    clearSelection();
-     * */
     }
     QGraphicsScene::mousePressEvent(event);
 }
 
 void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
-    //cout << "MOVED" << endl;
     if(mousePressed){
         //cout << "   L" << endl;
         QPointF mousePos(event->scenePos().x(),
                      event->scenePos().y());
-        //myRect.setBottomRight(mousePos);
-
-        if(!currentItem){
-            //cout << "MNB  " << mousePos.x() << "," << mousePos.y()<< endl;
-            emit movedPoint(mousePos);
-        }
-        else{
-            //cout << "MMMM" << endl;
-            currentItem->moveItem(newPos, mousePos);
-            //oldPos = mousePos;
-            //cout << "DOREF" << endl;
-            emit doRefresh();
-        }
+        emit mouseMoved(newPos, mousePos);
         newPos = mousePos;
-        //emit drawItem(myRect);
     }
     QGraphicsScene::mouseMoveEvent(event);
 }
 
 void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    /*
-    if (movingItem != 0 && event->button() == Qt::LeftButton) {
-        if (oldPos != movingItem->pos())
-            emit itemMoved(qgraphicsitem_cast<DiagramItem *>(movingItem),
-                           oldPos);
-        movingItem = 0;
-    }*/
-    //cout << "RELEASED" << endl;
     if(event->button() == Qt::LeftButton){
         //cout << "   LEFT" << endl;
         mousePressed = false;
-        emit addNewItem(oldPos, newPos);//(myRect);
-        //currentItem = nullptr;
+        emit leftMouseReleased(oldPos, newPos);
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

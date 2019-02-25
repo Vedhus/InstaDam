@@ -13,33 +13,29 @@ using namespace std;
 MainWindow::MainWindow()
 {
     undoStack = new QUndoStack(this);
-    type = Polygon;
+    type = Rect;
     createActions();
     createMenus();
-    item = nullptr;
-    //createUndoView();
+    currentItem = nullptr;
 
     diagramScene = new PhotoScene();
     QPixmap mPix = QPixmap("/home/friedel/Pictures/Wallpapers/Space-Background-1200x1920.jpg");
-    //QRectF mRect = QRectF(0,0,mPix.width(),mPix.height());
+
     QGraphicsPixmapItem *background = new QGraphicsPixmapItem(mPix);
     background->setZValue(-100);
-    //diagramScene->addPixmap(mPix);
+
     diagramScene->addItem(background);
-    //connect(diagramScene, SIGNAL(itemMoved(DiagramItem*,QPointF)),
-    //        this, SLOT(itemMoved(DiagramItem*,QPointF)));
-    connect(diagramScene, SIGNAL(pointClicked(QPointF)), this,
-            SLOT(newItem(QPointF)));
-    connect(diagramScene, SIGNAL(itemSelected(SelectItem*, QPointF)), this,
-            SLOT(selected(SelectItem*, QPointF)));
-    connect(diagramScene, SIGNAL(movedPoint(QPointF)), this,
-            SLOT(movePoint(QPointF)));
-    connect(diagramScene, SIGNAL(addNewItem(QPointF, QPointF)), this,
-            SLOT(addItem(QPointF, QPointF)));
-    connect(diagramScene, SIGNAL(doRefresh()), this,
-            SLOT(myupdate()));
-    connect(diagramScene, SIGNAL(deleteObject(SelectItem*)), this,
-            SLOT(deleteItem(SelectItem*)));
+
+    connect(diagramScene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
+            SLOT(processPointClicked(SelectItem*, QPointF)));
+
+    connect(diagramScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
+            SLOT(processMouseMoved(QPointF, QPointF)));
+    connect(diagramScene, SIGNAL(leftMouseReleased(QPointF, QPointF)), this,
+            SLOT(processLeftMouseReleased(QPointF, QPointF)));
+
+    connect(diagramScene, SIGNAL(keyPressed(const int)), this,
+            SLOT(processKeyPressed(const int)));
     setWindowTitle("Undo Framework");
     QGraphicsView *view = new QGraphicsView(diagramScene);
     setCentralWidget(view);
@@ -87,110 +83,123 @@ void MainWindow::createMenus()
     itemMenu->addAction(addBoxAction);
 }
 
-void MainWindow::newItem(QPointF pos){
+void MainWindow::processPointClicked(SelectItem *item, QPointF pos){
     //cout << "NEW" << endl;
-    if(item){
-        if(item->type() == Polygon){
-            item->addPoint(pos);
+    if(!item){
+        if(currentItem && currentItem->type() == Polygon){
+            currentItem->addPoint(pos);
             diagramScene->update();
             return;
         }
-    }
-    switch(type){
-        case Rect:
-           {
-            //cout << "RECT" << endl;
-            RectangleSelect *temp = new RectangleSelect(pos);
-            diagramScene->addItem(temp);
-            item = temp;
-            diagramScene->update();
-            //cout << "UPDATE" << endl;
-            }
-            break;
-        case Ellipse:
+        diagramScene->inactiveAll();
+        switch(type){
+            case Rect:
             {
-            //cout << "RECT" << endl;
-            EllipseSelect *temp = new EllipseSelect(pos);
-            diagramScene->addItem(temp);
-            item = temp;
-            diagramScene->update();
-            //cout << "UPDATE" << endl;
+                //cout << "RECT" << endl;
+                RectangleSelect *temp = new RectangleSelect(pos);
+                diagramScene->addItem(temp);
+                currentItem = temp;
+                diagramScene->update();
+                //cout << "UPDATE" << endl;
             }
-            break;
-        case Generic:
-            break;
-        case Free:
-            break;
-        case Polygon:
+                break;
+            case Ellipse:
             {
-            PolygonSelect *temp = new PolygonSelect(pos);
-            diagramScene->addItem(temp);
-            item = temp;
-            diagramScene->update();
+                //cout << "RECT" << endl;
+                EllipseSelect *temp = new EllipseSelect(pos);
+                diagramScene->addItem(temp);
+                currentItem = temp;
+                diagramScene->update();
+                //cout << "UPDATE" << endl;
             }
-            break;
+                break;
+            case Generic:
+                break;
+            case Free:
+                break;
+            case Polygon:
+            {
+                PolygonSelect *temp = new PolygonSelect(pos);
+                diagramScene->addItem(temp);
+                currentItem = temp;
+                diagramScene->update();
+            }
+                break;
         //default:
         //    break;
     //case Generic:
     //case Polygon:
 
 
-    }
-}
-
-void MainWindow::movePoint(QPointF pos){
-    //cout << "  MP" << endl;
-    item->addPoint(pos);
-    diagramScene->update();
-}
-
-void MainWindow::addItem(QPointF oldPos, QPointF newPos)
-{
-    //cout << "ADD ITEM" << endl;
-    if(item){
-        if(item->type() != Polygon){
-            //cout << "C1" << endl;
-            QUndoCommand *addCommand = new AddCommand(item, diagramScene);
-            undoStack->push(addCommand);
-            item = nullptr;
         }
     }
-    else if(selectedItem){
-        if(selectedItem->wasMoved()){
-            cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
-            QUndoCommand *moveCommand = new MoveCommand(selectedItem, oldPos, newPos);
+    else{
+        currentItem = item;
+        diagramScene->inactiveAll();
+        currentItem->clickPoint(pos);
+        diagramScene->update();
+    }
+}
+
+void MainWindow::processMouseMoved(QPointF fromPos, QPointF toPos){
+    if(currentItem){
+        if(currentItem->type() == Polygon){
+            currentItem->addPoint(toPos);
+        }
+        else{
+            currentItem->moveItem(fromPos, toPos);
+        }
+        diagramScene->update();
+    }
+}
+
+void MainWindow::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
+{
+    //cout << "ADD ITEM" << endl;
+    if(currentItem && !currentItem->isItemAdded()){
+        if(currentItem->type() != Polygon){
+            cout << "C1" << endl;
+            QUndoCommand *addCommand = new AddCommand(currentItem, diagramScene);
+            undoStack->push(addCommand);
+            currentItem = nullptr;
+        }
+        else{
+            cout << "C2" << endl;
+            currentItem->setActiveVertex(UNSELECTED);
+        }
+    }
+    else if(currentItem){
+        //cout << "C2" << endl;
+        if(currentItem->wasMoved()){
+            cout << "MC" << endl;
+            //cout << "MC " << oldPos.x() << "," << oldPos.y() << "    " << newPos.x() << "," << newPos.y() <<endl;
+            QUndoCommand *moveCommand = new MoveCommand(currentItem, oldPos, newPos);
             undoStack->push(moveCommand);
         }
         else{
-            //cout << "RMS" << endl;
-            QUndoCommand *resizeCommand = new MoveVertexCommand(selectedItem, oldPos, newPos, selectedItem->getActiveVertex());
+            cout << "RMS" << endl;
+            QUndoCommand *resizeCommand = new MoveVertexCommand(currentItem, oldPos, newPos, currentItem->getActiveVertex());
             undoStack->push(resizeCommand);
         }
-        selectedItem->resetState();
+        currentItem->resetState();
     }
 }
 
-void MainWindow::deleteItem(SelectItem *item){
-    QUndoCommand *deleteCommand = new DeleteCommand(item, diagramScene);
-    undoStack->push(deleteCommand);
+void MainWindow::processKeyPressed(const int key){
+    if(!currentItem){
 
-}
-void MainWindow::selected(SelectItem* selected, QPointF pos){
-    cout << "SELECTED" << endl;
-    if(item){
-        diagramScene->removeItem(item);
-        item = nullptr;
     }
-    selectedItem = selected;
-    selected->clickPoint(pos);
-    diagramScene->update();
-}
+    else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
+        cout << "DEL" << endl;
+        if(currentItem->type() == Polygon && currentItem->getActiveVertex() != UNSELECTED){
+            QUndoCommand *deleteVertexCommand = new DeleteVertexCommand(currentItem);
+            undoStack->push(deleteVertexCommand);
+        }
+        else{
+            cout << "DD" << endl;
+            QUndoCommand *deleteCommand = new DeleteCommand(currentItem, diagramScene);
+            undoStack->push(deleteCommand);
+        }
+    }
 
-void MainWindow::myupdate(){
-    diagramScene->update();
 }
-//void MainWindow::drawBox(QRectF rect){
-//    cout << "DRAW BOX" << endl;
-    //QUndoCommand *addCommand = new AddCommand(rect, diagramScene);
-    //undoStack->push(addCommand);
-//}

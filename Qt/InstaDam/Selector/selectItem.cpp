@@ -61,12 +61,19 @@ int SelectItem::type() const{
 }
 
 bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
+    //cout << "   POINT " << point.x() << "," << point.y() << endl;
+    //cout << "       BOX " << rect.left() << "," << rect.top() << "  " << rect.right() << "," << rect.bottom() << endl;
     if(point.y() >= rect.top() && point.y() <= rect.bottom()){
         if(point.x() <= rect.right() && point.x() >= rect.left()){
+            //cout << "T" << endl;
             return true;
         }
     }
     return false;
+}
+
+void SelectItem::removeVertex(int vertex){
+
 }
 
 QGraphicsScene* SelectItem::scene(){

@@ -10,7 +10,8 @@ HEADERS = \
     $$PWD/mainwindow.h \
     $$PWD/photoScene.h \
     $$PWD/rectangleSelect.h \
-    $$PWD/selectItem.h
+    $$PWD/selectItem.h \
+    boxbasedselector.h
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \
@@ -20,7 +21,8 @@ SOURCES = \
     $$PWD/mainwindow.cpp \
     $$PWD/photoScene.cpp \
     $$PWD/rectangleSelect.cpp \
-    $$PWD/selectItem.cpp
+    $$PWD/selectItem.cpp \
+    boxbasedselector.cpp
 
 INCLUDEPATH = \
     $$PWD/. \

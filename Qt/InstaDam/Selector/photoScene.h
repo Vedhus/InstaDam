@@ -22,6 +22,7 @@
 #include "selectItem.h"
 #include "ellipseSelect.h"
 #include "rectangleSelect.h"
+#include "polygonSelect.h"
 
 class SelectItem;
 QT_BEGIN_NAMESPACE
@@ -43,16 +44,13 @@ public:
     void addLabelItem(SelectItem* item, std::string label);
     void addItem(SelectItem* item);
     void addItem(QGraphicsItem* item);
-    SelectItem* getCurrent(){return currentItem;}
+    void inactiveAll();
 
 signals:
-    void pointClicked(QPointF point);
-    //void drawItem(QRectF rect);
-    void itemSelected(SelectItem *item, QPointF pos);
-    void movedPoint(QPointF point);
-    void addNewItem(QPointF oldPos, QPointF newPos);
-    void doRefresh();
-    void deleteObject(SelectItem* item);
+    void pointClicked(SelectItem* item, QPointF point);
+    void mouseMoved(QPointF fromPos, QPointF toPos);
+    void leftMouseReleased(QPointF oldPos, QPointF newPos);
+    void keyPressed(const int key);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -64,15 +62,10 @@ private:
     QGraphicsItem *movingItem;
     QPointF oldPos;
     QPointF newPos;
-    //QPointF origClick;
     std::string currentLabel;
-    //QRectF myRect;
     bool mousePressed;
-    SelectItem *currentItem;
     std::list<SelectItem*> currentItems;
     std::map<std::string, std::list<SelectItem*> > labelmap;
-    void inactiveAll();
-    //SelectType currentType;
 };
 
 

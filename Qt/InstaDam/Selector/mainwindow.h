@@ -40,12 +40,15 @@ public:
 
 private slots:
     //void deleteItem();
-    void newItem(QPointF pos);
-    void movePoint(QPointF pos);
-    void selected(SelectItem* selected, QPointF pos);
-    void addItem(QPointF oldPos, QPointF newPos);
-    void myupdate();
-    void deleteItem(SelectItem* item);
+    //void newItem(QPointF pos);
+    //void movePoint(QPointF pos);
+    void processMouseMoved(QPointF fromPos, QPointF toPos);
+    //void selected(SelectItem* selected, QPointF pos);
+    void processPointClicked(SelectItem *item, QPointF pos);  //OK
+    void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
+    //void myupdate();
+    //void deleteItem(SelectItem* item);
+    void processKeyPressed(const int key);  //OK
 
 private:
     void createActions();
@@ -66,8 +69,8 @@ private:
     QUndoStack *undoStack;
     QUndoView *undoView;
     SelectType type;
-    SelectItem *item;
-    SelectItem *selectedItem;
+    //SelectItem *item;
+    SelectItem *currentItem;
 };
 
 #endif /* MAINWINDOW_H */

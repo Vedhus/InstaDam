@@ -9,22 +9,22 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     std::cout << "INIT" << std::endl;
     myPoints.push_back(point);
     setActiveVertex(0);
-    activeVertex = 0;
+    activePoint = point;
+    //activeVertex = 0;
     polygon << point << point;
     constant.push_back(0.);
     multiple.push_back(0.);
     myVertices.push_back(makeVertex(point));
-    preCalc();
     setPolygon(polygon);
     myRect = QGraphicsPolygonItem::boundingRect();
     mytype = Polygon;
     active = true;
-    for(int i = 0; i < myPoints.size(); i++){
-        std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << std::endl;
-    }
-    for(int i = 0; i < polygon.size(); i++){
-        std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
-    }
+    //for(int i = 0; i < myPoints.size(); i++){
+    //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << std::endl;
+    //}
+    //for(int i = 0; i < polygon.size(); i++){
+    //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
+    //}
 
     QPen pen(Qt::green);
     pen.setWidth(5);
@@ -33,29 +33,54 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 
 }
+
+
+void PolygonSelect::removeVertex(int vertex){
+    if(vertex == UNSELECTED){
+        vertex = myPoints.size() - 2;
+        if(vertex < 0){
+            vertex = 0;
+        }
+    }
+    myPoints.removeAt(vertex);
+    myVertices.removeAt(vertex);
+    setActiveVertex(UNSELECTED);
+}
 //void updateCorner(QPointF point);
-void PolygonSelect::addPoint(QPointF &point){
-    active = true;
-    std::cout << "NEW POINT " << point.x() << "," << point.y() << std::endl;
+void PolygonSelect::addPoint(QPointF &point, int vertex){
+    if(vertex != UNSELECTED){
+        myPoints.insert(vertex, point);
+        myVertices.insert(vertex, makeVertex(point));
+        setActiveVertex(vertex);
+    }
+    else if(getActiveVertex() != UNSELECTED){
+        std::cout << "MOVE POINT" << std::endl;
+        movePoint(point);
+        activePoint = point;
+    }
+    else{
+        active = true;
+        std::cout << "NEW POINT " << point.x() << "," << point.y() << std::endl;
     //std::cout << "S1 " << myPoints.size() << std::endl;
-    activeVertex = myPoints.size();
-    myPoints.push_back(point);
+        activeVertex = myPoints.size();
+        activePoint = point;
+        myPoints.push_back(point);
     //std::cout << "S2 " << myPoints.size() << std::endl;
 
-    polygon << polygon[0];
-    polygon[activeVertex] = point;
-    std::cout << myPoints.size() << std::endl;
+        polygon << polygon[0];
+        polygon[activeVertex] = point;
+    //std::cout << myPoints.size() << std::endl;
     for(int i = 0; i < myPoints.size(); i++){
-        std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << std::endl;
+        std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << "  " << myPoints.size() << std::endl;
     }
-    for(int i = 0; i < polygon.size(); i++){
-        std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
+    //for(int i = 0; i < polygon.size(); i++){
+    //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
+    //}
+    //std::cout << std::endl;
+        myVertices.push_back(makeVertex(point));
+        constant.push_back(0.);
+        multiple.push_back(0.);
     }
-    std::cout << std::endl;
-    myVertices.push_back(makeVertex(point));
-    constant.push_back(0.);
-    multiple.push_back(0.);
-    preCalc();
     QGraphicsPolygonItem::prepareGeometryChange();
     setPolygon(polygon);
     myRect = QGraphicsPolygonItem::boundingRect();
@@ -98,7 +123,6 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
             myVertices[i] = makeVertex(myPoints[i]);
             polygon << myPoints[i];
         }
-        preCalc();
         QGraphicsPolygonItem::prepareGeometryChange();
         setPolygon(polygon);
     }
@@ -111,12 +135,12 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
 void PolygonSelect::movePoint(QPointF &point){
     std::cout << "MOVE P " << std::endl;
     myPoints[activeVertex] = point;
+    activePoint = point;
     myVertices[activeVertex] = makeVertex(point);
     polygon.clear();
     for(int i = 0; i < myPoints.size(); i++){
         polygon << myPoints[i];
     }
-    preCalc();
     QGraphicsPolygonItem::prepareGeometryChange();
     setPolygon(polygon);
 }
@@ -130,96 +154,34 @@ void PolygonSelect::resizeItem(int vertex, QPointF &point){
 void PolygonSelect::clickPoint(QPointF &point){
     std::cout << "CLICKPOINT" << std::endl;
     active = true;
+    selected = true;
+    activeVertex = UNSELECTED;
+
     for(int i = 0; i < myVertices.size(); i++){
         if(isInsideRect(myVertices[i], point)){
             activeVertex = i;
+            std::cout << "AV " << i << std::endl;
             break;
         }
     }
-    activeVertex = UNSELECTED;
 }
 //void setScene() override;
 QRectF PolygonSelect::boundingRect() const{
     return QGraphicsPolygonItem::boundingRect();
 }
 
-void PolygonSelect::preCalc(){
-    std::cout << "PRECALC " << myPoints.size() << std::endl;
-    int   i, j=myPoints.size()-1 ;
-
-    for(i=0; i<myPoints.size(); i++) {
-        if(myPoints[j].y() == myPoints[i].y()) {
-            constant[i] = myPoints[i].x();
-            multiple[i]=0; }
-        else {
-            constant[i] = myPoints[i].x() - (myPoints[i].y() * myPoints[j].x())/
-                    (myPoints[j].y() - myPoints[i].y()) + (myPoints[i].y() * myPoints[i].x())/
-                    (myPoints[j].y() - myPoints[i].y());
-            multiple[i] = (myPoints[j].x() - myPoints[i].x())/
-                    (myPoints[j].y()-myPoints[i].y());
-        }
-        j=i;
-    }
-    std::cout << "PRECALC " << myPoints.size() << std::endl;
-
-}
-
 bool PolygonSelect::isInside(QPointF &point){
-    std::cout << "INSIDE " << myPoints.size() << std::endl;
-
-
-
-    //  Globals which should be set before calling these functions:
-    //
-    //  int    polyCorners  =  how many corners the polygon has (no repeats)
-    //  float  polyX[]      =  horizontal coordinates of corners
-    //  float  polyY[]      =  vertical coordinates of corners
-    //  float  x, y         =  point to be tested
-    //
-    //  The following global arrays should be allocated before calling these functions:
-    //
-    //  float  constant[] = storage for precalculated constants (same size as polyX)
-    //  float  multiple[] = storage for precalculated multipliers (same size as polyX)
-    //
-    //  (Globals are used in this example for purposes of speed.  Change as
-    //  desired.)
-    //
-    //  USAGE:
-    //  Call precalc_values() to initialize the constant[] and multiple[] arrays,
-    //  then call pointInPolygon(x, y) to determine if the point is in the polygon.
-    //
-    //  The function will return YES if the point x,y is inside the polygon, or
-    //  NO if it is not.  If the point is exactly on the edge of the polygon,
-    //  then the function may return YES or NO.
-    //
-    //  Note that division by zero is avoided because the division is protected
-    //  by the "if" clause which surrounds it.
-
-    //void precalc_values() {
-
-
-    //unsigned long   i, j=myPoints.size();
-    //bool  oddNodes=false;
-
-    //for (i=0; i<polyCorners; i++) {
-    //    if ((polyY[i]< y && polyY[j]>=y
-    //         ||   polyY[j]< y && polyY[i]>=y)) {
-    //        oddNodes^=(y*multiple[i]+constant[i]<x); }
-    //    j=i; }
-
-    //  return oddNodes; }
-
-
-    bool oddNodes=false;
-    bool current = myPoints[myPoints.size()-1].y() > point.y();
-    bool previous;
-    for (int i = 0; i < myPoints.size(); i++) {
-        previous = current;
-        current = myPoints[i].y() > point.y();
-        if (current != previous) oddNodes^=point.y()*multiple[i]+constant[i]<point.x();
+    if(QGraphicsPolygonItem::contains(point)){
+        return true;
     }
-
-    return oddNodes;
+    else{
+        for(int i = 0; i < myVertices.size(); i++){
+            if(isInsideRect(myVertices[i], point)){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 void PolygonSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     QGraphicsPolygonItem::paint(painter, option, widget);
@@ -232,6 +194,6 @@ void PolygonSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 }
 
 QRectF PolygonSelect::makeVertex(QPointF &point){
-    return QRectF(point + SelectItem::xoffset + SelectItem::yoffset,
-                  point - SelectItem::yoffset - SelectItem::xoffset);
+    return QRectF(point - SelectItem::xoffset - SelectItem::yoffset,
+                  point + SelectItem::yoffset + SelectItem::xoffset);
 }

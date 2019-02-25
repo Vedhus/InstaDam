@@ -66,5 +66,27 @@ private:
     bool init = false;
 };
 
+class AddVertexCommand : public QUndoCommand{
+public:
+    AddVertexCommand(SelectItem *item, const QPointF point, QUndoCommand *parent = nullptr);
+    void undo() override;
+    void redo() override;
+private:
+    SelectItem *myItem;
+    QPointF myPoint;
+    bool init = false;
+};
+
+class DeleteVertexCommand : public QUndoCommand{
+public:
+    DeleteVertexCommand(SelectItem *item, QUndoCommand *parent = nullptr);
+    void undo() override;
+    void redo() override;
+private:
+    SelectItem *myItem;
+    QPointF myPoint;
+    int myVertex;
+    bool init = false;
+};
 #endif /* COMMANDS_H */
 

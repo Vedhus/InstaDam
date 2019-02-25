@@ -28,18 +28,21 @@ AddCommand::~AddCommand()
 
 void AddCommand::undo()
 {
+    //cout << "UA" << endl;
     myItem->hide();
     myScene->update();
 }
 
 void AddCommand::redo()
 {
+    //cout << "RA" << endl;
     if(init){
         myItem->show();
         myScene->clearSelection();
         myScene->update();
     }
     else{
+        myItem->itemWasAdded();
         init = true;
     }
 }
@@ -53,6 +56,7 @@ DeleteCommand::DeleteCommand(SelectItem* item, PhotoScene *scene, QUndoCommand *
 
 void DeleteCommand::undo()
 {
+    //cout << "UD" << endl;
     //myScene->addItem(myItem);
     myItem->show();
     myScene->update();
@@ -60,14 +64,15 @@ void DeleteCommand::undo()
 
 void DeleteCommand::redo()
 {
+    //cout << "RD" << endl;
     //myScene->removeItem(myItem);
-    if(init){
+    //if(init){
         myItem->hide();
         myScene->update();
-    }
-    else{
-        init = true;
-    }
+    //}
+    //else{
+    //    init = true;
+    //}
 }
 
 MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
@@ -79,12 +84,14 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
 }
 
 void MoveCommand::undo(){
+    //cout << "UM" << endl;
     myItem->setActiveVertex(0);
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
 }
 
 void MoveCommand::redo(){
+    //cout << "RM" << endl;
     if(init){
         myItem->setActiveVertex(0);
         myItem->moveItem(myoldPos, mynewPos);
@@ -117,3 +124,33 @@ void MoveVertexCommand::redo(){
     }
 }
 
+AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point, QUndoCommand *parent)
+    : QUndoCommand(parent){
+    myItem = item;
+    myPoint = point;
+}
+void AddVertexCommand::undo(){
+    myItem->setActiveVertex(UNSELECTED);
+    myItem->addPoint(myPoint);
+    myItem->scene()->update();
+}
+void AddVertexCommand::redo(){
+    myItem->removeVertex();
+    myItem->scene()->update();
+}
+
+DeleteVertexCommand::DeleteVertexCommand(SelectItem *item, QUndoCommand *parent)
+    : QUndoCommand(parent){
+    myItem = item;
+    myPoint = item->getActivePoint();
+    myVertex = item->getActiveVertex();
+}
+void DeleteVertexCommand::undo(){
+    myItem->setActiveVertex(UNSELECTED);
+    myItem->addPoint(myPoint, myVertex);
+    myItem->scene()->update();
+}
+void DeleteVertexCommand::redo(){
+    myItem->removeVertex(myVertex);
+    myItem->scene()->update();
+}

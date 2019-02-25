@@ -16,9 +16,12 @@
 
 #include <QGraphicsItem>
 #include <QWidget>
+#include <QPainter>
+
+const int UNSELECTED = INT_MAX;
 
 enum SelectType:int {Generic=50, Rect=51, Ellipse=52,Polygon=53, Free=54};
-//enum Side:int {NONE=0, TOP=1, BOTTOM=2, LEFT=4, RIGHT=8};
+
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
 const int LEFT = 0x4;
@@ -40,12 +43,11 @@ class SelectItem : public QGraphicsItem
 
         SelectItem(qreal vertSize = 10., QGraphicsItem *item = nullptr);
         SelectItem(QGraphicsItem *item = nullptr);
-        virtual void addPoint(QPointF &point) = 0;
+        virtual void addPoint(QPointF &point, int vertex = UNSELECTED) = 0;
         virtual void moveItem(QPointF &oldPos, QPointF &newPos) = 0;
         virtual void resizeItem(int vertex, QPointF &shift) = 0;
         virtual void clickPoint(QPointF &point) = 0;
         virtual bool isInside(QPointF &point) = 0;
-        //virtual void setScene() = 0;
         void sortCorners(QRectF &rect, QPointF &newPoint);
         int type() const override;
         bool isItemActive(){return active == true;}
@@ -57,13 +59,13 @@ class SelectItem : public QGraphicsItem
         bool wasResized(){return resized;}
         bool wasMoved(){return moved;}
         int getActiveVertex(){return activeVertex;}
+        void removeVertex(int vertex = UNSELECTED);
+        QPointF getActivePoint(){return activePoint;}
         void resetState(){
             moved = false;
             resized = false;
         }
         void setActiveVertex(int h, int v = 0){
-            //activeH = h;
-            //activeV = v;
             activeVertex = 0;
             activeVertex = (h | v);
         }
@@ -73,6 +75,8 @@ class SelectItem : public QGraphicsItem
         void flipV(){
             activeVertex ^= (LEFT | RIGHT);
         }
+        void itemWasAdded(){hasBeenAdded = true;}
+        bool isItemAdded(){return hasBeenAdded;}
 
     protected:
         SelectType selectType;
@@ -87,6 +91,9 @@ class SelectItem : public QGraphicsItem
         bool resized = false;
         bool moved = false;
         QRectF myRect;
+        QPointF activePoint;
+        QPen pen;
+        bool hasBeenAdded = false;
 };
 
 

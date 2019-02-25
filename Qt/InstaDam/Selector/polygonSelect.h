@@ -4,14 +4,13 @@
 #include <vector>
 #include "selectItem.h"
 
-const int UNSELECTED = INT_MAX;
 
 class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
 {
     public:
         PolygonSelect(QPointF point, QGraphicsItem *item = nullptr);
 
-        void addPoint(QPointF &point) override;
+        void addPoint(QPointF &point, int vertex = UNSELECTED) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         void resizeItem(int vertex, QPointF &shift) override;
         void clickPoint(QPointF &point) override;
@@ -22,11 +21,12 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
         QGraphicsScene* scene();
         void movePoint(QPointF &point);
         void checkPoint(QPointF &point);
+        void removeVertex(int vertex=UNSELECTED);
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
 
     private:
         QRectF makeVertex(QPointF &point);
-        void preCalc();
+        bool selected = true;
         QPolygonF polygon;
         QVector<QPointF> myPoints;
         QVector<QRectF> myVertices;
