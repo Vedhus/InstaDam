@@ -37,7 +37,8 @@ SOURCES += \
     picpushbutton.cpp \
     maskobjects.cpp \
     filtercontrols.cpp \
-    fslider.cpp
+    fslider.cpp \
+    newproject.cpp
 
 HEADERS += \
         instadam.h \
@@ -52,11 +53,13 @@ HEADERS += \
     maskobjects.h \
     filtercontrols.h \
     filterproperty.h \
-    fslider.h
+    fslider.h \
+    newproject.h
 
 
 FORMS += \
-        instadam.ui
+        instadam.ui \
+    newproject.ui
 
 INCLUDEPATH += D:\opencv\opencv\build\include
 
