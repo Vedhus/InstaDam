@@ -8,6 +8,7 @@
 
 
 
+
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
@@ -28,64 +29,55 @@ InstaDam::~InstaDam()
 
 Project InstaDam::on_actionNew_triggered()
 {
-    // find a way to either get a fixed number of labels from the user at the beginning
-    // or to create a flexible array where labels can get added
+    currentProject.resetLabels();
+    newProject = new newproject(this);
+    newProject->setModal(true);
+    newProject->exec();
+    currentProject = newProject->newPr;
 
-    // int const maxNumLabels = 3; // defined in the headers file as static const.
 
-    while(currentProject.numLabels() < 3){
-        // label names is working
-        QString text = QInputDialog::getText(this, tr("Add a new label"),
-                                             tr("New Label"), QLineEdit::Normal, "cracks");
-        // Color picking is working
-        QColor color = QColorDialog::getColor(Qt::black, this, "Pick a color",  QColorDialog::DontUseNativeDialog);
+    clearLayout(ui->labelClassLayout);
+    for(int i=0; i<currentProject.numLabels(); i++){
+          QPushButton *button = new QPushButton();
+          button->setText(currentProject.getLabel(i).getText());
+          QPalette pal = button->palette();
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          button->setAutoFillBackground(true);
+          button->setPalette(pal);
+          button->update();
+          ui->labelClassLayout->addWidget(button);
+          qInfo("Button Added!");
 
-        Label lb;
-        lb.setText(text);
-        lb.setColor(color);
-
-        currentProject.addLabel(lb);
-        // printing out to the console
-        QTextStream(stdout) << text << endl;
-        QTextStream(stdout) << color.name() << endl;
 
     }
-
-    ////////////////////////////////////////////////////////////////////
-        // Saving the file
-        QString outFileName = QFileDialog::getSaveFileName(this,
-               tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
-
-    //    if (outFileName.isEmpty()){
-    //            return currentProject;
-    //    }
-    //    else {
-        QFile outFile(outFileName);
-        outFile.open(QIODevice::ReadWrite);
-        for(int i=0; i<currentProject.numLabels(); i++)
-        {
-            Label lb = currentProject.getLabel(i);
-            QTextStream(&outFile) << lb.getText();
-            QTextStream(&outFile) << "~%";
-            QTextStream(&outFile) << lb.getColor().name() << endl;
-        }
-
    return currentProject;
 }
 
+void InstaDam::clearLayout(QLayout * layout) {
+    if (! layout)
+       return;
+    while (auto item = layout->takeAt(0)) {
+       delete item->widget();
+       clearLayout(item->layout());
+    }
+ }
 
 Project InstaDam::on_actionOpen_triggered()
 {
+
     QString doc;
     int i = 0;
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
+        tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
     if (fileName.isEmpty()){
             return currentProject; // remove that part and add an alert
     }
     else
     {
+       this->currentProject = Project();
+
        QFile file(fileName);
        QStringList list;
        file.open(QIODevice::ReadWrite);
@@ -98,21 +90,135 @@ Project InstaDam::on_actionOpen_triggered()
            list = line.split("~%");
 
            QTextStream(stdout) << list.size() << endl;
-           if(list.size()==2){
-               Label lb;
-               lb.setText(list[0]);
-               lb.setColor(QColor(list[1]));
-               QTextStream(stdout) << list[0] << endl;
-               QTextStream(stdout) << list[1] << endl;
 
-               currentProject.addLabel(lb);
-               i++;
-          }
+           Label lb;
+           lb.setText(list[0]);
+           lb.setColor(QColor(list[1]));
+           QTextStream(stdout) <<lb.getColor().name() << list[1] << lb.getColor().name() <<endl;
+           currentProject.addLabel(lb);
+
+
+           i++;
+
       }
+    }
+
+    i = 0;
+
+    clearLayout(ui->labelClassLayout);
+    QTextStream(stdout) <<currentProject.numLabels();
+    for(int i=0; i<currentProject.numLabels(); i++)
+    {
+          QPushButton *button = new QPushButton();
+
+          button->setText(currentProject.getLabel(i).getText());
+          QPalette pal = button->palette();
+
+          QTextStream(stdout) << currentProject.getLabel(i).getColor().name() << endl;
+
+
+          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
+          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          button->setAutoFillBackground(true);
+          button->setPalette(pal);
+          button->update();
+          ui->labelClassLayout->addWidget(button);
+
     }
 
     return currentProject;
 }
+
+
+
+
+//Project InstaDam::on_actionNew_triggered()
+//{
+//    // find a way to either get a fixed number of labels from the user at the beginning
+//    // or to create a flexible array where labels can get added
+
+//    // int const maxNumLabels = 3; // defined in the headers file as static const.
+
+//    while(currentProject.numLabels() < 3){
+//        // label names is working
+//        QString text = QInputDialog::getText(this, tr("Add a new label"),
+//                                             tr("New Label"), QLineEdit::Normal, "cracks");
+//        // Color picking is working
+//        QColor color = QColorDialog::getColor(Qt::black, this, "Pick a color",  QColorDialog::DontUseNativeDialog);
+
+//        Label lb;
+//        lb.setText(text);
+//        lb.setColor(color);
+
+//        currentProject.addLabel(lb);
+//        // printing out to the console
+//        QTextStream(stdout) << text << endl;
+//        QTextStream(stdout) << color.name() << endl;
+
+//    }
+
+//    ////////////////////////////////////////////////////////////////////
+//        // Saving the file
+//        QString outFileName = QFileDialog::getSaveFileName(this,
+//               tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
+
+//    //    if (outFileName.isEmpty()){
+//    //            return currentProject;
+//    //    }
+//    //    else {
+//        QFile outFile(outFileName);
+//        outFile.open(QIODevice::ReadWrite);
+//        for(int i=0; i<currentProject.numLabels(); i++)
+//        {
+//            Label lb = currentProject.getLabel(i);
+//            QTextStream(&outFile) << lb.getText();
+//            QTextStream(&outFile) << "~%";
+//            QTextStream(&outFile) << lb.getColor().name() << endl;
+//        }
+
+//   return currentProject;
+//}
+
+
+//Project InstaDam::on_actionOpen_triggered()
+//{
+//    QString doc;
+//    int i = 0;
+//    // Reading and Loading
+//    QString fileName = QFileDialog::getOpenFileName(this,
+//        tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
+//    if (fileName.isEmpty()){
+//            return currentProject; // remove that part and add an alert
+//    }
+//    else
+//    {
+//       QFile file(fileName);
+//       QStringList list;
+//       file.open(QIODevice::ReadWrite);
+//       QTextStream fileStream(&file);
+
+//       while(!fileStream.atEnd()){
+//           QString line = file.readLine(); // to be updated to read all the labels and the colors
+//           QTextStream(stdout) << line;
+
+//           list = line.split("~%");
+
+//           QTextStream(stdout) << list.size() << endl;
+//           if(list.size()==2){
+//               Label lb;
+//               lb.setText(list[0]);
+//               lb.setColor(QColor(list[1]));
+//               QTextStream(stdout) << list[0] << endl;
+//               QTextStream(stdout) << list[1] << endl;
+
+//               currentProject.addLabel(lb);
+//               i++;
+//          }
+//      }
+//    }
+
+//    return currentProject;
+//}
 
 
 
@@ -159,25 +265,22 @@ void InstaDam::resetPixmapButtons()
 
 void InstaDam::on_actionSave_triggered()
 {
-
-    Project currentProject;  // check how to feed the current project to this function
-    // Saving a file
+// Saving the file
     QString outFileName = QFileDialog::getSaveFileName(this,
-           tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
+           tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+    if (QFileInfo(outFileName).suffix() != QString("idpro"))
+        outFileName = outFileName +QString(".idpro");
 
-    if (outFileName.isEmpty()){
-            return;
+    QFile outFile(outFileName);
+    outFile.open(QIODevice::ReadWrite);
+    for(int i=0; i<currentProject.numLabels(); i++)
+    {
+        Label lb = currentProject.getLabel(i);
+        QTextStream(&outFile) << lb.getText();
+        QTextStream(&outFile) << "~%";
+        QTextStream(&outFile) << lb.getColor().name() << "~%"<<endl;
     }
-    else {
-        QFile outFile(outFileName);
-        outFile.open(QIODevice::ReadWrite);
-        for(int i=0; i<3; i++){
-            Label lb = currentProject.getLabel(i);
-            QTextStream(&outFile) << lb.getText();
-            QTextStream(&outFile) << "~%";
-            QTextStream(&outFile) << lb.getColor().name() << endl;
-        }
-     }
+
 }
 
 

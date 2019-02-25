@@ -24,6 +24,7 @@
 #include <QtCore>
 #include <QBitmap>
 #include <QPainter>
+#include "newproject.h"
 
 #include <iostream>
 #include <string>
@@ -64,6 +65,7 @@ public:
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void saveFile();
+    void clearLayout(QLayout * layout) ;
 
 
 private slots:
@@ -96,6 +98,7 @@ public slots:
 
 private:
     Ui::InstaDam *ui;
+    newproject *newProject;
     Project currentProject;
     QGraphicsScene *scene;
 };
