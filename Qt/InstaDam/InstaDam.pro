@@ -37,6 +37,7 @@ SOURCES += \
         Selector/rectangleSelect.cpp \
         Selector/polygonSelect.cpp \
         Selector/selectItem.cpp \
+        Selector/boxbasedselector.cpp \
     pixmapops.cpp
 
 HEADERS += \
@@ -51,6 +52,7 @@ HEADERS += \
         Selector/rectangleSelect.h \
         Selector/polygonSelect.h \
         Selector/selectItem.h \
+        Selector/boxbasedselector.h \
     pixmapops.h
 
 

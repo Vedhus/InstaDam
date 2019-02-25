@@ -286,9 +286,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="freeDrawButton">
+           <widget class="QPushButton" name="polygonButton">
             <property name="text">
-             <string>Free Draw</string>
+             <string>Polygon</string>
             </property>
            </widget>
           </item>

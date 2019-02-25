@@ -11,6 +11,7 @@ public:
     void resizeItem(int vertex, QPointF &newPos) override;
     void resetActiveVertex() override;
     void removeVertex(int vertex = UNSELECTED) override;
+    void update() override {}
 protected:
     void calcCorners();
     QRectF tl, bl, tr, br;

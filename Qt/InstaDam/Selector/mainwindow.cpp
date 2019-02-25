@@ -8,6 +8,7 @@ using namespace std;
 #include "ellipseSelect.h"
 #include "rectangleSelect.h"
 #include "polygonSelect.h"
+//#include "freeDrawSelect.h"
 #include "commands.h"
 
 MainWindow::MainWindow()
@@ -111,9 +112,13 @@ void MainWindow::processPointClicked(SelectItem *item, QPointF pos){
                 //cout << "UPDATE" << endl;
             }
                 break;
-            case Generic:
-                break;
-            case Free:
+            case Freedraw:
+            {
+                //FreeDrawSelect *temp = new FreeDrawSelect(pos);
+                //diagramScene->addItem(temp);
+                //currentItem = temp;
+                //diagramScene->update();
+            }
                 break;
             case Polygon:
             {

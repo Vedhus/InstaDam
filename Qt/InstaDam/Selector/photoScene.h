@@ -17,7 +17,7 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include <list>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <map>
 #include "selectItem.h"
 #include "ellipseSelect.h"

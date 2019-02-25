@@ -33,13 +33,11 @@ private slots:
     void on_actionOpen_File_triggered();
     void on_boxButton_clicked();
     void on_ellipseButton_clicked();
-    void on_freeDrawButton_clicked();
-    void newItem(QPointF pos);
-    void movePoint(QPointF pos);
-    void selected(SelectItem* selected, QPointF pos);
-    void addItem(QPointF oldPos, QPointF newPos);
-    void myupdate();
-    void deleteItem(SelectItem* item);
+    void on_polygonButton_clicked();
+    void processMouseMoved(QPointF fromPos, QPointF toPos);
+    void processPointClicked(SelectItem *item, QPointF pos);
+    void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
+    void processKeyPressed(const int key);
 
 private slots:
     Project on_actionNew_triggered();
@@ -60,8 +58,7 @@ private:
     PhotoScene *scene;
     QUndoStack *undoStack;
     SelectType type;
-    SelectItem *item;
-    SelectItem *selectedItem;
+    SelectItem *currentItem;
     QAction *undoAction;
     QAction *redoAction;
 

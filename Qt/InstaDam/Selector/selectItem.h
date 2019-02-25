@@ -20,7 +20,7 @@
 
 const int UNSELECTED = INT_MAX;
 
-enum SelectType:int {Generic=50, Rect=51, Ellipse=52,Polygon=53, Free=54};
+enum SelectType:int {Rect=51, Ellipse=52,Polygon=53, Freedraw=54};
 
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
@@ -81,11 +81,12 @@ class SelectItem : public QGraphicsItem
         }
         void itemWasAdded(){hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
+        virtual void update() = 0;
 
     protected:
         SelectType selectType;
         QPointF selectedPoint;
-        int mytype = Generic;
+        int mytype;
         bool active = false;
         bool pointAdded = false;
         int activeV = RIGHT;

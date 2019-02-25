@@ -30,6 +30,7 @@ void PhotoScene::addItem(SelectItem* item){
 
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){
+    cout << "K" << event->key() << "  " << Qt::Key_Delete << endl;
     emit keyPressed(event->key());
     QGraphicsScene::keyPressEvent(event);
 }
