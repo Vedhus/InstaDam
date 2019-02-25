@@ -131,6 +131,7 @@ void MainWindow::processPointClicked(SelectItem *item, QPointF pos){
         }
     }
     else{
+        cout << "I" << endl;
         currentItem = item;
         diagramScene->inactiveAll();
         currentItem->clickPoint(pos);
@@ -162,7 +163,7 @@ void MainWindow::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
                 currentItem = nullptr;
             }
             else{
-                //cout << "C3" << endl;
+                cout << "C3" << endl;
                 currentItem->setActiveVertex(UNSELECTED);
             }
         //}
@@ -186,8 +187,8 @@ void MainWindow::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
         }
         currentItem->resetState();
     }
-    else if(currentItem && currentItem->type() == Polygon){
-        //cout << "C2" << endl;
+    else if(currentItem && currentItem->type() == Polygon && !currentItem->wasPointAdded()){
+        cout << "C2" << endl;
         QUndoCommand *addVertexCommand = new AddVertexCommand(currentItem, newPos);
         undoStack->push(addVertexCommand);
         currentItem->setActiveVertex(UNSELECTED);
@@ -200,7 +201,7 @@ void MainWindow::processKeyPressed(const int key){
 
     }
     else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
-        //cout << "DEL " << (currentItem->type() == Polygon) << "  " << currentItem->getActiveVertex() << endl;
+        cout << "DEL " << (currentItem->type() == Polygon) << "  " << currentItem->getActiveVertex() << endl;
         if(currentItem->type() == Polygon && currentItem->getActiveVertex() != UNSELECTED){
             QUndoCommand *deleteVertexCommand = new DeleteVertexCommand(currentItem);
             undoStack->push(deleteVertexCommand);
@@ -210,6 +211,9 @@ void MainWindow::processKeyPressed(const int key){
             QUndoCommand *deleteCommand = new DeleteCommand(currentItem, diagramScene);
             undoStack->push(deleteCommand);
         }
+    }
+    else if(key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift){
+        currentItem = nullptr;
     }
 
 }

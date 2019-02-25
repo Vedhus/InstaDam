@@ -54,7 +54,7 @@ void PolygonSelect::refresh(){
     //cout << "REFRESH" << endl;
     polygon.clear();
     for(int i = 0; i < myPoints.size(); i++){
-        cout << myPoints[i].x() << "," << myPoints[i].y() << endl;
+        //cout << "  REF " << myPoints[i].x() << "," << myPoints[i].y() << endl;
         polygon << myPoints[i];
     }
     if(myPoints.size() > 1)
@@ -69,6 +69,7 @@ void PolygonSelect::addPoint(QPointF &point, int vertex){
         myPoints.insert(vertex, point);
         myVertices.insert(vertex, makeVertex(point));
         setActiveVertex(vertex);
+        refresh();
     }
     else if(getActiveVertex() != UNSELECTED){
         //std::cout << "MOVE POINT" << std::endl;
@@ -78,7 +79,7 @@ void PolygonSelect::addPoint(QPointF &point, int vertex){
     else{
         active = true;
         //std::cout << "NEW POINT " << point.x() << "," << point.y() << std::endl;
-        lastPointAdded = false;
+        pointAdded = false;
         //cout << "  LVA1 " << lastPointAdded << endl;
         //std::cout << "S1 " << myPoints.size() << std::endl;
         activeVertex = myPoints.size();
@@ -147,7 +148,7 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
         setPolygon(polygon);
     }
     else{
-        resized = lastPointAdded;
+        resized = pointAdded;
         checkPoint(newPos);
         movePoint(newPos);
     }
@@ -184,7 +185,8 @@ void PolygonSelect::clickPoint(QPointF &point){
     for(int i = 0; i < myVertices.size(); i++){
         if(isInsideRect(myVertices[i], point)){
             activeVertex = i;
-            lastPointAdded = true;
+            activePoint = myPoints[i];
+            pointAdded = true;
             break;
         }
     }

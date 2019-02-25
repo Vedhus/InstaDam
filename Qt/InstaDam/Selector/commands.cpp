@@ -84,14 +84,14 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
 }
 
 void MoveCommand::undo(){
-    //cout << "UM" << endl;
+    cout << "UM" << endl;
     myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
 }
 
 void MoveCommand::redo(){
-    //cout << "RM" << endl;
+    cout << "RM" << endl;
     if(init){
         myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
@@ -138,7 +138,7 @@ void AddVertexCommand::undo(){
 }
 void AddVertexCommand::redo(){
     if(init){
-        //cout << "AVC" << endl;
+        cout << "AVC" << endl;
         myItem->setActiveVertex(UNSELECTED);
         myItem->addPoint(myPoint);
         myItem->scene()->update();

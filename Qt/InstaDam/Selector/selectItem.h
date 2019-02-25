@@ -58,6 +58,7 @@ class SelectItem : public QGraphicsItem
         QGraphicsItem* getParentItem();
         bool wasResized(){return resized;}
         bool wasMoved(){return moved;}
+        bool wasPointAdded(){return pointAdded;}
         int getActiveVertex(){return activeVertex;}
         virtual void removeVertex(int vertex = UNSELECTED) = 0;
         virtual void resetActiveVertex() = 0;
@@ -65,6 +66,7 @@ class SelectItem : public QGraphicsItem
         void resetState(){
             moved = false;
             resized = false;
+            pointAdded = false;
             setActiveVertex(UNSELECTED);
         }
         void setActiveVertex(int h, int v = 0){
@@ -85,6 +87,7 @@ class SelectItem : public QGraphicsItem
         QPointF selectedPoint;
         int mytype = Generic;
         bool active = false;
+        bool pointAdded = false;
         int activeV = RIGHT;
         int activeH = BOTTOM;
         int activeVertex = (activeV | activeH);

@@ -27,7 +27,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
         QRectF makeVertex(QPointF &point);
         void refresh();
         bool selected = true;
-        bool lastPointAdded = false;
+        //bool lastPointAdded = false;
         QPolygonF polygon;
         QVector<QPointF> myPoints;
         QVector<QRectF> myVertices;
