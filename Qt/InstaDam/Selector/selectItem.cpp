@@ -19,6 +19,8 @@ void SelectItem::setVertexSize(qreal size){
 
 SelectItem::SelectItem(qreal vertSize, QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(vertSize);
+    myID = SelectItem::ID;
+    SelectItem::ID++;
 }
 
 SelectItem::SelectItem(QGraphicsItem *item) : QGraphicsItem(item){
