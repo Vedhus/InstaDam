@@ -1,9 +1,9 @@
 language: c++
 
 before_install:
- - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y; fi
+ - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-trusty -y
  - sudo apt-get update -qq
- - sudo apt-get install -qq qt510base qt510declarative qt510tools ; source /opt/qt510/bin/qt510-env.sh ; export QTHOME=/opt/qt510 ; fi
+ - sudo apt-get install -qq qt510base qt510declarative qt510tools ; source /opt/qt510/bin/qt510-env.sh ; export QTHOME=/opt/qt510
 
 script:
  - qmake -project
