@@ -1,6 +1,6 @@
 #include "ellipseSelect.h"
 #include <iostream>
-
+#include <cmath>
 #include <QPainter>
 #include <QGraphicsScene>
 //#include "QtWidgets/private/qgraphicsitem_p.h"
