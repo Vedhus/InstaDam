@@ -245,8 +245,8 @@ void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
             }
             else if (viewerType == MASK_VIEWER_TYPE)
                 this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
-            else
-                qInfo("Invalid viewer type");
+            /*else
+                qInfo("Invalid viewer type");*/
             paintMode = false;
             resetBrush(brushSize, capStyle);
             update();

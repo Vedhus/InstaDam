@@ -151,7 +151,7 @@ void InstaDam::on_panButton_clicked()
 
 void InstaDam::on_roundBrush_clicked()
 {
-    qInfo("Round");
+    //qInfo("Round");
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
 }
 
