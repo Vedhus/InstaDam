@@ -1,9 +1,9 @@
 language: c++
 
 before_install:
- - sudo add-apt-repository ppa:beineri/opt-qt-5.11.0-bionic
+ - sudo add-apt-repository --yes ppa:beineri/opt-qt-5.11.0-bionic
  - sudo apt-get update
- - sudo apt-get install qt511base qt511declarative qt511tools
+ - sudo apt-get install qt511base qt511declarative qt511tools qt511-meta
 
 script:
  - qmake -project
