@@ -1,12 +1,24 @@
 #ifndef PHOTOVIEWER_H
 #define PHOTOVIEWER_H
 
+
 #include "instadam.h"
 #include "filters.h"
 #include "maskobjects.h"
 #include "filtercontrols.h"
-class maskObjects;
-class filterControls;
+#include <QFrame>
+#include <QGraphicsView>
+#include <QMainWindow>
+//#include <QGraphicsScene>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QWheelEvent>
+#include <QtCore>
+#include <QBitmap>
+#include <QPainter>
+
+#include "Selector/photoScene.h"
+
 namespace Ui {
 class PhotoViewer;
 }
@@ -39,7 +51,7 @@ public:
     QGraphicsPixmapItem *photo;
     QPixmap imMask;
 
-    QGraphicsScene *scene;
+    PhotoScene *scene;
     QGraphicsPixmapItem *labels;
     QGraphicsPixmapItem *labelsTemp;
     QGraphicsPixmapItem *filterIm;
@@ -51,7 +63,7 @@ public:
 
 
     viewerTypes viewerType;
-    PhotoViewer(QWidget *parent = 0);
+    PhotoViewer(QWidget *parent = nullptr);
     void setPhotoFromFile(QString filename, QString labelname);
     void setPhotoFromPixmap(QPixmap, QPixmap );
 

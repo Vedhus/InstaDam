@@ -12,26 +12,15 @@
 #include <QObject>
 #include <QMenuBar>
 #include <QMenu>
-#include <QColorDialog>
-#include <QInputDialog>
-#include <QFrame>
-#include <QGraphicsView>
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QGraphicsPixmapItem>
-#include <QWheelEvent>
-#include <QtCore>
-#include <QBitmap>
-#include <QPainter>
+
 #include "newproject.h"
 
 #include <iostream>
 #include <string>
 #include <stdio.h>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 #include "opencv2/imgproc.hpp"
 
@@ -39,6 +28,10 @@ class filterControls;
 
 enum maskTypes{CANNY, THRESHOLD, BLUR, OTHER};
 enum threshold_or_filter{THRESH, FILTER};
+#include <QUndoStack>
+
+#include "Selector/photoScene.h"
+
 
 namespace Ui {
 class InstaDam;
@@ -70,15 +63,19 @@ public:
 
 private slots:
     void on_actionOpen_File_triggered();
+    void on_rectangleSelect_clicked();
+    void on_ellipseSelect_clicked();
+    void on_polygonSelect_clicked();
+    void processMouseMoved(QPointF fromPos, QPointF toPos);
+    void processPointClicked(SelectItem *item, QPointF pos);
+    void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
+    void processKeyPressed(const int key);
 
-private slots:
     Project on_actionNew_triggered();
 
     Project on_actionOpen_triggered();
 
     void on_actionSave_triggered();
-
-
 
     void on_panButton_clicked();
 
@@ -100,7 +97,13 @@ private:
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;
-    QGraphicsScene *scene;
+    PhotoScene *scene;
+    QUndoStack *undoStack;
+    SelectType type;
+    SelectItem *currentItem;
+    QAction *undoAction;
+    QAction *redoAction;
+
 };
 
 

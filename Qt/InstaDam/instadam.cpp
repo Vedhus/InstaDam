@@ -5,8 +5,11 @@
 #include <string>
 #include <iostream>
 
-
-
+#include "Selector/selectItem.h"
+#include "Selector/ellipseSelect.h"
+#include "Selector/rectangleSelect.h"
+#include "Selector/polygonSelect.h"
+#include "Selector/commands.h"
 
 
 InstaDam::InstaDam(QWidget *parent) :
@@ -18,8 +21,24 @@ InstaDam::InstaDam(QWidget *parent) :
     connectFilters();
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
-
-
+    undoStack = new QUndoStack(this);
+    type = Ellipse;
+    scene = ui->IdmPhotoViewer->scene;
+    currentItem = nullptr;
+    connect(scene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
+            SLOT(processPointClicked(SelectItem*, QPointF)));
+    connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
+            SLOT(processMouseMoved(QPointF, QPointF)));
+    connect(scene, SIGNAL(leftMouseReleased(QPointF, QPointF)), this,
+            SLOT(processLeftMouseReleased(QPointF, QPointF)));
+    connect(scene, SIGNAL(keyPressed(const int)), this,
+            SLOT(processKeyPressed(const int)));
+    undoAction = undoStack->createUndoAction(this, tr("&Undo"));
+    undoAction->setShortcuts(QKeySequence::Undo);
+    redoAction = undoStack->createRedoAction(this, tr("&Redo"));
+    redoAction->setShortcuts(QKeySequence::Redo);
+    ui->menuEdit->addAction(undoAction);
+    ui->menuEdit->addAction(redoAction);
 }
 
 InstaDam::~InstaDam()
@@ -423,6 +442,18 @@ void InstaDam::on_panButton_clicked()
     ui->IdmMaskViewer->setPanMode();
 }
 
+void InstaDam::on_rectangleSelect_clicked(){
+    type = Rect;
+}
+
+void InstaDam::on_ellipseSelect_clicked(){
+    type = Ellipse;
+}
+
+void InstaDam::on_polygonSelect_clicked(){
+    type = Polygon;
+}
+
 void InstaDam::on_roundBrush_clicked()
 {
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
@@ -456,4 +487,120 @@ void InstaDam::on_actionSave_File_triggered()
 }
 
 
+void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
+    //cout << "NEW" << endl;
+    if(!item){
+        if(currentItem && currentItem->type() == Polygon){
+            currentItem->addPoint(pos);
+            scene->update();
+            return;
+        }
+        scene->inactiveAll();
+        switch(type){
+            case Rect:
+            {
+                //cout << "RECT" << endl;
+                RectangleSelect *temp = new RectangleSelect(pos);
+                scene->addItem(temp);
+                currentItem = temp;
+                scene->update();
+                //cout << "UPDATE" << endl;
+            }
+                break;
+            case Ellipse:
+            {
+                //cout << "RECT" << endl;
+                EllipseSelect *temp = new EllipseSelect(pos);
+                scene->addItem(temp);
+                currentItem = temp;
+                scene->update();
+                //cout << "UPDATE" << endl;
+            }
+                break;
+            case Freedraw:
+            {
+                //FreeDrawSelect *temp = new FreeDrawSelect(pos);
+                //diagramScene->addItem(temp);
+                //currentItem = temp;
+                //diagramScene->update();
+            }
+                break;
+            case Polygon:
+            {
+                PolygonSelect *temp = new PolygonSelect(pos);
+                scene->addItem(temp);
+                currentItem = temp;
+                scene->update();
+            }
+                break;
+        //default:
+        //    break;
+    //case Generic:
 
+
+        }
+    }
+    else{
+        currentItem = item;
+        scene->inactiveAll();
+        currentItem->clickPoint(pos);
+        scene->update();
+    }
+}
+
+void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
+    if(currentItem){
+        currentItem->moveItem(fromPos, toPos);
+        scene->update();
+    }
+}
+
+void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
+{
+    if(currentItem && !currentItem->isItemAdded()){
+        QUndoCommand *addCommand = new AddCommand(currentItem, scene);
+        undoStack->push(addCommand);
+        if(currentItem->type() != Polygon){
+            currentItem = nullptr;
+        }
+        else{
+            currentItem->setActiveVertex(UNSELECTED);
+        }
+    }
+    else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized())){
+        if(currentItem->wasMoved()){
+            QUndoCommand *moveCommand = new MoveCommand(currentItem, oldPos, newPos);
+            undoStack->push(moveCommand);
+        }
+        else{
+            QUndoCommand *resizeCommand = new MoveVertexCommand(currentItem, oldPos, newPos, currentItem->getActiveVertex());
+            undoStack->push(resizeCommand);
+        }
+        currentItem->resetState();
+    }
+    else if(currentItem && currentItem->type() == Polygon && !currentItem->wasPointAdded()){
+        QUndoCommand *addVertexCommand = new AddVertexCommand(currentItem, newPos);
+        undoStack->push(addVertexCommand);
+        currentItem->setActiveVertex(UNSELECTED);
+    }
+}
+
+void InstaDam::processKeyPressed(const int key){
+    if(!currentItem){
+
+    }
+    else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
+        if(currentItem->type() == Polygon && currentItem->getActiveVertex() != UNSELECTED){
+            QUndoCommand *deleteVertexCommand = new DeleteVertexCommand(currentItem);
+            undoStack->push(deleteVertexCommand);
+        }
+        else{
+            QUndoCommand *deleteCommand = new DeleteCommand(currentItem, scene);
+            undoStack->push(deleteCommand);
+        }
+    }
+    else if(key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift){
+        currentItem = nullptr;
+    }
+
+}

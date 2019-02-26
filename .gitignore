@@ -4,3 +4,17 @@ Qt/build-InstaDam-Desktop_Qt_5_12_0_MinGW_64_bit-Debug
 Qt/build-InstaDam-Desktop_Qt_5_11_0_MinGW_32bit-Debug
 *.idpro
 *.idam
+Qt/build-InstaDam-Desktop_Qt_5_11_-_MinGW_32bit-Profile
+*.o
+.*
+moc_*
+*.user
+Makefile
+Qt/InstaDam/Selector/Selector
+*.info
+*.gcno
+Qt/InstaDam/Selector/Test/html
+*.autosave
+Qt/InstaDam/InstaDam
+Qt/InstaDam/ui_*.h
+Qt/build-InstaDam-Desktop-Debug/

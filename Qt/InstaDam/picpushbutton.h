@@ -24,13 +24,13 @@ public:
     void updatePixmap();
     void resetPixmaps(QPixmap );
     QPixmap addText(QPixmap, QString);
-    void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *) override;
     void manualSelect();
     virtual void mousePressEvent(QMouseEvent*) override;
     
 
 signals:
-    checked(maskTypes);
+    void checked(maskTypes);
 
 public slots:
     void otherBoxChecked(maskTypes);

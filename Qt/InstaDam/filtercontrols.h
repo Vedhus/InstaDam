@@ -1,6 +1,6 @@
 #ifndef FILTERCONTROLS_H
 #define FILTERCONTROLS_H
-#include "photoViewer.h"
+#include "photoviewer.h"
 #include<QDialog>
 #include "fslider.h"
 #include "filterproperty.h"

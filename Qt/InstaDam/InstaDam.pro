@@ -22,7 +22,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++1z
 
 SOURCES += \
         main.cpp \
@@ -31,14 +30,21 @@ SOURCES += \
         project.cpp \
         maskviewer.cpp \
         photoviewer.cpp \
-    pixmapops.cpp \
-    filterproperty.cpp \
-    filters.cpp \
-    picpushbutton.cpp \
-    maskobjects.cpp \
-    filtercontrols.cpp \
-    fslider.cpp \
-    newproject.cpp
+        pixmapops.cpp \
+        filterproperty.cpp \
+        filters.cpp \
+        picpushbutton.cpp \
+        maskobjects.cpp \
+        filtercontrols.cpp \
+        fslider.cpp \
+        newproject.cpp \
+        Selector/photoScene.cpp \
+        Selector/commands.cpp \
+        Selector/ellipseSelect.cpp \
+        Selector/rectangleSelect.cpp \
+        Selector/polygonSelect.cpp \
+        Selector/selectItem.cpp \
+        Selector/boxbasedselector.cpp
 
 HEADERS += \
         instadam.h \
@@ -46,29 +52,58 @@ HEADERS += \
         project.h \
         photoviewer.h \
         maskviewer.h \
-    pixmapops.h \
-    filterproperty.h \
-    filters.h \
-    picpushbutton.h \
-    maskobjects.h \
-    filtercontrols.h \
-    filterproperty.h \
-    fslider.h \
-    newproject.h
+        pixmapops.h \
+        filterproperty.h \
+        filters.h \
+        picpushbutton.h \
+        maskobjects.h \
+        filtercontrols.h \
+        filterproperty.h \
+        fslider.h \
+        newproject.h \
+        Selector/photoScene.h \
+        Selector/commands.h \
+        Selector/ellipseSelect.h \
+        Selector/rectangleSelect.h \
+        Selector/polygonSelect.h \
+        Selector/selectItem.h \
+        Selector/boxbasedselector.h
+
 
 
 FORMS += \
         instadam.ui \
     newproject.ui
 
-INCLUDEPATH += D:\opencv\opencv\build\include
+win32 {
+  INCLUDEPATH += D:\opencv\opencv\build\include
+  CONFIG += c++1z
 
-LIBS += D:\opencv\opencv-build\bin\libopencv_core320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_highgui320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_features2d320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_core320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_highgui320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_features2d320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d320.dll
+}
+unix {
+    INCLUDEPATH += $$PWD/. \
+    /opt/Qt5/5.12.0/gcc_64/include/QtWidgets \
+    /opt/Qt5/5.12.0/gcc_64/include/QtCore \
+    /opt/Qt5/5.12.0/gcc_64/include/QtGui \
+    /opt/Qt5/5.12.0/gcc_64/include/QtWidgets/5.12.0 \
+    /opt/Qt5/5.12.0/gcc_64/include/QtGui/5.12.0 \
+    /opt/Qt5/5.12.0/gcc_64/include/QtCore/5.12.0 \
+    /opt/Qt5/5.12.0/gcc_64/include/QtWidgets/5.12.0/QtWidgets \
+    /opt/Qt5/5.12.0/gcc_64/include/QtGui/5.12.0/QtGui \
+    /opt/Qt5/5.12.0/gcc_64/include/QtCore/5.12.0/QtCore
+
+  LIBS += -lQt5Widgets
+  LIBS += -lopencv_core -lopencv_highgui -lopencv_imgcodecs
+  LIBS += -lopencv_imgproc -lopencv_features2d -lopencv_calib3d
+
+  INCLUDEPATH += /usr/include/opencv4
+}
 
 
 # more correct variant, how set includepath and libs for mingw
