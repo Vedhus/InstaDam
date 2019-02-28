@@ -65,6 +65,9 @@ public:
     viewerTypes viewerType;
     PhotoViewer(QWidget *parent = nullptr);
     void setPhotoFromFile(QString filename, QString labelname);
+#ifdef WASM_BUILD
+    void setPhotoFromByteArray(QByteArray &array, QString labelname);
+#endif
     void setPhotoFromPixmap(QPixmap, QPixmap );
 
     void setPhoto(QPixmap , QPixmap , QPixmap );

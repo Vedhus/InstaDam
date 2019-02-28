@@ -4,6 +4,8 @@
 #include <math.h>
 #include "opencv2/imgcodecs/legacy/constants_c.h"
 #include "opencv2/imgproc/types_c.h"
+#include "opencv2/core/mat.hpp"
+#include "ui_instadam.h"
 
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
@@ -51,6 +53,30 @@ void PhotoViewer::setFilterControls(filterControls *fc)
     filterControl = fc;
 }
 
+#ifdef WASM_BUILD
+void PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname){
+    //scene->update();
+
+    QPixmap pixmap;
+    QColor whiteColor = QColor(0,0,0,0);
+    bool ret = pixmap.loadFromData(array);
+    cvImage = QPixmap2Mat(pixmap);
+
+    QPixmap white_temp = QPixmap(pixmap.size());
+    white_temp.fill(whiteColor);
+    QPixmap labelMap;
+    if (labelname.isNull())
+    {
+        labelMap = QPixmap(pixmap.size());
+        labelMap.fill(whiteColor);
+
+    }
+    else
+        labelMap = QPixmap(labelname);
+    setPhoto(pixmap, labelMap, white_temp);
+
+}
+#endif
 void PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
 {
 
