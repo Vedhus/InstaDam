@@ -72,7 +72,7 @@ private slots:
     void processPointClicked(SelectItem *item, QPointF pos);
     void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
     void processKeyPressed(const int key);
-
+    void on_finishPolygonButton_clicked();
     Project on_actionNew_triggered();
 
     Project on_actionOpen_triggered();
