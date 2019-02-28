@@ -36,7 +36,6 @@ QT_END_NAMESPACE
 
 class SelectItem : public QGraphicsItem
 {
-    static int ID;
     public:
         static qreal vertexSize;
         static QPointF xoffset;
@@ -82,7 +81,7 @@ class SelectItem : public QGraphicsItem
         }
         void itemWasAdded(){hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
-        virtual void init(QPointF &point) = 0;
+        virtual void update() = 0;
 
     protected:
         SelectType selectType;
@@ -101,8 +100,10 @@ class SelectItem : public QGraphicsItem
         QPointF activePoint;
         QPen pen;
         bool hasBeenAdded = false;
-        int myID;
 };
+
+
+
 
 #endif /* DIAGRAMITEM_H */
 
