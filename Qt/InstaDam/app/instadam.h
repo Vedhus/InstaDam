@@ -58,8 +58,7 @@ public:
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void saveFile();
-    void clearLayout(QLayout * layout) ;
-
+    void clearLayout(QLayout * layout);
 
 private slots:
     void on_actionOpen_File_triggered();
@@ -94,6 +93,14 @@ public slots:
 
 
 private:
+#ifdef WASM_BUILD
+    struct MyConnector{
+            std::function<void(void)> onActivate;
+    };
+    void loadRawImage();
+    void addConnector(QString text, std::function<void(void)> onActivate);
+    MyConnector *openFile;
+#endif
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;
@@ -103,7 +110,8 @@ private:
     SelectItem *currentItem;
     QAction *undoAction;
     QAction *redoAction;
-
+    QByteArray imgData;
+    QByteArray fileContent;
 };
 
 

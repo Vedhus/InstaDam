@@ -266,7 +266,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>68</width>
-                     <height>608</height>
+                     <height>523</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -427,6 +427,12 @@
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>201</width>
+                  <height>36</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string>Polygon Select</string>

@@ -4,14 +4,16 @@
 #include "filtercontrols.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 
 #include "Selector/selectItem.h"
 #include "Selector/ellipseSelect.h"
 #include "Selector/rectangleSelect.h"
 #include "Selector/polygonSelect.h"
 #include "Selector/commands.h"
-
-
+#ifdef WASM_BUILD
+#include "htmlFileHandler/qhtml5file.h"
+#endif
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
@@ -39,8 +41,26 @@ InstaDam::InstaDam(QWidget *parent) :
     redoAction->setShortcuts(QKeySequence::Redo);
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
+#ifdef WASM_BUILD
+    addConnector("Load File", [&]() {
+            QHtml5File::load("*", [&](const QByteArray &content, const QString &fileName){
+                fileContent = content;
+                filename = fileName;
+                imagesList = (QStringList() << filename);
+
+                openFile_and_labels();
+            });
+        });
+#endif
 }
 
+#ifdef WASM_BUILD
+void InstaDam::addConnector(QString text, std::function<void ()> onActivate){
+    openFile = new MyConnector;
+    openFile->onActivate = onActivate;
+}
+
+#endif
 InstaDam::~InstaDam()
 {
     delete ui;
@@ -147,9 +167,6 @@ Project InstaDam::on_actionOpen_triggered()
 
     return currentProject;
 }
-
-
-
 
 //Project InstaDam::on_actionNew_triggered()
 //{
@@ -285,6 +302,9 @@ void InstaDam::resetPixmapButtons()
 void InstaDam::on_actionSave_triggered()
 {
 // Saving the file
+#ifdef WASM_BUILD
+    QByteArray outFile;
+#else
     QString outFileName = QFileDialog::getSaveFileName(this,
            tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
     if (QFileInfo(outFileName).suffix() != QString("idpro"))
@@ -292,6 +312,7 @@ void InstaDam::on_actionSave_triggered()
 
     QFile outFile(outFileName);
     outFile.open(QIODevice::ReadWrite);
+#endif
     for(int i=0; i<currentProject.numLabels(); i++)
     {
         Label lb = currentProject.getLabel(i);
@@ -299,16 +320,17 @@ void InstaDam::on_actionSave_triggered()
         QTextStream(&outFile) << "~%";
         QTextStream(&outFile) << lb.getColor().name() << "~%"<<endl;
     }
-
+#ifdef WASM_BUILD
+    QHtml5File::save(outFile, "myproject.idpro");
+#endif
 }
 
 
-// File open opens a dialog window and allows a user to pick an image file to open. Subsequently,
-// a list of images in the directory is established and the image fileId in the list is established
-// The function then calls open file and labels
-
 void InstaDam::on_actionOpen_File_triggered()
 {
+#ifdef WASM_BUILD
+    openFile->onActivate();
+#else
     QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
     QString ext = QFileInfo(filename_temp).suffix();
     if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
@@ -335,10 +357,16 @@ void InstaDam::on_actionOpen_File_triggered()
     else {
        assertError("That doesn't seem to be a valid image file.");
     }
-
-
+#endif
 }
 
+#ifdef WASM_BUILD
+void InstaDam::loadRawImage(){
+
+
+    openFile_and_labels();
+}
+#endif
 // Generates the file name for the next file in the folder
 
 void InstaDam::on_saveAndNext_clicked()
@@ -365,6 +393,10 @@ void InstaDam::on_saveAndNext_clicked()
 
 void InstaDam::saveFile()
 {
+    QByteArray bArray;
+    QBuffer buffer(&bArray);
+    buffer.open(QIODevice::WriteOnly);
+    ui->IdmPhotoViewer->labels->pixmap().save(&buffer, "PNG");
 
     QFile file(labelFile);
     file.open(QIODevice::WriteOnly);
@@ -406,6 +438,9 @@ void InstaDam::openFile_and_labels()
     QString ext = file.suffix();
     QString labelNameTemp = QString::null;
 
+#ifdef WASM_BUILD
+    ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
+#else
     //Open labels
     generateLabelFileName();
     if (QFileInfo(labelFile).isFile())
@@ -414,7 +449,9 @@ void InstaDam::openFile_and_labels()
         qInfo(labelNameTemp.toUtf8().constData());
         qInfo("I will open the labels!");
     }
+    scene->update();
     ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
+#endif
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 }
 
