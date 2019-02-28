@@ -90,7 +90,7 @@ QVector<QPoint> FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
 
 //void updateCorner(QPointF point);
 void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
-    cout << "NEW POINT" << endl;
+    //cout << "NEW POINT" << endl;
     QAbstractGraphicsShapeItem::prepareGeometryChange();
 
     myRect = this->boundingRect();
@@ -115,7 +115,7 @@ void FreeDrawSelect::checkPoint(QPoint &point){
 }
 
 void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    cout << "MOVE" << endl;
+    //cout << "MOVE" << endl;
     QPoint start = oldPos.toPoint();
     QPoint end = newPos.toPoint();
     int dx, dy;
@@ -167,7 +167,7 @@ void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
 
 void FreeDrawSelect::clickPoint(QPointF &point){
     active = true;
-    cout << "CLICK" << endl;
+    //cout << "CLICK" << endl;
     activeVertex = UNSELECTED;
 }
 
@@ -177,13 +177,13 @@ bool FreeDrawSelect::isInside(QPointF &point){
 
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     //QAbstractGraphicsShapeItem::paint(painter, option, widget);
-    cout << "PAINT" << endl;
+    //cout << "PAINT" << endl;
     painter->setPen(myPen);
     painter->setBrush(brush());
-    for(QPolygon::iterator it = polygon.begin() ; it != polygon.end(); ++it){
-        cout << (*it).x() << "  " << (*it).y() << endl;
+    //for(QPolygon::iterator it = polygon.begin() ; it != polygon.end(); ++it){
+    //    cout << (*it).x() << "  " << (*it).y() << endl;
         //painter->drawPoint((*it));
-    }
+    //}
     painter->drawPoints(polygon);
     //}
 }

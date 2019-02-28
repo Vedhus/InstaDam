@@ -10,6 +10,12 @@
     <height>1227</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -35,6 +41,12 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -53,13 +65,19 @@
     </property>
     <item>
      <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -76,289 +94,363 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QPushButton" name="saveAndBack">
-            <property name="text">
-             <string>Save and Back</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="saveAndNext">
-            <property name="text">
-             <string>Save and Next</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="panButton">
-            <property name="text">
-             <string>Pan</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="roundBrush">
-            <property name="text">
-             <string>Round</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="squareBrush">
-            <property name="text">
-             <string>Square</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Brush Size</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSlider" name="horizontalSlider">
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="spinBox"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_14">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="accessibleName">
-             <string notr="true"/>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string notr="true">Filter Options</string>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>200</width>
-              <height>200</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QSplitter" name="splitter_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QWidget" name="horizontalLayoutWidget_3">
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <widget class="QFrame" name="frame_7">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QSplitter" name="splitter">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QFrame" name="frame_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="handleWidth">
-              <number>10</number>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>70</height>
+              </size>
              </property>
-             <widget class="QFrame" name="frame_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0">
+              <item>
+               <widget class="QPushButton" name="saveAndBack">
+                <property name="text">
+                 <string>Save and Back</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="saveAndNext">
+                <property name="text">
+                 <string>Save and Next</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>10</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="panButton">
+                <property name="text">
+                 <string>Pan</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_14">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="accessibleName">
+                 <string notr="true"/>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string notr="true">Filter Options</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>200</width>
+                  <height>200</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <property name="spacing">
+               <number>0</number>
               </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+              <property name="leftMargin">
+               <number>0</number>
               </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+              <property name="topMargin">
+               <number>0</number>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QSplitter" name="splitter_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QSplitter" name="splitter">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="handleWidth">
+                 <number>10</number>
+                </property>
+                <widget class="QFrame" name="frame_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="handleWidth">
-                  <number>10</number>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
                  </property>
-                 <widget class="QScrollArea" name="scrollArea_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>150</width>
-                    <height>16777215</height>
-                   </size>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0">
+                  <property name="spacing">
+                   <number>0</number>
                   </property>
-                  <property name="horizontalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  <property name="leftMargin">
+                   <number>0</number>
                   </property>
-                  <property name="widgetResizable">
-                   <bool>true</bool>
+                  <property name="topMargin">
+                   <number>0</number>
                   </property>
-                  <widget class="QWidget" name="scrollAreaWidget">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>68</width>
-                     <height>608</height>
-                    </rect>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_3">
-                    <property name="leftMargin">
-                     <number>0</number>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QSplitter" name="splitter_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
                     </property>
-                    <property name="topMargin">
-                     <number>0</number>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="rightMargin">
-                     <number>0</number>
+                    <property name="handleWidth">
+                     <number>10</number>
                     </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <item>
-                     <layout class="QVBoxLayout" name="labelClassLayout"/>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                 <widget class="QFrame" name="frame_3">
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QSplitter" name="splitter_3">
-                     <property name="minimumSize">
+                    <widget class="QScrollArea" name="scrollArea_2">
+                     <property name="maximumSize">
                       <size>
-                       <width>729</width>
-                       <height>0</height>
+                       <width>150</width>
+                       <height>16777215</height>
                       </size>
                      </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                     <property name="horizontalScrollBarPolicy">
+                      <enum>Qt::ScrollBarAlwaysOff</enum>
                      </property>
-                     <widget class="PhotoViewer" name="IdmPhotoViewer">
-                      <property name="minimumSize">
-                       <size>
-                        <width>20</width>
-                        <height>10</height>
-                       </size>
+                     <property name="widgetResizable">
+                      <bool>true</bool>
+                     </property>
+                     <widget class="QWidget" name="scrollAreaWidget">
+                      <property name="geometry">
+                       <rect>
+                        <x>0</x>
+                        <y>0</y>
+                        <width>68</width>
+                        <height>789</height>
+                       </rect>
                       </property>
-                     </widget>
-                     <widget class="MaskViewer" name="IdmMaskViewer">
-                      <property name="minimumSize">
-                       <size>
-                        <width>20</width>
-                        <height>10</height>
-                       </size>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_3">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <layout class="QVBoxLayout" name="labelClassLayout"/>
+                       </item>
+                      </layout>
                      </widget>
                     </widget>
-                   </item>
-                  </layout>
-                 </widget>
+                    <widget class="QFrame" name="frame_3">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_2">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QSplitter" name="splitter_3">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>729</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="PhotoViewer" name="IdmPhotoViewer">
+                         <property name="minimumSize">
+                          <size>
+                           <width>20</width>
+                           <height>10</height>
+                          </size>
+                         </property>
+                        </widget>
+                        <widget class="MaskViewer" name="IdmMaskViewer">
+                         <property name="minimumSize">
+                          <size>
+                           <width>20</width>
+                           <height>10</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
-               </item>
-              </layout>
-             </widget>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="horizontalLayoutWidget">
+         <widget class="QFrame" name="frame_8">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetMaximumSize</enum>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item>
             <widget class="QFrame" name="frame_5">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -372,37 +464,27 @@
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>50</height>
+               <height>150</height>
               </size>
              </property>
              <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
+              <enum>QFrame::NoFrame</enum>
              </property>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QPushButton" name="rectangleSelect">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>201</width>
-                  <height>36</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Box Select</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="ellipseSelect">
+             <layout class="QGridLayout" name="gridLayout">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="ellipseSelectButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -420,31 +502,78 @@
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QPushButton" name="polygonSelect">
+              <item row="0" column="1">
+               <widget class="QPushButton" name="polygonSelectButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>201</width>
+                  <height>36</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Polygon Select</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="freeSelectButton">
+                <property name="text">
+                 <string>Free Select</string>
                 </property>
-                <property name="sizeHint" stdset="0">
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="rectangleSelectButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
                  <size>
-                  <width>40</width>
-                  <height>20</height>
+                  <width>201</width>
+                  <height>36</height>
                  </size>
                 </property>
-               </spacer>
+                <property name="text">
+                 <string>Box Select</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2" rowspan="2">
+               <widget class="QFrame" name="selectControlFrame">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>120</height>
+                 </size>
+                </property>
+                <property name="sizeIncrement">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -479,7 +608,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>1890</width>
-                    <height>238</height>
+                    <height>90</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -564,7 +693,7 @@
      <x>0</x>
      <y>0</y>
      <width>1918</width>
-     <height>33</height>
+     <height>34</height>
     </rect>
    </property>
    <property name="defaultUp">

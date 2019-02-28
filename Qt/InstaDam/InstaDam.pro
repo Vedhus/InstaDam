@@ -44,7 +44,8 @@ SOURCES += \
         Selector/rectangleSelect.cpp \
         Selector/polygonSelect.cpp \
         Selector/selectItem.cpp \
-        Selector/boxbasedselector.cpp
+        Selector/boxbasedselector.cpp \
+    Selector/freeDrawSelect.cpp
 
 HEADERS += \
         instadam.h \
@@ -67,13 +68,17 @@ HEADERS += \
         Selector/rectangleSelect.h \
         Selector/polygonSelect.h \
         Selector/selectItem.h \
-        Selector/boxbasedselector.h
+        Selector/boxbasedselector.h \
+    Selector/freeDrawSelect.h
 
 
 
 FORMS += \
         instadam.ui \
-    newproject.ui
+    newproject.ui \
+    Selector/blankFrame.ui \
+    Selector/polygonSelect.ui \
+    Selector/freeSelect.ui
 
 win32 {
   INCLUDEPATH += D:\opencv\opencv\build\include
