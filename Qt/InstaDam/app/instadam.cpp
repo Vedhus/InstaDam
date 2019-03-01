@@ -1,14 +1,11 @@
 #include "instadam.h"
 #include "ui_instadam.h"
-#include "ui_blankFrame.h"
-#include "ui_freeSelect.h"
-#include "ui_polygonSelect.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
 #include <string>
 #include <iostream>
 #include <fstream>
-
+using namespace std;
 #include "Selector/selectItem.h"
 #include "Selector/ellipseSelect.h"
 #include "Selector/rectangleSelect.h"
@@ -48,9 +45,9 @@ InstaDam::InstaDam(QWidget *parent) :
     redoAction->setShortcuts(QKeySequence::Redo);
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
-    Ui::blankForm *blankForm = new Ui::blankForm;
-    Ui::freeSelectForm *freeSelectForm = new Ui::freeSelectForm;
-    Ui::polygonSelectForm *polygonSelectForm =new Ui::polygonSelectForm;
+    blankForm = new Ui::blankForm;
+    freeSelectForm = new Ui::freeSelectForm;
+    polygonSelectForm = new Ui::polygonSelectForm;
     controlLayout = new QGridLayout(ui->selectControlFrame);
     blankWidget = new QWidget(ui->selectControlFrame);
     blankForm->setupUi(blankWidget);
@@ -65,6 +62,8 @@ InstaDam::InstaDam(QWidget *parent) :
     polygonSelectForm->setupUi(polygonSelectWidget);
     connect(polygonSelectForm->finishPolygonButton, SIGNAL(clicked()), this,
             SLOT(finishPolygonButtonClicked()));
+    connect(polygonSelectForm->insertPointButton, SIGNAL(clicked()), this,
+            SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
@@ -577,6 +576,7 @@ void InstaDam::on_polygonSelectButton_clicked(){
             break;
     }
     polygonSelectWidget->show();
+    polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
     currentSelectType = Polygon;
     scene->update();
 }
@@ -625,6 +625,12 @@ void InstaDam::on_pushButton_14_clicked()
     dialogs->show();
 }
 
+void InstaDam::setInsert(){
+    insertVertex = true;
+    vertex1 = -1;
+    vertex2 = -1;
+    polygonSelectForm->polygonMessageBox->setPlainText("Click the vertices between which you want to insert a point.");
+}
 void InstaDam::on_actionSave_File_triggered()
 {
     saveFile();
@@ -640,10 +646,30 @@ void InstaDam::on_actionSave_File_triggered()
 
 
 void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
-    //cout << "NEW" << endl;
+    cout << "CLICK" << endl;
     if(!item){
         if(currentItem && currentItem->type() == Polygon){
-            currentItem->addPoint(pos);
+            cout << "AA" << endl;
+            if(insertVertex && vertex1 >= 0 && vertex2 >= 0){
+                cout << "BB" << endl;
+                if(abs(vertex2 - vertex1) == 1){
+                    cout << "CC" << endl;
+                    currentItem->insertVertex(min(vertex1, vertex2), pos);
+                }
+                else{
+                    cout << "DD" << endl;
+                    currentItem->insertVertex(max(vertex1, vertex2), pos);
+                }
+                cout << "EE" << endl;
+                vertex1 = -1;
+                vertex2 = -1;
+                insertVertex = false;
+                polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
+            }
+            else{
+                cout << "FF" << endl;
+                currentItem->addPoint(pos);
+            }
             scene->update();
             return;
         }
@@ -694,14 +720,65 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
         }
     }
     else{
+        cout << "A" << endl;
+        cout << item->type() << "  " << currentSelectType << endl;
+        if(item->type() != currentSelectType){
+            cout << "B" << endl;
+
+            switch(item->type()){
+                case Freedraw:
+                    on_freeSelectButton_clicked();
+                    break;
+                case Polygon:
+                    on_polygonSelectButton_clicked();
+                    break;
+                case Rect:
+                    on_rectangleSelectButton_clicked();
+                    break;
+                case Ellipse:
+                    on_ellipseSelectButton_clicked();
+                    break;
+            }
+        }
+        cout << "C" << endl;
+
         currentItem = item;
         scene->inactiveAll();
         currentItem->clickPoint(pos);
+        cout << "AV " << currentItem->getActiveVertex() << endl;
+        cout << "D" << endl;
+
+        if(currentItem->type() == Polygon && insertVertex){
+            cout << "E" << endl;
+            int vert = currentItem->getActiveVertex();
+            cout << vert << endl;
+            if(vert != UNSELECTED){
+                if(vertex1 <0){
+                    cout << "F" << endl;
+                    vertex1 = vert;
+                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                }
+                else if(vertex2 < 0){
+                    cout << "V1 " << vertex1 << "  " << " VERT " << vert << "  " << " ABS " << abs(vert - vertex1) << "  " << " COUNT " <<currentItem->numberOfVertices() << endl;
+                    if(abs(vert - vertex1) != 1 && abs(vert - vertex1) != (currentItem->numberOfVertices() - 1)){
+                        polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                    }
+                    else{
+                        cout << "G" << endl;
+                        vertex2 = vert;
+                        polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                    }
+                }
+            }
+            cout << "H" << endl;
+        }
+        cout << "I" << endl;
         scene->update();
     }
 }
 
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
+    cout << "MOVE" << endl;
     if(currentItem){
         currentItem->moveItem(fromPos, toPos);
         scene->update();
@@ -710,6 +787,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
 
 void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
 {
+    cout << "RELEASE" << endl;
     if(currentItem && !currentItem->isItemAdded()){
         QUndoCommand *addCommand = new AddCommand(currentItem, scene);
         undoStack->push(addCommand);
@@ -739,7 +817,10 @@ void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
 }
 
 void InstaDam::finishPolygonButtonClicked(){
+    if(currentItem)
+        currentItem->setActiveVertex(UNSELECTED);
     currentItem = nullptr;
+    scene->update();
 }
 void InstaDam::processKeyPressed(const int key){
     if(!currentItem){

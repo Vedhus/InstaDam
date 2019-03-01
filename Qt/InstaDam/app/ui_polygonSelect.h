@@ -11,9 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,31 +21,42 @@ QT_BEGIN_NAMESPACE
 class Ui_polygonSelectForm
 {
 public:
-    QHBoxLayout *horizontalLayout;
+    QGridLayout *gridLayout;
+    QPushButton *insertPointButton;
     QPushButton *finishPolygonButton;
-    QSpacerItem *polygonSeletSpacer;
+    QPlainTextEdit *polygonMessageBox;
 
     void setupUi(QWidget *polygonSelectForm)
     {
         if (polygonSelectForm->objectName().isEmpty())
             polygonSelectForm->setObjectName(QString::fromUtf8("polygonSelectForm"));
         polygonSelectForm->resize(1413, 158);
-        horizontalLayout = new QHBoxLayout(polygonSelectForm);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        finishPolygonButton = new QPushButton(polygonSelectForm);
-        finishPolygonButton->setObjectName(QString::fromUtf8("finishPolygonButton"));
+        gridLayout = new QGridLayout(polygonSelectForm);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        insertPointButton = new QPushButton(polygonSelectForm);
+        insertPointButton->setObjectName(QString::fromUtf8("insertPointButton"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(insertPointButton->sizePolicy().hasHeightForWidth());
+        insertPointButton->setSizePolicy(sizePolicy);
+
+        gridLayout->addWidget(insertPointButton, 1, 0, 1, 1);
+
+        finishPolygonButton = new QPushButton(polygonSelectForm);
+        finishPolygonButton->setObjectName(QString::fromUtf8("finishPolygonButton"));
         sizePolicy.setHeightForWidth(finishPolygonButton->sizePolicy().hasHeightForWidth());
         finishPolygonButton->setSizePolicy(sizePolicy);
-        finishPolygonButton->setMinimumSize(QSize(201, 36));
+        finishPolygonButton->setMinimumSize(QSize(252, 36));
 
-        horizontalLayout->addWidget(finishPolygonButton);
+        gridLayout->addWidget(finishPolygonButton, 0, 0, 1, 1);
 
-        polygonSeletSpacer = new QSpacerItem(1185, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        polygonMessageBox = new QPlainTextEdit(polygonSelectForm);
+        polygonMessageBox->setObjectName(QString::fromUtf8("polygonMessageBox"));
+        polygonMessageBox->setUndoRedoEnabled(false);
+        polygonMessageBox->setReadOnly(true);
 
-        horizontalLayout->addItem(polygonSeletSpacer);
+        gridLayout->addWidget(polygonMessageBox, 0, 1, 2, 1);
 
 
         retranslateUi(polygonSelectForm);
@@ -56,6 +67,7 @@ public:
     void retranslateUi(QWidget *polygonSelectForm)
     {
         polygonSelectForm->setWindowTitle(QApplication::translate("polygonSelectForm", "Form", nullptr));
+        insertPointButton->setText(QApplication::translate("polygonSelectForm", "Insert Point Between", nullptr));
         finishPolygonButton->setText(QApplication::translate("polygonSelectForm", "Finish Polygon", nullptr));
     } // retranslateUi
 

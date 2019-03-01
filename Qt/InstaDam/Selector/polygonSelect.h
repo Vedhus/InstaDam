@@ -5,10 +5,12 @@
 #include <cmath>
 #include "selectItem.h"
 
-
+const QString polygonBaseInstruction = QString("Click points to construct a polygon. Individual points can be moved and deleted. Click 'Finish Polygon' when done.");
 class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
 {
-    public:
+
+public:
+    const QString baseInstruction = polygonBaseInstruction;
         PolygonSelect(QPointF point, QGraphicsItem *item = nullptr);
 
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
@@ -24,8 +26,12 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
         void checkPoint(QPointF &point);
         void removeVertex(int vertex=UNSELECTED) override;
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-        void init(QPointF &point) override {};
+        void init(QPointF &point) override {}
+        void insertVertex(int vertex, QPointF &point) override;
+        QString baseInstructions() override {return PolygonSelect::baseInstruction;}
+        int numberOfVertices() override;
     private:
+        QPen highlightPen, myPen;
         QRectF makeVertex(QPointF &point);
         void refresh();
         bool selected = true;

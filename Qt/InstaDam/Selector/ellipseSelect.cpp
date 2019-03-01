@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 //#include "QtWidgets/private/qgraphicsitem_p.h"
 
+QString EllipseSelect::baseInstruction = QString("");
+
 EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, item)
 {

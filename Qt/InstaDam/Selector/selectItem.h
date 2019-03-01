@@ -63,6 +63,9 @@ class SelectItem : public QGraphicsItem
         int getActiveVertex(){return activeVertex;}
         virtual void removeVertex(int vertex = UNSELECTED) = 0;
         virtual void resetActiveVertex() = 0;
+        virtual void insertVertex(int vertex, QPointF &point) = 0;
+        virtual QString baseInstructions() = 0;
+        virtual int numberOfVertices() = 0;
         QPointF getActivePoint(){return activePoint;}
         void resetState(){
             moved = false;

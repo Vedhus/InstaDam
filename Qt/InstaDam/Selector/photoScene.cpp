@@ -46,11 +46,11 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            cout << "1" << endl;
+            cout << "ITEM" << endl;
             emit pointClicked(item, mousePos);
         }
         else{
-            cout << "0" << endl;
+            cout << "NO ITEM" << endl;
             emit pointClicked(nullptr, mousePos);
         }
 

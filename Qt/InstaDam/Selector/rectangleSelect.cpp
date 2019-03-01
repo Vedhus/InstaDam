@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 
+QString RectangleSelect::baseInstruction = QString("");
+
 RectangleSelect::~RectangleSelect(){
 
 }

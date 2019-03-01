@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
+
+QString FreeDrawSelect::baseInstruction = QString("");
 FreeDrawSelect::FreeDrawSelect(QPointF point, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(item){
     //QPointF pnt = QPointF(int(point.x()), int(point.y()));

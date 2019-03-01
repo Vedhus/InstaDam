@@ -9,7 +9,9 @@ class TestSelect;
 
 class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector
 {
+
     public:
+    static QString baseInstruction;
         EllipseSelect(QPointF point, QGraphicsItem *item = nullptr);
         EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *item = nullptr);
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
@@ -20,9 +22,10 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector
         bool isInside(QPointF &point) override;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
         QGraphicsScene* scene();
+        QString baseInstructions() override {return EllipseSelect::baseInstruction;}
 
 #ifdef TEST
-    private:
+private:
         friend TestSelect;
 #endif
         //void calcCorners();

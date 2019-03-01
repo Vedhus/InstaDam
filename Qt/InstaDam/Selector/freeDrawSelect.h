@@ -8,7 +8,9 @@ typedef QVector<QVector <bool> > Block;
 
 class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 {
+
     public:
+    static QString baseInstruction;
         FreeDrawSelect(QPointF point, QGraphicsItem *item = nullptr);
 
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
@@ -24,6 +26,9 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void movePoint(QPointF &point);
         void checkPoint(QPointF &point);
         void init(QPointF &point) override;
+        void insertVertex(int vertex, QPointF &point) override {}
+        QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
+        int numberOfVertices() override {return 0;}
     private:
         const int pixel = 5;
         QPolygon polygon;

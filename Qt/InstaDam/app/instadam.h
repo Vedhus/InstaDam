@@ -15,6 +15,9 @@
 #include <QMenu>
 
 #include "newproject.h"
+#include "ui_blankFrame.h"
+#include "ui_freeSelect.h"
+#include "ui_polygonSelect.h"
 
 #include <iostream>
 #include <string>
@@ -89,6 +92,7 @@ private slots:
     void on_actionSave_File_triggered();
 
     void on_saveAndNext_clicked();
+    void setInsert();
 
 public slots:
     void resetPixmapButtons();
@@ -118,6 +122,14 @@ private:
     QWidget *freeSelectWidget;
     QWidget *polygonSelectWidget;
     QGridLayout *controlLayout;
+    Ui::blankForm *blankForm;
+    Ui::freeSelectForm *freeSelectForm;
+    Ui::polygonSelectForm *polygonSelectForm;
+
+    int lastType = -1;
+    bool insertVertex = false;
+    int vertex1 = -1;
+    int vertex2 = -1;
 };
 
 

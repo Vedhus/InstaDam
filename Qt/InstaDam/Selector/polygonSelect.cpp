@@ -4,9 +4,10 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
+
 PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     : SelectItem(item), QGraphicsPolygonItem(item){
-    std::cout << "INIT" << std::endl;
+    std::cout << "POLY INIT" << std::endl;
     myPoints.push_back(point);
     setActiveVertex(0);
     activePoint = point;
@@ -26,14 +27,34 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
     //}
 
-    QPen pen(Qt::green);
-    pen.setWidth(5);
-    setPen(pen);
+    myPen = QPen(Qt::green);
+    myPen.setWidth(5);
+    setPen(myPen);
+    QColor temp = myPen.color();
+    qreal r = temp.redF();
+    qreal g = temp.greenF();
+    qreal b = temp.blueF();
+    r = r > 0.5 ? 0 : 1;
+    g = g > 0.5 ? 0 : 1;
+    b = b > 0.5 ? 0 : 1;
+    temp.setRgbF(r, g, b);
+    QPen tpen(temp);
+    tpen.setWidth(5);
+    highlightPen = tpen;
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 
 }
 
+int PolygonSelect::numberOfVertices(){
+    return myPoints.size();
+}
+void PolygonSelect::insertVertex(int vertex, QPointF &point){
+    myPoints.insert(vertex + 1, point);
+    myVertices.insert(vertex + 1, makeVertex(point));
+    refresh();
+    setActiveVertex(vertex + 1);
+}
 
 void PolygonSelect::removeVertex(int vertex){
     //cout << "REMOVING " << vertex << endl;
@@ -65,14 +86,14 @@ void PolygonSelect::refresh(){
 //void updateCorner(QPointF point);
 void PolygonSelect::addPoint(QPointF &point, int vertex){
     if(vertex != UNSELECTED){
-        //std::cout << "ADD NEW" << std::endl;
+        std::cout << "ADD NEW" << std::endl;
         myPoints.insert(vertex, point);
         myVertices.insert(vertex, makeVertex(point));
         setActiveVertex(vertex);
         refresh();
     }
     else if(getActiveVertex() != UNSELECTED){
-        //std::cout << "MOVE POINT" << std::endl;
+        std::cout << "MOVE POINT" << std::endl;
         movePoint(point);
         activePoint = point;
     }
@@ -89,7 +110,7 @@ void PolygonSelect::addPoint(QPointF &point, int vertex){
 
         polygon << polygon[0];
         polygon[activeVertex] = point;
-    //std::cout << myPoints.size() << std::endl;
+        std::cout << "SIZE " << myPoints.size() << std::endl;
         //for(int i = 0; i < myPoints.size(); i++){
         //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << "  " << myPoints.size() << std::endl;
         //}
@@ -213,8 +234,17 @@ void PolygonSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     QGraphicsPolygonItem::paint(painter, option, widget);
     if(active){
         painter->setBrush(brush());
-        for(QVector<QRectF>::iterator it = myVertices.begin() ; it != myVertices.end(); ++it){
-            painter->drawRect(*it);
+        for(int i = 0; i < myVertices.size(); i++){
+        //for(QVector<QRectF>::iterator it = myVertices.begin() ; it != myVertices.end(); ++it){
+            //painter->drawRect(*it);
+            if(activeVertex == i || (activeVertex == UNSELECTED && i == myVertices.size()-1)){
+                painter->setPen(highlightPen);
+                painter->drawRect(myVertices[i]);
+                painter->setPen(myPen);
+            }
+            else{
+                painter->drawRect(myVertices[i]);
+            }
         }
     }
 }
