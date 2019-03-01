@@ -27,6 +27,12 @@ SelectItem::SelectItem(QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(10.);
 }
 
+void SelectItem::invertColorForPen(){
+    QColor color = myPen.color();
+    color.setRgbF(color.redF() > 0.5 ? 0 : 1, color.greenF() > 0.5 ? 0 : 1, color.blueF() > 0.5 ? 0 : 1);
+    highlightPen = QPen(color);
+    highlightPen.setWidth(5);
+}
 void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint){
     if(activeVertex & TOP){
         if(activeVertex & LEFT){

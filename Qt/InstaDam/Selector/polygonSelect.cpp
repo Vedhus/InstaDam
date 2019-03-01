@@ -30,7 +30,7 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     myPen = QPen(Qt::green);
     myPen.setWidth(5);
     setPen(myPen);
-    QColor temp = myPen.color();
+    /*QColor temp = myPen.color();
     qreal r = temp.redF();
     qreal g = temp.greenF();
     qreal b = temp.blueF();
@@ -40,7 +40,8 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     temp.setRgbF(r, g, b);
     QPen tpen(temp);
     tpen.setWidth(5);
-    highlightPen = tpen;
+    highlightPen = tpen;*/
+    invertColorForPen();
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 

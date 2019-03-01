@@ -31,7 +31,6 @@ public:
         QString baseInstructions() override {return PolygonSelect::baseInstruction;}
         int numberOfVertices() override;
     private:
-        QPen highlightPen, myPen;
         QRectF makeVertex(QPointF &point);
         void refresh();
         bool selected = true;

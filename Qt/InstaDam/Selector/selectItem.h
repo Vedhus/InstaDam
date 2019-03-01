@@ -86,7 +86,9 @@ class SelectItem : public QGraphicsItem
         void itemWasAdded(){hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
         virtual void init(QPointF &point) = 0;
+        void invertColorForPen();
     protected:
+        QPen highlightPen, myPen;
         SelectType selectType;
         QPointF selectedPoint;
         int mytype;

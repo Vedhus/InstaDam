@@ -14,7 +14,9 @@ EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
     setRect(myRect);
     mytype = Ellipse;
     //myRect = rect;
-    setPen(BoxBasedSelector::pen);
+    myPen = BoxBasedSelector::pen;
+    setPen(myPen);
+    invertColorForPen();
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
