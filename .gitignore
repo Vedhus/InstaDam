@@ -30,6 +30,11 @@ Qt/InstaDam/app/ui_instadam\.h
 Qt/InstaDam/app/ui_newproject\.h
 
 *.a
+Qt/InstaDam/Selector/main\.cpp
+
+Qt/InstaDam/Selector/mainwindow\.cpp
+
+Qt/InstaDam/Selector/mainwindow\.h
 
 Qt/InstaDam/InstaDam\.html
 
@@ -47,4 +52,15 @@ Qt/InstaDam/Selector/mainwindow\.cpp
 
 Qt/InstaDam/Selector/mainwindow\.h
 
+
+*.so
+
+Qt/InstaDam/libselector\.so\.1
+
+Qt/InstaDam/libselector\.so\.1\.0
+
+Qt/InstaDam/libselector\.so\.1\.0\.0
+
 Qt/InstaDam/Selector/SelectorStandAlone\.pro
+
+Qt/InstaDam/Selector/SelectorStandAlone

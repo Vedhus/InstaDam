@@ -1,5 +1,8 @@
 #include "instadam.h"
 #include "ui_instadam.h"
+#include "ui_blankFrame.h"
+#include "ui_freeSelect.h"
+#include "ui_polygonSelect.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
 #include <string>
@@ -10,10 +13,14 @@
 #include "Selector/ellipseSelect.h"
 #include "Selector/rectangleSelect.h"
 #include "Selector/polygonSelect.h"
+#include "Selector/freeDrawSelect.h"
 #include "Selector/commands.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
+
+int SelectItem::ID = 0;
+
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
@@ -24,7 +31,7 @@ InstaDam::InstaDam(QWidget *parent) :
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
     undoStack = new QUndoStack(this);
-    type = Ellipse;
+    currentSelectType = Ellipse;
     scene = ui->IdmPhotoViewer->scene;
     currentItem = nullptr;
     connect(scene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
@@ -41,6 +48,26 @@ InstaDam::InstaDam(QWidget *parent) :
     redoAction->setShortcuts(QKeySequence::Redo);
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
+    Ui::blankForm *blankForm = new Ui::blankForm;
+    Ui::freeSelectForm *freeSelectForm = new Ui::freeSelectForm;
+    Ui::polygonSelectForm *polygonSelectForm =new Ui::polygonSelectForm;
+    controlLayout = new QGridLayout(ui->selectControlFrame);
+    blankWidget = new QWidget(ui->selectControlFrame);
+    blankForm->setupUi(blankWidget);
+    freeSelectWidget = new QWidget(ui->selectControlFrame);
+    freeSelectForm->setupUi(freeSelectWidget);
+    connect(freeSelectForm->roundBrushButton, SIGNAL(clicked()), this,
+            SLOT(roundBrushButtonClicked()));
+    connect(freeSelectForm->squareBrushButton, SIGNAL(clicked()), this,
+            SLOT(squareBrushButtonClicked()));
+    freeSelectWidget->hide();
+    polygonSelectWidget = new QWidget(ui->selectControlFrame);
+    polygonSelectForm->setupUi(polygonSelectWidget);
+    connect(polygonSelectForm->finishPolygonButton, SIGNAL(clicked()), this,
+            SLOT(finishPolygonButtonClicked()));
+    polygonSelectWidget->hide();
+    controlLayout->addWidget(blankWidget);
+
 #ifdef WASM_BUILD
     addConnector("Load File", [&]() {
             QHtml5File::load("*", [&](const QByteArray &content, const QString &fileName){
@@ -479,25 +506,113 @@ void InstaDam::on_panButton_clicked()
     ui->IdmMaskViewer->setPanMode();
 }
 
-void InstaDam::on_rectangleSelect_clicked(){
-    type = Rect;
+void InstaDam::on_rectangleSelectButton_clicked(){
+    switch(currentSelectType){
+        case Polygon:
+            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+                controlLayout->removeWidget(polygonSelectWidget);
+                polygonSelectWidget->hide();
+            }
+            controlLayout->addWidget(blankWidget);
+            break;
+        case Freedraw:
+            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+                controlLayout->removeWidget(freeSelectWidget);
+                freeSelectWidget->hide();
+            }
+            controlLayout->addWidget(blankWidget);
+            break;
+        case Rect:
+        case Ellipse:
+            break;
+    }
+    blankWidget->show();
+    currentSelectType = Rect;
+    scene->update();
 }
 
-void InstaDam::on_ellipseSelect_clicked(){
-    type = Ellipse;
+void InstaDam::on_ellipseSelectButton_clicked(){
+    switch(currentSelectType){
+        case Polygon:
+            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+                controlLayout->removeWidget(polygonSelectWidget);
+                polygonSelectWidget->hide();
+            }
+            controlLayout->addWidget(blankWidget);
+            break;
+        case Freedraw:
+            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+                controlLayout->removeWidget(freeSelectWidget);
+                freeSelectWidget->hide();
+            }
+            controlLayout->addWidget(blankWidget);
+            break;
+        case Rect:
+        case Ellipse:
+            break;
+    }
+    blankWidget->show();
+    currentSelectType = Ellipse;
+    scene->update();
 }
 
-void InstaDam::on_polygonSelect_clicked(){
-    type = Polygon;
+void InstaDam::on_polygonSelectButton_clicked(){
+    switch(currentSelectType){
+        case Ellipse:
+        case Rect:
+            if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
+                controlLayout->removeWidget(blankWidget);
+                blankWidget->hide();
+            }
+            controlLayout->addWidget(polygonSelectWidget);
+            break;
+        case Freedraw:
+            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+                controlLayout->removeWidget(freeSelectWidget);
+                freeSelectWidget->hide();
+            }
+            controlLayout->addWidget(polygonSelectWidget);
+            break;
+        case Polygon:
+            break;
+    }
+    polygonSelectWidget->show();
+    currentSelectType = Polygon;
+    scene->update();
 }
 
-void InstaDam::on_roundBrush_clicked()
+void InstaDam::on_freeSelectButton_clicked(){
+    switch(currentSelectType){
+        case Ellipse:
+        case Rect:
+            if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
+                controlLayout->removeWidget(blankWidget);
+                blankWidget->hide();
+            }
+            controlLayout->addWidget(freeSelectWidget);
+            break;
+        case Polygon:
+            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+                controlLayout->removeWidget(polygonSelectWidget);
+                polygonSelectWidget->hide();
+            }
+            controlLayout->addWidget(freeSelectWidget);
+            break;
+        case Freedraw:
+            break;
+    }
+    freeSelectWidget->show();
+    currentSelectType = Freedraw;
+    scene->update();
+}
+
+void InstaDam::roundBrushButtonClicked()
 {
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
     ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
 }
 
-void InstaDam::on_squareBrush_clicked()
+void InstaDam::squareBrushButtonClicked()
 {
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
@@ -533,7 +648,7 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
             return;
         }
         scene->inactiveAll();
-        switch(type){
+        switch(currentSelectType){
             case Rect:
             {
                 //cout << "RECT" << endl;
@@ -556,10 +671,11 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
                 break;
             case Freedraw:
             {
-                //FreeDrawSelect *temp = new FreeDrawSelect(pos);
-                //diagramScene->addItem(temp);
-                //currentItem = temp;
-                //diagramScene->update();
+                FreeDrawSelect *temp = new FreeDrawSelect(pos);
+                scene->addItem(temp);
+                currentItem = temp;
+                temp->init(pos);
+                scene->update();
             }
                 break;
             case Polygon:
@@ -622,6 +738,9 @@ void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
     }
 }
 
+void InstaDam::finishPolygonButtonClicked(){
+    currentItem = nullptr;
+}
 void InstaDam::processKeyPressed(const int key){
     if(!currentItem){
 

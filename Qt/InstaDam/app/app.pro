@@ -40,7 +40,11 @@ HEADERS += \
 
 FORMS += \
         instadam.ui \
-        newproject.ui
+        newproject.ui \
+        ../Selector/blankFrame.ui \
+        ../Selector/polygonSelect.ui \
+        ../Selector/freeSelect.ui
+
 
 win32 {
   INCLUDEPATH += D:\opencv\opencv\build\include $${PWD}/..

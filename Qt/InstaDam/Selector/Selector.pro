@@ -9,8 +9,9 @@ HEADERS = \
     $$PWD/photoScene.h \
     $$PWD/rectangleSelect.h \
     $$PWD/selectItem.h \
-    #$$PWD/freeDrawSelect.h \
-    boxbasedselector.h
+    $$PWD/freeDrawSelect.h \
+    boxbasedselector.h \
+    selectgroup.h
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \
@@ -19,8 +20,9 @@ SOURCES = \
     $$PWD/photoScene.cpp \
     $$PWD/rectangleSelect.cpp \
     $$PWD/selectItem.cpp \
-    #$$PWD/freeDrawSelect.cpp \
-    boxbasedselector.cpp
+    $$PWD/freeDrawSelect.cpp \
+    boxbasedselector.cpp \
+    selectgroup.cpp
 
 LIBS += -lQt5Widgets
 

@@ -24,7 +24,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
         void checkPoint(QPointF &point);
         void removeVertex(int vertex=UNSELECTED) override;
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-        void update() override {};
+        void init(QPointF &point) override {};
     private:
         QRectF makeVertex(QPointF &point);
         void refresh();

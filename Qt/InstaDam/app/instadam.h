@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QGraphicsItem>
 #include <QObject>
+#include <QGridLayout>
 #include <QMenuBar>
 #include <QMenu>
 
@@ -62,14 +63,15 @@ public:
 
 private slots:
     void on_actionOpen_File_triggered();
-    void on_rectangleSelect_clicked();
-    void on_ellipseSelect_clicked();
-    void on_polygonSelect_clicked();
+    void on_rectangleSelectButton_clicked();
+    void on_ellipseSelectButton_clicked();
+    void on_polygonSelectButton_clicked();
+    void on_freeSelectButton_clicked();
     void processMouseMoved(QPointF fromPos, QPointF toPos);
     void processPointClicked(SelectItem *item, QPointF pos);
     void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
     void processKeyPressed(const int key);
-
+    void finishPolygonButtonClicked();
     Project on_actionNew_triggered();
 
     Project on_actionOpen_triggered();
@@ -78,9 +80,9 @@ private slots:
 
     void on_panButton_clicked();
 
-    void on_roundBrush_clicked();
+    void roundBrushButtonClicked();
 
-    void on_squareBrush_clicked();
+    void squareBrushButtonClicked();
 
     void on_pushButton_14_clicked();
 
@@ -106,12 +108,16 @@ private:
     Project currentProject;
     PhotoScene *scene;
     QUndoStack *undoStack;
-    SelectType type;
+    SelectType currentSelectType;
     SelectItem *currentItem;
     QAction *undoAction;
     QAction *redoAction;
     QByteArray imgData;
     QByteArray fileContent;
+    QWidget *blankWidget;
+    QWidget *freeSelectWidget;
+    QWidget *polygonSelectWidget;
+    QGridLayout *controlLayout;
 };
 
 

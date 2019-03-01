@@ -4,39 +4,6 @@
 #include <algorithm>
 #include <iostream>
 
-/*void RectangleSelect::calcCorners(){
-    tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
-    bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
-    tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() + SelectItem::yoffset);
-    br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
-
-}
-
-void RectangleSelect::clickPoint(QPointF &point){
-    active = true;
-    if(isInsideRect(tl, point)){
-        setActiveVertex(TOP, LEFT);
-        activePoint = myRect.topLeft();
-    }
-    else if(isInsideRect(tr, point)){
-        setActiveVertex(TOP, RIGHT);
-        activePoint = myRect.topRight();
-    }
-    else if(isInsideRect(bl, point)){
-        setActiveVertex(BOTTOM, LEFT);
-        activePoint = myRect.bottomLeft();
-    }
-    else if(isInsideRect(br, point)){
-        setActiveVertex(BOTTOM, RIGHT);
-        activePoint = myRect.bottomRight();
-    }
-    else{
-        setActiveVertex(0, 0);
-    }
-    //cout << "  CLIK POINT" << endl;
-}
-
-*/
 RectangleSelect::~RectangleSelect(){
 
 }
