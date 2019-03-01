@@ -11,7 +11,7 @@ HEADERS = \
     $$PWD/photoScene.h \
     $$PWD/rectangleSelect.h \
     $$PWD/selectItem.h \
-    #$$PWD/freeDrawSelect.h \
+    $$PWD/freeDrawSelect.h \
     boxbasedselector.h
 
 SOURCES = \
@@ -23,7 +23,7 @@ SOURCES = \
     $$PWD/photoScene.cpp \
     $$PWD/rectangleSelect.cpp \
     $$PWD/selectItem.cpp \
-    #$$PWD/freeDrawSelect.cpp \
+    $$PWD/freeDrawSelect.cpp \
     boxbasedselector.cpp
 
 INCLUDEPATH = \
