@@ -17,7 +17,7 @@ using namespace std;
 #endif
 
 int SelectItem::ID = 0;
-
+QSize SelectItem::myBounds = QSize(0,0);
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
@@ -57,6 +57,10 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(roundBrushButtonClicked()));
     connect(freeSelectForm->squareBrushButton, SIGNAL(clicked()), this,
             SLOT(squareBrushButtonClicked()));
+    connect(freeSelectForm->drawButton, SIGNAL(clicked()), this,
+            SLOT(toggleDrawing(true)));
+    connect(freeSelectForm->eraseButton, SIGNAL(clicked()), this,
+            SLOT(toggleDrawing(false)));
     freeSelectWidget->hide();
     polygonSelectWidget = new QWidget(ui->selectControlFrame);
     polygonSelectForm->setupUi(polygonSelectWidget);
@@ -194,6 +198,18 @@ Project InstaDam::on_actionOpen_triggered()
     return currentProject;
 }
 
+void InstaDam::toggleDrawing(bool value){
+    if(value){
+        drawing = true;
+        freeSelectForm->eraseButton->setChecked(false);
+        freeSelectForm->drawButton->setChecked(true);
+    }
+    else{
+        drawing = true;
+        freeSelectForm->eraseButton->setChecked(true);
+        freeSelectForm->drawButton->setChecked(false);
+    }
+}
 //Project InstaDam::on_actionNew_triggered()
 //{
 //    // find a way to either get a fixed number of labels from the user at the beginning
@@ -465,7 +481,7 @@ void InstaDam::openFile_and_labels()
     QString labelNameTemp = QString::null;
 
 #ifdef WASM_BUILD
-    ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
 #else
     //Open labels
     generateLabelFileName();
@@ -476,7 +492,7 @@ void InstaDam::openFile_and_labels()
         qInfo("I will open the labels!");
     }
     scene->update();
-    ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
 #endif
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 }

@@ -93,6 +93,7 @@ private slots:
 
     void on_saveAndNext_clicked();
     void setInsert();
+    void toggleDrawing(bool value);
 
 public slots:
     void resetPixmapButtons();
@@ -125,7 +126,7 @@ private:
     Ui::blankForm *blankForm;
     Ui::freeSelectForm *freeSelectForm;
     Ui::polygonSelectForm *polygonSelectForm;
-
+    bool drawing = true;
     int lastType = -1;
     bool insertVertex = false;
     int vertex1 = -1;

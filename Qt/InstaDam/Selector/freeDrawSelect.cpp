@@ -13,7 +13,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, QGraphicsItem *item)
     offset = point;
     //gridSize = QPointF(scene()->width(), scene()->height());
     //addBlock(point);
-
+    myMap = new QHash<int, int>;
     setActiveVertex(0);
     myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
     mytype = Freedraw;
@@ -27,29 +27,29 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, QGraphicsItem *item)
 
 }
 
-QPoint FreeDrawSelect::getBox(QPoint &point){
-    return QPoint(int(std::floor(point.x()/baseSize)), int(std::floor(point.y()/baseSize)));
-}
+//QPoint FreeDrawSelect::getBox(QPoint &point){
+//    return QPoint(int(std::floor(point.x()/baseSize)), int(std::floor(point.y()/baseSize)));
+//}
 
-void FreeDrawSelect::updateMap(QPoint &point){
+//void FreeDrawSelect::updateMap(QPoint &point){
     //QPoint currentBox = getBox(point);
-    int x = int(std::floor(point.x()/baseSize));
-    int y = int(std::floor(point.y()/baseSize));
-    if(!myMap[x][y]){
-        myMap[x][y] = makeBlock();
-    }
-    int xx = point.x()%baseSize;
-    int yy = point.y()%baseSize;
-    (*myMap[x][y])[xx][yy] = true;
-}
+//    int x = int(std::floor(point.x()/baseSize));
+//    int y = int(std::floor(point.y()/baseSize));
+//    if(!myMap[x][y]){
+//        myMap[x][y] = makeBlock();
+//    }
+//    int xx = point.x()%baseSize;
+//    int yy = point.y()%baseSize;
+//    (*myMap[x][y])[xx][yy] = true;
+//}
 
 void FreeDrawSelect::init(QPointF &point){
     //myMap = makeBlock();
-    gridSize = QPoint(int(std::floor(scene()->width()/baseSize)) + 1, int(std::floor(scene()->height()/baseSize)) + 1);
+    //gridSize = QPoint(int(std::floor(scene()->width()/baseSize)) + 1, int(std::floor(scene()->height()/baseSize)) + 1);
     //inUse = Block(gridSize.x(), QVector <bool>(gridSize.y(), false));
-    myMap = QVector<QVector <Block*> >(gridSize.x(), QVector <Block*>(gridSize.y(), nullptr));
-    QPoint newPoint = point.toPoint();
-    updateMap(newPoint);
+    //myMap = QVector<QVector <Block*> >(gridSize.x(), QVector <Block*>(gridSize.y(), nullptr));
+    //QPoint newPoint = point.toPoint();
+    //updateMap(newPoint);
     //QPoint currentBox = getBox(newPoint);
     //inUse[currentBox.x()][currentBox.y()] = true;
     //Block *temp = makeBlock();
@@ -57,14 +57,14 @@ void FreeDrawSelect::init(QPointF &point){
     //myMap[currentBox.x()][currentBox.y()] = temp;
 }
 
-Block* FreeDrawSelect::makeBlock(){
-    Block *block = new Block;
-    block->resize(100);
-    for(int i = 0; i < baseSize; i++){
-        (*block)[i] = baseVector;
-    }
-    return block;
-}
+//Block* FreeDrawSelect::makeBlock(){
+//    Block *block = new Block;
+//    block->resize(100);
+//    for(int i = 0; i < baseSize; i++){
+//        (*block)[i] = baseVector;
+//    }
+//    return block;
+//}
 
 QVector<QPoint> FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
     qreal dx = end.x() - start.x();

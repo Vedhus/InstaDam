@@ -103,10 +103,11 @@ void SelectItem::checkBoundaries(QPointF &shift, QRectF &rect){
         tlc.setX(std::max(tlc.x(), 0.));
         rect.moveTopLeft(tlc);
     }
-    else if(brc.x() >= scene()->width() || brc.y() >= scene()->height()){
+    else if(brc.x() >= SelectItem::myBounds.width() ||
+            brc.y() >= SelectItem::myBounds.height()){
         //cout << "X2" << endl;
-        brc.setY(std::min(brc.y(), scene()->height() - 1));
-        brc.setX(std::min(brc.x(), scene()->width() - 1));
+        brc.setY(std::min(int(brc.y()), SelectItem::myBounds.height() - 1));
+        brc.setX(std::min(int(brc.x()), SelectItem::myBounds.width() - 1));
         rect.moveBottomRight(brc);
     }
     else{

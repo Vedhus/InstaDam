@@ -38,6 +38,7 @@ class SelectItem : public QGraphicsItem
 {
     static int ID;
     public:
+        static QSize myBounds;
         static qreal vertexSize;
         static QPointF xoffset;
         static QPointF yoffset;

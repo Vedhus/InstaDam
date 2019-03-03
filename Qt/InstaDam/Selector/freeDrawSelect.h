@@ -2,9 +2,9 @@
 #define FREEDRAWSELECT_H
 
 #include "selectItem.h"
-#include <QSet>
+#include <QHash>
 
-typedef QVector<QVector <bool> > Block;
+//typedef QVector<QVector <bool> > Block;
 
 class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 {
@@ -32,17 +32,18 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
     private:
         const int pixel = 5;
         QPolygon polygon;
-        QVector<QVector <Block*> > myMap;
+        //QVector<QVector <Block*> > myMap;
+        QHash<int, int> *myMap;
         //Block inUse;
         QPoint gridSize;
         QPointF offset;
-        QPen myPen;
+        //QPen myPen;
         const int baseSize = 100;
-        QVector<bool> baseVector = QVector<bool>(baseSize, false);
-        QPoint getBox(QPoint &point);
-        Block* makeBlock();
+        //QVector<bool> baseVector = QVector<bool>(baseSize, false);
+        //QPoint getBox(QPoint &point);
+        //Block* makeBlock();
         QVector<QPoint> rasterizeLine(QPoint &start, QPoint &end);
         void checkPoint(QPoint &point);
-        void updateMap(QPoint &point);
+        //void updateMap(QPoint &point);
 };
 #endif // POLYGONSELECT_H
