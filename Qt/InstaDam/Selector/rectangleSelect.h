@@ -9,7 +9,9 @@ class TestSelect;
 
 class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem
 {
-    public:
+
+public:
+    static QString baseInstruction;
         RectangleSelect(QPointF point, QGraphicsItem *item = nullptr);
         RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *item = nullptr);
         ~RectangleSelect() override;
@@ -17,14 +19,15 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         //void resizeItem(int vertex, QPointF &newPos) override;
         //void clickPoint(QPointF &point) override;
+        void updatePen(QPen pen) override;
         int type(){return SelectItem::type();}
         QRectF boundingRect() const override;
         bool isInside(QPointF &point) override;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
         QGraphicsScene* scene();
-
+        QString baseInstructions() override {return RectangleSelect::baseInstruction;}
 #ifdef TEST
-    private:
+private:
         friend TestSelect;
 #endif
 };

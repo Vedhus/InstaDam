@@ -1,6 +1,7 @@
 #include <QtWidgets>
 
 #include "selectItem.h"
+#include "label.h"
 #include <algorithm>
 #include <iostream>
 using namespace std;
@@ -27,6 +28,12 @@ SelectItem::SelectItem(QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(10.);
 }
 
+void SelectItem::invertColorForPen(){
+    QColor color = myPen.color();
+    color.setRgbF(color.redF() > 0.5 ? 0 : 1, color.greenF() > 0.5 ? 0 : 1, color.blueF() > 0.5 ? 0 : 1);
+    highlightPen = QPen(color);
+    highlightPen.setWidth(5);
+}
 void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint){
     if(activeVertex & TOP){
         if(activeVertex & LEFT){
@@ -63,11 +70,8 @@ int SelectItem::type() const{
 }
 
 bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
-    //cout << "   POINT " << point.x() << "," << point.y() << endl;
-    //cout << "       BOX " << rect.left() << "," << rect.top() << "  " << rect.right() << "," << rect.bottom() << endl;
     if(point.y() >= rect.top() && point.y() <= rect.bottom()){
         if(point.x() <= rect.right() && point.x() >= rect.left()){
-            //cout << "T" << endl;
             return true;
         }
     }
@@ -87,24 +91,26 @@ QGraphicsItem* SelectItem::getParentItem(){
 void SelectItem::checkBoundaries(QPointF &shift, QRectF &rect){
     QPointF tlc = rect.topLeft() + shift;
     QPointF brc = rect.bottomRight() + shift;
-    //cout << "MOVE" << endl;
 
-    //cout << SelectItem::scene()->width() << endl;
-    //cout << "SDFSDF" << endl;
     if(tlc.x() < 0 || tlc.y() < 0){
-        //cout << "X1" << endl;
         tlc.setY(std::max(tlc.y(), 0.));
         tlc.setX(std::max(tlc.x(), 0.));
         rect.moveTopLeft(tlc);
     }
-    else if(brc.x() >= scene()->width() || brc.y() >= scene()->height()){
-        //cout << "X2" << endl;
-        brc.setY(std::min(brc.y(), scene()->height() - 1));
-        brc.setX(std::min(brc.x(), scene()->width() - 1));
+    else if(brc.x() >= SelectItem::myBounds.width() ||
+            brc.y() >= SelectItem::myBounds.height()){
+        brc.setY(std::min(int(brc.y()), SelectItem::myBounds.height() - 1));
+        brc.setX(std::min(int(brc.x()), SelectItem::myBounds.width() - 1));
         rect.moveBottomRight(brc);
     }
     else{
-        //cout << "X3" << endl;
         rect.moveTopLeft(tlc);
     }
+}
+
+void SelectItem::setLabel(Label *label){
+    myLabel = label;
+    myPen = QPen(label->getColor());
+    myPen.setWidth(2);
+    updatePen(myPen);
 }

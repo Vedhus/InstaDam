@@ -1,14 +1,12 @@
 #include "instadam.h"
 #include "ui_instadam.h"
-#include "ui_blankFrame.h"
-#include "ui_freeSelect.h"
-#include "ui_polygonSelect.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
+#include "labelButton.h"
 #include <string>
 #include <iostream>
 #include <fstream>
-
+using namespace std;
 #include "Selector/selectItem.h"
 #include "Selector/ellipseSelect.h"
 #include "Selector/rectangleSelect.h"
@@ -20,7 +18,7 @@
 #endif
 
 int SelectItem::ID = 0;
-
+QSize SelectItem::myBounds = QSize(0,0);
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
@@ -34,6 +32,7 @@ InstaDam::InstaDam(QWidget *parent) :
     currentSelectType = Ellipse;
     scene = ui->IdmPhotoViewer->scene;
     currentItem = nullptr;
+    currentLabel = nullptr;
     connect(scene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
             SLOT(processPointClicked(SelectItem*, QPointF)));
     connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
@@ -48,9 +47,9 @@ InstaDam::InstaDam(QWidget *parent) :
     redoAction->setShortcuts(QKeySequence::Redo);
     ui->menuEdit->addAction(undoAction);
     ui->menuEdit->addAction(redoAction);
-    Ui::blankForm *blankForm = new Ui::blankForm;
-    Ui::freeSelectForm *freeSelectForm = new Ui::freeSelectForm;
-    Ui::polygonSelectForm *polygonSelectForm =new Ui::polygonSelectForm;
+    blankForm = new Ui::blankForm;
+    freeSelectForm = new Ui::freeSelectForm;
+    polygonSelectForm = new Ui::polygonSelectForm;
     controlLayout = new QGridLayout(ui->selectControlFrame);
     blankWidget = new QWidget(ui->selectControlFrame);
     blankForm->setupUi(blankWidget);
@@ -60,11 +59,17 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(roundBrushButtonClicked()));
     connect(freeSelectForm->squareBrushButton, SIGNAL(clicked()), this,
             SLOT(squareBrushButtonClicked()));
+    connect(freeSelectForm->drawButton, SIGNAL(clicked()), this,
+            SLOT(toggleDrawing(true)));
+    connect(freeSelectForm->eraseButton, SIGNAL(clicked()), this,
+            SLOT(toggleDrawing(false)));
     freeSelectWidget->hide();
     polygonSelectWidget = new QWidget(ui->selectControlFrame);
     polygonSelectForm->setupUi(polygonSelectWidget);
     connect(polygonSelectForm->finishPolygonButton, SIGNAL(clicked()), this,
             SLOT(finishPolygonButtonClicked()));
+    connect(polygonSelectForm->insertPointButton, SIGNAL(clicked()), this,
+            SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
@@ -104,22 +109,30 @@ Project InstaDam::on_actionNew_triggered()
 
     clearLayout(ui->labelClassLayout);
     for(int i=0; i<currentProject.numLabels(); i++){
-          QPushButton *button = new QPushButton();
-          button->setText(currentProject.getLabel(i).getText());
-          QPalette pal = button->palette();
-          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
-          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
-          button->setAutoFillBackground(true);
-          button->setPalette(pal);
-          button->update();
-          ui->labelClassLayout->addWidget(button);
-          qInfo("Button Added!");
-
-
+        Label *label = currentProject.getLabel(i);
+        LabelButton *button = new LabelButton(label);
+        button->setText(label->getText());
+        QPalette pal = button->palette();
+        pal.setColor(QPalette::ButtonText, Qt::black);
+        pal.setColor(QPalette::Button, label->getColor());
+        button->setAutoFillBackground(true);
+        button->setPalette(pal);
+        button->update();
+        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
+        ui->labelClassLayout->addWidget(button);
+        qInfo("Button Added!");
     }
    return currentProject;
 }
 
+void InstaDam::setCurrentLabel(LabelButton *button){
+    currentLabel = button->myLabel;
+}
+void InstaDam::setCurrentLabel(Label *label){
+    cout << "SET LABEL" << endl;
+    currentLabel = label;
+    cout << label->getText().toStdString() << endl;
+}
 void InstaDam::clearLayout(QLayout * layout) {
     if (! layout)
        return;
@@ -175,26 +188,41 @@ Project InstaDam::on_actionOpen_triggered()
     QTextStream(stdout) <<currentProject.numLabels();
     for(int i=0; i<currentProject.numLabels(); i++)
     {
-          QPushButton *button = new QPushButton();
+        Label *label = currentProject.getLabel(i);
+        LabelButton *button = new LabelButton(label);
 
-          button->setText(currentProject.getLabel(i).getText());
-          QPalette pal = button->palette();
+        button->setText(label->getText());
+        QPalette pal = button->palette();
 
-          QTextStream(stdout) << currentProject.getLabel(i).getColor().name() << endl;
+        QTextStream(stdout) << label->getColor().name() << endl;
 
 
-          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
-          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
-          button->setAutoFillBackground(true);
-          button->setPalette(pal);
-          button->update();
-          ui->labelClassLayout->addWidget(button);
+        pal.setColor(QPalette::ButtonText, Qt::black);
+        pal.setColor(QPalette::Button, label->getColor());
+        button->setAutoFillBackground(true);
+        button->setPalette(pal);
+        button->update();
+        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
+//        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
+        ui->labelClassLayout->addWidget(button);
 
     }
 
     return currentProject;
 }
 
+void InstaDam::toggleDrawing(bool value){
+    if(value){
+        drawing = true;
+        freeSelectForm->eraseButton->setChecked(false);
+        freeSelectForm->drawButton->setChecked(true);
+    }
+    else{
+        drawing = true;
+        freeSelectForm->eraseButton->setChecked(true);
+        freeSelectForm->drawButton->setChecked(false);
+    }
+}
 //Project InstaDam::on_actionNew_triggered()
 //{
 //    // find a way to either get a fixed number of labels from the user at the beginning
@@ -342,7 +370,7 @@ void InstaDam::on_actionSave_triggered()
 #endif
     for(int i=0; i<currentProject.numLabels(); i++)
     {
-        Label lb = currentProject.getLabel(i);
+        Label lb = (*currentProject.getLabel(i));
         QTextStream(&outFile) << lb.getText();
         QTextStream(&outFile) << "~%";
         QTextStream(&outFile) << lb.getColor().name() << "~%"<<endl;
@@ -466,7 +494,7 @@ void InstaDam::openFile_and_labels()
     QString labelNameTemp = QString::null;
 
 #ifdef WASM_BUILD
-    ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
 #else
     //Open labels
     generateLabelFileName();
@@ -477,7 +505,7 @@ void InstaDam::openFile_and_labels()
         qInfo("I will open the labels!");
     }
     scene->update();
-    ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
 #endif
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 }
@@ -577,6 +605,7 @@ void InstaDam::on_polygonSelectButton_clicked(){
             break;
     }
     polygonSelectWidget->show();
+    polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
     currentSelectType = Polygon;
     scene->update();
 }
@@ -625,6 +654,12 @@ void InstaDam::on_pushButton_14_clicked()
     dialogs->show();
 }
 
+void InstaDam::setInsert(){
+    insertVertex = true;
+    vertex1 = -1;
+    vertex2 = -1;
+    polygonSelectForm->polygonMessageBox->setPlainText("Click the vertices between which you want to insert a point.");
+}
 void InstaDam::on_actionSave_File_triggered()
 {
     saveFile();
@@ -640,10 +675,40 @@ void InstaDam::on_actionSave_File_triggered()
 
 
 void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
-    //cout << "NEW" << endl;
+    //cout << "CLICK" << endl;
     if(!item){
+        //cout << "QQ" << endl;
+        //if(currentLabel == nullptr){
+        //    cout << "NL" << endl;
+        //}
+        if(!currentLabel){
+        //    cout << "NO LABEL" << endl;
+            return;
+        }
+        //cout << "CL" << currentLabel->getText().toStdString() << "__" << endl;
+
         if(currentItem && currentItem->type() == Polygon){
-            currentItem->addPoint(pos);
+            //cout << "AA" << endl;
+            if(insertVertex && vertex1 >= 0 && vertex2 >= 0){
+                //cout << "BB" << endl;
+                if(abs(vertex2 - vertex1) == 1){
+                  //  cout << "CC" << endl;
+                    currentItem->insertVertex(min(vertex1, vertex2), pos);
+                }
+                else{
+                    //cout << "DD" << endl;
+                    currentItem->insertVertex(max(vertex1, vertex2), pos);
+                }
+                //cout << "EE" << endl;
+                vertex1 = -1;
+                vertex2 = -1;
+                insertVertex = false;
+                polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
+            }
+            else{
+                //cout << "FF" << endl;
+                currentItem->addPoint(pos);
+            }
             scene->update();
             return;
         }
@@ -651,22 +716,20 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
         switch(currentSelectType){
             case Rect:
             {
-                //cout << "RECT" << endl;
                 RectangleSelect *temp = new RectangleSelect(pos);
                 scene->addItem(temp);
                 currentItem = temp;
+                currentLabel->addItem(temp);
                 scene->update();
-                //cout << "UPDATE" << endl;
             }
                 break;
             case Ellipse:
             {
-                //cout << "RECT" << endl;
                 EllipseSelect *temp = new EllipseSelect(pos);
                 scene->addItem(temp);
                 currentItem = temp;
+                currentLabel->addItem(temp);
                 scene->update();
-                //cout << "UPDATE" << endl;
             }
                 break;
             case Freedraw:
@@ -674,6 +737,7 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
                 FreeDrawSelect *temp = new FreeDrawSelect(pos);
                 scene->addItem(temp);
                 currentItem = temp;
+                currentLabel->addItem(temp);
                 temp->init(pos);
                 scene->update();
             }
@@ -683,6 +747,7 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
                 PolygonSelect *temp = new PolygonSelect(pos);
                 scene->addItem(temp);
                 currentItem = temp;
+                currentLabel->addItem(temp);
                 scene->update();
             }
                 break;
@@ -694,9 +759,47 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
         }
     }
     else{
+        if(item->type() != currentSelectType){
+
+            switch(item->type()){
+                case Freedraw:
+                    on_freeSelectButton_clicked();
+                    break;
+                case Polygon:
+                    on_polygonSelectButton_clicked();
+                    break;
+                case Rect:
+                    on_rectangleSelectButton_clicked();
+                    break;
+                case Ellipse:
+                    on_ellipseSelectButton_clicked();
+                    break;
+            }
+        }
+
         currentItem = item;
         scene->inactiveAll();
         currentItem->clickPoint(pos);
+
+        if(currentItem->type() == Polygon && insertVertex){
+            int vert = currentItem->getActiveVertex();
+            cout << vert << endl;
+            if(vert != UNSELECTED){
+                if(vertex1 <0){
+                    vertex1 = vert;
+                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                }
+                else if(vertex2 < 0){
+                    if(abs(vert - vertex1) != 1 && abs(vert - vertex1) != (currentItem->numberOfVertices() - 1)){
+                        polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                    }
+                    else{
+                        vertex2 = vert;
+                        polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                    }
+                }
+            }
+        }
         scene->update();
     }
 }
@@ -739,7 +842,10 @@ void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
 }
 
 void InstaDam::finishPolygonButtonClicked(){
+    if(currentItem)
+        currentItem->setActiveVertex(UNSELECTED);
     currentItem = nullptr;
+    scene->update();
 }
 void InstaDam::processKeyPressed(const int key){
     if(!currentItem){

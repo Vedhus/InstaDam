@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 //#include "QtWidgets/private/qgraphicsitem_p.h"
 
+QString EllipseSelect::baseInstruction = QString("");
+
 EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, item)
 {
@@ -12,7 +14,9 @@ EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
     setRect(myRect);
     mytype = Ellipse;
     //myRect = rect;
-    setPen(BoxBasedSelector::pen);
+    myPen = BoxBasedSelector::pen;
+    setPen(myPen);
+    invertColorForPen();
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
@@ -30,11 +34,8 @@ EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *ite
 }
 
 void EllipseSelect::addPoint(QPointF &point, int vertex){
-    //myRect.setBottomRight(point);
-    //std::cout << "ADD POINT " << point.x() << "," << point.y() << std::endl;
 
     sortCorners(myRect, point);
-    //std::cout << "  " << myRect.topLeft().x() << "," << myRect.topLeft().y() << "  " << myRect.bottomRight().x() << "," << myRect.bottomRight().y() << std::endl;
     calcCorners();
 
     QGraphicsEllipseItem::prepareGeometryChange();
@@ -43,14 +44,11 @@ void EllipseSelect::addPoint(QPointF &point, int vertex){
 }
 
 void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    //std::cout << "MI " << activeCorner << std::endl;
     if(activeVertex != 0){
-        //std::cout << "RESIZE" << std::endl;
         addPoint(newPos);
         resized = true;
     }
     else{
-        //std::cout << "MOVE" << std::endl;
         QPointF shift = newPos - oldPos;
         checkBoundaries(shift, myRect);
         moved = true;
@@ -58,6 +56,10 @@ void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     calcCorners();
     QGraphicsEllipseItem::prepareGeometryChange();
     setRect(myRect);
+}
+
+void EllipseSelect::updatePen(QPen pen){
+    setPen(pen);
 }
 
 

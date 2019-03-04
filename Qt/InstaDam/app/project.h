@@ -1,6 +1,6 @@
 #ifndef PROJECT_H
 #define PROJECT_H
-#include "label.h"
+#include "../Selector/label.h"
 #include <QVector>
 
 class Project{
@@ -13,7 +13,7 @@ class Project{
 
         ~Project();
 
-        Label getLabel(int index);
+        Label *getLabel(int index);
 
         void setLabel(int index, Label lb);
 

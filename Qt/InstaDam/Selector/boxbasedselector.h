@@ -12,6 +12,9 @@ public:
     void resetActiveVertex() override;
     void removeVertex(int vertex = UNSELECTED) override;
     void init(QPointF &point) override {}
+    void insertVertex(int vertex, QPointF &point) override {}
+    int numberOfVertices() override {return 2;}
+
 protected:
     void calcCorners();
     QRectF tl, bl, tr, br;

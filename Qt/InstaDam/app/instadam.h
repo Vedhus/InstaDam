@@ -15,6 +15,11 @@
 #include <QMenu>
 
 #include "newproject.h"
+#include "ui_blankFrame.h"
+#include "ui_freeSelect.h"
+#include "ui_polygonSelect.h"
+#include "../Selector/label.h"
+#include "labelButton.h"
 
 #include <iostream>
 #include <string>
@@ -89,7 +94,10 @@ private slots:
     void on_actionSave_File_triggered();
 
     void on_saveAndNext_clicked();
-
+    void setInsert();
+    void toggleDrawing(bool value);
+    void setCurrentLabel(Label *label);
+    void setCurrentLabel(LabelButton *button);
 public slots:
     void resetPixmapButtons();
 
@@ -103,6 +111,7 @@ private:
     void addConnector(QString text, std::function<void(void)> onActivate);
     MyConnector *openFile;
 #endif
+    Label *currentLabel;
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;
@@ -118,6 +127,14 @@ private:
     QWidget *freeSelectWidget;
     QWidget *polygonSelectWidget;
     QGridLayout *controlLayout;
+    Ui::blankForm *blankForm;
+    Ui::freeSelectForm *freeSelectForm;
+    Ui::polygonSelectForm *polygonSelectForm;
+    bool drawing = true;
+    int lastType = -1;
+    bool insertVertex = false;
+    int vertex1 = -1;
+    int vertex2 = -1;
 };
 
 

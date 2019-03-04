@@ -8,9 +8,9 @@ Project::~Project()
 {
 }
 
-Label Project::getLabel(int index)
+Label *Project::getLabel(int index)
 {
-    return labels[index];
+    return &labels[index];
 }
 
 void Project::setLabel(int index, Label lb)

@@ -17,7 +17,9 @@
 #include <QGraphicsItem>
 #include <QWidget>
 #include <QPainter>
+//#include "label.h"
 
+class Label;
 const int UNSELECTED = INT_MAX;
 
 enum SelectType:int {Rect=51, Ellipse=52,Polygon=53, Freedraw=54};
@@ -36,8 +38,9 @@ QT_END_NAMESPACE
 
 class SelectItem : public QGraphicsItem
 {
-    static int ID;
     public:
+        static int ID;
+        static QSize myBounds;
         static qreal vertexSize;
         static QPointF xoffset;
         static QPointF yoffset;
@@ -63,7 +66,11 @@ class SelectItem : public QGraphicsItem
         int getActiveVertex(){return activeVertex;}
         virtual void removeVertex(int vertex = UNSELECTED) = 0;
         virtual void resetActiveVertex() = 0;
+        virtual void insertVertex(int vertex, QPointF &point) = 0;
+        virtual QString baseInstructions() = 0;
+        virtual int numberOfVertices() = 0;
         QPointF getActivePoint(){return activePoint;}
+        virtual void updatePen(QPen pen) = 0;
         void resetState(){
             moved = false;
             resized = false;
@@ -83,7 +90,10 @@ class SelectItem : public QGraphicsItem
         void itemWasAdded(){hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
         virtual void init(QPointF &point) = 0;
+        void setLabel(Label *label);
+        void invertColorForPen();
     protected:
+        QPen highlightPen, myPen;
         SelectType selectType;
         QPointF selectedPoint;
         int mytype;
@@ -101,10 +111,11 @@ class SelectItem : public QGraphicsItem
         QPen pen;
         bool hasBeenAdded = false;
         int myID;
+        Label *myLabel;
 };
 
 
 
 
-#endif /* DIAGRAMITEM_H */
+#endif
 

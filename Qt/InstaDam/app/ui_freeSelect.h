@@ -25,63 +25,90 @@ class Ui_freeSelectForm
 {
 public:
     QGridLayout *gridLayout;
+    QSlider *brushSizeSlider;
+    QSpacerItem *freeDrawSpacer;
+    QPushButton *eraseButton;
+    QPushButton *drawButton;
+    QPushButton *roundBrushButton;
     QLabel *brushSizeLabel;
     QSpinBox *brushSizeSpinner;
-    QSlider *brushSizeSlider;
-    QPushButton *roundBrushButton;
     QPushButton *squareBrushButton;
-    QSpacerItem *freeDrawSpacer;
 
     void setupUi(QWidget *freeSelectForm)
     {
         if (freeSelectForm->objectName().isEmpty())
             freeSelectForm->setObjectName(QString::fromUtf8("freeSelectForm"));
         freeSelectForm->resize(1421, 152);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(2);
+        sizePolicy.setHeightForWidth(freeSelectForm->sizePolicy().hasHeightForWidth());
+        freeSelectForm->setSizePolicy(sizePolicy);
+        freeSelectForm->setMinimumSize(QSize(0, 0));
         gridLayout = new QGridLayout(freeSelectForm);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setHorizontalSpacing(30);
-        brushSizeLabel = new QLabel(freeSelectForm);
-        brushSizeLabel->setObjectName(QString::fromUtf8("brushSizeLabel"));
-
-        gridLayout->addWidget(brushSizeLabel, 0, 1, 1, 1);
-
-        brushSizeSpinner = new QSpinBox(freeSelectForm);
-        brushSizeSpinner->setObjectName(QString::fromUtf8("brushSizeSpinner"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(brushSizeSpinner->sizePolicy().hasHeightForWidth());
-        brushSizeSpinner->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(brushSizeSpinner, 0, 3, 1, 1);
-
         brushSizeSlider = new QSlider(freeSelectForm);
         brushSizeSlider->setObjectName(QString::fromUtf8("brushSizeSlider"));
         brushSizeSlider->setMinimumSize(QSize(200, 0));
         brushSizeSlider->setMaximumSize(QSize(120, 16777215));
         brushSizeSlider->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(brushSizeSlider, 0, 2, 1, 1);
-
-        roundBrushButton = new QPushButton(freeSelectForm);
-        roundBrushButton->setObjectName(QString::fromUtf8("roundBrushButton"));
-        sizePolicy.setHeightForWidth(roundBrushButton->sizePolicy().hasHeightForWidth());
-        roundBrushButton->setSizePolicy(sizePolicy);
-        roundBrushButton->setMinimumSize(QSize(201, 36));
-
-        gridLayout->addWidget(roundBrushButton, 0, 0, 1, 1);
-
-        squareBrushButton = new QPushButton(freeSelectForm);
-        squareBrushButton->setObjectName(QString::fromUtf8("squareBrushButton"));
-        sizePolicy.setHeightForWidth(squareBrushButton->sizePolicy().hasHeightForWidth());
-        squareBrushButton->setSizePolicy(sizePolicy);
-        squareBrushButton->setMinimumSize(QSize(201, 36));
-
-        gridLayout->addWidget(squareBrushButton, 1, 0, 1, 1);
+        gridLayout->addWidget(brushSizeSlider, 0, 3, 1, 1);
 
         freeDrawSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addItem(freeDrawSpacer, 0, 4, 1, 1);
+        gridLayout->addItem(freeDrawSpacer, 0, 5, 1, 1);
+
+        eraseButton = new QPushButton(freeSelectForm);
+        eraseButton->setObjectName(QString::fromUtf8("eraseButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(eraseButton->sizePolicy().hasHeightForWidth());
+        eraseButton->setSizePolicy(sizePolicy1);
+        eraseButton->setMinimumSize(QSize(150, 36));
+        eraseButton->setCheckable(true);
+
+        gridLayout->addWidget(eraseButton, 1, 0, 1, 1);
+
+        drawButton = new QPushButton(freeSelectForm);
+        drawButton->setObjectName(QString::fromUtf8("drawButton"));
+        sizePolicy1.setHeightForWidth(drawButton->sizePolicy().hasHeightForWidth());
+        drawButton->setSizePolicy(sizePolicy1);
+        drawButton->setMinimumSize(QSize(150, 36));
+        drawButton->setCheckable(true);
+        drawButton->setChecked(true);
+
+        gridLayout->addWidget(drawButton, 0, 0, 1, 1);
+
+        roundBrushButton = new QPushButton(freeSelectForm);
+        roundBrushButton->setObjectName(QString::fromUtf8("roundBrushButton"));
+        sizePolicy1.setHeightForWidth(roundBrushButton->sizePolicy().hasHeightForWidth());
+        roundBrushButton->setSizePolicy(sizePolicy1);
+        roundBrushButton->setMinimumSize(QSize(150, 36));
+
+        gridLayout->addWidget(roundBrushButton, 0, 1, 1, 1);
+
+        brushSizeLabel = new QLabel(freeSelectForm);
+        brushSizeLabel->setObjectName(QString::fromUtf8("brushSizeLabel"));
+
+        gridLayout->addWidget(brushSizeLabel, 0, 2, 1, 1);
+
+        brushSizeSpinner = new QSpinBox(freeSelectForm);
+        brushSizeSpinner->setObjectName(QString::fromUtf8("brushSizeSpinner"));
+        sizePolicy1.setHeightForWidth(brushSizeSpinner->sizePolicy().hasHeightForWidth());
+        brushSizeSpinner->setSizePolicy(sizePolicy1);
+
+        gridLayout->addWidget(brushSizeSpinner, 0, 4, 1, 1);
+
+        squareBrushButton = new QPushButton(freeSelectForm);
+        squareBrushButton->setObjectName(QString::fromUtf8("squareBrushButton"));
+        sizePolicy1.setHeightForWidth(squareBrushButton->sizePolicy().hasHeightForWidth());
+        squareBrushButton->setSizePolicy(sizePolicy1);
+        squareBrushButton->setMinimumSize(QSize(150, 36));
+
+        gridLayout->addWidget(squareBrushButton, 1, 1, 1, 1);
 
 
         retranslateUi(freeSelectForm);
@@ -92,8 +119,10 @@ public:
     void retranslateUi(QWidget *freeSelectForm)
     {
         freeSelectForm->setWindowTitle(QApplication::translate("freeSelectForm", "Form", nullptr));
-        brushSizeLabel->setText(QApplication::translate("freeSelectForm", "Brush Size", nullptr));
+        eraseButton->setText(QApplication::translate("freeSelectForm", "Erase", nullptr));
+        drawButton->setText(QApplication::translate("freeSelectForm", "Draw", nullptr));
         roundBrushButton->setText(QApplication::translate("freeSelectForm", "Round", nullptr));
+        brushSizeLabel->setText(QApplication::translate("freeSelectForm", "Brush Size", nullptr));
         squareBrushButton->setText(QApplication::translate("freeSelectForm", "Square", nullptr));
     } // retranslateUi
 
