@@ -30,6 +30,7 @@ public:
         void insertVertex(int vertex, QPointF &point) override;
         QString baseInstructions() override {return PolygonSelect::baseInstruction;}
         int numberOfVertices() override;
+        void updatePen(QPen pen) override;
     private:
         QRectF makeVertex(QPointF &point);
         void refresh();

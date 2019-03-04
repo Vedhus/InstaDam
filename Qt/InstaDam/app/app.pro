@@ -9,7 +9,6 @@ TEMPLATE = app
 SOURCES += \
         main.cpp \
         instadam.cpp \
-        label.cpp \
         project.cpp \
         maskviewer.cpp \
         photoviewer.cpp \
@@ -21,10 +20,10 @@ SOURCES += \
         filtercontrols.cpp \
         fslider.cpp \
         newproject.cpp \
+    labelButton.cpp
 
 HEADERS += \
         instadam.h \
-        label.h \
         project.h \
         photoviewer.h \
         maskviewer.h \
@@ -37,6 +36,7 @@ HEADERS += \
         filterproperty.h \
         fslider.h \
         newproject.h \
+    labelButton.h
 
 FORMS += \
         instadam.ui \

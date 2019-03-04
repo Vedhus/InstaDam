@@ -1,6 +1,6 @@
 #include "newproject.h"
 #include "ui_newproject.h"
-#include "label.h"
+#include "../Selector/label.h"
 #include <QInputDialog>
 #include <QColorDialog>
 #include "QTextStream"
@@ -29,8 +29,8 @@ void newproject::on_pushButton_clicked()
     lb.setColor(color);
     this->newPr.addLabel(lb);
 
-    QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1).getColor().name() << endl;
-    QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1).getText() << endl;
+    QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getColor().name() << endl;
+    QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getText() << endl;
     QTextStream(stdout) << this->newPr.numLabels() << endl;
 }
 

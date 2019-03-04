@@ -19,12 +19,16 @@ RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *i
 {
     setRect(myRect);
     mytype = Rect;
-    myPen = BoxBasedSelector::pen;
+    //myPen = BoxBasedSelector::pen;
     //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
-    setPen(myPen);
+    //setPen(myPen);
     invertColorForPen();
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
+
+void RectangleSelect::updatePen(QPen pen){
+    setPen(pen);
 }
 
 RectangleSelect::RectangleSelect(QPointF point, QGraphicsItem *item)

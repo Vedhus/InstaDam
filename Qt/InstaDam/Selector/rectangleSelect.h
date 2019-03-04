@@ -19,6 +19,7 @@ public:
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         //void resizeItem(int vertex, QPointF &newPos) override;
         //void clickPoint(QPointF &point) override;
+        void updatePen(QPen pen) override;
         int type(){return SelectItem::type();}
         QRectF boundingRect() const override;
         bool isInside(QPointF &point) override;

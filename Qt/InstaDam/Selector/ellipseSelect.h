@@ -18,6 +18,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         //void resizeItem(int vertex, QPointF &shift) override;
         //void clickPoint(QPointF &point) override;
+        void updatePen(QPen pen) override;
         QRectF boundingRect() const override;
         bool isInside(QPointF &point) override;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;

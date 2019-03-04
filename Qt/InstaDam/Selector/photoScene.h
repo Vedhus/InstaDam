@@ -1,18 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/* 
- * File:   diagramscene.h
- * Author: friedel
- *
- * Created on February 6, 2019, 9:00 PM
- */
-
-#ifndef DIAGRAMSCENE_H
-#define DIAGRAMSCENE_H
+#ifndef PHOTOSCENE_H
+#define PHOTOSCENE_H
 
 #include <QObject>
 #include <QGraphicsScene>
@@ -69,5 +57,5 @@ private:
 };
 
 
-#endif /* DIAGRAMSCENE_H */
+#endif
 

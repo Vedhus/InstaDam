@@ -7,7 +7,7 @@ using namespace std;
 
 PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     : SelectItem(item), QGraphicsPolygonItem(item){
-    std::cout << "POLY INIT" << std::endl;
+    cout << "POLY INIT" << endl;
     myPoints.push_back(point);
     setActiveVertex(0);
     activePoint = point;
@@ -45,6 +45,10 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 
+}
+
+void PolygonSelect::updatePen(QPen pen){
+    setPen(pen);
 }
 
 int PolygonSelect::numberOfVertices(){
@@ -251,6 +255,6 @@ void PolygonSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 }
 
 QRectF PolygonSelect::makeVertex(QPointF &point){
-    return QRectF(point - SelectItem::xoffset - SelectItem::yoffset,
-                  point + SelectItem::yoffset + SelectItem::xoffset);
+    return QRectF(point - (SelectItem::xoffset/2.) - (SelectItem::yoffset/2.),
+                  point + (SelectItem::yoffset/2.) + (SelectItem::xoffset/2.));
 }

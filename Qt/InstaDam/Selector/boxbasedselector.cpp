@@ -6,8 +6,8 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, QGraphicsItem *item) : SelectI
     myRect.setBottomRight(point);
     calcCorners();
     active = true;
-    pen = QPen(Qt::blue);
-    pen.setWidth(5);
+    //pen = QPen(Qt::blue);
+    //pen.setWidth(5);
 }
 
 BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QGraphicsItem *item ) :
@@ -16,8 +16,8 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QGraphicsItem 
     myRect.setBottomRight(point);
     calcCorners();
     active = true;
-    pen = QPen(Qt::blue);
-    pen.setWidth(5);
+    //pen = QPen(Qt::blue);
+    //pen.setWidth(5);
 }
 
 void BoxBasedSelector::resetActiveVertex(){

@@ -24,6 +24,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
         QGraphicsScene* scene();
         void movePoint(QPointF &point);
+        void updatePen(QPen pen) override;
         void checkPoint(QPointF &point);
         void init(QPointF &point) override;
         void insertVertex(int vertex, QPointF &point) override {}
@@ -31,18 +32,20 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         int numberOfVertices() override {return 0;}
     private:
         const int pixel = 5;
-        QPolygon polygon;
+        //QPolygon polygon;
         //QVector<QVector <Block*> > myMap;
-        QHash<int, int> *myMap;
+        QHash<int, QPoint> *myMap;
+        int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
+        int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
         //Block inUse;
-        QPoint gridSize;
-        QPointF offset;
+        //QPoint gridSize;
+        //QPointF offset;
         //QPen myPen;
-        const int baseSize = 100;
+        //const int baseSize = 100;
         //QVector<bool> baseVector = QVector<bool>(baseSize, false);
         //QPoint getBox(QPoint &point);
         //Block* makeBlock();
-        QVector<QPoint> rasterizeLine(QPoint &start, QPoint &end);
+        void rasterizeLine(QPoint &start, QPoint &end);
         void checkPoint(QPoint &point);
         //void updateMap(QPoint &point);
 };

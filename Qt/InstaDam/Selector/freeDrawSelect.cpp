@@ -9,11 +9,12 @@ QString FreeDrawSelect::baseInstruction = QString("");
 FreeDrawSelect::FreeDrawSelect(QPointF point, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(item){
     //QPointF pnt = QPointF(int(point.x()), int(point.y()));
-    polygon << point.toPoint();
-    offset = point;
+    //polygon << point.toPoint();
+    //offset = point;
     //gridSize = QPointF(scene()->width(), scene()->height());
     //addBlock(point);
-    myMap = new QHash<int, int>;
+    myMap = new QHash<int, QPoint>;
+    myMap->insert(pointToInt(point.toPoint()), point.toPoint());
     setActiveVertex(0);
     myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
     mytype = Freedraw;
@@ -25,6 +26,10 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, QGraphicsItem *item)
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsMovable);
 
+}
+
+void FreeDrawSelect::updatePen(QPen pen){
+    setPen(pen);
 }
 
 //QPoint FreeDrawSelect::getBox(QPoint &point){
@@ -66,7 +71,7 @@ void FreeDrawSelect::init(QPointF &point){
 //    return block;
 //}
 
-QVector<QPoint> FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
+void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
     qreal dx = end.x() - start.x();
     qreal dy = end.y() - start.y();
     qreal step;
@@ -83,11 +88,12 @@ QVector<QPoint> FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
     x = start.x();
     y = start.y();
     for(int i = 1.; i <= step; i++){
-        points.push_back(QPointF(x, y).toPoint());
+        //points.push_back(QPointF(x, y).toPoint());
+        myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
         x += dx;
         y += dy;
     }
-    return points;
+    //return points;
 }
 
 //void updateCorner(QPointF point);
@@ -146,7 +152,7 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     QVector<QPoint> points = QVector<QPoint>();
 
     for(int i = 0; i < pixel; i++){
-        points.append(rasterizeLine(start, end));
+        rasterizeLine(start, end);
         start.rx() += dx;
         end.rx() += dx;
     }
@@ -154,12 +160,12 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     for(int i = 1; i < pixel; i++){
         start.ry() += dy;
         end.ry() += dy;
-        points.append(rasterizeLine(start, end));
+        rasterizeLine(start, end);
     }
-    for(QVector<QPoint>::iterator it = points.begin(); it != points.end(); ++it){
-        updateMap((*it));
-    }
-    polygon.append(points);
+    //for(QVector<QPoint>::iterator it = points.begin(); it != points.end(); ++it){
+    //    updateMap((*it));
+    //}
+    //polygon.append(points);
 }
 
 
@@ -180,12 +186,17 @@ bool FreeDrawSelect::isInside(QPointF &point){
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     //QAbstractGraphicsShapeItem::paint(painter, option, widget);
     //cout << "PAINT" << endl;
+    //QList<QPoint> myl = QList<QPoint>();
+    //QPolygon qp = QPolygon(QPolygon::fromList(myl));
+    //painter->drawPoints(QPolygon::fromList(myl));
     painter->setPen(myPen);
     painter->setBrush(brush());
     //for(QPolygon::iterator it = polygon.begin() ; it != polygon.end(); ++it){
     //    cout << (*it).x() << "  " << (*it).y() << endl;
         //painter->drawPoint((*it));
     //}
-    painter->drawPoints(polygon);
+    //painter->drawPoints(mypoints, mypoints->size());
+    //painter->drawPoints(polygon);
+    painter->drawPoints(QPolygon::fromList(myMap->values()));
     //}
 }

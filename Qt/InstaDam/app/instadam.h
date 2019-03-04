@@ -18,6 +18,8 @@
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
 #include "ui_polygonSelect.h"
+#include "../Selector/label.h"
+#include "labelButton.h"
 
 #include <iostream>
 #include <string>
@@ -94,7 +96,8 @@ private slots:
     void on_saveAndNext_clicked();
     void setInsert();
     void toggleDrawing(bool value);
-
+    void setCurrentLabel(Label *label);
+    void setCurrentLabel(LabelButton *button);
 public slots:
     void resetPixmapButtons();
 
@@ -108,6 +111,7 @@ private:
     void addConnector(QString text, std::function<void(void)> onActivate);
     MyConnector *openFile;
 #endif
+    Label *currentLabel;
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;

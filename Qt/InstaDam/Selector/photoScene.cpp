@@ -30,7 +30,6 @@ void PhotoScene::addItem(SelectItem* item){
 
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){
-    cout << "K" << event->key() << "  " << Qt::Key_Delete << endl;
     emit keyPressed(event->key());
     QGraphicsScene::keyPressEvent(event);
 }
@@ -46,11 +45,9 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            cout << "ITEM" << endl;
             emit pointClicked(item, mousePos);
         }
         else{
-            cout << "NO ITEM" << endl;
             emit pointClicked(nullptr, mousePos);
         }
 
