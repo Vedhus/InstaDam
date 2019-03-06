@@ -54,6 +54,7 @@ QGraphicsScene* RectangleSelect::scene(){
 //}
 
 void RectangleSelect::addPoint(QPointF &point, int vertex){
+    UNUSED(vertex);
     //myRect.setBottomRight(point);
     //cout << "ADD POINT " << point.x() << "," << point.y() << endl;
 

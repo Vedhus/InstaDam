@@ -18,8 +18,8 @@ class FreeDrawErase : public FreeDrawSelect
         FreeDrawErase(QPointF point, int brushSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
         ~FreeDrawErase() override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
-        bool isInside(QPointF &point) override {return false;}
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {}
+        bool isInside(QPointF &point) override {UNUSED(point); return false;}
+        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {UNUSED(painter); UNUSED(option); UNUSED(widget);}
         EraseMap* getMap(){return undoMap;}
 protected:
         void rasterizeLine(QPoint &start, QPoint &end);

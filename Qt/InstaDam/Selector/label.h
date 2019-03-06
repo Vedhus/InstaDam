@@ -37,7 +37,7 @@ class Label{
     void addItem(RectangleSelect *item);
     void addItem(EllipseSelect *item);
     void addItem(PolygonSelect *item);
-    void addItem(FreeDrawErase *item){}
+    void addItem(FreeDrawErase *item){UNUSED(item);}
     void removeItem(const int id);
 };
 

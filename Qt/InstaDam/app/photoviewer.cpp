@@ -300,7 +300,7 @@ void PhotoViewer::wheelEvent(QWheelEvent* event)
         }
         else
         {
-            factor = 0.8;
+            factor = 0.8f;
             zoom -= 1;
         }
 
@@ -365,18 +365,7 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
 
     if(hasPhoto)
     {
-        if (paintMode)
-        {
-            //QPainter p(&currentMap);
-            //p.setPen(pen);
-            //p.drawLine(mapToScene(lastPos), mapToScene(event->pos()));
-            //QPointF endPoint = mapToScene(event->pos());
-            //path.moveTo(mapToScene(lastPos));
-            //path.lineTo(endPoint);
-            //lastPos = event->pos();
-            //brush->setPath(path);
-        }
-        else
+        if (!paintMode)
         {
             QRect viewrect = viewport()->rect();
             QPointF point = this->mapToScene(round(viewrect.width()/2.0), round(viewrect.height()/2.0));

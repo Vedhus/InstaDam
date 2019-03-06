@@ -37,6 +37,7 @@ void FreeDrawSelect::updatePen(QPen pen){
 }
 
 void FreeDrawSelect::init(QPointF &point){
+    UNUSED(point);
 }
 
 void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
@@ -64,6 +65,8 @@ void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
 }
 
 void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
+    UNUSED(point);
+    UNUSED(vertex);
     QAbstractGraphicsShapeItem::prepareGeometryChange();
 
     myRect = this->boundingRect();
@@ -191,6 +194,8 @@ bool FreeDrawSelect::isInside(QPointF &point){
 }
 
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    UNUSED(option);
+    UNUSED(widget);
     painter->setPen(myPen);
     painter->setBrush(brush());
     FreeMapIterator it((*myMap));

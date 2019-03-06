@@ -37,7 +37,7 @@ EllipseSelect::~EllipseSelect(){
 
 }
 void EllipseSelect::addPoint(QPointF &point, int vertex){
-
+    UNUSED(vertex);
     sortCorners(myRect, point);
     calcCorners();
 

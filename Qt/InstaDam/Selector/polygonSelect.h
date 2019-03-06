@@ -26,7 +26,7 @@ public:
         void checkPoint(QPointF &point);
         void removeVertex(int vertex=UNSELECTED) override;
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-        void init(QPointF &point) override {}
+        void init(QPointF &point) override {UNUSED(point);}
         void insertVertex(int vertex, QPointF &point) override;
         QString baseInstructions() override {return PolygonSelect::baseInstruction;}
         int numberOfVertices() override;

@@ -23,7 +23,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void resizeItem(int vertex, QPointF &shift) override;
         void clickPoint(QPointF &point) override;
         void resetActiveVertex() override{}
-        void removeVertex(int vertex=UNSELECTED) override {}
+        void removeVertex(int vertex=UNSELECTED) override {UNUSED(vertex);}
         QRectF boundingRect() const override;
         bool isInside(QPointF &point) override;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
@@ -32,7 +32,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void updatePen(QPen pen) override;
         void checkPoint(QPointF &point);
         void init(QPointF &point) override;
-        void insertVertex(int vertex, QPointF &point) override {}
+        void insertVertex(int vertex, QPointF &point) override {UNUSED(vertex);UNUSED(point);}
         QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
         int numberOfVertices() override {return 0;}
         void deletePoints(QVector<int> &points, FreeMap *delHash);

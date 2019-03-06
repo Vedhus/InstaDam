@@ -28,7 +28,7 @@ void BoxBasedSelector::resetActiveVertex(){
 }
 
 void BoxBasedSelector::removeVertex(int vertex){
-
+    UNUSED(vertex);
 }
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
