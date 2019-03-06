@@ -18,11 +18,11 @@
 #include <QWidget>
 #include <QPainter>
 //#include "label.h"
-
+#define UNUSED(x) (void)(x)
 class Label;
 const int UNSELECTED = INT_MAX;
 
-enum SelectType:int {Rect=51, Ellipse=52,Polygon=53, Freedraw=54};
+enum SelectType:int {Rect=51, Ellipse=52,Polygon=53, Freedraw=54, Freeerase=55};
 
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
@@ -45,8 +45,9 @@ class SelectItem : public QGraphicsItem
         static QPointF xoffset;
         static QPointF yoffset;
 
-        SelectItem(qreal vertSize = 10., QGraphicsItem *item = nullptr);
-        SelectItem(QGraphicsItem *item = nullptr);
+        SelectItem(qreal vertSize = 10., Label *label=nullptr, QGraphicsItem *item = nullptr);
+        SelectItem(Label *label=nullptr, QGraphicsItem *item = nullptr);
+        virtual ~SelectItem() override {}
         virtual void addPoint(QPointF &point, int vertex = UNSELECTED) = 0;
         virtual void moveItem(QPointF &oldPos, QPointF &newPos) = 0;
         virtual void resizeItem(int vertex, QPointF &shift) = 0;
@@ -92,6 +93,7 @@ class SelectItem : public QGraphicsItem
         virtual void init(QPointF &point) = 0;
         void setLabel(Label *label);
         void invertColorForPen();
+        int myID;
     protected:
         QPen highlightPen, myPen;
         SelectType selectType;
@@ -110,7 +112,6 @@ class SelectItem : public QGraphicsItem
         QPointF activePoint;
         QPen pen;
         bool hasBeenAdded = false;
-        int myID;
         Label *myLabel;
 };
 

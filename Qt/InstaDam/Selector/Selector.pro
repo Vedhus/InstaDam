@@ -12,8 +12,8 @@ HEADERS = \
     $$PWD/freeDrawSelect.h \
     boxbasedselector.h \
     selectgroup.h \
-    label.h
-    //freedrawerase.h
+    label.h \
+    freeDrawErase.h
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \
@@ -25,8 +25,8 @@ SOURCES = \
     $$PWD/freeDrawSelect.cpp \
     boxbasedselector.cpp \
     selectgroup.cpp \
-    label.cpp
-    //freedrawerase.cpp
+    label.cpp \
+    freeDrawErase.cpp
 
 LIBS += -lQt5Widgets
 

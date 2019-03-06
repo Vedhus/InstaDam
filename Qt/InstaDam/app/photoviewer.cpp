@@ -367,14 +367,14 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
     {
         if (paintMode)
         {
-            QPainter p(&currentMap);
-            p.setPen(pen);
-            p.drawLine(mapToScene(lastPos), mapToScene(event->pos()));
-            QPointF endPoint = mapToScene(event->pos());
-            path.moveTo(mapToScene(lastPos));
-            path.lineTo(endPoint);
-            lastPos = event->pos();
-            brush->setPath(path);
+            //QPainter p(&currentMap);
+            //p.setPen(pen);
+            //p.drawLine(mapToScene(lastPos), mapToScene(event->pos()));
+            //QPointF endPoint = mapToScene(event->pos());
+            //path.moveTo(mapToScene(lastPos));
+            //path.lineTo(endPoint);
+            //lastPos = event->pos();
+            //brush->setPath(path);
         }
         else
         {

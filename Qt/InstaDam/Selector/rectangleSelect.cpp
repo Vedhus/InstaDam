@@ -1,4 +1,5 @@
 #include "rectangleSelect.h"
+#include "label.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <algorithm>
@@ -14,11 +15,13 @@ RectangleSelect::~RectangleSelect(){
 //    setActiveVertex(vertex);
 //    addPoint(newPos);
 //}
-RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *item)
-    : BoxBasedSelector(point, vertSize,item), QGraphicsRectItem(item)
+RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item)
+    : BoxBasedSelector(point, vertSize,label, item), QGraphicsRectItem(item)
 {
     setRect(myRect);
     mytype = Rect;
+    label->addItem(this);
+    updatePen(myPen);
     //myPen = BoxBasedSelector::pen;
     //QColor color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
     //setPen(myPen);
@@ -31,12 +34,12 @@ void RectangleSelect::updatePen(QPen pen){
     setPen(pen);
 }
 
-RectangleSelect::RectangleSelect(QPointF point, QGraphicsItem *item)
-    : BoxBasedSelector(point,item), QGraphicsRectItem(item)
+RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *item)
+    : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
 {
     setRect(myRect);
     mytype = Rect;
-    setPen(BoxBasedSelector::pen);
+    updatePen(myPen);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }

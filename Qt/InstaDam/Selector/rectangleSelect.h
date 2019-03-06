@@ -12,8 +12,8 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem
 
 public:
     static QString baseInstruction;
-        RectangleSelect(QPointF point, QGraphicsItem *item = nullptr);
-        RectangleSelect(QPointF point, qreal vertSize, QGraphicsItem *item = nullptr);
+        RectangleSelect(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
+        RectangleSelect(QPointF point, qreal vertSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
         ~RectangleSelect() override;
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;

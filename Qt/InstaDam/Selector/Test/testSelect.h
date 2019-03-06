@@ -3,7 +3,11 @@
 #include <QtTest/QtTest>
 #include "../rectangleSelect.h"
 #include "../ellipseSelect.h"
+#include "../freeDrawErase.h"
+#include "../freeDrawSelect.h"
+#include "../label.h"
 
+//int SelectItem::ID = 0;
 class TestSelect: public QObject
 {
     Q_OBJECT
@@ -29,8 +33,11 @@ private slots:
     void testEllipseClickPoint();
     void testEllipseBoundingRect();
     void testEllipseIsInside();
+    void testFreeMove();
+    void testEraseMove();
 
 private:
+    Label *myLabel = new Label();
     QPointF point = QPointF(5., 10.);
     QPointF brc = QPointF(20.,20.);
     QPointF tlc = QPointF(1.,1.);
@@ -42,6 +49,8 @@ private:
     QPointF insideBRC = QPointF(19.,19.);
     RectangleSelect *ritem;
     EllipseSelect *eitem;
+    FreeDrawSelect *fitem;
+    FreeDrawErase *feitem;
 };
 
 #endif // TESTRECTANGLESELECT_H

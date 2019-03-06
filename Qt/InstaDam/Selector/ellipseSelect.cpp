@@ -1,4 +1,5 @@
 #include "ellipseSelect.h"
+#include "label.h"
 #include <iostream>
 #include <cmath>
 #include <QPainter>
@@ -7,32 +8,34 @@
 
 QString EllipseSelect::baseInstruction = QString("");
 
-EllipseSelect::EllipseSelect(QPointF point, QGraphicsItem *item)
-    : QGraphicsEllipseItem(item), BoxBasedSelector(point, item)
+EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
 {
-
     setRect(myRect);
     mytype = Ellipse;
-    //myRect = rect;
-    myPen = BoxBasedSelector::pen;
-    setPen(myPen);
+    label->addItem(this);
+    updatePen(myPen);
     invertColorForPen();
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *item)
-    : QGraphicsEllipseItem(item), BoxBasedSelector(point, vertexSize, item)
+EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, Label *label, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), BoxBasedSelector(point, vertexSize, label, item)
 {
     setRect(myRect);
     mytype = Ellipse;
-    //myRect = rect;
+    updatePen(myPen);
+    label->addItem(this);
 
     setPen(BoxBasedSelector::pen);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
+EllipseSelect::~EllipseSelect(){
+
+}
 void EllipseSelect::addPoint(QPointF &point, int vertex){
 
     sortCorners(myRect, point);

@@ -1,7 +1,7 @@
 #include "boxbasedselector.h"
 #include <QPainter>
 
-BoxBasedSelector::BoxBasedSelector(QPointF point, QGraphicsItem *item) : SelectItem(item){
+BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *item) : SelectItem(label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
     calcCorners();
@@ -10,8 +10,8 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, QGraphicsItem *item) : SelectI
     //pen.setWidth(5);
 }
 
-BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QGraphicsItem *item ) :
-    SelectItem(vertSize, item){
+BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item ) :
+    SelectItem(vertSize, label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
     calcCorners();
@@ -20,6 +20,9 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QGraphicsItem 
     //pen.setWidth(5);
 }
 
+BoxBasedSelector::~BoxBasedSelector(){
+
+}
 void BoxBasedSelector::resetActiveVertex(){
     setActiveVertex(0);
 }

@@ -18,14 +18,14 @@ void SelectItem::setVertexSize(qreal size){
     SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
 }
 
-SelectItem::SelectItem(qreal vertSize, QGraphicsItem *item) : QGraphicsItem(item){
+SelectItem::SelectItem(qreal vertSize, Label *label, QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(vertSize);
     myID = SelectItem::ID;
     SelectItem::ID++;
+    setLabel(label);
 }
 
-SelectItem::SelectItem(QGraphicsItem *item) : QGraphicsItem(item){
-    SelectItem::setVertexSize(10.);
+SelectItem::SelectItem(Label *label, QGraphicsItem *item) : SelectItem(10., label, item){
 }
 
 void SelectItem::invertColorForPen(){
@@ -110,7 +110,8 @@ void SelectItem::checkBoundaries(QPointF &shift, QRectF &rect){
 
 void SelectItem::setLabel(Label *label){
     myLabel = label;
-    myPen = QPen(label->getColor());
-    myPen.setWidth(2);
-    updatePen(myPen);
+    if(label != nullptr){
+        myPen = QPen(label->getColor());
+        myPen.setWidth(2);
+    }
 }

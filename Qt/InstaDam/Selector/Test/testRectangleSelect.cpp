@@ -5,9 +5,10 @@
 #include <iostream>
 using namespace std;
 
-
+QSize SelectItem::myBounds = QSize(50,50);
+int SelectItem::ID = 0;
 void TestSelect::testRectClickPoint(){
-    ritem = new RectangleSelect(point, 3.);
+    ritem = new RectangleSelect(point, 3., myLabel);
     ritem->addPoint(brc);
     ritem->clickPoint(outsidePoint);
     QCOMPARE(ritem->getActiveVertex(), 0);
@@ -25,7 +26,7 @@ void TestSelect::testRectClickPoint(){
 }
 
 void TestSelect::testRectBoundingRect(){
-    ritem = new RectangleSelect(point, 3.);
+    ritem = new RectangleSelect(point, 3., myLabel);
     ritem->addPoint(brc);
     QRectF bb = ritem->boundingRect();
     QVERIFY(ritem->isInsideRect(bb, point));
@@ -34,7 +35,7 @@ void TestSelect::testRectBoundingRect(){
 
 void TestSelect::testRectResizeItem(){
     QRectF myRect = QRectF(point, outsidePoint);
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     ritem->resizeItem(BOTTOM | RIGHT, outsidePoint);
     QCOMPARE(ritem->myRect, myRect);
@@ -42,7 +43,7 @@ void TestSelect::testRectResizeItem(){
 }
 
 void TestSelect::testRectMoveItem(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
     QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
@@ -61,7 +62,7 @@ void TestSelect::testRectMoveItem(){
 }
 
 void TestSelect::testCheckBoundaries(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QRectF origRect = ritem->myRect;
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
@@ -87,7 +88,7 @@ void TestSelect::testCheckBoundaries(){
 }
 
 void TestSelect::testSortCorners(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->setActiveVertex(TOP, LEFT);
     ritem->addPoint(tlc);
     QRectF myRect = QRectF(tlc, point);
@@ -95,7 +96,7 @@ void TestSelect::testSortCorners(){
     delete ritem;
 }
 void TestSelect::testRectIsInside(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QVERIFY(ritem->isInside(insidePoint));
     QVERIFY(ritem->isInside(insideTLC));
@@ -105,10 +106,10 @@ void TestSelect::testRectIsInside(){
 
 void TestSelect::testInit()
 {
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->type(), Rect);
     delete ritem;
-    ritem = new RectangleSelect(point, 5.);
+    ritem = new RectangleSelect(point, 5., myLabel);
     QCOMPARE(ritem->type(), Rect);
     delete ritem;
 }
@@ -124,7 +125,7 @@ void TestSelect::testActive(){
 }
 
 void TestSelect::testActiveVertex(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     ritem->setActiveVertex(TOP, LEFT);
     QCOMPARE((ritem->getActiveVertex() & TOP), TOP);
     ritem->flipH();
@@ -137,12 +138,12 @@ void TestSelect::testActiveVertex(){
 }
 
 void TestSelect::testRectAddPoint(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     QRectF myRect = QRectF(point, brc);
     ritem->addPoint(brc);
     QVERIFY(ritem->myRect == myRect);
     delete ritem;
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     myRect = QRectF(tlc, point);
     ritem->addPoint(tlc);
     QVERIFY(ritem->myRect == myRect);
@@ -150,13 +151,13 @@ void TestSelect::testRectAddPoint(){
 }
 
 void TestSelect::testGetType(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->type(), Rect);
     delete ritem;
 }
 
 void TestSelect::testScene(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->scene(), nullptr);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
@@ -168,7 +169,7 @@ void TestSelect::testScene(){
 }
 
 void TestSelect::testGetParentItem(){
-    ritem = new RectangleSelect(point);
+    ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->getParentItem(), nullptr);
     delete ritem;
 }

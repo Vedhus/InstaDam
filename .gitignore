@@ -64,3 +64,5 @@ Qt/InstaDam/libselector\.so\.1\.0\.0
 Qt/InstaDam/Selector/SelectorStandAlone\.pro
 
 Qt/InstaDam/Selector/SelectorStandAlone
+
+*.gcda

@@ -5,14 +5,21 @@ SOURCES = testRectangleSelect.cpp \
           ../boxbasedselector.cpp \
           ../rectangleSelect.cpp \
           ../ellipseSelect.cpp \
-          ../selectItem.cpp
+          ../freeDrawSelect.cpp \
+          ../freeDrawErase.cpp \
+          ../label.cpp \
+          ../selectItem.cpp \
+          testfree.cpp
 
 HEADERS = \
           ../boxbasedselector.h \
           ../rectangleSelect.h \
           ../ellipseSelect.h \
           ../selectItem.h \
-    testSelect.h
+          ../freeDrawSelect.h \
+          ../freeDrawErase.h \
+          ../label.h \
+          testSelect.h
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial1

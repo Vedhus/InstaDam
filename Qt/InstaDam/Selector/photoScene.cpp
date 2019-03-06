@@ -38,8 +38,8 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton){
         mousePressed = true;
-        QPointF mousePos(event->buttonDownScenePos(Qt::LeftButton).x(),
-                         event->buttonDownScenePos(Qt::LeftButton).y());
+        QPointF mousePos(event->scenePos().x(),
+                         event->scenePos().y());
         SelectItem *item = itemAt(mousePos);
 
         oldPos = mousePos;

@@ -4,7 +4,7 @@
 using namespace std;
 
 void TestSelect::testEllipseClickPoint(){
-    eitem = new EllipseSelect(point, 3.);
+    eitem = new EllipseSelect(point, 3., myLabel);
     eitem->addPoint(brc);
     eitem->clickPoint(outsidePoint);
     QCOMPARE(eitem->getActiveVertex(), 0);
@@ -22,7 +22,7 @@ void TestSelect::testEllipseClickPoint(){
 }
 
 void TestSelect::testEllipseBoundingRect(){
-    eitem = new EllipseSelect(point, 3.);
+    eitem = new EllipseSelect(point, 3., myLabel);
     eitem->addPoint(brc);
     QRectF bb = eitem->boundingRect();
     QVERIFY(eitem->isInsideRect(bb, point));
@@ -31,7 +31,7 @@ void TestSelect::testEllipseBoundingRect(){
 
 void TestSelect::testEllipseResizeItem(){
     QRectF myRect = QRectF(point, outsidePoint);
-    eitem = new EllipseSelect(point);
+    eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
     eitem->resizeItem(BOTTOM | RIGHT, outsidePoint);
     QCOMPARE(eitem->myRect, myRect);
@@ -39,7 +39,7 @@ void TestSelect::testEllipseResizeItem(){
 }
 
 void TestSelect::testEllipseMoveItem(){
-    eitem = new EllipseSelect(point);
+    eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
     QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
@@ -58,7 +58,7 @@ void TestSelect::testEllipseMoveItem(){
 }
 
 void TestSelect::testEllipseIsInside(){
-    eitem = new EllipseSelect(point, 2.);
+    eitem = new EllipseSelect(point, 2., myLabel);
     eitem->addPoint(brc);
     QVERIFY(eitem->isInside(insidePoint));
     QVERIFY(eitem->isInside(insideTLC));
@@ -70,12 +70,12 @@ void TestSelect::testEllipseIsInside(){
 }
 
 void TestSelect::testEllipseAddPoint(){
-    eitem = new EllipseSelect(point);
+    eitem = new EllipseSelect(point, myLabel);
     QRectF myRect = QRectF(point, brc);
     eitem->addPoint(brc);
     QVERIFY(eitem->myRect == myRect);
     delete eitem;
-    eitem = new EllipseSelect(point);
+    eitem = new EllipseSelect(point, myLabel);
     myRect = QRectF(tlc, point);
     eitem->addPoint(tlc);
     QVERIFY(eitem->myRect == myRect);
