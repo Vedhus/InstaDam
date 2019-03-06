@@ -30,7 +30,7 @@ void Label::setText(QString tx){
     text = tx;
 }
 
-void Label::addItem(SelectItem *item){
+/*void Label::addItem(SelectItem *item){
     switch(item->type()){
         case Rect:
             rectangleObjects.insert(item->ID, item);
@@ -45,8 +45,24 @@ void Label::addItem(SelectItem *item){
             freeDrawObjects.insert(item->ID, item);
             break;
     }
-    item->setLabel(this);
+    //item->setLabel(this);
+}*/
+void Label::addItem(RectangleSelect *item){
+    rectangleObjects.insert(item->myID, item);
 }
+
+void Label::addItem(EllipseSelect *item){
+    ellipseObjects.insert(item->myID, item);
+}
+
+void Label::addItem(PolygonSelect *item){
+    polygonObjects.insert(item->myID, item);
+}
+
+void Label::addItem(FreeDrawSelect *item){
+    freeDrawObjects.insert(item->myID, item);
+}
+
 
 void Label::removeItem(const int id){
     if(rectangleObjects.remove(id) != 0){

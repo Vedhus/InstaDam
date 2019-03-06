@@ -1,4 +1,5 @@
 #include <QtWidgets>
+#include <QVector>
 #include <iostream>
 using namespace std;
 
@@ -84,14 +85,14 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
 }
 
 void MoveCommand::undo(){
-    cout << "UM" << endl;
+    //cout << "UM" << endl;
     myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
 }
 
 void MoveCommand::redo(){
-    cout << "RM" << endl;
+    //cout << "RM" << endl;
     if(init){
         myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
@@ -138,7 +139,7 @@ void AddVertexCommand::undo(){
 }
 void AddVertexCommand::redo(){
     if(init){
-        cout << "AVC" << endl;
+        //cout << "AVC" << endl;
         myItem->setActiveVertex(UNSELECTED);
         myItem->addPoint(myPoint);
         myItem->scene()->update();
@@ -162,4 +163,37 @@ void DeleteVertexCommand::undo(){
 void DeleteVertexCommand::redo(){
     myItem->removeVertex(myVertex);
     myItem->scene()->update();
+}
+
+ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene, QUndoCommand *parent)
+    : QUndoCommand(parent){
+    myItem = item;
+    myScene = scene;
+}
+
+void ErasePointsCommand::undo(){
+    //cout << "UNDO" << endl;
+    EraseMapIterator it((*myItem->getMap()));
+    while(it.hasNext()){
+        //cout << "ADD P" << endl;
+        it.next();
+        it.key()->addPoints(it.value());
+    }
+    myScene->update();
+}
+
+void ErasePointsCommand::redo(){
+    if(init){
+        EraseMapIterator it((*myItem->getMap()));
+        FreeMap tempMap = FreeMap();
+        while(it.hasNext()){
+            it.next();
+            QVector<int> tempVector = it.value()->keys().toVector();
+            it.key()->deletePoints(tempVector, &tempMap);
+        }
+    }
+    else{
+        init = true;
+    }
+    myScene->update();
 }

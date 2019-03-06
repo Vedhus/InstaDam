@@ -11,8 +11,8 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
 
 public:
     const QString baseInstruction = polygonBaseInstruction;
-        PolygonSelect(QPointF point, QGraphicsItem *item = nullptr);
-
+        PolygonSelect(QPointF point, Label *label=nullptr, QGraphicsItem *item = nullptr);
+        ~PolygonSelect() override;
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         void resizeItem(int vertex, QPointF &shift) override;
@@ -26,7 +26,7 @@ public:
         void checkPoint(QPointF &point);
         void removeVertex(int vertex=UNSELECTED) override;
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-        void init(QPointF &point) override {}
+        void init(QPointF &point) override {UNUSED(point);}
         void insertVertex(int vertex, QPointF &point) override;
         QString baseInstructions() override {return PolygonSelect::baseInstruction;}
         int numberOfVertices() override;

@@ -95,9 +95,11 @@ private slots:
 
     void on_saveAndNext_clicked();
     void setInsert();
-    void toggleDrawing(bool value);
+    void toggleDrawing();
+    void toggleErasing();
     void setCurrentLabel(Label *label);
     void setCurrentLabel(LabelButton *button);
+    void setCurrentBrushSize(int);
 public slots:
     void resetPixmapButtons();
 
@@ -135,6 +137,8 @@ private:
     bool insertVertex = false;
     int vertex1 = -1;
     int vertex2 = -1;
+    int currentBrushSize = 5;
+    FreeDrawErase *myErase;
 };
 
 

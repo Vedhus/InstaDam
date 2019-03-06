@@ -5,6 +5,7 @@
 
 #include "selectItem.h"
 #include "polygonSelect.h"
+#include "freeDrawErase.h"
 #include "photoScene.h"
 
 
@@ -88,5 +89,17 @@ private:
     int myVertex;
     bool init = false;
 };
+
+class ErasePointsCommand : public QUndoCommand{
+public:
+    ErasePointsCommand(FreeDrawErase *item, PhotoScene *graphicsScene, QUndoCommand *parent = nullptr);
+    void undo() override;
+    void redo() override;
+private:
+    FreeDrawErase *myItem;
+    PhotoScene *myScene;
+    bool init = false;
+};
+
 #endif /* COMMANDS_H */
 

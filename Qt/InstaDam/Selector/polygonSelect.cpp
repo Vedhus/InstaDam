@@ -1,13 +1,14 @@
 #include "polygonSelect.h"
+#include "label.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <algorithm>
 #include <iostream>
 using namespace std;
 
-PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
-    : SelectItem(item), QGraphicsPolygonItem(item){
-    cout << "POLY INIT" << endl;
+PolygonSelect::PolygonSelect(QPointF point, Label *label, QGraphicsItem *item)
+    : SelectItem(label, item), QGraphicsPolygonItem(item){
+    //cout << "POLY INIT" << endl;
     myPoints.push_back(point);
     setActiveVertex(0);
     activePoint = point;
@@ -20,6 +21,8 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     myRect = QGraphicsPolygonItem::boundingRect();
     mytype = Polygon;
     active = true;
+    label->addItem(this);
+    updatePen(myPen);
     //for(int i = 0; i < myPoints.size(); i++){
     //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << std::endl;
     //}
@@ -27,26 +30,15 @@ PolygonSelect::PolygonSelect(QPointF point, QGraphicsItem *item)
     //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
     //}
 
-    myPen = QPen(Qt::green);
-    myPen.setWidth(5);
-    setPen(myPen);
-    /*QColor temp = myPen.color();
-    qreal r = temp.redF();
-    qreal g = temp.greenF();
-    qreal b = temp.blueF();
-    r = r > 0.5 ? 0 : 1;
-    g = g > 0.5 ? 0 : 1;
-    b = b > 0.5 ? 0 : 1;
-    temp.setRgbF(r, g, b);
-    QPen tpen(temp);
-    tpen.setWidth(5);
-    highlightPen = tpen;*/
     invertColorForPen();
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 
 }
 
+PolygonSelect::~PolygonSelect(){
+
+}
 void PolygonSelect::updatePen(QPen pen){
     setPen(pen);
 }
@@ -91,14 +83,14 @@ void PolygonSelect::refresh(){
 //void updateCorner(QPointF point);
 void PolygonSelect::addPoint(QPointF &point, int vertex){
     if(vertex != UNSELECTED){
-        std::cout << "ADD NEW" << std::endl;
+        //std::cout << "ADD NEW" << std::endl;
         myPoints.insert(vertex, point);
         myVertices.insert(vertex, makeVertex(point));
         setActiveVertex(vertex);
         refresh();
     }
     else if(getActiveVertex() != UNSELECTED){
-        std::cout << "MOVE POINT" << std::endl;
+        //std::cout << "MOVE POINT" << std::endl;
         movePoint(point);
         activePoint = point;
     }
@@ -115,7 +107,7 @@ void PolygonSelect::addPoint(QPointF &point, int vertex){
 
         polygon << polygon[0];
         polygon[activeVertex] = point;
-        std::cout << "SIZE " << myPoints.size() << std::endl;
+        //std::cout << "SIZE " << myPoints.size() << std::endl;
         //for(int i = 0; i < myPoints.size(); i++){
         //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << "  " << myPoints.size() << std::endl;
         //}

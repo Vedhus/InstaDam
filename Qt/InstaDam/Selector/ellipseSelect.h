@@ -12,8 +12,9 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector
 
     public:
     static QString baseInstruction;
-        EllipseSelect(QPointF point, QGraphicsItem *item = nullptr);
-        EllipseSelect(QPointF point, qreal vertexSize, QGraphicsItem *item = nullptr);
+        EllipseSelect(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
+        EllipseSelect(QPointF point, qreal vertexSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
+        ~EllipseSelect() override;
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
         //void resizeItem(int vertex, QPointF &shift) override;
