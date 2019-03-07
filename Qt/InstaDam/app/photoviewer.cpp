@@ -10,7 +10,7 @@
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
     viewerType = PHOTO_VIEWER_TYPE;
-    scene = new PhotoScene(this);
+    scene = new PhotoScene(viewerType, this);
     photo = new QGraphicsPixmapItem();
     labelsTemp = new QGraphicsPixmapItem();
     labels = new QGraphicsPixmapItem();

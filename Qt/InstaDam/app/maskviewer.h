@@ -17,7 +17,7 @@ class MaskViewer : public PhotoViewer
     Q_OBJECT
 
 public:
-    MaskViewer(QWidget *parent = 0);
+    MaskViewer(QWidget *parent = nullptr);
     void LinkToPhotoViewer(PhotoViewer *);
 
     maskObjects *maskObject;

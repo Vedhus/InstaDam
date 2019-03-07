@@ -5,6 +5,7 @@ MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent)
     zoom = 0;
     hasPhoto = false;
     viewerType = MASK_VIEWER_TYPE;
+    scene->myViewerType = viewerType;
     selectedMask = CANNY;
 
 }

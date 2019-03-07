@@ -5,9 +5,10 @@ using namespace std;
 #include "photoScene.h"
 #include "selectItem.h"
 
-PhotoScene::PhotoScene(QObject *parent)
+PhotoScene::PhotoScene(viewerTypes type, QObject *parent)
     : QGraphicsScene(parent), currentItems(), labelmap()
 {
+    myViewerType = type;
     movingItem = nullptr;
     mousePressed = false;
 }
@@ -25,12 +26,10 @@ void PhotoScene::addItem(QGraphicsItem* item){
 void PhotoScene::addItem(SelectItem* item){
     currentItems.push_front(item);
     QGraphicsScene::addItem(item);
-    //item->setScene();
 }
 
-
 void PhotoScene::keyPressEvent(QKeyEvent *event){
-    emit keyPressed(event->key());
+    emit keyPressed(myViewerType, event->key());
     QGraphicsScene::keyPressEvent(event);
 }
 
@@ -45,10 +44,10 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            emit pointClicked(item, mousePos);
+            emit pointClicked(myViewerType, item, mousePos);
         }
         else{
-            emit pointClicked(nullptr, mousePos);
+            emit pointClicked(myViewerType, nullptr, mousePos);
         }
 
     }
@@ -71,7 +70,7 @@ void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton){
         //cout << "   LEFT" << endl;
         mousePressed = false;
-        emit leftMouseReleased(oldPos, newPos);
+        emit leftMouseReleased(myViewerType, oldPos, newPos);
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

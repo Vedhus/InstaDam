@@ -28,16 +28,26 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, Label *label, QGrap
 
 }
 
+void FreeDrawSelect::mirrorHide(){
+    if(mirror != nullptr)
+        mirror->SelectItem::hide();
+}
+
+void FreeDrawSelect::mirrorShow(){
+    if(mirror != nullptr)
+        mirror->SelectItem::show();
+}
+
+void FreeDrawSelect::setMirror(SelectItem *item){
+    mirror = dynamic_cast<FreeDrawSelect*>(item);
+}
+
 FreeDrawSelect::~FreeDrawSelect(){
     if(myMap != nullptr)
         delete myMap;
 }
 void FreeDrawSelect::updatePen(QPen pen){
     setPen(pen);
-}
-
-void FreeDrawSelect::init(QPointF &point){
-    UNUSED(point);
 }
 
 void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
@@ -88,6 +98,12 @@ void FreeDrawSelect::checkPoint(QPointF &point){
 void FreeDrawSelect::checkPoint(QPoint &point){
     point.setX(std::min(std::max(0, point.x()), SelectItem::myBounds.width()));
     point.setY(std::min(std::max(0, point.y()), SelectItem::myBounds.height()));
+}
+
+void FreeDrawSelect::updateMirrorScene(){
+    cout << "UMS" << endl;
+    if(mirror != nullptr)
+        mirror->scene()->update();
 }
 
 void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
@@ -173,7 +189,7 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
             end.rx() += edx;
         }
     }
-
+    setMirrorMap();
 }
 
 
@@ -198,14 +214,19 @@ void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     UNUSED(widget);
     painter->setPen(myPen);
     painter->setBrush(brush());
-    FreeMapIterator it((*myMap));
+    //FreeMapIterator it((*myMap));
     painter->drawPoints(QPolygon::fromList(myMap->values()));
 }
 
+void FreeDrawSelect::setMirrorMap(){
+    if(mirror != nullptr)
+        mirror->myMap = myMap;
+}
 void FreeDrawSelect::deletePoints(QVector<int> &points, FreeMap *delHash){
     for(int i = 0; i < points.size(); i++){
         deletePoint(points[i], delHash);
     }
+    setMirrorMap();
 }
 
 void FreeDrawSelect::deletePoint(int point, FreeMap *delHash){
@@ -217,4 +238,5 @@ void FreeDrawSelect::deletePoint(int point, FreeMap *delHash){
 
 void FreeDrawSelect::addPoints(FreeMap *points){
     myMap->unite((*points));
+    setMirrorMap();
 }

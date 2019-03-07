@@ -10,13 +10,8 @@ AddCommand::AddCommand(SelectItem *item,
                        PhotoScene *scene, QUndoCommand *parent)
     : QUndoCommand(parent)
 {
-    static int itemCount = 0;
     myScene = scene;
     myItem = item;
-
-    scene->update();
-    ++itemCount;
-    
 }
 
 
@@ -31,7 +26,9 @@ void AddCommand::undo()
 {
     //cout << "UA" << endl;
     myItem->hide();
+    myItem->mirrorHide();
     myScene->update();
+    myItem->updateMirrorScene();
 }
 
 void AddCommand::redo()
@@ -39,8 +36,10 @@ void AddCommand::redo()
     //cout << "RA" << endl;
     if(init){
         myItem->show();
+        myItem->mirrorShow();
         myScene->clearSelection();
         myScene->update();
+        myItem->updateMirrorScene();
     }
     else{
         myItem->itemWasAdded();
@@ -60,7 +59,9 @@ void DeleteCommand::undo()
     //cout << "UD" << endl;
     //myScene->addItem(myItem);
     myItem->show();
+    myItem->mirrorShow();
     myScene->update();
+    myItem->updateMirrorScene();
 }
 
 void DeleteCommand::redo()
@@ -70,6 +71,8 @@ void DeleteCommand::redo()
     //if(init){
         myItem->hide();
         myScene->update();
+        myItem->mirrorHide();
+        myItem->updateMirrorScene();
     //}
     //else{
     //    init = true;
@@ -89,6 +92,7 @@ void MoveCommand::undo(){
     myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
+    myItem->updateMirrorScene();
 }
 
 void MoveCommand::redo(){
@@ -97,6 +101,7 @@ void MoveCommand::redo(){
         myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
         myItem->scene()->update();
+        myItem->updateMirrorScene();
     }
     else{
         init = true;
@@ -114,12 +119,14 @@ MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos, con
 void MoveVertexCommand::undo(){
     myItem->resizeItem(myVertex, myoldPos);
     myItem->scene()->update();
+    myItem->updateMirrorScene();
 }
 void MoveVertexCommand::redo(){
     //cout << "MVC" << endl;
     if(init){
         myItem->resizeItem(myVertex, mynewPos);
         myItem->scene()->update();
+        myItem->updateMirrorScene();
     }
     else{
         init = true;
@@ -136,6 +143,7 @@ void AddVertexCommand::undo(){
     //cout << "RVC" << endl;
     myItem->removeVertex();
     myItem->scene()->update();
+    myItem->updateMirrorScene();
 }
 void AddVertexCommand::redo(){
     if(init){
@@ -143,6 +151,7 @@ void AddVertexCommand::redo(){
         myItem->setActiveVertex(UNSELECTED);
         myItem->addPoint(myPoint);
         myItem->scene()->update();
+        myItem->updateMirrorScene();
     }
     else{
         init = true;
@@ -159,16 +168,20 @@ void DeleteVertexCommand::undo(){
     myItem->setActiveVertex(UNSELECTED);
     myItem->addPoint(myPoint, myVertex);
     myItem->scene()->update();
+    myItem->updateMirrorScene();
 }
+
 void DeleteVertexCommand::redo(){
     myItem->removeVertex(myVertex);
     myItem->scene()->update();
+    myItem->updateMirrorScene();
 }
 
-ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene, QUndoCommand *parent)
+ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene, PhotoScene *maskScene, QUndoCommand *parent)
     : QUndoCommand(parent){
     myItem = item;
     myScene = scene;
+    myMask = maskScene;
 }
 
 void ErasePointsCommand::undo(){
@@ -180,6 +193,7 @@ void ErasePointsCommand::undo(){
         it.key()->addPoints(it.value());
     }
     myScene->update();
+    myMask->update();
 }
 
 void ErasePointsCommand::redo(){
@@ -196,4 +210,5 @@ void ErasePointsCommand::redo(){
         init = true;
     }
     myScene->update();
+    myMask->update();
 }

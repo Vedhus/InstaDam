@@ -30,23 +30,6 @@ void Label::setText(QString tx){
     text = tx;
 }
 
-/*void Label::addItem(SelectItem *item){
-    switch(item->type()){
-        case Rect:
-            rectangleObjects.insert(item->ID, item);
-            break;
-        case Ellipse:
-            ellipseObjects.insert(item->ID, item);
-            break;
-        case Polygon:
-            polygonObjects.insert(item->ID, item);
-            break;
-        case Freedraw:
-            freeDrawObjects.insert(item->ID, item);
-            break;
-    }
-    //item->setLabel(this);
-}*/
 void Label::addItem(RectangleSelect *item){
     rectangleObjects.insert(item->myID, item);
 }

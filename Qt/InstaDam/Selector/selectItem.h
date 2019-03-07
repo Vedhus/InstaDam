@@ -53,28 +53,36 @@ class SelectItem : public QGraphicsItem
         virtual void resizeItem(int vertex, QPointF &shift) = 0;
         virtual void clickPoint(QPointF &point) = 0;
         virtual bool isInside(QPointF &point) = 0;
-        void sortCorners(QRectF &rect, QPointF &newPoint);
-        int type() const override;
-        bool isItemActive(){return active == true;}
-        void setItemActive(){active = true;}
-        void setInactive(){active = false;}
-        static void setVertexSize(qreal size);
-        QGraphicsScene* scene();
-        QGraphicsItem* getParentItem();
-        bool wasResized(){return resized;}
-        bool wasMoved(){return moved;}
-        bool wasPointAdded(){return pointAdded;}
-        int getActiveVertex(){return activeVertex;}
         virtual void removeVertex(int vertex = UNSELECTED) = 0;
         virtual void resetActiveVertex() = 0;
         virtual void insertVertex(int vertex, QPointF &point) = 0;
         virtual QString baseInstructions() = 0;
         virtual int numberOfVertices() = 0;
-        QPointF getActivePoint(){return activePoint;}
         virtual void updatePen(QPen pen) = 0;
+        virtual void setMirror(SelectItem *item) = 0;
+        virtual void setMirrorVertex(int vertex) = 0;
+        virtual void updateMirrorScene() = 0;
+        virtual void mirrorHide() = 0;
+        virtual void mirrorShow() = 0;
+        virtual void setMirrorActive() = 0;
+        virtual void setMirrorMoved() = 0;
+        virtual void setMirrorResized() = 0;
+        virtual SelectItem* getMirror() = 0;
+        virtual void setMirrorAdded() = 0;
+
+        void sortCorners(QRectF &rect, QPointF &newPoint);
+        int type() const override;
+        static void setVertexSize(qreal size);
+        QGraphicsScene* scene();
+        QGraphicsItem* getParentItem();
+        void setLabel(Label *label);
+        void invertColorForPen();
+
         void resetState(){
             moved = false;
             resized = false;
+            setMirrorMoved();
+            setMirrorResized();
             pointAdded = false;
             setActiveVertex(UNSELECTED);
         }
@@ -88,31 +96,41 @@ class SelectItem : public QGraphicsItem
         void flipV(){
             activeVertex ^= (LEFT | RIGHT);
         }
-        void itemWasAdded(){hasBeenAdded = true;}
+
+        bool wasResized(){return resized;}
+        bool wasMoved(){return moved;}
+        bool wasPointAdded(){return pointAdded;}
+        int getActiveVertex(){return activeVertex;}
+        QPointF getActivePoint(){return activePoint;}
+        void itemWasAdded(){setMirrorAdded(); hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
-        virtual void init(QPointF &point) = 0;
-        void setLabel(Label *label);
-        void invertColorForPen();
+        bool isItemActive(){return active == true;}
+        void setItemActive(){setMirrorActive(); active = true;}
+        void setInactive(){active = false;}
+
         int myID;
-    protected:
         QPen highlightPen, myPen;
+    protected:
         SelectType selectType;
         QPointF selectedPoint;
-        int mytype;
-        bool active = false;
-        bool pointAdded = false;
-        int activeV = RIGHT;
-        int activeH = BOTTOM;
-        int activeVertex = (activeV | activeH);
-        bool isInsideRect(QRectF &rect, QPointF &point);
-        void checkBoundaries(QPointF &shift, QRectF &rect);
-        bool resized = false;
-        bool moved = false;
         QRectF myRect;
         QPointF activePoint;
         QPen pen;
-        bool hasBeenAdded = false;
         Label *myLabel;
+
+        bool active = false;
+        bool pointAdded = false;
+        bool resized = false;
+        bool moved = false;
+        bool hasBeenAdded = false;
+        int mytype;
+        int activeV = RIGHT;
+        int activeH = BOTTOM;
+        int activeVertex = (activeV | activeH);
+
+        bool isInsideRect(QRectF &rect, QPointF &point);
+        void checkBoundaries(QPointF &shift, QRectF &rect);
+
 };
 
 
