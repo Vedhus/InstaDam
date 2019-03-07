@@ -37,7 +37,7 @@ public:
     void setMirrorResized() override;
     EllipseSelect* getMirror() override {return mirror;}
     void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-
+    void rotateMirror() override;
 private:
         EllipseSelect *mirror;
 #ifdef TEST

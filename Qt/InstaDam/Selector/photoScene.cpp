@@ -35,7 +35,7 @@ void PhotoScene::keyPressEvent(QKeyEvent *event){
 
 void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton){
+    if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
         mousePressed = true;
         QPointF mousePos(event->scenePos().x(),
                          event->scenePos().y());
@@ -44,10 +44,10 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            emit pointClicked(myViewerType, item, mousePos);
+            emit pointClicked(myViewerType, item, mousePos, event->button());
         }
         else{
-            emit pointClicked(myViewerType, nullptr, mousePos);
+            emit pointClicked(myViewerType, nullptr, mousePos, event->button());
         }
 
     }
@@ -67,10 +67,11 @@ void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
 
 void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton){
+    if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
         //cout << "   LEFT" << endl;
         mousePressed = false;
-        emit leftMouseReleased(myViewerType, oldPos, newPos);
+        //cout << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
+        emit mouseReleased(myViewerType, oldPos, newPos, event->button());
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

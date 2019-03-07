@@ -73,8 +73,8 @@ private slots:
     void on_polygonSelectButton_clicked();
     void on_freeSelectButton_clicked();
     void processMouseMoved(QPointF fromPos, QPointF toPos);
-    void processPointClicked(viewerTypes type, SelectItem *item, QPointF pos);
-    void processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos);
+    void processPointClicked(viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button);
+    void processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
     void processKeyPressed(viewerTypes type, const int key);
     void finishPolygonButtonClicked();
     Project on_actionNew_triggered();
@@ -143,6 +143,7 @@ private:
     SelectItem *tempItem;
     SelectItem *mirrorItem;
     int brushMode = Qt::SquareCap;
+    Qt::MouseButton currentButton = Qt::NoButton;
 };
 
 

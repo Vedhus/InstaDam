@@ -1,6 +1,10 @@
 #include "boxbasedselector.h"
 #include <QPainter>
 #include <iostream>
+#include <math.h>
+
+#define PI 3.14159265
+
 using namespace std;
 
 BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *item) : SelectItem(label, item){
@@ -69,4 +73,14 @@ void BoxBasedSelector::calcCorners(bool mir){
     br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
     if(mir)
         setMirrorCorners(tl, bl, tr, br);
+}
+
+void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
+    setTransformOriginPoint(myRect.center());
+    QPointF start = from - myRect.center();
+    QPointF end = to - myRect.center();
+    myRotation += (std::atan2(end.y(), end.x()) - std::atan2(start.y(), start.x())) * 180./PI;
+    setRotation(myRotation);
+    rotated = true;
+    rotateMirror();
 }

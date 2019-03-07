@@ -156,5 +156,12 @@ void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->drawRect(tr);
         painter->drawRect(br);
     }
+}
 
+void RectangleSelect::rotateMirror(){
+    if(mirror != nullptr){
+        mirror->myRotation = myRotation;
+        mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
+        mirror->BoxBasedSelector::setRotation(myRotation);
+    }
 }

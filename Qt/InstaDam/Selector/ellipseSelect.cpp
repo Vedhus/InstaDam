@@ -39,6 +39,14 @@ EllipseSelect::~EllipseSelect(){
 
 }
 
+void EllipseSelect::rotateMirror(){
+    if(mirror != nullptr){
+        mirror->myRotation = myRotation;
+        mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
+        mirror->BoxBasedSelector::setRotation(myRotation);
+    }
+}
+
 void EllipseSelect::setRectUnchecked(QRectF rect){
     QGraphicsEllipseItem::prepareGeometryChange();
     myRect = rect;

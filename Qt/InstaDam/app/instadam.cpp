@@ -35,20 +35,20 @@ InstaDam::InstaDam(QWidget *parent) :
     maskScene = ui->IdmMaskViewer->scene;
     currentItem = nullptr;
     currentLabel = nullptr;
-    connect(scene, SIGNAL(pointClicked(viewerTypes, SelectItem*, QPointF)), this,
-            SLOT(processPointClicked(viewerTypes, SelectItem*, QPointF)));
+    connect(scene, SIGNAL(pointClicked(viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)), this,
+            SLOT(processPointClicked(viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)));
     connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
-    connect(scene, SIGNAL(leftMouseReleased(viewerTypes, QPointF, QPointF)), this,
-            SLOT(processLeftMouseReleased(viewerTypes, QPointF, QPointF)));
+    connect(scene, SIGNAL(mouseReleased(viewerTypes, QPointF, QPointF, const Qt::MouseButton)), this,
+            SLOT(processMouseReleased(viewerTypes, QPointF, QPointF, const Qt::MouseButton)));
     connect(scene, SIGNAL(keyPressed(viewerTypes, const int)), this,
             SLOT(processKeyPressed(viewerTypes, const int)));
-    connect(maskScene, SIGNAL(pointClicked(viewerTypes, SelectItem*, QPointF)), this,
-            SLOT(processPointClicked(viewerTypes, SelectItem*, QPointF)));
+    connect(maskScene, SIGNAL(pointClicked(viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)), this,
+            SLOT(processPointClicked(viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)));
     connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
-    connect(maskScene, SIGNAL(leftMouseReleased(viewerTypes, QPointF, QPointF)), this,
-            SLOT(processLeftMouseReleased(viewerTypes, QPointF, QPointF)));
+    connect(maskScene, SIGNAL(mouseReleased(viewerTypes, QPointF, QPointF, const Qt::MouseButton)), this,
+            SLOT(processMouseReleased(viewerTypes, QPointF, QPointF, const Qt::MouseButton)));
     connect(maskScene, SIGNAL(keyPressed(viewerTypes, const int)), this,
             SLOT(processKeyPressed(viewerTypes, const int)));
 
@@ -714,14 +714,15 @@ void InstaDam::on_actionSave_File_triggered()
 }
 
 
-void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF pos){
+void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button){
     //cout << "CLICK " << type<< endl;
+    currentButton = button;
     if(!item){
         //cout << "QQ" << endl;
         //if(currentLabel == nullptr){
         //    cout << "NL" << endl;
         //}
-        if(!currentLabel){
+        if(!currentLabel || button == Qt::RightButton){
             //cout << "NO LABEL" << endl;
             return;
         }
@@ -879,13 +880,20 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
 
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
     if(currentItem){
-        currentItem->moveItem(fromPos, toPos);
+        if(currentButton == Qt::LeftButton){
+            //cout << "MOVED" << endl;
+            currentItem->moveItem(fromPos, toPos);
+        }
+        else{
+            //cout << "ROTATE" << endl;
+            currentItem->rotate(fromPos, toPos);
+        }
         scene->update();
         maskScene->update();
     }
 }
 
-void InstaDam::processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos)
+void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
 {
     if(currentItem && !currentItem->isItemAdded()){
         if(currentItem->type() == Freeerase){
@@ -895,6 +903,7 @@ void InstaDam::processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPoint
             QUndoCommand *addCommand = new AddCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), scene);
             undoStack->push(addCommand);
         }
+        currentItem->resetState();
         if(currentItem->type() != Polygon){
             currentItem = nullptr;
         }
@@ -902,15 +911,19 @@ void InstaDam::processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPoint
             currentItem->setActiveVertex(UNSELECTED);
         }
     }
-    else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized())){
+    else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized() || currentItem->wasRotated())){
         if(currentItem->wasMoved()){
             //cout << "MOVED" << endl;
             QUndoCommand *moveCommand = new MoveCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos);
             undoStack->push(moveCommand);
         }
-        else{
+        else if(currentItem->wasResized()){
             QUndoCommand *resizeCommand = new MoveVertexCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos, currentItem->getActiveVertex());
             undoStack->push(resizeCommand);
+        }
+        else{
+            QUndoCommand *rotateCommand = new RotateCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos);
+            undoStack->push(rotateCommand);
         }
         currentItem->resetState();
     }
@@ -918,7 +931,9 @@ void InstaDam::processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPoint
         QUndoCommand *addVertexCommand = new AddVertexCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), newPos);
         undoStack->push(addVertexCommand);
         currentItem->setActiveVertex(UNSELECTED);
+        currentItem->resetState();
     }
+    currentButton = Qt::NoButton;
 }
 
 void InstaDam::finishPolygonButtonClicked(){

@@ -49,6 +49,8 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void setMirrorAdded() override {mirror->hasBeenAdded = true;}
         void drawWithSquare(QPointF &oldPos, QPointF &newPos);
         void drawWithCircle(QPointF &oldPos, QPointF &newPos);
+        void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
+        void rotateMirror() override {}
 protected:
         FreeMap *myMap;
         int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
