@@ -102,5 +102,18 @@ private:
     bool init = false;
 };
 
+class RotateCommand : public QUndoCommand{
+public:
+    RotateCommand(SelectItem *item, const QPointF oldPos,
+                const QPointF newPos, QUndoCommand *parent = nullptr);
+    void undo() override;
+    void redo() override;
+private:
+    SelectItem *myItem;
+    QPointF myoldPos;
+    QPointF mynewPos;
+    bool init = false;
+};
+
 #endif /* COMMANDS_H */
 

@@ -38,6 +38,7 @@ public:
     void setMirrorResized() override;
     RectangleSelect* getMirror() override {return mirror;}
     void setMirrorAdded() override {mirror->hasBeenAdded = true;}
+    void rotateMirror() override;
 
 private:
     RectangleSelect *mirror = nullptr;

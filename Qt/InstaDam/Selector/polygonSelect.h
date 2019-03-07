@@ -41,7 +41,8 @@ public:
         void setMirrorResized() override;
         PolygonSelect* getMirror() override {return mirror;}
         void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-
+        void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
+        void rotateMirror() override {};
     private:
         QRectF makeVertex(QPointF &point);
         void refresh();

@@ -37,9 +37,9 @@ public:
     viewerTypes myViewerType;
 
 signals:
-    void pointClicked(viewerTypes type, SelectItem* item, QPointF point);
+    void pointClicked(viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);
     void mouseMoved(QPointF fromPos, QPointF toPos);
-    void leftMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos);
+    void mouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
     void keyPressed(viewerTypes type, const int key);
 
 protected:

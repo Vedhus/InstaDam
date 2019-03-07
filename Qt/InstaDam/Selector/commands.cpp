@@ -212,3 +212,32 @@ void ErasePointsCommand::redo(){
     myScene->update();
     myMask->update();
 }
+
+RotateCommand::RotateCommand(SelectItem *item, const QPointF oldPos,
+                         const QPointF newPos,
+                         QUndoCommand *parent) : QUndoCommand(parent){
+    myItem = item;
+    myoldPos = oldPos;
+    mynewPos = newPos;
+}
+
+void RotateCommand::undo(){
+    //cout << "UM" << endl;
+    myItem->resetActiveVertex();
+    myItem->rotate(mynewPos, myoldPos);
+    myItem->scene()->update();
+    myItem->updateMirrorScene();
+}
+
+void RotateCommand::redo(){
+    //cout << "RM" << endl;
+    if(init){
+        myItem->resetActiveVertex();
+        myItem->rotate(myoldPos, mynewPos);
+        myItem->scene()->update();
+        myItem->updateMirrorScene();
+    }
+    else{
+        init = true;
+    }
+}

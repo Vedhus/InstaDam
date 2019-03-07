@@ -16,9 +16,11 @@ public:
     int numberOfVertices() override {return 2;}
     virtual void setRectUnchecked(QRectF rect) = 0;
     virtual void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) = 0;
+    void rotate(QPointF &from, QPointF &to) override;
 protected:
     void calcCorners(bool mir = true);
     QRectF tl, bl, tr, br;
+    qreal myRotation = 0;
 };
 
 #endif // BOXBASEDSELECTOR_H
