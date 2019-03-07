@@ -48,6 +48,16 @@ void PolygonSelect::updatePen(QPen pen){
     setPen(pen);
 }
 
+void PolygonSelect::setMirrorMoved(){
+    if(mirror != nullptr)
+        mirror->moved = moved;
+}
+
+void PolygonSelect::setMirrorResized(){
+    if(mirror != nullptr)
+        mirror->resized = resized;
+}
+
 void PolygonSelect::setMirror(SelectItem *item){
     mirror = dynamic_cast<PolygonSelect*>(item);
 }
@@ -177,6 +187,7 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     //std::cout << "MOVED" << std::endl;
     if(activeVertex == UNSELECTED){
         moved = true;
+        setMirrorMoved();
         QPointF shift = newPos - oldPos;
         QPointF tlcShift = boundingRect().topLeft() + shift;
         QPointF brcShift = boundingRect().bottomRight() + shift;
@@ -207,6 +218,7 @@ void PolygonSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     }
     else{
         resized = pointAdded;
+        setMirrorResized();
         checkPoint(newPos);
         movePoint(newPos);
     }

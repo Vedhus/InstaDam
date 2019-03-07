@@ -33,6 +33,10 @@ public:
     void mirrorHide() override;
     void mirrorShow() override;
     void setMirrorActive() override;
+    void setMirrorMoved() override;
+    void setMirrorResized() override;
+    EllipseSelect* getMirror() override {return mirror;}
+    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
 
 private:
         EllipseSelect *mirror;

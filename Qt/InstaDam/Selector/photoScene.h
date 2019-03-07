@@ -39,8 +39,8 @@ public:
 signals:
     void pointClicked(viewerTypes type, SelectItem* item, QPointF point);
     void mouseMoved(QPointF fromPos, QPointF toPos);
-    void leftMouseReleased(QPointF oldPos, QPointF newPos);
-    void keyPressed(const int key);
+    void leftMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos);
+    void keyPressed(viewerTypes type, const int key);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

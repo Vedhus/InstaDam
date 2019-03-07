@@ -65,6 +65,10 @@ class SelectItem : public QGraphicsItem
         virtual void mirrorHide() = 0;
         virtual void mirrorShow() = 0;
         virtual void setMirrorActive() = 0;
+        virtual void setMirrorMoved() = 0;
+        virtual void setMirrorResized() = 0;
+        virtual SelectItem* getMirror() = 0;
+        virtual void setMirrorAdded() = 0;
 
         void sortCorners(QRectF &rect, QPointF &newPoint);
         int type() const override;
@@ -77,6 +81,8 @@ class SelectItem : public QGraphicsItem
         void resetState(){
             moved = false;
             resized = false;
+            setMirrorMoved();
+            setMirrorResized();
             pointAdded = false;
             setActiveVertex(UNSELECTED);
         }
@@ -96,15 +102,15 @@ class SelectItem : public QGraphicsItem
         bool wasPointAdded(){return pointAdded;}
         int getActiveVertex(){return activeVertex;}
         QPointF getActivePoint(){return activePoint;}
-        void itemWasAdded(){hasBeenAdded = true;}
+        void itemWasAdded(){setMirrorAdded(); hasBeenAdded = true;}
         bool isItemAdded(){return hasBeenAdded;}
         bool isItemActive(){return active == true;}
         void setItemActive(){setMirrorActive(); active = true;}
         void setInactive(){active = false;}
 
         int myID;
-    protected:
         QPen highlightPen, myPen;
+    protected:
         SelectType selectType;
         QPointF selectedPoint;
         QRectF myRect;

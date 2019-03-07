@@ -34,6 +34,10 @@ public:
     void mirrorHide() override;
     void mirrorShow() override;
     void setMirrorActive() override;
+    void setMirrorMoved() override;
+    void setMirrorResized() override;
+    RectangleSelect* getMirror() override {return mirror;}
+    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
 
 private:
     RectangleSelect *mirror = nullptr;

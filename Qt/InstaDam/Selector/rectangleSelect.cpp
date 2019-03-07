@@ -14,7 +14,7 @@ RectangleSelect::~RectangleSelect(){
 RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item)
     : BoxBasedSelector(point, vertSize,label, item), QGraphicsRectItem(item)
 {
-    cout << "RR" << endl;
+    //cout << "RR" << endl;
     setRect(myRect);
     mytype = Rect;
     if(label)
@@ -50,6 +50,16 @@ void RectangleSelect::setMirrorActive(){
         mirror->setItemActive();
 }
 
+void RectangleSelect::setMirrorMoved(){
+    if(mirror != nullptr)
+        mirror->moved = moved;
+}
+
+void RectangleSelect::setMirrorResized(){
+    if(mirror != nullptr)
+        mirror->resized = resized;
+}
+
 void RectangleSelect::mirrorHide(){
     if(mirror != nullptr)
         mirror->SelectItem::hide();
@@ -67,7 +77,7 @@ void RectangleSelect::updateMirrorScene(){
 
 void RectangleSelect::setRectUnchecked(QRectF rect){
     QGraphicsRectItem::prepareGeometryChange();
-    cout << "S R U" << endl;
+    //cout << "S R U" << endl;
     myRect = rect;
     setRect(myRect);
 }
@@ -88,13 +98,13 @@ void RectangleSelect::addPoint(QPointF &point, int vertex){
 
 void RectangleSelect::setMirrorVertex(int vertex){
     if(mirror != nullptr){
-        cout << "SET A V M" << endl;
+        //cout << "SET A V M" << endl;
         mirror->setActiveVertex(vertex);
     }
 }
 void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
     if(mirror != nullptr){
-        cout << " SET M C" << endl;
+        //cout << " SET M C" << endl;
         mirror->tl = tlc;
         mirror->bl = blc;
         mirror->tr = trc;
@@ -102,18 +112,20 @@ void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRect
     }
 }
 void RectangleSelect::setMirror(SelectItem *item){
-    cout << "MIRROR " << myID << endl;
+    //cout << "MIRROR " << myID << endl;
     mirror = dynamic_cast<RectangleSelect*>(item);
 }
 
 void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     if(activeVertex != 0){
         resized = true;
+        setMirrorResized();
         //cout << "RESIZE" << endl;
         addPoint(newPos);
     }
     else{
         moved = true;
+        setMirrorMoved();
         QPointF shift = newPos - oldPos;
         checkBoundaries(shift, myRect);
     }
@@ -136,7 +148,6 @@ QRectF RectangleSelect::boundingRect() const{
 
 void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     QGraphicsRectItem::paint(painter, option, widget);
-    cout << "PAINT " << myID << endl;
 
     if(active){
         painter->setBrush(brush());

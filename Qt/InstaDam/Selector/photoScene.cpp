@@ -29,7 +29,7 @@ void PhotoScene::addItem(SelectItem* item){
 }
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){
-    emit keyPressed(event->key());
+    emit keyPressed(myViewerType, event->key());
     QGraphicsScene::keyPressEvent(event);
 }
 
@@ -70,7 +70,7 @@ void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton){
         //cout << "   LEFT" << endl;
         mousePressed = false;
-        emit leftMouseReleased(oldPos, newPos);
+        emit leftMouseReleased(myViewerType, oldPos, newPos);
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

@@ -74,8 +74,8 @@ private slots:
     void on_freeSelectButton_clicked();
     void processMouseMoved(QPointF fromPos, QPointF toPos);
     void processPointClicked(viewerTypes type, SelectItem *item, QPointF pos);
-    void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
-    void processKeyPressed(const int key);
+    void processLeftMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos);
+    void processKeyPressed(viewerTypes type, const int key);
     void finishPolygonButtonClicked();
     Project on_actionNew_triggered();
 

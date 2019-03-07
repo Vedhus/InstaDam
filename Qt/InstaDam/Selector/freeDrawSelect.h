@@ -43,7 +43,10 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void mirrorHide() override;
         void mirrorShow() override;
         void setMirrorActive() override {}
-
+        void setMirrorMoved() override {}
+        void setMirrorResized() override {}
+        FreeDrawSelect* getMirror() override {return mirror;}
+        void setMirrorAdded() override {mirror->hasBeenAdded = true;}
 
 protected:
         FreeMap *myMap;

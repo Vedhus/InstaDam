@@ -50,6 +50,16 @@ void EllipseSelect::setMirrorActive(){
         mirror->setItemActive();
 }
 
+void EllipseSelect::setMirrorMoved(){
+    if(mirror != nullptr)
+        mirror->moved = moved;
+}
+
+void EllipseSelect::setMirrorResized(){
+    if(mirror != nullptr)
+        mirror->resized = resized;
+}
+
 QGraphicsScene* EllipseSelect::scene(){
     return SelectItem::scene();
 }
@@ -74,11 +84,13 @@ void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     if(activeVertex != 0){
         addPoint(newPos);
         resized = true;
+        setMirrorResized();
     }
     else{
         QPointF shift = newPos - oldPos;
         checkBoundaries(shift, myRect);
         moved = true;
+        setMirrorMoved();
     }
     calcCorners();
     QGraphicsEllipseItem::prepareGeometryChange();
