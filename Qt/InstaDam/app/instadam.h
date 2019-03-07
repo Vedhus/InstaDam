@@ -142,6 +142,7 @@ private:
     FreeDrawErase *myErase;
     SelectItem *tempItem;
     SelectItem *mirrorItem;
+    int brushMode = Qt::SquareCap;
 };
 
 

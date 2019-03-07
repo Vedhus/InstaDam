@@ -20,7 +20,7 @@ public:
     //void resizeItem(int vertex, QPointF &newPos) override;
     //void clickPoint(QPointF &point) override;
     void updatePen(QPen pen) override;
-    //int type(){return SelectItem::type();}
+    int type(){return SelectItem::type();}
     QRectF boundingRect() const override;
     bool isInside(QPointF &point) override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;

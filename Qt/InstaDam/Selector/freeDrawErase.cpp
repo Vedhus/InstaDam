@@ -3,8 +3,8 @@
 #include <iostream>
 using namespace std;
 
-FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, Label *label, QGraphicsItem *item)
-    : FreeDrawSelect(point, brushSize, nullptr, item){
+FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
+    : FreeDrawSelect(point, brushSize, brushMode, nullptr, item){
     myLabel = label;
     undoMap = new EraseMap();
     QHashIterator<int, FreeDrawSelect*> it(myLabel->freeDrawObjects);
@@ -53,7 +53,7 @@ void FreeDrawErase::rasterizeLine(QPoint &start, QPoint &end){
     }
 }
 
-void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
+void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
     QPoint start = oldPos.toPoint();
     QPoint end = newPos.toPoint();
     int sdx, sdy, edx, edy;
@@ -135,6 +135,20 @@ void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
             end.rx() += edx;
         }
     }
+}
+
+void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
+
+}
+
+void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
+    if(brushType == Qt::SquareCap){
+        drawWithSquare(oldPos, newPos);
+    }
+    else{
+        drawWithCircle(oldPos, newPos);
+    }
+
 
     EraseMapIterator it((*undoMap));
     while(it.hasNext()){

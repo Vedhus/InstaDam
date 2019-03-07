@@ -4,10 +4,14 @@
 #include <QGraphicsScene>
 #include <algorithm>
 #include <iostream>
+#include <math.h>
+
+#define PI 3.14159265
+
 using namespace std;
 
 QString FreeDrawSelect::baseInstruction = QString("");
-FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, Label *label, QGraphicsItem *item)
+FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = new FreeMap();
     myMap->insert(pointToInt(point.toPoint()), point.toPoint());
@@ -22,6 +26,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, Label *label, QGrap
     halfWidth = brushSize/2;
     updatePen(myPen);
     lastPoint = point.toPoint();
+    brushType = brushMode;
 
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsMovable);
@@ -51,7 +56,7 @@ void FreeDrawSelect::updatePen(QPen pen){
 }
 
 void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
-    //cout << "RR" << endl;
+    //cout << "       RR " << start.x() << "," << start.y() << "  " << end.x() << "," << end.y() << endl;
 
     qreal dx = end.x() - start.x();
     qreal dy = end.y() - start.y();
@@ -101,13 +106,12 @@ void FreeDrawSelect::checkPoint(QPoint &point){
 }
 
 void FreeDrawSelect::updateMirrorScene(){
-    cout << "UMS" << endl;
+    //cout << "UMS" << endl;
     if(mirror != nullptr)
         mirror->scene()->update();
 }
 
-void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-
+void FreeDrawSelect::drawWithSquare(QPointF &oldPos, QPointF &newPos){
     QPoint start = oldPos.toPoint();
     QPoint end = newPos.toPoint();
     int sdx, sdy, edx, edy;
@@ -189,9 +193,70 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
             end.rx() += edx;
         }
     }
-    setMirrorMap();
+}
+void rotatePoint(QPointF &point, const qreal angle){
+    qreal x = point.x();
+    qreal y = point.y();
+    point.setX(x*cos(angle) - y*sin(angle));
+    point.setY(y*cos(angle) + x*sin(angle));
 }
 
+void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
+    //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
+    QPointF shift = newPos - oldPos;
+    qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
+    //cout << "ANG " << angle*180./PI << endl;
+    qreal rotate = -PI/(fullWidth - 1);
+    //cout << "ROT " << rotate*180./PI << endl;
+    QPointF addOnStart = QPointF(halfWidth, 0.);
+    QPointF addOnEnd = QPointF(halfWidth, 0.);
+    rotatePoint(addOnStart, angle);
+    rotatePoint(addOnEnd, angle);
+    //addOn.setX(addOn.x()*cos(angle) - addOn.y()*sin(angle));
+    //addOn.setY(addOn.y()*cos(angle) + addOn.x()*sin(angle));
+    QPoint start;
+    QPoint end;
+    //angle -= PI/2.;
+    for(int i = 0; i < fullWidth; i++){
+        rotatePoint(addOnStart, rotate);
+        rotatePoint(addOnEnd, -rotate);
+        start = (oldPos + addOnStart).toPoint();
+        end = (newPos + addOnEnd).toPoint();
+        //cout << "   " << i << " " << int(rotate*i*180./PI) << "_" << int(addOnStart.x()) << "," << int(addOnStart.y()) << "  " << int(-rotate*i*180./PI) << "_"<< int(addOnEnd.x()) << "," << int(addOnEnd.y()) << endl;
+        rasterizeLine(start, end);
+    }
+}
+
+
+void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
+    if(brushType == Qt::SquareCap){
+        drawWithSquare(oldPos, newPos);
+    }
+    else{
+        drawWithCircle(oldPos, newPos);
+    }
+    calcRect();
+    setMirrorMap();
+    //cout << " _____ " << myRect.left() << "," << myRect.top() << "  " << myRect.right() << "," << myRect.bottom() << endl;
+}
+
+
+void FreeDrawSelect::calcRect(){
+    return;
+    int t = 1000000;
+    int l = 1000000;
+    int b = 0;
+    int r = 0;
+    FreeMapIterator it((*myMap));
+    while(it.hasNext()){
+        it.next();
+        t = min(t, it.value().y());
+        l = min(l, it.value().x());
+        b = max(b, it.value().y());
+        r = max(r, it.value().x());
+    }
+    myRect = QRectF(QPointF(t,l), QPointF(b,r));
+}
 
 void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
     UNUSED(vertex);
@@ -219,13 +284,16 @@ void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 }
 
 void FreeDrawSelect::setMirrorMap(){
-    if(mirror != nullptr)
+    if(mirror != nullptr){
         mirror->myMap = myMap;
+        mirror->myRect = myRect;
+    }
 }
 void FreeDrawSelect::deletePoints(QVector<int> &points, FreeMap *delHash){
     for(int i = 0; i < points.size(); i++){
         deletePoint(points[i], delHash);
     }
+    calcRect();
     setMirrorMap();
 }
 
@@ -238,5 +306,6 @@ void FreeDrawSelect::deletePoint(int point, FreeMap *delHash){
 
 void FreeDrawSelect::addPoints(FreeMap *points){
     myMap->unite((*points));
+    calcRect();
     setMirrorMap();
 }

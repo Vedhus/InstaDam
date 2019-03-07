@@ -16,7 +16,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 
     public:
     static QString baseInstruction;
-        FreeDrawSelect(QPointF point, int brushSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
+        FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
         ~FreeDrawSelect() override;
         void addPoint(QPointF &point, int vertex = UNSELECTED) override;
         void moveItem(QPointF &oldPos, QPointF &newPos) override;
@@ -47,7 +47,8 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void setMirrorResized() override {}
         FreeDrawSelect* getMirror() override {return mirror;}
         void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-
+        void drawWithSquare(QPointF &oldPos, QPointF &newPos);
+        void drawWithCircle(QPointF &oldPos, QPointF &newPos);
 protected:
         FreeMap *myMap;
         int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
@@ -56,6 +57,7 @@ protected:
         int halfWidth;
         int fullWidth;
         QPoint lastPoint;
+        int brushType;
 
 private:
 #ifdef TEST
@@ -65,5 +67,6 @@ private:
         FreeDrawSelect *mirror = nullptr;
         void checkPoint(QPoint &point);
         void setMirrorMap();
+        void calcRect();
 };
 #endif // POLYGONSELECT_H
