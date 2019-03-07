@@ -52,7 +52,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
         void rotateMirror() override {}
 protected:
-        FreeMap *myMap;
+        FreeMap *myMap = nullptr;
         int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
         int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
         void rasterizeLine(QPoint &start, QPoint &end);

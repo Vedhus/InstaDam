@@ -1,6 +1,9 @@
 #include "freeDrawErase.h"
 #include "label.h"
 #include <iostream>
+#include <math.h>
+
+#define PI 3.14159265
 using namespace std;
 
 FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
@@ -136,8 +139,32 @@ void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
         }
     }
 }
+void rotatePoint(QPointF &point, const qreal angle);
 
 void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
+    //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
+    QPointF shift = newPos - oldPos;
+    qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
+    //cout << "ANG " << angle*180./PI << endl;
+    qreal rotate = -PI/(fullWidth - 1);
+    //cout << "ROT " << rotate*180./PI << endl;
+    QPointF addOnStart = QPointF(halfWidth, 0.);
+    QPointF addOnEnd = QPointF(halfWidth, 0.);
+    rotatePoint(addOnStart, angle);
+    rotatePoint(addOnEnd, angle);
+    //addOn.setX(addOn.x()*cos(angle) - addOn.y()*sin(angle));
+    //addOn.setY(addOn.y()*cos(angle) + addOn.x()*sin(angle));
+    QPoint start;
+    QPoint end;
+    //angle -= PI/2.;
+    for(int i = 0; i < fullWidth; i++){
+        rotatePoint(addOnStart, rotate);
+        rotatePoint(addOnEnd, -rotate);
+        start = (oldPos + addOnStart).toPoint();
+        end = (newPos + addOnEnd).toPoint();
+        //cout << "   " << i << " " << int(rotate*i*180./PI) << "_" << int(addOnStart.x()) << "," << int(addOnStart.y()) << "  " << int(-rotate*i*180./PI) << "_"<< int(addOnEnd.x()) << "," << int(addOnEnd.y()) << endl;
+        rasterizeLine(start, end);
+    }
 
 }
 
