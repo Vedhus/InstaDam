@@ -66,3 +66,5 @@ Qt/InstaDam/Selector/SelectorStandAlone\.pro
 Qt/InstaDam/Selector/SelectorStandAlone
 
 *.gcda
+
+Qt/InstaDam/Selector/Test/SelectorTest

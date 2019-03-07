@@ -675,12 +675,14 @@ void InstaDam::on_freeSelectButton_clicked(){
 
 void InstaDam::roundBrushButtonClicked()
 {
+    brushMode = Qt::RoundCap;
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
     ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
 }
 
 void InstaDam::squareBrushButtonClicked()
 {
+    brushMode = Qt::SquareCap;
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
 }
@@ -782,8 +784,8 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
             case Freedraw:
             {
                 if(drawing){
-                    FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, currentLabel);
-                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, currentBrushSize);
+                    FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, brushMode, currentLabel);
+                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, currentBrushSize, brushMode);
                     tempItem = temp;
                     mirrorItem = mirror;
                     mirrorItem->setLabel(currentLabel);
@@ -792,7 +794,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
                     mirrorItem->setMirror(tempItem);
                 }
                 else{
-                    myErase = new FreeDrawErase(pos, currentBrushSize, currentLabel);
+                    myErase = new FreeDrawErase(pos, currentBrushSize, brushMode, currentLabel);
                     currentItem = myErase;
                 }
             }
