@@ -32,7 +32,7 @@ protected:
         friend TestSelect;
 #endif
         void voidPoint(QPoint &point);
-        EraseMap *undoMap;
+        EraseMap *undoMap = nullptr;
         QVector<int> deleteList;
 //        QHash<int, SelectItem*> freeDrawItems;
 };
