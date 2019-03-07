@@ -73,7 +73,7 @@ private slots:
     void on_polygonSelectButton_clicked();
     void on_freeSelectButton_clicked();
     void processMouseMoved(QPointF fromPos, QPointF toPos);
-    void processPointClicked(SelectItem *item, QPointF pos);
+    void processPointClicked(viewerTypes type, SelectItem *item, QPointF pos);
     void processLeftMouseReleased(QPointF oldPos, QPointF newPos);
     void processKeyPressed(const int key);
     void finishPolygonButtonClicked();
@@ -118,6 +118,7 @@ private:
     newproject *newProject;
     Project currentProject;
     PhotoScene *scene;
+    PhotoScene *maskScene;
     QUndoStack *undoStack;
     SelectType currentSelectType;
     SelectItem *currentItem;
@@ -139,6 +140,8 @@ private:
     int vertex2 = -1;
     int currentBrushSize = 5;
     FreeDrawErase *myErase;
+    SelectItem *tempItem;
+    SelectItem *mirrorItem;
 };
 
 

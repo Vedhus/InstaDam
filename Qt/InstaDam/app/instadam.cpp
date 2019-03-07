@@ -32,10 +32,11 @@ InstaDam::InstaDam(QWidget *parent) :
     undoStack = new QUndoStack(this);
     currentSelectType = Ellipse;
     scene = ui->IdmPhotoViewer->scene;
+    maskScene = ui->IdmMaskViewer->scene;
     currentItem = nullptr;
     currentLabel = nullptr;
-    connect(scene, SIGNAL(pointClicked(SelectItem*, QPointF)), this,
-            SLOT(processPointClicked(SelectItem*, QPointF)));
+    connect(scene, SIGNAL(pointClicked(viewerTypes, SelectItem*, QPointF)), this,
+            SLOT(processPointClicked(viewerTypes, SelectItem*, QPointF)));
     connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
     connect(scene, SIGNAL(leftMouseReleased(QPointF, QPointF)), this,
@@ -546,6 +547,7 @@ void InstaDam::on_panButton_clicked()
 
 void InstaDam::on_rectangleSelectButton_clicked(){
     scene->inactiveAll();
+    maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
         case Polygon:
@@ -570,10 +572,12 @@ void InstaDam::on_rectangleSelectButton_clicked(){
     blankWidget->show();
     currentSelectType = Rect;
     scene->update();
+    maskScene->update();
 }
 
 void InstaDam::on_ellipseSelectButton_clicked(){
     scene->inactiveAll();
+    maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
         case Polygon:
@@ -598,10 +602,12 @@ void InstaDam::on_ellipseSelectButton_clicked(){
     blankWidget->show();
     currentSelectType = Ellipse;
     scene->update();
+    maskScene->update();
 }
 
 void InstaDam::on_polygonSelectButton_clicked(){
     scene->inactiveAll();
+    maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
         case Ellipse:
@@ -655,6 +661,7 @@ void InstaDam::on_freeSelectButton_clicked(){
     freeSelectWidget->show();
     currentSelectType = Freedraw;
     scene->update();
+    maskScene->update();
 }
 
 void InstaDam::roundBrushButtonClicked()
@@ -696,7 +703,7 @@ void InstaDam::on_actionSave_File_triggered()
 }
 
 
-void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
+void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF pos){
     //cout << "CLICK" << endl;
     if(!item){
         //cout << "QQ" << endl;
@@ -732,27 +739,32 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
                 currentItem->addPoint(pos);
             }
             scene->update();
+            maskScene->update();
             return;
         }
         scene->inactiveAll();
+        maskScene->inactiveAll();
         switch(currentSelectType){
             case Rect:
             {
-                //cout << "R" << endl;
                 RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
-                //cout << "R2" << endl;
-                scene->addItem(temp);
-                currentItem = temp;
-                scene->update();
-                //cout << "R5" << endl;
+                RectangleSelect *mirror = new RectangleSelect(pos);
+                tempItem = temp;
+                mirrorItem = mirror;
+                mirrorItem->setLabel(currentLabel);
+                tempItem->setMirror(mirrorItem);
+                mirrorItem->setMirror(tempItem);
             }
                 break;
             case Ellipse:
             {
                 EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
-                scene->addItem(temp);
-                currentItem = temp;
-                scene->update();
+                EllipseSelect *mirror = new EllipseSelect(pos);
+                tempItem = temp;
+                mirrorItem = mirror;
+                mirrorItem->setLabel(currentLabel);
+                tempItem->setMirror(mirrorItem);
+                mirrorItem->setMirror(tempItem);
             }
                 break;
             case Freeerase:
@@ -760,32 +772,46 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
             {
                 if(drawing){
                     FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, currentLabel);
-                    scene->addItem(temp);
-                    currentItem = temp;
-                    temp->init(pos);
-                    scene->update();
+                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, currentBrushSize);
+                    tempItem = temp;
+                    mirrorItem = mirror;
+                    mirrorItem->setLabel(currentLabel);
+                    tempItem->setMirror(mirrorItem);
+                    mirrorItem->setMirror(tempItem);
                 }
                 else{
                     myErase = new FreeDrawErase(pos, currentBrushSize, currentLabel);
                     currentItem = myErase;
-                    scene->update();
                 }
             }
                 break;
             case Polygon:
             {
                 PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
-                scene->addItem(temp);
-                currentItem = temp;
-                scene->update();
+                PolygonSelect *mirror = new PolygonSelect(pos);
+                tempItem = temp;
+                mirrorItem = mirror;
+                mirrorItem->setLabel(currentLabel);
+                tempItem->setMirror(mirrorItem);
+                mirrorItem->setMirror(tempItem);
             }
                 break;
-        //default:
-        //    break;
-    //case Generic:
-
-
         }
+        if((currentSelectType != Freedraw && currentSelectType != Freeerase) || drawing){
+            mirrorItem->setLabel(currentLabel);
+            scene->addItem(tempItem);
+            maskScene->addItem(mirrorItem);
+            switch(type){
+                case PHOTO_VIEWER_TYPE:
+                    currentItem = tempItem;
+                    break;
+                case MASK_VIEWER_TYPE:
+                    currentItem = mirrorItem;
+                    break;
+            }
+        }
+        scene->update();
+        maskScene->update();
     }
     else{
         if(item->type() != currentSelectType){
@@ -808,6 +834,7 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
 
         currentItem = item;
         scene->inactiveAll();
+        maskScene->inactiveAll();
         currentItem->clickPoint(pos);
 
         if(currentItem->type() == Polygon && insertVertex){
@@ -830,6 +857,7 @@ void InstaDam::processPointClicked(SelectItem *item, QPointF pos){
             }
         }
         scene->update();
+        maskScene->update();
     }
 }
 
@@ -837,6 +865,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
     if(currentItem){
         currentItem->moveItem(fromPos, toPos);
         scene->update();
+        maskScene->update();
     }
 }
 
@@ -844,7 +873,7 @@ void InstaDam::processLeftMouseReleased(QPointF oldPos, QPointF newPos)
 {
     if(currentItem && !currentItem->isItemAdded()){
         if(currentItem->type() == Freeerase){
-            QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene);
+            QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
             undoStack->push(eraseCommand);
         }else{
             QUndoCommand *addCommand = new AddCommand(currentItem, scene);
@@ -880,6 +909,7 @@ void InstaDam::finishPolygonButtonClicked(){
         currentItem->setActiveVertex(UNSELECTED);
     currentItem = nullptr;
     scene->update();
+    maskScene->update();
 }
 void InstaDam::processKeyPressed(const int key){
     if(!currentItem){

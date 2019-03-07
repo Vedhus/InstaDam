@@ -26,11 +26,18 @@ public:
         void checkPoint(QPointF &point);
         void removeVertex(int vertex=UNSELECTED) override;
         qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-        void init(QPointF &point) override {UNUSED(point);}
         void insertVertex(int vertex, QPointF &point) override;
         QString baseInstructions() override {return PolygonSelect::baseInstruction;}
         int numberOfVertices() override;
         void updatePen(QPen pen) override;
+        void setMirror(SelectItem *item) override;
+        void setMirrorVertex(int vertex) override;
+        void setMirrorActivePoint(QPointF point);
+        void updateMirrorScene() override;
+        void mirrorHide() override;
+        void mirrorShow() override;
+        void setMirrorActive() override;
+
     private:
         QRectF makeVertex(QPointF &point);
         void refresh();
@@ -39,6 +46,8 @@ public:
         QPolygonF polygon;
         QVector<QPointF> myPoints;
         QVector<QRectF> myVertices;
-        QVector<qreal> constant, multiple;
+        PolygonSelect *mirror;
+        void setMirrorPolygon(int actVert);
+        void setMirrorRect(QRectF rect);
 };
 #endif // POLYGONSELECT_H

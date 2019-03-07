@@ -5,9 +5,10 @@ using namespace std;
 #include "photoScene.h"
 #include "selectItem.h"
 
-PhotoScene::PhotoScene(QObject *parent)
+PhotoScene::PhotoScene(viewerTypes type, QObject *parent)
     : QGraphicsScene(parent), currentItems(), labelmap()
 {
+    myViewerType = type;
     movingItem = nullptr;
     mousePressed = false;
 }
@@ -25,9 +26,7 @@ void PhotoScene::addItem(QGraphicsItem* item){
 void PhotoScene::addItem(SelectItem* item){
     currentItems.push_front(item);
     QGraphicsScene::addItem(item);
-    //item->setScene();
 }
-
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){
     emit keyPressed(event->key());
@@ -45,10 +44,10 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         oldPos = mousePos;
         newPos = mousePos;
         if(item && item->type() != 7){
-            emit pointClicked(item, mousePos);
+            emit pointClicked(myViewerType, item, mousePos);
         }
         else{
-            emit pointClicked(nullptr, mousePos);
+            emit pointClicked(myViewerType, nullptr, mousePos);
         }
 
     }

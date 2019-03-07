@@ -92,12 +92,13 @@ private:
 
 class ErasePointsCommand : public QUndoCommand{
 public:
-    ErasePointsCommand(FreeDrawErase *item, PhotoScene *graphicsScene, QUndoCommand *parent = nullptr);
+    ErasePointsCommand(FreeDrawErase *item, PhotoScene *graphicsScene, PhotoScene *maskScene, QUndoCommand *parent = nullptr);
     void undo() override;
     void redo() override;
 private:
     FreeDrawErase *myItem;
     PhotoScene *myScene;
+    PhotoScene *myMask;
     bool init = false;
 };
 

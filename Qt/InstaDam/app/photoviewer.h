@@ -23,8 +23,6 @@ namespace Ui {
 class PhotoViewer;
 }
 
-enum viewerTypes{PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE};
-
 enum brushTypes {PAINTBRUSH, ERASER, PAN};
 
 class PhotoViewer : public QGraphicsView

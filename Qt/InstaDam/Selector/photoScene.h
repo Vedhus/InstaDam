@@ -17,14 +17,15 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneDragDropEvent;
 class QGraphicsViewItem;
 QT_END_NAMESPACE
+
+enum viewerTypes{PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE};
+
 class PhotoScene : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
-    PhotoScene(QObject *parent = nullptr);
-    //void setCurrentItem(RectItem *rectItem);
-    //void setCurrentType(SelectType newType);
+    PhotoScene(viewerTypes type, QObject *parent = nullptr);
     SelectItem* itemAt(QPointF point);
     SelectItem* itemAt(QPointF point, std::string label);
     void addLabel(std::string label);
@@ -33,9 +34,10 @@ public:
     void addItem(SelectItem* item);
     void addItem(QGraphicsItem* item);
     void inactiveAll();
+    viewerTypes myViewerType;
 
 signals:
-    void pointClicked(SelectItem* item, QPointF point);
+    void pointClicked(viewerTypes type, SelectItem* item, QPointF point);
     void mouseMoved(QPointF fromPos, QPointF toPos);
     void leftMouseReleased(QPointF oldPos, QPointF newPos);
     void keyPressed(const int key);

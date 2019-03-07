@@ -31,13 +31,20 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
         void movePoint(QPointF &point);
         void updatePen(QPen pen) override;
         void checkPoint(QPointF &point);
-        void init(QPointF &point) override;
         void insertVertex(int vertex, QPointF &point) override {UNUSED(vertex);UNUSED(point);}
         QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
         int numberOfVertices() override {return 0;}
         void deletePoints(QVector<int> &points, FreeMap *delHash);
         void deletePoint(int points, FreeMap *delHash);
         void addPoints(FreeMap *points);
+        void setMirror(SelectItem *item) override;
+        void setMirrorVertex(int vertex) override {UNUSED(vertex);}
+        void updateMirrorScene() override;
+        void mirrorHide() override;
+        void mirrorShow() override;
+        void setMirrorActive() override {}
+
+
 protected:
         FreeMap *myMap;
         int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
@@ -52,19 +59,8 @@ private:
 
         friend TestSelect;
 #endif
-
-        //const int pixel = 5;
-        //QPolygon polygon;
-        //QVector<QVector <Block*> > myMap;
-        //Block inUse;
-        //QPoint gridSize;
-        //QPointF offset;
-        //QPen myPen;
-        //const int baseSize = 100;
-        //QVector<bool> baseVector = QVector<bool>(baseSize, false);
-        //QPoint getBox(QPoint &point);
-        //Block* makeBlock();
+        FreeDrawSelect *mirror = nullptr;
         void checkPoint(QPoint &point);
-        //void updateMap(QPoint &point);
+        void setMirrorMap();
 };
 #endif // POLYGONSELECT_H

@@ -12,11 +12,12 @@ public:
     void resizeItem(int vertex, QPointF &newPos) override;
     void resetActiveVertex() override;
     void removeVertex(int vertex = UNSELECTED) override;
-    void init(QPointF &point) override {UNUSED(point);}
     void insertVertex(int vertex, QPointF &point) override {UNUSED(point);UNUSED(vertex);}
     int numberOfVertices() override {return 2;}
+    virtual void setRectUnchecked(QRectF rect) = 0;
+    virtual void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) = 0;
 protected:
-    void calcCorners();
+    void calcCorners(bool mir = true);
     QRectF tl, bl, tr, br;
 };
 

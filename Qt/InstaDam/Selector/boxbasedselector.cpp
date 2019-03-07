@@ -1,10 +1,12 @@
 #include "boxbasedselector.h"
 #include <QPainter>
+#include <iostream>
+using namespace std;
 
 BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *item) : SelectItem(label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
-    calcCorners();
+    calcCorners(false);
     active = true;
     //pen = QPen(Qt::blue);
     //pen.setWidth(5);
@@ -30,6 +32,7 @@ void BoxBasedSelector::resetActiveVertex(){
 void BoxBasedSelector::removeVertex(int vertex){
     UNUSED(vertex);
 }
+
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
@@ -51,14 +54,19 @@ void BoxBasedSelector::clickPoint(QPointF &point){
     else{
         setActiveVertex(0, 0);
     }
+    setMirrorVertex(getActiveVertex());
 }
 void BoxBasedSelector::resizeItem(int vertex, QPointF &newPos){
     setActiveVertex(vertex);
+    setMirrorVertex(getActiveVertex());
     addPoint(newPos);
+
 }
-void BoxBasedSelector::calcCorners(){
+void BoxBasedSelector::calcCorners(bool mir){
     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() + SelectItem::yoffset);
     br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
+    if(mir)
+        setMirrorCorners(tl, bl, tr, br);
 }
