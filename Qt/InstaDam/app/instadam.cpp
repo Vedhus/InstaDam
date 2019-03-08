@@ -18,8 +18,6 @@ using namespace std;
 #include "htmlFileHandler/qhtml5file.h"
 #endif
 
-int SelectItem::ID = 0;
-QSize SelectItem::myBounds = QSize(0,0);
 InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)

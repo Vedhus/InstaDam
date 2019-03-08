@@ -10,6 +10,8 @@ using namespace std;
 qreal SelectItem::vertexSize = 10.;
 QPointF SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
 QPointF SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
+int SelectItem::ID = 0;
+QSize SelectItem::myBounds = QSize(0,0);
 
 
 SelectItem::SelectItem(qreal vertSize, Label *label, QGraphicsItem *item) : QGraphicsItem(item){
