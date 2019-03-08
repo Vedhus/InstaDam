@@ -17,8 +17,6 @@ AddCommand::AddCommand(SelectItem *item,
 
 AddCommand::~AddCommand()
 {
-    if (!myItem->scene())
-        delete myItem;
 }
 
 

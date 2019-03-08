@@ -5,10 +5,18 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-QString RectangleSelect::baseInstruction = QString("");
 
-RectangleSelect::~RectangleSelect(){
 
+RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *item)
+    : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
+{
+    setRect(myRect);
+    mytype = Rect;
+    if(label)
+        label->addItem(this);
+    updatePen(myPen);
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item)
@@ -25,63 +33,11 @@ RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QG
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-void RectangleSelect::updatePen(QPen pen){
-    setPen(pen);
+RectangleSelect::~RectangleSelect(){
+
 }
 
-RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *item)
-    : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
-{
-    setRect(myRect);
-    mytype = Rect;
-    if(label)
-        label->addItem(this);
-    updatePen(myPen);
-    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
-    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
-}
-
-QGraphicsScene* RectangleSelect::scene(){
-    return SelectItem::scene();
-}
-
-void RectangleSelect::setMirrorActive(){
-    if(mirror != nullptr)
-        mirror->setItemActive();
-}
-
-void RectangleSelect::setMirrorMoved(){
-    if(mirror != nullptr)
-        mirror->moved = moved;
-}
-
-void RectangleSelect::setMirrorResized(){
-    if(mirror != nullptr)
-        mirror->resized = resized;
-}
-
-void RectangleSelect::mirrorHide(){
-    if(mirror != nullptr)
-        mirror->SelectItem::hide();
-}
-
-void RectangleSelect::mirrorShow(){
-    if(mirror != nullptr)
-        mirror->SelectItem::show();
-}
-
-void RectangleSelect::updateMirrorScene(){
-    if(mirror != nullptr)
-        mirror->scene()->update();
-}
-
-void RectangleSelect::setRectUnchecked(QRectF rect){
-    QGraphicsRectItem::prepareGeometryChange();
-    //cout << "S R U" << endl;
-    myRect = rect;
-    setRect(myRect);
-}
-
+/*---------------------- Overrides ---------------------------*/
 void RectangleSelect::addPoint(QPointF &point, int vertex){
     UNUSED(vertex);
     //myRect.setBottomRight(point);
@@ -96,24 +52,13 @@ void RectangleSelect::addPoint(QPointF &point, int vertex){
         mirror->setRectUnchecked(myRect);
 }
 
-void RectangleSelect::setMirrorVertex(int vertex){
-    if(mirror != nullptr){
-        //cout << "SET A V M" << endl;
-        mirror->setActiveVertex(vertex);
-    }
+QRectF RectangleSelect::boundingRect() const{
+    return QGraphicsRectItem::boundingRect();
 }
-void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
-    if(mirror != nullptr){
-        //cout << " SET M C" << endl;
-        mirror->tl = tlc;
-        mirror->bl = blc;
-        mirror->tr = trc;
-        mirror->br = brc;
-    }
-}
-void RectangleSelect::setMirror(SelectItem *item){
-    //cout << "MIRROR " << myID << endl;
-    mirror = dynamic_cast<RectangleSelect*>(item);
+
+bool RectangleSelect::isInside(QPointF &point){
+    return QGraphicsRectItem::contains(point);
+    //return isInsideRect(myRect, point);
 }
 
 void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
@@ -136,16 +81,6 @@ void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
         mirror->setRectUnchecked(myRect);
 }
 
-
-bool RectangleSelect::isInside(QPointF &point){
-    return QGraphicsRectItem::contains(point);
-    //return isInsideRect(myRect, point);
-}
-
-QRectF RectangleSelect::boundingRect() const{
-    return QGraphicsRectItem::boundingRect();
-}
-
 void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     QGraphicsRectItem::paint(painter, option, widget);
 
@@ -158,6 +93,28 @@ void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     }
 }
 
+void RectangleSelect::updatePen(QPen pen){
+    setPen(pen);
+}
+
+void RectangleSelect::setRectUnchecked(QRectF rect){
+    QGraphicsRectItem::prepareGeometryChange();
+    //cout << "S R U" << endl;
+    myRect = rect;
+    setRect(myRect);
+}
+
+/*---------------------------- Mirror functions ----------------------*/
+void RectangleSelect::mirrorHide(){
+    if(mirror != nullptr)
+        mirror->SelectItem::hide();
+}
+
+void RectangleSelect::mirrorShow(){
+    if(mirror != nullptr)
+        mirror->SelectItem::show();
+}
+
 void RectangleSelect::rotateMirror(){
     if(mirror != nullptr){
         mirror->myRotation = myRotation;
@@ -165,3 +122,55 @@ void RectangleSelect::rotateMirror(){
         mirror->BoxBasedSelector::setRotation(myRotation);
     }
 }
+
+void RectangleSelect::setMirror(SelectItem *item){
+    //cout << "MIRROR " << myID << endl;
+    mirror = dynamic_cast<RectangleSelect*>(item);
+}
+
+void RectangleSelect::setMirrorActive(){
+    if(mirror != nullptr)
+        mirror->setItemActive();
+}
+
+void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
+    if(mirror != nullptr){
+        //cout << " SET M C" << endl;
+        mirror->tl = tlc;
+        mirror->bl = blc;
+        mirror->tr = trc;
+        mirror->br = brc;
+    }
+}
+
+void RectangleSelect::setMirrorMoved(){
+    if(mirror != nullptr)
+        mirror->moved = moved;
+}
+
+
+void RectangleSelect::setMirrorResized(){
+    if(mirror != nullptr)
+        mirror->resized = resized;
+}
+
+void RectangleSelect::setMirrorVertex(int vertex){
+    if(mirror != nullptr){
+        //cout << "SET A V M" << endl;
+        mirror->setActiveVertex(vertex);
+    }
+}
+
+void RectangleSelect::updateMirrorScene(){
+    if(mirror != nullptr)
+        mirror->scene()->update();
+}
+
+
+QGraphicsScene* RectangleSelect::scene(){
+    return SelectItem::scene();
+}
+
+
+
+

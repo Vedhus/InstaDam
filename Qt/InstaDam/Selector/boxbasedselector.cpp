@@ -29,14 +29,8 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, Label *label, 
 BoxBasedSelector::~BoxBasedSelector(){
 
 }
-void BoxBasedSelector::resetActiveVertex(){
-    setActiveVertex(0);
-}
 
-void BoxBasedSelector::removeVertex(int vertex){
-    UNUSED(vertex);
-}
-
+/*-------------------------- Overrides -------------------------*/
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
@@ -60,19 +54,20 @@ void BoxBasedSelector::clickPoint(QPointF &point){
     }
     setMirrorVertex(getActiveVertex());
 }
+
+void BoxBasedSelector::removeVertex(int vertex){
+    UNUSED(vertex);
+}
+
+void BoxBasedSelector::resetActiveVertex(){
+    setActiveVertex(0);
+}
+
 void BoxBasedSelector::resizeItem(int vertex, QPointF &newPos){
     setActiveVertex(vertex);
     setMirrorVertex(getActiveVertex());
     addPoint(newPos);
 
-}
-void BoxBasedSelector::calcCorners(bool mir){
-    tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
-    bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
-    tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() + SelectItem::yoffset);
-    br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
-    if(mir)
-        setMirrorCorners(tl, bl, tr, br);
 }
 
 void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
@@ -83,4 +78,14 @@ void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
     setRotation(myRotation);
     rotated = true;
     rotateMirror();
+}
+
+/*-------------------------- Protected ------------------------*/
+void BoxBasedSelector::calcCorners(bool mir){
+    tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
+    bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
+    tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() + SelectItem::yoffset);
+    br = QRectF(myRect.bottomRight() - SelectItem::xoffset - SelectItem::yoffset, myRect.bottomRight());
+    if(mir)
+        setMirrorCorners(tl, bl, tr, br);
 }

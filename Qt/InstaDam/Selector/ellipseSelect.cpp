@@ -4,9 +4,6 @@
 #include <cmath>
 #include <QPainter>
 #include <QGraphicsScene>
-//#include "QtWidgets/private/qgraphicsitem_p.h"
-
-QString EllipseSelect::baseInstruction = QString("");
 
 EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
@@ -39,39 +36,7 @@ EllipseSelect::~EllipseSelect(){
 
 }
 
-void EllipseSelect::rotateMirror(){
-    if(mirror != nullptr){
-        mirror->myRotation = myRotation;
-        mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
-        mirror->BoxBasedSelector::setRotation(myRotation);
-    }
-}
-
-void EllipseSelect::setRectUnchecked(QRectF rect){
-    QGraphicsEllipseItem::prepareGeometryChange();
-    myRect = rect;
-    setRect(myRect);
-}
-
-void EllipseSelect::setMirrorActive(){
-    if(mirror != nullptr)
-        mirror->setItemActive();
-}
-
-void EllipseSelect::setMirrorMoved(){
-    if(mirror != nullptr)
-        mirror->moved = moved;
-}
-
-void EllipseSelect::setMirrorResized(){
-    if(mirror != nullptr)
-        mirror->resized = resized;
-}
-
-QGraphicsScene* EllipseSelect::scene(){
-    return SelectItem::scene();
-}
-
+/*------------------------- Overrides ----------------------------*/
 void EllipseSelect::addPoint(QPointF &point, int vertex){
     UNUSED(vertex);
     sortCorners(myRect, point);
@@ -84,8 +49,20 @@ void EllipseSelect::addPoint(QPointF &point, int vertex){
         mirror->setRectUnchecked(myRect);
 }
 
-void EllipseSelect::setMirror(SelectItem *item){
-    mirror = dynamic_cast<EllipseSelect*>(item);
+QRectF EllipseSelect::boundingRect() const{
+    return QGraphicsEllipseItem::boundingRect();
+}
+
+bool EllipseSelect::isInside(QPointF &point){
+    QPointF center = rect().center();
+    if((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
+            (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2)) <= 1.){
+        return true;
+    }
+    else if(active && (isInsideRect(tl, point) || isInsideRect(tr, point) || isInsideRect(bl, point) || isInsideRect(br, point))){
+        return true;
+    }
+    return false;
 }
 
 void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
@@ -107,15 +84,29 @@ void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
         mirror->setRectUnchecked(myRect);
 }
 
+void EllipseSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    QGraphicsEllipseItem::paint(painter, option, widget);
+    if(active){
+        painter->setBrush(brush());
+        painter->drawRect(tl);
+        painter->drawRect(bl);
+        painter->drawRect(tr);
+        painter->drawRect(br);
+    }
+
+}
+
+void EllipseSelect::setRectUnchecked(QRectF rect){
+    QGraphicsEllipseItem::prepareGeometryChange();
+    myRect = rect;
+    setRect(myRect);
+}
+
 void EllipseSelect::updatePen(QPen pen){
     setPen(pen);
 }
 
-void EllipseSelect::updateMirrorScene(){
-    if(mirror != nullptr)
-        mirror->scene()->update();
-}
-
+/*---------------------------------- Mirror --------------------------*/
 void EllipseSelect::mirrorHide(){
     if(mirror != nullptr)
         mirror->SelectItem::hide();
@@ -126,20 +117,21 @@ void EllipseSelect::mirrorShow(){
         mirror->SelectItem::show();
 }
 
-bool EllipseSelect::isInside(QPointF &point){
-    QPointF center = rect().center();
-    if((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
-            (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2)) <= 1.){
-        return true;
+void EllipseSelect::rotateMirror(){
+    if(mirror != nullptr){
+        mirror->myRotation = myRotation;
+        mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
+        mirror->BoxBasedSelector::setRotation(myRotation);
     }
-    else if(active && (isInsideRect(tl, point) || isInsideRect(tr, point) || isInsideRect(bl, point) || isInsideRect(br, point))){
-        return true;
-    }
-    return false;
 }
-void EllipseSelect::setMirrorVertex(int vertex){
+
+void EllipseSelect::setMirror(SelectItem *item){
+    mirror = dynamic_cast<EllipseSelect*>(item);
+}
+
+void EllipseSelect::setMirrorActive(){
     if(mirror != nullptr)
-        mirror->setActiveVertex(vertex);
+        mirror->setItemActive();
 }
 
 void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
@@ -151,18 +143,24 @@ void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF 
     }
 }
 
-QRectF EllipseSelect::boundingRect() const{
-    return QGraphicsEllipseItem::boundingRect();
+void EllipseSelect::setMirrorMoved(){
+    if(mirror != nullptr)
+        mirror->moved = moved;
 }
+void EllipseSelect::setMirrorResized(){
+    if(mirror != nullptr)
+        mirror->resized = resized;
+}
+void EllipseSelect::setMirrorVertex(int vertex){
+    if(mirror != nullptr)
+        mirror->setActiveVertex(vertex);
+}
+void EllipseSelect::updateMirrorScene(){
+    if(mirror != nullptr)
+        mirror->scene()->update();
+}
+/*--------------------------------------- End Mirror ------------------*/
 
-void EllipseSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    QGraphicsEllipseItem::paint(painter, option, widget);
-    if(active){
-        painter->setBrush(brush());
-        painter->drawRect(tl);
-        painter->drawRect(bl);
-        painter->drawRect(tr);
-        painter->drawRect(br);
-    }
-
+QGraphicsScene* EllipseSelect::scene(){
+    return SelectItem::scene();
 }

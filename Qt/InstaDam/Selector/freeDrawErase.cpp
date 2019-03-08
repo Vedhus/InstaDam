@@ -5,6 +5,7 @@
 
 #define PI 3.14159265
 using namespace std;
+void rotatePoint(QPointF &point, const qreal angle);
 
 FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
     : FreeDrawSelect(point, brushSize, brushMode, nullptr, item){
@@ -26,34 +27,55 @@ FreeDrawErase::~FreeDrawErase(){
         delete myMap;
     if(undoMap != nullptr)
         delete undoMap;
-    if(myLabel != nullptr)
-        delete myLabel;
 }
 
-void FreeDrawErase::voidPoint(QPoint &point){
-    {UNUSED(point);}
-}
-
-void FreeDrawErase::rasterizeLine(QPoint &start, QPoint &end){
-    qreal dx = end.x() - start.x();
-    qreal dy = end.y() - start.y();
-    qreal step;
-    qreal x, y;
-    if(abs(dx) >= abs(dy)){
-        step = abs(dx);
+/*-------------------------- Overrides ---------------------------*/
+void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
+    if(brushType == Qt::SquareCap){
+        drawWithSquare(oldPos, newPos);
     }
     else{
-        step = abs(dy);
+        drawWithCircle(oldPos, newPos);
     }
-    dx = dx / step;
-    dy = dy / step;
-    x = start.x();
-    y = start.y();
-    for(int i = 1.; i <= step; i++){
-        deleteList.push_back(coordsToInt(int(x), int(y)));
-        x += dx;
-        y += dy;
+
+
+    EraseMapIterator it((*undoMap));
+    while(it.hasNext()){
+        it.next();
+        it.key()->deletePoints(deleteList, undoMap->value(it.key()));
     }
+    lastPoint = newPos.toPoint();
+#ifndef TEST
+    deleteList.clear();
+#endif
+}
+/*------------------------- End Overrides ----------------------*/
+
+void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
+    //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
+    QPointF shift = newPos - oldPos;
+    qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
+    //cout << "ANG " << angle*180./PI << endl;
+    qreal rotate = -PI/(fullWidth - 1);
+    //cout << "ROT " << rotate*180./PI << endl;
+    QPointF addOnStart = QPointF(halfWidth, 0.);
+    QPointF addOnEnd = QPointF(halfWidth, 0.);
+    rotatePoint(addOnStart, angle);
+    rotatePoint(addOnEnd, angle);
+    //addOn.setX(addOn.x()*cos(angle) - addOn.y()*sin(angle));
+    //addOn.setY(addOn.y()*cos(angle) + addOn.x()*sin(angle));
+    QPoint start;
+    QPoint end;
+    //angle -= PI/2.;
+    for(int i = 0; i < fullWidth; i++){
+        rotatePoint(addOnStart, rotate);
+        rotatePoint(addOnEnd, -rotate);
+        start = (oldPos + addOnStart).toPoint();
+        end = (newPos + addOnEnd).toPoint();
+        //cout << "   " << i << " " << int(rotate*i*180./PI) << "_" << int(addOnStart.x()) << "," << int(addOnStart.y()) << "  " << int(-rotate*i*180./PI) << "_"<< int(addOnEnd.x()) << "," << int(addOnEnd.y()) << endl;
+        rasterizeLine(start, end);
+    }
+
 }
 
 void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
@@ -139,52 +161,36 @@ void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
         }
     }
 }
-void rotatePoint(QPointF &point, const qreal angle);
 
-void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
-    //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
-    QPointF shift = newPos - oldPos;
-    qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
-    //cout << "ANG " << angle*180./PI << endl;
-    qreal rotate = -PI/(fullWidth - 1);
-    //cout << "ROT " << rotate*180./PI << endl;
-    QPointF addOnStart = QPointF(halfWidth, 0.);
-    QPointF addOnEnd = QPointF(halfWidth, 0.);
-    rotatePoint(addOnStart, angle);
-    rotatePoint(addOnEnd, angle);
-    //addOn.setX(addOn.x()*cos(angle) - addOn.y()*sin(angle));
-    //addOn.setY(addOn.y()*cos(angle) + addOn.x()*sin(angle));
-    QPoint start;
-    QPoint end;
-    //angle -= PI/2.;
-    for(int i = 0; i < fullWidth; i++){
-        rotatePoint(addOnStart, rotate);
-        rotatePoint(addOnEnd, -rotate);
-        start = (oldPos + addOnStart).toPoint();
-        end = (newPos + addOnEnd).toPoint();
-        //cout << "   " << i << " " << int(rotate*i*180./PI) << "_" << int(addOnStart.x()) << "," << int(addOnStart.y()) << "  " << int(-rotate*i*180./PI) << "_"<< int(addOnEnd.x()) << "," << int(addOnEnd.y()) << endl;
-        rasterizeLine(start, end);
-    }
-
-}
-
-void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
-    if(brushType == Qt::SquareCap){
-        drawWithSquare(oldPos, newPos);
+/*----------------------------- Protected ---------------------------*/
+void FreeDrawErase::rasterizeLine(QPoint &start, QPoint &end){
+    qreal dx = end.x() - start.x();
+    qreal dy = end.y() - start.y();
+    qreal step;
+    qreal x, y;
+    if(abs(dx) >= abs(dy)){
+        step = abs(dx);
     }
     else{
-        drawWithCircle(oldPos, newPos);
+        step = abs(dy);
     }
-
-
-    EraseMapIterator it((*undoMap));
-    while(it.hasNext()){
-        it.next();
-        it.key()->deletePoints(deleteList, undoMap->value(it.key()));
+    dx = dx / step;
+    dy = dy / step;
+    x = start.x();
+    y = start.y();
+    for(int i = 1.; i <= step; i++){
+        deleteList.push_back(coordsToInt(int(x), int(y)));
+        x += dx;
+        y += dy;
     }
-    lastPoint = newPos.toPoint();
-#ifndef TEST
-    deleteList.clear();
-#endif
 }
+
+///*----------------------- Private ---------------------------------*/
+//void FreeDrawErase::voidPoint(QPoint &point){
+//    {UNUSED(point);}
+//}
+
+
+
+
 

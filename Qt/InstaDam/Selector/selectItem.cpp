@@ -12,12 +12,6 @@ QPointF SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
 QPointF SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
 
 
-void SelectItem::setVertexSize(qreal size){
-    SelectItem::vertexSize = size;
-    SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
-    SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
-}
-
 SelectItem::SelectItem(qreal vertSize, Label *label, QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(vertSize);
     myID = SelectItem::ID;
@@ -28,12 +22,36 @@ SelectItem::SelectItem(qreal vertSize, Label *label, QGraphicsItem *item) : QGra
 SelectItem::SelectItem(Label *label, QGraphicsItem *item) : SelectItem(10., label, item){
 }
 
+QGraphicsItem* SelectItem::getParentItem(){
+    return parentItem();
+}
+
 void SelectItem::invertColorForPen(){
     QColor color = myPen.color();
     color.setRgbF(color.redF() > 0.5 ? 0 : 1, color.greenF() > 0.5 ? 0 : 1, color.blueF() > 0.5 ? 0 : 1);
     highlightPen = QPen(color);
     highlightPen.setWidth(5);
 }
+
+QGraphicsScene* SelectItem::scene(){
+    //cout << "SCENE2" << endl;
+    return QGraphicsItem::scene();
+}
+
+void SelectItem::setLabel(Label *label){
+    myLabel = label;
+    if(label != nullptr){
+        myPen = QPen(label->getColor());
+        myPen.setWidth(2);
+    }
+}
+
+void SelectItem::setVertexSize(qreal size){
+    SelectItem::vertexSize = size;
+    SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);
+    SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
+}
+
 void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint){
     if(activeVertex & TOP){
         if(activeVertex & LEFT){
@@ -69,25 +87,7 @@ int SelectItem::type() const{
     return mytype;
 }
 
-bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
-    if(point.y() >= rect.top() && point.y() <= rect.bottom()){
-        if(point.x() <= rect.right() && point.x() >= rect.left()){
-            return true;
-        }
-    }
-    return false;
-}
-
-
-QGraphicsScene* SelectItem::scene(){
-    //cout << "SCENE2" << endl;
-    return QGraphicsItem::scene();
-}
-
-QGraphicsItem* SelectItem::getParentItem(){
-    return parentItem();
-}
-
+/*---------------- Protected members ---------------------------*/
 void SelectItem::checkBoundaries(QPointF &shift, QRectF &rect){
     QPointF tlc = rect.topLeft() + shift;
     QPointF brc = rect.bottomRight() + shift;
@@ -108,10 +108,11 @@ void SelectItem::checkBoundaries(QPointF &shift, QRectF &rect){
     }
 }
 
-void SelectItem::setLabel(Label *label){
-    myLabel = label;
-    if(label != nullptr){
-        myPen = QPen(label->getColor());
-        myPen.setWidth(2);
+bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
+    if(point.y() >= rect.top() && point.y() <= rect.bottom()){
+        if(point.x() <= rect.right() && point.x() >= rect.left()){
+            return true;
+        }
     }
+    return false;
 }
