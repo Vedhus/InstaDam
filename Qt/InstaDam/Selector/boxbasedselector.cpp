@@ -74,7 +74,7 @@ void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
     setTransformOriginPoint(myRect.center());
     QPointF start = from - myRect.center();
     QPointF end = to - myRect.center();
-    myRotation += (std::atan2(end.y(), end.x()) - std::atan2(start.y(), start.x())) * 180./PI;
+    myRotation += (atan2(end.y(), end.x()) - atan2(start.y(), start.x())) * 180./PI;
     setRotation(myRotation);
     rotated = true;
     rotateMirror();

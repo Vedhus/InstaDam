@@ -24,7 +24,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Labe
     myMap->insert(pointToInt(point.toPoint()), point.toPoint());
     setActiveVertex(0);
     myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
-    mytype = Freedraw;
+    mytype = FreedrawObj;
     active = true;
     if(label != nullptr)
         label->addItem(this);

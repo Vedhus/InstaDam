@@ -9,7 +9,7 @@ EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
 {
     setRect(myRect);
-    mytype = Ellipse;
+    mytype = EllipseObj;
     if(label)
         label->addItem(this);
     updatePen(myPen);
@@ -22,7 +22,7 @@ EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, Label *label, QGra
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, vertexSize, label, item)
 {
     setRect(myRect);
-    mytype = Ellipse;
+    mytype = EllipseObj;
     updatePen(myPen);
     if(label)
         label->addItem(this);

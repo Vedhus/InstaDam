@@ -19,7 +19,7 @@ FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label 
         undoMap->insert(it.value(), delHash);
     }
     deleteList = QVector<int>();
-    mytype = Freeerase;
+    mytype = FreeeraseObj;
 }
 
 FreeDrawErase::~FreeDrawErase(){

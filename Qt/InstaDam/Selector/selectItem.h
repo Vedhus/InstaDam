@@ -22,7 +22,7 @@
 class Label;
 const int UNSELECTED = INT_MAX;
 
-enum SelectType:int {Rect=51, Ellipse=52,Polygon=53, Freedraw=54, Freeerase=55};
+enum SelectType:int {RectangleObj=51, EllipseObj=52, PolygonObj=53, FreedrawObj=54, FreeeraseObj=55};
 
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
