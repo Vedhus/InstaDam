@@ -30,7 +30,7 @@ InstaDam::InstaDam(QWidget *parent) :
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
     undoStack = new QUndoStack(this);
-    currentSelectType = Ellipse;
+    currentSelectType = EllipseObj;
     scene = ui->IdmPhotoViewer->scene;
     maskScene = ui->IdmMaskViewer->scene;
     currentItem = nullptr;
@@ -559,27 +559,27 @@ void InstaDam::on_rectangleSelectButton_clicked(){
     maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
-        case Polygon:
+        case PolygonObj:
             if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
             break;
-        case Freedraw:
+        case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
             break;
-        case Freeerase:
-        case Rect:
-        case Ellipse:
+        case FreeeraseObj:
+        case RectangleObj:
+        case EllipseObj:
             break;
     }
     blankWidget->show();
-    currentSelectType = Rect;
+    currentSelectType = RectangleObj;
     scene->update();
     maskScene->update();
 }
@@ -589,27 +589,27 @@ void InstaDam::on_ellipseSelectButton_clicked(){
     maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
-        case Polygon:
+        case PolygonObj:
             if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
             break;
-        case Freedraw:
+        case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
             break;
-        case Freeerase:
-        case Rect:
-        case Ellipse:
+        case FreeeraseObj:
+        case RectangleObj:
+        case EllipseObj:
             break;
     }
     blankWidget->show();
-    currentSelectType = Ellipse;
+    currentSelectType = EllipseObj;
     scene->update();
     maskScene->update();
 }
@@ -619,28 +619,28 @@ void InstaDam::on_polygonSelectButton_clicked(){
     maskScene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
-        case Ellipse:
-        case Rect:
+        case EllipseObj:
+        case RectangleObj:
             if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
                 controlLayout->removeWidget(blankWidget);
                 blankWidget->hide();
             }
             controlLayout->addWidget(polygonSelectWidget);
             break;
-        case Freedraw:
+        case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
             controlLayout->addWidget(polygonSelectWidget);
             break;
-        case Freeerase:
-        case Polygon:
+        case FreeeraseObj:
+        case PolygonObj:
             break;
     }
     polygonSelectWidget->show();
     polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
-    currentSelectType = Polygon;
+    currentSelectType = PolygonObj;
     scene->update();
 }
 
@@ -648,27 +648,27 @@ void InstaDam::on_freeSelectButton_clicked(){
     scene->inactiveAll();
     currentItem = nullptr;
     switch(currentSelectType){
-        case Ellipse:
-        case Rect:
+        case EllipseObj:
+        case RectangleObj:
             if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
                 controlLayout->removeWidget(blankWidget);
                 blankWidget->hide();
             }
             controlLayout->addWidget(freeSelectWidget);
             break;
-        case Polygon:
+        case PolygonObj:
             if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(freeSelectWidget);
             break;
-        case Freeerase:
-        case Freedraw:
+        case FreeeraseObj:
+        case FreedrawObj:
             break;
     }
     freeSelectWidget->show();
-    currentSelectType = Freedraw;
+    currentSelectType = FreedrawObj;
     scene->update();
     maskScene->update();
 }
@@ -728,7 +728,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
         }
         //cout << "CL" << currentLabel->getText().toStdString() << "__" << endl;
 
-        if(currentItem && currentItem->type() == Polygon){
+        if(currentItem && currentItem->type() == PolygonObj){
             //cout << "AA" << endl;
             if(insertVertex && vertex1 >= 0 && vertex2 >= 0){
                 //cout << "BB" << endl;
@@ -757,7 +757,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
         scene->inactiveAll();
         maskScene->inactiveAll();
         switch(currentSelectType){
-            case Rect:
+            case RectangleObj:
             {
                 RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
                 RectangleSelect *mirror = new RectangleSelect(pos);
@@ -769,7 +769,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
                 mirrorItem->setMirror(tempItem);
             }
                 break;
-            case Ellipse:
+            case EllipseObj:
             {
                 EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
                 EllipseSelect *mirror = new EllipseSelect(pos);
@@ -781,8 +781,8 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
                 mirrorItem->setMirror(tempItem);
             }
                 break;
-            case Freeerase:
-            case Freedraw:
+            case FreeeraseObj:
+            case FreedrawObj:
             {
                 if(drawing){
                     FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, brushMode, currentLabel);
@@ -800,7 +800,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
                 }
             }
                 break;
-            case Polygon:
+            case PolygonObj:
             {
                 PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
                 PolygonSelect *mirror = new PolygonSelect(pos);
@@ -813,7 +813,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
             }
                 break;
         }
-        if((currentSelectType != Freedraw && currentSelectType != Freeerase) || drawing){
+        if((currentSelectType != FreedrawObj && currentSelectType != FreeeraseObj) || drawing){
             mirrorItem->setLabel(currentLabel);
             mirrorItem->updatePen(mirrorItem->myPen);
             scene->addItem(tempItem);
@@ -834,16 +834,16 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
         if(item->type() != currentSelectType){
 
             switch(item->type()){
-                case Freedraw:
+                case FreedrawObj:
                     on_freeSelectButton_clicked();
                     break;
-                case Polygon:
+                case PolygonObj:
                     on_polygonSelectButton_clicked();
                     break;
-                case Rect:
+                case RectangleObj:
                     on_rectangleSelectButton_clicked();
                     break;
-                case Ellipse:
+                case EllipseObj:
                     on_ellipseSelectButton_clicked();
                     break;
             }
@@ -854,7 +854,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
         maskScene->inactiveAll();
         currentItem->clickPoint(pos);
 
-        if(currentItem->type() == Polygon && insertVertex){
+        if(currentItem->type() == PolygonObj && insertVertex){
             int vert = currentItem->getActiveVertex();
             //cout << vert << endl;
             if(vert != UNSELECTED){
@@ -896,7 +896,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
 void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
 {
     if(currentItem && !currentItem->isItemAdded()){
-        if(currentItem->type() == Freeerase){
+        if(currentItem->type() == FreeeraseObj){
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
             undoStack->push(eraseCommand);
         }else{
@@ -904,7 +904,7 @@ void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF ne
             undoStack->push(addCommand);
         }
         currentItem->resetState();
-        if(currentItem->type() != Polygon){
+        if(currentItem->type() != PolygonObj){
             currentItem = nullptr;
         }
         else{
@@ -927,7 +927,7 @@ void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF ne
         }
         currentItem->resetState();
     }
-    else if(currentItem && currentItem->type() == Polygon && !currentItem->wasPointAdded()){
+    else if(currentItem && currentItem->type() == PolygonObj && !currentItem->wasPointAdded()){
         QUndoCommand *addVertexCommand = new AddVertexCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), newPos);
         undoStack->push(addVertexCommand);
         currentItem->setActiveVertex(UNSELECTED);
@@ -948,7 +948,7 @@ void InstaDam::processKeyPressed(viewerTypes type, const int key){
 
     }
     else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
-        if(currentItem->type() == Polygon && currentItem->getActiveVertex() != UNSELECTED){
+        if(currentItem->type() == PolygonObj && currentItem->getActiveVertex() != UNSELECTED){
             QUndoCommand *deleteVertexCommand = new DeleteVertexCommand((type == PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror());
             undoStack->push(deleteVertexCommand);
         }

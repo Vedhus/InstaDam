@@ -18,7 +18,7 @@ PolygonSelect::PolygonSelect(QPointF point, Label *label, QGraphicsItem *item)
     myVertices.push_back(makeVertex(point));
     setPolygon(polygon);
     myRect = QGraphicsPolygonItem::boundingRect();
-    mytype = Polygon;
+    mytype = PolygonObj;
     active = true;
     if(label)
         label->addItem(this);

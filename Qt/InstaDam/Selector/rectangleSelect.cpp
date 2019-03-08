@@ -11,7 +11,7 @@ RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *ite
     : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
 {
     setRect(myRect);
-    mytype = Rect;
+    mytype = RectangleObj;
     if(label)
         label->addItem(this);
     updatePen(myPen);
@@ -24,7 +24,7 @@ RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QG
 {
     //cout << "RR" << endl;
     setRect(myRect);
-    mytype = Rect;
+    mytype = RectangleObj;
     if(label)
         label->addItem(this);
     updatePen(myPen);
