@@ -26,6 +26,7 @@ class PhotoScene : public QGraphicsScene
 
 public:
     PhotoScene(viewerTypes type, QObject *parent = nullptr);
+
     SelectItem* itemAt(QPointF point);
     SelectItem* itemAt(QPointF point, std::string label);
     void addLabel(std::string label);

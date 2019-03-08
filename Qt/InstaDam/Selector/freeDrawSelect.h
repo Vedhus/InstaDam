@@ -13,62 +13,73 @@ typedef QHash<int, QPoint> FreeMap;
 typedef QHashIterator<int, QPoint> FreeMapIterator;
 class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 {
-
-    public:
+public:
     static QString baseInstruction;
-        FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
-        ~FreeDrawSelect() override;
-        void addPoint(QPointF &point, int vertex = UNSELECTED) override;
-        void moveItem(QPointF &oldPos, QPointF &newPos) override;
-        void resizeItem(int vertex, QPointF &shift) override;
-        void clickPoint(QPointF &point) override;
-        void resetActiveVertex() override{}
-        void removeVertex(int vertex=UNSELECTED) override {UNUSED(vertex);}
-        QRectF boundingRect() const override;
-        bool isInside(QPointF &point) override;
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-        QGraphicsScene* scene();
-        void movePoint(QPointF &point);
-        void updatePen(QPen pen) override;
-        void checkPoint(QPointF &point);
-        void insertVertex(int vertex, QPointF &point) override {UNUSED(vertex);UNUSED(point);}
-        QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
-        int numberOfVertices() override {return 0;}
-        void deletePoints(QVector<int> &points, FreeMap *delHash);
-        void deletePoint(int points, FreeMap *delHash);
-        void addPoints(FreeMap *points);
-        void setMirror(SelectItem *item) override;
-        void setMirrorVertex(int vertex) override {UNUSED(vertex);}
-        void updateMirrorScene() override;
-        void mirrorHide() override;
-        void mirrorShow() override;
-        void setMirrorActive() override {}
-        void setMirrorMoved() override {}
-        void setMirrorResized() override {}
-        FreeDrawSelect* getMirror() override {return mirror;}
-        void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-        void drawWithSquare(QPointF &oldPos, QPointF &newPos);
-        void drawWithCircle(QPointF &oldPos, QPointF &newPos);
-        void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
-        void rotateMirror() override {}
+    FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    ~FreeDrawSelect() override;
+
+    /*-------------- Implemented fvuntions from SelectItem ---------*/
+    void addPoint(QPointF &point, int vertex = UNSELECTED) override;
+    QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
+    QRectF boundingRect() const override;
+    void clickPoint(QPointF &point) override;
+    void insertVertex(int vertex, QPointF &point) override {UNUSED(vertex);UNUSED(point);}
+    bool isInside(QPointF &point) override;
+    void moveItem(QPointF &oldPos, QPointF &newPos) override;
+    int numberOfVertices() override {return 0;}
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void removeVertex(int vertex=UNSELECTED) override {UNUSED(vertex);}
+    void resetActiveVertex() override{}
+    void resizeItem(int vertex, QPointF &shift) override;
+    void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
+    void updatePen(QPen pen) override;
+
+    // Mirror
+    FreeDrawSelect* getMirror() override {return mirror;}
+    void mirrorHide() override;
+    void mirrorShow() override;
+    void rotateMirror() override {}
+    void setMirror(SelectItem *item) override;
+    void setMirrorActive() override {}
+    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
+    void setMirrorMoved() override {}
+    void setMirrorResized() override {}
+    void setMirrorVertex(int vertex) override {UNUSED(vertex);}
+    void updateMirrorScene() override;
+    /*------------- End implemented functions*/
+
+    void addPoints(FreeMap *points);
+    void checkPoint(QPointF &point);
+    void deletePoint(int points, FreeMap *delHash);
+    void deletePoints(QVector<int> &points, FreeMap *delHash);
+    void drawWithCircle(QPointF &oldPos, QPointF &newPos);
+    void drawWithSquare(QPointF &oldPos, QPointF &newPos);
+    //void movePoint(QPointF &point);
+
+    QGraphicsScene* scene();
+
 protected:
-        FreeMap *myMap = nullptr;
-        int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
-        int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
-        void rasterizeLine(QPoint &start, QPoint &end);
-        int halfWidth;
-        int fullWidth;
-        QPoint lastPoint;
-        int brushType;
+    FreeMap *myMap = nullptr;
+
+    int brushType;
+    int fullWidth;
+    int halfWidth;
+
+    QPoint lastPoint;
+
+    int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
+    int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
+    void rasterizeLine(QPoint &start, QPoint &end);
 
 private:
 #ifdef TEST
 
-        friend TestSelect;
+    friend TestSelect;
 #endif
-        FreeDrawSelect *mirror = nullptr;
-        void checkPoint(QPoint &point);
-        void setMirrorMap();
-        void calcRect();
+    FreeDrawSelect *mirror = nullptr;
+
+    void calcRect();
+    void checkPoint(QPoint &point);
+    void setMirrorMap();
 };
 #endif // POLYGONSELECT_H

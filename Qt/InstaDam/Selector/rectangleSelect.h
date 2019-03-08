@@ -6,39 +6,45 @@
 class TestSelect;
 
 #endif
-
+const QString rectBaseString = QString("Click to define a corner, then drag the mouse (while holding the button down) to define the rectangle. Use the right mouse button to rotate.");
 class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem
 {
 
 public:
-    static QString baseInstruction;
+    const QString baseInstruction = rectBaseString;
+
     RectangleSelect(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
     RectangleSelect(QPointF point, qreal vertSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
     ~RectangleSelect() override;
+
+    /*-------------- Implemented fvuntions from SelectItem ---------*/
     void addPoint(QPointF &point, int vertex = UNSELECTED) override;
-    void moveItem(QPointF &oldPos, QPointF &newPos) override;
-    //void resizeItem(int vertex, QPointF &newPos) override;
-    //void clickPoint(QPointF &point) override;
-    void updatePen(QPen pen) override;
-    int type(){return SelectItem::type();}
+    QString baseInstructions() override {return RectangleSelect::baseInstruction;}
     QRectF boundingRect() const override;
     bool isInside(QPointF &point) override;
+    void moveItem(QPointF &oldPos, QPointF &newPos) override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    QGraphicsScene* scene();
-    QString baseInstructions() override {return RectangleSelect::baseInstruction;}
+    void updatePen(QPen pen) override;
     void setRectUnchecked(QRectF rect) override;
-    void setMirror(SelectItem* item) override;
-    void setMirrorVertex(int vertex) override;
-    void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) override;
-    void updateMirrorScene() override;
+
+    // Mirror
+    RectangleSelect* getMirror() override {return mirror;}
     void mirrorHide() override;
     void mirrorShow() override;
+    void rotateMirror() override;
+    void setMirror(SelectItem* item) override;
     void setMirrorActive() override;
+    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
+    void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) override;
     void setMirrorMoved() override;
     void setMirrorResized() override;
-    RectangleSelect* getMirror() override {return mirror;}
-    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-    void rotateMirror() override;
+    void setMirrorVertex(int vertex) override;
+    void updateMirrorScene() override;
+    /*------------- End implemented functions*/
+
+    int type(){return SelectItem::type();}
+
+    QGraphicsScene* scene();
 
 private:
     RectangleSelect *mirror = nullptr;

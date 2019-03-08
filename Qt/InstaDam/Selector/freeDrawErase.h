@@ -10,30 +10,37 @@ class TestSelect;
 
 typedef QMap<FreeDrawSelect*, FreeMap* > EraseMap;
 typedef QMapIterator<FreeDrawSelect*, FreeMap* > EraseMapIterator;
+
 class FreeDrawErase : public FreeDrawSelect
 {
-
-    public:
+public:
     static QString baseInstruction;
-        FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
-        ~FreeDrawErase() override;
-        void moveItem(QPointF &oldPos, QPointF &newPos) override;
-        bool isInside(QPointF &point) override {UNUSED(point); return false;}
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {UNUSED(painter); UNUSED(option); UNUSED(widget);}
-        EraseMap* getMap(){return undoMap;}
-        void drawWithSquare(QPointF &oldPos, QPointF &newPos);
-        void drawWithCircle(QPointF &oldPos, QPointF &newPos);
+    FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    ~FreeDrawErase() override;
+
+    /*-------------- Implemented fvuntions from SelectItem ---------*/
+    bool isInside(QPointF &point) override {UNUSED(point); return false;}
+    void moveItem(QPointF &oldPos, QPointF &newPos) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {UNUSED(painter); UNUSED(option); UNUSED(widget);}
+    /*------------- End implemented functions*/
+
+    void drawWithCircle(QPointF &oldPos, QPointF &newPos);
+    void drawWithSquare(QPointF &oldPos, QPointF &newPos);
+
+    EraseMap* getMap(){return undoMap;}
 
 protected:
-        void rasterizeLine(QPoint &start, QPoint &end);
-    private:
+    void rasterizeLine(QPoint &start, QPoint &end);
+
+private:
 #ifdef TEST
 
-        friend TestSelect;
+    friend TestSelect;
 #endif
-        void voidPoint(QPoint &point);
-        EraseMap *undoMap = nullptr;
-        QVector<int> deleteList;
-//        QHash<int, SelectItem*> freeDrawItems;
+    QVector<int> deleteList;
+
+    EraseMap *undoMap = nullptr;
+
+    //void voidPoint(QPoint &point);
 };
 #endif // FREEDRAWERASE_H
