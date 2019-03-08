@@ -16,12 +16,14 @@ fSlider::fSlider(maskTypes maskType, int propNums, threshold_or_filter tf, QWidg
 
 void fSlider::reemitValueChanged(int value)
 {
-    emit filterValueChanged(selectedMask, propNum, value, thof);
+   // emit filterValueChanged(selectedMask, propNum, value, thof);
 }
 
 void fSlider::reemitSliderReleased()
 {
-    emit  fSliderReleased(selectedMask,thof);
+    emit  fSliderReleased(value());
+    emit  filterValueChanged(selectedMask, propNum, value(), thof);
+
 }
 
 

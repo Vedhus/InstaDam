@@ -38,7 +38,9 @@ SOURCES += \
     maskobjects.cpp \
     filtercontrols.cpp \
     fslider.cpp \
-    newproject.cpp
+    newproject.cpp \
+    labelbutton.cpp \
+    paintbrush.cpp
 
 HEADERS += \
         instadam.h \
@@ -54,7 +56,9 @@ HEADERS += \
     filtercontrols.h \
     filterproperty.h \
     fslider.h \
-    newproject.h
+    newproject.h \
+    labelbutton.h \
+    paintbrush.h
 
 
 FORMS += \
@@ -63,12 +67,12 @@ FORMS += \
 
 INCLUDEPATH += D:\opencv\opencv\build\include
 
-LIBS += D:\opencv\opencv-build\bin\libopencv_core320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_highgui320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_features2d320.dll
-LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_core320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_highgui320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_imgcodecs320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_imgproc320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_features2d320.dll
+LIBS += D:\opencv\opencv-build32\bin\libopencv_calib3d320.dll
 
 
 # more correct variant, how set includepath and libs for mingw

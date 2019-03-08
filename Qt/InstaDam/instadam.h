@@ -65,16 +65,19 @@ public:
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void saveFile();
+    void setLabels();
+    void connectButtons();
     void clearLayout(QLayout * layout) ;
+    QVector<QString> labelPaths;
 
 
 private slots:
     void on_actionOpen_File_triggered();
 
 private slots:
-    Project on_actionNew_triggered();
+    Project* on_actionNew_triggered();
 
-    Project on_actionOpen_triggered();
+    Project* on_actionOpen_triggered();
 
     void on_actionSave_triggered();
 
@@ -92,6 +95,10 @@ private slots:
 
     void on_saveAndNext_clicked();
 
+    void on_eraser_clicked();
+
+    void on_saveAndBack_clicked();
+
 public slots:
     void resetPixmapButtons();
 
@@ -99,7 +106,7 @@ public slots:
 private:
     Ui::InstaDam *ui;
     newproject *newProject;
-    Project currentProject;
+    Project *currentProject = nullptr ;
     QGraphicsScene *scene;
 };
 

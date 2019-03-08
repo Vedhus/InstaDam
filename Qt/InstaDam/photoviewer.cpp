@@ -5,26 +5,30 @@
 
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
+    B = new paintBrush;
+
+
     viewerType = PHOTO_VIEWER_TYPE;
     scene = new QGraphicsScene(this);
     photo = new QGraphicsPixmapItem();
     labelsTemp = new QGraphicsPixmapItem();
-    labels = new QGraphicsPixmapItem();
+    B->selectedLabelClass = 0;
+    //labels = new QGraphicsPixmapItem();
     filterIm = new QGraphicsPixmapItem();
-
     hasPhoto = false;
 
     labelsTemp->setOpacity(0);
-    labels->setOpacity(0.5);
+
+    brush = new QGraphicsPathItem();
 
     scene->addItem(labelsTemp);
     scene->addItem(photo);
-    scene->addItem(labels);
+    scene->addItem(brush);
+
 
     setScene(scene);
     zoom = 1;
-    brush = new QGraphicsPathItem();
-    scene->addItem(brush);
+
 
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::AnchorUnderMouse);
@@ -32,7 +36,7 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFrameShape(QFrame::NoFrame);
     setDragMode(QGraphicsView::NoDrag);
-    resetBrush(10, Qt::RoundCap);
+    resetBrush();
     maskObject = new maskObjects();
     selectedMask = CANNY;
 
@@ -49,27 +53,68 @@ void PhotoViewer::setFilterControls(filterControls *fc)
     filterControl = fc;
 }
 
-void PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
+void PhotoViewer::setPhotoFromFile(QString filename, QVector<QString> labelName)
 {
 
+
+    for (int i = 0; i<labelItems.length(); i++)
+    {
+        scene->removeItem(labelItems[i]);
+        delete labelItems[i];
+    }
+    labelItems.clear();
+    qInfo("The number of labels is %d",labelItems.length());
+
+    //QGraphicsItemGroup * labels;
     QColor whiteColor = QColor(0,0,0,0);
     QPixmap pixmap = QPixmap(filename);
     cvImage = cv::imread(filename.toLocal8Bit().constData(), CV_LOAD_IMAGE_COLOR);
 
 
-    QPixmap labelMap;
-    if (labelname.isNull())
-    {
-        labelMap = QPixmap(pixmap.size());
-        labelMap.fill(whiteColor);
+    QVectorIterator<QString> itLabels(labelName);
+    int i = 0;
 
+//    scene->clear();
+
+//    scene->addItem(labelsTemp);
+//    scene->addItem(photo);
+//    scene->addItem(brush);
+    while(itLabels.hasNext())
+    {
+        QString labelFile = itLabels.next();
+        qInfo("I will open the labels!");
+        qInfo(labelFile.toUtf8().constData());
+
+        QPixmap labelMap;
+        if (QFileInfo(labelFile).isFile())
+        {
+
+            labelMap = QPixmap(labelFile);
+
+        }
+        else
+        {
+            labelMap = QPixmap(pixmap.size());
+            labelMap.fill(whiteColor);
+
+        }
+
+        QGraphicsPixmapItem *labtemp = new QGraphicsPixmapItem();
+        labtemp->setPixmap(labelMap);
+        labtemp->setOpacity(0.5);
+        //QGraphicsItem *labItem = qgraphicsitem_cast<QGraphicsItem*>(labtemp);
+        labelItems.append(labtemp);
+        //labelGroup.append(labItem);
+        scene->addItem(labelItems[i]);
+
+        i+=1;
     }
-    else
-        labelMap = QPixmap(labelname);
+    //labelGroup = qgraphicsitem_cast<QGraphicsItemGroup *>(labelItems)
+    //labels = scene->createItemGroup(labelGroup);
 
     QPixmap white_temp = QPixmap(pixmap.size());
     white_temp.fill(whiteColor);
-    setPhoto(pixmap, labelMap, white_temp);
+    setPhoto(pixmap, white_temp);
 
 
 }
@@ -79,18 +124,18 @@ void PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
 
 
 
-void PhotoViewer::setPhotoFromPixmap(QPixmap px, QPixmap lpx)
-{
-    cvImage = QPixmap2Mat(px);
+//void PhotoViewer::setPhotoFromPixmap(QPixmap px, QPixmap lpx)
+//{
+//    cvImage = QPixmap2Mat(px);
 
-    QPixmap white_temp = QPixmap(px.size());
-    QColor whiteColor = QColor(0,0,0,0);
-    white_temp.fill(whiteColor);
-    setPhoto(px, lpx, white_temp);
+//    QPixmap white_temp = QPixmap(px.size());
+//    QColor whiteColor = QColor(0,0,0,0);
+//    white_temp.fill(whiteColor);
+//    setPhoto(px, lpx, white_temp);
 
-}
+//}
 
-void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsTempPixmap)
+void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsTempPixmap)
 {
 
     cv::resize(cvImage, cvThumb,cv::Size(200,200) , CV_INTER_LINEAR);
@@ -102,7 +147,7 @@ void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsT
         if (this->viewerType == PHOTO_VIEWER_TYPE)
         {
                 this->photo->setPixmap(pixmap);
-                this->labels->setPixmap(labelsPixmap);
+                //this->labels->setPixmap(labelsPixmap);
                 this->labelsTemp->setPixmap(labelsTempPixmap);
                 this->hasPhoto = true;
 
@@ -215,40 +260,100 @@ void PhotoViewer::fitInView()
 
 void PhotoViewer::setPanMode()
 {
-    this->brushType = PAN;
-    setDragMode(QGraphicsView::ScrollHandDrag);
+    this->B->brushType = PAN;
+    resetBrush();
+
 }
 
-void PhotoViewer::resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt::RoundCap)
+void PhotoViewer::setEraserMode()
+{
+    this->B->brushType = ERASER;
+    this->B->color = QColor(255,255,255,125);
+    resetBrush();
+
+}
+
+void PhotoViewer::resetBrushDrag()
+{
+    switch(B->brushType)
+    {
+    case ERASER:
+        setDragMode(QGraphicsView::NoDrag);
+        break;
+    case PAN:
+       setDragMode(QGraphicsView::ScrollHandDrag);
+        break;
+    case PAINTBRUSH:
+        setDragMode(QGraphicsView::NoDrag);
+        break;
+
+    }
+}
+
+
+void PhotoViewer::resetBrush()
 {
 
-    brushSize = size;
+    //emit brushResetting();
+    resetBrushDrag();
 
+    qInfo("Hand mode changed");
     scene->removeItem(brush);
     delete brush;
+    qInfo("brush deleted");
     pen = QPen();
 
-    pen.setColor(QColor(255,0,255,255));
-    pen.setWidth(size);
+    pen.setColor(B->color);
+    pen.setWidth(B->size);
 
-    capStyle = capStyle_input;
-    pen.setCapStyle(capStyle);
+    pen.setCapStyle(B->capStyle);
     path = QPainterPath();
     brush = new QGraphicsPathItem();
     brush->setPen(pen);
     scene->addItem(brush);
     paintMode = false;
+    qInfo("function Changed");
+
+
+
+
+}
+
+void PhotoViewer::labelChanged(int i, QColor col)
+{
+    if (hasPhoto)
+    {
+        B->selectedLabelClass = i;
+        B->color = col;
+
+        this->B->brushType = PAINTBRUSH;
+        resetBrush();
+
+    }
+
+}
+void  PhotoViewer::brushSizeChanged(int size)
+{
+    B->size = size;
+    resetBrush();
+}
+
+void PhotoViewer::opacityChanged(int i, int op)
+{
+    if (hasPhoto)
+    {
+    labelItems[i]->setOpacity(op/100.0);
+    }
 }
 
 void PhotoViewer::setBrushMode(Qt::PenCapStyle cap)
 {
     if (this->hasPhoto)
     {
-        setDragMode(QGraphicsView::NoDrag);
-        this->capStyle = cap;
-        this->brushType = PAINTBRUSH;
-        resetBrush(this->brushSize, this->capStyle);
-        this->update();
+
+        this->B->capStyle = cap;
+        resetBrush();
+
     }
 }
 
@@ -306,7 +411,8 @@ void PhotoViewer::resizeEvent(QResizeEvent *event)
 
 void PhotoViewer::mousePressEvent(QMouseEvent* event)
 {
-
+    qInfo("Before brush drag reset");
+    resetBrushDrag();
     if (hasPhoto)
     {
         if (photo->isUnderMouse())
@@ -315,16 +421,20 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event)
         }
         if (dragMode() == QGraphicsView::NoDrag)
         {
-            resetBrush(brushSize, capStyle);
+            resetBrush();
             lastPos = event->pos();
+            qInfo("Before labelsTemp");
             currentMap = labelsTemp->pixmap();
             if (viewerType == MASK_VIEWER_TYPE)
                 currentMap.setMask(imMask.mask());
+
             paintMode = true;
             update();
+            qInfo("after update");
         }
 
     }
+
     QGraphicsView::mousePressEvent(event);
 }
 
@@ -332,18 +442,25 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event)
 void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
 {
 
+    resetBrushDrag();
     if(hasPhoto)
     {
         if (paintMode)
         {
+
             QPainter p(&currentMap);
+
             p.setPen(pen);
+
             p.drawLine(mapToScene(lastPos), mapToScene(event->pos()));
+
             QPointF endPoint = mapToScene(event->pos());
+
             path.moveTo(mapToScene(lastPos));
             path.lineTo(endPoint);
             lastPos = event->pos();
             brush->setPath(path);
+
         }
         else
         {
@@ -366,14 +483,14 @@ void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
         {
             if (viewerType == PHOTO_VIEWER_TYPE)
             {
-                this->labels->setPixmap(directPixmaps(labels->pixmap(),currentMap, brushType));
+                this->labelItems[B->selectedLabelClass]->setPixmap(directPixmaps(labelItems[B->selectedLabelClass]->pixmap(),currentMap, B->brushType));
             }
             else if (viewerType == MASK_VIEWER_TYPE)
-                this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
+                this->labelItems[B->selectedLabelClass]->setPixmap(maskPixmaps(labelItems[B->selectedLabelClass]->pixmap(),currentMap, imMask, B->brushType));
             else
                 qInfo("Invalid viewer type");
             paintMode = false;
-            resetBrush(brushSize, capStyle);
+            resetBrush();
             update();
         }
 

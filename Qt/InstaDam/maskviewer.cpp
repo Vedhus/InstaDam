@@ -13,8 +13,9 @@ void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer)
     hasPhoto = true;
     photoViewer = viewer;
     photo->setPixmap(photoViewer->filterIm->pixmap());
-    labels = photoViewer->labels;
-    labels->setPixmap(photoViewer->labels->pixmap());
+    B = photoViewer->B;
+    labelItems = photoViewer->labelItems;
+//    labels->setPixmap(photoViewer->labels->pixmap());
     labelsTemp = photoViewer->labelsTemp;
     imMask = viewer->imMask;
     cvImage = viewer->cvImage;
@@ -34,7 +35,7 @@ void MaskViewer::setImMask(maskTypes filterName)
     {
 
         pixmapFilt = filterControl->qImg.copy();
-        imMask = filterControl->qAlpha.copy();
+       imMask = filterControl->qAlpha.copy();
         photo->setPixmap(pixmapFilt);
     }
 }

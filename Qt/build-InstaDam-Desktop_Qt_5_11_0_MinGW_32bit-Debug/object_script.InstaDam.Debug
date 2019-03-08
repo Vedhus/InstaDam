@@ -13,6 +13,8 @@ INPUT(
 ./debug\filtercontrols.o
 ./debug\fslider.o
 ./debug\newproject.o
+./debug\labelbutton.o
+./debug\paintbrush.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o
@@ -20,4 +22,5 @@ INPUT(
 ./debug\moc_filtercontrols.o
 ./debug\moc_fslider.o
 ./debug\moc_newproject.o
+./debug\moc_labelbutton.o
 );

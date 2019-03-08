@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_PhotoViewer_t {
-    QByteArrayData data[11];
-    char stringdata0[125];
+    QByteArrayData data[16];
+    char stringdata0[196];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,16 +38,23 @@ QT_MOC_LITERAL(3, 26, 6), // "zoomed"
 QT_MOC_LITERAL(4, 33, 11), // "changedMask"
 QT_MOC_LITERAL(5, 45, 9), // "maskTypes"
 QT_MOC_LITERAL(6, 55, 11), // "loadedPhoto"
-QT_MOC_LITERAL(7, 67, 22), // "zoomedInADifferentView"
-QT_MOC_LITERAL(8, 90, 9), // "setImMask"
-QT_MOC_LITERAL(9, 100, 19), // "threshold_or_filter"
-QT_MOC_LITERAL(10, 120, 4) // "thof"
+QT_MOC_LITERAL(7, 67, 14), // "brushResetting"
+QT_MOC_LITERAL(8, 82, 22), // "zoomedInADifferentView"
+QT_MOC_LITERAL(9, 105, 9), // "setImMask"
+QT_MOC_LITERAL(10, 115, 19), // "threshold_or_filter"
+QT_MOC_LITERAL(11, 135, 4), // "thof"
+QT_MOC_LITERAL(12, 140, 12), // "labelChanged"
+QT_MOC_LITERAL(13, 153, 14), // "opacityChanged"
+QT_MOC_LITERAL(14, 168, 16), // "brushSizeChanged"
+QT_MOC_LITERAL(15, 185, 10) // "resetBrush"
 
     },
     "PhotoViewer\0photoClicked\0\0zoomed\0"
     "changedMask\0maskTypes\0loadedPhoto\0"
-    "zoomedInADifferentView\0setImMask\0"
-    "threshold_or_filter\0thof"
+    "brushResetting\0zoomedInADifferentView\0"
+    "setImMask\0threshold_or_filter\0thof\0"
+    "labelChanged\0opacityChanged\0"
+    "brushSizeChanged\0resetBrush"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,34 +64,44 @@ static const uint qt_meta_data_PhotoViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       3,    3,   52,    2, 0x06 /* Public */,
-       4,    1,   59,    2, 0x06 /* Public */,
-       6,    0,   62,    2, 0x06 /* Public */,
+       1,    1,   74,    2, 0x06 /* Public */,
+       3,    3,   77,    2, 0x06 /* Public */,
+       4,    1,   84,    2, 0x06 /* Public */,
+       6,    0,   87,    2, 0x06 /* Public */,
+       7,    0,   88,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    3,   63,    2, 0x0a /* Public */,
-       8,    2,   70,    2, 0x0a /* Public */,
-       8,    1,   75,    2, 0x2a /* Public | MethodCloned */,
+       8,    3,   89,    2, 0x0a /* Public */,
+       9,    2,   96,    2, 0x0a /* Public */,
+       9,    1,  101,    2, 0x2a /* Public | MethodCloned */,
+      12,    2,  104,    2, 0x0a /* Public */,
+      13,    2,  109,    2, 0x0a /* Public */,
+      14,    1,  114,    2, 0x0a /* Public */,
+      15,    0,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QPoint,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::Float, QMetaType::QPointF,    2,    2,    2,
     QMetaType::Void, 0x80000000 | 5,    2,
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Float, QMetaType::QPointF,    2,    2,    2,
-    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 9,    2,   10,
+    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 10,    2,   11,
     QMetaType::Void, 0x80000000 | 5,    2,
+    QMetaType::Void, QMetaType::Int, QMetaType::QColor,    2,    2,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -99,9 +116,14 @@ void PhotoViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 1: _t->zoomed((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< QPointF(*)>(_a[3]))); break;
         case 2: _t->changedMask((*reinterpret_cast< maskTypes(*)>(_a[1]))); break;
         case 3: _t->loadedPhoto(); break;
-        case 4: _t->zoomedInADifferentView((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< QPointF(*)>(_a[3]))); break;
-        case 5: _t->setImMask((*reinterpret_cast< maskTypes(*)>(_a[1])),(*reinterpret_cast< threshold_or_filter(*)>(_a[2]))); break;
-        case 6: _t->setImMask((*reinterpret_cast< maskTypes(*)>(_a[1]))); break;
+        case 4: _t->brushResetting(); break;
+        case 5: _t->zoomedInADifferentView((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< QPointF(*)>(_a[3]))); break;
+        case 6: _t->setImMask((*reinterpret_cast< maskTypes(*)>(_a[1])),(*reinterpret_cast< threshold_or_filter(*)>(_a[2]))); break;
+        case 7: _t->setImMask((*reinterpret_cast< maskTypes(*)>(_a[1]))); break;
+        case 8: _t->labelChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QColor(*)>(_a[2]))); break;
+        case 9: _t->opacityChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 10: _t->brushSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->resetBrush(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -134,6 +156,13 @@ void PhotoViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 return;
             }
         }
+        {
+            using _t = void (PhotoViewer::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PhotoViewer::brushResetting)) {
+                *result = 4;
+                return;
+            }
+        }
     }
 }
 
@@ -162,13 +191,13 @@ int PhotoViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 12;
     }
     return _id;
 }
@@ -198,6 +227,12 @@ void PhotoViewer::changedMask(maskTypes _t1)
 void PhotoViewer::loadedPhoto()
 {
     QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+}
+
+// SIGNAL 4
+void PhotoViewer::brushResetting()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

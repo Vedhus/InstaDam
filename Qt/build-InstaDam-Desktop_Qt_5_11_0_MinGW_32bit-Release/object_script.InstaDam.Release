@@ -13,6 +13,8 @@ INPUT(
 ./release\filtercontrols.o
 ./release\fslider.o
 ./release\newproject.o
+./release\labelbutton.o
+./release\paintbrush.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
@@ -20,4 +22,5 @@ INPUT(
 ./release\moc_filtercontrols.o
 ./release\moc_fslider.o
 ./release\moc_newproject.o
+./release\moc_labelbutton.o
 );

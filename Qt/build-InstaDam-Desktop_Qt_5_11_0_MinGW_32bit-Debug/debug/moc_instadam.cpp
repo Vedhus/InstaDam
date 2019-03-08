@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_InstaDam_t {
     QByteArrayData data[14];
-    char stringdata0[280];
+    char stringdata0[281];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,20 +35,20 @@ QT_MOC_LITERAL(0, 0, 8), // "InstaDam"
 QT_MOC_LITERAL(1, 9, 28), // "on_actionOpen_File_triggered"
 QT_MOC_LITERAL(2, 38, 0), // ""
 QT_MOC_LITERAL(3, 39, 22), // "on_actionNew_triggered"
-QT_MOC_LITERAL(4, 62, 7), // "Project"
-QT_MOC_LITERAL(5, 70, 23), // "on_actionOpen_triggered"
-QT_MOC_LITERAL(6, 94, 23), // "on_actionSave_triggered"
-QT_MOC_LITERAL(7, 118, 20), // "on_panButton_clicked"
-QT_MOC_LITERAL(8, 139, 21), // "on_roundBrush_clicked"
-QT_MOC_LITERAL(9, 161, 22), // "on_squareBrush_clicked"
-QT_MOC_LITERAL(10, 184, 24), // "on_pushButton_14_clicked"
-QT_MOC_LITERAL(11, 209, 28), // "on_actionSave_File_triggered"
-QT_MOC_LITERAL(12, 238, 22), // "on_saveAndNext_clicked"
-QT_MOC_LITERAL(13, 261, 18) // "resetPixmapButtons"
+QT_MOC_LITERAL(4, 62, 8), // "Project*"
+QT_MOC_LITERAL(5, 71, 23), // "on_actionOpen_triggered"
+QT_MOC_LITERAL(6, 95, 23), // "on_actionSave_triggered"
+QT_MOC_LITERAL(7, 119, 20), // "on_panButton_clicked"
+QT_MOC_LITERAL(8, 140, 21), // "on_roundBrush_clicked"
+QT_MOC_LITERAL(9, 162, 22), // "on_squareBrush_clicked"
+QT_MOC_LITERAL(10, 185, 24), // "on_pushButton_14_clicked"
+QT_MOC_LITERAL(11, 210, 28), // "on_actionSave_File_triggered"
+QT_MOC_LITERAL(12, 239, 22), // "on_saveAndNext_clicked"
+QT_MOC_LITERAL(13, 262, 18) // "resetPixmapButtons"
 
     },
     "InstaDam\0on_actionOpen_File_triggered\0"
-    "\0on_actionNew_triggered\0Project\0"
+    "\0on_actionNew_triggered\0Project*\0"
     "on_actionOpen_triggered\0on_actionSave_triggered\0"
     "on_panButton_clicked\0on_roundBrush_clicked\0"
     "on_squareBrush_clicked\0on_pushButton_14_clicked\0"
@@ -106,10 +106,10 @@ void InstaDam::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->on_actionOpen_File_triggered(); break;
-        case 1: { Project _r = _t->on_actionNew_triggered();
-            if (_a[0]) *reinterpret_cast< Project*>(_a[0]) = std::move(_r); }  break;
-        case 2: { Project _r = _t->on_actionOpen_triggered();
-            if (_a[0]) *reinterpret_cast< Project*>(_a[0]) = std::move(_r); }  break;
+        case 1: { Project* _r = _t->on_actionNew_triggered();
+            if (_a[0]) *reinterpret_cast< Project**>(_a[0]) = std::move(_r); }  break;
+        case 2: { Project* _r = _t->on_actionOpen_triggered();
+            if (_a[0]) *reinterpret_cast< Project**>(_a[0]) = std::move(_r); }  break;
         case 3: _t->on_actionSave_triggered(); break;
         case 4: _t->on_panButton_clicked(); break;
         case 5: _t->on_roundBrush_clicked(); break;

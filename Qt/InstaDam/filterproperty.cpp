@@ -15,6 +15,7 @@ filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMi
     this->threshold_filter = thof;
     this->signalBool = sb;
 
+
 }
 void filterProperty::sliderAssign(int sliderVal)
 {

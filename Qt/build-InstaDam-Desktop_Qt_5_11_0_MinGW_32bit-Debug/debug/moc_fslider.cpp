@@ -66,15 +66,15 @@ static const uint qt_meta_data_fSlider[] = {
 
  // signals: name, argc, parameters, tag, flags
        1,    4,   34,    2, 0x06 /* Public */,
-       8,    2,   43,    2, 0x06 /* Public */,
+       8,    1,   43,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,   48,    2, 0x08 /* Private */,
-      10,    0,   51,    2, 0x08 /* Private */,
+       9,    1,   46,    2, 0x08 /* Private */,
+      10,    0,   49,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Int, QMetaType::Int, 0x80000000 | 7,    4,    5,    6,    2,
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 7,    2,    2,
+    QMetaType::Void, QMetaType::Int,    2,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    6,
@@ -90,7 +90,7 @@ void fSlider::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->filterValueChanged((*reinterpret_cast< maskTypes(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< threshold_or_filter(*)>(_a[4]))); break;
-        case 1: _t->fSliderReleased((*reinterpret_cast< maskTypes(*)>(_a[1])),(*reinterpret_cast< threshold_or_filter(*)>(_a[2]))); break;
+        case 1: _t->fSliderReleased((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->reemitValueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->reemitSliderReleased(); break;
         default: ;
@@ -105,7 +105,7 @@ void fSlider::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             }
         }
         {
-            using _t = void (fSlider::*)(maskTypes , threshold_or_filter );
+            using _t = void (fSlider::*)(int );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&fSlider::fSliderReleased)) {
                 *result = 1;
                 return;
@@ -158,9 +158,9 @@ void fSlider::filterValueChanged(maskTypes _t1, int _t2, int _t3, threshold_or_f
 }
 
 // SIGNAL 1
-void fSlider::fSliderReleased(maskTypes _t1, threshold_or_filter _t2)
+void fSlider::fSliderReleased(int _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 struct qt_meta_stringdata_fSpinBox_t {

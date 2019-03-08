@@ -4,8 +4,9 @@
 #include "filtercontrols.h"
 #include <string>
 #include <iostream>
+#include <QHBoxLayout>
 
-
+#include "labelbutton.h"
 
 
 
@@ -15,7 +16,7 @@ InstaDam::InstaDam(QWidget *parent) :
 {
     ui->setupUi(this);
     filterControl = new filterControls();
-    connectFilters();
+    connectButtons();
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
 
@@ -27,30 +28,16 @@ InstaDam::~InstaDam()
     delete ui;
 }
 
-Project InstaDam::on_actionNew_triggered()
+Project* InstaDam::on_actionNew_triggered()
 {
-    currentProject.resetLabels();
+    currentProject->resetLabels();
     newProject = new newproject(this);
     newProject->setModal(true);
     newProject->exec();
-    currentProject = newProject->newPr;
+    currentProject = &newProject->newPr;
 
 
-    clearLayout(ui->labelClassLayout);
-    for(int i=0; i<currentProject.numLabels(); i++){
-          QPushButton *button = new QPushButton();
-          button->setText(currentProject.getLabel(i).getText());
-          QPalette pal = button->palette();
-          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
-          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
-          button->setAutoFillBackground(true);
-          button->setPalette(pal);
-          button->update();
-          ui->labelClassLayout->addWidget(button);
-          qInfo("Button Added!");
-
-
-    }
+    setLabels();
    return currentProject;
 }
 
@@ -63,7 +50,7 @@ void InstaDam::clearLayout(QLayout * layout) {
     }
  }
 
-Project InstaDam::on_actionOpen_triggered()
+Project* InstaDam::on_actionOpen_triggered()
 {
 
     QString doc;
@@ -76,7 +63,7 @@ Project InstaDam::on_actionOpen_triggered()
     }
     else
     {
-       this->currentProject = Project();
+       this->currentProject = new Project();
 
        QFile file(fileName);
        QStringList list;
@@ -95,7 +82,7 @@ Project InstaDam::on_actionOpen_triggered()
            lb.setText(list[0]);
            lb.setColor(QColor(list[1]));
            QTextStream(stdout) <<lb.getColor().name() << list[1] << lb.getColor().name() <<endl;
-           currentProject.addLabel(lb);
+           currentProject->addLabel(lb);
 
 
            i++;
@@ -105,28 +92,34 @@ Project InstaDam::on_actionOpen_triggered()
 
     i = 0;
 
+
+    setLabels();
+
+    return currentProject;
+}
+
+void InstaDam::setLabels()
+{
     clearLayout(ui->labelClassLayout);
-    QTextStream(stdout) <<currentProject.numLabels();
-    for(int i=0; i<currentProject.numLabels(); i++)
-    {
-          QPushButton *button = new QPushButton();
-
-          button->setText(currentProject.getLabel(i).getText());
+    QTextStream(stdout) <<currentProject->numLabels();
+    for(int i=0; i<currentProject->numLabels(); i++){
+          labelButton *button = new labelButton(i);
+          button->setText(currentProject->getLabel(i).getText());
           QPalette pal = button->palette();
-
-          QTextStream(stdout) << currentProject.getLabel(i).getColor().name() << endl;
-
-
-          pal.setColor(QPalette::ButtonText, currentProject.getLabel(i).getColor());
-          pal.setColor(QPalette::Button, currentProject.getLabel(i).getColor());
+          pal.setColor(QPalette::ButtonText, currentProject->getLabel(i).getColor());
+          pal.setColor(QPalette::Button, currentProject->getLabel(i).getColor());
           button->setAutoFillBackground(true);
           button->setPalette(pal);
           button->update();
-          ui->labelClassLayout->addWidget(button);
-
+          QHBoxLayout *hl = new QHBoxLayout();
+          hl->addWidget(button->slider);
+          hl->addWidget(button);
+          ui->labelClassLayout->addLayout(hl);
+          qInfo("Button Added!");
+          connect(button, SIGNAL(lClicked(int, QColor)), ui->IdmPhotoViewer, SLOT(labelChanged(int, QColor)));
+          button->slider->setValue(50);
+          connect(button, SIGNAL(opacity(int, int)), ui->IdmPhotoViewer, SLOT(opacityChanged(int, int)));
     }
-
-    return currentProject;
 }
 
 
@@ -139,7 +132,7 @@ Project InstaDam::on_actionOpen_triggered()
 
 //    // int const maxNumLabels = 3; // defined in the headers file as static const.
 
-//    while(currentProject.numLabels() < 3){
+//    while(currentProject->numLabels() < 3){
 //        // label names is working
 //        QString text = QInputDialog::getText(this, tr("Add a new label"),
 //                                             tr("New Label"), QLineEdit::Normal, "cracks");
@@ -150,7 +143,7 @@ Project InstaDam::on_actionOpen_triggered()
 //        lb.setText(text);
 //        lb.setColor(color);
 
-//        currentProject.addLabel(lb);
+//        currentProject->addLabel(lb);
 //        // printing out to the console
 //        QTextStream(stdout) << text << endl;
 //        QTextStream(stdout) << color.name() << endl;
@@ -168,9 +161,9 @@ Project InstaDam::on_actionOpen_triggered()
 //    //    else {
 //        QFile outFile(outFileName);
 //        outFile.open(QIODevice::ReadWrite);
-//        for(int i=0; i<currentProject.numLabels(); i++)
+//        for(int i=0; i<currentProject->numLabels(); i++)
 //        {
-//            Label lb = currentProject.getLabel(i);
+//            Label lb = currentProject->getLabel(i);
 //            QTextStream(&outFile) << lb.getText();
 //            QTextStream(&outFile) << "~%";
 //            QTextStream(&outFile) << lb.getColor().name() << endl;
@@ -211,7 +204,7 @@ Project InstaDam::on_actionOpen_triggered()
 //               QTextStream(stdout) << list[0] << endl;
 //               QTextStream(stdout) << list[1] << endl;
 
-//               currentProject.addLabel(lb);
+//               currentProject->addLabel(lb);
 //               i++;
 //          }
 //      }
@@ -221,7 +214,18 @@ Project InstaDam::on_actionOpen_triggered()
 //}
 
 
-
+void InstaDam::connectButtons()
+{
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), ui->IdmPhotoViewer, SLOT(brushSizeChanged(int)));
+    ui->horizontalSlider->setMaximum(500);
+    ui->spinBox->setMaximum(500);
+    ui->spinBox->setValue(ui->IdmPhotoViewer->B->size);
+    ui->horizontalSlider->setValue(ui->IdmPhotoViewer->B->size);
+    connect(ui->spinBox, SIGNAL(valueChanged(int)), ui->IdmPhotoViewer, SLOT(brushSizeChanged(int)));
+    connect(ui->spinBox, SIGNAL(valueChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), ui->spinBox, SLOT(setValue(int)));
+    connectFilters();
+}
 
 void InstaDam::connectFilters()
 {
@@ -249,6 +253,8 @@ void InstaDam::connectFilters()
 
     connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
     connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
+//    connect(ui->IdmMaskViewer, SIGNAL(brushResetting()), ui->IdmPhotoViewer, SLOT(resetBrush()));
+//    connect(ui->IdmPhotoViewer, SIGNAL(brushResetting()), ui->IdmMaskViewer, SLOT(resetBrush()));
 
     connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this, SLOT(resetPixmapButtons()));
 }
@@ -273,9 +279,9 @@ void InstaDam::on_actionSave_triggered()
 
     QFile outFile(outFileName);
     outFile.open(QIODevice::ReadWrite);
-    for(int i=0; i<currentProject.numLabels(); i++)
+    for(int i=0; i<currentProject->numLabels(); i++)
     {
-        Label lb = currentProject.getLabel(i);
+        Label lb = currentProject->getLabel(i);
         QTextStream(&outFile) << lb.getText();
         QTextStream(&outFile) << "~%";
         QTextStream(&outFile) << lb.getColor().name() << "~%"<<endl;
@@ -290,31 +296,37 @@ void InstaDam::on_actionSave_triggered()
 
 void InstaDam::on_actionOpen_File_triggered()
 {
-    QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
-    QString ext = QFileInfo(filename_temp).suffix();
-    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
-    {
-        this->filename = filename_temp;
-        this->file = QFileInfo(filename);
-        this->path = file.dir();
-        this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-
-        if (imagesList.empty())
-                assertError("That doesn't seem to be a valid image file.");
-        else
-        {
-            int counter = 0;
-            foreach(QString filename, imagesList) {
-               if (file.completeBaseName()==filename)
-                   break;
-                counter++;
-            }
-            fileId = counter;
-            openFile_and_labels();
-        }
-    }
+    if (currentProject == nullptr)
+        assertError("Please create or open a project first.");
     else {
-       assertError("That doesn't seem to be a valid image file.");
+
+
+        QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+        QString ext = QFileInfo(filename_temp).suffix();
+        if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
+        {
+            this->filename = filename_temp;
+            this->file = QFileInfo(filename);
+            this->path = file.dir();
+            this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
+
+            if (imagesList.empty())
+                    assertError("That doesn't seem to be a valid image file.");
+            else
+            {
+                int counter = 0;
+                foreach(QString filename, imagesList) {
+                   if (file.completeBaseName()==filename)
+                       break;
+                    counter++;
+                }
+                fileId = counter;
+                openFile_and_labels();
+            }
+        }
+        else {
+           assertError("That doesn't seem to be a valid image file.");
+        }
     }
 
 
@@ -344,12 +356,41 @@ void InstaDam::on_saveAndNext_clicked()
 
 }
 
+void InstaDam::on_saveAndBack_clicked()
+{
+    if (imagesList.empty())
+            assertError("No file loaded! Please go to File->Open File and select an image to open");
+    else
+    {
+        saveFile();
+        int newId = (fileId-1)%imagesList.size();
+        if (newId)
+        {
+            fileId = newId;
+            this->filename = path.absolutePath()+"/"+imagesList[fileId];
+            this->file = QFileInfo(this->filename);
+            openFile_and_labels();
+
+        }
+
+    }
+
+}
+
+
+
 void InstaDam::saveFile()
 {
+    for(int i=0; i<currentProject->numLabels(); i++){
+        QFile file(labelPaths[i]);
+        file.open(QIODevice::WriteOnly);
+        qInfo("\nI will save these labels %d",i);
 
-    QFile file(labelFile);
-    file.open(QIODevice::WriteOnly);
-    ui->IdmPhotoViewer->labels->pixmap().save(&file, "PNG");
+        qInfo(labelPaths[i].toUtf8().constData());
+
+
+        ui->IdmPhotoViewer->labelItems[i]->pixmap().save(&file, "PNG");
+    }
 }
 
 
@@ -367,14 +408,18 @@ void InstaDam::generateLabelFileName()
 {
 
     QString baseName = this->file.baseName();
-    QString labelName = baseName+"_label.png";
-    QString labelPath = this->path.absolutePath()+"/labels/";
+    QString labelPath = this->path.absolutePath()+"/labels/"+baseName+"/";
     if (!QDir(labelPath).exists())
     {
-        QDir().mkdir(labelPath);
+        qInfo("Creating paths %s", labelPath.toUtf8().constData());
+        QDir().mkpath(labelPath);
+    }
+    labelPaths.clear();
+    for(int i=0; i<currentProject->numLabels(); i++){
+        QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
+        this->labelPaths.append(labelPath+labfilePrefix+"_label.png");
     }
 
-    this->labelFile = labelPath+labelName;
     this->path = file.dir();
 
 }
@@ -389,13 +434,13 @@ void InstaDam::openFile_and_labels()
 
     //Open labels
     generateLabelFileName();
-    if (QFileInfo(labelFile).isFile())
-    {
-        labelNameTemp = labelFile;
-        qInfo(labelNameTemp.toUtf8().constData());
-        qInfo("I will open the labels!");
-    }
-    ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
+//    if (QFileInfo(labelFile).isFile())
+//    {
+//        labelNameTemp = labelFile;
+//        qInfo(labelNameTemp.toUtf8().constData());
+//        qInfo("I will open the labels!");
+//    }
+    ui->IdmPhotoViewer->setPhotoFromFile(filename, labelPaths);
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 }
 
@@ -456,4 +501,10 @@ void InstaDam::on_actionSave_File_triggered()
 }
 
 
+
+
+void InstaDam::on_eraser_clicked()
+{
+    ui->IdmPhotoViewer->setEraserMode();
+}
 

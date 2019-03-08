@@ -5,6 +5,7 @@
 #include "filters.h"
 #include "maskobjects.h"
 #include "filtercontrols.h"
+#include "paintBrush.h"
 class maskObjects;
 class filterControls;
 namespace Ui {
@@ -13,7 +14,6 @@ class PhotoViewer;
 
 enum viewerTypes{PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE};
 
-enum brushTypes {PAINTBRUSH, ERASER, PAN};
 
 class PhotoViewer : public QGraphicsView
 {
@@ -22,15 +22,16 @@ class PhotoViewer : public QGraphicsView
 public:
     bool hasPhoto;
     bool paintMode;
+    paintBrush *B;
+
+
     int zoom;
-    Qt::PenCapStyle capStyle;
-    int brushSize;
+
     cv::Mat cvImage;
     cv::Mat cvThumb;
     maskObjects *maskObject;
     filterControls *filterControl;
-
-    brushTypes brushType;
+    int selectedLabelClass;
     maskTypes selectedMask;
     QPen pen;
     QPainterPath path;
@@ -40,8 +41,10 @@ public:
     QPixmap imMask;
 
     QGraphicsScene *scene;
-    QGraphicsPixmapItem *labels;
-    QGraphicsPixmapItem *labelsTemp;
+    QList<QGraphicsPixmapItem*> labelItems;
+    QList<QGraphicsItem*> labelGroup;
+    QGraphicsItemGroup * labels;
+    QGraphicsPixmapItem * labelsTemp;
     QGraphicsPixmapItem *filterIm;
 
     QPoint lastPos;
@@ -52,10 +55,10 @@ public:
 
     viewerTypes viewerType;
     PhotoViewer(QWidget *parent = 0);
-    void setPhotoFromFile(QString filename, QString labelname);
+    void setPhotoFromFile(QString filename, QVector<QString> );
     void setPhotoFromPixmap(QPixmap, QPixmap );
 
-    void setPhoto(QPixmap , QPixmap , QPixmap );
+    void setPhoto(QPixmap , QPixmap );
 
     void testPixmap();
     void fitInView();
@@ -66,14 +69,17 @@ public:
     virtual void resizeEvent(QResizeEvent *event) override;
     void setFilterControls(filterControls *);
     void setPanMode();
-    void resetBrush(int, Qt::PenCapStyle);
+
     void setBrushMode(Qt::PenCapStyle);
+    void setEraserMode();
+
 
     void setMaskPixmap();
 
     cv::Mat QImage2Mat(QImage const& src);
 
     cv::Mat QPixmap2Mat(QPixmap src);
+    void resetBrushDrag();
 
 
 
@@ -84,10 +90,15 @@ signals:
     void zoomed(int, float, QPointF);
     void changedMask(maskTypes);
     void loadedPhoto();
+    void brushResetting();
 
 public slots:
     void zoomedInADifferentView(int , float, QPointF );
     void setImMask(maskTypes, threshold_or_filter thof = FILTER);
+    void labelChanged(int, QColor);
+    void opacityChanged(int, int);
+    void brushSizeChanged(int);
+    void resetBrush();
 
 
 
@@ -100,3 +111,4 @@ private:
 };
 
 #endif // PHOTOVIEWER_H
+

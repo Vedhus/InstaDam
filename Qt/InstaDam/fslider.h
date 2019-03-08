@@ -17,7 +17,7 @@ public:
 
 signals:
     void filterValueChanged(maskTypes selectedMask, int propNum, int value, threshold_or_filter);
-    void fSliderReleased(maskTypes, threshold_or_filter);
+    void fSliderReleased(int);
 private slots:
     void reemitValueChanged(int value);
     void reemitSliderReleased();

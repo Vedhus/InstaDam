@@ -55,6 +55,7 @@ public:
     QPushButton *saveAndNext;
     QSpacerItem *verticalSpacer;
     QPushButton *panButton;
+    QPushButton *eraser;
     QPushButton *roundBrush;
     QPushButton *squareBrush;
     QLabel *label;
@@ -97,7 +98,6 @@ public:
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu_File;
-    QMenu *menuEdit;
     QMenu *menuProject;
 
     void setupUi(QMainWindow *InstaDam)
@@ -173,6 +173,11 @@ public:
 
         horizontalLayout_4->addWidget(panButton);
 
+        eraser = new QPushButton(frame_4);
+        eraser->setObjectName(QStringLiteral("eraser"));
+
+        horizontalLayout_4->addWidget(eraser);
+
         roundBrush = new QPushButton(frame_4);
         roundBrush->setObjectName(QStringLiteral("roundBrush"));
 
@@ -247,12 +252,12 @@ public:
         splitter_2->setHandleWidth(10);
         scrollArea_2 = new QScrollArea(splitter_2);
         scrollArea_2->setObjectName(QStringLiteral("scrollArea_2"));
-        scrollArea_2->setMaximumSize(QSize(150, 16777215));
+        scrollArea_2->setMaximumSize(QSize(16777215, 16777215));
         scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 94, 305));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 305));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -389,20 +394,16 @@ public:
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
-        menuEdit = new QMenu(menubar);
-        menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuProject = new QMenu(menubar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
         InstaDam->setMenuBar(menubar);
 
         menubar->addAction(menuProject->menuAction());
         menubar->addAction(menu_File->menuAction());
-        menubar->addAction(menuEdit->menuAction());
         menu_File->addAction(actionOpen_File);
         menu_File->addAction(actionSave_File);
         menu_File->addSeparator();
         menu_File->addAction(actionExit);
-        menuEdit->addAction(actionUndo);
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
@@ -429,6 +430,7 @@ public:
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
+        eraser->setText(QApplication::translate("InstaDam", "Eraser", nullptr));
         roundBrush->setText(QApplication::translate("InstaDam", "Round", nullptr));
         squareBrush->setText(QApplication::translate("InstaDam", "Square", nullptr));
         label->setText(QApplication::translate("InstaDam", "Brush Size", nullptr));
@@ -440,7 +442,6 @@ public:
         threshold_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Filters", nullptr));
         menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
-        menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
         menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
     } // retranslateUi
 

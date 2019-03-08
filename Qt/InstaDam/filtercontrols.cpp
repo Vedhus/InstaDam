@@ -39,7 +39,7 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc, PhotoView
         {
                 fSlider *itemSlider = new fSlider(selectedMask, i,  thof, this);
                 fSpinBox* itemNumbox = new fSpinBox(selectedMask, i, thof, this);
-                connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox, SLOT(setValue(int)));
+                connect(itemSlider, SIGNAL(fSliderReleased(int)), itemNumbox, SLOT(setValue(int)));
                 itemSlider->setOrientation(Qt::Horizontal);
                 connect(itemNumbox, SIGNAL(valueChanged(int)), itemSlider, SLOT(setValue(int)));
 
@@ -120,6 +120,7 @@ void filterControls::defineProperties()
 
 
     qInfo("B1");
+
     std::vector<filterProperty*> cannyProperties;
 
        cannyProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
@@ -145,6 +146,15 @@ void filterControls::defineProperties()
 
         thresholdProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
         thresholdProperties.push_back(  new  filterProperty("Threshold min",SLIDER, 0, 60,  255,  ANY, THRESH, false)  );
+
+//    std::vector<filterProperty*> cannyProperties;
+
+//       colorProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
+//       colorProperties.push_back( new  filterProperty("Add color",COLORPICKER, 3,5,  801,  ODD, COLOR, false)  );
+//       colorProperties.push_back(  new  filterProperty("Color Range",SLIDER, 0, 10,  255,  ANY, FILTER, false)  );
+//       colorProperties.push_back(  new  filterProperty("Saturation Range",SLIDER, 0, 10,  255,  ANY, FILTER, false)  );
+//       colorProperties.push_back(  new  filterProperty("Value Range",SLIDER, 0, 10,  255,  ANY, FILTER, false)  );
+
 
 
 
@@ -184,6 +194,9 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter)
                                            properties[(int)BLUR]->propertylist[4]->val);
 
             break;
+//        case COLORSELECT:
+//            cv::inRange(image, cv::Scalar(low_H, low_S, low_V), cv::Scalar(high_H, high_S, high_V), edge_temp);
+//            break;
         case THRESHOLD:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             break;
