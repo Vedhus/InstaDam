@@ -47,15 +47,15 @@ FORMS += \
 
 
 win32 {
-  INCLUDEPATH += D:\opencv\opencv\build\include $${PWD}/..
+  INCLUDEPATH += D:\opencv\build\include $${PWD}/..
   CONFIG += c++1z
 
-  LIBS += D:\opencv\opencv-build\bin\libopencv_core320.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_highgui320.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs320.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc320.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_features2d320.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d320.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_core401.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_highgui401.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs401.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc401.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_features2d401.dll
+  LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d401.dll
 
 wasm: LIBS += -L$${PWD}/../htmlFileHandler -lhtmlFileHandler -L/usr/lib/emscripten
 }
