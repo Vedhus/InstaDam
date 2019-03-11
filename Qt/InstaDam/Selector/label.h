@@ -2,6 +2,8 @@
 #define LABEL_H
 
 #include <QColor>
+#include <QJsonObject>
+
 #include "freeDrawSelect.h"
 #include "freeDrawErase.h"
 #include "rectangleSelect.h"
@@ -18,6 +20,7 @@ class Label{
   public:
 
     Label();
+    Label(const QJsonObject &json);
 
     ~Label();
 
@@ -39,6 +42,8 @@ class Label{
     void addItem(PolygonSelect *item);
     void addItem(FreeDrawErase *item){UNUSED(item);}
     void removeItem(const int id);
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 };
 
 #endif // LABEL_H

@@ -15,6 +15,9 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 {
 public:
     static QString baseInstruction;
+    FreeDrawSelect();
+    FreeDrawSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(const QList<FreeDrawSelect*> items);
     FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
@@ -33,6 +36,8 @@ public:
     void resizeItem(int vertex, QPointF &shift) override;
     void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
     void updatePen(QPen pen) override;
+    void read(const QJsonObject &json) override;
+    void write(QJsonObject &json) const override;
 
     // Mirror
     FreeDrawSelect* getMirror() override {return mirror;}
@@ -46,6 +51,8 @@ public:
     void setMirrorResized() override {}
     void setMirrorVertex(int vertex) override {UNUSED(vertex);}
     void updateMirrorScene() override;
+
+    void setMirrorMap();
     /*------------- End implemented functions*/
 
     void addPoints(FreeMap *points);
@@ -80,6 +87,5 @@ private:
 
     void calcRect();
     void checkPoint(QPoint &point);
-    void setMirrorMap();
 };
 #endif // POLYGONSELECT_H

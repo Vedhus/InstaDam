@@ -2,9 +2,29 @@
 #include "label.h"
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QJsonArray>
 #include <algorithm>
 #include <iostream>
 using namespace std;
+
+PolygonSelect::PolygonSelect() : PolygonSelect(QPointF(0.,0.)){
+
+}
+PolygonSelect::PolygonSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+    : SelectItem(label, item), QGraphicsPolygonItem(item){
+    read(json);
+    myRect = QGraphicsPolygonItem::boundingRect();
+    mytype = PolygonObj;
+    active = true;
+    if(label)
+        label->addItem(this);
+    updatePen(myPen);
+    QGraphicsPolygonItem::prepareGeometryChange();
+
+    invertColorForPen();
+    QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
 
 PolygonSelect::PolygonSelect(QPointF point, Label *label, QGraphicsItem *item)
     : SelectItem(label, item), QGraphicsPolygonItem(item){
@@ -23,12 +43,6 @@ PolygonSelect::PolygonSelect(QPointF point, Label *label, QGraphicsItem *item)
     if(label)
         label->addItem(this);
     updatePen(myPen);
-    //for(int i = 0; i < myPoints.size(); i++){
-    //    std::cout << "POINT " << i << "  " << myPoints[i].x() << "," << myPoints[i].y() << std::endl;
-    //}
-    //for(int i = 0; i < polygon.size(); i++){
-    //    std::cout << "  POINT2 " << i << "  " << polygon[i].x() << "," << polygon[i].y() << std::endl;
-    //}
 
     invertColorForPen();
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
@@ -185,6 +199,19 @@ void PolygonSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
 }
 
+void PolygonSelect::read(const QJsonObject &json){
+    QJsonArray pointArray = json["points"].toArray();
+    myPoints.clear();
+    myVertices.clear();
+    for(int i = 0; i < pointArray.size(); i += 2){
+        QPointF temp = QPointF(pointArray[i].toDouble(), pointArray[i+1].toDouble());
+        myPoints.push_back(temp);
+        myVertices.push_back(makeVertex(temp));
+    }
+    refresh();
+    myID = json["objectID"].toInt();
+}
+
 void PolygonSelect::removeVertex(int vertex){
     //cout << "REMOVING " << vertex << endl;
     if(vertex == UNSELECTED){
@@ -213,6 +240,16 @@ void PolygonSelect::resizeItem(int vertex, QPointF &point){
 
 void PolygonSelect::updatePen(QPen pen){
     setPen(pen);
+}
+
+void PolygonSelect::write(QJsonObject &json) const{
+    json["objectID"] = myID;
+    QJsonArray points;
+    for(int i = 0; i < myPoints.size(); i++){
+        points.append(myPoints[i].x());
+        points.append(myPoints[i].y());
+    }
+    json["points"] = points;
 }
 
 /*------------------------ Mirror -------------------------------*/
