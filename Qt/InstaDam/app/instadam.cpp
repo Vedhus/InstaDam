@@ -114,7 +114,7 @@ InstaDam::~InstaDam()
     delete ui;
 }
 
-Project InstaDam::on_actionNew_triggered()
+void InstaDam::on_actionNew_triggered()
 {
     currentProject.resetLabels();
     newProject = new newproject(this);
@@ -138,7 +138,6 @@ Project InstaDam::on_actionNew_triggered()
         ui->labelClassLayout->addWidget(button);
         qInfo("Button Added!");
     }
-   return currentProject;
 }
 
 void InstaDam::setCurrentLabel(LabelButton *button){
@@ -158,73 +157,22 @@ void InstaDam::clearLayout(QLayout * layout) {
     }
  }
 
-Project InstaDam::on_actionOpen_triggered()
+void InstaDam::on_actionOpen_triggered()
 {
-
     QString doc;
-    int i = 0;
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
     if (fileName.isEmpty()){
-            return currentProject; // remove that part and add an alert
+            return; // remove that part and add an alert
     }
     else
     {
-       this->currentProject = Project();
-
-       QFile file(fileName);
-       QStringList list;
-       file.open(QIODevice::ReadWrite);
-       QTextStream fileStream(&file);
-
-       while(!fileStream.atEnd()){
-           QString line = file.readLine(); // to be updated to read all the labels and the colors
-           QTextStream(stdout) << line;
-
-           list = line.split("~%");
-
-           QTextStream(stdout) << list.size() << endl;
-
-           Label lb;
-           lb.setText(list[0]);
-           lb.setColor(QColor(list[1]));
-           QTextStream(stdout) <<lb.getColor().name() << list[1] << lb.getColor().name() <<endl;
-           currentProject.addLabel(lb);
-
-
-           i++;
-
-      }
+        this->currentProject = Project();
+        loadLabelFile(fileName);
     }
-
-    i = 0;
-
-    clearLayout(ui->labelClassLayout);
-    QTextStream(stdout) <<currentProject.numLabels();
-    for(int i=0; i<currentProject.numLabels(); i++)
-    {
-        Label *label = currentProject.getLabel(i);
-        LabelButton *button = new LabelButton(label);
-
-        button->setText(label->getText());
-        QPalette pal = button->palette();
-
-        QTextStream(stdout) << label->getColor().name() << endl;
-
-
-        pal.setColor(QPalette::ButtonText, Qt::black);
-        pal.setColor(QPalette::Button, label->getColor());
-        button->setAutoFillBackground(true);
-        button->setPalette(pal);
-        button->update();
-        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
-//        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
-        ui->labelClassLayout->addWidget(button);
-
-    }
-
-    return currentProject;
+    scene->update();
+    maskScene->update();
 }
 
 void InstaDam::toggleDrawing(){
@@ -384,15 +332,12 @@ void InstaDam::on_actionSave_triggered()
         outFileName = outFileName +QString(".idpro");
 
     QFile outFile(outFileName);
-    outFile.open(QIODevice::ReadWrite);
+    outFile.open(QIODevice::WriteOnly);
 #endif
-    for(int i=0; i<currentProject.numLabels(); i++)
-    {
-        Label lb = (*currentProject.getLabel(i));
-        QTextStream(&outFile) << lb.getText();
-        QTextStream(&outFile) << "~%";
-        QTextStream(&outFile) << lb.getColor().name() << "~%"<<endl;
-    }
+    QJsonObject json;
+    write(json);
+    QJsonDocument saveDoc(json);
+    outFile.write(saveDoc.toJson());
 #ifdef WASM_BUILD
     QHtml5File::save(outFile, "myproject.idpro");
 #endif
@@ -518,15 +463,105 @@ void InstaDam::openFile_and_labels()
     generateLabelFileName();
     if (QFileInfo(labelFile).isFile())
     {
-        labelNameTemp = labelFile;
-        qInfo(labelNameTemp.toUtf8().constData());
-        qInfo("I will open the labels!");
+        loadLabelFile(labelFile);
     }
-    scene->update();
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename, labelNameTemp);
 #endif
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
+    scene->update();
+    maskScene->update();
 }
+
+
+void InstaDam::loadLabelFile(QString filename){
+    QFile loadFile(filename);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return;
+    }
+    QByteArray saveData = loadFile.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    read(loadDoc.object());
+
+    clearLayout(ui->labelClassLayout);
+    QTextStream(stdout) <<currentProject.numLabels();
+    for(int i=0; i<currentProject.numLabels(); i++)
+    {
+        Label *label = currentProject.getLabel(i);
+        LabelButton *button = new LabelButton(label);
+
+        button->setText(label->getText());
+        QPalette pal = button->palette();
+
+        QTextStream(stdout) << label->getColor().name() << endl;
+
+        pal.setColor(QPalette::ButtonText, Qt::black);
+        pal.setColor(QPalette::Button, label->getColor());
+        button->setAutoFillBackground(true);
+        button->setPalette(pal);
+        button->update();
+        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
+        //        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
+        ui->labelClassLayout->addWidget(button);
+        if(!label->rectangleObjects.isEmpty()){
+            QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
+            while(rit.hasNext()){
+                rit.next();
+                RectangleSelect *mirror = new RectangleSelect();
+                mirror->setLabel(label);
+                mirror->updatePen(mirror->myPen);
+                rit.value()->setMirror(mirror);
+                mirror->setMirror(rit.value());
+                mirror->setRectUnchecked(rit.value()->getRect());
+                rit.value()->rotateMirror();
+                scene->addItem(rit.value());
+                maskScene->addItem(mirror);
+            }
+        }
+        if(!label->ellipseObjects.isEmpty()){
+            QHashIterator<int, EllipseSelect*> eit(label->ellipseObjects);
+            while(eit.hasNext()){
+                eit.next();
+                EllipseSelect *mirror = new EllipseSelect();
+                mirror->setLabel(label);
+                mirror->updatePen(mirror->myPen);
+                eit.value()->setMirror(mirror);
+                mirror->setMirror(eit.value());
+                mirror->setRectUnchecked(eit.value()->getRect());
+                eit.value()->rotateMirror();
+                scene->addItem(eit.value());
+                maskScene->addItem(mirror);
+            }
+        }
+        if(!label->polygonObjects.isEmpty()){
+            QHashIterator<int, PolygonSelect*> pit(label->polygonObjects);
+            while(pit.hasNext()){
+                pit.next();
+                PolygonSelect *mirror = new PolygonSelect();
+                mirror->setLabel(label);
+                mirror->updatePen(mirror->myPen);
+                pit.value()->setMirror(mirror);
+                mirror->setMirror(pit.value());
+                pit.value()->setMirrorPolygon(UNSELECTED);
+                scene->addItem(pit.value());
+                maskScene->addItem(mirror);
+            }
+        }
+        if(!label->freeDrawObjects.isEmpty()){
+            FreeDrawSelect *item = label->freeDrawObjects.values()[0];
+            FreeDrawSelect *mirror = new FreeDrawSelect();
+            mirror->setLabel(label);
+            mirror->updatePen(mirror->myPen);
+            item->setMirror(mirror);
+            mirror->setMirror(item);
+            item->setMirrorMap();
+            scene->addItem(item);
+            maskScene->addItem(mirror);
+        }
+    }
+}
+
+
 
 //    else if(!ext.compare("idam"))
 //    {
@@ -959,4 +994,30 @@ void InstaDam::processKeyPressed(viewerTypes type, const int key){
         currentItem = nullptr;
     }
 
+}
+
+void InstaDam::read(const QJsonObject &json){
+    if(json.contains("image")){
+
+    }
+    if(json.contains("labels") && json["labels"].isArray()){
+        QJsonArray labelArray = json["labels"].toArray();
+        //labels.reserve(labelArray.size());
+        for(int i = 0; i < labelArray.size(); i++){
+            QJsonObject labelObject = labelArray[i].toObject();
+            cout << "LABEL" << endl;
+            Label label = Label(labelObject);
+            currentProject.addLabel(label);
+        }
+    }
+}
+
+void InstaDam::write(QJsonObject &json){
+    QJsonArray labs;
+    for(int i = 0; i < currentProject.numLabels(); i++){
+        QJsonObject lab;
+        currentProject.getLabel(i)->write(lab);
+        labs.append(lab);
+    }
+    json["labels"] = labs;
 }

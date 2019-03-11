@@ -5,6 +5,22 @@
 #include <QPainter>
 #include <QGraphicsScene>
 
+EllipseSelect::EllipseSelect() : EllipseSelect(QPointF(0.,0.)){
+
+}
+
+EllipseSelect::EllipseSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), BoxBasedSelector(json, label, item){
+    setRect(myRect);
+    mytype = EllipseObj;
+    if(label)
+        label->addItem(this);
+    updatePen(myPen);
+    QGraphicsEllipseItem::prepareGeometryChange();
+    QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
+
 EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
 {

@@ -17,6 +17,7 @@
 #include <QGraphicsItem>
 #include <QWidget>
 #include <QPainter>
+#include <QJsonObject>
 //#include "label.h"
 #define UNUSED(x) (void)(x)
 class Label;
@@ -63,6 +64,9 @@ public:
     virtual void rotate(QPointF &from, QPointF &to) = 0;
     virtual void updatePen(QPen pen) = 0;
 
+    // I/O
+    virtual void read(const QJsonObject &json) = 0;
+    virtual void write(QJsonObject &json) const = 0;
     // get info about the objects
     virtual QString baseInstructions() = 0;
     virtual bool isInside(QPointF &point) = 0;

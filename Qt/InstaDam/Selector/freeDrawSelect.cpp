@@ -2,6 +2,7 @@
 #include "label.h"
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QJsonArray>
 #include <algorithm>
 #include <iostream>
 #include <math.h>
@@ -18,6 +19,36 @@ void rotatePoint(QPointF &point, const qreal angle){
 }
 
 QString FreeDrawSelect::baseInstruction = QString("");
+
+FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
+
+}
+
+FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+    : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
+    myMap = new FreeMap();
+    read(json);
+    setActiveVertex(0);
+    mytype = FreedrawObj;
+    if(label != nullptr)
+        label->addItem(this);
+    myPen.setWidth(1);
+    updatePen(myPen);
+
+    QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsMovable);
+
+}
+
+FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
+    : QAbstractGraphicsShapeItem(nullptr), SelectItem(0.){
+    myMap = new FreeMap();
+    QListIterator<FreeDrawSelect*> it(items);
+    while(it.hasNext()){
+        myMap->unite((*it.next()->myMap));
+    }
+}
+
 FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = new FreeMap();
@@ -90,6 +121,19 @@ void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->drawPoints(QPolygon::fromList(myMap->values()));
 }
 
+void FreeDrawSelect::read(const QJsonObject &json){
+    fullWidth = 2;
+    halfWidth = 1;
+    brushType = 1;
+    QJsonArray pointArray = json["points"].toArray();
+    for(int i = 0; i < pointArray.size(); i += 2){
+        int x = pointArray[i].toInt();
+        int y = pointArray[i+1].toInt();
+        myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
+    }
+    myID = json["objectID"].toInt();
+}
+
 void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
     UNUSED(vertex);
     UNUSED(point);
@@ -97,6 +141,19 @@ void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
 
 void FreeDrawSelect::updatePen(QPen pen){
     setPen(pen);
+}
+
+void FreeDrawSelect::write(QJsonObject &json)const{
+    json["objectID"] = myID;
+    QJsonArray points;
+    QList<QPoint> pointList = myMap->values();
+    QPoint pnt;
+    while(!pointList.isEmpty()){
+        pnt = pointList.takeFirst();
+        points.append(pnt.x());
+        points.append(pnt.y());
+    }
+    json["points"] = points;
 }
 
 /*--------------------------------- Mirror ----------------------------*/
@@ -311,7 +368,10 @@ void FreeDrawSelect::checkPoint(QPoint &point){
 
 void FreeDrawSelect::setMirrorMap(){
     if(mirror != nullptr){
+        cout << "IUP"<< endl;
         mirror->myMap = myMap;
         mirror->myRect = myRect;
+        myMap = mirror->myMap;
+        myRect = mirror->myRect;
     }
 }

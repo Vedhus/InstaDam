@@ -6,6 +6,21 @@
 #include <iostream>
 using namespace std;
 
+RectangleSelect::RectangleSelect() : RectangleSelect(QPointF(0.,0.)){
+
+}
+
+RectangleSelect::RectangleSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+    : BoxBasedSelector(json, label, item), QGraphicsRectItem(item){
+    setRect(myRect);
+    mytype = RectangleObj;
+    if(label)
+        label->addItem(this);
+    updatePen(myPen);
+    QGraphicsRectItem::prepareGeometryChange();
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
 
 RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *item)
     : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
@@ -103,6 +118,7 @@ void RectangleSelect::setRectUnchecked(QRectF rect){
     myRect = rect;
     setRect(myRect);
 }
+
 
 /*---------------------------- Mirror functions ----------------------*/
 void RectangleSelect::mirrorHide(){

@@ -77,9 +77,9 @@ private slots:
     void processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
     void processKeyPressed(viewerTypes type, const int key);
     void finishPolygonButtonClicked();
-    Project on_actionNew_triggered();
+    void on_actionNew_triggered();
 
-    Project on_actionOpen_triggered();
+    void on_actionOpen_triggered();
 
     void on_actionSave_triggered();
 
@@ -144,6 +144,10 @@ private:
     SelectItem *mirrorItem;
     int brushMode = Qt::SquareCap;
     Qt::MouseButton currentButton = Qt::NoButton;
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json);
+    void loadLabelFile(QString filename);
 };
 
 
