@@ -11,6 +11,8 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
 
 public:
     const QString baseInstruction = polygonBaseInstruction;
+    PolygonSelect();
+    PolygonSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
     PolygonSelect(QPointF point, Label *label=nullptr, QGraphicsItem *item = nullptr);
     ~PolygonSelect() override;
 
@@ -29,6 +31,8 @@ public:
     void resizeItem(int vertex, QPointF &shift) override;
     void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
     void updatePen(QPen pen) override;
+    void read(const QJsonObject &json) override;
+    void write(QJsonObject &json) const override;
 
     // Mirror
     PolygonSelect* getMirror() override {return mirror;}
@@ -43,6 +47,8 @@ public:
     void setMirrorResized() override;
     void setMirrorVertex(int vertex) override;
     void updateMirrorScene() override;
+
+    void setMirrorPolygon(int actVert);
     /*------------- End implemented functions*/
 
     void checkPoint(QPointF &point);
@@ -65,7 +71,6 @@ private:
 
     void refresh();
 
-    void setMirrorPolygon(int actVert);
     void setMirrorRect(QRectF rect);
 };
 #endif // POLYGONSELECT_H

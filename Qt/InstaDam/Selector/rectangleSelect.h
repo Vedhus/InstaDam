@@ -12,7 +12,8 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem
 
 public:
     const QString baseInstruction = rectBaseString;
-
+    RectangleSelect();
+    RectangleSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
     RectangleSelect(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
     RectangleSelect(QPointF point, qreal vertSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
     ~RectangleSelect() override;

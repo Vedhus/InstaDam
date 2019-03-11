@@ -7,6 +7,10 @@
 
 using namespace std;
 
+BoxBasedSelector::BoxBasedSelector(const QJsonObject &json, Label *label, QGraphicsItem *item) : SelectItem(label, item){
+    read(json);
+}
+
 BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *item) : SelectItem(label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
@@ -78,6 +82,25 @@ void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
     setRotation(myRotation);
     rotated = true;
     rotateMirror();
+}
+
+void BoxBasedSelector::read(const QJsonObject &json){
+    QPointF tlc = QPointF(json["left"].toDouble(), json["top"].toDouble());
+    QPointF brc = QPointF(json["right"].toDouble(), json["bottom"].toDouble());
+    myRect = QRectF(tlc, brc);
+    myRotation = json["rotation"].toDouble();
+    myID = json["objectID"].toInt();
+    setTransformOriginPoint(myRect.center());
+    setRotation(myRotation);
+}
+
+void BoxBasedSelector::write(QJsonObject &json) const{
+    json["objectID"] = myID;
+    json["rotation"] = myRotation;
+    json["left"] = myRect.left();
+    json["right"] = myRect.right();
+    json["top"] = myRect.top();
+    json["bottom"] = myRect.bottom();
 }
 
 /*-------------------------- Protected ------------------------*/
