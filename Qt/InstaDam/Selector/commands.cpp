@@ -197,11 +197,11 @@ void ErasePointsCommand::undo(){
 void ErasePointsCommand::redo(){
     if(init){
         EraseMapIterator it((*myItem->getMap()));
-        FreeMap tempMap = FreeMap();
+        QSharedPointer<FreeMap> tempMap = QSharedPointer<FreeMap>::create();
         while(it.hasNext()){
             it.next();
             QVector<int> tempVector = it.value()->keys().toVector();
-            it.key()->deletePoints(tempVector, &tempMap);
+            it.key()->deletePoints(tempVector, tempMap);
         }
     }
     else{
