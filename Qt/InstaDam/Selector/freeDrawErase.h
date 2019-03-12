@@ -8,8 +8,8 @@ class TestSelect;
 
 #endif
 
-typedef QMap<FreeDrawSelect*, FreeMap* > EraseMap;
-typedef QMapIterator<FreeDrawSelect*, FreeMap* > EraseMapIterator;
+typedef QMap<FreeDrawSelect*, QSharedPointer<FreeMap> > EraseMap;
+typedef QMapIterator<FreeDrawSelect*, QSharedPointer<FreeMap> > EraseMapIterator;
 
 class FreeDrawErase : public FreeDrawSelect
 {
@@ -27,7 +27,7 @@ public:
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
 
-    EraseMap* getMap(){return undoMap;}
+    QSharedPointer<EraseMap> getMap(){return undoMap;}
 
 protected:
     void rasterizeLine(QPoint &start, QPoint &end);
@@ -39,7 +39,7 @@ private:
 #endif
     QVector<int> deleteList;
 
-    EraseMap *undoMap = nullptr;
+    QSharedPointer<EraseMap> undoMap = nullptr;
 
     //void voidPoint(QPoint &point);
 };

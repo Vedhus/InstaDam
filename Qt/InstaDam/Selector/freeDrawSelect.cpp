@@ -26,7 +26,7 @@ FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
 
 FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
-    myMap = new FreeMap();
+    myMap = QSharedPointer<FreeMap>::create();
     read(json);
     setActiveVertex(0);
     mytype = FreedrawObj;
@@ -42,7 +42,7 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, Label *label, QGraphicsI
 
 FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     : QAbstractGraphicsShapeItem(nullptr), SelectItem(0.){
-    myMap = new FreeMap();
+    myMap = QSharedPointer<FreeMap>::create();
     QListIterator<FreeDrawSelect*> it(items);
     while(it.hasNext()){
         myMap->unite((*it.next()->myMap));
@@ -51,7 +51,7 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
 
 FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
-    myMap = new FreeMap();
+    myMap = QSharedPointer<FreeMap>::create();
     myMap->insert(pointToInt(point.toPoint()), point.toPoint());
     setActiveVertex(0);
     myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
@@ -72,8 +72,8 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Labe
 }
 
 FreeDrawSelect::~FreeDrawSelect(){
-    if(myMap != nullptr)
-        delete myMap;
+    //if(myMap != nullptr)
+    //    delete myMap;
 }
 
 /*---------------------------- Overrides ------------------------*/
@@ -182,7 +182,7 @@ void FreeDrawSelect::updateMirrorScene(){
 }
 /*---------------------------- End Mirror ------------------------------*/
 
-void FreeDrawSelect::addPoints(FreeMap *points){
+void FreeDrawSelect::addPoints(QSharedPointer<FreeMap> points){
     myMap->unite((*points));
     calcRect();
     setMirrorMap();
@@ -193,14 +193,14 @@ void FreeDrawSelect::checkPoint(QPointF &point){
     point.setY(std::min(std::max(0., point.y()), qreal(SelectItem::myBounds.height())));
 }
 
-void FreeDrawSelect::deletePoint(int point, FreeMap *delHash){
+void FreeDrawSelect::deletePoint(int point, QSharedPointer<FreeMap> delHash){
     if(myMap->contains(point)){
         delHash->insert(point, (*myMap)[point]);
         myMap->remove(point);
     }
 }
 
-void FreeDrawSelect::deletePoints(QVector<int> &points, FreeMap *delHash){
+void FreeDrawSelect::deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash){
     for(int i = 0; i < points.size(); i++){
         deletePoint(points[i], delHash);
     }
@@ -372,7 +372,6 @@ void FreeDrawSelect::checkPoint(QPoint &point){
 
 void FreeDrawSelect::setMirrorMap(){
     if(mirror != nullptr){
-        cout << "IUP"<< endl;
         mirror->myMap = myMap;
         mirror->myRect = myRect;
         myMap = mirror->myMap;

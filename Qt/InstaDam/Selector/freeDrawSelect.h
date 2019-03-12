@@ -55,10 +55,10 @@ public:
     void setMirrorMap();
     /*------------- End implemented functions*/
 
-    void addPoints(FreeMap *points);
+    void addPoints(QSharedPointer<FreeMap> points);
     void checkPoint(QPointF &point);
-    void deletePoint(int points, FreeMap *delHash);
-    void deletePoints(QVector<int> &points, FreeMap *delHash);
+    void deletePoint(int points, QSharedPointer<FreeMap> delHash);
+    void deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash);
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
     QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
@@ -67,7 +67,7 @@ public:
     QGraphicsScene* scene();
 
 protected:
-    FreeMap *myMap = nullptr;
+    QSharedPointer<FreeMap> myMap = nullptr;
 
     int brushType;
     int fullWidth;
