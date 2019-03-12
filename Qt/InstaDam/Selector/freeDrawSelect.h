@@ -61,6 +61,7 @@ public:
     void deletePoints(QVector<int> &points, FreeMap *delHash);
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
+    QPolygon getPoints(){return QPolygon::fromList(myMap->values());}
     //void movePoint(QPointF &point);
 
     QGraphicsScene* scene();

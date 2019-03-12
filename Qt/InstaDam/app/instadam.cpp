@@ -411,7 +411,12 @@ void InstaDam::on_saveAndNext_clicked()
 
 void InstaDam::saveFile()
 {
-    QByteArray bArray;
+    QString baseName = this->file.baseName();
+    for(int i = 0; i < currentProject.numLabels(); i++){
+        Label *label = currentProject.getLabel(i);
+        label->exportLabel(SelectItem::myBounds).save(baseName + "_" + label->getText() + ".png", "PNG");
+    }
+    /*QByteArray bArray;
     QBuffer buffer(&bArray);
     buffer.open(QIODevice::WriteOnly);
     ui->IdmPhotoViewer->labels->pixmap().save(&buffer, "PNG");
@@ -419,6 +424,7 @@ void InstaDam::saveFile()
     QFile file(labelFile);
     file.open(QIODevice::WriteOnly);
     ui->IdmPhotoViewer->labels->pixmap().save(&file, "PNG");
+    */
 }
 
 
