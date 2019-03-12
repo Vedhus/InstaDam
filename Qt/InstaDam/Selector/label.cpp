@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <QJsonArray>
+
 using namespace std;
 Label::Label()
 {
@@ -96,6 +97,56 @@ void Label::read(const QJsonObject &json){
     }
     setText(json["text"].toString());
     setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+}
+
+QPixmap Label::exportLabel(QSize &rect){
+    QPixmap map(rect.width(), rect.height());
+    QPainter *paint = new QPainter(&map);
+    QBrush brush(Qt::black);
+    paint->setPen(Qt::black);
+    paint->setBrush(brush);
+    paint->fillRect(0.,0.,rect.width(), rect.height(), Qt::white);
+    if(!rectangleObjects.isEmpty()){
+        QHashIterator<int, RectangleSelect*> rit(rectangleObjects);
+        while(rit.hasNext()){
+            rit.next();
+            QRectF r = rit.value()->getRect();
+            paint->translate(r.center());
+            paint->rotate(rit.value()->getRotationAngle());
+            paint->translate(-r.center());
+            paint->drawRect(r);
+            paint->resetTransform();
+        }
+    }
+    if(!ellipseObjects.isEmpty()){
+        QHashIterator<int, EllipseSelect*> eit(ellipseObjects);
+        while(eit.hasNext()){
+            eit.next();
+            QRectF r = eit.value()->getRect();
+            paint->translate(r.center());
+            paint->rotate(eit.value()->getRotationAngle());
+            paint->translate(-r.center());
+            paint->drawEllipse(r);
+            paint->resetTransform();
+        }
+    }
+    if(!polygonObjects.isEmpty()){
+        QHashIterator<int, PolygonSelect*> pit(polygonObjects);
+        while(pit.hasNext()){
+            pit.next();
+            paint->drawPolygon(pit.value()->getPolygon());
+        }
+    }
+    if(!freeDrawObjects.isEmpty()){
+        QHashIterator<int, FreeDrawSelect*> fit(freeDrawObjects);
+        while(fit.hasNext()){
+            fit.next();
+            paint->drawPoints(fit.value()->getPoints());
+        }
+
+    }
+    delete paint;
+    return map;
 }
 
 void Label::write(QJsonObject &json) const{
