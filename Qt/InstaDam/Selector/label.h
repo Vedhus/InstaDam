@@ -3,6 +3,7 @@
 
 #include <QColor>
 #include <QJsonObject>
+#include <QPixmap>
 
 #include "freeDrawSelect.h"
 #include "freeDrawErase.h"
@@ -44,6 +45,7 @@ class Label{
     void removeItem(const int id);
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    QPixmap exportLabel(QSize &rect);
 };
 
 #endif // LABEL_H
