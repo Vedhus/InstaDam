@@ -240,6 +240,10 @@ void PolygonSelect::resizeItem(int vertex, QPointF &point){
 
 void PolygonSelect::updatePen(QPen pen){
     setPen(pen);
+    QColor col = pen.color();
+    col.setAlphaF(0.25);
+    QBrush brush(col);
+    setBrush(brush);
 }
 
 void PolygonSelect::write(QJsonObject &json) const{
