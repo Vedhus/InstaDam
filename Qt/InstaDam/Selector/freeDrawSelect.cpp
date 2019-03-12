@@ -59,7 +59,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Labe
     active = true;
     if(label != nullptr)
         label->addItem(this);
-    myPen.setWidth(1);
+    myPen.setWidth(2);
     fullWidth = brushSize;
     halfWidth = brushSize/2;
     updatePen(myPen);
@@ -115,10 +115,14 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     UNUSED(option);
     UNUSED(widget);
+    painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     painter->setPen(myPen);
     painter->setBrush(brush());
-    //FreeMapIterator it((*myMap));
-    painter->drawPoints(QPolygon::fromList(myMap->values()));
+    FreeMapIterator it((*myMap));
+    //painter->drawPoints(QPolygonF::fromList(myMap->values()));
+    while(it.hasNext()){
+        painter->drawPoint(it.next().value());
+    }
 }
 
 void FreeDrawSelect::read(const QJsonObject &json){
@@ -146,8 +150,8 @@ void FreeDrawSelect::updatePen(QPen pen){
 void FreeDrawSelect::write(QJsonObject &json)const{
     json["objectID"] = myID;
     QJsonArray points;
-    QList<QPoint> pointList = myMap->values();
-    QPoint pnt;
+    QList<QPointF> pointList = myMap->values();
+    QPointF pnt;
     while(!pointList.isEmpty()){
         pnt = pointList.takeFirst();
         points.append(pnt.x());
@@ -346,10 +350,10 @@ void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
 /*------------------------------- Private ---------------------------*/
 void FreeDrawSelect::calcRect(){
     return;
-    int t = 1000000;
-    int l = 1000000;
-    int b = 0;
-    int r = 0;
+    qreal t = 1000000.;
+    qreal l = 1000000.;
+    qreal b = 0.;
+    qreal r = 0.;
     FreeMapIterator it((*myMap));
     while(it.hasNext()){
         it.next();

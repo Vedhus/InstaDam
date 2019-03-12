@@ -4,6 +4,7 @@
 #include "filtercontrols.h"
 #include "labelButton.h"
 #include <string>
+#include <QByteArray>
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -337,9 +338,13 @@ void InstaDam::on_actionSave_triggered()
     QJsonObject json;
     write(json);
     QJsonDocument saveDoc(json);
-    outFile.write(saveDoc.toJson());
+
 #ifdef WASM_BUILD
+    outFile = saveDoc.toBinaryData();
     QHtml5File::save(outFile, "myproject.idpro");
+
+#else
+    outFile.write(saveDoc.toJson());
 #endif
 }
 

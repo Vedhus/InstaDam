@@ -9,8 +9,8 @@ class TestSelect;
 #endif
 
 //typedef QVector<QVector <bool> > Block;
-typedef QHash<int, QPoint> FreeMap;
-typedef QHashIterator<int, QPoint> FreeMapIterator;
+typedef QHash<int, QPointF> FreeMap;
+typedef QHashIterator<int, QPointF> FreeMapIterator;
 class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 {
 public:
@@ -61,7 +61,7 @@ public:
     void deletePoints(QVector<int> &points, FreeMap *delHash);
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
-    QPolygon getPoints(){return QPolygon::fromList(myMap->values());}
+    QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
     //void movePoint(QPointF &point);
 
     QGraphicsScene* scene();
