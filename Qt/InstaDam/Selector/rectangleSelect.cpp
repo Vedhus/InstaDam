@@ -110,6 +110,10 @@ void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void RectangleSelect::updatePen(QPen pen){
     setPen(pen);
+    QColor col = pen.color();
+    col.setAlphaF(0.25);
+    QBrush brush(col);
+    setBrush(brush);
 }
 
 void RectangleSelect::setRectUnchecked(QRectF rect){

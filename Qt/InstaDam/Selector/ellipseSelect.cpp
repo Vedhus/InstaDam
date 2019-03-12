@@ -120,6 +120,10 @@ void EllipseSelect::setRectUnchecked(QRectF rect){
 
 void EllipseSelect::updatePen(QPen pen){
     setPen(pen);
+    QColor col = pen.color();
+    col.setAlphaF(0.25);
+    QBrush brush(col);
+    setBrush(brush);
 }
 
 /*---------------------------------- Mirror --------------------------*/
