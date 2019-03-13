@@ -43,6 +43,7 @@ public:
     void updateMirrorScene() override;
     /*------------- End implemented functions*/
 
+    bool isVisible(){return SelectItem::isVisible();}
     int type(){return SelectItem::type();}
 
     QGraphicsScene* scene();

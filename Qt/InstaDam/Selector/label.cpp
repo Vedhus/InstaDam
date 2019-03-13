@@ -110,6 +110,8 @@ QPixmap Label::exportLabel(QSize &rect){
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);
         while(rit.hasNext()){
             rit.next();
+            if(!rit.value()->isVisible())
+                continue;
             QRectF r = rit.value()->getRect();
             paint->translate(r.center());
             paint->rotate(rit.value()->getRotationAngle());
@@ -122,6 +124,8 @@ QPixmap Label::exportLabel(QSize &rect){
         QHashIterator<int, EllipseSelect*> eit(ellipseObjects);
         while(eit.hasNext()){
             eit.next();
+            if(!eit.value()->isVisible())
+                continue;
             QRectF r = eit.value()->getRect();
             paint->translate(r.center());
             paint->rotate(eit.value()->getRotationAngle());
@@ -134,6 +138,8 @@ QPixmap Label::exportLabel(QSize &rect){
         QHashIterator<int, PolygonSelect*> pit(polygonObjects);
         while(pit.hasNext()){
             pit.next();
+            if(!pit.value()->isVisible())
+                continue;
             paint->drawPolygon(pit.value()->getPolygon());
         }
     }
@@ -141,6 +147,8 @@ QPixmap Label::exportLabel(QSize &rect){
         QHashIterator<int, FreeDrawSelect*> fit(freeDrawObjects);
         while(fit.hasNext()){
             fit.next();
+            if(!fit.value()->isVisible())
+                continue;
             paint->drawPoints(fit.value()->getPoints());
         }
 
@@ -160,6 +168,8 @@ void Label::write(QJsonObject &json) const{
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);
         while(rit.hasNext()){
             rit.next();
+            if(!rit.value()->isVisible())
+                continue;
             QJsonObject rect;
             rit.value()->write(rect);
             rectangles.append(rect);
@@ -171,6 +181,8 @@ void Label::write(QJsonObject &json) const{
         QHashIterator<int, EllipseSelect*> eit(ellipseObjects);
         while(eit.hasNext()){
             eit.next();
+            if(!eit.value()->isVisible())
+                continue;
             QJsonObject ellipse;
             eit.value()->write(ellipse);
             ellipses.append(ellipse);
@@ -182,6 +194,8 @@ void Label::write(QJsonObject &json) const{
         QHashIterator<int, PolygonSelect*> pit(polygonObjects);
         while(pit.hasNext()){
             pit.next();
+            if(!pit.value()->isVisible())
+                continue;
             QJsonObject poly;
             pit.value()->write(poly);
             polygons.append(poly);
@@ -189,8 +203,14 @@ void Label::write(QJsonObject &json) const{
         json["polygons"] = polygons;
     }
     if(!freeDrawObjects.isEmpty()){
-        //QList<FreeDrawSelect*> items = freeDrawObjects.values();
-        FreeDrawSelect *item = new FreeDrawSelect(freeDrawObjects.values());
+        QList<FreeDrawSelect*> items;
+        QVector<FreeDrawSelect*> it = freeDrawObjects.values().toVector();
+        for(int i = 0; i < it.size(); i++){
+            if(it[i]->isVisible())
+                items.push_back(it[i]);
+        }
+
+        FreeDrawSelect *item = new FreeDrawSelect(items);
         QJsonObject fdo;
         item->write(fdo);
         json["freedraw"] = fdo;
