@@ -78,3 +78,13 @@ Qt/InstaDam/L1\.png
 Qt/InstaDam/L22\.png
 
 Qt/InstaDam/html/
+
+*.1
+
+*.0
+
+*.pc
+
+Qt/InstaDam/libquazip\.prl
+
+Qt/InstaDam/im2_idpro\.zip

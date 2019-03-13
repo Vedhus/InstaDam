@@ -15,6 +15,8 @@ using namespace std;
 #include "Selector/freeDrawSelect.h"
 #include "Selector/freeDrawErase.h"
 #include "Selector/commands.h"
+#include "quazip/quazip.h"
+#include "quazip/quazipfile.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
@@ -28,6 +30,9 @@ InstaDam::InstaDam(QWidget *parent) :
     connectFilters();
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
+#ifdef WASM_BUILD
+    ui->actionExport->setVisible(false);
+#endif
     undoStack = new QUndoStack(this);
     currentSelectType = EllipseObj;
     scene = ui->IdmPhotoViewer->scene;
@@ -94,7 +99,7 @@ InstaDam::InstaDam(QWidget *parent) :
     addImageConnector("Load File", [&]() {
             QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName){
                 imageFileContent = content;
-                filename = fileName;
+                this->filename = fileName;
                 imagesList = (QStringList() << filename);
 
                 openFile_and_labels();
@@ -105,7 +110,7 @@ InstaDam::InstaDam(QWidget *parent) :
             QHtml5File::load(".idpro", [&](const QByteArray &content, const QString &fileName){
                 idproFileContent = content;
                 idproFileName = fileName;
-                imagesList = (QStringList() << filename);
+                //imagesList = (QStringList() << filename);
 
                 loadLabelFile(idproFileName);
             });
@@ -186,14 +191,14 @@ void InstaDam::on_actionOpen_triggered()
 #else
       //QString doc;
     // Reading and Loading
-    QString fileName = QFileDialog::getOpenFileName(this,
+    QString myfileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-    if (fileName.isEmpty()){
+    if (myfileName.isEmpty()){
             return; // remove that part and add an alert
     }
     else
     {
-        loadLabelFile(fileName);
+        loadLabelFile(myfileName);
     }
 #endif
 }
@@ -332,7 +337,7 @@ void InstaDam::on_saveAndNext_clicked()
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     else
     {
-        saveFile();
+        exportImages();
         int newId = (fileId+1)%imagesList.size();
         if (newId)
         {
@@ -347,25 +352,25 @@ void InstaDam::on_saveAndNext_clicked()
 
 }
 
-void InstaDam::saveFile()
+void InstaDam::exportImages(bool asBuffers)
 {
     QString baseName = this->file.baseName();
     for(int i = 0; i < currentProject.numLabels(); i++){
         Label *label = currentProject.getLabel(i);
-        label->exportLabel(SelectItem::myBounds).save(baseName + "_" + label->getText() + ".png", "PNG");
+        QString filename = baseName + "_" + label->getText() + ".png";
+        if(asBuffers){
+            cout << "F " << filename.toStdString() << endl;
+            QByteArray *bytes;// = QSharedPointer<QByteArray>::create();
+            QBuffer *buffer = new QBuffer(bytes);//QSharedPointer<QBuffer>::create(bytes.data());
+            label->exportLabel(SelectItem::myBounds).save(buffer, "PNG");
+            exportFiles.insert(filename, buffer);
+            cout << buffer->size() << endl;
+        }
+        else{
+            label->exportLabel(SelectItem::myBounds).save(filename, "PNG");
+        }
     }
-    /*QByteArray bArray;
-    QBuffer buffer(&bArray);
-    buffer.open(QIODevice::WriteOnly);
-    ui->IdmPhotoViewer->labels->pixmap().save(&buffer, "PNG");
-
-    QFile file(labelFile);
-    file.open(QIODevice::WriteOnly);
-    ui->IdmPhotoViewer->labels->pixmap().save(&file, "PNG");
-    */
 }
-
-
 
 void InstaDam::assertError(std::string errorMessage)
 {
@@ -512,25 +517,6 @@ void InstaDam::loadLabelFile(QString filename){
     scene->update();
     maskScene->update();
 }
-
-
-
-//    else if(!ext.compare("idam"))
-//    {
-//        QTextStream(stdout) << "idam attempted to be opened";
-//        QFile file(filename);
-//        file.open(QIODevice::ReadOnly);
-//        QDataStream in(&file);
-//        QPixmap photoPixmap, labelPixmap;
-//        in >> photoPixmap >> labelPixmap;
-//        ui->IdmPhotoViewer->setPhotoFromPixmap(photoPixmap, labelPixmap);
-//    }
-//    else{
-//        QTextStream(stdout) << "something other than an image or idam being opened, need to throw error to user here";
-//    }
-
-
-
 
 
 void InstaDam::on_panButton_clicked()
@@ -685,19 +671,81 @@ void InstaDam::setInsert(){
     vertex2 = -1;
     polygonSelectForm->polygonMessageBox->setPlainText("Click the vertices between which you want to insert a point.");
 }
-void InstaDam::on_actionSave_File_triggered()
+void InstaDam::on_actionExport_triggered()
 {
-    saveFile();
-//    QTextStream(stdout) << "saving current canvas as idamfile format";
-//    QString outFileName = QFileDialog::getSaveFileName(this, tr("save images"), "../", tr("instadam files (.idam));; All Files (*)"));
-//    QFile outFile(outFileName);
-//    outFile.open(QIODevice::WriteOnly);
-//    //actually write to the file here
-//    QDataStream out(&outFile);
-//    out << ui->IdmPhotoViewer->photo->pixmap() << ui->IdmPhotoViewer->labels->pixmap();
-//    outFile.close();
+    exportImages();
 }
 
+void InstaDam::on_actionExport_zip_triggered(){
+    exportImages(true);
+#ifdef WASM_BUILD
+    QByteArray *outbytes;
+
+    QBuffer *outbuffer = new QBuffer(outbytes);
+    QuaZip zip(outbuffer);
+#else
+    QuaZip zip(this->file.baseName() + "_idpro.zip");
+#endif
+    if (!zip.open(QuaZip::mdCreate)) {
+        //myMessageOutput(true, QtDebugMsg, QString("testCreate(): zip.open(): %1").arg(zip.getZipError()));
+        return;
+    }
+
+    QuaZipFile outFile(&zip);
+    QHashIterator<QString, QBuffer*> it(exportFiles);
+    while(it.hasNext()){
+        it.next();
+        QString filename = it.key();
+        QBuffer *buffer = it.value();
+
+        if(!(*buffer).open(QIODevice::ReadOnly)) {
+            qInfo("Could not access buffer file.");
+            return;
+        }
+
+        if (!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(filename, filename))) {
+            qInfo("Error opening zip file.");
+            return;
+        }
+        for (qint64 pos = 0, len = (*buffer).size(); pos < len; ) {
+            char buf[4096];
+            qint64 readSize = qMin(static_cast<qint64>(4096), len - pos);
+            qint64 l;
+            if ((l = (*buffer).read(buf, readSize)) != readSize){
+                qInfo("Read failure");
+}
+            qDebug("Reading %ld bytes from %s at %ld returned %ld",
+                   static_cast<long>(readSize),
+                   filename.toUtf8().constData(),
+                   static_cast<long>(pos),
+                   static_cast<long>(l));
+            outFile.write(buf, readSize);
+            pos += readSize;
+        }
+        if (outFile.getZipError() != UNZ_OK) {
+            qInfo("Zip file error");
+            return;
+        }
+        outFile.close();
+
+        if (outFile.getZipError() != UNZ_OK) {
+            qInfo("Error closeing zip file.");
+            return;
+        }
+
+        (*buffer).close();
+    }
+
+    zip.close();
+
+    if (zip.getZipError() != 0) {
+        qInfo("Error.");
+        return;
+    }
+#ifdef WASM_BUILD
+    QHtml5File::save(outbuffer->data(), "myproject_idpro.zip");
+#endif
+}
 
 void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button){
     //cout << "CLICK " << type<< endl;

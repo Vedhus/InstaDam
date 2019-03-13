@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
 TEMPLATE = app
-
+INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 SOURCES += \
         main.cpp \
         instadam.cpp \
@@ -67,7 +67,7 @@ unix {
   LIBS += -lQt5Widgets
   LIBS += -lopencv_imgcodecs
   LIBS += -lopencv_imgproc -lopencv_features2d -lopencv_calib3d -lopencv_highgui -lopencv_core
-  LIBS += -L$${PWD}/.. -lselector
+  LIBS += -L$${PWD}/.. -lselector -lquazip
 wasm: LIBS += -lhtmlFileHandler -L/usr/lib/emscripten
   INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
 }
