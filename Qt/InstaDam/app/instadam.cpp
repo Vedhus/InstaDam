@@ -271,9 +271,9 @@ void InstaDam::on_actionSave_triggered()
     QJsonObject json;
     write(json);
     QJsonDocument saveDoc(json);
-
 #ifdef WASM_BUILD
-    outFile = saveDoc.toBinaryData();
+    QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+    outFile.append(strJson);
     QHtml5File::save(outFile, "myproject.idpro");
 
 #else
