@@ -8,7 +8,6 @@ SUBDIRS = \
           selector
 wasm: SUBDIRS += filehandler
 
-
 app.subdir = app
 selector.subdir = Selector
 wasm {

@@ -100,6 +100,7 @@ private slots:
     void setCurrentLabel(Label *label);
     void setCurrentLabel(LabelButton *button);
     void setCurrentBrushSize(int);
+    void setNewProject();
 public slots:
     void resetPixmapButtons();
 

@@ -115,14 +115,8 @@ InstaDam::~InstaDam()
     delete ui;
 }
 
-void InstaDam::on_actionNew_triggered()
-{
-    currentProject.resetLabels();
-    newProject = new newproject(this);
-    newProject->setModal(true);
-    newProject->exec();
+void InstaDam::setNewProject(){
     currentProject = newProject->newPr;
-
 
     clearLayout(ui->labelClassLayout);
     for(int i=0; i<currentProject.numLabels(); i++){
@@ -139,6 +133,17 @@ void InstaDam::on_actionNew_triggered()
         ui->labelClassLayout->addWidget(button);
         qInfo("Button Added!");
     }
+
+}
+
+void InstaDam::on_actionNew_triggered()
+{
+    currentProject.resetLabels();
+    newProject = new newproject(this);
+    newProject->setModal(true);
+    connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
+    newProject->exec();
+    setNewProject();
 }
 
 void InstaDam::setCurrentLabel(LabelButton *button){
