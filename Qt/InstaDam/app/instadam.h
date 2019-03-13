@@ -111,8 +111,12 @@ private:
             std::function<void(void)> onActivate;
     };
     void loadRawImage();
-    void addConnector(QString text, std::function<void(void)> onActivate);
-    MyConnector *openFile;
+    void addImageConnector(QString text, std::function<void(void)> onActivate);
+    void addIdproConnector(QString text, std::function<void(void)> onActivate);
+    MyConnector *openImageConnector;
+    MyConnector *openIdproConnector;
+    QByteArray imageFileContent;
+    QByteArray idproFileContent;
 #endif
     Label *currentLabel;
     Ui::InstaDam *ui;
@@ -126,7 +130,7 @@ private:
     QAction *undoAction;
     QAction *redoAction;
     QByteArray imgData;
-    QByteArray fileContent;
+    QString idproFileName;
     QWidget *blankWidget;
     QWidget *freeSelectWidget;
     QWidget *polygonSelectWidget;

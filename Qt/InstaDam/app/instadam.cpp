@@ -91,22 +91,38 @@ InstaDam::InstaDam(QWidget *parent) :
     controlLayout->addWidget(blankWidget);
 
 #ifdef WASM_BUILD
-    addConnector("Load File", [&]() {
-            QHtml5File::load("*", [&](const QByteArray &content, const QString &fileName){
-                fileContent = content;
+    addImageConnector("Load File", [&]() {
+            QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName){
+                imageFileContent = content;
                 filename = fileName;
                 imagesList = (QStringList() << filename);
 
                 openFile_and_labels();
             });
         });
+
+    addIdproConnector("Load File", [&]() {
+            QHtml5File::load(".idpro", [&](const QByteArray &content, const QString &fileName){
+                idproFileContent = content;
+                idproFileName = fileName;
+                imagesList = (QStringList() << filename);
+
+                loadLabelFile(idproFileName);
+            });
+        });
+
 #endif
 }
 
 #ifdef WASM_BUILD
-void InstaDam::addConnector(QString text, std::function<void ()> onActivate){
-    openFile = new MyConnector;
-    openFile->onActivate = onActivate;
+void InstaDam::addImageConnector(QString text, std::function<void ()> onActivate){
+    openImageConnector = new MyConnector;
+    openImageConnector->onActivate = onActivate;
+}
+
+void InstaDam::addIdproConnector(QString text, std::function<void ()> onActivate){
+    openIdproConnector = new MyConnector;
+    openIdproConnector->onActivate = onActivate;
 }
 
 #endif
@@ -149,11 +165,11 @@ void InstaDam::on_actionNew_triggered()
 void InstaDam::setCurrentLabel(LabelButton *button){
     currentLabel = button->myLabel;
 }
+
 void InstaDam::setCurrentLabel(Label *label){
-    //cout << "SET LABEL" << endl;
     currentLabel = label;
-    //cout << label->getText().toStdString() << endl;
 }
+
 void InstaDam::clearLayout(QLayout * layout) {
     if (! layout)
        return;
@@ -165,7 +181,10 @@ void InstaDam::clearLayout(QLayout * layout) {
 
 void InstaDam::on_actionOpen_triggered()
 {
-    QString doc;
+#ifdef WASM_BUILD
+      openIdproConnector->onActivate();
+#else
+      //QString doc;
     // Reading and Loading
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
@@ -174,11 +193,9 @@ void InstaDam::on_actionOpen_triggered()
     }
     else
     {
-        this->currentProject = Project();
         loadLabelFile(fileName);
     }
-    scene->update();
-    maskScene->update();
+#endif
 }
 
 void InstaDam::toggleDrawing(){
@@ -186,101 +203,12 @@ void InstaDam::toggleDrawing(){
     freeSelectForm->eraseButton->setChecked(false);
     freeSelectForm->drawButton->setChecked(true);
 }
+
 void InstaDam::toggleErasing(){
     drawing = false;
     freeSelectForm->eraseButton->setChecked(true);
     freeSelectForm->drawButton->setChecked(false);
 }
-//Project InstaDam::on_actionNew_triggered()
-//{
-//    // find a way to either get a fixed number of labels from the user at the beginning
-//    // or to create a flexible array where labels can get added
-
-//    // int const maxNumLabels = 3; // defined in the headers file as static const.
-
-//    while(currentProject.numLabels() < 3){
-//        // label names is working
-//        QString text = QInputDialog::getText(this, tr("Add a new label"),
-//                                             tr("New Label"), QLineEdit::Normal, "cracks");
-//        // Color picking is working
-//        QColor color = QColorDialog::getColor(Qt::black, this, "Pick a color",  QColorDialog::DontUseNativeDialog);
-
-//        Label lb;
-//        lb.setText(text);
-//        lb.setColor(color);
-
-//        currentProject.addLabel(lb);
-//        // printing out to the console
-//        QTextStream(stdout) << text << endl;
-//        QTextStream(stdout) << color.name() << endl;
-
-//    }
-
-//    ////////////////////////////////////////////////////////////////////
-//        // Saving the file
-//        QString outFileName = QFileDialog::getSaveFileName(this,
-//               tr("save project"), "../", tr("instadam files (.idpro));; All Files (*)"));
-
-//    //    if (outFileName.isEmpty()){
-//    //            return currentProject;
-//    //    }
-//    //    else {
-//        QFile outFile(outFileName);
-//        outFile.open(QIODevice::ReadWrite);
-//        for(int i=0; i<currentProject.numLabels(); i++)
-//        {
-//            Label lb = currentProject.getLabel(i);
-//            QTextStream(&outFile) << lb.getText();
-//            QTextStream(&outFile) << "~%";
-//            QTextStream(&outFile) << lb.getColor().name() << endl;
-//        }
-
-//   return currentProject;
-//}
-
-
-//Project InstaDam::on_actionOpen_triggered()
-//{
-//    QString doc;
-//    int i = 0;
-//    // Reading and Loading
-//    QString fileName = QFileDialog::getOpenFileName(this,
-//        tr("open project"), "../", tr("instadam files (.idpro));; All Files (*)"));
-//    if (fileName.isEmpty()){
-//            return currentProject; // remove that part and add an alert
-//    }
-//    else
-//    {
-//       QFile file(fileName);
-//       QStringList list;
-//       file.open(QIODevice::ReadWrite);
-//       QTextStream fileStream(&file);
-
-//       while(!fileStream.atEnd()){
-//           QString line = file.readLine(); // to be updated to read all the labels and the colors
-//           QTextStream(stdout) << line;
-
-//           list = line.split("~%");
-
-//           QTextStream(stdout) << list.size() << endl;
-//           if(list.size()==2){
-//               Label lb;
-//               lb.setText(list[0]);
-//               lb.setColor(QColor(list[1]));
-//               QTextStream(stdout) << list[0] << endl;
-//               QTextStream(stdout) << list[1] << endl;
-
-//               currentProject.addLabel(lb);
-//               i++;
-//          }
-//      }
-//    }
-
-//    return currentProject;
-//}
-
-
-
 
 void InstaDam::connectFilters()
 {
@@ -357,7 +285,7 @@ void InstaDam::on_actionSave_triggered()
 void InstaDam::on_actionOpen_File_triggered()
 {
 #ifdef WASM_BUILD
-    openFile->onActivate();
+    openImageConnector->onActivate();
 #else
     QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
     QString ext = QFileInfo(filename_temp).suffix();
@@ -473,7 +401,7 @@ void InstaDam::openFile_and_labels()
     QString labelNameTemp = QString::null;
 
 #ifdef WASM_BUILD
-    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(fileContent,labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent,labelNameTemp);
 #else
     //Open labels
     generateLabelFileName();
@@ -490,12 +418,18 @@ void InstaDam::openFile_and_labels()
 
 
 void InstaDam::loadLabelFile(QString filename){
+    this->currentProject = Project();
+
+#ifdef WASM_BUILD
+    QByteArray saveData = idproFileContent;
+#else
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
         return;
     }
     QByteArray saveData = loadFile.readAll();
+#endif
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
     read(loadDoc.object());
 
@@ -575,6 +509,8 @@ void InstaDam::loadLabelFile(QString filename){
             maskScene->addItem(mirror);
         }
     }
+    scene->update();
+    maskScene->update();
 }
 
 
