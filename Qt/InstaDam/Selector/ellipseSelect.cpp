@@ -4,26 +4,30 @@
 #include <cmath>
 #include <QPainter>
 #include <QGraphicsScene>
-
+#include <iostream>
+using namespace std;
 EllipseSelect::EllipseSelect() : EllipseSelect(QPointF(0.,0.)){
-
+    mirror = nullptr;
 }
 
-EllipseSelect::EllipseSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+EllipseSelect::EllipseSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(json, label, item){
+    mirror = nullptr;
     setRect(myRect);
     mytype = EllipseObj;
     if(label)
         label->addItem(this);
     updatePen(myPen);
+    calcCorners();
     QGraphicsEllipseItem::prepareGeometryChange();
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
+EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
 {
+    mirror = nullptr;
     setRect(myRect);
     mytype = EllipseObj;
     if(label)
@@ -34,7 +38,7 @@ EllipseSelect::EllipseSelect(QPointF point, Label *label, QGraphicsItem *item)
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, Label *label, QGraphicsItem *item)
+EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsEllipseItem(item), BoxBasedSelector(point, vertexSize, label, item)
 {
     setRect(myRect);
@@ -151,7 +155,7 @@ void EllipseSelect::setMirror(SelectItem *item){
 
 void EllipseSelect::setMirrorActive(){
     if(mirror != nullptr)
-        mirror->setItemActive();
+        mirror->active = true;
 }
 
 void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){

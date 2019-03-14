@@ -48,8 +48,8 @@ public:
     int myID;
     QPen highlightPen, myPen;
 
-    SelectItem(qreal vertSize = 10., Label *label=nullptr, QGraphicsItem *item = nullptr);
-    SelectItem(Label *label=nullptr, QGraphicsItem *item = nullptr);
+    SelectItem(qreal vertSize = 10., QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
+    SelectItem(QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
     virtual ~SelectItem() override {}
 
     /*---------------- Virtual functions ---------------------------*/
@@ -89,7 +89,8 @@ public:
     QGraphicsItem* getParentItem();
     void invertColorForPen();
     QGraphicsScene* scene();
-    void setLabel(Label *label);
+    void setLabel(QSharedPointer<Label> label);
+    QSharedPointer<Label> getLabel(){return myLabel;}
     static void setVertexSize(qreal size);
     void sortCorners(QRectF &rect, QPointF &newPoint);
     int type() const override;
@@ -141,7 +142,7 @@ protected:
 
     QPen pen;
 
-    Label *myLabel;
+    QSharedPointer<Label> myLabel;
 
     bool active = false;
     bool hasBeenAdded = false;

@@ -7,11 +7,11 @@
 
 using namespace std;
 
-BoxBasedSelector::BoxBasedSelector(const QJsonObject &json, Label *label, QGraphicsItem *item) : SelectItem(label, item){
+BoxBasedSelector::BoxBasedSelector(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(label, item){
     read(json);
 }
 
-BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *item) : SelectItem(label, item){
+BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
     calcCorners(false);
@@ -20,7 +20,7 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, Label *label, QGraphicsItem *i
     //pen.setWidth(5);
 }
 
-BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item ) :
+BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QSharedPointer<Label> label, QGraphicsItem *item ) :
     SelectItem(vertSize, label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);

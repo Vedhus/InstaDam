@@ -14,9 +14,9 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector
 public:
     const QString baseInstruction = ellipseBaseString;
     EllipseSelect();
-    EllipseSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
-    EllipseSelect(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
-    EllipseSelect(QPointF point, qreal vertexSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    EllipseSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    EllipseSelect(QPointF point, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    EllipseSelect(QPointF point, qreal vertexSize, QSharedPointer<Label>label = nullptr, QGraphicsItem *item = nullptr);
     ~EllipseSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/

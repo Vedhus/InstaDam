@@ -1,6 +1,6 @@
 #include "labelButton.h"
 
-LabelButton::LabelButton(Label *label) : QPushButton(){
+LabelButton::LabelButton(QSharedPointer<Label> label) : QPushButton(){
     myLabel = label;
     connect(this, &QPushButton::clicked, this, &LabelButton::wasClicked );
 }

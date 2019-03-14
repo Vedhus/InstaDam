@@ -24,7 +24,7 @@ FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
 
 }
 
-FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = QSharedPointer<FreeMap>::create();
     read(json);
@@ -49,7 +49,7 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     }
 }
 
-FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
+FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = QSharedPointer<FreeMap>::create();
     myMap->insert(pointToInt(point.toPoint()), point.toPoint());

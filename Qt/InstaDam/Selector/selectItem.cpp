@@ -14,14 +14,14 @@ int SelectItem::ID = 0;
 QSize SelectItem::myBounds = QSize(0,0);
 
 
-SelectItem::SelectItem(qreal vertSize, Label *label, QGraphicsItem *item) : QGraphicsItem(item){
+SelectItem::SelectItem(qreal vertSize, QSharedPointer<Label> label, QGraphicsItem *item) : QGraphicsItem(item){
     SelectItem::setVertexSize(vertSize);
     myID = SelectItem::ID;
     SelectItem::ID++;
     setLabel(label);
 }
 
-SelectItem::SelectItem(Label *label, QGraphicsItem *item) : SelectItem(10., label, item){
+SelectItem::SelectItem(QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(10., label, item){
 }
 
 QGraphicsItem* SelectItem::getParentItem(){
@@ -40,11 +40,12 @@ QGraphicsScene* SelectItem::scene(){
     return QGraphicsItem::scene();
 }
 
-void SelectItem::setLabel(Label *label){
+void SelectItem::setLabel(QSharedPointer<Label> label){
     myLabel = label;
     if(label != nullptr){
         myPen = QPen(label->getColor());
         myPen.setWidth(2);
+        updatePen(myPen);
     }
 }
 

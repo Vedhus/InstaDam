@@ -58,9 +58,9 @@ void newproject::colorPicked(const QColor &oldcolor){
     QColor color = colorDialog->selectedColor();
 #endif
         if(color.isValid()){
-            Label lb;
-            lb.setText(tempName);
-            lb.setColor(color);
+            QSharedPointer<Label> lb = QSharedPointer<Label>::create();
+            lb->setText(tempName);
+            lb->setColor(color);
             this->newPr.addLabel(lb);
 
             QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getColor().name() << endl;

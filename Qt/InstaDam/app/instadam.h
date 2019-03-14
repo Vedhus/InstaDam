@@ -98,7 +98,7 @@ private slots:
     void setInsert();
     void toggleDrawing();
     void toggleErasing();
-    void setCurrentLabel(Label *label);
+    void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
     void setCurrentBrushSize(int);
     void setNewProject();
@@ -119,7 +119,7 @@ private:
     QByteArray imageFileContent;
     QByteArray idproFileContent;
 #endif
-    Label *currentLabel;
+    QSharedPointer<Label> currentLabel;
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;

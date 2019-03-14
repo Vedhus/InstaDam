@@ -13,7 +13,7 @@
 
 //class SelectItem;
 
-class Label{
+class Label: public QEnableSharedFromThis<Label>{
   private:
     QColor color;
     QString text;
