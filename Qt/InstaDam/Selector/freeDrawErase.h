@@ -30,7 +30,7 @@ public:
     QSharedPointer<EraseMap> getMap(){return undoMap;}
 
 protected:
-    void rasterizeLine(QPoint &start, QPoint &end);
+    void rasterizeLine(QPointF &start, QPointF &end);
 
 private:
 #ifdef TEST
