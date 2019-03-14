@@ -1,7 +1,6 @@
 TEMPLATE = lib
 TARGET = ../selector
 
-
 HEADERS = \
     $$PWD/polygonSelect.h \
     $$PWD/commands.h \

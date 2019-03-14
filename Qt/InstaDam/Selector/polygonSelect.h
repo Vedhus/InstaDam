@@ -52,6 +52,7 @@ public:
     /*------------- End implemented functions*/
 
     void checkPoint(QPointF &point);
+    bool isVisible(){return SelectItem::isVisible();}
     qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
     void movePoint(QPointF &point);
     QPolygonF getPolygon(){return polygon;}

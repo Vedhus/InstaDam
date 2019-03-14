@@ -5,16 +5,17 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
           app \
-          selector
-wasm: SUBDIRS += filehandler
-
+          selector \
+          quazip
+wasm: SUBDIRS += filehandler quazip
 
 app.subdir = app
 selector.subdir = Selector
+    quazip.subdir = quazip
 wasm {
     filehandler.subdir = htmlFileHandler
-    app.depends = filehandler selector
+    app.depends = filehandler selector quazip
 }
 !wasm{
-    app.depends = selector
+    app.depends = selector quazip
 }

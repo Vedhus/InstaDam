@@ -13,6 +13,7 @@
 #include <QGridLayout>
 #include <QMenuBar>
 #include <QMenu>
+#include <QBuffer>
 
 #include "newproject.h"
 #include "ui_blankFrame.h"
@@ -63,7 +64,7 @@ public:
     void openFile_and_labels();
     void generateLabelFileName();
     void assertError(std::string errorMessage);
-    void saveFile();
+    void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
 
 private slots:
@@ -91,8 +92,8 @@ private slots:
 
     void on_pushButton_14_clicked();
 
-    void on_actionSave_File_triggered();
-
+    void on_actionExport_triggered();
+    void on_actionExport_zip_triggered();
     void on_saveAndNext_clicked();
     void setInsert();
     void toggleDrawing();
@@ -100,6 +101,7 @@ private slots:
     void setCurrentLabel(Label *label);
     void setCurrentLabel(LabelButton *button);
     void setCurrentBrushSize(int);
+    void setNewProject();
 public slots:
     void resetPixmapButtons();
 
@@ -110,8 +112,12 @@ private:
             std::function<void(void)> onActivate;
     };
     void loadRawImage();
-    void addConnector(QString text, std::function<void(void)> onActivate);
-    MyConnector *openFile;
+    void addImageConnector(QString text, std::function<void(void)> onActivate);
+    void addIdproConnector(QString text, std::function<void(void)> onActivate);
+    MyConnector *openImageConnector;
+    MyConnector *openIdproConnector;
+    QByteArray imageFileContent;
+    QByteArray idproFileContent;
 #endif
     Label *currentLabel;
     Ui::InstaDam *ui;
@@ -125,7 +131,7 @@ private:
     QAction *undoAction;
     QAction *redoAction;
     QByteArray imgData;
-    QByteArray fileContent;
+    QString idproFileName;
     QWidget *blankWidget;
     QWidget *freeSelectWidget;
     QWidget *polygonSelectWidget;
@@ -144,6 +150,7 @@ private:
     SelectItem *mirrorItem;
     int brushMode = Qt::SquareCap;
     Qt::MouseButton currentButton = Qt::NoButton;
+    QHash<QString, QBuffer*> exportFiles;
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);

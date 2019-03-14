@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
 TEMPLATE = app
-
+INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 SOURCES += \
         main.cpp \
         instadam.cpp \
@@ -20,7 +20,9 @@ SOURCES += \
         filtercontrols.cpp \
         fslider.cpp \
         newproject.cpp \
-    labelButton.cpp
+        labelButton.cpp
+
+wasm: SOURCES += colordialog.cpp
 
 HEADERS += \
         instadam.h \
@@ -36,14 +38,16 @@ HEADERS += \
         filterproperty.h \
         fslider.h \
         newproject.h \
-    labelButton.h
+        labelButton.h
+wasm: HEADERS += colordialog.h
 
 FORMS += \
         instadam.ui \
         newproject.ui \
         ../Selector/blankFrame.ui \
         ../Selector/polygonSelect.ui \
-        ../Selector/freeSelect.ui
+        ../Selector/freeSelect.ui \
+        labeldialog.ui
 
 
 win32 {
@@ -63,7 +67,7 @@ unix {
   LIBS += -lQt5Widgets
   LIBS += -lopencv_imgcodecs
   LIBS += -lopencv_imgproc -lopencv_features2d -lopencv_calib3d -lopencv_highgui -lopencv_core
-  LIBS += -L$${PWD}/.. -lselector
+  LIBS += -L$${PWD}/.. -lselector -lquazip
 wasm: LIBS += -lhtmlFileHandler -L/usr/lib/emscripten
   INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
 }

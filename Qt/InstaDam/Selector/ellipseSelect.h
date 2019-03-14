@@ -46,6 +46,7 @@ public:
 
 
     QGraphicsScene* scene();
+    bool isVisible(){return SelectItem::isVisible();}
 
 private:
         EllipseSelect *mirror;
