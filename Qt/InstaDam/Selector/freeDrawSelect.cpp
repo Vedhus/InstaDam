@@ -86,7 +86,7 @@ void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
 }
 
 QRectF FreeDrawSelect::boundingRect() const{
-    return myRect.adjusted(-5, -5, 5, 5);
+    return myRect.adjusted(-2, -2, 2, 2);
 }
 
 void FreeDrawSelect::clickPoint(QPointF &point){
@@ -136,6 +136,7 @@ void FreeDrawSelect::read(const QJsonObject &json){
         myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
     }
     myID = json["objectID"].toInt();
+    calcRect();
 }
 
 void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
@@ -357,7 +358,6 @@ void FreeDrawSelect::rasterizeLine(QPointF &start, QPointF &end){
 
 /*------------------------------- Private ---------------------------*/
 void FreeDrawSelect::calcRect(){
-    return;
     qreal t = 1000000.;
     qreal l = 1000000.;
     qreal b = 0.;
@@ -370,6 +370,7 @@ void FreeDrawSelect::calcRect(){
         b = max(b, it.value().y());
         r = max(r, it.value().x());
     }
+    cout << t << "," << l << "  " << b << "," << r << endl;
     myRect = QRectF(QPointF(t,l), QPointF(b,r));
 }
 
