@@ -354,7 +354,7 @@ void InstaDam::on_saveAndNext_clicked()
 
 void InstaDam::exportImages(bool asBuffers)
 {
-    QString baseName = this->file.baseName();
+    QString baseName = this->filename;
     for(int i = 0; i < currentProject.numLabels(); i++){
         Label *label = currentProject.getLabel(i);
         QString filename = baseName + "_" + label->getText() + ".png";
@@ -684,7 +684,7 @@ void InstaDam::on_actionExport_zip_triggered(){
     QBuffer *outbuffer = new QBuffer(outbytes);
     QuaZip zip(outbuffer);
 #else
-    QuaZip zip(this->file.baseName() + "_idpro.zip");
+    QuaZip zip(this->filename + "_idpro.zip");
 #endif
     if (!zip.open(QuaZip::mdCreate)) {
         //myMessageOutput(true, QtDebugMsg, QString("testCreate(): zip.open(): %1").arg(zip.getZipError()));
