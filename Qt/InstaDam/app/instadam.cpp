@@ -567,19 +567,25 @@ void InstaDam::on_rectangleSelectButton_clicked(){
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
+            ui->polygonSelectButton->setChecked(false);
             break;
+        case FreeeraseObj:
         case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
+            ui->freeSelectButton->setChecked(false);
             controlLayout->addWidget(blankWidget);
             break;
-        case FreeeraseObj:
         case RectangleObj:
+            break;
         case EllipseObj:
+            ui->ellipseSelectButton->setChecked(false);
             break;
     }
+    ui->rectangleSelectButton->setChecked(true);
+    blankForm->blankText->setPlainText(rectBaseString);
     blankWidget->show();
     currentSelectType = RectangleObj;
     scene->update();
@@ -597,19 +603,25 @@ void InstaDam::on_ellipseSelectButton_clicked(){
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
+            ui->polygonSelectButton->setChecked(false);
             break;
+        case FreeeraseObj:
         case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
             controlLayout->addWidget(blankWidget);
+            ui->freeSelectButton->setChecked(false);
             break;
-        case FreeeraseObj:
         case RectangleObj:
+            ui->rectangleSelectButton->setChecked(false);
+            break;
         case EllipseObj:
             break;
     }
+    ui->ellipseSelectButton->setChecked(true);
+    blankForm->blankText->setPlainText(ellipseBaseString);
     blankWidget->show();
     currentSelectType = EllipseObj;
     scene->update();
@@ -628,18 +640,22 @@ void InstaDam::on_polygonSelectButton_clicked(){
                 blankWidget->hide();
             }
             controlLayout->addWidget(polygonSelectWidget);
+            ui->ellipseSelectButton->setChecked(false);
+            ui->rectangleSelectButton->setChecked(false);
             break;
+        case FreeeraseObj:
         case FreedrawObj:
             if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
             controlLayout->addWidget(polygonSelectWidget);
+            ui->freeSelectButton->setChecked(false);
             break;
-        case FreeeraseObj:
         case PolygonObj:
             break;
     }
+    ui->polygonSelectButton->setChecked(true);
     polygonSelectWidget->show();
     polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
     currentSelectType = PolygonObj;
@@ -657,6 +673,8 @@ void InstaDam::on_freeSelectButton_clicked(){
                 blankWidget->hide();
             }
             controlLayout->addWidget(freeSelectWidget);
+            ui->ellipseSelectButton->setChecked(false);
+            ui->rectangleSelectButton->setChecked(false);
             break;
         case PolygonObj:
             if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
@@ -664,11 +682,13 @@ void InstaDam::on_freeSelectButton_clicked(){
                 polygonSelectWidget->hide();
             }
             controlLayout->addWidget(freeSelectWidget);
+            ui->polygonSelectButton->setChecked(false);
             break;
         case FreeeraseObj:
         case FreedrawObj:
             break;
     }
+    ui->freeSelectButton->setChecked(true);
     freeSelectWidget->show();
     currentSelectType = FreedrawObj;
     scene->update();

@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,8 @@ class Ui_blankForm
 public:
     QHBoxLayout *horizontalLayout;
     QFrame *blankFrame;
+    QHBoxLayout *horizontalLayout_2;
+    QPlainTextEdit *blankText;
 
     void setupUi(QWidget *blankForm)
     {
@@ -40,6 +43,15 @@ public:
         blankFrame->setFrameShape(QFrame::NoFrame);
         blankFrame->setFrameShadow(QFrame::Plain);
         blankFrame->setLineWidth(0);
+        horizontalLayout_2 = new QHBoxLayout(blankFrame);
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        blankText = new QPlainTextEdit(blankFrame);
+        blankText->setObjectName(QString::fromUtf8("blankText"));
+
+        horizontalLayout_2->addWidget(blankText);
+
 
         horizontalLayout->addWidget(blankFrame);
 
