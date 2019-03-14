@@ -244,10 +244,16 @@ void PhotoViewer::fitInView()
 }
 
 
-void PhotoViewer::setPanMode()
+void PhotoViewer::setPanMode(bool mode)
 {
-    this->brushType = PAN;
-    setDragMode(QGraphicsView::ScrollHandDrag);
+    if(mode){
+        this->brushType = PAN;
+        setDragMode(QGraphicsView::ScrollHandDrag);
+    }
+    else{
+        this->brushType = PAINTBRUSH;
+        setDragMode(QGraphicsView::NoDrag);
+    }
 }
 
 void PhotoViewer::resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt::RoundCap)

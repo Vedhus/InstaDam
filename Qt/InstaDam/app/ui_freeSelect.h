@@ -87,6 +87,8 @@ public:
         sizePolicy1.setHeightForWidth(roundBrushButton->sizePolicy().hasHeightForWidth());
         roundBrushButton->setSizePolicy(sizePolicy1);
         roundBrushButton->setMinimumSize(QSize(150, 36));
+        roundBrushButton->setCheckable(true);
+        roundBrushButton->setChecked(true);
 
         gridLayout->addWidget(roundBrushButton, 0, 1, 1, 1);
 
@@ -107,6 +109,7 @@ public:
         sizePolicy1.setHeightForWidth(squareBrushButton->sizePolicy().hasHeightForWidth());
         squareBrushButton->setSizePolicy(sizePolicy1);
         squareBrushButton->setMinimumSize(QSize(150, 36));
+        squareBrushButton->setCheckable(true);
 
         gridLayout->addWidget(squareBrushButton, 1, 1, 1, 1);
 

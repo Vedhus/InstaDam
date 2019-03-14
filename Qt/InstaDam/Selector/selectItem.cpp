@@ -18,7 +18,7 @@ SelectItem::SelectItem(qreal vertSize, QSharedPointer<Label> label, QGraphicsIte
     SelectItem::setVertexSize(vertSize);
     myID = SelectItem::ID;
     SelectItem::ID++;
-    setLabel(label);
+    setLabel(label, true);
 }
 
 SelectItem::SelectItem(QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(10., label, item){
@@ -40,12 +40,13 @@ QGraphicsScene* SelectItem::scene(){
     return QGraphicsItem::scene();
 }
 
-void SelectItem::setLabel(QSharedPointer<Label> label){
+void SelectItem::setLabel(QSharedPointer<Label> label, bool init){
     myLabel = label;
     if(label != nullptr){
         myPen = QPen(label->getColor());
         myPen.setWidth(2);
-        updatePen(myPen);
+        if(!init)
+            updatePen(myPen);
     }
 }
 

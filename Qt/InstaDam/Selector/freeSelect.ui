@@ -125,6 +125,12 @@
      <property name="text">
       <string>Round</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="0" column="2">
@@ -160,6 +166,9 @@
      </property>
      <property name="text">
       <string>Square</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
