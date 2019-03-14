@@ -10,19 +10,20 @@ RectangleSelect::RectangleSelect() : RectangleSelect(QPointF(0.,0.)){
 
 }
 
-RectangleSelect::RectangleSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+RectangleSelect::RectangleSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : BoxBasedSelector(json, label, item), QGraphicsRectItem(item){
     setRect(myRect);
     mytype = RectangleObj;
     if(label)
         label->addItem(this);
     updatePen(myPen);
+    calcCorners();
     QGraphicsRectItem::prepareGeometryChange();
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *item)
+RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item)
     : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
 {
     setRect(myRect);
@@ -34,7 +35,7 @@ RectangleSelect::RectangleSelect(QPointF point, Label *label, QGraphicsItem *ite
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, Label *label, QGraphicsItem *item)
+RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QSharedPointer<Label> label, QGraphicsItem *item)
     : BoxBasedSelector(point, vertSize,label, item), QGraphicsRectItem(item)
 {
     //cout << "RR" << endl;
@@ -55,9 +56,6 @@ RectangleSelect::~RectangleSelect(){
 /*---------------------- Overrides ---------------------------*/
 void RectangleSelect::addPoint(QPointF &point, int vertex){
     UNUSED(vertex);
-    //myRect.setBottomRight(point);
-    //cout << "ADD POINT " << point.x() << "," << point.y() << endl;
-
     sortCorners(myRect, point);
     calcCorners();
 
@@ -73,14 +71,12 @@ QRectF RectangleSelect::boundingRect() const{
 
 bool RectangleSelect::isInside(QPointF &point){
     return QGraphicsRectItem::contains(point);
-    //return isInsideRect(myRect, point);
 }
 
 void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     if(activeVertex != 0){
         resized = true;
         setMirrorResized();
-        //cout << "RESIZE" << endl;
         addPoint(newPos);
     }
     else{
@@ -150,7 +146,7 @@ void RectangleSelect::setMirror(SelectItem *item){
 
 void RectangleSelect::setMirrorActive(){
     if(mirror != nullptr)
-        mirror->setItemActive();
+        mirror->active = true;
 }
 
 void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){

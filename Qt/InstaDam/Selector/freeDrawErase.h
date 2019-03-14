@@ -15,7 +15,7 @@ class FreeDrawErase : public FreeDrawSelect
 {
 public:
     static QString baseInstruction;
-    FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawErase(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawErase() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/

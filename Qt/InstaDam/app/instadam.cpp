@@ -141,7 +141,7 @@ void InstaDam::setNewProject(){
 
     clearLayout(ui->labelClassLayout);
     for(int i=0; i<currentProject.numLabels(); i++){
-        Label *label = currentProject.getLabel(i);
+        QSharedPointer<Label> label = currentProject.getLabel(i);
         LabelButton *button = new LabelButton(label);
         button->setText(label->getText());
         QPalette pal = button->palette();
@@ -150,7 +150,7 @@ void InstaDam::setNewProject(){
         button->setAutoFillBackground(true);
         button->setPalette(pal);
         button->update();
-        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
+        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
         ui->labelClassLayout->addWidget(button);
         qInfo("Button Added!");
     }
@@ -171,7 +171,7 @@ void InstaDam::setCurrentLabel(LabelButton *button){
     currentLabel = button->myLabel;
 }
 
-void InstaDam::setCurrentLabel(Label *label){
+void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
     currentLabel = label;
 }
 
@@ -179,8 +179,10 @@ void InstaDam::clearLayout(QLayout * layout) {
     if (! layout)
        return;
     while (auto item = layout->takeAt(0)) {
-       delete item->widget();
-       clearLayout(item->layout());
+        if(item){
+            delete item->widget();
+            clearLayout(item->layout());
+        }
     }
  }
 
@@ -356,11 +358,11 @@ void InstaDam::exportImages(bool asBuffers)
 {
     QString baseName = this->filename;
     for(int i = 0; i < currentProject.numLabels(); i++){
-        Label *label = currentProject.getLabel(i);
+        QSharedPointer<Label> label = currentProject.getLabel(i);
         QString filename = baseName + "_" + label->getText() + ".png";
         if(asBuffers){
             cout << "F " << filename.toStdString() << endl;
-            QByteArray *bytes;// = QSharedPointer<QByteArray>::create();
+            QByteArray *bytes = new QByteArray();// = QSharedPointer<QByteArray>::create();
             QBuffer *buffer = new QBuffer(bytes);//QSharedPointer<QBuffer>::create(bytes.data());
             label->exportLabel(SelectItem::myBounds).save(buffer, "PNG");
             exportFiles.insert(filename, buffer);
@@ -442,7 +444,7 @@ void InstaDam::loadLabelFile(QString filename){
     QTextStream(stdout) <<currentProject.numLabels();
     for(int i=0; i<currentProject.numLabels(); i++)
     {
-        Label *label = currentProject.getLabel(i);
+        QSharedPointer<Label> label = currentProject.getLabel(i);
         LabelButton *button = new LabelButton(label);
 
         button->setText(label->getText());
@@ -455,7 +457,7 @@ void InstaDam::loadLabelFile(QString filename){
         button->setAutoFillBackground(true);
         button->setPalette(pal);
         button->update();
-        connect(button, SIGNAL(cclicked(Label*)), this, SLOT(setCurrentLabel(Label*)));
+        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
         //        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
         ui->labelClassLayout->addWidget(button);
         if(!label->rectangleObjects.isEmpty()){
@@ -463,6 +465,7 @@ void InstaDam::loadLabelFile(QString filename){
             while(rit.hasNext()){
                 rit.next();
                 RectangleSelect *mirror = new RectangleSelect();
+                rit.value()->setLabel(label);
                 mirror->setLabel(label);
                 mirror->updatePen(mirror->myPen);
                 rit.value()->setMirror(mirror);
@@ -471,6 +474,8 @@ void InstaDam::loadLabelFile(QString filename){
                 rit.value()->rotateMirror();
                 scene->addItem(rit.value());
                 maskScene->addItem(mirror);
+                rit.value()->itemWasAdded();
+                mirror->itemWasAdded();
             }
         }
         if(!label->ellipseObjects.isEmpty()){
@@ -478,6 +483,7 @@ void InstaDam::loadLabelFile(QString filename){
             while(eit.hasNext()){
                 eit.next();
                 EllipseSelect *mirror = new EllipseSelect();
+                eit.value()->setLabel(label);
                 mirror->setLabel(label);
                 mirror->updatePen(mirror->myPen);
                 eit.value()->setMirror(mirror);
@@ -486,6 +492,8 @@ void InstaDam::loadLabelFile(QString filename){
                 eit.value()->rotateMirror();
                 scene->addItem(eit.value());
                 maskScene->addItem(mirror);
+                eit.value()->itemWasAdded();
+                mirror->itemWasAdded();
             }
         }
         if(!label->polygonObjects.isEmpty()){
@@ -493,6 +501,7 @@ void InstaDam::loadLabelFile(QString filename){
             while(pit.hasNext()){
                 pit.next();
                 PolygonSelect *mirror = new PolygonSelect();
+                pit.value()->setLabel(label);
                 mirror->setLabel(label);
                 mirror->updatePen(mirror->myPen);
                 pit.value()->setMirror(mirror);
@@ -500,11 +509,14 @@ void InstaDam::loadLabelFile(QString filename){
                 pit.value()->setMirrorPolygon(UNSELECTED);
                 scene->addItem(pit.value());
                 maskScene->addItem(mirror);
+                pit.value()->itemWasAdded();
+                mirror->itemWasAdded();
             }
         }
         if(!label->freeDrawObjects.isEmpty()){
             FreeDrawSelect *item = label->freeDrawObjects.values()[0];
             FreeDrawSelect *mirror = new FreeDrawSelect();
+            item->setLabel(label);
             mirror->setLabel(label);
             mirror->updatePen(mirror->myPen);
             item->setMirror(mirror);
@@ -512,8 +524,12 @@ void InstaDam::loadLabelFile(QString filename){
             item->setMirrorMap();
             scene->addItem(item);
             maskScene->addItem(mirror);
+            item->itemWasAdded();
+            mirror->itemWasAdded();
         }
     }
+    scene->inactiveAll();
+    undoStack->clear();
     scene->update();
     maskScene->update();
 }
@@ -865,7 +881,6 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
     }
     else{
         if(item->type() != currentSelectType){
-
             switch(item->type()){
                 case FreedrawObj:
                     on_freeSelectButton_clicked();
@@ -881,12 +896,14 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
                     break;
             }
         }
-
+        //cout << "ITEM" << endl;
         currentItem = item;
+        currentLabel = currentItem->getLabel();
+        //cout << "LABL" << endl;
         scene->inactiveAll();
         maskScene->inactiveAll();
         currentItem->clickPoint(pos);
-
+        currentItem->setItemActive();
         if(currentItem->type() == PolygonObj && insertVertex){
             int vert = currentItem->getActiveVertex();
             //cout << vert << endl;
@@ -928,6 +945,8 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
 
 void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
 {
+    UNUSED(button);
+    //cout << currentItem->type() << "  " << currentItem->isItemAdded() << endl;
     if(currentItem && !currentItem->isItemAdded()){
         if(currentItem->type() == FreeeraseObj){
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
@@ -982,7 +1001,7 @@ void InstaDam::finishPolygonButtonClicked(){
 }
 void InstaDam::processKeyPressed(viewerTypes type, const int key){
     if(!currentItem){
-
+        cout << "NO CURRENT" << endl;
     }
     else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
         if(currentItem->type() == PolygonObj && currentItem->getActiveVertex() != UNSELECTED){
@@ -1009,8 +1028,7 @@ void InstaDam::read(const QJsonObject &json){
         //labels.reserve(labelArray.size());
         for(int i = 0; i < labelArray.size(); i++){
             QJsonObject labelObject = labelArray[i].toObject();
-            cout << "LABEL" << endl;
-            Label label = Label(labelObject);
+            QSharedPointer<Label> label = QSharedPointer<Label>::create(labelObject);
             currentProject.addLabel(label);
         }
     }

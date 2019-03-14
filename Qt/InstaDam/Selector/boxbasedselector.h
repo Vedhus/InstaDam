@@ -5,9 +5,9 @@
 class BoxBasedSelector : public SelectItem
 {
 public:
-    BoxBasedSelector(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
-    BoxBasedSelector(QPointF point, Label *label = nullptr, QGraphicsItem *item = nullptr);
-    BoxBasedSelector(QPointF point, qreal vertSize, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    BoxBasedSelector(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    BoxBasedSelector(QPointF point, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    BoxBasedSelector(QPointF point, qreal vertSize, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~BoxBasedSelector() override;
 
     /*---------------- Virtual functions ---------------------------*/

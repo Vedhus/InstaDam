@@ -16,9 +16,9 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 public:
     static QString baseInstruction;
     FreeDrawSelect();
-    FreeDrawSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QList<FreeDrawSelect*> items);
-    FreeDrawSelect(QPointF point, int brushSize, int brushMode, Label *label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/

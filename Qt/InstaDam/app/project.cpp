@@ -8,24 +8,24 @@ Project::~Project()
 {
 }
 
-Label *Project::getLabel(int index)
+QSharedPointer<Label> Project::getLabel(int index)
 {
-    return &labels[index];
+    return labels[index];
 }
 
-void Project::setLabel(int index, Label lb)
+void Project::setLabel(int index, QSharedPointer<Label> lb)
 {
     labels[index] = lb;
 }
 
-void Project::addLabel(Label lb)
+void Project::addLabel(QSharedPointer<Label> lb)
 {
     labels.append(lb);
 }
 
 void Project::resetLabels()
 {
-    QVector<Label> labels;
+    QVector<QSharedPointer<Label> > labels;
 }
 
 int Project::numLabels()

@@ -6,10 +6,10 @@
 class LabelButton : public QPushButton{
     Q_OBJECT
 public:
-    LabelButton(Label *label);
-    Label* myLabel;
+    LabelButton(QSharedPointer<Label> label);
+    QSharedPointer<Label> myLabel;
 signals:
-    void cclicked(Label *label);
+    void cclicked(QSharedPointer<Label> label);
 public slots:
     void wasClicked();
 

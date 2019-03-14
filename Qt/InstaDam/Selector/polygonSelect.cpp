@@ -10,7 +10,7 @@ using namespace std;
 PolygonSelect::PolygonSelect() : PolygonSelect(QPointF(0.,0.)){
 
 }
-PolygonSelect::PolygonSelect(const QJsonObject &json, Label *label, QGraphicsItem *item)
+PolygonSelect::PolygonSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : SelectItem(label, item), QGraphicsPolygonItem(item){
     read(json);
     myRect = QGraphicsPolygonItem::boundingRect();
@@ -26,7 +26,7 @@ PolygonSelect::PolygonSelect(const QJsonObject &json, Label *label, QGraphicsIte
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-PolygonSelect::PolygonSelect(QPointF point, Label *label, QGraphicsItem *item)
+PolygonSelect::PolygonSelect(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item)
     : SelectItem(label, item), QGraphicsPolygonItem(item){
     //cout << "POLY INIT" << endl;
     myPoints.push_back(point);
@@ -273,7 +273,7 @@ void PolygonSelect::setMirror(SelectItem *item){
 
 void PolygonSelect::setMirrorActive(){
     if(mirror != nullptr)
-        mirror->setItemActive();
+        mirror->active = true;
 }
 
 void PolygonSelect::setMirrorActivePoint(QPointF point){

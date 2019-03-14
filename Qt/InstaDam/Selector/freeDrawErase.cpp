@@ -7,7 +7,7 @@
 using namespace std;
 void rotatePoint(QPointF &point, const qreal angle);
 
-FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label *label, QGraphicsItem *item)
+FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
     : FreeDrawSelect(point, brushSize, brushMode, nullptr, item){
     myLabel = label;
     undoMap = QSharedPointer<EraseMap>::create();
@@ -17,7 +17,6 @@ FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, Label 
         QSharedPointer<FreeMap> delHash = QSharedPointer<FreeMap>::create();
         it.value()->deletePoint(pointToInt(point.toPoint()), delHash);
         undoMap->insert(it.value(), delHash);
-        cout << "ADDING " << it.value()->myID << endl;
     }
     deleteList = QVector<int>();
     mytype = FreeeraseObj;

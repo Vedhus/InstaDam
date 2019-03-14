@@ -12,8 +12,8 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
 public:
     const QString baseInstruction = polygonBaseInstruction;
     PolygonSelect();
-    PolygonSelect(const QJsonObject &json, Label *label = nullptr, QGraphicsItem *item = nullptr);
-    PolygonSelect(QPointF point, Label *label=nullptr, QGraphicsItem *item = nullptr);
+    PolygonSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    PolygonSelect(QPointF point, QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
     ~PolygonSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/
