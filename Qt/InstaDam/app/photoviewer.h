@@ -78,7 +78,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent*) override;
     virtual void resizeEvent(QResizeEvent *event) override;
     void setFilterControls(filterControls *);
-    void setPanMode();
+    void setPanMode(bool mode);
     void resetBrush(int, Qt::PenCapStyle);
     void setBrushMode(Qt::PenCapStyle);
 

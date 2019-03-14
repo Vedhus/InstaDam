@@ -76,6 +76,7 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(squareBrushButtonClicked()));
     connect(freeSelectForm->drawButton, SIGNAL(clicked()), this,
             SLOT(toggleDrawing()));
+    connect(ui->panButton, SIGNAL(clicked()), this, SLOT(panButton_clicked()));
     connect(freeSelectForm->eraseButton, SIGNAL(clicked()), this,
             SLOT(toggleErasing()));
     connect(freeSelectForm->brushSizeSlider, SIGNAL(valueChanged(int)), freeSelectForm->brushSizeSpinner,
@@ -140,6 +141,7 @@ void InstaDam::setNewProject(){
     currentProject = newProject->newPr;
 
     clearLayout(ui->labelClassLayout);
+    labelButtons.clear();
     for(int i=0; i<currentProject.numLabels(); i++){
         QSharedPointer<Label> label = currentProject.getLabel(i);
         LabelButton *button = new LabelButton(label);
@@ -151,6 +153,7 @@ void InstaDam::setNewProject(){
         button->setPalette(pal);
         button->update();
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
+        labelButtons.push_back(button);
         ui->labelClassLayout->addWidget(button);
         qInfo("Button Added!");
     }
@@ -172,6 +175,14 @@ void InstaDam::setCurrentLabel(LabelButton *button){
 }
 
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
+    for(int i = 0; i < labelButtons.size(); i++){
+        if(label != labelButtons[i]->myLabel){
+            labelButtons[i]->setChecked(false);
+        }
+        else{
+            labelButtons[i]->setChecked(true);
+        }
+    }
     currentLabel = label;
 }
 
@@ -442,6 +453,7 @@ void InstaDam::loadLabelFile(QString filename){
 
     clearLayout(ui->labelClassLayout);
     QTextStream(stdout) <<currentProject.numLabels();
+    labelButtons.clear();
     for(int i=0; i<currentProject.numLabels(); i++)
     {
         QSharedPointer<Label> label = currentProject.getLabel(i);
@@ -459,6 +471,7 @@ void InstaDam::loadLabelFile(QString filename){
         button->update();
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
         //        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
+        labelButtons.push_back(button);
         ui->labelClassLayout->addWidget(button);
         if(!label->rectangleObjects.isEmpty()){
             QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
@@ -535,10 +548,12 @@ void InstaDam::loadLabelFile(QString filename){
 }
 
 
-void InstaDam::on_panButton_clicked()
+void InstaDam::panButton_clicked()
 {
-    ui->IdmPhotoViewer->setPanMode();
-    ui->IdmMaskViewer->setPanMode();
+    panning = !panning; //!ui->panButton->isChecked();
+    ui->panButton->setChecked(panning);
+    ui->IdmPhotoViewer->setPanMode(panning);
+    ui->IdmMaskViewer->setPanMode(panning);
 }
 
 void InstaDam::on_rectangleSelectButton_clicked(){
@@ -663,6 +678,8 @@ void InstaDam::on_freeSelectButton_clicked(){
 void InstaDam::roundBrushButtonClicked()
 {
     brushMode = Qt::RoundCap;
+    freeSelectForm->squareBrushButton->setChecked(false);
+    freeSelectForm->roundBrushButton->setChecked(true);
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
     ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
 }
@@ -670,6 +687,8 @@ void InstaDam::roundBrushButtonClicked()
 void InstaDam::squareBrushButtonClicked()
 {
     brushMode = Qt::SquareCap;
+    freeSelectForm->squareBrushButton->setChecked(true);
+    freeSelectForm->roundBrushButton->setChecked(false);
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
 }
@@ -775,7 +794,7 @@ void InstaDam::processPointClicked(viewerTypes type, SelectItem *item, QPointF p
             //cout << "NO LABEL" << endl;
             return;
         }
-        //cout << "CL" << currentLabel->getText().toStdString() << "__" << endl;
+        cout << "CL" << currentLabel->getText().toStdString() << "__" << endl;
 
         if(currentItem && currentItem->type() == PolygonObj){
             //cout << "AA" << endl;

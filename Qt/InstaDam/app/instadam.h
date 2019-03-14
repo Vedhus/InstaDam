@@ -84,7 +84,7 @@ private slots:
 
     void on_actionSave_triggered();
 
-    void on_panButton_clicked();
+    void panButton_clicked();
 
     void roundBrushButtonClicked();
 
@@ -120,6 +120,7 @@ private:
     QByteArray idproFileContent;
 #endif
     QSharedPointer<Label> currentLabel;
+    QVector<LabelButton*> labelButtons;
     Ui::InstaDam *ui;
     newproject *newProject;
     Project currentProject;
@@ -140,6 +141,7 @@ private:
     Ui::freeSelectForm *freeSelectForm;
     Ui::polygonSelectForm *polygonSelectForm;
     bool drawing = true;
+    bool panning = false;
     int lastType = -1;
     bool insertVertex = false;
     int vertex1 = -1;

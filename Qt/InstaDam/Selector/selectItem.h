@@ -89,7 +89,7 @@ public:
     QGraphicsItem* getParentItem();
     void invertColorForPen();
     QGraphicsScene* scene();
-    void setLabel(QSharedPointer<Label> label);
+    void setLabel(QSharedPointer<Label> label, bool init = false);
     QSharedPointer<Label> getLabel(){return myLabel;}
     static void setVertexSize(qreal size);
     void sortCorners(QRectF &rect, QPointF &newPoint);

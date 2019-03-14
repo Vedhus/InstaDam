@@ -2,6 +2,7 @@
 
 LabelButton::LabelButton(QSharedPointer<Label> label) : QPushButton(){
     myLabel = label;
+    setCheckable(true);
     connect(this, &QPushButton::clicked, this, &LabelButton::wasClicked );
 }
 
