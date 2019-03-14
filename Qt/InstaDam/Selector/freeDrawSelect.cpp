@@ -160,6 +160,14 @@ void FreeDrawSelect::write(QJsonObject &json)const{
     json["points"] = points;
 }
 
+void FreeDrawSelect::print(){
+    QList<QPointF> pointList = myMap->values();
+    QPointF pnt;
+    while(!pointList.isEmpty()){
+        pnt = pointList.takeFirst();
+        cout << pnt.x() << " " << pnt.y() << endl;
+    }
+}
 /*--------------------------------- Mirror ----------------------------*/
 void FreeDrawSelect::mirrorHide(){
     if(mirror != nullptr)
@@ -213,7 +221,7 @@ void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
     QPointF shift = newPos - oldPos;
     qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
     //cout << "ANG " << angle*180./PI << endl;
-    qreal rotate = -PI/(fullWidth - 1);
+    qreal rotate = (-PI/(fullWidth - 1))/5.;
     //cout << "ROT " << rotate*180./PI << endl;
     QPointF addOnStart = QPointF(halfWidth, 0.);
     QPointF addOnEnd = QPointF(halfWidth, 0.);
@@ -221,30 +229,30 @@ void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
     rotatePoint(addOnEnd, angle);
     //addOn.setX(addOn.x()*cos(angle) - addOn.y()*sin(angle));
     //addOn.setY(addOn.y()*cos(angle) + addOn.x()*sin(angle));
-    QPoint start;
-    QPoint end;
+    QPointF start;
+    QPointF end;
     //angle -= PI/2.;
-    for(int i = 0; i < fullWidth; i++){
+    for(int i = 0; i < fullWidth*5; i++){
         rotatePoint(addOnStart, rotate);
         rotatePoint(addOnEnd, -rotate);
-        start = (oldPos + addOnStart).toPoint();
-        end = (newPos + addOnEnd).toPoint();
+        start = (oldPos + addOnStart);
+        end = (newPos + addOnEnd);
         //cout << "   " << i << " " << int(rotate*i*180./PI) << "_" << int(addOnStart.x()) << "," << int(addOnStart.y()) << "  " << int(-rotate*i*180./PI) << "_"<< int(addOnEnd.x()) << "," << int(addOnEnd.y()) << endl;
         rasterizeLine(start, end);
     }
 }
 
 void FreeDrawSelect::drawWithSquare(QPointF &oldPos, QPointF &newPos){
-    QPoint start = oldPos.toPoint();
-    QPoint end = newPos.toPoint();
+    QPointF start = oldPos;
+    QPointF end = newPos;
     int sdx, sdy, edx, edy;
-    if(start.x() == end.x()){
+    if(start.toPoint().x() == end.toPoint().x()){
         sdx = edx = 1;
         start.rx() -= halfWidth;
         end.rx() -= halfWidth;
         sdy = edy = 0;
     }
-    else if(start.y() == end.y()){
+    else if(start.toPoint().y() == end.toPoint().y()){
         sdy = edy = 1;
         start.ry() -= halfWidth;
         end.ry() -= halfWidth;
@@ -323,7 +331,7 @@ QGraphicsScene* FreeDrawSelect::scene(){
 }
 
 /*---------------------------- Protected ---------------------------*/
-void FreeDrawSelect::rasterizeLine(QPoint &start, QPoint &end){
+void FreeDrawSelect::rasterizeLine(QPointF &start, QPointF &end){
     //cout << "       RR " << start.x() << "," << start.y() << "  " << end.x() << "," << end.y() << endl;
 
     qreal dx = end.x() - start.x();

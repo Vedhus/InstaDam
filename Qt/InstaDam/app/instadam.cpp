@@ -938,6 +938,10 @@ void InstaDam::processMouseReleased(viewerTypes type, QPointF oldPos, QPointF ne
         }
         currentItem->resetState();
         if(currentItem->type() != PolygonObj){
+            //if(currentItem->type() == FreedrawObj){
+            //    FreeDrawSelect *fd = dynamic_cast<FreeDrawSelect*>(currentItem);
+            //    fd->print();
+            //}
             currentItem = nullptr;
         }
         else{

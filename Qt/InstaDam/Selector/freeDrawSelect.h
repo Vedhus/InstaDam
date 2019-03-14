@@ -64,6 +64,7 @@ public:
     QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
     //void movePoint(QPointF &point);
 
+    void print();
     QGraphicsScene* scene();
     bool isVisible(){return SelectItem::isVisible();}
 
@@ -78,7 +79,7 @@ protected:
 
     int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
     int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
-    void rasterizeLine(QPoint &start, QPoint &end);
+    void rasterizeLine(QPointF &start, QPointF &end);
 
 private:
 #ifdef TEST
