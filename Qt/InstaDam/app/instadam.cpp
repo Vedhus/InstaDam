@@ -141,6 +141,7 @@ void InstaDam::setNewProject(){
     currentProject = newProject->newPr;
 
     clearLayout(ui->labelClassLayout);
+    labelButtons.clear();
     for(int i=0; i<currentProject.numLabels(); i++){
         QSharedPointer<Label> label = currentProject.getLabel(i);
         LabelButton *button = new LabelButton(label);
@@ -152,6 +153,7 @@ void InstaDam::setNewProject(){
         button->setPalette(pal);
         button->update();
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
+        labelButtons.push_back(button);
         ui->labelClassLayout->addWidget(button);
         qInfo("Button Added!");
     }
@@ -173,6 +175,14 @@ void InstaDam::setCurrentLabel(LabelButton *button){
 }
 
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
+    for(int i = 0; i < labelButtons.size(); i++){
+        if(label != labelButtons[i]->myLabel){
+            labelButtons[i]->setChecked(false);
+        }
+        else{
+            labelButtons[i]->setChecked(true);
+        }
+    }
     currentLabel = label;
 }
 
@@ -443,6 +453,7 @@ void InstaDam::loadLabelFile(QString filename){
 
     clearLayout(ui->labelClassLayout);
     QTextStream(stdout) <<currentProject.numLabels();
+    labelButtons.clear();
     for(int i=0; i<currentProject.numLabels(); i++)
     {
         QSharedPointer<Label> label = currentProject.getLabel(i);
@@ -460,6 +471,7 @@ void InstaDam::loadLabelFile(QString filename){
         button->update();
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
         //        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
+        labelButtons.push_back(button);
         ui->labelClassLayout->addWidget(button);
         if(!label->rectangleObjects.isEmpty()){
             QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
