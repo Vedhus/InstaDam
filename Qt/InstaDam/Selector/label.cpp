@@ -74,6 +74,7 @@ void Label::read(const QJsonObject &json){
         QJsonArray rectArray = json["rectangles"].toArray();
         for(QJsonArray::iterator it = rectArray.begin(); it != rectArray.end(); ++it){
             RectangleSelect *rect = new RectangleSelect(it->toObject(), this);
+            SelectItem::ID = max(SelectItem::ID, rect->myID);
             addItem(rect);
         }
     }
@@ -81,6 +82,7 @@ void Label::read(const QJsonObject &json){
         QJsonArray ellipseArray = json["ellipses"].toArray();
         for(QJsonArray::iterator it = ellipseArray.begin(); it != ellipseArray.end(); ++it){
             EllipseSelect *ellipse = new EllipseSelect(it->toObject(), this);
+            SelectItem::ID = max(SelectItem::ID, ellipse->myID);
             addItem(ellipse);
         }
     }
@@ -88,15 +90,16 @@ void Label::read(const QJsonObject &json){
         QJsonArray polyArray = json["polygons"].toArray();
         for(QJsonArray::iterator it = polyArray.begin(); it != polyArray.end(); ++it){
             PolygonSelect *poly = new PolygonSelect(it->toObject(), this);
+            SelectItem::ID = max(SelectItem::ID, poly->myID);
             addItem(poly);
         }
     }
     if(json.contains("freedraw")){
         FreeDrawSelect *fd = new FreeDrawSelect(json["freedraw"].toObject(), this);
+        SelectItem::ID = max(SelectItem::ID, fd->myID);
         addItem(fd);
     }
-    setText(json["text"].toString());
-    setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+    SelectItem::ID += 1;
 }
 
 QPixmap Label::exportLabel(QSize &rect){
