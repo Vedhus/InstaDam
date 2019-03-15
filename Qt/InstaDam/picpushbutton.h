@@ -30,7 +30,7 @@ public:
     
 
 signals:
-    checked(maskTypes);
+    int checked(maskTypes);
 
 public slots:
     void otherBoxChecked(maskTypes);
