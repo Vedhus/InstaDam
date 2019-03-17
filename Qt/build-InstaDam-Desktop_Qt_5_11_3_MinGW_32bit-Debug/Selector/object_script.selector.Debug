@@ -1,0 +1,14 @@
+INPUT(
+./debug\polygonSelect.o
+./debug\commands.o
+./debug\ellipseSelect.o
+./debug\photoScene.o
+./debug\rectangleSelect.o
+./debug\selectItem.o
+./debug\freeDrawSelect.o
+./debug\boxbasedselector.o
+./debug\selectgroup.o
+./debug\label.o
+./debug\freeDrawErase.o
+./debug\moc_photoScene.o
+);

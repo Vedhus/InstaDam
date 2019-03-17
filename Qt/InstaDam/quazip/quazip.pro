@@ -67,6 +67,7 @@ win32 {
 
     # workaround for qdatetime.h macro bug
     DEFINES += NOMINMAX
+    DEFINES+=ZLIB_WINAPI
 }
 
 
