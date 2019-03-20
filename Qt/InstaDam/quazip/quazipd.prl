@@ -1,0 +1,4 @@
+QMAKE_PRL_BUILD_DIR = "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip"
+QMAKE_PRO_INPUT = quazip.pro
+QMAKE_PRL_TARGET = libquazipd.a
+QMAKE_PRL_CONFIG = lex yacc debug exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin windows file_copies qmake_use qt warn_on link_prl debug_and_release debug_and_release_target precompile_header shared no_plugin_manifest win32 mingw gcc copy_dir_files debug DebugBuild Debug build_pass create_prl no_install_prl create_pc debug DebugBuild Debug build_pass have_target dll no_plist exclusive_builds debug_info c++11 no_autoqmake thread uic opengl moc resources

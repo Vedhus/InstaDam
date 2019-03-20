@@ -3,19 +3,33 @@ QT = core gui
 
 TEMPLATE = subdirs
 
-SUBDIRS = \
+unix {SUBDIRS = \
           app \
-          selector \
-          quazip
-wasm: SUBDIRS += filehandler quazip
+          selector\
+            quazip
+    }
+
+win32{SUBDIRS = \
+          app \
+          selector}
+
+            #quazip
+wasm: SUBDIRS += filehandler #quazip
 
 app.subdir = app
+
+
 selector.subdir = Selector
-    quazip.subdir = quazip
+unix{
+quazip.subdir = quazip
+}
 wasm {
     filehandler.subdir = htmlFileHandler
-    app.depends = filehandler selector quazip
+    unix: app.depends = filehandler selector quazip
+    win32: app.depends = filehandler selector
 }
 !wasm{
-    app.depends = selector quazip
+    unix: app.depends = selector quazip
+    win32: app.depends = selector
 }
+

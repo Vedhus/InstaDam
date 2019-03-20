@@ -51,15 +51,28 @@ FORMS += \
 
 
 win32 {
-  INCLUDEPATH += D:\opencv\build\include $${PWD}/..
-  CONFIG += c++1z
 
-  LIBS += D:\opencv\opencv-build\bin\libopencv_core401.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_highgui401.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_imgcodecs401.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_imgproc401.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_features2d401.dll
-  LIBS += D:\opencv\opencv-build\bin\libopencv_calib3d401.dll
+
+
+  CONFIG += c++1z
+   INCLUDEPATH += $${PWD}\..\quazip\include
+## Change paths here depending on your system installation location
+   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+   LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
+##End change paths
+
+  LIBS += -L$${PWD}\..\quazip\lib
+  LIBS += -lquazip -lz
+  DEFINES+=ZLIB_WINAPI
+  LIBS += -L$${PWD}/..
+
+  LIBS +=  -lselector
 
 wasm: LIBS += -L$${PWD}/../htmlFileHandler -lhtmlFileHandler -L/usr/lib/emscripten
 }
@@ -70,6 +83,7 @@ unix {
   LIBS += -L$${PWD}/.. -lselector -lquazip
 wasm: LIBS += -lhtmlFileHandler -L/usr/lib/emscripten
   INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
+
 }
 
 # Default rules for deployment.
