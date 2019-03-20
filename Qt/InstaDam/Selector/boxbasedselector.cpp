@@ -7,10 +7,37 @@
 
 using namespace std;
 
+/*!
+  \class BoxBasedSelector
+  \ingroup Selector
+  \inmodule InstaDam
+  \inherits SelectItem
+  \brief The BoxBasedSelector class provides a base class for SelectItem subclasses that can be described with a box.
+
+  The BoxBasedSelector class provides a base class for SelectItem subclasses that can be described with a box, such as
+  RectangleSelect and EllipseSelect. It implements several of the virtual functions from SelectItem which will
+  have identical implementations on all its subclasses:
+
+  \list
+  \li RectangleSelect
+  \li EllipseSelect
+  \endlist
+
+  */
+
+/*!
+  Constructs a BoxBasedSelector object by reading a QJsonObject and setting the internal rectangle and rotation angle
+  to the values given in \a json. \a label is the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any.
+  */
 BoxBasedSelector::BoxBasedSelector(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(label, item){
     read(json);
 }
 
+/*!
+  Constructs a BoxBasedSelector object by setting all vertices to be a \a point, \a label is the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any.
+  */
 BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item) : SelectItem(label, item){
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
@@ -20,6 +47,11 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer<Label> label, Q
     //pen.setWidth(5);
 }
 
+/*!
+  Constructs a BoxBasedSelector object by setting all vertices to be a \a point, \a vertSize indicates the size of the
+  vertex highlight boxes, \a label is the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any.
+  */
 BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QSharedPointer<Label> label, QGraphicsItem *item ) :
     SelectItem(vertSize, label, item){
     myRect.setTopLeft(point);
@@ -30,11 +62,17 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize, QSharedPointer
     //pen.setWidth(5);
 }
 
+/*!
+  Destructor
+  */
 BoxBasedSelector::~BoxBasedSelector(){
 
 }
 
 /*-------------------------- Overrides -------------------------*/
+/*!
+  \reimp
+  */
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
@@ -59,14 +97,23 @@ void BoxBasedSelector::clickPoint(QPointF &point){
     setMirrorVertex(getActiveVertex());
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::removeVertex(int vertex){
     UNUSED(vertex);
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::resetActiveVertex(){
     setActiveVertex(0);
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::resizeItem(int vertex, QPointF &newPos){
     setActiveVertex(vertex);
     setMirrorVertex(getActiveVertex());
@@ -74,6 +121,9 @@ void BoxBasedSelector::resizeItem(int vertex, QPointF &newPos){
 
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
     setTransformOriginPoint(myRect.center());
     QPointF start = from - myRect.center();
@@ -84,6 +134,9 @@ void BoxBasedSelector::rotate(QPointF &from, QPointF &to){
     rotateMirror();
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::read(const QJsonObject &json){
     QPointF tlc = QPointF(json["left"].toDouble(), json["top"].toDouble());
     QPointF brc = QPointF(json["right"].toDouble(), json["bottom"].toDouble());
@@ -94,6 +147,9 @@ void BoxBasedSelector::read(const QJsonObject &json){
     setRotation(myRotation);
 }
 
+/*!
+  \reimp
+  */
 void BoxBasedSelector::write(QJsonObject &json) const{
     json["objectID"] = myID;
     json["rotation"] = myRotation;
@@ -104,6 +160,11 @@ void BoxBasedSelector::write(QJsonObject &json) const{
 }
 
 /*-------------------------- Protected ------------------------*/
+/*!
+  Calculates the vertex boxes in the corners of the defining rectangle. The boxes are used to
+  indicate the BoxBasedSelector is active and to act as points to click and drag to resize the item.
+  If the mirror needs to be updated as well the \a mir should be \c true.
+  */
 void BoxBasedSelector::calcCorners(bool mir){
     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset + SelectItem::yoffset);
     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() + SelectItem::xoffset);
@@ -112,3 +173,55 @@ void BoxBasedSelector::calcCorners(bool mir){
     if(mir)
         setMirrorCorners(tl, bl, tr, br);
 }
+
+/*!
+  \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) = 0;
+
+  Pure virtual function to set the corner vertex boxes of the mirror object. \a tlc is the top-left corner,
+  \a blc is the bottom-left corner, \a trc is the top-right corner, and \a brc is the bottom right corner.
+  */
+
+/*!
+  \fn virtual void BoxBasedSelector::setRectUnchecked(QRectF rect) = 0;
+
+  Pure virtual function to set the internal rectangle of the BoxBasedSelector to \a rect without checking to see if
+  it completely fits in the QGraphicsScene. This is used when setting the internal rectangle of the mirror
+  after checking has been done in this instance.
+  */
+
+/*!
+  \fn void BoxBasedSelector::insertVertex(int vertex, QPointF &point)
+  \reimp
+
+  Empty function as this and any derived classes can have two, and only two vertices.
+  */
+
+/*!
+  \fn int BoxBasedSelector::numberOfVertices()
+
+  \reimp
+
+  Always returns 2, as this and any derived classes can have two, and only two vertices.
+  */
+
+/*!
+  \fn void BoxBasedSelector::setRotationAngle(qreal angle)
+
+  Sets the rotation angle of the BoxBasedSelector to \a angle degrees, measured from the horizontal going counterclockwise.
+
+  \sa getRotationAngle()
+  */
+
+/*!
+  \fn qreal BoxBasedSelector::getRotationAngle()
+
+  Returns a \c qreal containing the rotation angle of the BoxBasedSelector in degrees.
+
+  \sa setRotationAngle()
+  */
+
+/*!
+  \fn QRectF BoxBasedSelector::getRect()
+
+  Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
+  */

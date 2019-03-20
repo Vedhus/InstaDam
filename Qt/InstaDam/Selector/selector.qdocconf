@@ -1,0 +1,17 @@
+#include(/home/friedel/qtt/doc/global/qt-module-defaults.qdocconf)
+depends += qtcore qtgui qtwidgets
+project = Selector
+description = SelectItem Reference Documentation
+moduleheader = moduleheader.h
+headerdirs += .
+sourcedirs += .
+excludedirs += Test
+sources.fileextensions = "*.cpp *.qdoc"
+headers.fileextensions = "*.h *.hh *.hpp"
+outputdir = ./doc/
+outputformats = HTML
+HTML.stylesheets = /home/friedel/qtt/doc/global/template/style/offline.css
+HTML.headerstyles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\"/>\n"
+HTML.postheader = "<p class=\"header\"><small>[My awesome documentation]</small></p><hr/>"
+HTML.footer = "<hr/><p class=\"footer\"><small>[some footer and whatnot information]</small></p>"
+indexes = /home/friedel/qtt/doc/qtcore/qtcore.index /home/friedel/qtt/doc/qtgui/qtgui.index /home/friedel/qtt/doc/qtnetwork/qtnetwork.index /home/friedel/qtt/doc/qtwidgets/qtwidgets.index

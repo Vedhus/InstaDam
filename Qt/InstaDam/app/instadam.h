@@ -74,9 +74,9 @@ private slots:
     void on_polygonSelectButton_clicked();
     void on_freeSelectButton_clicked();
     void processMouseMoved(QPointF fromPos, QPointF toPos);
-    void processPointClicked(viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button);
-    void processMouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
-    void processKeyPressed(viewerTypes type, const int key);
+    void processPointClicked(PhotoScene::viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button);
+    void processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
+    void processKeyPressed(PhotoScene::viewerTypes type, const int key);
     void finishPolygonButtonClicked();
     void on_actionNew_triggered();
 
@@ -127,7 +127,7 @@ private:
     PhotoScene *scene;
     PhotoScene *maskScene;
     QUndoStack *undoStack;
-    SelectType currentSelectType;
+    SelectItem::SelectType currentSelectType;
     SelectItem *currentItem;
     QAction *undoAction;
     QAction *redoAction;
