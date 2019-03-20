@@ -60,7 +60,7 @@ public:
 
 
 
-    viewerTypes viewerType;
+    PhotoScene::viewerTypes viewerType;
     PhotoViewer(QWidget *parent = nullptr);
     QSize setPhotoFromFile(QString filename, QString labelname);
 #ifdef WASM_BUILD

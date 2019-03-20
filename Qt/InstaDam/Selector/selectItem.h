@@ -18,12 +18,12 @@
 #include <QWidget>
 #include <QPainter>
 #include <QJsonObject>
+
 //#include "label.h"
 #define UNUSED(x) (void)(x)
 class Label;
-const int UNSELECTED = INT_MAX;
-
-enum SelectType:int {RectangleObj=51, EllipseObj=52, PolygonObj=53, FreedrawObj=54, FreeeraseObj=55};
+class QRectF;
+class QPointF;
 
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
@@ -40,6 +40,23 @@ QT_END_NAMESPACE
 class SelectItem : public QGraphicsItem
 {
 public:
+
+    enum SelectType {
+        Rectangle=51,
+        Ellipse=52,
+        Polygon=53,
+        Freedraw=54,
+        Freeerase=55};
+
+    enum Vertex:int{
+        NONE = 0x0,
+        TOP = 0x1,
+        BOTTOM = 0x2,
+        LEFT = 0x4,
+        RIGHT = 0x8,
+        UNSELECTED = INT_MAX
+    };
+
     static int ID;
     static QSize myBounds;
     static qreal vertexSize;
@@ -106,8 +123,8 @@ public:
 
     QPointF getActivePoint(){return activePoint;}
     int getActiveVertex(){return activeVertex;}
-    bool isItemActive(){return active == true;}
-    bool isItemAdded(){return hasBeenAdded;}
+    bool isItemActive()const {return active;}
+    bool isItemAdded()const {return hasBeenAdded;}
     void itemWasAdded(){setMirrorAdded(); hasBeenAdded = true;}
 
     void resetState(){
@@ -117,20 +134,20 @@ public:
         setMirrorResized();
         pointAdded = false;
         rotated = false;
-        setActiveVertex(UNSELECTED);
+        setActiveVertex(SelectItem::UNSELECTED);
     }
 
-    void setActiveVertex(int h, int v = 0){
+    void setActiveVertex(int h, int v = NONE){
         activeVertex = 0;
         activeVertex = (h | v);
     }
 
     void setInactive(){active = false;}
     void setItemActive(){setMirrorActive(); active = true;}
-    bool wasMoved(){return moved;}
-    bool wasPointAdded(){return pointAdded;}
-    bool wasResized(){return resized;}
-    bool wasRotated(){return rotated;}
+    bool wasMoved()const {return moved;}
+    bool wasPointAdded()const {return pointAdded;}
+    bool wasResized()const {return resized;}
+    bool wasRotated()const {return rotated;}
 
 protected:
     SelectType selectType;
@@ -159,9 +176,6 @@ protected:
     void checkBoundaries(QPointF &shift, QRectF &rect);
     bool isInsideRect(QRectF &rect, QPointF &point);
 };
-
-
-
 
 #endif
 

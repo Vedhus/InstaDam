@@ -5,52 +5,113 @@
 #include <QJsonArray>
 
 using namespace std;
+
+/*!
+  \class Label
+  \ingroup Selector
+  \inmodule InstaDam
+  \inherits QEnableSharedFromThis
+  \brief The Label class provides a class for holding SelectItems.
+
+  Provides a class for holing SelectItems which annotate the same type of feature.
+  */
+
+/*!
+  Default constructor
+  */
 Label::Label()
 {
 
 }
 
+/*!
+  Constructs a Label object based on data read in from \a json. The Label color and
+  text are read from the QJsonObject and any SelectItems in the object are
+  constructed and added to this Label.
+  */
 Label::Label(const QJsonObject &json){
     read(json);
 }
+
+/*!
+  Destructor
+  */
 Label::~Label()
 {
 
 }
 
+/*!
+  Convenience function which returns the QColor of this Label.
+  */
 QColor Label::getColor(){
     return color;
 }
 
+/*!
+  Convenience function for setting the color of this Label to \a col.
+  */
 void Label::setColor(QColor col){
     color = col;
 }
 
+/*!
+  Convenience funtion for getting the test of this Label as a QString
+  */
 QString Label::getText(){
     return text;
 }
 
+/*!
+  Convenience funtion for setting the text of this laael to \a tx
+  */
 void Label::setText(QString tx){
     text = tx;
 }
 
+/*!
+  \overload addItem()
+
+  This convenience function adds a RectangleSelect object to the Label
+  */
 void Label::addItem(RectangleSelect *item){
     rectangleObjects.insert(item->myID, item);
 }
 
+/*!
+  \overload addItem()
+
+  This convenience function adds an EllipseSelect object to the Label
+
+  */
 void Label::addItem(EllipseSelect *item){
     ellipseObjects.insert(item->myID, item);
 }
 
+/*!
+  \overload addItem()
+
+  This convenience function adds a PolygonSelect object to the Label
+
+  */
 void Label::addItem(PolygonSelect *item){
     polygonObjects.insert(item->myID, item);
 }
 
+/*!
+  \overload addItem()
+
+  This convenience function adds a FreeDrawSelect object to the Label
+
+  */
 void Label::addItem(FreeDrawSelect *item){
     freeDrawObjects.insert(item->myID, item);
 }
 
 
+/*!
+  Removes a SelectItem from the Label based on it's unique ID given as \a id.
+  */
 void Label::removeItem(const int id){
     if(rectangleObjects.remove(id) != 0){
         if(ellipseObjects.remove(id) != 0){
@@ -61,6 +122,11 @@ void Label::removeItem(const int id){
     }
 }
 
+/*!
+  Reads a QJsonObject \a json and sets the Label's attrbutes to the data it reads.
+  Any SelectItems found in the QJsonObject are also constructed and added to this
+  Label.
+  */
 void Label::read(const QJsonObject &json){
     rectangleObjects.clear();
     ellipseObjects.clear();
@@ -101,6 +167,11 @@ void Label::read(const QJsonObject &json){
     SelectItem::ID += 1;
 }
 
+/*!
+  Creates a QPixmap bitmask based on all of the SelectItems that this Label holds.
+  It paints each item based on their internal parameters. \a rect specifies the
+  size of the output QPixmap.
+  */
 QPixmap Label::exportLabel(QSize &rect){
     QPixmap map(rect.width(), rect.height());
     QPainter *paint = new QPainter(&map);
@@ -159,6 +230,10 @@ QPixmap Label::exportLabel(QSize &rect){
     return map;
 }
 
+/*!
+  Writes the contents of the Label to QJsonObject \a json. The Label attributes
+  and any SelectItems this Label holds are written.
+  */
 void Label::write(QJsonObject &json) const{
     json["text"] = text;
     json["red"] = color.red();
@@ -218,4 +293,10 @@ void Label::write(QJsonObject &json) const{
         json["freedraw"] = fdo;
     }
 }
+
+/*!
+  \fn Label::addItem(FreeDrawErase *item)
+
+  Empty function as FreeDrawErase objects are not saved.
+  */
 #endif

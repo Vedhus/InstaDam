@@ -18,13 +18,16 @@ class QGraphicsSceneDragDropEvent;
 class QGraphicsViewItem;
 QT_END_NAMESPACE
 
-enum viewerTypes{PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE};
 
 class PhotoScene : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
+    enum viewerTypes{
+        PHOTO_VIEWER_TYPE,
+        MASK_VIEWER_TYPE};
+
     PhotoScene(viewerTypes type, QObject *parent = nullptr);
 
     SelectItem* itemAt(QPointF point);
@@ -38,10 +41,10 @@ public:
     viewerTypes myViewerType;
 
 signals:
-    void pointClicked(viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);
+    void pointClicked(PhotoScene::viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);
     void mouseMoved(QPointF fromPos, QPointF toPos);
-    void mouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
-    void keyPressed(viewerTypes type, const int key);
+    void mouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
+    void keyPressed(PhotoScene::viewerTypes type, const int key);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

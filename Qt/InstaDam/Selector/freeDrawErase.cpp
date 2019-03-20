@@ -7,6 +7,28 @@
 using namespace std;
 void rotatePoint(QPointF &point, const qreal angle);
 
+/*!
+  \class FreeDrawErase
+  \ingroup Selector
+  \inmodule InstaDam
+  \inherits FreeDrawSelect
+  \brief The FreeEraseSelect class provides a class for erasing regions breated by a FreeDrawSelect.
+
+  Provides a class for erasing from selection regions created by FreeDrawSelect objects. This is done  by painting on the canvas with a brush.
+  The region is defined by the pixels that are painted on. This class exists only to remove pixels from
+  existing FreeDrawSelect objects and provide undo/redo capabilities to the deletion.
+  */
+
+/*!
+  Constructs a FreeDrawErase instance withan initial selected point \a point, with a brush size of \a brushSize
+  pixels, brush type of \a brushMode, \a label as the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any. Acceptable values for the \a brushMode are:
+
+  \list
+  \li Qt::SquareCap
+  \li Qt::RoundCap
+  \endlist
+  */
 FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
     : FreeDrawSelect(point, brushSize, brushMode, nullptr, item){
     myLabel = label;
@@ -19,9 +41,12 @@ FreeDrawErase::FreeDrawErase(QPointF point, int brushSize, int brushMode, QShare
         undoMap->insert(it.value(), delHash);
     }
     deleteList = QVector<int>();
-    mytype = FreeeraseObj;
+    mytype = SelectItem::Freeerase;
 }
 
+/*!
+  Destructor
+  */
 FreeDrawErase::~FreeDrawErase(){
     //if(myMap != nullptr)
     //    delete myMap;
@@ -30,6 +55,9 @@ FreeDrawErase::~FreeDrawErase(){
 }
 
 /*-------------------------- Overrides ---------------------------*/
+/*!
+  \reimp
+  */
 void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
     if(brushType == Qt::SquareCap){
         drawWithSquare(oldPos, newPos);
@@ -51,6 +79,12 @@ void FreeDrawErase::moveItem(QPointF &oldPos, QPointF &newPos){
 }
 /*------------------------- End Overrides ----------------------*/
 
+/*!
+  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
+  and a round brush pattern.
+
+  \sa drawWithSquare()
+*/
 void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
     //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
     QPointF shift = newPos - oldPos;
@@ -78,6 +112,12 @@ void FreeDrawErase::drawWithCircle(QPointF &oldPos, QPointF &newPos){
 
 }
 
+/*!
+  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
+  and a square brush pattern.
+
+  \sa drawWithCircle()
+  */
 void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
     QPointF start = oldPos;
     QPointF end = newPos;
@@ -163,6 +203,10 @@ void FreeDrawErase::drawWithSquare(QPointF &oldPos, QPointF &newPos){
 }
 
 /*----------------------------- Protected ---------------------------*/
+/*!
+  Creates a rasterized verion of the line defined by \a start and \a end. The pixels on this line
+  are then removed from all FreeDrawSelect objects associated with the owning Label instance.
+  */
 void FreeDrawErase::rasterizeLine(QPointF &start, QPointF &end){
     qreal dx = end.x() - start.x();
     qreal dy = end.y() - start.y();
@@ -185,12 +229,22 @@ void FreeDrawErase::rasterizeLine(QPointF &start, QPointF &end){
     }
 }
 
-///*----------------------- Private ---------------------------------*/
-//void FreeDrawErase::voidPoint(QPoint &point){
-//    {UNUSED(point);}
-//}
+/*!
+  \fn bool FreeDrawErase::isInside(QPointF &point)
+  \reimp
 
+  Empty function as a point is not in an erased region.
+  */
 
+/*!
+  \fn void FreeDrawErase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr)
+  \reimp
 
+  Empty function as FreeDrawErase objects are not painted
+  */
 
+/*!
+  \fn QSharedPointer<EraseMap> FreeDrawErase::getMap()
 
+  Returns a pointer to an EraseMap containing a map of the points deleted from each FreeDrawSelect object.
+  */

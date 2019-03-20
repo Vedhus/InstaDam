@@ -9,7 +9,7 @@
 
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
-    viewerType = PHOTO_VIEWER_TYPE;
+    viewerType = PhotoScene::PHOTO_VIEWER_TYPE;
     scene = new PhotoScene(viewerType, this);
     photo = new QGraphicsPixmapItem();
     labelsTemp = new QGraphicsPixmapItem();
@@ -130,7 +130,7 @@ void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsT
 
     if (pixmap.isNull() == 0)
     {
-        if (this->viewerType == PHOTO_VIEWER_TYPE)
+        if (this->viewerType == PhotoScene::PHOTO_VIEWER_TYPE)
         {
                 this->photo->setPixmap(pixmap);
                 this->labels->setPixmap(labelsPixmap);
@@ -355,7 +355,7 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event)
             resetBrush(brushSize, capStyle);
             lastPos = event->pos();
             currentMap = labelsTemp->pixmap();
-            if (viewerType == MASK_VIEWER_TYPE)
+            if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
                 currentMap.setMask(imMask.mask());
             paintMode = true;
             update();
@@ -390,11 +390,11 @@ void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
     {
         if (paintMode)
         {
-            if (viewerType == PHOTO_VIEWER_TYPE)
+            if (viewerType == PhotoScene::PHOTO_VIEWER_TYPE)
             {
                 this->labels->setPixmap(directPixmaps(labels->pixmap(),currentMap, brushType));
             }
-            else if (viewerType == MASK_VIEWER_TYPE)
+            else if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
                 this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
             else
                 qInfo("Invalid viewer type");

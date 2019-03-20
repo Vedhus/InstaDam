@@ -1,0 +1,53 @@
+/*!
+  \page mirroritems.html overview
+
+  \title Mirror Items
+
+  Any given derivative of QGraphicsItem can only be owned by a single
+  QGraphicsScene. But in InstaDam select regions are plotted on both the
+  Photo Scene and Mask Scene. To get around this, when a selection region
+  is created on one of the scenes an identical, but distinct copy, is made
+  and added to the other scene. These two instances are called mirrors, and
+  each has a reference to the other in their data structures.
+
+  Using these references allows each SelectItem to communicate to its mirror
+  any changes that are made (resize, move, etc.). Any class that derives from
+  SelectItem must implement the following virtual functions that deal with
+  mirrors:
+
+  \list
+  \li \l {SelectItem::}{getMirror()}
+  \li \l {SelectItem::}{mirrorHide()}
+  \li \l {SelectItem::}{mirrorShow()}
+  \li \l {SelectItem::}{rotateMirror()}
+  \li \l {SelectItem::}{setMirror()}
+  \li \l {SelectItem::}{setMirrorActive()}
+  \li \l {SelectItem::}{setMirrorAdded()}
+  \li \l {SelectItem::}{setMirrorMoved()}
+  \li \l {SelectItem::}{setMirrorResized()}
+  \li \l {SelectItem::}{setMirrorVertex()}
+  \li \l {SelectItem::}{updateMirrorScene()}
+  \endlist
+
+  When implementing the following virtual functions be sure to send updates
+  to the mirror (check for null pointer first):
+
+  \list
+  \li \l {SelectItem::}{addPoint()}
+  \li \l {SelectItem::}{clickPoint()}
+  \li \l {SelectItem::}{insertVertex()}
+  \li \l {SelectItem::}{moveItem()}
+  \li \l {SelectItem::}{removeVertex()}
+  \li \l {SelectItem::}{resetActiveVertex()}
+  \li \l {SelectItem::}{resizeItem()}
+  \li \l {SelectItem::}{rotate()}
+  \li \l {SelectItem::}{updatePen()}
+  \endlist
+
+  Below is an example implementation
+
+  \quotefromfile /home/friedel/CS428/project/InstaDam/Qt/InstaDam/Selector/rectangleSelect.cpp
+
+  \skipto moveItem
+  \printuntil /^\}/
+  */

@@ -9,6 +9,18 @@
 #include <fstream>
 #define PI 3.14159265
 
+/*!
+  \typedef FreeMap
+  \relates QPointF
+
+  Synonym for QHash<int, QPointF>.
+  */
+
+/*!
+  \typedef FreeMapIterator
+  \relates QPointF
+  Synonym for QHashIterator<int, QPointF>.
+  */
 using namespace std;
 
 void rotatePoint(QPointF &point, const qreal angle){
@@ -18,18 +30,38 @@ void rotatePoint(QPointF &point, const qreal angle){
     point.setY(y*cos(angle) + x*sin(angle));
 }
 
+/*!
+  \class FreeDrawSelect
+  \ingroup Selector
+  \inmodule InstaDam
+  \inherits SelectItem QAbstractGraphicsShapeItem
+  \brief The FreeDrawSelect class provides a class for annotating regions by painting them.
+
+  Provides a class for creating selection regions defined by painting on the canvas with a brush.
+  The region is defined by the pixels that are painted on.
+  */
+
+
 QString FreeDrawSelect::baseInstruction = QString("");
 
+/*!
+  Constructs a FreeDrawSelect object with no selected points, and a square brush with a size of 2 pixels.
+  */
 FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
 
 }
 
+/*!
+  Constructs a FreeDrawSelect object by reading a QJsonObject and setting the internal pixel map
+  to the values given in \a json. \a label is the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any.
+  */
 FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = QSharedPointer<FreeMap>::create();
     read(json);
     setActiveVertex(0);
-    mytype = FreedrawObj;
+    mytype = SelectItem::Freedraw;
     if(label != nullptr)
         label->addItem(this);
     myPen.setWidth(1);
@@ -40,6 +72,10 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> la
 
 }
 
+/*!
+  Constructor used to combine several FreeDrawSelect items given as \a items, into a single instance. This
+  is done by merging all of the internal pixel maps into a single entity, discarding duplicate points.
+  */
 FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     : QAbstractGraphicsShapeItem(nullptr), SelectItem(0.){
     myMap = QSharedPointer<FreeMap>::create();
@@ -49,13 +85,23 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     }
 }
 
+/*!
+  Constructs a FreeDrawSelect object with an initial selected point \a point, with a brush size of \a brushSize
+  pixels, brush type of \a brushMode, \a label as the Label which owns this object and \a item is the
+  parent QGraphicsItem, if any. Acceptable values for the \a brushMode are:
+
+  \list
+  \li Qt::SquareCap
+  \li Qt::RoundCap
+  \endlist
+  */
 FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = QSharedPointer<FreeMap>::create();
     myMap->insert(pointToInt(point.toPoint()), point.toPoint());
     setActiveVertex(0);
     myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
-    mytype = FreedrawObj;
+    mytype = SelectItem::Freedraw;
     active = true;
     if(label != nullptr)
         label->addItem(this);
@@ -71,12 +117,18 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSha
 
 }
 
+/*!
+  Destructor
+  */
 FreeDrawSelect::~FreeDrawSelect(){
     //if(myMap != nullptr)
     //    delete myMap;
 }
 
 /*---------------------------- Overrides ------------------------*/
+/*!
+  \reimp
+  */
 void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
     UNUSED(point);
     UNUSED(vertex);
@@ -85,21 +137,33 @@ void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
     myRect = this->boundingRect();
 }
 
+/*!
+  \reimp
+  */
 QRectF FreeDrawSelect::boundingRect() const{
     return myRect.adjusted(-2, -2, 2, 2);
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::clickPoint(QPointF &point){
     UNUSED(point);
     active = true;
     activeVertex = UNSELECTED;
 }
 
+/*!
+  \reimp
+  */
 bool FreeDrawSelect::isInside(QPointF &point){
     UNUSED(point);
     return false;
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     if(brushType == Qt::SquareCap){
         drawWithSquare(oldPos, newPos);
@@ -112,6 +176,9 @@ void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     //cout << " _____ " << myRect.left() << "," << myRect.top() << "  " << myRect.right() << "," << myRect.bottom() << endl;
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     UNUSED(option);
     UNUSED(widget);
@@ -125,6 +192,9 @@ void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     }
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::read(const QJsonObject &json){
     fullWidth = 2;
     halfWidth = 1;
@@ -139,15 +209,24 @@ void FreeDrawSelect::read(const QJsonObject &json){
     calcRect();
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
     UNUSED(vertex);
     UNUSED(point);
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::updatePen(QPen pen){
     setPen(pen);
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::write(QJsonObject &json)const{
     json["objectID"] = myID;
     QJsonArray points;
@@ -170,20 +249,32 @@ void FreeDrawSelect::print(){
     }
 }
 /*--------------------------------- Mirror ----------------------------*/
+/*!
+  \reimp
+  */
 void FreeDrawSelect::mirrorHide(){
     if(mirror != nullptr)
         mirror->SelectItem::hide();
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::mirrorShow(){
     if(mirror != nullptr)
         mirror->SelectItem::show();
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::setMirror(SelectItem *item){
     mirror = dynamic_cast<FreeDrawSelect*>(item);
 }
 
+/*!
+  \reimp
+  */
 void FreeDrawSelect::updateMirrorScene(){
     //cout << "UMS" << endl;
     if(mirror != nullptr)
@@ -191,17 +282,28 @@ void FreeDrawSelect::updateMirrorScene(){
 }
 /*---------------------------- End Mirror ------------------------------*/
 
+/*!
+  Adds \a points to the internal pixel map of selected points.
+  */
 void FreeDrawSelect::addPoints(QSharedPointer<FreeMap> points){
     myMap->unite((*points));
     calcRect();
     setMirrorMap();
 }
 
+/*!
+  Checks whether \a point is inside of the QGraphicsScene which owns this FreeDrawSelect object.
+  If it is outside the scene then \a point is adjusted so that it is inside.
+*/
 void FreeDrawSelect::checkPoint(QPointF &point){
     point.setX(std::min(std::max(0., point.x()), qreal(SelectItem::myBounds.width())));
     point.setY(std::min(std::max(0., point.y()), qreal(SelectItem::myBounds.height())));
 }
 
+/*!
+  Removes \a point from the internal pixel map, if it exists in the map. \a delHash is used to store
+  any removed pixels in order to enable undo and redo of this operation.
+  */
 void FreeDrawSelect::deletePoint(int point, QSharedPointer<FreeMap> delHash){
     if(myMap->contains(point)){
         delHash->insert(point, (*myMap)[point]);
@@ -209,6 +311,10 @@ void FreeDrawSelect::deletePoint(int point, QSharedPointer<FreeMap> delHash){
     }
 }
 
+/*!
+  Removes pixels defined by \a points from the internal pixel map. \a delHash is used to store
+  any removed pixels in order to enable undo and redo of this operation.
+  */
 void FreeDrawSelect::deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash){
     for(int i = 0; i < points.size(); i++){
         deletePoint(points[i], delHash);
@@ -217,6 +323,12 @@ void FreeDrawSelect::deletePoints(QVector<int> &points, QSharedPointer<FreeMap> 
     setMirrorMap();
 }
 
+/*!
+  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
+  and a round brush pattern.
+
+  \sa drawWithSquare()
+*/
 void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
     //cout << "CIRCLE " << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
     QPointF shift = newPos - oldPos;
@@ -243,6 +355,12 @@ void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
     }
 }
 
+/*!
+  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
+  and a square brush pattern.
+
+  \sa drawWithCircle()
+  */
 void FreeDrawSelect::drawWithSquare(QPointF &oldPos, QPointF &newPos){
     QPointF start = oldPos;
     QPointF end = newPos;
@@ -327,11 +445,20 @@ void FreeDrawSelect::drawWithSquare(QPointF &oldPos, QPointF &newPos){
     }
 }
 
+/*!
+  \overload SelectItem::scene()
+
+  Returns the QGraphicsScene to which this item belongs.
+  */
 QGraphicsScene* FreeDrawSelect::scene(){
     return SelectItem::scene();
 }
 
 /*---------------------------- Protected ---------------------------*/
+/*!
+  Creates a rasterized verion of the line defined by \a start and \a end. The pixels on this line
+  are added to the internal pixel map.
+  */
 void FreeDrawSelect::rasterizeLine(QPointF &start, QPointF &end){
     //cout << "       RR " << start.x() << "," << start.y() << "  " << end.x() << "," << end.y() << endl;
 
@@ -357,6 +484,9 @@ void FreeDrawSelect::rasterizeLine(QPointF &start, QPointF &end){
 }
 
 /*------------------------------- Private ---------------------------*/
+/*!
+  Function to calculate the bounding rectangle which encompases all of the selected points.
+*/
 void FreeDrawSelect::calcRect(){
     qreal t = 1000000.;
     qreal l = 1000000.;
@@ -374,11 +504,18 @@ void FreeDrawSelect::calcRect(){
     myRect = QRectF(QPointF(t,l), QPointF(b,r));
 }
 
+/*!
+  Checks whether \a point is inside of the QGraphicsScene which owns this FreeDrawSelect object.
+  If it is outside the scene then \a point is adjusted so that it is inside.
+*/
 void FreeDrawSelect::checkPoint(QPoint &point){
     point.setX(std::min(std::max(0, point.x()), SelectItem::myBounds.width()));
     point.setY(std::min(std::max(0, point.y()), SelectItem::myBounds.height()));
 }
 
+/*!
+  Sets the bounding rectangle and pixel map of the mirror, based on the values of this instance.
+  */
 void FreeDrawSelect::setMirrorMap(){
     if(mirror != nullptr){
         mirror->myMap = myMap;
@@ -387,3 +524,110 @@ void FreeDrawSelect::setMirrorMap(){
         myRect = mirror->myRect;
     }
 }
+
+/*!
+  \fn QString FreeDrawSelect::baseInstructions()
+
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::insertVertex(int vertex, QPointF &point)
+  \reimp
+
+  Empty function since FreeDrawSelect items have no vertices.
+  */
+
+/*!
+  \fn int FreeDrawSelect::numberOfVertices()
+  \reimp
+
+  Returns 0 since FreeDrawSelect items have no vertices.
+  */
+
+/*!
+  \fn void FreeDrawSelect::removeVertex(int vertex=UNSELECTED)
+  \reimp
+
+  Empty function since FreeDrawSelect items have no vertices.
+  */
+
+/*!
+  \fn void FreeDrawSelect::resetActiveVertex()
+  \reimp
+
+  Empty function since FreeDrawSelect items have no vertices.
+  */
+
+/*!
+  \fn void FreeDrawSelect::rotate(QPointF &from, QPointF &to)
+  \reimp
+
+  Empty function since FreeDrawSelect items cannot be rotated.
+  */
+
+/*!
+  \fn FreeDrawSelect* FreeDrawSelect::getMirror()
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::rotateMirror()
+  \reimp
+
+  Empty function since FreeDrawSelect items cannot be rotated.
+  */
+
+/*!
+  \fn void FreeDrawSelect::setMirrorActive()
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::setMirrorAdded()
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::setMirrorMoved()
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::setMirrorResized()
+  \reimp
+  */
+
+/*!
+  \fn void FreeDrawSelect::setMirrorVertex(int vertex)
+  \reimp
+  */
+
+/*!
+  \fn QPolygonF FreeDrawSelect::getPoints()
+
+  Returns a QPolygonF containing all of the points in the pixel map.
+  */
+
+/*!
+  \fn bool FreeDrawSelect::isVisible()
+
+  Returns whether the FreeDrawSelect object is visible (\c true) on the QGraphicsScene or not (\c false).
+  */
+
+/*!
+  \fn int FreeDrawSelect::coordsToInt(int x, int y)
+
+  Converts the \a x and \a y coordinates into an integer representation of the pixel.
+
+  \sa pointToInt()
+  */
+
+/*!
+  \fn int FreeDrawSelect::pointToInt(QPoint point)
+
+  Converts \a point into an integer representation of the pixel.
+
+  \sa coordsToInt()
+  */
+

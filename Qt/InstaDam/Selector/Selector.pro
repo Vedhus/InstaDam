@@ -30,3 +30,8 @@ SOURCES = \
 LIBS += -lQt5Widgets
 
 QT += core gui widgets
+
+DISTFILES += \
+    selector.qdocconf \
+    mirrors.qdoc \
+    select.qdoc
