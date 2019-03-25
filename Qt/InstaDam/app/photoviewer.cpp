@@ -6,7 +6,8 @@
 #include "opencv2/imgproc/types_c.h"
 #include "opencv2/core/mat.hpp"
 #include "ui_instadam.h"
-
+#include <iostream>
+using namespace std;
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
 {
     viewerType = PhotoScene::PHOTO_VIEWER_TYPE;
@@ -261,7 +262,7 @@ void PhotoViewer::resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt:
 
     brushSize = size;
 
-    scene->removeItem(brush);
+    //scene->removeItem(brush);
     delete brush;
     pen = QPen();
 
@@ -343,26 +344,29 @@ void PhotoViewer::resizeEvent(QResizeEvent *event)
 
 void PhotoViewer::mousePressEvent(QMouseEvent* event)
 {
+    cout << "VIEWER PRESS"<< endl;
+    QGraphicsView::mousePressEvent(event);
+    cout << "VQ DONE" << endl;
 
-    if (hasPhoto)
+    //if (hasPhoto)
+    //{
+    //    if (photo->isUnderMouse())
+    //    {
+    //        emit photoClicked(QPoint(event->pos()));
+    //    }
+    if (dragMode() == QGraphicsView::NoDrag)
     {
-        if (photo->isUnderMouse())
-        {
-            emit photoClicked(QPoint(event->pos()));
-        }
-        if (dragMode() == QGraphicsView::NoDrag)
-        {
-            resetBrush(brushSize, capStyle);
-            lastPos = event->pos();
-            currentMap = labelsTemp->pixmap();
-            if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
-                currentMap.setMask(imMask.mask());
+            //resetBrush(brushSize, capStyle);
+            //lastPos = event->pos();
+            //currentMap = labelsTemp->pixmap();
+            //if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
+            //    currentMap.setMask(imMask.mask());
             paintMode = true;
             update();
-        }
+        //}
 
     }
-    QGraphicsView::mousePressEvent(event);
+    cout << "V DONE"<< endl;
 }
 
 
@@ -386,27 +390,23 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event)
 
 void PhotoViewer::mouseReleaseEvent(QMouseEvent* event)
 {
-    if(hasPhoto)
-    {
-        if (paintMode)
-        {
-            if (viewerType == PhotoScene::PHOTO_VIEWER_TYPE)
-            {
-                this->labels->setPixmap(directPixmaps(labels->pixmap(),currentMap, brushType));
-            }
-            else if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
-                this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
-            else
-                qInfo("Invalid viewer type");
+    QGraphicsView::mouseReleaseEvent(event);
+    //if(hasPhoto)
+    //{
+    //    if (paintMode)
+    //    {
+            //if (viewerType == PhotoScene::PHOTO_VIEWER_TYPE)
+            //{
+            //    this->labels->setPixmap(directPixmaps(labels->pixmap(),currentMap, brushType));
+            //}
+            //else if (viewerType == PhotoScene::MASK_VIEWER_TYPE)
+            //    this->labels->setPixmap(maskPixmaps(labels->pixmap(),currentMap, imMask, brushType));
+            //else
+            //    qInfo("Invalid viewer type");
             paintMode = false;
-            resetBrush(brushSize, capStyle);
+            //resetBrush(brushSize, capStyle);
             update();
-        }
-
-
-
-    }
-   QGraphicsView::mouseReleaseEvent(event);
-
+    //    }
+    //}
 
 }

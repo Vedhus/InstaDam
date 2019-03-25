@@ -39,6 +39,7 @@ public:
     void addItem(QGraphicsItem* item);
     void inactiveAll();
     viewerTypes myViewerType;
+    void removeItem(SelectItem* item);
 
 signals:
     void pointClicked(PhotoScene::viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);

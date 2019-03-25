@@ -19,7 +19,7 @@ public:
     EllipseSelect(QPointF point, qreal vertexSize, QSharedPointer<Label>label = nullptr, QGraphicsItem *item = nullptr);
     ~EllipseSelect() override;
 
-    /*-------------- Implemented fvuntions from SelectItem ---------*/
+    /*-------------- Implemented functions from SelectItem ---------*/
     void addPoint(QPointF &point, int vertex = UNSELECTED) override;
     QString baseInstructions() override {return EllipseSelect::baseInstruction;}
     QRectF boundingRect() const override;
@@ -28,6 +28,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void setRectUnchecked(QRectF rect) override;
     void updatePen(QPen pen) override;
+    void toPixmap(QPainter *painter) override;
 
     // Mirror functions
     EllipseSelect* getMirror() override {return mirror;}

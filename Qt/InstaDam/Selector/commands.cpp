@@ -59,8 +59,9 @@ void AddCommand::undo()
  */
 void AddCommand::redo()
 {
-    //cout << "RA" << endl;
+    cout << "RA" << endl;
     if(init){
+        cout << "Q" << endl;
         myItem->show();
         myItem->mirrorShow();
         myScene->clearSelection();
@@ -68,7 +69,11 @@ void AddCommand::redo()
         myItem->updateMirrorScene();
     }
     else{
-        myItem->itemWasAdded();
+        cout << "X" << endl;
+        cout << myItem->getMirror();
+        if(myItem->getMirror() != nullptr)
+            myItem->itemWasAdded();
+        cout << "Y" << endl;
         init = true;
     }
 }

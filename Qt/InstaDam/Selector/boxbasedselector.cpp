@@ -76,22 +76,27 @@ BoxBasedSelector::~BoxBasedSelector(){
 void BoxBasedSelector::clickPoint(QPointF &point){
     active = true;
     if(isInsideRect(tl, point)){
+        cout << "TL" << endl;
         setActiveVertex(TOP, LEFT);
         activePoint = myRect.topLeft();
     }
     else if(isInsideRect(tr, point)){
+        cout << "TR" << endl;
         setActiveVertex(TOP, RIGHT);
         activePoint = myRect.topRight();
     }
     else if(isInsideRect(bl, point)){
+        cout << "BL" << endl;
         setActiveVertex(BOTTOM, LEFT);
         activePoint = myRect.bottomLeft();
     }
     else if(isInsideRect(br, point)){
+        cout << "BR" << endl;
         setActiveVertex(BOTTOM, RIGHT);
         activePoint = myRect.bottomRight();
     }
     else{
+        cout << "NULL" << endl;
         setActiveVertex(0, 0);
     }
     setMirrorVertex(getActiveVertex());

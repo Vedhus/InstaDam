@@ -44,6 +44,34 @@ void rotatePoint(QPointF &point, const qreal angle){
 
 QString FreeDrawSelect::baseInstruction = QString("");
 
+
+FreeDrawSelect::FreeDrawSelect(QPixmap map, QSharedPointer<Label> label, QGraphicsItem *item)
+    : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
+    myMap = QSharedPointer<FreeMap>::create();
+    mytype = SelectItem::Freedraw;
+    if(label != nullptr)
+        label->addItem(this);
+    myPen.setWidth(1);
+    updatePen(myPen);
+    QImage img = map.toImage();
+    img = img.convertToFormat(QImage::Format_RGB32);
+    QRgb *rgb;
+    for(int y = 0; y < img.height(); y++){
+        cout << " Y " << y << endl;
+        rgb = (QRgb*)img.scanLine(y);
+        for(int x = 0; x < img.width(); x++){
+            cout << " " << qRed(rgb[x]);
+            if(qRed(rgb[x]) != 0 || qBlue(rgb[x]) != 0 || qGreen(rgb[x] != 0)){
+                cout << "HIT";
+                myMap->insert(coordsToInt(x, y), QPoint(x, y));
+            }
+        }
+        cout << endl;
+    }
+    QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
+
 /*!
   Constructs a FreeDrawSelect object with no selected points, and a square brush with a size of 2 pixels.
   */
@@ -238,6 +266,10 @@ void FreeDrawSelect::write(QJsonObject &json)const{
         points.append(pnt.y());
     }
     json["points"] = points;
+}
+
+void FreeDrawSelect::toPixmap(QPainter *painter){
+    painter->drawPoints(getPoints());
 }
 
 void FreeDrawSelect::print(){

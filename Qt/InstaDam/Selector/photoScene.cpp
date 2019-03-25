@@ -57,6 +57,17 @@ void PhotoScene::addItem(SelectItem* item){
 }
 
 /*!
+  \overload removeItem()
+  Adds \a item to the scene.
+  */
+void PhotoScene::removeItem(SelectItem* item){
+    cout << "  R " << currentItems.size() << endl;
+    currentItems.remove(item);
+    cout << "    " << currentItems.size() << endl;
+    QGraphicsScene::removeItem(item);
+}
+
+/*!
   \overload keyPressEvent()
 
   Executed when a key is pressed. \a event contains the key information.
@@ -80,6 +91,7 @@ void PhotoScene::keyPressEvent(QKeyEvent *event){
   */
 void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    cout << "SCENE PRESS" << endl;
     if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
         mousePressed = true;
         QPointF mousePos(event->scenePos().x(),
@@ -96,7 +108,9 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
 
     }
+    cout << "S DONE" << endl;
     QGraphicsScene::mousePressEvent(event);
+    cout << "SQ DONE" << endl;
 }
 
 /*!
@@ -144,9 +158,9 @@ void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
   If there is no SelectItem under that position then \c nullptr is returned.
   */
 SelectItem* PhotoScene::itemAt(QPointF point){
-    //cout << "ITEMAT " << currentItems.size() << endl;
+    cout << "ITEMAT " << currentItems.size() << endl;
     for(std::list<SelectItem*>::const_iterator iterator = currentItems.begin(), end = currentItems.end(); iterator != end; ++iterator) {
-        //cout <<"Q" << endl;
+        cout <<"Q" << endl;
         if((*iterator)->isVisible() && (*iterator)->isInside(point)){
             //cout << "Z" << endl;
             return (*iterator);

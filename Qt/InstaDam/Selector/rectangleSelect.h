@@ -2,6 +2,8 @@
 #define RECTANGLE_SELECT_H
 
 #include "boxbasedselector.h"
+#include <iostream>
+using namespace std;
 #ifdef TEST
 class TestSelect;
 
@@ -27,9 +29,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void updatePen(QPen pen) override;
     void setRectUnchecked(QRectF rect) override;
+    void toPixmap(QPainter *painter) override;
 
     // Mirror
-    RectangleSelect* getMirror() override {return mirror;}
+    RectangleSelect* getMirror() override {cout << "MIR" << endl;return mirror;}
     void mirrorHide() override;
     void mirrorShow() override;
     void rotateMirror() override;

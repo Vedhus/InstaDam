@@ -183,6 +183,14 @@ void EllipseSelect::updatePen(QPen pen){
     setBrush(brush);
 }
 
+void EllipseSelect::toPixmap(QPainter *painter){
+    painter->translate(myRect.center());
+    painter->rotate(getRotationAngle());
+    painter->translate(-myRect.center());
+    painter->drawEllipse(myRect);
+    painter->resetTransform();
+}
+
 /*---------------------------------- Mirror --------------------------*/
 /*!
   \reimp

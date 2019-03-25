@@ -22,6 +22,8 @@ public:
     bool isInside(QPointF &point) override {UNUSED(point); return false;}
     void moveItem(QPointF &oldPos, QPointF &newPos) override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {UNUSED(painter); UNUSED(option); UNUSED(widget);}
+    void toPixmap(QPainter *painter) override {UNUSED(painter);}
+
     /*------------- End implemented functions*/
 
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
