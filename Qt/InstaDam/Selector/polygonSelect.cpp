@@ -304,6 +304,13 @@ void PolygonSelect::resizeItem(int vertex, QPointF &point){
 /*!
   \reimp
   */
+void PolygonSelect::toPixmap(QPainter *painter){
+    painter->drawPolygon(getPolygon());
+}
+
+/*!
+  \reimp
+  */
 void PolygonSelect::updatePen(QPen pen){
     setPen(pen);
     QColor col = pen.color();
@@ -325,9 +332,6 @@ void PolygonSelect::write(QJsonObject &json) const{
     json["points"] = points;
 }
 
-void PolygonSelect::toPixmap(QPainter *painter){
-    painter->drawPolygon(getPolygon());
-}
 /*------------------------ Mirror -------------------------------*/
 /*!
   \reimp

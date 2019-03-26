@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- label.cpp -->
+  <title>Label Class | Selector</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>Label</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Label Class</h1>
+<!-- $$$Label-brief -->
+<p>The Label class provides a class for holding SelectItems. <a href="#details">More...</a></p>
+<!-- @@@Label -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;Label&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qenablesharedfromthis.html">QEnableSharedFromThis</a></td></tr></table></div><ul>
+<li><a href="label-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="label.html#Label">Label</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="label.html#Label-1">Label</a></b>(const QJsonObject &amp;<i>json</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="label.html#dtor.Label">~Label</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem">addItem</a></b>(FreeDrawErase *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-1">addItem</a></b>(RectangleSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-2">addItem</a></b>(EllipseSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-3">addItem</a></b>(PolygonSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-4">addItem</a></b>(FreeDrawSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="label.html#exportLabel">exportLabel</a></b>(QSize &amp;<i>rect</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QColor </td><td class="memItemRight bottomAlign"><b><a href="label.html#getColor">getColor</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="label.html#getText">getText</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#removeItem">removeItem</a></b>(const int <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#setColor">setColor</a></b>(QColor <i>col</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#setText">setText</a></b>(QString <i>tx</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#write">write</a></b>(QJsonObject &amp;<i>json</i>) const</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 public functions inherited from <a href="http://doc.qt.io/qt-5/qenablesharedfromthis.html#public-functions">QEnableSharedFromThis</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QHash&lt;int, EllipseSelect *&gt; </td><td class="memItemRight bottomAlign"><b><a href="label.html#ellipseObjects-var">ellipseObjects</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHash&lt;int, FreeDrawSelect *&gt; </td><td class="memItemRight bottomAlign"><b><a href="label.html#freeDrawObjects-var">freeDrawObjects</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHash&lt;int, PolygonSelect *&gt; </td><td class="memItemRight bottomAlign"><b><a href="label.html#polygonObjects-var">polygonObjects</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHash&lt;int, RectangleSelect *&gt; </td><td class="memItemRight bottomAlign"><b><a href="label.html#rectangleObjects-var">rectangleObjects</a></b></td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$Label-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The Label class provides a class for holding SelectItems.</p>
+<p>Provides a class for holing SelectItems which annotate the same type of feature.</p>
+</div>
+<!-- @@@Label -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$Label[overload1]$$$Label -->
+<h3 class="fn" id="Label"><a name="Label"></a>Label::<span class="name">Label</span>()</h3>
+<p>Default constructor</p>
+<!-- @@@Label -->
+<!-- $$$Label$$$LabelconstQJsonObject& -->
+<h3 class="fn" id="Label-1"><a name="Label-1"></a>Label::<span class="name">Label</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>)</h3>
+<p>Constructs a Label object based on data read in from <i>json</i>. The Label color and text are read from the <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> and any SelectItems in the object are constructed and added to this Label.</p>
+<!-- @@@Label -->
+<!-- $$$~Label[overload1]$$$~Label -->
+<h3 class="fn" id="dtor.Label"><a name="dtor.Label"></a>Label::<span class="name">~Label</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~Label -->
+<!-- $$$addItem[overload1]$$$addItemFreeDrawErase* -->
+<h3 class="fn" id="addItem"><a name="addItem"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="freedrawerase.html">FreeDrawErase</a></span> *<i>item</i>)</h3>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not saved.</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemRectangleSelect* -->
+<h3 class="fn" id="addItem-1"><a name="addItem-1"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="rectangleselect.html">RectangleSelect</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
+<p>This convenience function adds a <a href="rectangleselect.html">RectangleSelect</a> object to the Label</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemEllipseSelect* -->
+<h3 class="fn" id="addItem-2"><a name="addItem-2"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="ellipseselect.html">EllipseSelect</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
+<p>This convenience function adds an <a href="ellipseselect.html">EllipseSelect</a> object to the Label</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemPolygonSelect* -->
+<h3 class="fn" id="addItem-3"><a name="addItem-3"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="polygonselect.html">PolygonSelect</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
+<p>This convenience function adds a <a href="select.html#polygonselect">PolygonSelect</a> object to the Label</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemFreeDrawSelect* -->
+<h3 class="fn" id="addItem-4"><a name="addItem-4"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="freedrawselect.html">FreeDrawSelect</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
+<p>This convenience function adds a <a href="select.html#freedrawselect">FreeDrawSelect</a> object to the Label</p>
+<!-- @@@addItem -->
+<!-- $$$exportLabel[overload1]$$$exportLabelQSize& -->
+<h3 class="fn" id="exportLabel"><a name="exportLabel"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> Label::<span class="name">exportLabel</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qsize.html">QSize</a></span> &amp;<i>rect</i>)</h3>
+<p>Creates a <a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a> bitmask based on all of the SelectItems that this Label holds. It paints each item based on their internal parameters. <i>rect</i> specifies the size of the output <a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a>.</p>
+<!-- @@@exportLabel -->
+<!-- $$$getColor[overload1]$$$getColor -->
+<h3 class="fn" id="getColor"><a name="getColor"></a><span class="type"><a href="http://doc.qt.io/qt-5/qcolor.html">QColor</a></span> Label::<span class="name">getColor</span>()</h3>
+<p>Convenience function which returns the <a href="http://doc.qt.io/qt-5/qcolor.html">QColor</a> of this Label.</p>
+<!-- @@@getColor -->
+<!-- $$$getText[overload1]$$$getText -->
+<h3 class="fn" id="getText"><a name="getText"></a><span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> Label::<span class="name">getText</span>()</h3>
+<p>Convenience funtion for getting the test of this Label as a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a></p>
+<!-- @@@getText -->
+<!-- $$$read[overload1]$$$readconstQJsonObject& -->
+<h3 class="fn" id="read"><a name="read"></a><span class="type">void</span> Label::<span class="name">read</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>)</h3>
+<p>Reads a <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> <i>json</i> and sets the Label's attrbutes to the data it reads. Any SelectItems found in the <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> are also constructed and added to this Label.</p>
+<!-- @@@read -->
+<!-- $$$removeItem[overload1]$$$removeItemconstint -->
+<h3 class="fn" id="removeItem"><a name="removeItem"></a><span class="type">void</span> Label::<span class="name">removeItem</span>(const <span class="type">int</span> <i>id</i>)</h3>
+<p>Removes a <a href="selectitem.html">SelectItem</a> from the Label based on it's unique ID given as <i>id</i>.</p>
+<!-- @@@removeItem -->
+<!-- $$$setColor[overload1]$$$setColorQColor -->
+<h3 class="fn" id="setColor"><a name="setColor"></a><span class="type">void</span> Label::<span class="name">setColor</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qcolor.html">QColor</a></span> <i>col</i>)</h3>
+<p>Convenience function for setting the color of this Label to <i>col</i>.</p>
+<!-- @@@setColor -->
+<!-- $$$setText[overload1]$$$setTextQString -->
+<h3 class="fn" id="setText"><a name="setText"></a><span class="type">void</span> Label::<span class="name">setText</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>tx</i>)</h3>
+<p>Convenience funtion for setting the text of this laael to <i>tx</i></p>
+<!-- @@@setText -->
+<!-- $$$write[overload1]$$$writeQJsonObject& -->
+<h3 class="fn" id="write"><a name="write"></a><span class="type">void</span> Label::<span class="name">write</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>) const</h3>
+<p>Writes the contents of the Label to <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> <i>json</i>. The Label attributes and any SelectItems this Label holds are written.</p>
+<!-- @@@write -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

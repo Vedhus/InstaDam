@@ -32,11 +32,6 @@ Qt/InstaDam/app/ui_instadam\.h
 Qt/InstaDam/app/ui_newproject\.h
 
 *.a
-Qt/InstaDam/Selector/main\.cpp
-
-Qt/InstaDam/Selector/mainwindow\.cpp
-
-Qt/InstaDam/Selector/mainwindow\.h
 
 Qt/InstaDam/InstaDam\.html
 
@@ -97,4 +92,3 @@ Qt/InstaDam/im2\.JPG_L1\.png
 
 Qt/InstaDam/im2\.JPG_L22\.png
 
-Qt/InstaDam/Selector/doc/

@@ -69,7 +69,6 @@ public:
     QSharedPointer<FreeMap> getMap(){return myMap;}
     //void movePoint(QPointF &point);
 
-    void print();
     QGraphicsScene* scene();
     bool isVisible(){return SelectItem::isVisible();}
 

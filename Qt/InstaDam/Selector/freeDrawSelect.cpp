@@ -44,7 +44,10 @@ void rotatePoint(QPointF &point, const qreal angle){
 
 QString FreeDrawSelect::baseInstruction = QString("");
 
-
+/*!
+  Constructs a FreeDwarSelect object based on the given \a map, Label \a label
+  and parent \a item, if any.
+  */
 FreeDrawSelect::FreeDrawSelect(QPixmap map, QSharedPointer<Label> label, QGraphicsItem *item)
     : QAbstractGraphicsShapeItem(item), SelectItem(label, item){
     myMap = QSharedPointer<FreeMap>::create();
@@ -253,6 +256,13 @@ void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
 /*!
   \reimp
   */
+void FreeDrawSelect::toPixmap(QPainter *painter){
+    painter->drawPoints(getPoints());
+}
+
+/*!
+  \reimp
+  */
 void FreeDrawSelect::updatePen(QPen pen){
     setPen(pen);
 }
@@ -273,18 +283,6 @@ void FreeDrawSelect::write(QJsonObject &json)const{
     json["points"] = points;
 }
 
-void FreeDrawSelect::toPixmap(QPainter *painter){
-    painter->drawPoints(getPoints());
-}
-
-void FreeDrawSelect::print(){
-    QList<QPointF> pointList = myMap->values();
-    QPointF pnt;
-    while(!pointList.isEmpty()){
-        pnt = pointList.takeFirst();
-        cout << pnt.x() << " " << pnt.y() << endl;
-    }
-}
 /*--------------------------------- Mirror ----------------------------*/
 /*!
   \reimp
@@ -491,6 +489,9 @@ QGraphicsScene* FreeDrawSelect::scene(){
     return SelectItem::scene();
 }
 
+/*!
+  Sets the internal map to \a map, without doing any bounds checking.
+  */
 void FreeDrawSelect::setPointsUnchecked(QSharedPointer<FreeMap> map){
     myMap = map;
     calcRect();
@@ -674,3 +675,8 @@ void FreeDrawSelect::setMirrorMap(){
   \sa coordsToInt()
   */
 
+/*!
+  \fn QSharedPointer<FreeMap> FreeDrawSelect::getMap()
+
+  Returns the internal map of points.
+  */

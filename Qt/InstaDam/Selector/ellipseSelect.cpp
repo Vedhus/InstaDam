@@ -175,20 +175,23 @@ void EllipseSelect::setRectUnchecked(QRectF rect){
 /*!
   \reimp
   */
-void EllipseSelect::updatePen(QPen pen){
-    setPen(pen);
-    QColor col = pen.color();
-    col.setAlphaF(0.25);
-    QBrush brush(col);
-    setBrush(brush);
-}
-
 void EllipseSelect::toPixmap(QPainter *painter){
     painter->translate(myRect.center());
     painter->rotate(getRotationAngle());
     painter->translate(-myRect.center());
     painter->drawEllipse(myRect);
     painter->resetTransform();
+}
+
+/*!
+  \reimp
+  */
+void EllipseSelect::updatePen(QPen pen){
+    setPen(pen);
+    QColor col = pen.color();
+    col.setAlphaF(0.25);
+    QBrush brush(col);
+    setBrush(brush);
 }
 
 /*---------------------------------- Mirror --------------------------*/

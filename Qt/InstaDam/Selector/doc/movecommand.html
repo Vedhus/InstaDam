@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- commands.cpp -->
+  <title>MoveCommand Class | Selector</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>MoveCommand</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">MoveCommand Class</h1>
+<!-- $$$MoveCommand-brief -->
+<p>The <a href="movecommand.html">MoveCommand</a> class provides undo and redo actions for moving a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>. <a href="#details">More...</a></p>
+<!-- @@@MoveCommand -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;MoveCommand&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a></td></tr></table></div><ul>
+<li><a href="movecommand-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="movecommand.html#MoveCommand">MoveCommand</a></b>(SelectItem *<i>item</i>, const QPointF <i>oldPos</i>, const QPointF <i>newPos</i>, QUndoCommand *<i>parent</i> = nullptr)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="movecommand.html#redo">redo</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="movecommand.html#undo">undo</a></b>() override</td></tr>
+</table></div>
+<ul>
+<li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qundocommand.html#public-functions">QUndoCommand</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$MoveCommand-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="movecommand.html">MoveCommand</a> class provides undo and redo actions for moving a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>.</p>
+<p><a href="deletecommand.html">DeleteCommand</a> is used to hold a reference to a <a href="selectitem.html">SelectItem</a> and the starting and ending positions of the move. Using the <a href="movecommand.html#undo">undo</a>() and <a href="movecommand.html#redo">redo</a>() commands the item can be moved and returned to it's original position in the scene repeatedly.</p>
+</div>
+<p><b>See also </b><a href="addcommand.html">AddCommand</a>, <a href="deletecommand.html">DeleteCommand</a>, <a href="movevertexcommand.html">MoveVertexCommand</a>, <a href="addvertexcommand.html">AddVertexCommand</a>, <a href="deletevertexcommand.html">DeleteVertexCommand</a>, <a href="erasepointscommand.html">ErasePointsCommand</a>, and <a href="rotatecommand.html">RotateCommand</a>.</p>
+<!-- @@@MoveCommand -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$MoveCommand[overload1]$$$MoveCommandSelectItem*constQPointFconstQPointFQUndoCommand* -->
+<h3 class="fn" id="MoveCommand"><a name="MoveCommand"></a>MoveCommand::<span class="name">MoveCommand</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>oldPos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>newPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qundocommand.html#QUndoCommand">QUndoCommand</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs a <a href="movecommand.html">MoveCommand</a> using the provided <i>item</i> so that the it's movement from <i>oldPos</i> to <i>newPos</i> on the scene can be undone and/or redone. <i>parent</i> refers to parent <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a>, if any.</p>
+<!-- @@@MoveCommand -->
+<!-- $$$redo[overload1]$$$redo -->
+<h3 class="fn" id="redo"><a name="redo"></a><code>[override virtual] </code><span class="type">void</span> MoveCommand::<span class="name">redo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#redo">QUndoCommand::redo</a>().</p>
+<!-- @@@redo -->
+<!-- $$$undo[overload1]$$$undo -->
+<h3 class="fn" id="undo"><a name="undo"></a><code>[override virtual] </code><span class="type">void</span> MoveCommand::<span class="name">undo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#undo">QUndoCommand::undo</a>().</p>
+<!-- @@@undo -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>
