@@ -523,6 +523,11 @@ bool SelectItem::isInsideRect(QRectF &rect, QPointF &point){
 */
 
 /*!
+  \fn void SelectItem::toPixmap(QPainter* painter)
+  Rasterizes the SelectItem and draws it on the given \a painter.
+  */
+
+/*!
   \enum SelectItem::SelectType
 
   This enum is used to define the type of the SelectItem:

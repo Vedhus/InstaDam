@@ -248,3 +248,10 @@ void FreeDrawErase::rasterizeLine(QPointF &start, QPointF &end){
 
   Returns a pointer to an EraseMap containing a map of the points deleted from each FreeDrawSelect object.
   */
+
+/*!
+  \fn void FreeDrawErase::toPixmap(QPainter *painter)
+  \reimp
+
+  Empty function as FreeDrawErase objects are not painted
+  */

@@ -175,6 +175,9 @@ void RectangleSelect::setRectUnchecked(QRectF rect){
     setRect(myRect);
 }
 
+/*!
+  \reimp
+  */
 void RectangleSelect::toPixmap(QPainter *painter){
     painter->translate(myRect.center());
     painter->rotate(getRotationAngle());

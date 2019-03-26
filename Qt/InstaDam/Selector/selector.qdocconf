@@ -5,6 +5,7 @@ description = SelectItem Reference Documentation
 moduleheader = moduleheader.h
 headerdirs += .
 sourcedirs += .
+imagedirs += ./images
 excludedirs += Test
 sources.fileextensions = "*.cpp *.qdoc"
 headers.fileextensions = "*.h *.hh *.hpp"
@@ -12,6 +13,23 @@ outputdir = ./doc/
 outputformats = HTML
 HTML.stylesheets = /home/friedel/qtt/doc/global/template/style/offline.css
 HTML.headerstyles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\"/>\n"
-HTML.postheader = "<p class=\"header\"><small>[My awesome documentation]</small></p><hr/>"
-HTML.footer = "<hr/><p class=\"footer\"><small>[some footer and whatnot information]</small></p>"
+HTML.postheader = "<p class=\"header\"><small>InstaDam Documentation</small></p><hr/>"
+HTML.footer = "<hr/><p class=\"footer\"><small></small></p>"
+HTML.extraimages += images/draw_mirror.gif \
+images/ellipse.gif \
+images/erase.gif \
+images/free_draw.gif \
+images/move.gif \
+images/polygon_add.gif \
+images/polygon.gif \
+images/polygon_manipulate.gif \
+images/rect.gif \
+images/rect-mirror.gif \
+images/resize.gif \
+images/rotate.gif \
+images/polygon_delete.gif \
+images/undo_redo.gif \
+images/undo_redo_mask.gif \
+images/undo_redo_after.gif
+
 indexes = /home/friedel/qtt/doc/qtcore/qtcore.index /home/friedel/qtt/doc/qtgui/qtgui.index /home/friedel/qtt/doc/qtnetwork/qtnetwork.index /home/friedel/qtt/doc/qtwidgets/qtwidgets.index

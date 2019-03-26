@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- photoScene.cpp -->
+  <title>PhotoScene Class | Selector</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>PhotoScene</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">PhotoScene Class</h1>
+<!-- $$$PhotoScene-brief -->
+<p>The <a href="photoscene.html">PhotoScene</a> class provides a scene for rendering SelectItems. <a href="#details">More...</a></p>
+<!-- @@@PhotoScene -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;PhotoScene&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a></td></tr></table></div><ul>
+<li><a href="photoscene-members.html">List of all members, including inherited members</a></li>
+<li><a href="photoscene-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#viewerTypes-enum">viewerTypes</a></b> { PHOTO_VIEWER_TYPE, MASK_VIEWER_TYPE }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#PhotoScene">PhotoScene</a></b>(PhotoScene::viewerTypes <i>type</i>, QObject *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#addItem">addItem</a></b>(SelectItem *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#addItem-1">addItem</a></b>(QGraphicsItem *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#addLabel">addLabel</a></b>(std::string <i>label</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#addLabelItem">addLabelItem</a></b>(SelectItem *<i>item</i>, std::string <i>label</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#inactiveAll">inactiveAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> SelectItem *</td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#itemAt">itemAt</a></b>(QPointF <i>point</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> SelectItem *</td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#itemAt-1">itemAt</a></b>(QPointF <i>point</i>, std::string <i>label</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#removeItem">removeItem</a></b>(SelectItem *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#setCurrentLabel">setCurrentLabel</a></b>(std::string <i>label</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">78 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#public-functions">QGraphicsScene</a></li>
+<li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#keyPressed">keyPressed</a></b>(PhotoScene::viewerTypes <i>type</i>, const int <i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#mouseMoved">mouseMoved</a></b>(QPointF <i>fromPos</i>, QPointF <i>toPos</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#mouseReleased">mouseReleased</a></b>(PhotoScene::viewerTypes <i>type</i>, QPointF <i>oldPos</i>, QPointF <i>newPos</i>, const Qt::MouseButton <i>button</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#pointClicked">pointClicked</a></b>(PhotoScene::viewerTypes <i>type</i>, SelectItem *<i>item</i>, QPointF <i>point</i>, const Qt::MouseButton <i>button</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#signals">QGraphicsScene</a></li>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoScene::viewerTypes </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#myViewerType-var">myViewerType</a></b></td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QMetaObject </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#staticMetaObject-var">staticMetaObject</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">9 static public members inherited from <a href="http://doc.qt.io/qt-5/qobject.html#static-public-members">QObject</a></li>
+</ul>
+<a name="reimplemented-protected-functions"></a>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#keyPressEvent">keyPressEvent</a></b>(QKeyEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#mouseMoveEvent">mouseMoveEvent</a></b>(QGraphicsSceneMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#mousePressEvent">mousePressEvent</a></b>(QGraphicsSceneMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoscene.html#mouseReleaseEvent">mouseReleaseEvent</a></b>(QGraphicsSceneMouseEvent *<i>event</i>) override</td></tr>
+</table></div>
+<ul>
+<li class="fn">20 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#protected-functions">QGraphicsScene</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">10 properties inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#properties">QGraphicsScene</a></li>
+<li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
+<li class="fn">5 public slots inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#public-slots">QGraphicsScene</a></li>
+<li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
+<li class="fn">20 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#protected-functions">QGraphicsScene</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">1 protected slot inherited from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#protected-slots">QGraphicsScene</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$PhotoScene-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="photoscene.html">PhotoScene</a> class provides a scene for rendering SelectItems.</p>
+<p>Provides a class for rendering SelectItems on top of a background image. This class emits signals when the mouse moves and/or clicks and when keystrokes are made. It holds an internal list of SelectItems that have been drawn in the scene.</p>
+</div>
+<!-- @@@PhotoScene -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$viewerTypes$$$PHOTO_VIEWER_TYPE$$$MASK_VIEWER_TYPE -->
+<h3 class="fn" id="viewerTypes-enum"><a name="viewerTypes-enum"></a>enum PhotoScene::<span class="name">viewerTypes</span></h3>
+<p>This enum is used to indicate which panel this <a href="photoscene.html">PhotoScene</a> belongs to.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>PhotoScene::PHOTO_VIEWER_TYPE</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The scene containing the opened image.</td></tr>
+<tr><td class="topAlign"><code>PhotoScene::MASK_VIEWER_TYPE</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The scene containing the masked image.</td></tr>
+</table></div>
+<!-- @@@viewerTypes -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$PhotoScene[overload1]$$$PhotoScenePhotoScene::viewerTypesQObject* -->
+<h3 class="fn" id="PhotoScene"><a name="PhotoScene"></a>PhotoScene::<span class="name">PhotoScene</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qobject.html#QObject">QObject</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs a <a href="photoscene.html">PhotoScene</a> instance of type <i>type</i>, with parent <i>parent</i>, if any.</p>
+<!-- @@@PhotoScene -->
+<!-- $$$addItem[overload1]$$$addItemSelectItem* -->
+<h3 class="fn" id="addItem"><a name="addItem"></a><span class="type">void</span> PhotoScene::<span class="name">addItem</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>)</h3>
+<p>This function overloads addItem().</p>
+<p>Adds <i>item</i> to the scene.</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemQGraphicsItem* -->
+<h3 class="fn" id="addItem-1"><a name="addItem-1"></a><span class="type">void</span> PhotoScene::<span class="name">addItem</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="photoscene.html#addItem">addItem</a>().</p>
+<p>Adds <i>item</i> to the scene.</p>
+<!-- @@@addItem -->
+<!-- $$$addLabel[overload1]$$$addLabelstd::string -->
+<h3 class="fn" id="addLabel"><a name="addLabel"></a><span class="type">void</span> PhotoScene::<span class="name">addLabel</span>(<span class="type">std::string</span> <i>label</i>)</h3>
+<p>Adds <i>label</i> to the <a href="photoscene.html">PhotoScene</a></p>
+<!-- @@@addLabel -->
+<!-- $$$addLabelItem[overload1]$$$addLabelItemSelectItem*std::string -->
+<h3 class="fn" id="addLabelItem"><a name="addLabelItem"></a><span class="type">void</span> PhotoScene::<span class="name">addLabelItem</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type">std::string</span> <i>label</i>)</h3>
+<p>Adds <i>item</i> to the Label given by <i>label</i>.</p>
+<!-- @@@addLabelItem -->
+<!-- $$$inactiveAll[overload1]$$$inactiveAll -->
+<h3 class="fn" id="inactiveAll"><a name="inactiveAll"></a><span class="type">void</span> PhotoScene::<span class="name">inactiveAll</span>()</h3>
+<p>Sets all SelectItems in the <a href="photoscene.html">PhotoScene</a> to inactive.</p>
+<!-- @@@inactiveAll -->
+<!-- $$$itemAt[overload1]$$$itemAtQPointF -->
+<h3 class="fn" id="itemAt"><a name="itemAt"></a><span class="type"><a href="selectitem.html">SelectItem</a></span> *PhotoScene::<span class="name">itemAt</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>)</h3>
+<p>Returns a pointer to the top <a href="selectitem.html">SelectItem</a> at <i>point</i> in scene coordinates. If there is no <a href="selectitem.html">SelectItem</a> under that position then <code>nullptr</code> is returned.</p>
+<!-- @@@itemAt -->
+<!-- $$$itemAt$$$itemAtQPointFstd::string -->
+<h3 class="fn" id="itemAt-1"><a name="itemAt-1"></a><span class="type"><a href="selectitem.html">SelectItem</a></span> *PhotoScene::<span class="name">itemAt</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type">std::string</span> <i>label</i>)</h3>
+<p>This function overloads <a href="photoscene.html#itemAt">itemAt</a>().</p>
+<p>Returns a pointer to the top <a href="selectitem.html">SelectItem</a> at <i>point</i> in scene coordinates and with Label <i>label</i>. If there is no <a href="selectitem.html">SelectItem</a> from that Label under that position then <code>nullptr</code> is returned.</p>
+<!-- @@@itemAt -->
+<!-- $$$keyPressEvent[overload1]$$$keyPressEventQKeyEvent* -->
+<h3 class="fn" id="keyPressEvent"><a name="keyPressEvent"></a><code>[override virtual protected] </code><span class="type">void</span> PhotoScene::<span class="name">keyPressEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qkeyevent.html">QKeyEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#keyPressEvent">QGraphicsScene::keyPressEvent</a>().</p>
+<p>This function overloads keyPressEvent().</p>
+<p>Executed when a key is pressed. <i>event</i> contains the key information.</p>
+<p><b>See also </b><a href="http://doc.qt.io/qt-5/qgraphicsscene.html#keyPressEvent">QGraphicsScene::keyPressEvent</a>().</p>
+<!-- @@@keyPressEvent -->
+<!-- $$$keyPressed[overload1]$$$keyPressedPhotoScene::viewerTypesconstint -->
+<h3 class="fn" id="keyPressed"><a name="keyPressed"></a><code>[signal] </code><span class="type">void</span> PhotoScene::<span class="name">keyPressed</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, const <span class="type">int</span> <i>key</i>)</h3>
+<p>Triggered when a key is pressed in the <a href="photoscene.html">PhotoScene</a>. The signal contains which type of viewer this is as <i>type</i> and what key was pressed as <i>key</i>.</p>
+<!-- @@@keyPressed -->
+<!-- $$$mouseMoveEvent[overload1]$$$mouseMoveEventQGraphicsSceneMouseEvent* -->
+<h3 class="fn" id="mouseMoveEvent"><a name="mouseMoveEvent"></a><code>[override virtual protected] </code><span class="type">void</span> PhotoScene::<span class="name">mouseMoveEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsscenemouseevent.html">QGraphicsSceneMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mouseMoveEvent">QGraphicsScene::mouseMoveEvent</a>().</p>
+<p>This function overloads mouseMoveEvent().</p>
+<p>Executed when the mouse moves in the <a href="photoscene.html">PhotoScene</a>. <i>event</i> contains the new position of the mouse. If a mouse button is depressed a <a href="photoscene.html#mouseMoved">mouseMoved</a>() signal is emitted.</p>
+<p><b>See also </b><a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mouseMoveEvent">QGraphicsScene::mouseMoveEvent</a>().</p>
+<!-- @@@mouseMoveEvent -->
+<!-- $$$mouseMoved[overload1]$$$mouseMovedQPointFQPointF -->
+<h3 class="fn" id="mouseMoved"><a name="mouseMoved"></a><code>[signal] </code><span class="type">void</span> PhotoScene::<span class="name">mouseMoved</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>fromPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>toPos</i>)</h3>
+<p>Triggered when the mouse moves in the <a href="photoscene.html">PhotoScene</a> and a mouse button is depressed. The signal contains the starting (<i>fromPos</i>) and ending (<i>toPos</i>) positions of the mouse.</p>
+<!-- @@@mouseMoved -->
+<!-- $$$mousePressEvent[overload1]$$$mousePressEventQGraphicsSceneMouseEvent* -->
+<h3 class="fn" id="mousePressEvent"><a name="mousePressEvent"></a><code>[override virtual protected] </code><span class="type">void</span> PhotoScene::<span class="name">mousePressEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsscenemouseevent.html">QGraphicsSceneMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mousePressEvent">QGraphicsScene::mousePressEvent</a>().</p>
+<p>This function overloads mousePressEvent().</p>
+<p>Executed when a mouse button is pressed. <i>event</i> contains which button was pressed and where in the <a href="photoscene.html">PhotoScene</a>. The <a href="photoscene.html">PhotoScene</a> searches for any SelectItems under the clicked point and <code>emits</code> a <a href="photoscene.html#pointClicked">pointClicked</a>() signal with the result.</p>
+<p><b>See also </b><a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mousePressEvent">QGraphicsScene::mousePressEvent</a>().</p>
+<!-- @@@mousePressEvent -->
+<!-- $$$mouseReleaseEvent[overload1]$$$mouseReleaseEventQGraphicsSceneMouseEvent* -->
+<h3 class="fn" id="mouseReleaseEvent"><a name="mouseReleaseEvent"></a><code>[override virtual protected] </code><span class="type">void</span> PhotoScene::<span class="name">mouseReleaseEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsscenemouseevent.html">QGraphicsSceneMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mouseReleaseEvent">QGraphicsScene::mouseReleaseEvent</a>().</p>
+<p>This function overloads mouseReleaseEvent().</p>
+<p>Executed when a mouse button is released. <i>event</i> contains which button was released. A <a href="photoscene.html#mouseReleased">mouseReleased</a>() signal is emitted with the <a href="photoscene.html">PhotoScene</a> type, any mouse movement information, and which button was released.</p>
+<p><b>See also </b><a href="http://doc.qt.io/qt-5/qgraphicsscene.html#mouseReleaseEvent">QGraphicsScene::mouseReleaseEvent</a>().</p>
+<!-- @@@mouseReleaseEvent -->
+<!-- $$$mouseReleased[overload1]$$$mouseReleasedPhotoScene::viewerTypesQPointFQPointFconstQt::MouseButton -->
+<h3 class="fn" id="mouseReleased"><a name="mouseReleased"></a><code>[signal] </code><span class="type">void</span> PhotoScene::<span class="name">mouseReleased</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>oldPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>newPos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a></span> <i>button</i>)</h3>
+<p>Triggered when a mouse button is released. The signal contains which type of viewer this is as <i>type</i>, he starting (<i>oldPos</i>) and ending (<i>newPos</i>) positions of the mouse (during the time the button was depressed), and which mouse button was released as <i>button</i>.</p>
+<!-- @@@mouseReleased -->
+<!-- $$$pointClicked[overload1]$$$pointClickedPhotoScene::viewerTypesSelectItem*QPointFconstQt::MouseButton -->
+<h3 class="fn" id="pointClicked"><a name="pointClicked"></a><code>[signal] </code><span class="type">void</span> PhotoScene::<span class="name">pointClicked</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, <span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a></span> <i>button</i>)</h3>
+<p>Triggered when a mouse button is depressed in the <a href="photoscene.html">PhotoScene</a>. The signal contains which type of viewer this is as <i>type</i>, any <a href="selectitem.html">SelectItem</a> that exists under the mouse as <i>item</i>, the position of the mouse as <i>point</i>, and which mouse button was depressed as <i>button</i>.</p>
+<!-- @@@pointClicked -->
+<!-- $$$removeItem[overload1]$$$removeItemSelectItem* -->
+<h3 class="fn" id="removeItem"><a name="removeItem"></a><span class="type">void</span> PhotoScene::<span class="name">removeItem</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>)</h3>
+<p>This function overloads removeItem().</p>
+<p>Adds <i>item</i> to the scene.</p>
+<!-- @@@removeItem -->
+<!-- $$$setCurrentLabel[overload1]$$$setCurrentLabelstd::string -->
+<h3 class="fn" id="setCurrentLabel"><a name="setCurrentLabel"></a><span class="type">void</span> PhotoScene::<span class="name">setCurrentLabel</span>(<span class="type">std::string</span> <i>label</i>)</h3>
+<p>Sets the currently active Label to be <i>label</i>.</p>
+<!-- @@@setCurrentLabel -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

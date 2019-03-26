@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- commands.cpp -->
+  <title>RotateCommand Class | Selector</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>RotateCommand</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">RotateCommand Class</h1>
+<!-- $$$RotateCommand-brief -->
+<p>The <a href="rotatecommand.html">RotateCommand</a> class provides undo and redo actions for rotating a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>. <a href="#details">More...</a></p>
+<!-- @@@RotateCommand -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;RotateCommand&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a></td></tr></table></div><ul>
+<li><a href="rotatecommand-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="rotatecommand.html#RotateCommand">RotateCommand</a></b>(SelectItem *<i>item</i>, const QPointF <i>oldPos</i>, const QPointF <i>newPos</i>, QUndoCommand *<i>parent</i> = nullptr)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="rotatecommand.html#redo">redo</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="rotatecommand.html#undo">undo</a></b>() override</td></tr>
+</table></div>
+<ul>
+<li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qundocommand.html#public-functions">QUndoCommand</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$RotateCommand-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="rotatecommand.html">RotateCommand</a> class provides undo and redo actions for rotating a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>.</p>
+<p><a href="rotatecommand.html">RotateCommand</a> is used to hold a reference to a <a href="selectitem.html">SelectItem</a> and the starting and ending points of rotation. Using the <a href="rotatecommand.html#undo">undo</a>() and <a href="rotatecommand.html#redo">redo</a>() commands the rotation of the item can be undone and redone repeatedly.</p>
+</div>
+<p><b>See also </b><a href="addcommand.html">AddCommand</a>, <a href="movecommand.html">MoveCommand</a>, <a href="addvertexcommand.html">AddVertexCommand</a>, <a href="movevertexcommand.html">MoveVertexCommand</a>, <a href="deletevertexcommand.html">DeleteVertexCommand</a>, <a href="erasepointscommand.html">ErasePointsCommand</a>, and <a href="deletecommand.html">DeleteCommand</a>.</p>
+<!-- @@@RotateCommand -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$RotateCommand[overload1]$$$RotateCommandSelectItem*constQPointFconstQPointFQUndoCommand* -->
+<h3 class="fn" id="RotateCommand"><a name="RotateCommand"></a>RotateCommand::<span class="name">RotateCommand</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>oldPos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>newPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qundocommand.html#QUndoCommand">QUndoCommand</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs a <a href="rotatecommand.html">RotateCommand</a> using the provided <i>item</i> and the starting (<i>oldPos</i>) and ending (<i>newPos</i>) points of rotation so that the rotation of this <i>item</i> can be undone and/or redone. <i>parent</i> refers to parent <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a>, if any.</p>
+<!-- @@@RotateCommand -->
+<!-- $$$redo[overload1]$$$redo -->
+<h3 class="fn" id="redo"><a name="redo"></a><code>[override virtual] </code><span class="type">void</span> RotateCommand::<span class="name">redo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#redo">QUndoCommand::redo</a>().</p>
+<!-- @@@redo -->
+<!-- $$$undo[overload1]$$$undo -->
+<h3 class="fn" id="undo"><a name="undo"></a><code>[override virtual] </code><span class="type">void</span> RotateCommand::<span class="name">undo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#undo">QUndoCommand::undo</a>().</p>
+<!-- @@@undo -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>
