@@ -10,7 +10,6 @@ HEADERS = \
     $$PWD/selectItem.h \
     $$PWD/freeDrawSelect.h \
     boxbasedselector.h \
-    selectgroup.h \
     label.h \
     freeDrawErase.h
 
@@ -23,7 +22,6 @@ SOURCES = \
     $$PWD/selectItem.cpp \
     $$PWD/freeDrawSelect.cpp \
     boxbasedselector.cpp \
-    selectgroup.cpp \
     label.cpp \
     freeDrawErase.cpp
 
