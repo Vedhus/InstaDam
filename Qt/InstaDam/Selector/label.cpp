@@ -185,12 +185,7 @@ QPixmap Label::exportLabel(QSize &rect){
             rit.next();
             if(!rit.value()->isVisible())
                 continue;
-            QRectF r = rit.value()->getRect();
-            paint->translate(r.center());
-            paint->rotate(rit.value()->getRotationAngle());
-            paint->translate(-r.center());
-            paint->drawRect(r);
-            paint->resetTransform();
+            rit.value()->toPixmap(paint);
         }
     }
     if(!ellipseObjects.isEmpty()){
@@ -199,12 +194,7 @@ QPixmap Label::exportLabel(QSize &rect){
             eit.next();
             if(!eit.value()->isVisible())
                 continue;
-            QRectF r = eit.value()->getRect();
-            paint->translate(r.center());
-            paint->rotate(eit.value()->getRotationAngle());
-            paint->translate(-r.center());
-            paint->drawEllipse(r);
-            paint->resetTransform();
+            eit.value()->toPixmap(paint);
         }
     }
     if(!polygonObjects.isEmpty()){
@@ -213,7 +203,7 @@ QPixmap Label::exportLabel(QSize &rect){
             pit.next();
             if(!pit.value()->isVisible())
                 continue;
-            paint->drawPolygon(pit.value()->getPolygon());
+            pit.value()->toPixmap(paint);
         }
     }
     if(!freeDrawObjects.isEmpty()){
@@ -222,7 +212,7 @@ QPixmap Label::exportLabel(QSize &rect){
             fit.next();
             if(!fit.value()->isVisible())
                 continue;
-            paint->drawPoints(fit.value()->getPoints());
+            fit.value()->toPixmap(paint);
         }
 
     }

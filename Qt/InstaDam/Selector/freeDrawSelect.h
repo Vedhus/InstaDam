@@ -3,6 +3,7 @@
 
 #include "selectItem.h"
 #include <QHash>
+#include <QPixmap>
 #ifdef TEST
 class TestSelect;
 
@@ -16,6 +17,7 @@ class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
 public:
     static QString baseInstruction;
     FreeDrawSelect();
+    FreeDrawSelect(QPixmap map, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QList<FreeDrawSelect*> items);
     FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
@@ -38,6 +40,7 @@ public:
     void updatePen(QPen pen) override;
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
+    void toPixmap(QPainter *painter) override;
 
     // Mirror
     FreeDrawSelect* getMirror() override {return mirror;}
@@ -62,6 +65,8 @@ public:
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
     QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
+    void setPointsUnchecked(QSharedPointer<FreeMap> map);
+    QSharedPointer<FreeMap> getMap(){return myMap;}
     //void movePoint(QPointF &point);
 
     void print();

@@ -175,7 +175,13 @@ void RectangleSelect::setRectUnchecked(QRectF rect){
     setRect(myRect);
 }
 
-
+void RectangleSelect::toPixmap(QPainter *painter){
+    painter->translate(myRect.center());
+    painter->rotate(getRotationAngle());
+    painter->translate(-myRect.center());
+    painter->drawRect(myRect);
+    painter->resetTransform();
+}
 /*---------------------------- Mirror functions ----------------------*/
 /*!
   \reimp

@@ -325,6 +325,9 @@ void PolygonSelect::write(QJsonObject &json) const{
     json["points"] = points;
 }
 
+void PolygonSelect::toPixmap(QPainter *painter){
+    painter->drawPolygon(getPolygon());
+}
 /*------------------------ Mirror -------------------------------*/
 /*!
   \reimp

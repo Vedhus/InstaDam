@@ -9,6 +9,7 @@
 #include "project.h"
 #include <QDialog>
 #include <QGraphicsItem>
+#include <QUndoGroup>
 #include <QObject>
 #include <QGridLayout>
 #include <QMenuBar>
@@ -102,6 +103,8 @@ private slots:
     void setCurrentLabel(LabelButton *button);
     void setCurrentBrushSize(int);
     void setNewProject();
+    void addCurrentSelection();
+    void cancelCurrentSelection();
 public slots:
     void resetPixmapButtons();
 
@@ -126,7 +129,9 @@ private:
     Project currentProject;
     PhotoScene *scene;
     PhotoScene *maskScene;
-    QUndoStack *undoStack;
+    QUndoStack *mainUndoStack;
+    QUndoStack *tempUndoStack;
+    QUndoGroup *undoGroup;
     SelectItem::SelectType currentSelectType;
     SelectItem *currentItem;
     QAction *undoAction;
@@ -142,6 +147,7 @@ private:
     Ui::polygonSelectForm *polygonSelectForm;
     bool drawing = true;
     bool panning = false;
+    bool canDrawOnPhoto = true;
     int lastType = -1;
     bool insertVertex = false;
     int vertex1 = -1;
@@ -150,10 +156,12 @@ private:
     FreeDrawErase *myErase;
     SelectItem *tempItem;
     SelectItem *mirrorItem;
+    SelectItem *maskItem;
     int brushMode = Qt::SquareCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
 
+    QPixmap maskSelection(SelectItem *item);
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     void loadLabelFile(QString filename);

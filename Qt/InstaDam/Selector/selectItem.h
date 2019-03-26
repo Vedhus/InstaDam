@@ -18,12 +18,12 @@
 #include <QWidget>
 #include <QPainter>
 #include <QJsonObject>
+//#include "freeDrawSelect.h"
 
 //#include "label.h"
 #define UNUSED(x) (void)(x)
 class Label;
-class QRectF;
-class QPointF;
+class FreeDrawSelect;
 
 const int TOP = 0x1;
 const int BOTTOM = 0x2;
@@ -84,6 +84,7 @@ public:
     // I/O
     virtual void read(const QJsonObject &json) = 0;
     virtual void write(QJsonObject &json) const = 0;
+    virtual void toPixmap(QPainter* painter) = 0;
     // get info about the objects
     virtual QString baseInstructions() = 0;
     virtual bool isInside(QPointF &point) = 0;
@@ -173,6 +174,7 @@ protected:
     int activeH = BOTTOM;
     int activeVertex = (activeV | activeH);
 
+    FreeDrawSelect* pixmap;
     void checkBoundaries(QPointF &shift, QRectF &rect);
     bool isInsideRect(QRectF &rect, QPointF &point);
 };

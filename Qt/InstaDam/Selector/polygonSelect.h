@@ -33,6 +33,7 @@ public:
     void updatePen(QPen pen) override;
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
+    void toPixmap(QPainter *painter) override;
 
     // Mirror
     PolygonSelect* getMirror() override {return mirror;}
