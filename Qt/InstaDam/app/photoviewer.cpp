@@ -344,9 +344,7 @@ void PhotoViewer::resizeEvent(QResizeEvent *event)
 
 void PhotoViewer::mousePressEvent(QMouseEvent* event)
 {
-    cout << "VIEWER PRESS"<< endl;
     QGraphicsView::mousePressEvent(event);
-    cout << "VQ DONE" << endl;
 
     //if (hasPhoto)
     //{
@@ -366,7 +364,6 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event)
         //}
 
     }
-    cout << "V DONE"<< endl;
 }
 
 

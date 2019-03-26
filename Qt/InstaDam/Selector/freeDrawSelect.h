@@ -65,6 +65,8 @@ public:
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
     QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
+    void setPointsUnchecked(QSharedPointer<FreeMap> map);
+    QSharedPointer<FreeMap> getMap(){return myMap;}
     //void movePoint(QPointF &point);
 
     void print();

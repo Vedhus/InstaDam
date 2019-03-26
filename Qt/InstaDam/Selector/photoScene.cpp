@@ -61,9 +61,7 @@ void PhotoScene::addItem(SelectItem* item){
   Adds \a item to the scene.
   */
 void PhotoScene::removeItem(SelectItem* item){
-    cout << "  R " << currentItems.size() << endl;
     currentItems.remove(item);
-    cout << "    " << currentItems.size() << endl;
     QGraphicsScene::removeItem(item);
 }
 
@@ -91,7 +89,6 @@ void PhotoScene::keyPressEvent(QKeyEvent *event){
   */
 void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    cout << "SCENE PRESS" << endl;
     if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
         mousePressed = true;
         QPointF mousePos(event->scenePos().x(),
@@ -108,9 +105,7 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
 
     }
-    cout << "S DONE" << endl;
     QGraphicsScene::mousePressEvent(event);
-    cout << "SQ DONE" << endl;
 }
 
 /*!
@@ -124,7 +119,6 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
   */
 void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
     if(mousePressed){
-        //cout << "   L" << endl;
         QPointF mousePos(event->scenePos().x(),
                      event->scenePos().y());
         emit mouseMoved(newPos, mousePos);
@@ -145,9 +139,7 @@ void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
 void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
-        //cout << "   LEFT" << endl;
         mousePressed = false;
-        //cout << oldPos.x() << "," << oldPos.y() << "  " << newPos.x() << "," << newPos.y() << endl;
         emit mouseReleased(myViewerType, oldPos, newPos, event->button());
     }
     QGraphicsScene::mouseReleaseEvent(event);
@@ -158,15 +150,11 @@ void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
   If there is no SelectItem under that position then \c nullptr is returned.
   */
 SelectItem* PhotoScene::itemAt(QPointF point){
-    cout << "ITEMAT " << currentItems.size() << endl;
     for(std::list<SelectItem*>::const_iterator iterator = currentItems.begin(), end = currentItems.end(); iterator != end; ++iterator) {
-        cout <<"Q" << endl;
         if((*iterator)->isVisible() && (*iterator)->isInside(point)){
-            //cout << "Z" << endl;
             return (*iterator);
         }
     }
-    //cout << "W" << endl;
     return nullptr;
 
 }

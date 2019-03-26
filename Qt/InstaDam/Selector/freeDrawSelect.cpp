@@ -57,17 +57,19 @@ FreeDrawSelect::FreeDrawSelect(QPixmap map, QSharedPointer<Label> label, QGraphi
     img = img.convertToFormat(QImage::Format_RGB32);
     QRgb *rgb;
     for(int y = 0; y < img.height(); y++){
-        cout << " Y " << y << endl;
+        //cout << " Y " << y << endl;
         rgb = (QRgb*)img.scanLine(y);
         for(int x = 0; x < img.width(); x++){
-            cout << " " << qRed(rgb[x]);
+            //cout << " " << qRed(rgb[x]);
             if(qRed(rgb[x]) != 0 || qBlue(rgb[x]) != 0 || qGreen(rgb[x] != 0)){
-                cout << "HIT";
+                //cout << "HIT";
                 myMap->insert(coordsToInt(x, y), QPoint(x, y));
             }
         }
-        cout << endl;
+        //cout << endl;
     }
+    calcRect();
+    setMirrorMap();
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QAbstractGraphicsShapeItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
@@ -111,6 +113,8 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     while(it.hasNext()){
         myMap->unite((*it.next()->myMap));
     }
+    calcRect();
+    setMirrorMap();
 }
 
 /*!
@@ -160,9 +164,9 @@ FreeDrawSelect::~FreeDrawSelect(){
 void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
     UNUSED(point);
     UNUSED(vertex);
-    QAbstractGraphicsShapeItem::prepareGeometryChange();
+    //QAbstractGraphicsShapeItem::prepareGeometryChange();
 
-    myRect = this->boundingRect();
+    //myRect = this->boundingRect();
 }
 
 /*!
@@ -235,6 +239,7 @@ void FreeDrawSelect::read(const QJsonObject &json){
     }
     myID = json["objectID"].toInt();
     calcRect();
+    setMirrorMap();
 }
 
 /*!
@@ -486,6 +491,12 @@ QGraphicsScene* FreeDrawSelect::scene(){
     return SelectItem::scene();
 }
 
+void FreeDrawSelect::setPointsUnchecked(QSharedPointer<FreeMap> map){
+    myMap = map;
+    calcRect();
+    setMirrorMap();
+}
+
 /*---------------------------- Protected ---------------------------*/
 /*!
   Creates a rasterized verion of the line defined by \a start and \a end. The pixels on this line
@@ -532,7 +543,7 @@ void FreeDrawSelect::calcRect(){
         b = max(b, it.value().y());
         r = max(r, it.value().x());
     }
-    cout << t << "," << l << "  " << b << "," << r << endl;
+    //cout << t << "," << l << "  " << b << "," << r << endl;
     myRect = QRectF(QPointF(t,l), QPointF(b,r));
 }
 

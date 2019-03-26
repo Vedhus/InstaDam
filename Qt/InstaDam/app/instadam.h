@@ -161,6 +161,7 @@ private:
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
 
+    QPixmap maskSelection(SelectItem *item);
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     void loadLabelFile(QString filename);
