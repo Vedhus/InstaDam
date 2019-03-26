@@ -10,9 +10,12 @@ Label::Label()
 
 }
 
-Label::Label(const QJsonObject &json){
-    read(json);
+Label::Label(const QJsonObject &json, int j){
+    readIdpro(json);
+    labelId = j;
 }
+
+
 Label::~Label()
 {
 
@@ -20,6 +23,10 @@ Label::~Label()
 
 QColor Label::getColor(){
     return color;
+}
+
+void Label::setId(int j){
+    labelId = j;
 }
 
 void Label::setColor(QColor col){
@@ -61,14 +68,22 @@ void Label::removeItem(const int id){
     }
 }
 
-void Label::read(const QJsonObject &json){
+void Label::readIdpro(const QJsonObject &json){
+    clear();
+    setText(json["text"].toString());
+    setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+}
+
+void Label::clear()
+{
     rectangleObjects.clear();
     ellipseObjects.clear();
     polygonObjects.clear();
     freeDrawObjects.clear();
-    setText(json["text"].toString());
-    setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+}
 
+void Label::readIdantn(const QJsonObject &json){
+    clear();
     if(json.contains("rectangles")){
         QJsonArray rectArray = json["rectangles"].toArray();
         for(QJsonArray::iterator it = rectArray.begin(); it != rectArray.end(); ++it){
@@ -92,14 +107,18 @@ void Label::read(const QJsonObject &json){
             SelectItem::ID = max(SelectItem::ID, poly->myID);
             addItem(poly);
         }
-    }
+   }
+
     if(json.contains("freedraw")){
         FreeDrawSelect *fd = new FreeDrawSelect(json["freedraw"].toObject(), sharedFromThis());
         SelectItem::ID = max(SelectItem::ID, fd->myID);
         addItem(fd);
     }
+
+    qInfo("Start annotation read");
     SelectItem::ID += 1;
 }
+
 
 QPixmap Label::exportLabel(QSize &rect){
     QPixmap map(rect.width(), rect.height());
@@ -165,6 +184,8 @@ void Label::write(QJsonObject &json) const{
     json["green"] = color.green();
     json["blue"] = color.blue();
     json["alpha"] = color.alpha();
+}
+void Label::writeIdantn(QJsonObject &json) const{
     if(!rectangleObjects.isEmpty()){
         QJsonArray rectangles;
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);

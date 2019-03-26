@@ -34,7 +34,9 @@ public:
     void addLabelItem(SelectItem* item, std::string label);
     void addItem(SelectItem* item);
     void addItem(QGraphicsItem* item);
+    void addLabelItem(QGraphicsItem* item);
     void inactiveAll();
+    void clearItems();
     viewerTypes myViewerType;
 
 signals:
@@ -55,6 +57,7 @@ private:
     QPointF newPos;
     std::string currentLabel;
     bool mousePressed;
+    QList<SelectItem* > labelItems;
     std::list<SelectItem*> currentItems;
     std::map<std::string, std::list<SelectItem*> > labelmap;
 };

@@ -10,5 +10,6 @@ INPUT(
 ./debug\selectgroup.o
 ./debug\label.o
 ./debug\freeDrawErase.o
+./debug\annotation.o
 ./debug\moc_photoScene.o
 );

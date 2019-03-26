@@ -48,6 +48,7 @@ public:
     QAction *actionDelete;
     QAction *actionExport;
     QAction *actionExport_zip;
+    QAction *actionSave_Annotation;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -148,6 +149,9 @@ public:
         actionExport->setObjectName(QStringLiteral("actionExport"));
         actionExport_zip = new QAction(InstaDam);
         actionExport_zip->setObjectName(QStringLiteral("actionExport_zip"));
+        actionSave_Annotation = new QAction(InstaDam);
+        actionSave_Annotation->setObjectName(QStringLiteral("actionSave_Annotation"));
+        actionSave_Annotation->setEnabled(true);
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -274,7 +278,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 813));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 884));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -414,7 +418,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1890, 88));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1888, 70));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -484,7 +488,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1918, 33));
+        menubar->setGeometry(QRect(0, 0, 1918, 21));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -499,6 +503,7 @@ public:
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
         menu_File->addAction(actionOpen_File);
+        menu_File->addAction(actionSave_Annotation);
         menu_File->addSeparator();
         menu_File->addAction(actionExit);
         menuEdit->addAction(actionDelete);
@@ -540,6 +545,7 @@ public:
 #endif // QT_NO_SHORTCUT
         actionExport->setText(QApplication::translate("InstaDam", "Export", nullptr));
         actionExport_zip->setText(QApplication::translate("InstaDam", "Export zip", nullptr));
+        actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save Annotation", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));

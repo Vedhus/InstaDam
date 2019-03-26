@@ -16,6 +16,7 @@
 #include <QBuffer>
 
 #include "newproject.h"
+
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
 #include "ui_polygonSelect.h"
@@ -59,6 +60,8 @@ public:
     QFileInfo file;
     QString filename;
     QString labelFile;
+    QVector<QString> labelPaths;
+    QString annotationPath;
     QStringList imagesList;
     QDir path;
     void openFile_and_labels();
@@ -102,6 +105,10 @@ private slots:
     void setCurrentLabel(LabelButton *button);
     void setCurrentBrushSize(int);
     void setNewProject();
+    void on_actionSave_Annotation_triggered();
+
+    void on_saveAndBack_clicked();
+
 public slots:
     void resetPixmapButtons();
 
@@ -154,9 +161,12 @@ private:
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
 
-    void read(const QJsonObject &json);
-    void write(QJsonObject &json);
-    void loadLabelFile(QString filename);
+    void read(const QJsonObject &json, fileTypes);
+    void write(QJsonObject &json, fileTypes);
+    void loadProject(QString filename);
+    void loadIdpro(QString filename);
+    void setLabelClasses();
+    void loadLabelFile(QString filename, fileTypes);
 };
 
 

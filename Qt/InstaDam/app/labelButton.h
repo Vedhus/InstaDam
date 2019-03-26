@@ -1,6 +1,7 @@
 #ifndef LABELBUTTON_H
 #define LABELBUTTON_H
 #include <QPushButton>
+#include <QSlider>
 #include "../Selector/label.h"
 
 class LabelButton : public QPushButton{
@@ -8,11 +9,14 @@ class LabelButton : public QPushButton{
 public:
     LabelButton(QSharedPointer<Label> label);
     QSharedPointer<Label> myLabel;
+    QSlider *slider;
 signals:
     void cclicked(QSharedPointer<Label> label);
+    void opacity(QSharedPointer<Label> label, int);
 public slots:
     void wasClicked();
-
+    void reemitValueChanged(int);
 };
+
 
 #endif // LABELBUTTON_H

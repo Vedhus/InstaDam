@@ -13,6 +13,7 @@ INPUT(
 ./debug\fslider.o
 ./debug\newproject.o
 ./debug\labelButton.o
+./debug\paintbrush.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o

@@ -10,7 +10,7 @@
 #include "rectangleSelect.h"
 #include "ellipseSelect.h"
 #include "polygonSelect.h"
-
+enum fileTypes {PROJECT, ANNOTATION};
 //class SelectItem;
 
 class Label: public QEnableSharedFromThis<Label>{
@@ -21,10 +21,12 @@ class Label: public QEnableSharedFromThis<Label>{
   public:
 
     Label();
-    Label(const QJsonObject &json);
+    Label(const QJsonObject &json, int);
+    int labelId;
+    void clear();
 
     ~Label();
-
+    void setId(int j);
     QColor getColor();
 
     void setColor(QColor col);
@@ -43,8 +45,10 @@ class Label: public QEnableSharedFromThis<Label>{
     void addItem(PolygonSelect *item);
     void addItem(FreeDrawErase *item){UNUSED(item);}
     void removeItem(const int id);
-    void read(const QJsonObject &json);
+    void readIdpro(const QJsonObject &json);
+    void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    void writeIdantn(QJsonObject &json) const;
     QPixmap exportLabel(QSize &rect);
 };
 

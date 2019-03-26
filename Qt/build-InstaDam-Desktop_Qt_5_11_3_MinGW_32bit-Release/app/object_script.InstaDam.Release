@@ -13,6 +13,7 @@ INPUT(
 ./release\fslider.o
 ./release\newproject.o
 ./release\labelButton.o
+./release\paintbrush.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o

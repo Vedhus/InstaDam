@@ -22,10 +22,31 @@ void PhotoScene::inactiveAll(){
 }
 void PhotoScene::addItem(QGraphicsItem* item){
     QGraphicsScene::addItem(item);
+
+}
+void PhotoScene::addLabelItem(QGraphicsItem* item){
+    QGraphicsScene::addItem(item);
+
+
 }
 void PhotoScene::addItem(SelectItem* item){
     currentItems.push_front(item);
     QGraphicsScene::addItem(item);
+    labelItems.append(item);
+}
+
+void PhotoScene::clearItems()
+{
+    qInfo("The number of labels is %d",labelItems.length());
+    for (int i = 0; i < labelItems.length(); i++)
+    {
+        this->removeItem(labelItems[i]);
+        //delete labelItems[i];
+    }
+    labelItems.clear();
+    currentItems.clear();
+    labelmap.clear();
+
 }
 
 void PhotoScene::keyPressEvent(QKeyEvent *event){

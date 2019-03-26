@@ -20,7 +20,8 @@ SOURCES += \
         filtercontrols.cpp \
         fslider.cpp \
         newproject.cpp \
-        labelButton.cpp
+        labelButton.cpp \
+    paintbrush.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -38,7 +39,8 @@ HEADERS += \
         filterproperty.h \
         fslider.h \
         newproject.h \
-        labelButton.h
+        labelButton.h \
+    paintbrush.h
 wasm: HEADERS += colordialog.h
 
 FORMS += \
@@ -65,6 +67,7 @@ win32 {
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
+   QMAKE_LIBDIR+= $${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
 ##End change paths
 
   LIBS += -L$${PWD}\..\quazip\lib

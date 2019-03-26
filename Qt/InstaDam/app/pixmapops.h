@@ -4,10 +4,9 @@
 
 
 QPixmap testPixmap(int, int, int, int);
-QPixmap maskPixmaps(QPixmap, QPixmap, QPixmap, brushTypes );
-QPixmap directPixmaps(QPixmap, QPixmap, brushTypes);
+QPixmap maskPixmaps(QPixmap, QPixmap, QPixmap, toolTypes );
+QPixmap directPixmaps(QPixmap, QPixmap, toolTypes);
 QPixmap joinPixmaps(QPixmap, QPixmap, QPainter::CompositionMode);
-
 
 
 

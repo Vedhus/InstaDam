@@ -12,7 +12,8 @@ HEADERS = \
     boxbasedselector.h \
     selectgroup.h \
     label.h \
-    freeDrawErase.h
+    freeDrawErase.h \
+    annotation.h
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \
@@ -25,7 +26,8 @@ SOURCES = \
     boxbasedselector.cpp \
     selectgroup.cpp \
     label.cpp \
-    freeDrawErase.cpp
+    freeDrawErase.cpp \
+    annotation.cpp
 
 LIBS += -lQt5Widgets
 

@@ -9,14 +9,14 @@ QPixmap testPixmap(int r = 255,int g = 0,int b = 0, int a = 255)
     return px;
 }
 
-QPixmap maskPixmaps(QPixmap p1, QPixmap p2, QPixmap mask, brushTypes brushType)
+QPixmap maskPixmaps(QPixmap p1, QPixmap p2, QPixmap mask, toolTypes brushType)
 {
     QPixmap maskp2 = joinPixmaps(mask, p2, QPainter::CompositionMode_SourceIn);
     return directPixmaps(p1,maskp2, brushType);
 
 }
 
-QPixmap directPixmaps(QPixmap p1, QPixmap p2, brushTypes brushType)
+QPixmap directPixmaps(QPixmap p1, QPixmap p2, toolTypes brushType)
 {
     QPainter::CompositionMode mode;
     if (brushType == ERASER)
@@ -39,6 +39,3 @@ QPixmap joinPixmaps(QPixmap p1, QPixmap p2, QPainter::CompositionMode mode= QPai
     painter.end();
     return result;
 }
-
-
-

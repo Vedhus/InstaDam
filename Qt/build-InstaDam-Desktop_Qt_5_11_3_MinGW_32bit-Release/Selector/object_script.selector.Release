@@ -10,5 +10,6 @@ INPUT(
 ./release\selectgroup.o
 ./release\label.o
 ./release\freeDrawErase.o
+./release\annotation.o
 ./release\moc_photoScene.o
 );
