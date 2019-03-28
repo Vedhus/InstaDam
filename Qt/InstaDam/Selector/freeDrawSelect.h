@@ -12,7 +12,7 @@ class TestSelect;
 //typedef QVector<QVector <bool> > Block;
 typedef QHash<int, QPointF> FreeMap;
 typedef QHashIterator<int, QPointF> FreeMapIterator;
-class FreeDrawSelect : public QAbstractGraphicsShapeItem, public SelectItem
+class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem
 {
 public:
     static QString baseInstruction;
@@ -59,18 +59,19 @@ public:
     /*------------- End implemented functions*/
 
     void addPoints(QSharedPointer<FreeMap> points);
-    void checkPoint(QPointF &point);
     void deletePoint(int points, QSharedPointer<FreeMap> delHash);
     void deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash);
     void drawWithCircle(QPointF &oldPos, QPointF &newPos);
     void drawWithSquare(QPointF &oldPos, QPointF &newPos);
     QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
+    QPolygonF getPoints(QPointF offset);
     void setPointsUnchecked(QSharedPointer<FreeMap> map);
     QSharedPointer<FreeMap> getMap(){return myMap;}
     //void movePoint(QPointF &point);
 
     QGraphicsScene* scene();
     bool isVisible(){return SelectItem::isVisible();}
+    void setRecalc(){needToPixmap = true;}
 
 protected:
     QSharedPointer<FreeMap> myMap = nullptr;
@@ -91,8 +92,8 @@ private:
     friend TestSelect;
 #endif
     FreeDrawSelect *mirror = nullptr;
+    bool needToPixmap = false;
 
     void calcRect();
-    void checkPoint(QPoint &point);
 };
 #endif // POLYGONSELECT_H
