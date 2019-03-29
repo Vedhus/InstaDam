@@ -10,8 +10,6 @@ class TestSelect;
 #endif
 
 //typedef QVector<QVector <bool> > Block;
-typedef QHash<int, QPointF> FreeMap;
-typedef QHashIterator<int, QPointF> FreeMapIterator;
 class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem
 {
 public:
@@ -20,7 +18,7 @@ public:
     FreeDrawSelect(QPixmap map, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QList<FreeDrawSelect*> items);
-    FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/
@@ -58,33 +56,24 @@ public:
     void setMirrorMap();
     /*------------- End implemented functions*/
 
-    void addPoints(QSharedPointer<FreeMap> points);
-    void deletePoint(int points, QSharedPointer<FreeMap> delHash);
-    void deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash);
-    void drawWithCircle(QPointF &oldPos, QPointF &newPos);
-    void drawWithSquare(QPointF &oldPos, QPointF &newPos);
-    QPolygonF getPoints(){return QPolygonF::fromList(myMap->values());}
-    QPolygonF getPoints(QPointF offset);
-    void setPointsUnchecked(QSharedPointer<FreeMap> map);
-    QSharedPointer<FreeMap> getMap(){return myMap;}
-    //void movePoint(QPointF &point);
+    void addPoints(QSharedPointer<QPixmap> points);
+    void deletePoints(QPen &pen, QSharedPointer<QPixmap> map);
+    void deletePoints(QPointF &start, QPointF &end, QPen pen, QSharedPointer<QPixmap> outmap);
+    void setPointsUnchecked(QPixmap map);
 
     QGraphicsScene* scene();
     bool isVisible(){return SelectItem::isVisible();}
     void setRecalc(){needToPixmap = true;}
+    QPixmap getPixmap(){return myPixmap;}
 
 protected:
-    QSharedPointer<FreeMap> myMap = nullptr;
+    QPixmap myPixmap;
 
     int brushType;
     int fullWidth;
     int halfWidth;
 
     QPoint lastPoint;
-
-    int coordsToInt(int x, int y){return ((y * SelectItem::myBounds.width()) + x);}
-    int pointToInt(QPoint point){return coordsToInt(point.x(), point.y());}
-    void rasterizeLine(QPointF &start, QPointF &end);
 
 private:
 #ifdef TEST
@@ -93,7 +82,6 @@ private:
 #endif
     FreeDrawSelect *mirror = nullptr;
     bool needToPixmap = false;
-
-    void calcRect();
+    QPainter myPainter;
 };
 #endif // POLYGONSELECT_H

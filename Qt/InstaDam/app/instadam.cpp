@@ -1027,7 +1027,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos
         if(currentItem->type() == SelectItem::Freedraw && type == PhotoScene::MASK_VIEWER_TYPE){
             FreeDrawSelect fds(maskSelection(currentItem));
             FreeDrawSelect *temp = dynamic_cast<FreeDrawSelect*>(currentItem);
-            temp->setPointsUnchecked(fds.getMap());
+            temp->setPointsUnchecked(fds.getPixmap().copy());
         }
         if(currentItem->type() == SelectItem::Freeerase){
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
