@@ -66,6 +66,7 @@ public:
     QStringList imagesList;
     QDir path;
     void openFile_and_labels();
+    void setLabels();
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);

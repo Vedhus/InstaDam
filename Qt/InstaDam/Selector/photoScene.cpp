@@ -57,6 +57,8 @@ void PhotoScene::addItem(SelectItem* item){
     labelItems.append(item);
 }
 
+
+
 /*!
   \overload removeItem()
   Adds \a item to the scene.

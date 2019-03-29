@@ -146,7 +146,13 @@ InstaDam::~InstaDam()
 
 void InstaDam::setNewProject(){
     currentProject = newProject->newPr;
+    setLabels();
 
+
+}
+
+void InstaDam::setLabels()
+{
     clearLayout(ui->labelClassLayout);
     labelButtons.clear();
     for(int i=0; i<currentProject.numLabels(); i++){
@@ -159,12 +165,20 @@ void InstaDam::setNewProject(){
         button->setAutoFillBackground(true);
         button->setPalette(pal);
         button->update();
+
+        QHBoxLayout *hl = new QHBoxLayout();
+        hl->addWidget(button->slider);
+        hl->addWidget(button);
+        ui->labelClassLayout->addLayout(hl);
+        qInfo("Button Added!");
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
+        button->slider->setValue(50);
+        //connect(button, SIGNAL(opacity(int, int)), ui->IdmPhotoViewer, SLOT(opacityChanged(int, int)));
+
         labelButtons.push_back(button);
-        ui->labelClassLayout->addWidget(button);
+
         qInfo("Button Added!");
     }
-
 }
 
 void InstaDam::on_actionNew_triggered()
@@ -557,27 +571,7 @@ void InstaDam::loadLabelFile(QString filename, fileTypes fileType){
         {
             this->currentProject = Project();
             read(loadDoc.object(), fileType);
-            clearLayout(ui->labelClassLayout);
-            labelButtons.clear();
-            for(int i=0; i<currentProject.numLabels(); i++)
-            {
-
-                QSharedPointer<Label> label = currentProject.getLabel(i);
-                LabelButton *button = new LabelButton(label);
-
-                button->setText(label->getText());
-                QPalette pal = button->palette();
-                QTextStream(stdout) << label->getColor().name() << endl;
-                pal.setColor(QPalette::ButtonText, Qt::black);
-                pal.setColor(QPalette::Button, label->getColor());
-                button->setAutoFillBackground(true);
-                button->setPalette(pal);
-                button->update();
-                connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
-                //        connect(button, SIGNAL(clicked()), this, SLOT(setCurrentLabel(button.myLabel)));
-                labelButtons.push_back(button);
-                ui->labelClassLayout->addWidget(button);
-            }
+            setLabels();
         }
 
     else {
