@@ -29,8 +29,9 @@ Label::Label()
   text are read from the QJsonObject and any SelectItems in the object are
   constructed and added to this Label.
   */
-Label::Label(const QJsonObject &json){
-    read(json);
+Label::Label(const QJsonObject &json, int j){
+        readIdpro(json);
+        labelId = j;
 }
 
 /*!
@@ -54,6 +55,15 @@ QColor Label::getColor(){
 void Label::setColor(QColor col){
     color = col;
 }
+
+/*!
+  Convenience funtion for setting the id this Label as an \a int.
+  */
+
+void Label::setId(int j){
+    labelId = j;
+}
+
 
 /*!
   Convenience funtion for getting the test of this Label as a QString
@@ -121,20 +131,34 @@ void Label::removeItem(const int id){
         }
     }
 }
-
 /*!
-  Reads a QJsonObject \a json and sets the Label's attrbutes to the data it reads.
-  Any SelectItems found in the QJsonObject are also constructed and added to this
-  Label.
+  Clears the label data in memory.
   */
-void Label::read(const QJsonObject &json){
+void Label::clear()
+{
     rectangleObjects.clear();
     ellipseObjects.clear();
     polygonObjects.clear();
     freeDrawObjects.clear();
+}
+
+/*!
+  Reads a QJsonObject \a json and sets the Label class's attrbutes to the data it reads.
+  */
+void Label::readIdpro(const QJsonObject &json){
+    clear();
     setText(json["text"].toString());
     setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+}
 
+/*!
+  Reads a QJsonObject \a json and sets the Label annotation's to the data it reads.
+Any SelectItems found in the QJsonObject are also constructed and added to this
+Label.
+*/
+
+void Label::readIdantn(const QJsonObject &json){
+    clear();
     if(json.contains("rectangles")){
         QJsonArray rectArray = json["rectangles"].toArray();
         for(QJsonArray::iterator it = rectArray.begin(); it != rectArray.end(); ++it){
@@ -221,8 +245,7 @@ QPixmap Label::exportLabel(QSize &rect){
 }
 
 /*!
-  Writes the contents of the Label to QJsonObject \a json. The Label attributes
-  and any SelectItems this Label holds are written.
+  Writes the contents of the Label class to QJsonObject \a json.
   */
 void Label::write(QJsonObject &json) const{
     json["text"] = text;
@@ -230,6 +253,13 @@ void Label::write(QJsonObject &json) const{
     json["green"] = color.green();
     json["blue"] = color.blue();
     json["alpha"] = color.alpha();
+}
+
+/*!
+  Writes the contents of the Label data to QJsonObject \a json.
+Any SelectItems this Label holds are written.
+  */
+void Label::writeIdantn(QJsonObject &json) const{
     if(!rectangleObjects.isEmpty()){
         QJsonArray rectangles;
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);

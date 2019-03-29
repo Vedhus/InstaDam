@@ -7,7 +7,6 @@ INPUT(
 ./debug\selectItem.o
 ./debug\freeDrawSelect.o
 ./debug\boxbasedselector.o
-./debug\selectgroup.o
 ./debug\label.o
 ./debug\freeDrawErase.o
 ./debug\moc_photoScene.o

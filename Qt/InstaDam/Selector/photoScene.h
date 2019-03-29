@@ -40,6 +40,7 @@ public:
     void inactiveAll();
     viewerTypes myViewerType;
     void removeItem(SelectItem* item);
+    void clearItems();
 
 signals:
     void pointClicked(PhotoScene::viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);
@@ -59,6 +60,7 @@ private:
     QPointF newPos;
     std::string currentLabel;
     bool mousePressed;
+    QList<SelectItem* > labelItems;
     std::list<SelectItem*> currentItems;
     std::map<std::string, std::list<SelectItem*> > labelmap;
 };

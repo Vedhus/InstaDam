@@ -7,7 +7,6 @@ INPUT(
 ./release\selectItem.o
 ./release\freeDrawSelect.o
 ./release\boxbasedselector.o
-./release\selectgroup.o
 ./release\label.o
 ./release\freeDrawErase.o
 ./release\moc_photoScene.o

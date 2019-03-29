@@ -310,6 +310,8 @@ release/moc_instadam.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -558,6 +560,8 @@ release/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -934,6 +938,8 @@ release/moc_maskviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsV
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1296,6 +1302,8 @@ release/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1546,6 +1554,8 @@ release/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1915,6 +1925,8 @@ release/moc_fslider.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \
@@ -2468,6 +2480,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -2839,6 +2853,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3196,6 +3212,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3474,6 +3492,8 @@ release/main.o: ../../InstaDam/app/main.cpp ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3719,6 +3739,8 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4251,6 +4273,8 @@ release/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskv
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4611,6 +4635,8 @@ release/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/pho
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4995,6 +5021,8 @@ release/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapo
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5362,6 +5390,8 @@ release/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/a
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5611,6 +5641,8 @@ release/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5984,6 +6016,8 @@ release/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/a
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -6352,6 +6386,8 @@ release/fslider.o: ../../InstaDam/app/fslider.cpp ../../InstaDam/app/fslider.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \

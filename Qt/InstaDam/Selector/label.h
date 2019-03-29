@@ -12,18 +12,20 @@
 #include "polygonSelect.h"
 
 //class SelectItem;
-
+enum fileTypes {PROJECT, ANNOTATION};
 class Label: public QEnableSharedFromThis<Label>{
   private:
     QColor color;
     QString text;
+    int labelId;
 
   public:
 
     Label();
-    Label(const QJsonObject &json);
+    Label(const QJsonObject &json, int);
 
     ~Label();
+    void setId(int j);
 
     QColor getColor();
 
@@ -43,8 +45,11 @@ class Label: public QEnableSharedFromThis<Label>{
     void addItem(PolygonSelect *item);
     void addItem(FreeDrawErase *item){UNUSED(item);}
     void removeItem(const int id);
-    void read(const QJsonObject &json);
+    void clear();
+    void readIdpro(const QJsonObject &json);
+    void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    void writeIdantn(QJsonObject &json) const;
     QPixmap exportLabel(QSize &rect);
 };
 
