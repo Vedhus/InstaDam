@@ -2,6 +2,7 @@
 #define COMMANDS_H
 
 #include <QUndoCommand>
+#include <QColor>
 
 #include "selectItem.h"
 #include "polygonSelect.h"
@@ -100,6 +101,7 @@ private:
     PhotoScene *myScene;
     PhotoScene *myMask;
     bool init = false;
+    QPen myPen;
 };
 
 class RotateCommand : public QUndoCommand{

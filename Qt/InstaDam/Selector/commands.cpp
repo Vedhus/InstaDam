@@ -361,6 +361,7 @@ ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene, P
     myItem = item;
     myScene = scene;
     myMask = maskScene;
+    myPen.setColor(Qt::transparent);
 }
 /*!
    \reimp
@@ -381,12 +382,13 @@ void ErasePointsCommand::undo(){
  */
 void ErasePointsCommand::redo(){
     if(init){
+        cout << "REDO" << endl;
         EraseMapIterator it((*myItem->getMap()));
-        QSharedPointer<FreeMap> tempMap = QSharedPointer<FreeMap>::create();
+        //QSharedPointer<FreeMap> tempMap = QSharedPointer<FreeMap>::create();
         while(it.hasNext()){
             it.next();
-            QVector<int> tempVector = it.value()->keys().toVector();
-            it.key()->deletePoints(tempVector, tempMap);
+            //QVector<int> tempVector = it.value()->keys().toVector();
+            it.key()->deletePoints(myPen, it.value());
         }
     }
     else{

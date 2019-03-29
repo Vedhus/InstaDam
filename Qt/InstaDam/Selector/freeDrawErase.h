@@ -8,14 +8,14 @@ class TestSelect;
 
 #endif
 
-typedef QMap<FreeDrawSelect*, QSharedPointer<FreeMap> > EraseMap;
-typedef QMapIterator<FreeDrawSelect*, QSharedPointer<FreeMap> > EraseMapIterator;
+typedef QMap<FreeDrawSelect*, QSharedPointer<QPixmap> > EraseMap;
+typedef QMapIterator<FreeDrawSelect*, QSharedPointer<QPixmap> > EraseMapIterator;
 
 class FreeDrawErase : public FreeDrawSelect
 {
 public:
     static QString baseInstruction;
-    FreeDrawErase(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawErase(QPointF point, int brushSize, Qt::PenCapStyle brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawErase() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/
@@ -26,13 +26,8 @@ public:
 
     /*------------- End implemented functions*/
 
-    void drawWithCircle(QPointF &oldPos, QPointF &newPos);
-    void drawWithSquare(QPointF &oldPos, QPointF &newPos);
 
     QSharedPointer<EraseMap> getMap(){return undoMap;}
-
-protected:
-    void rasterizeLine(QPointF &start, QPointF &end);
 
 private:
 #ifdef TEST
