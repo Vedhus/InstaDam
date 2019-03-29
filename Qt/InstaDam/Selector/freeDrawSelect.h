@@ -16,8 +16,10 @@ public:
     static QString baseInstruction;
     FreeDrawSelect();
     FreeDrawSelect(QPixmap map, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(QPixmap map, QPen pen);
     FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(const QList<FreeDrawSelect*> items);
+    FreeDrawSelect(QPointF point, QPen pen, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
@@ -69,9 +71,6 @@ public:
 protected:
     QPixmap myPixmap;
 
-    int brushType;
-    int fullWidth;
-    int halfWidth;
 
     QPoint lastPoint;
 

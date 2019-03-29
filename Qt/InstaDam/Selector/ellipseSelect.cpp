@@ -108,7 +108,8 @@ void EllipseSelect::addPoint(QPointF &point, int vertex){
   \reimp
   */
 QRectF EllipseSelect::boundingRect() const{
-    return QGraphicsEllipseItem::boundingRect();
+    return QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+
 }
 
 /*!

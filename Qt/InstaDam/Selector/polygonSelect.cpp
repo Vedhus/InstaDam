@@ -125,7 +125,7 @@ void PolygonSelect::addPoint(QPointF &point, int vertex){
   \reimp
   */
 QRectF PolygonSelect::boundingRect() const{
-    return QGraphicsPolygonItem::boundingRect();
+    return QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
 }
 
 /*!

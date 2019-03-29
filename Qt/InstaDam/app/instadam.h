@@ -157,7 +157,7 @@ private:
     SelectItem *tempItem;
     SelectItem *mirrorItem;
     SelectItem *maskItem;
-    Qt::PenCapStyle brushMode = Qt::SquareCap;
+    Qt::PenCapStyle brushMode = Qt::RoundCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
 

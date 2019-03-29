@@ -103,7 +103,8 @@ void RectangleSelect::addPoint(QPointF &point, int vertex){
   \reimp
   */
 QRectF RectangleSelect::boundingRect() const{
-    return QGraphicsRectItem::boundingRect();
+    return QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+
 }
 
 /*!

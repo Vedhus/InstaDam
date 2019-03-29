@@ -906,11 +906,11 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
             {
                 if(drawing){
                     FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, brushMode, currentLabel);
-                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, currentBrushSize, brushMode);
+                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, temp->myPen);
                     tempItem = temp;
                     mirrorItem = mirror;
                     mirrorItem->setLabel(currentLabel);
-                    mirrorItem->updatePen(mirrorItem->myPen);
+                    mirrorItem->updatePen(temp->myPen);
                     tempItem->setMirror(mirrorItem);
                     mirrorItem->setMirror(tempItem);
                 }
@@ -935,7 +935,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
         }
         if((currentSelectType != SelectItem::Freedraw && currentSelectType != SelectItem::Freeerase) || drawing){
             mirrorItem->setLabel(currentLabel);
-            mirrorItem->updatePen(mirrorItem->myPen);
+            mirrorItem->updatePen(tempItem->myPen);
             scene->addItem(tempItem);
             maskScene->addItem(mirrorItem);
             switch(type){
@@ -1022,12 +1022,11 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
 {
     UNUSED(button);
-    //cout << currentItem->type() << "  " << currentItem->isItemAdded() << endl;
     if(currentItem && !currentItem->isItemAdded()){
         if(currentItem->type() == SelectItem::Freedraw && type == PhotoScene::MASK_VIEWER_TYPE){
-            FreeDrawSelect fds(maskSelection(currentItem));
+            FreeDrawSelect fds(maskSelection(currentItem), currentItem->myPen);
             FreeDrawSelect *temp = dynamic_cast<FreeDrawSelect*>(currentItem);
-            temp->setPointsUnchecked(fds.getPixmap().copy());
+            temp->setPointsUnchecked(fds.getPixmap());
         }
         if(currentItem->type() == SelectItem::Freeerase){
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
@@ -1039,10 +1038,6 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos
         }
         currentItem->resetState();
         if(currentItem->type() != SelectItem::Polygon){
-            //if(currentItem->type() == SelectItem::Freedraw){
-            //    FreeDrawSelect *fd = dynamic_cast<FreeDrawSelect*>(currentItem);
-            //    fd->print();
-            //}
             currentItem = nullptr;
         }
         else{
@@ -1131,86 +1126,47 @@ void InstaDam::write(QJsonObject &json){
 
 void InstaDam::addCurrentSelection(){
     tempUndoStack->clear();
-    //cout << 12 << endl;
     undoGroup->setActiveStack(mainUndoStack);
-    //cout << 13 << endl;
     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem), currentLabel);
-    //cout << 14 << endl;
     scene->addItem(fds);
-    //cout << 15 << endl;
     QUndoCommand *addCommand = new AddCommand(fds, scene);
-    //cout << 16 << endl;
     mainUndoStack->push(addCommand);
-    //cout << 17 << endl;
     scene->removeItem(maskItem->getMirror());
     maskScene->removeItem(maskItem->getMirror());
     scene->removeItem(maskItem);
-    //cout << 18 << endl;
     maskScene->removeItem(maskItem);
-    //cout << 19 << endl;
-    //delete maskItem->getMirror();
-    //cout << 20 << endl;
-    //delete maskItem;
-    //cout << 21 << endl;
     maskItem = nullptr;
-    //cout << 22 << endl;
     ui->addSelectionButton->setDisabled(true);
-    //cout << 23 << endl;
     ui->cancelSelectionButton->setDisabled(true);
-    //cout << 24 << endl;
     canDrawOnPhoto = true;
 }
 
 void InstaDam::cancelCurrentSelection(){
-    //cout << 1 << endl;
     undoGroup->setActiveStack(mainUndoStack);
-    //cout << 2 << endl;
     canDrawOnPhoto = true;
     if(!ui->addSelectionButton->isEnabled()){
-        //cout << 3 << endl;
         return;
     }
-    //cout << 4 << endl;
     tempUndoStack->clear();
-    //cout << "QQ" << endl;
-    //cout << maskItem << endl;
-    //cout << 5 << endl;
     scene->removeItem(maskItem->getMirror());
     maskScene->removeItem(maskItem->getMirror());
     scene->removeItem(maskItem);
-    //cout << 6 << endl;
     maskScene->removeItem(maskItem);
-    //cout << 7 << endl;
-    //delete maskItem->getMirror();
-    //cout << 8 << endl;
-    //delete maskItem;
-    //cout << 9 << endl;
     maskItem = nullptr;
-    //cout << 10 << endl;
     ui->addSelectionButton->setDisabled(true);
-    //cout << 11 << endl;
     ui->cancelSelectionButton->setDisabled(true);
 }
 
 QPixmap InstaDam::maskSelection(SelectItem *item){
     QPixmap map(SelectItem::myBounds);
-    //cout << 2 << endl;
     map.fill(Qt::transparent);
-    //cout << 3 << endl;
     QPainter *paint = new QPainter(&map);
-    //cout << 4 << endl;
     QBrush brush(currentLabel->getColor());
-    //cout << 5 << endl;
     paint->setPen(currentLabel->getColor());
-    //cout << 6 << endl;
     paint->setBrush(brush);
-    //cout << 7 << endl;
     paint->setCompositionMode(QPainter::CompositionMode_SourceOver);
-    //cout << 8 << endl;
     item->toPixmap(paint);
-    //cout << 9 << endl;
     paint->end();
-    //cout << 10 << endl;
     map = joinPixmaps(ui->IdmMaskViewer->photo->pixmap(), map, QPainter::CompositionMode_DestinationIn);
     return map;
 }
