@@ -355,6 +355,10 @@ void InstaDam::on_actionSave_triggered()
 
 void InstaDam::on_actionOpen_File_triggered()
 {
+
+    if (currentProject.numLabels() == 0)
+        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+    else {
     QTextStream(stdout)<<currentProject.numLabels()<<"\n";
 #ifdef WASM_BUILD
     openImageConnector->onActivate();
@@ -394,7 +398,9 @@ void InstaDam::on_actionOpen_File_triggered()
     else {
        assertError("That doesn't seem to be a valid image file.");
     }
+
 #endif
+    }
 }
 
 #ifdef WASM_BUILD
