@@ -72,6 +72,7 @@ public:
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
+    void setCurrentProject(Project);
 
 private slots:
     void on_actionOpen_File_triggered();

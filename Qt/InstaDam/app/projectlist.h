@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QNetworkAccessManager>
 
 namespace Ui {
 class ProjectList;
@@ -15,12 +16,17 @@ class ProjectList : public QWidget
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
-    void addItems(QJsonDocument);
+    void addItems(QJsonDocument, QString, QString);
 public slots:
     void openProject(QListWidgetItem *);
 
 private:
     Ui::ProjectList *ui;
+    QString databaseURL;
+    QString accessToken;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *rep;
+    void getLabelsReplyFinished();
 
 };
 

@@ -1357,5 +1357,9 @@ void InstaDam::on_addSelectionButton_clicked()
 
 }
 
+void InstaDam::setCurrentProject(Project pr){
+    this->currentProject = pr;
+}
+
 
 

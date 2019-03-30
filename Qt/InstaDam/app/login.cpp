@@ -82,12 +82,6 @@ void Login::replyFinished()
               qInfo() << this->accessToken;
               Login::dumpToken();
               Login::listProjects();
-              /////////////////////////
-              /// move the following code to after the project is picked
-//              InstaDam *w = new InstaDam;
-//              w->show();
-//              hide();
-              /////////////////////////
         }
          else{
               qInfo() << obj;
@@ -107,14 +101,9 @@ void Login::projectsReplyFinished()
       }
 
       else{
-//          QJsonObject obj = jsonReply.object();
-//          qInfo()<< "jsonReply:";
-//          qInfo()<< jsonReply;
-//          qInfo()<< "obj:";
-//          qInfo()<< obj;
           ProjectList *pl = new ProjectList;
           pl->show();
-          pl->addItems(jsonReply);
+          pl->addItems(jsonReply, this->databaseURL, this->accessToken);
           hide();
       }
 }
