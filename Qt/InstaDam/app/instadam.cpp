@@ -17,6 +17,7 @@ using namespace std;
 #include "Selector/commands.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
+#include "startingwidget.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
@@ -25,6 +26,7 @@ InstaDam::InstaDam(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
 {
+
     ui->setupUi(this);
     filterControl = new filterControls();
     connectFilters();
@@ -102,6 +104,9 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
+
+    StartingWidget *sw = new StartingWidget;
+    sw->show();
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {

@@ -60,6 +60,7 @@ public:
     QFileInfo file;
     QString filename;
     QString labelFile;
+    bool runningLocally = false;
 
     QVector<QString> labelPaths;
     QString annotationPath;

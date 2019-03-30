@@ -13,6 +13,10 @@ INPUT(
 ./debug\fslider.o
 ./debug\newproject.o
 ./debug\labelButton.o
+./debug\register.o
+./debug\startingwidget.o
+./debug\login.o
+./debug\projectlist.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o
@@ -21,4 +25,8 @@ INPUT(
 ./debug\moc_fslider.o
 ./debug\moc_newproject.o
 ./debug\moc_labelButton.o
+./debug\moc_register.o
+./debug\moc_startingwidget.o
+./debug\moc_login.o
+./debug\moc_projectlist.o
 );

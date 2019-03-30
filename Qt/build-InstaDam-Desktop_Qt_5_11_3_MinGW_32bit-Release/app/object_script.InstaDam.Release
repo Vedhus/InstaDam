@@ -13,6 +13,10 @@ INPUT(
 ./release\fslider.o
 ./release\newproject.o
 ./release\labelButton.o
+./release\register.o
+./release\startingwidget.o
+./release\login.o
+./release\projectlist.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
@@ -21,4 +25,8 @@ INPUT(
 ./release\moc_fslider.o
 ./release\moc_newproject.o
 ./release\moc_labelButton.o
+./release\moc_register.o
+./release\moc_startingwidget.o
+./release\moc_login.o
+./release\moc_projectlist.o
 );
