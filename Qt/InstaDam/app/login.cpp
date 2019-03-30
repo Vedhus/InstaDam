@@ -107,31 +107,26 @@ void Login::projectsReplyFinished()
       }
 
       else{
-          QJsonObject obj = jsonReply.object();
-          qInfo()<< "implement a function to read the returned object";
+//          QJsonObject obj = jsonReply.object();
+//          qInfo()<< "jsonReply:";
+//          qInfo()<< jsonReply;
+//          qInfo()<< "obj:";
+//          qInfo()<< obj;
           ProjectList *pl = new ProjectList;
           pl->show();
-          pl->addItems(obj);
+          pl->addItems(jsonReply);
           hide();
       }
 }
 
 void Login::listProjects(){
     QString databaseProjectsURL = this->databaseURL+"/projects";
-    QJsonObject js
-    {
-        {"accessToken", this->accessToken},
-    };
     QUrl dabaseLink = QUrl(databaseProjectsURL);
-
     qInfo() << databaseProjectsURL;
-    qInfo() << js;
-
-    QJsonDocument doc(js);
-    QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json"); // this might need to be updated based on backend
-
+    QString loginToken = "Bearer "+this->accessToken;
+    qInfo() << loginToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
 
     connect(rep, &QNetworkReply::finished,

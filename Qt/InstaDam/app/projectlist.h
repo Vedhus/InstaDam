@@ -2,6 +2,7 @@
 #define PROJECTLIST_H
 
 #include <QWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class ProjectList;
@@ -14,7 +15,9 @@ class ProjectList : public QWidget
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
-    void addItems(QJsonObject);
+    void addItems(QJsonDocument);
+public slots:
+    void openProject(QListWidgetItem *);
 
 private:
     Ui::ProjectList *ui;

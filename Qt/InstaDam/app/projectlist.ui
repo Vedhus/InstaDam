@@ -26,13 +26,13 @@
     <string>Create New Project (for Admins)</string>
    </property>
   </widget>
-  <widget class="QTableView" name="projectsTable">
+  <widget class="QListWidget" name="projectsTable">
    <property name="geometry">
     <rect>
      <x>25</x>
      <y>25</y>
      <width>550</width>
-     <height>275</height>
+     <height>281</height>
     </rect>
    </property>
   </widget>
