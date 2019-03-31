@@ -6,6 +6,7 @@
 class Project{
     private:
         QVector<QSharedPointer<Label> > labels;
+        int id;
 
     public:
 
@@ -16,6 +17,10 @@ class Project{
         QSharedPointer<Label> getLabel(int index);
 
         void setLabel(int index, QSharedPointer<Label> lb);
+
+        void setId(int id);
+
+        int getId();
 
         void addLabel(QSharedPointer<Label> lb);
 
