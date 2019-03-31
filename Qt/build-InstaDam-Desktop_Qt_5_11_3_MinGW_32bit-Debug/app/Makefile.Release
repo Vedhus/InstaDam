@@ -14,10 +14,10 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DZLIB_WINAPI -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -O2 -Wall -W -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\..\InstaDam\app -I. -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:\opencv\opencv401\opencv\build\include -I..\..\InstaDam -I..\..\InstaDam\quazip\include -ID:\Qt\5.11.3\mingw53_32\include -ID:\Qt\5.11.3\mingw53_32\include\QtWidgets -ID:\Qt\5.11.3\mingw53_32\include\QtGui -ID:\Qt\5.11.3\mingw53_32\include\QtANGLE -ID:\Qt\5.11.3\mingw53_32\include\QtCore -Irelease -I. -ID:\Qt\5.11.3\mingw53_32\mkspecs\win32-g++ 
+INCPATH       = -I..\..\InstaDam\app -I. -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I..\..\InstaDam\quazip\include -ID:\opencv\opencv401\opencv\build\include -I..\..\InstaDam -ID:\Qt\5.11.3\mingw53_32\include -ID:\Qt\5.11.3\mingw53_32\include\QtWidgets -ID:\Qt\5.11.3\mingw53_32\include\QtGui -ID:\Qt\5.11.3\mingw53_32\include\QtANGLE -ID:\Qt\5.11.3\mingw53_32\include\QtCore -Irelease -I. -ID:\Qt\5.11.3\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LD:\Qt\5.11.3\mingw53_32\lib D:\Qt\5.11.3\mingw53_32\lib\libqtmain.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\InstaDam\quazip\lib" D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll -lquazip -lz -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\InstaDam" -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug\Selector" -lselector D:\Qt\5.11.3\mingw53_32\lib\libQt5Widgets.a D:\Qt\5.11.3\mingw53_32\lib\libQt5Gui.a D:\Qt\5.11.3\mingw53_32\lib\libQt5Core.a 
+LIBS        =        -lmingw32 -LD:\Qt\5.11.3\mingw53_32\lib D:\Qt\5.11.3\mingw53_32\lib\libqtmain.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-win32\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release\Selector" -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\InstaDam\quazip\lib" -lquazip -lz -L"G:\My Drive\HW\CS 428\Project\InstaDam\Qt\InstaDam" -lselector D:\Qt\5.11.3\mingw53_32\lib\libQt5Widgets.a D:\Qt\5.11.3\mingw53_32\lib\libQt5Gui.a D:\Qt\5.11.3\mingw53_32\lib\libQt5Core.a 
 QMAKE         = D:\Qt\5.11.3\mingw53_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -305,6 +305,8 @@ release/moc_instadam.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -410,7 +412,7 @@ release/moc_instadam.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../InstaDam/app/instadam.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\instadam.h -o release\moc_instadam.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\instadam.h -o release\moc_instadam.cpp
 
 release/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
@@ -553,6 +555,8 @@ release/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -779,7 +783,7 @@ release/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/app/photoviewer.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\photoviewer.h -o release\moc_photoviewer.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\photoviewer.h -o release\moc_photoviewer.cpp
 
 release/moc_maskviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
@@ -929,6 +933,8 @@ release/moc_maskviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsV
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1148,7 +1154,7 @@ release/moc_maskviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsV
 		../../InstaDam/app/maskviewer.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\maskviewer.h -o release\moc_maskviewer.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\maskviewer.h -o release\moc_maskviewer.cpp
 
 release/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
@@ -1291,6 +1297,8 @@ release/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1397,7 +1405,7 @@ release/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/app/picpushbutton.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\picpushbutton.h -o release\moc_picpushbutton.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\picpushbutton.h -o release\moc_picpushbutton.cpp
 
 release/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../InstaDam/app/instadam.h \
@@ -1541,6 +1549,8 @@ release/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -1766,7 +1776,7 @@ release/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../InstaDam/app/filtercontrols.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\filtercontrols.h -o release\moc_filtercontrols.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\filtercontrols.h -o release\moc_filtercontrols.cpp
 
 release/moc_fslider.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobject.h \
@@ -1910,6 +1920,8 @@ release/moc_fslider.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \
@@ -2016,7 +2028,7 @@ release/moc_fslider.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../InstaDam/app/fslider.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\fslider.h -o release\moc_fslider.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\fslider.h -o release\moc_fslider.cpp
 
 release/moc_newproject.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -2175,7 +2187,7 @@ release/moc_newproject.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
 		../../InstaDam/app/newproject.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\newproject.h -o release\moc_newproject.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\newproject.h -o release\moc_newproject.cpp
 
 release/moc_labelButton.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
@@ -2283,6 +2295,9 @@ release/moc_labelButton.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButt
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
 		../../InstaDam/Selector/label.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
@@ -2308,7 +2323,7 @@ release/moc_labelButton.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButt
 		../../InstaDam/app/labelButton.h \
 		release/moc_predefs.h \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
-	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\labelButton.h -o release\moc_labelButton.cpp
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/app/release/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\labelButton.h -o release\moc_labelButton.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -2463,6 +2478,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -2834,6 +2851,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3191,6 +3210,8 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3469,6 +3490,8 @@ release/main.o: ../../InstaDam/app/main.cpp ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -3714,6 +3737,8 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4246,6 +4271,8 @@ release/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskv
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4606,6 +4633,8 @@ release/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/pho
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -4990,6 +5019,8 @@ release/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapo
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5357,6 +5388,8 @@ release/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/a
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5606,6 +5639,8 @@ release/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -5979,6 +6014,8 @@ release/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/a
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
@@ -6347,6 +6384,8 @@ release/fslider.o: ../../InstaDam/app/fslider.cpp ../../InstaDam/app/fslider.h \
 		../../InstaDam/Selector/polygonSelect.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \
@@ -6724,6 +6763,9 @@ release/labelButton.o: ../../InstaDam/app/labelButton.cpp ../../InstaDam/app/lab
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
 		../../InstaDam/Selector/label.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \

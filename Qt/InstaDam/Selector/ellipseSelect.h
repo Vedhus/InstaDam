@@ -49,6 +49,7 @@ public:
     QGraphicsScene* scene();
     bool isVisible(){return SelectItem::isVisible();}
     int type(){return SelectItem::type();}
+    void setOpacity(qreal);
 
 private:
         EllipseSelect *mirror;

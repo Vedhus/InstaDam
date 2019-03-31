@@ -60,9 +60,13 @@ public:
     QFileInfo file;
     QString filename;
     QString labelFile;
+
+    QVector<QString> labelPaths;
+    QString annotationPath;
     QStringList imagesList;
     QDir path;
     void openFile_and_labels();
+    void setLabels();
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
@@ -101,10 +105,17 @@ private slots:
     void toggleErasing();
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
+    void setOpacity(QSharedPointer<Label>, int);
     void setCurrentBrushSize(int);
     void setNewProject();
     void addCurrentSelection();
     void cancelCurrentSelection();
+    void on_addSelectionButton_clicked();
+
+    void on_saveAndBack_clicked();
+
+    void on_actionSave_Annotation_triggered();
+
 public slots:
     void resetPixmapButtons();
 
@@ -162,9 +173,9 @@ private:
     QHash<QString, QBuffer*> exportFiles;
 
     QPixmap maskSelection(SelectItem *item);
-    void read(const QJsonObject &json);
-    void write(QJsonObject &json);
-    void loadLabelFile(QString filename);
+    void read(const QJsonObject &json, fileTypes);
+    void write(QJsonObject &json, fileTypes);
+    void loadLabelFile(QString filename, fileTypes);
 };
 
 

@@ -54,7 +54,10 @@ void PhotoScene::addItem(QGraphicsItem* item){
 void PhotoScene::addItem(SelectItem* item){
     currentItems.push_front(item);
     QGraphicsScene::addItem(item);
+    labelItems.append(item);
 }
+
+
 
 /*!
   \overload removeItem()
@@ -63,7 +66,27 @@ void PhotoScene::addItem(SelectItem* item){
 void PhotoScene::removeItem(SelectItem* item){
     currentItems.remove(item);
     QGraphicsScene::removeItem(item);
+
 }
+
+/*!
+  \overload clearItems()
+  Clears every \a item in the scene.
+  */
+
+void PhotoScene::clearItems()
+{
+    qInfo("The number of labels is %d",labelItems.length());
+    for (int i = 0; i < labelItems.length(); i++)
+    {
+        this->removeItem(labelItems[i]);
+    }
+    labelItems.clear();
+    currentItems.clear();
+    labelmap.clear();
+
+}
+
 
 /*!
   \overload keyPressEvent()

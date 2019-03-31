@@ -61,6 +61,13 @@ EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label, QGraphi
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
+/*!
+ * Sets the opacity of the label to \a val
+*/
+void EllipseSelect::setOpacity(qreal val){
+   SelectItem::setOpacity(val);
+
+}
 
 /*!
   Constructs an EllipseSelect object by setting all vertices to be a \a point, \a vertexSize indicates the size of the
