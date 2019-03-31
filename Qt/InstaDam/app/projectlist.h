@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
+#include <QListWidgetItem>
+#include <QNetworkAccessManager>
+
 namespace Ui {
 class ProjectList;
 }
@@ -12,19 +15,23 @@ class ProjectList : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProjectList(QWidget *parent = nullptr, QString databseURL ="", QByteArray token = "");
+    explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
     void addItems(QJsonObject);
     void listImages();
     void imagesReplyFinished();
+
+    void addItems(QJsonDocument, QString, QString);
+public slots:
+    void openProject(QListWidgetItem *);
+
 private:
     Ui::ProjectList *ui;
-    QByteArray access_token;
     QString databaseURL;
-    QNetworkReply *rep;
+    QString accessToken;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-private slots:
-    void on_loadImagesButton_clicked();
+    QNetworkReply *rep;
+    void getLabelsReplyFinished();
 
 
 };

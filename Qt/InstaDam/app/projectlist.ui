@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>379</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,30 +26,14 @@
     <string>Create New Project (for Admins)</string>
    </property>
   </widget>
-  <widget class="QTableView" name="projectsTable">
+  <widget class="QListWidget" name="projectsTable">
    <property name="geometry">
     <rect>
      <x>25</x>
      <y>25</y>
      <width>550</width>
-     <height>275</height>
+     <height>281</height>
     </rect>
-   </property>
-   <property name="showGrid">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="loadImagesButton">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>350</y>
-     <width>541</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Load Images</string>
    </property>
   </widget>
  </widget>

@@ -2880,6 +2880,26 @@ release/moc_projectlist.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidgetItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistwidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyleoption.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qvalidator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qregularexpression.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qicon.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyle.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabbar.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabwidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qrubberband.h \
 		../../InstaDam/app/projectlist.h \
 		release/moc_predefs.h \
 		../../../../Qt/5.11.3/mingw53_32/bin/moc.exe
@@ -8230,6 +8250,17 @@ release/login.o: ../../InstaDam/app/login.cpp ../../InstaDam/app/login.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		../../InstaDam/app/startingwidget.h \
 		../../InstaDam/app/projectlist.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidgetItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistwidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyleoption.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyle.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabbar.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qrubberband.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QDebug \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonDocument \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsondocument.h
@@ -8368,16 +8399,9 @@ release/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/pro
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
-		ui_projectlist.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qeventloop.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidgetItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistwidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlistview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qframe.h \
@@ -8395,6 +8419,16 @@ release/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/pro
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabbar.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qrubberband.h \
+		ui_projectlist.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qeventloop.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qguiapplication.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHeaderView \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qheaderview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
@@ -8403,8 +8437,127 @@ release/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/pro
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonDocument \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsondocument.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
+		../../InstaDam/app/instadam.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMainWindow \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmainwindow.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdir.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qfileinfo.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QTextStream \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMessageBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../../InstaDam/app/project.h \
+		../../InstaDam/Selector/label.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonobject.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QPixmap \
+		../../InstaDam/Selector/freeDrawSelect.h \
+		../../InstaDam/Selector/selectItem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsitem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QPainter \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qpen.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QHash \
+		../../InstaDam/Selector/freeDrawErase.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSet \
+		../../InstaDam/Selector/rectangleSelect.h \
+		../../InstaDam/Selector/boxbasedselector.h \
+		../../InstaDam/Selector/ellipseSelect.h \
+		../../InstaDam/Selector/polygonSelect.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenuBar \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmenubar.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmenu.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qaction.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qactiongroup.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../InstaDam/app/newproject.h \
+		../../InstaDam/app/ui_labeldialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QDialogButtonBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextformat.h \
+		../../InstaDam/app/colordialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/ui_blankFrame.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPlainTextEdit \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qplaintextedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtextedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextdocument.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qabstracttextdocumentlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qglyphrun.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
+		../../InstaDam/app/ui_freeSelect.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSpinBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
+		../../InstaDam/app/ui_polygonSelect.h \
+		../../InstaDam/app/labelButton.h \
+		../../../../opencv/build/include/opencv2/core/core.hpp \
+		../../../../opencv/build/include/opencv2/core.hpp \
+		../../../../opencv/build/include/opencv2/core/cvdef.h \
+		../../../../opencv/build/include/opencv2/core/hal/interface.h \
+		../../../../opencv/build/include/opencv2/core/cv_cpu_dispatch.h \
+		../../../../opencv/build/include/opencv2/core/cv_cpu_helper.h \
+		../../../../opencv/build/include/opencv2/core/fast_math.hpp \
+		../../../../opencv/build/include/opencv2/core/version.hpp \
+		../../../../opencv/build/include/opencv2/core/base.hpp \
+		../../../../opencv/build/include/opencv2/opencv_modules.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd_wrapper.hpp \
+		../../../../opencv/build/include/opencv2/core/neon_utils.hpp \
+		../../../../opencv/build/include/opencv2/core/vsx_utils.hpp \
+		../../../../opencv/build/include/opencv2/core/check.hpp \
+		../../../../opencv/build/include/opencv2/core/traits.hpp \
+		../../../../opencv/build/include/opencv2/core/matx.hpp \
+		../../../../opencv/build/include/opencv2/core/saturate.hpp \
+		../../../../opencv/build/include/opencv2/core/types.hpp \
+		../../../../opencv/build/include/opencv2/core/mat.hpp \
+		../../../../opencv/build/include/opencv2/core/bufferpool.hpp \
+		../../../../opencv/build/include/opencv2/core/mat.inl.hpp \
+		../../../../opencv/build/include/opencv2/core/persistence.hpp \
+		../../../../opencv/build/include/opencv2/core/operations.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd.inl.hpp \
+		../../../../opencv/build/include/opencv2/core/utility.hpp \
+		../../../../opencv/build/include/opencv2/core/optim.hpp \
+		../../../../opencv/build/include/opencv2/core/ovx.hpp \
+		../../../../opencv/build/include/opencv2/highgui/highgui.hpp \
+		../../../../opencv/build/include/opencv2/highgui.hpp \
+		../../../../opencv/build/include/opencv2/imgcodecs.hpp \
+		../../../../opencv/build/include/opencv2/videoio.hpp \
+		../../../../opencv/build/include/opencv2/imgproc.hpp \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoStack \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundostack.h \
+		../../InstaDam/Selector/photoScene.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonArray \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonarray.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QDebug \
 		../../InstaDam/app/imagelist.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/projectlist.o ../../InstaDam/app/projectlist.cpp
@@ -8550,8 +8703,6 @@ release/imagelist.o: ../../InstaDam/app/imagelist.cpp ../../InstaDam/app/imageli
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qguiapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHeaderView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qheaderview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
@@ -8577,11 +8728,130 @@ release/imagelist.o: ../../InstaDam/app/imagelist.cpp ../../InstaDam/app/imageli
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QTableWidget \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtablewidget.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtableview.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonDocument \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsondocument.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
+		../../InstaDam/app/instadam.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMainWindow \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmainwindow.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdir.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qfileinfo.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QTextStream \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMessageBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../../InstaDam/app/project.h \
+		../../InstaDam/Selector/label.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonobject.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QPixmap \
+		../../InstaDam/Selector/freeDrawSelect.h \
+		../../InstaDam/Selector/selectItem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsitem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QPainter \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qpen.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QHash \
+		../../InstaDam/Selector/freeDrawErase.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSet \
+		../../InstaDam/Selector/rectangleSelect.h \
+		../../InstaDam/Selector/boxbasedselector.h \
+		../../InstaDam/Selector/ellipseSelect.h \
+		../../InstaDam/Selector/polygonSelect.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoGroup \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundogroup.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenuBar \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmenubar.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmenu.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qaction.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qactiongroup.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../InstaDam/app/newproject.h \
+		../../InstaDam/app/ui_labeldialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QDialogButtonBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextformat.h \
+		../../InstaDam/app/colordialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/ui_blankFrame.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPlainTextEdit \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qplaintextedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtextedit.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextdocument.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qabstracttextdocumentlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qtextlayout.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qglyphrun.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
+		../../InstaDam/app/ui_freeSelect.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSpinBox \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
+		../../InstaDam/app/ui_polygonSelect.h \
+		../../InstaDam/app/labelButton.h \
+		../../../../opencv/build/include/opencv2/core/core.hpp \
+		../../../../opencv/build/include/opencv2/core.hpp \
+		../../../../opencv/build/include/opencv2/core/cvdef.h \
+		../../../../opencv/build/include/opencv2/core/hal/interface.h \
+		../../../../opencv/build/include/opencv2/core/cv_cpu_dispatch.h \
+		../../../../opencv/build/include/opencv2/core/cv_cpu_helper.h \
+		../../../../opencv/build/include/opencv2/core/fast_math.hpp \
+		../../../../opencv/build/include/opencv2/core/version.hpp \
+		../../../../opencv/build/include/opencv2/core/base.hpp \
+		../../../../opencv/build/include/opencv2/opencv_modules.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd_wrapper.hpp \
+		../../../../opencv/build/include/opencv2/core/neon_utils.hpp \
+		../../../../opencv/build/include/opencv2/core/vsx_utils.hpp \
+		../../../../opencv/build/include/opencv2/core/check.hpp \
+		../../../../opencv/build/include/opencv2/core/traits.hpp \
+		../../../../opencv/build/include/opencv2/core/matx.hpp \
+		../../../../opencv/build/include/opencv2/core/saturate.hpp \
+		../../../../opencv/build/include/opencv2/core/types.hpp \
+		../../../../opencv/build/include/opencv2/core/mat.hpp \
+		../../../../opencv/build/include/opencv2/core/bufferpool.hpp \
+		../../../../opencv/build/include/opencv2/core/mat.inl.hpp \
+		../../../../opencv/build/include/opencv2/core/persistence.hpp \
+		../../../../opencv/build/include/opencv2/core/operations.hpp \
+		../../../../opencv/build/include/opencv2/core/cvstd.inl.hpp \
+		../../../../opencv/build/include/opencv2/core/utility.hpp \
+		../../../../opencv/build/include/opencv2/core/optim.hpp \
+		../../../../opencv/build/include/opencv2/core/ovx.hpp \
+		../../../../opencv/build/include/opencv2/highgui/highgui.hpp \
+		../../../../opencv/build/include/opencv2/highgui.hpp \
+		../../../../opencv/build/include/opencv2/imgcodecs.hpp \
+		../../../../opencv/build/include/opencv2/videoio.hpp \
+		../../../../opencv/build/include/opencv2/imgproc.hpp \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoStack \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundostack.h \
+		../../InstaDam/Selector/photoScene.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonDocument \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsondocument.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonArray \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonarray.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/imagelist.o ../../InstaDam/app/imagelist.cpp
 

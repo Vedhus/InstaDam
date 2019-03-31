@@ -16,6 +16,9 @@
 #include <QMenu>
 #include <QBuffer>
 
+#include <QWidget>
+#include <QtNetwork/QNetworkReply>
+
 #include "newproject.h"
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
@@ -50,7 +53,7 @@ class InstaDam : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit InstaDam(QWidget *parent = nullptr);
+    explicit InstaDam(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
     ~InstaDam();
     void fileOpen();
     void connectFilters();
@@ -72,6 +75,7 @@ public:
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
+    void setCurrentProject(Project);
 
 private slots:
     void on_actionOpen_File_triggered();
@@ -168,6 +172,10 @@ private:
     SelectItem *tempItem;
     SelectItem *mirrorItem;
     SelectItem *maskItem;
+    QString accessToken;
+    QString databaseURL;
+    QNetworkReply *rep;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     int brushMode = Qt::SquareCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
@@ -176,6 +184,7 @@ private:
     void read(const QJsonObject &json, fileTypes);
     void write(QJsonObject &json, fileTypes);
     void loadLabelFile(QString filename, fileTypes);
+    void imagesReplyFinished();
 };
 
 

@@ -12,13 +12,13 @@ class ImageList : public QWidget
     Q_OBJECT
 
 public:
-    explicit ImageList(QWidget *parent = nullptr, QString databseURL ="", QByteArray token = "");
+    explicit ImageList(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
     ~ImageList();
     void addItems(QJsonObject);
 
 private:
     Ui::ImageList *ui;
-    QByteArray access_token;
+    QString access_token;
     QString databaseURL;
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);

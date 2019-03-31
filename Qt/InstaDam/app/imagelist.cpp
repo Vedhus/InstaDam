@@ -8,7 +8,7 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 
-ImageList::ImageList(QWidget *parent, QString databaseUrl, QByteArray token) :
+ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :
     QWidget(parent),
     ui(new Ui::ImageList)
 {

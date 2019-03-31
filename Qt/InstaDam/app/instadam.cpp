@@ -5,6 +5,7 @@
 #include "labelButton.h"
 #include <string>
 #include <QByteArray>
+#include "imagelist.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -22,7 +23,7 @@ using namespace std;
 #include "htmlFileHandler/qhtml5file.h"
 #endif
 
-InstaDam::InstaDam(QWidget *parent) :
+InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
 {
@@ -44,6 +45,9 @@ InstaDam::InstaDam(QWidget *parent) :
     currentSelectType = SelectItem::Ellipse;
     scene = ui->IdmPhotoViewer->scene;
     maskScene = ui->IdmMaskViewer->scene;
+
+    this->databaseURL = databaseURL;
+    this->accessToken = token;
     currentItem = nullptr;
     currentLabel = nullptr;
     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)), this,
@@ -358,54 +362,96 @@ void InstaDam::on_actionSave_triggered()
 }
 
 
+
+void InstaDam::imagesReplyFinished()
+{
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+      if(jsonError.error != QJsonParseError::NoError){
+            qInfo() << "Error: " << jsonError.errorString();
+      }
+
+      else{
+          QJsonObject obj = jsonReply.object();
+          ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
+          il->show();
+          il->addItems(obj);
+      }
+}
+
+
 void InstaDam::on_actionOpen_File_triggered()
 {
-
-    if (currentProject.numLabels() == 0)
-        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-    else {
-    QTextStream(stdout)<<currentProject.numLabels()<<"\n";
-#ifdef WASM_BUILD
-    openImageConnector->onActivate();
-#else
-    QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
-    QString ext = QFileInfo(filename_temp).suffix();
-    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
-    {
-        this->filename = filename_temp;
-        this->file = QFileInfo(filename);
-        this->path = file.dir();
-        this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-
-        if (imagesList.empty())
-                assertError("That doesn't seem to be a valid image file.");
-        else
+   if(runningLocally)
+   {
+        if (currentProject.numLabels() == 0)
+            assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+        else {
+        QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+    #ifdef WASM_BUILD
+        openImageConnector->onActivate();
+    #else
+        QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+        QString ext = QFileInfo(filename_temp).suffix();
+        if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
         {
-            int counter = 0;
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
-            foreach(QString tempFilename, imagesList) {
-               QFileInfo tempInfo = QFileInfo(tempFilename);
+            this->filename = filename_temp;
+            this->file = QFileInfo(filename);
+            this->path = file.dir();
+            this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
 
-               if (file.completeBaseName()==tempInfo.completeBaseName())
-               {
+            if (imagesList.empty())
+                    assertError("That doesn't seem to be a valid image file.");
+            else
+            {
+                int counter = 0;
+                QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+                foreach(QString tempFilename, imagesList) {
+                   QFileInfo tempInfo = QFileInfo(tempFilename);
 
-                   break;
-               }
-              counter++;
+                   if (file.completeBaseName()==tempInfo.completeBaseName())
+                   {
 
+                       break;
+                   }
+                  counter++;
+
+                }
+                fileId = counter;
+                QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+                openFile_and_labels();
+                QTextStream(stdout)<<currentProject.numLabels()<<"\n";
             }
-            fileId = counter;
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
-            openFile_and_labels();
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
         }
-    }
-    else {
-       assertError("That doesn't seem to be a valid image file.");
-    }
+        else {
+           assertError("That doesn't seem to be a valid image file.");
+        }
 
-#endif
-    }
+    #endif
+        }
+   }
+   else
+   {
+       QString databaseImagesURL = this->databaseURL+"/projects/1/images";
+       QUrl dabaseLink = QUrl(databaseImagesURL);
+
+       qInfo() << databaseImagesURL;
+
+       QNetworkRequest req = QNetworkRequest(dabaseLink);
+       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+      // debugRequest(req);
+
+
+       rep = manager->get(req);
+
+       connect(rep, &QNetworkReply::finished,
+               this, &InstaDam::imagesReplyFinished);
+
+       qInfo() << "waiting for the reply...";
+   }
 }
 
 #ifdef WASM_BUILD
@@ -1355,6 +1401,10 @@ QPixmap InstaDam::maskSelection(SelectItem *item){
 void InstaDam::on_addSelectionButton_clicked()
 {
 
+}
+
+void InstaDam::setCurrentProject(Project pr){
+    this->currentProject = pr;
 }
 
 

@@ -78,16 +78,10 @@ void Login::replyFinished()
       else{
           QJsonObject obj = jsonReply.object();
           if(obj.contains("access_token")){
-              this->accessToken = "Bearer " + obj.value("access_token").toString().toUtf8();
+              this->accessToken = obj.value("access_token").toString().toUtf8();
               //qInfo() << this->accessToken;
               Login::dumpToken();
               Login::listProjects();
-              /////////////////////////
-              /// move the following code to after the project is picked
-//              InstaDam *w = new InstaDam;
-//              w->show();
-//              hide();
-              /////////////////////////
         }
          else{
               qInfo() << obj;
@@ -110,9 +104,9 @@ void Login::projectsReplyFinished()
           QJsonObject obj = jsonReply.object();
           //qInfo()<< "implement a function to read the returned object";
           qInfo() << obj;
-          ProjectList *pl = new ProjectList(nullptr, this->databaseURL, this->accessToken);
+          ProjectList *pl = new ProjectList;
           pl->show();
-          pl->addItems(obj);
+          pl->addItems(jsonReply, this->databaseURL, this->accessToken);
           hide();
       }
 }
@@ -131,12 +125,11 @@ void Login::listProjects(){
     QString databaseProjectsURL = this->databaseURL+"/projects";
     QUrl dabaseLink = QUrl(databaseProjectsURL);
 
-    //qInfo() << databaseProjectsURL;
-
+    qInfo() << databaseProjectsURL;
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    req.setRawHeader("Authorization", this->accessToken);
-    debugRequest(req);
-
+    QString loginToken = "Bearer "+this->accessToken;
+    qInfo() << loginToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
 
     rep = manager->get(req);
 
