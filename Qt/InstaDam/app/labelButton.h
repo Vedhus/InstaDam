@@ -16,11 +16,17 @@ signals:
 public slots:
     void wasClicked();
     void reemitValueChanged(int);
+};
 
-
-
-
-
+class LabelButtonFilter : public QPushButton{
+    Q_OBJECT
+public:
+    LabelButtonFilter(QSharedPointer<Label> label);
+    QSharedPointer<Label> myLabel;
+signals:
+    void cclicked(QSharedPointer<Label> label);
+public slots:
+    void wasClicked();
 };
 
 #endif // LABELBUTTON_H

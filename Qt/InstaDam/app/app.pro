@@ -38,7 +38,8 @@ HEADERS += \
         filterproperty.h \
         fslider.h \
         newproject.h \
-        labelButton.h
+        labelButton.h \
+    enumconstants.h
 wasm: HEADERS += colordialog.h
 
 FORMS += \

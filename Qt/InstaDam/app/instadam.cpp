@@ -27,9 +27,15 @@ InstaDam::InstaDam(QWidget *parent) :
 {
     ui->setupUi(this);
     filterControl = new filterControls();
+    maskTypeList = { BLUR, CANNY, THRESHOLD, LABELMASK};
+    maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label, ui->labelmask_label};
     connectFilters();
+    qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
+
+
+
 #ifdef WASM_BUILD
     ui->actionExport->setVisible(false);
 #endif
@@ -155,8 +161,8 @@ void InstaDam::setLabels()
 {
     clearLayout(ui->labelClassLayout);
     labelButtons.clear();
-    for(int i=0; i<currentProject.numLabels(); i++){
-        QSharedPointer<Label> label = currentProject.getLabel(i);
+    for(int i=0; i<currentProject->numLabels(); i++){
+        QSharedPointer<Label> label = currentProject->getLabel(i);
         LabelButton *button = new LabelButton(label);
         button->setText(label->getText());
         QPalette pal = button->palette();
@@ -183,7 +189,7 @@ void InstaDam::setLabels()
 
 void InstaDam::on_actionNew_triggered()
 {
-    currentProject.resetLabels();
+    currentProject->resetLabels();
     newProject = new newproject(this);
     newProject->setModal(true);
     connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
@@ -263,27 +269,41 @@ void InstaDam::toggleErasing(){
 
 void InstaDam::connectFilters()
 {
+
+
+
+
+   for (int i = 0; i < maskButtonList.size(); ++i) {
+       for (int j = 0; j < maskButtonList.size(); ++j) {
+           if (i == j)
+           {
+              maskButtonList[i]->setMaskType(maskTypeList[i]);
+              connect(maskButtonList[i], SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+           }
+           else {
+            connect(maskButtonList[i], SIGNAL(checked(maskTypes)), maskButtonList[j], SLOT(otherBoxChecked(maskTypes)));
+
+           }
+
+       }
+
+   }
+
+//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
+//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+
+
+//   connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
+//   connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+//      connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
+
+//   connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
+//   connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
+//      connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
+
+
     connect(ui->IdmPhotoViewer, SIGNAL(changedMask(maskTypes)), ui->IdmMaskViewer, SLOT(setImMask(maskTypes)));
-
-    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
-    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-    ui->blur_label->setMaskType(BLUR);
-
-    connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
-
-
-    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
-    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-    ui->canny_label->setMaskType(CANNY);
-    ui->canny_label->manualSelect();
-    connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
-
-
-    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
-    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
-    ui->threshold_label->setMaskType(THRESHOLD);
-
-    connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
 
     connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
     connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
@@ -293,12 +313,10 @@ void InstaDam::connectFilters()
 void InstaDam::resetPixmapButtons()
 {
     cv::Mat thumbnail = ui->IdmPhotoViewer->cvThumb;
-    ui->blur_label->resetPixmaps(filterControl->thumb2pixmap(thumbnail, BLUR));
-    qInfo("1");
-    ui->canny_label->resetPixmaps(filterControl->thumb2pixmap(thumbnail, CANNY));
-    qInfo("2");
-    ui->threshold_label->resetPixmaps(filterControl->thumb2pixmap( thumbnail, THRESHOLD));
-    qInfo("3");
+    for (int i = 0; i < maskButtonList.size(); ++i) {
+         maskButtonList[i]->resetPixmaps(filterControl->thumb2pixmap(thumbnail, maskTypeList[i]));
+    }
+
 }
 
 void InstaDam::setCurrentBrushSize(int size){
@@ -364,10 +382,10 @@ void InstaDam::on_actionSave_triggered()
 void InstaDam::on_actionOpen_File_triggered()
 {
 
-    if (currentProject.numLabels() == 0)
+    if (currentProject== nullptr)
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
     else {
-    QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+    QTextStream(stdout)<<currentProject->numLabels()<<"\n";
 #ifdef WASM_BUILD
     openImageConnector->onActivate();
 #else
@@ -385,7 +403,7 @@ void InstaDam::on_actionOpen_File_triggered()
         else
         {
             int counter = 0;
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+            QTextStream(stdout)<<currentProject->numLabels()<<"\n";
             foreach(QString tempFilename, imagesList) {
                QFileInfo tempInfo = QFileInfo(tempFilename);
 
@@ -398,9 +416,9 @@ void InstaDam::on_actionOpen_File_triggered()
 
             }
             fileId = counter;
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+            QTextStream(stdout)<<currentProject->numLabels()<<"\n";
             openFile_and_labels();
-            QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+            QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         }
     }
     else {
@@ -470,8 +488,8 @@ void InstaDam::on_saveAndBack_clicked()
 void InstaDam::exportImages(bool asBuffers)
 {
     QString baseName = this->filename;
-    for(int i = 0; i < currentProject.numLabels(); i++){
-        QSharedPointer<Label> label = currentProject.getLabel(i);
+    for(int i = 0; i < currentProject->numLabels(); i++){
+        QSharedPointer<Label> label = currentProject->getLabel(i);
         QString filename = baseName + "_" + label->getText() + ".png";
         if(asBuffers){
             //cout << "F " << filename.toStdString() << endl;
@@ -514,7 +532,7 @@ void InstaDam::generateLabelFileName()
     }
     labelPaths.clear();
     this->annotationPath = aPath+baseName+".idantn";
-    for(int i=0; i<currentProject.numLabels(); i++){
+    for(int i=0; i<currentProject->numLabels(); i++){
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
         this->labelPaths.append(exPath+labfilePrefix+"_label.png");
     }
@@ -535,11 +553,11 @@ void InstaDam::openFile_and_labels()
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent,labelNameTemp);
 #else
     //Open labels
-    QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+    QTextStream(stdout)<<currentProject->numLabels()<<"\n";
     scene->clearItems();
     maskScene->clearItems();
     generateLabelFileName();
-    QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+    QTextStream(stdout)<<currentProject->numLabels()<<"\n";
     if (QFileInfo(this->annotationPath).isFile())
     {
         QTextStream(stdout) <<"Loading labels\n"<<this->annotationPath;
@@ -548,9 +566,9 @@ void InstaDam::openFile_and_labels()
         QTextStream(stdout) <<"Loaded labels";
     }
     else {
-        for(int i=0; i<currentProject.numLabels(); i++)
+        for(int i=0; i<currentProject->numLabels(); i++)
         {
-           currentProject.getLabel(i)->clear();
+           currentProject->getLabel(i)->clear();
         }
     }
     QTextStream(stdout) <<"Loading photo";
@@ -583,17 +601,17 @@ void InstaDam::loadLabelFile(QString filename, fileTypes fileType){
 
     if (fileType == PROJECT)
         {
-            this->currentProject = Project();
+            this->currentProject = new Project();
             read(loadDoc.object(), fileType);
             setLabels();
         }
 
     else {
 
-        for(int i=0; i<currentProject.numLabels(); i++)
+        for(int i=0; i<currentProject->numLabels(); i++)
             {
             read(loadDoc.object(), fileType);
-            QSharedPointer<Label> label = currentProject.getLabel(i);
+            QSharedPointer<Label> label = currentProject->getLabel(i);
 
             if(!label->rectangleObjects.isEmpty()){
                 QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
@@ -844,9 +862,13 @@ void InstaDam::squareBrushButtonClicked()
 
 void InstaDam::on_pushButton_14_clicked()
 {
+    if (currentProject== nullptr)
+        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+    else {
 
-    filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask, filterControl, ui->IdmPhotoViewer);
+    filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask, filterControl, ui->IdmPhotoViewer, currentProject);
     dialogs->show();
+    }
 }
 
 void InstaDam::setInsert(){
@@ -1226,14 +1248,14 @@ void InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
             {
 
                 QSharedPointer<Label> label = QSharedPointer<Label>::create(labelObject, i);
-                currentProject.addLabel(label);
-                QTextStream(stdout)<<currentProject.numLabels()<<"\n";
+                currentProject->addLabel(label);
+                QTextStream(stdout)<<currentProject->numLabels()<<"\n";
             }
             else {
-                    QTextStream(stdout)<<currentProject.numLabels();
-                    QTextStream(stdout)<<currentProject.getLabel(i)->getText();
-                    currentProject.getLabel(i)->clear();
-                    currentProject.getLabel(i)->readIdantn(labelObject);
+                    QTextStream(stdout)<<currentProject->numLabels();
+                    QTextStream(stdout)<<currentProject->getLabel(i)->getText();
+                    currentProject->getLabel(i)->clear();
+                    currentProject->getLabel(i)->readIdantn(labelObject);
 
 
             }
@@ -1246,15 +1268,15 @@ void InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
 void InstaDam::write(QJsonObject &json, fileTypes type = PROJECT){
 
     QJsonArray labs;
-    for(int i = 0; i < currentProject.numLabels(); i++){
+    for(int i = 0; i < currentProject->numLabels(); i++){
         QJsonObject lab;
         if (type== PROJECT)
         {
-            currentProject.getLabel(i)->write(lab);
+            currentProject->getLabel(i)->write(lab);
         }
         else if (type == ANNOTATION)
         {
-            currentProject.getLabel(i)->writeIdantn(lab);
+            currentProject->getLabel(i)->writeIdantn(lab);
         }
         labs.append(lab);
     }

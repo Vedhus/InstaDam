@@ -2,7 +2,7 @@
 #define PICPUSHBUTTON_H
 
 #include "instadam.h"
-
+#include "enumconstants.h"
 #include<QAbstractButton>
 #include<QPushButton>
 #include<QLabel>

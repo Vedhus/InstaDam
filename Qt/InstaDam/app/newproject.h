@@ -21,12 +21,12 @@ public:
     explicit newproject(QWidget *parent = nullptr);
     ~newproject();
 
-    Project newPr;
+    Project *newPr;
 
 private slots:
     void on_pushButton_clicked();
 
-    Project on_buttonBox_accepted();
+    Project* on_buttonBox_accepted();
 #ifdef WASM_BUILD
     void nameAcceptClicked();
     void colorPicked(const QColor &color);
