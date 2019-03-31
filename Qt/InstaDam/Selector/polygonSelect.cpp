@@ -25,6 +25,7 @@ PolygonSelect::PolygonSelect() : PolygonSelect(QPointF(0.,0.)){
 
 }
 
+
 /*!
   Constructs a PolygonSelect object by reading a QJsonObject and setting the internal vertex list
   to the values given in \a json. \a label is the Label which owns this object and \a item is the
@@ -71,6 +72,14 @@ PolygonSelect::PolygonSelect(QPointF point, QSharedPointer<Label> label, QGraphi
     invertColorForPen();
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPolygonItem::setFlag(QGraphicsItem::ItemIsMovable);
+
+}
+
+/*!
+ * Sets the opacity of the label to \a val
+*/
+void PolygonSelect::setOpacity(qreal val){
+   SelectItem::setOpacity(val);
 
 }
 

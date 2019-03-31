@@ -10,4 +10,5 @@ INPUT(
 ./debug\label.o
 ./debug\freeDrawErase.o
 ./debug\moc_photoScene.o
+./debug\moc_label.o
 );

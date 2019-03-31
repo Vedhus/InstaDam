@@ -173,7 +173,7 @@ void InstaDam::setLabels()
         qInfo("Button Added!");
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
         button->slider->setValue(50);
-        //connect(button, SIGNAL(opacity(int, int)), ui->IdmPhotoViewer, SLOT(opacityChanged(int, int)));
+        connect(button, SIGNAL(opacity(QSharedPointer<Label>, int)), this, SLOT(setOpacity(QSharedPointer<Label>, int)));
 
         labelButtons.push_back(button);
 
@@ -193,6 +193,14 @@ void InstaDam::on_actionNew_triggered()
 
 void InstaDam::setCurrentLabel(LabelButton *button){
     currentLabel = button->myLabel;
+}
+
+void InstaDam::setOpacity(QSharedPointer<Label> label, int val){
+    qInfo("Instadam Opacity");
+    label->setOpacity(val);
+    scene->update();
+    maskScene->update();
+
 }
 
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label){

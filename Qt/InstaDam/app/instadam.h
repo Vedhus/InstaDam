@@ -105,6 +105,7 @@ private slots:
     void toggleErasing();
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
+    void setOpacity(QSharedPointer<Label>, int);
     void setCurrentBrushSize(int);
     void setNewProject();
     void addCurrentSelection();

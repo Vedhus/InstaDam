@@ -59,6 +59,7 @@ public:
     QPolygonF getPolygon(){return polygon;}
 
     QGraphicsScene* scene();
+    void setOpacity(qreal);
 
 private:
     bool selected = true;

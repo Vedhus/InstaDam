@@ -59,6 +59,13 @@ RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label, QGr
 }
 
 /*!
+ * Sets the opacity of the label to \a val
+ */
+void RectangleSelect::setOpacity(qreal val){
+    SelectItem::setOpacity(val);
+
+}
+/*!
   Constructs a RectangleSelect object by setting all vertices to be a \a point, \a vertSize indicates the size of the
   vertex highlight boxes, \a label is the Label which owns this object and \a item is the
   parent QGraphicsItem, if any.

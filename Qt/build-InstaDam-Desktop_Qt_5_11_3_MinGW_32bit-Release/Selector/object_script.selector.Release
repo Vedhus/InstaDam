@@ -10,4 +10,5 @@ INPUT(
 ./release\label.o
 ./release\freeDrawErase.o
 ./release\moc_photoScene.o
+./release\moc_label.o
 );

@@ -51,6 +51,7 @@ class Label: public QEnableSharedFromThis<Label>{
     void write(QJsonObject &json) const;
     void writeIdantn(QJsonObject &json) const;
     QPixmap exportLabel(QSize &rect);
+    void setOpacity(int val);
 };
 
 #endif // LABEL_H
