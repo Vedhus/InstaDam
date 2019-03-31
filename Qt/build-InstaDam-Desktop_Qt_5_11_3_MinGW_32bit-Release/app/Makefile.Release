@@ -3847,7 +3847,18 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		ui_instadam.h \
-		../../InstaDam/app/pixmapops.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QAction \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QScrollArea \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSplitter \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qsplitter.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QStatusBar \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qstatusbar.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QTabWidget \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QVBoxLayout \
+		../../InstaDam/app/maskviewer.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../InstaDam/app/photoviewer.h \
 		../../InstaDam/app/filters.h \
 		../../InstaDam/app/maskobjects.h \
@@ -3857,9 +3868,6 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QString \
-		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
-		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
-		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsPixmapItem \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QWheelEvent \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QtCore \
@@ -3969,6 +3977,9 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtcoreversion.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QBitmap \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qbitmap.h \
+		../../InstaDam/app/picpushbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../InstaDam/app/pixmapops.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QByteArray \
 		../../InstaDam/Selector/commands.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoCommand \
@@ -4856,7 +4867,18 @@ release/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/pho
 		D:/opencv/opencv401/opencv/build/include/opencv2/imgproc/types_c.h \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core_c.h \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/types_c.h \
-		ui_instadam.h
+		ui_instadam.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QAction \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QScrollArea \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSplitter \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qsplitter.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QStatusBar \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qstatusbar.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QTabWidget \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QVBoxLayout \
+		../../InstaDam/app/maskviewer.h \
+		../../InstaDam/app/picpushbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\photoviewer.o ..\..\InstaDam\app\photoviewer.cpp
 
 release/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops.h \
@@ -6630,6 +6652,10 @@ release/newproject.o: ../../InstaDam/app/newproject.cpp ../../InstaDam/app/newpr
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
 		ui_newproject.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qicon.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QInputDialog \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qinputdialog.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QTextStream
