@@ -26,16 +26,17 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
     qInfo() << obj;
+    int counter = 1; // delete once the id is returned from the server
     for(int i =0; i<projects_list.count();i++){
         QJsonValue project = projects_list.at(i);
             if(project.isObject()){
                 QJsonObject subObj = project.toObject();
                 QStringList proj_details;
-                foreach(const QString& k, subObj.keys()) {
+                proj_details << QString::number(counter); // delete later
+                foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
                     QJsonValue val = subObj.value(k);
-                    qInfo() << "Key = " << k << ", Value = " << val;
                     if(k == "id"){
-                        proj_details << val.toString();
+                        proj_details.insert(0,val.toString());
                     }
                     if(k == "name"){
                         proj_details << val.toString();
@@ -48,6 +49,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                             proj_details << "Annotator";
                             }
                         }
+
                     }
                 ui->projectsTable->addItem(proj_details.join(" - "));
                connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
@@ -56,14 +58,17 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                 qInfo() << "The returned object does not satisfy the requirements";
                 qInfo() << project;
             }
-        }
+    counter++; //delete later
+    }
 
 
 }
 
 void ProjectList::openProject(QListWidgetItem *project_name){
     qInfo() << "inside open a new project" << project_name->text();
-    QString id="1";
+//    QString id="1";
+    QString id = QString(project_name->text().at(0));
+    qInfo() << id;
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     qInfo() << databaseGetProjectURL;
