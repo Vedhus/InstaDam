@@ -232,12 +232,12 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter)
         case LABELMASK:
             if (!this->labelMask.isNull())
             {
-                qInfo("Converting labels to pixmap");
+
                 QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888));
             cv::Mat mat(image_pixmap.height(), image_pixmap.width(),CV_8UC3, image_pixmap.bits());
-            qInfo("Converted labels to pixmap");
+
             cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
-            qInfo("Converted labels to image");
+
             }
             else
                 cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
