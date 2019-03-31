@@ -18,8 +18,6 @@ public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
     void addItems(QJsonObject);
-    void listImages();
-    void imagesReplyFinished();
 
     void addItems(QJsonDocument, QString, QString);
 public slots:
