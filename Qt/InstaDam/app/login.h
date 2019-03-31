@@ -35,7 +35,7 @@ private:
     void listProjects();
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QString accessToken;
+    QByteArray accessToken;
     QString databaseURL;
 };
 

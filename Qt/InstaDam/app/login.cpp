@@ -78,8 +78,8 @@ void Login::replyFinished()
       else{
           QJsonObject obj = jsonReply.object();
           if(obj.contains("access_token")){
-              this->accessToken = obj.value("access_token").toString();
-              qInfo() << this->accessToken;
+              this->accessToken = "Bearer " + obj.value("access_token").toString().toUtf8();
+              //qInfo() << this->accessToken;
               Login::dumpToken();
               Login::listProjects();
               /////////////////////////
@@ -108,29 +108,35 @@ void Login::projectsReplyFinished()
 
       else{
           QJsonObject obj = jsonReply.object();
-          qInfo()<< "implement a function to read the returned object";
-          ProjectList *pl = new ProjectList;
+          //qInfo()<< "implement a function to read the returned object";
+          qInfo() << obj;
+          ProjectList *pl = new ProjectList(nullptr, this->databaseURL, this->accessToken);
           pl->show();
           pl->addItems(obj);
           hide();
       }
 }
 
+void debugRequest(QNetworkRequest request)
+{
+
+  qDebug() << request.url().toString();
+  const QList<QByteArray>& rawHeaderList(request.rawHeaderList());
+  foreach (QByteArray rawHeader, rawHeaderList) {
+    qDebug() << request.rawHeader(rawHeader);
+  }
+}
+
 void Login::listProjects(){
     QString databaseProjectsURL = this->databaseURL+"/projects";
-    QJsonObject js
-    {
-        {"accessToken", this->accessToken},
-    };
     QUrl dabaseLink = QUrl(databaseProjectsURL);
 
-    qInfo() << databaseProjectsURL;
-    qInfo() << js;
+    //qInfo() << databaseProjectsURL;
 
-    QJsonDocument doc(js);
-    QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json"); // this might need to be updated based on backend
+    req.setRawHeader("Authorization", this->accessToken);
+    debugRequest(req);
+
 
     rep = manager->get(req);
 
@@ -141,6 +147,8 @@ void Login::listProjects(){
 
 
 }
+
+
 void Login::dumpToken(){
     QFile file("token.txt");
     if (file.open(QIODevice::ReadWrite)) {

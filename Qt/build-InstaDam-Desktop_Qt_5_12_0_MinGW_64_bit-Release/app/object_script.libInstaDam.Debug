@@ -1,0 +1,24 @@
+CREATE ./libInstaDam.a
+ADDMOD debug/main.o
+ADDMOD debug/instadam.o
+ADDMOD debug/project.o
+ADDMOD debug/maskviewer.o
+ADDMOD debug/photoviewer.o
+ADDMOD debug/pixmapops.o
+ADDMOD debug/filterproperty.o
+ADDMOD debug/filters.o
+ADDMOD debug/picpushbutton.o
+ADDMOD debug/maskobjects.o
+ADDMOD debug/filtercontrols.o
+ADDMOD debug/fslider.o
+ADDMOD debug/newproject.o
+ADDMOD debug/labelButton.o
+ADDMOD debug/moc_instadam.o
+ADDMOD debug/moc_photoviewer.o
+ADDMOD debug/moc_maskviewer.o
+ADDMOD debug/moc_picpushbutton.o
+ADDMOD debug/moc_filtercontrols.o
+ADDMOD debug/moc_fslider.o
+ADDMOD debug/moc_newproject.o
+ADDMOD debug/moc_labelButton.o
+SAVE

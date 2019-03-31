@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>350</height>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,19 @@
      <width>550</width>
      <height>275</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="loadImagesButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>350</y>
+     <width>541</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load Images</string>
    </property>
   </widget>
  </widget>
