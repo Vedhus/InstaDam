@@ -35,6 +35,9 @@
      <height>275</height>
     </rect>
    </property>
+   <property name="showGrid">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="loadImagesButton">
    <property name="geometry">

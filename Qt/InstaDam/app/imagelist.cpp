@@ -1,5 +1,6 @@
 #include "imagelist.h"
 #include "ui_imagelist.h"
+#include "instadam.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -75,6 +76,10 @@ void ImageList::on_loadButton_clicked()
 {
     qInfo() << "load button clicked";
     /*open a canvas with the selected image, check if annotations exist for image and load those as well*/
+    InstaDam *id = new InstaDam;
+    id->runningLocally = false;
+    id->show();
+    hide();
 }
 
 void ImageList::on_cancelButton_clicked()
