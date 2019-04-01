@@ -52,12 +52,16 @@ QString FreeDrawSelect::baseInstruction = QString("");
   */
 FreeDrawSelect::FreeDrawSelect(QPixmap map, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item){
-    myMap = QSharedPointer<FreeMap>::create();
     mytype = SelectItem::Freedraw;
+    myPixmap = QPixmap(SelectItem::myBounds);
+    myPixmap.fill(Qt::transparent);
     if(label != nullptr)
         label->addItem(this);
     myPen.setWidth(1);
     updatePen(myPen);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
     QImage img = map.toImage();
     img = img.convertToFormat(QImage::Format_RGB32);
     QRgb *rgb;
@@ -68,23 +72,70 @@ FreeDrawSelect::FreeDrawSelect(QPixmap map, QSharedPointer<Label> label, QGraphi
             //cout << " " << qRed(rgb[x]);
             if(qRed(rgb[x]) != 0 || qBlue(rgb[x]) != 0 || qGreen(rgb[x] != 0)){
                 //cout << "HIT";
-                myMap->insert(coordsToInt(x, y), QPoint(x, y));
+                myPainter.drawPoint(QPoint(x, y));
+            }
+            else{
+                img.setPixelColor(x,y, Qt::transparent);
+                //cout << "T" << endl;
             }
         }
         //cout << endl;
     }
-    needToPixmap = true;
-    calcRect();
+    myPainter.end();
+
+    //myPixmap = QPixmap::fromImage(img);
+
     setMirrorMap();
+    QGraphicsPixmapItem::prepareGeometryChange();
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
+}
+
+FreeDrawSelect::FreeDrawSelect(QPixmap map, QPen pen)
+    : QGraphicsPixmapItem(nullptr), SelectItem(nullptr, nullptr){
+    mytype = SelectItem::Freedraw;
+    myPixmap = QPixmap(SelectItem::myBounds);
+    myPixmap.fill(Qt::transparent);
+    myPen = pen;
+    myPen.setWidth(1);
+    updatePen(myPen);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+    QImage img = map.toImage();
+    img = img.convertToFormat(QImage::Format_RGB32);
+    QRgb *rgb;
+    for(int y = 0; y < img.height(); y++){
+        //cout << " Y " << y << endl;
+        rgb = (QRgb*)img.scanLine(y);
+        for(int x = 0; x < img.width(); x++){
+            //cout << " " << qRed(rgb[x]);
+            if(qRed(rgb[x]) != 0 || qBlue(rgb[x]) != 0 || qGreen(rgb[x] != 0)){
+                //cout << "HIT";
+                myPainter.drawPoint(QPoint(x, y));
+            }
+            else{
+                img.setPixelColor(x,y, Qt::transparent);
+                //cout << "T" << endl;
+            }
+        }
+        //cout << endl;
+    }
+    myPainter.end();
+
+    //myPixmap = QPixmap::fromImage(img);
+
+    setMirrorMap();
+    QGraphicsPixmapItem::prepareGeometryChange();
+    QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
+
 }
 
 /*!
   Constructs a FreeDrawSelect object with no selected points, and a square brush with a size of 2 pixels.
   */
-FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
-
+FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, Qt::SquareCap){
 }
 
 /*!
@@ -94,7 +145,6 @@ FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(0.,0.), 2, 1){
   */
 FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item){
-    myMap = QSharedPointer<FreeMap>::create();
     read(json);
     setActiveVertex(0);
     mytype = SelectItem::Freedraw;
@@ -102,6 +152,8 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> la
         label->addItem(this);
     myPen.setWidth(1);
     updatePen(myPen);
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+    QGraphicsPixmapItem::prepareGeometryChange();
 
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
@@ -114,13 +166,20 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> la
   */
 FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
     : QGraphicsPixmapItem(nullptr), SelectItem(0.){
-    myMap = QSharedPointer<FreeMap>::create();
+    mytype = SelectItem::Freedraw;
     QListIterator<FreeDrawSelect*> it(items);
+    myPixmap = QPixmap(SelectItem::myBounds);
+    myPixmap.fill(Qt::transparent);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+
     while(it.hasNext()){
-        myMap->unite((*it.next()->myMap));
+        myPainter.drawPixmap(QPointF(0.,0.),(it.next()->getPixmap()));
     }
-    calcRect();
     setMirrorMap();
+    QGraphicsPixmapItem::prepareGeometryChange();
 }
 
 /*!
@@ -133,26 +192,55 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> items)
   \li Qt::RoundCap
   \endlist
   */
-FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, int brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
+FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode, QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item){
-    myMap = QSharedPointer<FreeMap>::create();
-    myMap->insert(pointToInt(point.toPoint()), point.toPoint());
     setActiveVertex(0);
-    myRect = QRectF(point, point).adjusted(-2.5,-2.5,2.5,2.5);
-    mytype = SelectItem::Freedraw;
     active = true;
     if(label != nullptr)
         label->addItem(this);
-    myPen.setWidth(2);
-    fullWidth = brushSize;
-    halfWidth = brushSize/2;
-    updatePen(myPen);
-    lastPoint = point.toPoint();
-    brushType = brushMode;
+    myPen.setWidth(brushSize);
+    myPen.setCapStyle(brushMode);
+    myPen.setJoinStyle(Qt::MiterJoin);
+    myPen.setMiterLimit(0.1);
+    mytype = SelectItem::Freedraw;
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
 
+    //myPen.setWidth(2);
+    //fullWidth = brushSize;
+    //halfWidth = brushSize/2;
+    //updatePen(myPen);
+    //lastPoint = point.toPoint();
+    //brushType = brushMode;
+    myPixmap = QPixmap(SelectItem::myBounds);
+    myPixmap.fill(Qt::transparent);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.drawPoint(point);
+    myPainter.end();
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsPixmapItem::prepareGeometryChange();
+}
 
+FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen, QSharedPointer<Label> label, QGraphicsItem *item)
+    : QGraphicsPixmapItem(item), SelectItem(label, item){
+    setActiveVertex(0);
+    active = true;
+    if(label != nullptr)
+        label->addItem(this);
+    myPen = pen;
+    mytype = SelectItem::Freedraw;
+    //brushType = myPen.capStyle();
+    myPixmap = QPixmap(SelectItem::myBounds);
+    myPixmap.fill(Qt::transparent);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.drawPoint(point);
+    myPainter.end();
+    myRect = QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
+    QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
+    QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsPixmapItem::prepareGeometryChange();
 }
 
 /*!
@@ -174,7 +262,7 @@ void FreeDrawSelect::addPoint(QPointF &point, int vertex ){
   \reimp
   */
 QRectF FreeDrawSelect::boundingRect() const{
-    return myRect.adjusted(-2, -2, 2, 2);
+    return myRect;
 }
 
 /*!
@@ -198,22 +286,17 @@ bool FreeDrawSelect::isInside(QPointF &point){
   \reimp
   */
 void FreeDrawSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    //cout << " MOVE" << endl;
-    if(brushType == Qt::SquareCap){
-        drawWithSquare(oldPos, newPos);
-    }
-    else{
-        drawWithCircle(oldPos, newPos);
-    }
-    needToPixmap = true;
-    calcRect();
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.drawLine(oldPos, newPos);
+    myPainter.end();
     setMirrorMap();
 }
 
-QPolygonF FreeDrawSelect::getPoints(QPointF offset){
-    QPolygonF poly = QPolygonF::fromList(myMap->values());
-    return poly.translated(-offset);
-}
+//QPolygonF FreeDrawSelect::getPoints(QPointF offset){
+//    QPolygonF poly = QPolygonF::fromList(myMap->values());
+//    return poly.translated(-offset);
+//}
 
 /*!
   \reimp
@@ -221,39 +304,38 @@ QPolygonF FreeDrawSelect::getPoints(QPointF offset){
 void FreeDrawSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     UNUSED(option);
     UNUSED(widget);
-    if(needToPixmap){
-        QPixmap map(int(myRect.width()),int(myRect.height()));
-        map.fill(Qt::transparent);
-        QPainter temp(&map);
-        QBrush brush(myLabel->getColor());
+    //if(needToPixmap){
+        //QPixmap map(int(myRect.width()),int(myRect.height()));
+        //map.fill(Qt::transparent);
+        //QPainter temp(&map);
+        //QBrush brush(myLabel->getColor());
         //cout << 5 << endl;
-        temp.setPen(myLabel->getColor());
+        //temp.setPen(myLabel->getColor());
         //cout << 6 << endl;
-        temp.setBrush(brush);
-        temp.drawPoints(getPoints(myRect.topLeft()));
-        temp.end();
-        setPixmap(map);
-        setOffset(myRect.topLeft());
+        //temp.setBrush(brush);
+        //temp.drawPoints(getPoints(myRect.topLeft()));
+        //temp.end();
+        setPixmap(myPixmap);
+        //setOffset(myRect.topLeft());
         needToPixmap = false;
-    }
+    //}
     QGraphicsPixmapItem::paint(painter, option, widget);
 }
-
+void FreeDrawSelect::setPointsUnchecked(QPixmap map){
+    myPixmap = map;
+    setMirrorMap();
+}
 /*!
   \reimp
   */
 void FreeDrawSelect::read(const QJsonObject &json){
-    fullWidth = 2;
-    halfWidth = 1;
-    brushType = 1;
     QJsonArray pointArray = json["points"].toArray();
     for(int i = 0; i < pointArray.size(); i += 2){
         int x = pointArray[i].toInt();
         int y = pointArray[i+1].toInt();
-        myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
+        //myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
     }
     myID = json["objectID"].toInt();
-    calcRect();
     setMirrorMap();
 }
 
@@ -269,14 +351,14 @@ void FreeDrawSelect::resizeItem(int vertex, QPointF &point){
   \reimp
   */
 void FreeDrawSelect::toPixmap(QPainter *painter){
-    painter->drawPoints(getPoints());
+    painter->drawPixmap(QPointF(0.,0.), myPixmap);
 }
 
 /*!
   \reimp
   */
 void FreeDrawSelect::updatePen(QPen pen){
-    UNUSED(pen);
+    myPen = pen;
 }
 
 /*!
@@ -285,7 +367,7 @@ void FreeDrawSelect::updatePen(QPen pen){
 void FreeDrawSelect::write(QJsonObject &json)const{
     json["objectID"] = myID;
     QJsonArray points;
-    QList<QPointF> pointList = myMap->values();
+    QList<QPointF> pointList;// = myMap->values();
     QPointF pnt;
     while(!pointList.isEmpty()){
         pnt = pointList.takeFirst();
@@ -332,17 +414,22 @@ void FreeDrawSelect::updateMirrorScene(){
 /*!
   Adds \a points to the internal pixel map of selected points.
   */
-void FreeDrawSelect::addPoints(QSharedPointer<FreeMap> points){
-    myMap->unite((*points));
-    needToPixmap = true;
-    calcRect();
+void FreeDrawSelect::addPoints(QSharedPointer<QPixmap> points){
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+    myPainter.drawPixmap(QPointF(0.,0.), (*points.data()));
+    myPainter.end();
+    //myMap->unite((*points));
+    //needToPixmap = true;
+    //calcRect();
     setMirrorMap();
 }
 
-/*!
+/*/*!
   Removes \a point from the internal pixel map, if it exists in the map. \a delHash is used to store
   any removed pixels in order to enable undo and redo of this operation.
-  */
+  /
 void FreeDrawSelect::deletePoint(int point, QSharedPointer<FreeMap> delHash){
     if(myMap->contains(point)){
         delHash->insert(point, (*myMap)[point]);
@@ -351,10 +438,10 @@ void FreeDrawSelect::deletePoint(int point, QSharedPointer<FreeMap> delHash){
     }
 }
 
-/*!
+*!
   Removes pixels defined by \a points from the internal pixel map. \a delHash is used to store
   any removed pixels in order to enable undo and redo of this operation.
-  */
+  /
 void FreeDrawSelect::deletePoints(QVector<int> &points, QSharedPointer<FreeMap> delHash){
     for(int i = 0; i < points.size(); i++){
         deletePoint(points[i], delHash);
@@ -362,201 +449,58 @@ void FreeDrawSelect::deletePoints(QVector<int> &points, QSharedPointer<FreeMap> 
     calcRect();
     setMirrorMap();
 }
-
-/*!
-  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
-  and a round brush pattern.
-
-  \sa drawWithSquare()
 */
-void FreeDrawSelect::drawWithCircle(QPointF &oldPos, QPointF &newPos){
-    QPointF shift = newPos - oldPos;
-    qreal angle = std::atan2(shift.y(), shift.x()) - PI/2.;
-    //cout << "ANG " << angle*180./PI << endl;
-    qreal rotate = (-PI/(fullWidth - 1))/5.;
-    //cout << "ROT " << rotate*180./PI << endl;
-    QPointF addOnStart = QPointF(halfWidth, 0.);
-    QPointF addOnEnd = QPointF(halfWidth, 0.);
-    rotatePoint(addOnStart, angle);
-    rotatePoint(addOnEnd, angle);
-    QPointF start;
-    QPointF end;
-    //angle -= PI/2.;
-    for(int i = 0; i < fullWidth*5; i++){
-        rotatePoint(addOnStart, rotate);
-        rotatePoint(addOnEnd, -rotate);
-        start = (oldPos + addOnStart);
-        end = (newPos + addOnEnd);
-        rasterizeLine(start, end);
-    }
+void FreeDrawSelect::deletePoints(QPointF &start, QPointF &end, QPen pen, QSharedPointer<QPixmap> outmap){
+    QPixmap temp = myPixmap.copy();
+    myPainter.begin(&myPixmap);
+    myPainter.setCompositionMode(QPainter::CompositionMode_SourceOut);
+    myPainter.setPen(pen);
+    myPainter.drawLine(start, end);
+    myPainter.end();
+    pen.setColor(myPen.color());
+    myPainter.begin(&temp);
+    //pen.setColor(Qt::yellow);
+    myPainter.setPen(pen);
+    myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);
+    myPainter.drawPixmap(QPointF(0.,0.), myPixmap);
+    myPainter.end();
+    myPainter.begin(outmap.data());
+    myPainter.setPen(pen);
+    myPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    myPainter.drawPixmap(QPointF(0.,0.), temp);
+    myPainter.end();
+
+    setMirrorMap();
 }
 
 /*!
-  Determines which pixels define a brush stroke from \a oldPos to \a newPos, using the fullWidth of the brush,
-  and a square brush pattern.
-
-  \sa drawWithCircle()
-  */
-void FreeDrawSelect::drawWithSquare(QPointF &oldPos, QPointF &newPos){
-    QPointF start = oldPos;
-    QPointF end = newPos;
-    int sdx, sdy, edx, edy;
-    if(start.toPoint().x() == end.toPoint().x()){
-        sdx = edx = 1;
-        start.rx() -= halfWidth;
-        end.rx() -= halfWidth;
-        sdy = edy = 0;
-    }
-    else if(start.toPoint().y() == end.toPoint().y()){
-        sdy = edy = 1;
-        start.ry() -= halfWidth;
-        end.ry() -= halfWidth;
-        sdx = edx = 0;
-    }
-    else if(start.x() > end.x()){
-        sdx = -1;
-        edx = 1;
-        start.rx() += halfWidth;
-        end.rx() -= halfWidth;
-        if(start.y() > end.y()){
-            sdy = -1;
-            edy = 1;
-            start.ry() += halfWidth;
-            end.ry() -= halfWidth;
-        }
-        else{
-            sdy = 1;
-            edy = -1;
-            start.ry() -= halfWidth;
-            end.ry() += halfWidth;
-        }
-    }
-    else{
-        sdx = 1;
-        edx = -1;
-        start.rx() -= halfWidth;
-        end.rx() += halfWidth;
-        if(start.y() > end.y()){
-            start.ry() += halfWidth;
-            end.ry() -= halfWidth;
-            sdy = -1;
-            edy = 1;
-        }
-        else{
-            sdy = 1;
-            edy = -1;
-            start.ry() -= halfWidth;
-            end.ry() += halfWidth;
-        }
-    }
-    if(sdx == 0){
-        for(int i = 0; i < fullWidth; i++){
-            rasterizeLine(start, end);
-            start.ry() += sdy;
-            end.ry() += edy;
-        }
-    }
-    else if(sdy == 0){
-        for(int i = 0; i < fullWidth; i++){
-            rasterizeLine(start, end);
-            start.rx() += sdx;
-            end.rx() += edx;
-        }
-    }
-    else{
-        for(int i = 0; i < fullWidth; i++){
-            rasterizeLine(start, end);
-            start.rx() += sdx;
-            end.ry() += edy;
-        }
-        start.rx() -= (fullWidth - 1) * sdx;
-        end.ry() -= (fullWidth - 1) *edy;
-        start.ry() += sdy;
-        end.rx() += edx;
-        for(int i = 1; i < fullWidth; i++){
-            rasterizeLine(start, end);
-            start.ry() += sdy;
-            end.rx() += edx;
-        }
-    }
-}
-
-/*!
-  \overload SelectItem::scene()
-
   Returns the QGraphicsScene to which this item belongs.
   */
 QGraphicsScene* FreeDrawSelect::scene(){
     return SelectItem::scene();
 }
-
-/*!
-  Sets the internal map to \a map, without doing any bounds checking.
-  */
-void FreeDrawSelect::setPointsUnchecked(QSharedPointer<FreeMap> map){
-    myMap = map;
-    needToPixmap = true;
-    calcRect();
+void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map){
+    myPainter.begin(&myPixmap);
+    pen.setColor(Qt::red);
+    myPainter.setPen(pen);
+    myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);
+    myPainter.drawPixmap(QPointF(0.,0.), (*map.data()));
+    myPainter.end();
     setMirrorMap();
 }
 
-/*---------------------------- Protected ---------------------------*/
-/*!
-  Creates a rasterized verion of the line defined by \a start and \a end. The pixels on this line
-  are added to the internal pixel map.
-  */
-void FreeDrawSelect::rasterizeLine(QPointF &start, QPointF &end){
-    qreal dx = end.x() - start.x();
-    qreal dy = end.y() - start.y();
-    qreal step;
-    qreal x, y;
-    if(abs(dx) >= abs(dy)){
-        step = abs(dx);
-    }
-    else{
-        step = abs(dy);
-    }
-    dx = dx / step;
-    dy = dy / step;
-    x = start.x();
-    y = start.y();
-    for(int i = 1.; i <= step; i++){
-        if(x >= 0 && y >= 0 && x < SelectItem::myBounds.width() && y < SelectItem::myBounds.height())
-        myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
-        x += dx;
-        y += dy;
-    }
-}
 
 /*------------------------------- Private ---------------------------*/
-/*!
-  Function to calculate the bounding rectangle which encompases all of the selected points.
-*/
-void FreeDrawSelect::calcRect(){
-    qreal t = 1000000.;
-    qreal l = 1000000.;
-    qreal b = 0.;
-    qreal r = 0.;
-    FreeMapIterator it((*myMap));
-    while(it.hasNext()){
-        it.next();
-        t = max(0., min(t, it.value().y()));
-        l = max(0., min(l, it.value().x()));
-        b = min(qreal(SelectItem::myBounds.height()), max(b, it.value().y()));
-        r = min(qreal(SelectItem::myBounds.width()), max(r, it.value().x()));
-    }
-    myRect = QRectF(QPointF(l,t), QPointF(r,b));
-}
 
 /*!
   Sets the bounding rectangle and pixel map of the mirror, based on the values of this instance.
   */
 void FreeDrawSelect::setMirrorMap(){
     if(mirror != nullptr){
-        mirror->myMap = myMap;
-        mirror->myRect = myRect;
-        myMap = mirror->myMap;
-        myRect = mirror->myRect;
+        mirror->myPixmap = myPixmap;
+        //mirror->myRect = myRect;
+        //myMap = mirror->myMap;
+        //myRect = mirror->myRect;
         mirror->setRecalc();
     }
 }

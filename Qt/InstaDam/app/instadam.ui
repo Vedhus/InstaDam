@@ -718,6 +718,20 @@
                          </property>
                         </widget>
                        </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_2">
+                         <property name="text">
+                          <string>Label Mask</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_3">
+                         <property name="text">
+                          <string>Color Range</string>
+                         </property>
+                        </widget>
+                       </item>
                       </layout>
                      </item>
                      <item>
@@ -738,6 +752,20 @@
                        </item>
                        <item alignment="Qt::AlignHCenter">
                         <widget class="PicPushButton" name="threshold_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="PicPushButton" name="labelmask_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="PicPushButton" name="colorrange_label">
                          <property name="text">
                           <string>TextLabel</string>
                          </property>

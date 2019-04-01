@@ -5,7 +5,7 @@
 #include<QVBoxLayout>
 #include<QLabel>
 #include<QString>
-
+#include "pixmapops.h"
 
 #include <QtGlobal>
 #define CONNECTCAST(OBJECT,TYPE,FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)
@@ -16,14 +16,15 @@
 
 
 
-filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc, PhotoViewer* photoViewer):QDialog()
+filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc, PhotoViewer* photoViewer, Project *currentPro):QDialog()
 {
     qInfo("1");
+
     int numControls = fc->properties[(int)selectedMask]->numControls;
     this->setWindowTitle("Filter Options");
 
     QVBoxLayout *VBlayout = new QVBoxLayout(this);
-
+    Project* currentProject = currentPro;
     for (int i = 0; i<numControls; i++)
     {
         QLabel *name = new QLabel();
@@ -83,11 +84,34 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc, PhotoView
 
             break;
         }
+        case LABELLIST:
+        {
+                VBlayout->addLayout(HBlayout);
+                for(int i=0; i<currentProject->numLabels(); i++){
+                    QSharedPointer<Label> label = currentProject->getLabel(i);
+                    LabelButtonFilter *button = new LabelButtonFilter(label);
+                    button->setText(label->getText());
+                    QPalette pal = button->palette();
+                    pal.setColor(QPalette::ButtonText, Qt::black);
+                    pal.setColor(QPalette::Button, label->getColor());
+                    button->setAutoFillBackground(true);
+                    button->setPalette(pal);
+                    button->update();
+
+                    VBlayout->addWidget(button);
+
+                    connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), fc, SLOT(setLabelMask(QSharedPointer<Label>)));
+
+                }
+                break;
+
+        }
 
 
         }
         connect(fc, SIGNAL(valAssigned(maskTypes , threshold_or_filter )),photoViewer,
                 SLOT(setImMask(maskTypes ,  threshold_or_filter )));
+
 
 
     }
@@ -100,6 +124,7 @@ filterControls::filterControls():QObject()
 
 {
     defineProperties();
+
 
 }
 
@@ -114,12 +139,20 @@ void filterControls::assignVal(maskTypes maskType, int propNum, int value,  thre
 
 
 }
+
+void filterControls::setLabelMask(QSharedPointer<Label> label)
+{
+    this->labelMask = label->exportLabel(SelectItem::myBounds);
+    emit valAssigned(LABELMASK, FILTER);
+    qInfo("val Assigned");
+
+}
 void filterControls::defineProperties()
 {
 
 
 
-    qInfo("B1");
+
     std::vector<filterProperty*> cannyProperties;
 
        cannyProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
@@ -145,6 +178,13 @@ void filterControls::defineProperties()
 
         thresholdProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
         thresholdProperties.push_back(  new  filterProperty("Threshold min",SLIDER, 0, 60,  255,  ANY, THRESH, false)  );
+    std::vector<filterProperty*> labelmaskProperties;
+
+        labelmaskProperties.push_back( new   filterProperty("Invert",CHECKBOX, 0, 2,  1, ANY, THRESH, false)  );
+        labelmaskProperties.push_back(  new  filterProperty("Threshold min",SLIDER, 0, 60,  255,  ANY, THRESH, false)  );
+        labelmaskProperties.push_back( new   filterProperty("Label List",LABELLIST, 0, 2,  1, ANY, FILTER, false)  );
+
+
 
 
 
@@ -152,12 +192,14 @@ void filterControls::defineProperties()
     filterPropertiesMeta *cannyPropertiesMeta = new filterPropertiesMeta(cannyProperties, 5, CANNY);
     filterPropertiesMeta *blurPropertiesMeta = new filterPropertiesMeta(blurProperties, 5, BLUR);
     filterPropertiesMeta *thresholdPropertiesMeta = new filterPropertiesMeta(thresholdProperties, 2, THRESHOLD);
+     filterPropertiesMeta *labelmaskPropertiesMeta = new filterPropertiesMeta(labelmaskProperties, 3, LABELMASK);
 
 
     //Order follows order of enum defined in instadam.h
     properties.push_back(cannyPropertiesMeta);
     properties.push_back(thresholdPropertiesMeta);
     properties.push_back(blurPropertiesMeta);
+    properties.push_back(labelmaskPropertiesMeta);
 
 
 
@@ -187,6 +229,20 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter)
         case THRESHOLD:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             break;
+        case LABELMASK:
+            if (!this->labelMask.isNull())
+            {
+
+                QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888));
+            cv::Mat mat(image_pixmap.height(), image_pixmap.width(),CV_8UC3, image_pixmap.bits());
+
+            cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
+
+            }
+            else
+                cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            break;
+
         }
 
     return edge_temp;

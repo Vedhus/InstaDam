@@ -356,9 +356,35 @@ debug/moc_instadam.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -378,6 +404,8 @@ debug/moc_instadam.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/instadam.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -438,12 +466,14 @@ debug/moc_instadam.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../../../opencv/build/include/opencv2/highgui.hpp \
 		../../../../opencv/build/include/opencv2/imgcodecs.hpp \
 		../../../../opencv/build/include/opencv2/videoio.hpp \
+		../../InstaDam/app/enumconstants.h \
 		../../../../opencv/build/include/opencv2/imgproc.hpp \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoStack \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundostack.h \
 		../../InstaDam/Selector/photoScene.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/instadam.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.11.3/mingw53_32/bin/moc.exe
@@ -606,9 +636,35 @@ debug/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -628,6 +684,12 @@ debug/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -642,9 +704,6 @@ debug/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -722,8 +781,6 @@ debug/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -814,7 +871,6 @@ debug/moc_photoviewer.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../InstaDam/app/photoviewer.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.11.3/mingw53_32/bin/moc.exe
@@ -984,9 +1040,35 @@ debug/moc_maskviewer.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGr
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -1005,6 +1087,12 @@ debug/moc_maskviewer.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGr
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -1018,9 +1106,6 @@ debug/moc_maskviewer.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGr
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -1076,7 +1161,6 @@ debug/moc_maskviewer.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGr
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsPixmapItem \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QWheelEvent \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QtCore \
@@ -1098,8 +1182,6 @@ debug/moc_maskviewer.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGr
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -1348,9 +1430,35 @@ debug/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -1370,6 +1478,12 @@ debug/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -1384,9 +1498,6 @@ debug/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -1436,7 +1547,6 @@ debug/moc_picpushbutton.cpp: ../../InstaDam/app/instadam.h \
 		../../InstaDam/Selector/photoScene.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/picpushbutton.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.11.3/mingw53_32/bin/moc.exe
@@ -1600,9 +1710,35 @@ debug/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -1622,6 +1758,12 @@ debug/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -1636,9 +1778,6 @@ debug/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -1695,7 +1834,6 @@ debug/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
@@ -1720,8 +1858,6 @@ debug/moc_filtercontrols.cpp: ../../InstaDam/app/photoviewer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -1970,9 +2106,35 @@ debug/moc_fslider.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -1992,6 +2154,12 @@ debug/moc_fslider.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -2006,9 +2174,6 @@ debug/moc_fslider.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtCore/QObject \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -3037,6 +3202,7 @@ debug/moc_imagelist.cpp: ../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QWid
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../InstaDam/app/imagelist.h \
 		debug/moc_predefs.h \
 		../../../../Qt/5.11.3/mingw53_32/bin/moc.exe
@@ -3211,9 +3377,35 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -3233,6 +3425,12 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -3247,9 +3445,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -3327,8 +3522,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -3419,7 +3612,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
@@ -3584,9 +3776,35 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -3605,6 +3823,12 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -3618,9 +3842,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -3676,7 +3897,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsPixmapItem \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QWheelEvent \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QtCore \
@@ -3698,8 +3918,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -3943,9 +4161,35 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -3965,6 +4209,12 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -3979,9 +4229,6 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -4030,8 +4277,7 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundostack.h \
 		../../InstaDam/Selector/photoScene.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h
 	'D:\Qt\5.11.3\mingw53_32\bin\uic.exe' ../../InstaDam/app/instadam.ui -o ui_instadam.h
 
 ui_newproject.h: ../../InstaDam/app/newproject.ui \
@@ -4243,9 +4489,35 @@ debug/main.o: ../../InstaDam/app/main.cpp ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -4265,6 +4537,12 @@ debug/main.o: ../../InstaDam/app/main.cpp ../../InstaDam/app/instadam.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -4279,9 +4557,6 @@ debug/main.o: ../../InstaDam/app/main.cpp ../../InstaDam/app/instadam.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -4491,9 +4766,35 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -4513,6 +4814,12 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -4527,9 +4834,6 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -4600,7 +4904,6 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsPixmapItem \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QWheelEvent \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QtCore \
@@ -4622,8 +4925,6 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -4710,10 +5011,9 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qtcoreversion.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QBitmap \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qbitmap.h \
-		../../InstaDam/app/picpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/pixmapops.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QByteArray \
+		../../InstaDam/app/imagelist.h \
 		../../InstaDam/Selector/commands.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoCommand \
 		../../InstaDam/quazip/quazip.h \
@@ -4727,7 +5027,6 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../InstaDam/quazip/quazipfileinfo.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QDateTime \
 		../../InstaDam/quazip/quazipfile.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
 		../../InstaDam/quazip/quazipnewinfo.h \
 		../../InstaDam/app/startingwidget.h \
 		../../InstaDam/htmlFileHandler/qhtml5file.h
@@ -5026,9 +5325,35 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -5047,6 +5372,12 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -5060,9 +5391,6 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -5118,7 +5446,6 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsPixmapItem \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QWheelEvent \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QtCore \
@@ -5140,8 +5467,6 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -5388,9 +5713,35 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -5410,6 +5761,12 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -5424,9 +5781,6 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -5483,7 +5837,6 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
@@ -5508,8 +5861,6 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -5610,9 +5961,7 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstatusbar.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QTabWidget \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QVBoxLayout \
-		../../InstaDam/app/maskviewer.h \
-		../../InstaDam/app/picpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton
+		../../InstaDam/app/maskviewer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/photoviewer.o ../../InstaDam/app/photoviewer.cpp
 
 debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops.h \
@@ -5774,9 +6123,35 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -5796,6 +6171,12 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -5810,9 +6191,6 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -5869,7 +6247,6 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
@@ -5894,8 +6271,6 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -6143,9 +6518,34 @@ debug/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -6165,6 +6565,12 @@ debug/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/app
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -6179,9 +6585,6 @@ debug/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -6394,9 +6797,35 @@ debug/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app/p
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -6476,6 +6905,7 @@ debug/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app/p
 		../../../../opencv/build/include/opencv2/highgui.hpp \
 		../../../../opencv/build/include/opencv2/imgcodecs.hpp \
 		../../../../opencv/build/include/opencv2/videoio.hpp \
+		../../InstaDam/app/enumconstants.h \
 		../../../../opencv/build/include/opencv2/imgproc.hpp \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QUndoStack \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qundostack.h \
@@ -6492,7 +6922,6 @@ debug/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app/p
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qscrollarea.h \
@@ -6517,8 +6946,6 @@ debug/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app/p
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -6769,9 +7196,35 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -6791,6 +7244,12 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -6805,9 +7264,6 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -6883,8 +7339,6 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcollator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineoption.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcommandlineparser.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qelapsedtimer.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdiriterator.h \
@@ -6975,8 +7429,8 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QCheckBox \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcheckbox.h \
 		../../InstaDam/app/filterproperty.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QVBoxLayout \
+		../../InstaDam/app/pixmapops.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QtGlobal
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/filtercontrols.o ../../InstaDam/app/filtercontrols.cpp
 
@@ -7138,9 +7592,35 @@ debug/fslider.o: ../../InstaDam/app/fslider.cpp ../../InstaDam/app/fslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMenu \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QBuffer \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qbuffer.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkReply \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkreply.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QIODevice \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QString \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkRequest \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QUrl \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QNetworkAccessManager \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslConfiguration \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslconfiguration.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslerror.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslcertificate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcryptographichash.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qssl.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFlags \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
 		../../InstaDam/app/newproject.h \
 		../../InstaDam/app/ui_labeldialog.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QVariant \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -7160,6 +7640,12 @@ debug/fslider.o: ../../InstaDam/app/fslider.cpp ../../InstaDam/app/fslider.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -7174,9 +7660,6 @@ debug/fslider.o: ../../InstaDam/app/fslider.cpp ../../InstaDam/app/fslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -7902,6 +8385,12 @@ debug/startingwidget.o: ../../InstaDam/app/startingwidget.cpp ../../InstaDam/app
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -7916,9 +8405,6 @@ debug/startingwidget.o: ../../InstaDam/app/startingwidget.cpp ../../InstaDam/app
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qrawfont.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qfontdatabase.h \
 		../../InstaDam/app/ui_freeSelect.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
@@ -8188,6 +8674,9 @@ debug/login.o: ../../InstaDam/app/login.cpp ../../InstaDam/app/login.h \
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -8427,13 +8916,10 @@ debug/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/proje
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qguiapplication.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidget \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QTableView \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtableview.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QJsonDocument \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsondocument.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
@@ -8499,6 +8985,9 @@ debug/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/proje
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \
@@ -8695,6 +9184,7 @@ debug/imagelist.o: ../../InstaDam/app/imagelist.cpp ../../InstaDam/app/imagelist
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../Qt/5.11.3/mingw53_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QMetaType \
+		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		ui_imagelist.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qapplication.h \
@@ -8729,7 +9219,6 @@ debug/imagelist.o: ../../InstaDam/app/imagelist.cpp ../../InstaDam/app/imagelist
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtablewidget.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtableview.h \
 		../../InstaDam/app/instadam.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QMainWindow \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qmainwindow.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFileDialog \
@@ -8791,6 +9280,9 @@ debug/imagelist.o: ../../InstaDam/app/imagelist.cpp ../../InstaDam/app/imagelist
 		../../InstaDam/app/colordialog.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QColorDialog \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qcolordialog.h \
+		../../InstaDam/app/picpushbutton.h \
+		../../InstaDam/app/enumconstants.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QAbstractButton \
 		../../InstaDam/app/ui_blankFrame.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHBoxLayout \

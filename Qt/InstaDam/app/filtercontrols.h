@@ -4,6 +4,9 @@
 #include<QDialog>
 #include "fslider.h"
 #include "filterproperty.h"
+#include "Selector/label.h"
+#include "labelButton.h"
+#include "project.h"
 
 class PhotoViewer;
 
@@ -11,7 +14,7 @@ class filterDialog: public QDialog
 
 {
 public:
-    filterDialog(maskTypes, filterControls*, PhotoViewer* );
+    filterDialog(maskTypes, filterControls*, PhotoViewer*, Project *);
 };
 
 class filterControls: public QObject
@@ -33,8 +36,12 @@ public:
     QPixmap thumb2pixmap(cv::Mat, maskTypes);
     void show(maskTypes);
     PhotoViewer *photoViewer;
+    QPixmap labelMask;
+
+
 public slots:
     void assignVal(maskTypes maskType, int propNum, int value,  threshold_or_filter thof);
+    void setLabelMask(QSharedPointer<Label>);
 signals:
     void valAssigned(maskTypes maskType,  threshold_or_filter thof);
 

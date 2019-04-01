@@ -2295,6 +2295,9 @@ debug/moc_labelButton.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
 		../../InstaDam/Selector/label.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
@@ -6760,6 +6763,9 @@ debug/labelButton.o: ../../InstaDam/app/labelButton.cpp ../../InstaDam/app/label
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
 		../../InstaDam/Selector/label.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \

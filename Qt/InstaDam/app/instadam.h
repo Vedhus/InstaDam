@@ -20,6 +20,7 @@
 #include <QtNetwork/QNetworkReply>
 
 #include "newproject.h"
+#include "picpushbutton.h"
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
 #include "ui_polygonSelect.h"
@@ -32,13 +33,12 @@
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
-
+#include "enumconstants.h"
 #include "opencv2/imgproc.hpp"
 
 class filterControls;
+class PicPushButton;
 
-enum maskTypes{CANNY, THRESHOLD, BLUR, OTHER};
-enum threshold_or_filter{THRESH, FILTER};
 #include <QUndoStack>
 
 #include "Selector/photoScene.h"
@@ -75,7 +75,10 @@ public:
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
-    void setCurrentProject(Project);
+    void setCurrentProject(Project*);
+    QList<maskTypes> maskTypeList ;
+    QList<PicPushButton*> maskButtonList;
+
 
 private slots:
     void on_actionOpen_File_triggered();
@@ -110,6 +113,7 @@ private slots:
     void toggleErasing();
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
+    void setOpacity(QSharedPointer<Label>, int);
     void setCurrentBrushSize(int);
     void setNewProject();
     void addCurrentSelection();
@@ -142,7 +146,7 @@ private:
     QVector<LabelButton*> labelButtons;
     Ui::InstaDam *ui;
     newproject *newProject;
-    Project currentProject;
+    Project *currentProject = nullptr;
     PhotoScene *scene;
     PhotoScene *maskScene;
     QUndoStack *mainUndoStack;
@@ -173,11 +177,12 @@ private:
     SelectItem *tempItem;
     SelectItem *mirrorItem;
     SelectItem *maskItem;
+
     QString accessToken;
     QString databaseURL;
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    int brushMode = Qt::SquareCap;
+    Qt::PenCapStyle brushMode = Qt::RoundCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
 

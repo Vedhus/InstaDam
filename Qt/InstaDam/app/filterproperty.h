@@ -9,7 +9,7 @@
 
 
 
-enum btnTypes{SLIDER, CHECKBOX};
+enum btnTypes{SLIDER, CHECKBOX, LABELLIST};
 enum evenOdds{EVEN, ODD, ANY};
 
 
@@ -29,6 +29,7 @@ public:
     threshold_or_filter threshold_filter;
     bool signalBool;
     void sliderAssign(int sliderVal);
+
 
 
 };

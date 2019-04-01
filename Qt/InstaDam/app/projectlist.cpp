@@ -104,7 +104,7 @@ void ProjectList::getLabelsReplyFinished()
               InstaDam *w = new InstaDam(nullptr, this->databaseURL, this->accessToken);
               w->show();
               hide();
-              Project newPr = Project();
+              Project* newPr = new Project();
 
               QJsonObject labels = jsonReply.object();
               foreach(const QString& k, labels.keys()) {
@@ -119,7 +119,7 @@ void ProjectList::getLabelsReplyFinished()
                                    Label lb = Label(label, label.value("id").toInt());
                                    Label *lb_ = &lb;
                                    QSharedPointer<Label> LB = QSharedPointer<Label>(lb_);
-                                   newPr.addLabel(LB);
+                                   newPr->addLabel(LB);
                                }
                         }
 //                    }

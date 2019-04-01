@@ -10,6 +10,7 @@ newproject::newproject(QWidget *parent) :
     ui(new Ui::newproject)
 {
     ui->setupUi(this);
+    this->newPr = new Project();
 }
 
 newproject::~newproject()
@@ -32,11 +33,11 @@ void newproject::nameAcceptClicked(){
 //        Label lb;
 //        lb.setText(tempName);
 //        lb.setColor(colorDialog->selectedColor());
-//        this->newPr.addLabel(lb);
+//        this->newPr->addLabel(lb);
 
-//        QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getColor().name() << endl;
-//        QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getText() << endl;
-//        QTextStream(stdout) << this->newPr.numLabels() << endl;
+//        QTextStream(stdout) << this->newPr->getLabel(this->newPr->numLabels()-1)->getColor().name() << endl;
+//        QTextStream(stdout) << this->newPr->getLabel(this->newPr->numLabels()-1)->getText() << endl;
+//        QTextStream(stdout) << this->newPr->numLabels() << endl;
 //    }
 //}
 void newproject::on_pushButton_clicked()
@@ -61,11 +62,11 @@ void newproject::colorPicked(const QColor &oldcolor){
             QSharedPointer<Label> lb = QSharedPointer<Label>::create();
             lb->setText(tempName);
             lb->setColor(color);
-            this->newPr.addLabel(lb);
+            this->newPr->addLabel(lb);
 
-            QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getColor().name() << endl;
-            QTextStream(stdout) << this->newPr.getLabel(this->newPr.numLabels()-1)->getText() << endl;
-            QTextStream(stdout) << this->newPr.numLabels() << endl;
+            QTextStream(stdout) << this->newPr->getLabel(this->newPr->numLabels()-1)->getColor().name() << endl;
+            QTextStream(stdout) << this->newPr->getLabel(this->newPr->numLabels()-1)->getText() << endl;
+            QTextStream(stdout) << this->newPr->numLabels() << endl;
         }
 #ifndef WASM_BUILD
     }
@@ -73,7 +74,7 @@ void newproject::colorPicked(const QColor &oldcolor){
 
 }
 
-Project newproject::on_buttonBox_accepted()
+Project* newproject::on_buttonBox_accepted()
 {
     return this->newPr;
 }

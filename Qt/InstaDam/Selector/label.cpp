@@ -57,7 +57,7 @@ void Label::setColor(QColor col){
 }
 
 /*!
-  Convenience funtion for setting the id this Label as an \a int.
+  Convenience funtion for setting the id this Label as the \a labelId .
   */
 
 void Label::setId(int j){
@@ -140,6 +140,25 @@ void Label::clear()
     ellipseObjects.clear();
     polygonObjects.clear();
     freeDrawObjects.clear();
+}
+
+void Label::setOpacity(int val)
+
+{
+
+    float normalizedValue = val/100.0;
+    qInfo("Opacity\n%f", normalizedValue);
+    QHash<int, RectangleSelect*>::iterator rectItems;
+    QHash<int, PolygonSelect*>::iterator polygonItems;
+    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
+    QHash<int, EllipseSelect*>::iterator ellipseItems;
+
+    for (rectItems = rectangleObjects.begin(); rectItems != rectangleObjects.end(); ++rectItems)
+        rectItems.value()->setOpacity(normalizedValue);
+        qInfo("Opacity Rectangle\n");
+    for (polygonItems = polygonObjects.begin(); polygonItems != polygonObjects.end(); ++polygonItems)
+        polygonItems.value()->setOpacity(normalizedValue);
+        qInfo("Opacity Polygon\n");
 }
 
 /*!

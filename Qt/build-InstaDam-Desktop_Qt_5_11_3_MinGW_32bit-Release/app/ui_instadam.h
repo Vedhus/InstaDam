@@ -101,10 +101,14 @@ public:
     QLabel *label_6;
     QLabel *label_5;
     QLabel *label_4;
+    QLabel *label_2;
+    QLabel *label_3;
     QHBoxLayout *horizontalLayout_7;
     PicPushButton *blur_label;
     PicPushButton *canny_label;
     PicPushButton *threshold_label;
+    PicPushButton *labelmask_label;
+    PicPushButton *colorrange_label;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu_File;
@@ -469,6 +473,16 @@ public:
 
         horizontalLayout_8->addWidget(label_4, 0, Qt::AlignHCenter);
 
+        label_2 = new QLabel(scrollAreaWidgetContents);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        horizontalLayout_8->addWidget(label_2, 0, Qt::AlignHCenter);
+
+        label_3 = new QLabel(scrollAreaWidgetContents);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        horizontalLayout_8->addWidget(label_3, 0, Qt::AlignHCenter);
+
 
         verticalLayout_6->addLayout(horizontalLayout_8);
 
@@ -488,6 +502,16 @@ public:
         threshold_label->setObjectName(QStringLiteral("threshold_label"));
 
         horizontalLayout_7->addWidget(threshold_label, 0, Qt::AlignHCenter);
+
+        labelmask_label = new PicPushButton(scrollAreaWidgetContents);
+        labelmask_label->setObjectName(QStringLiteral("labelmask_label"));
+
+        horizontalLayout_7->addWidget(labelmask_label, 0, Qt::AlignHCenter);
+
+        colorrange_label = new PicPushButton(scrollAreaWidgetContents);
+        colorrange_label->setObjectName(QStringLiteral("colorrange_label"));
+
+        horizontalLayout_7->addWidget(colorrange_label, 0, Qt::AlignHCenter);
 
 
         verticalLayout_6->addLayout(horizontalLayout_7);
@@ -587,9 +611,13 @@ public:
         label_6->setText(QApplication::translate("InstaDam", "Blur", nullptr));
         label_5->setText(QApplication::translate("InstaDam", "Canny", nullptr));
         label_4->setText(QApplication::translate("InstaDam", "Threshold", nullptr));
+        label_2->setText(QApplication::translate("InstaDam", "Label Mask", nullptr));
+        label_3->setText(QApplication::translate("InstaDam", "Color Range", nullptr));
         blur_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         canny_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         threshold_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
+        labelmask_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
+        colorrange_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Filters", nullptr));
         menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));

@@ -21,4 +21,16 @@ void LabelButton::reemitValueChanged(int value)
 }
 
 
+LabelButtonFilter::LabelButtonFilter(QSharedPointer<Label> label) : QPushButton(){
+    myLabel = label;
+    setCheckable(true);
+    connect(this, &QPushButton::clicked, this, &LabelButtonFilter::wasClicked );
+}
+
+void LabelButtonFilter::wasClicked(){
+    emit cclicked(myLabel);
+}
+
+
+
 

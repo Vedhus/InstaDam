@@ -20,7 +20,7 @@ public:
     RectangleSelect(QPointF point, qreal vertSize, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
     ~RectangleSelect() override;
 
-    /*-------------- Implemented fvuntions from SelectItem ---------*/
+    /*-------------- Implemented funtions from SelectItem ---------*/
     void addPoint(QPointF &point, int vertex = UNSELECTED) override;
     QString baseInstructions() override {return RectangleSelect::baseInstruction;}
     QRectF boundingRect() const override;
@@ -30,6 +30,7 @@ public:
     void updatePen(QPen pen) override;
     void setRectUnchecked(QRectF rect) override;
     void toPixmap(QPainter *painter) override;
+    void setOpacity(qreal);
 
     // Mirror
     RectangleSelect* getMirror() override {cout << "MIR" << endl;return mirror;}

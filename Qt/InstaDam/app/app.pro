@@ -50,6 +50,8 @@ HEADERS += \
     login.h \
     projectlist.h \
     imagelist.h
+    enumconstants.h
+
 wasm: HEADERS += colordialog.h
 
 FORMS += \
