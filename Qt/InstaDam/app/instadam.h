@@ -57,14 +57,14 @@ public:
     filterControls * filterControl;
 
     int fileId= 0;
-    QFileInfo file;
-    QString filename;
+    QFileInfo file, oldFile;
+    QString filename, oldFilename;
     QString labelFile;
 
-    QVector<QString> labelPaths;
-    QString annotationPath;
-    QStringList imagesList;
-    QDir path;
+    QVector<QString> labelPaths, oldLabelPaths;
+    QString annotationPath, oldAnnotationPath;
+    QStringList imagesList, oldImagesList;
+    QDir path, oldPath;
     void openFile_and_labels();
     void setLabels();
     void generateLabelFileName();
@@ -173,11 +173,15 @@ private:
     Qt::PenCapStyle brushMode = Qt::RoundCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
+    QVector<QSharedPointer<Label> > tempLabels;
 
     QPixmap maskSelection(SelectItem *item);
-    void read(const QJsonObject &json, fileTypes);
+    bool read(const QJsonObject &json, fileTypes);
     void write(QJsonObject &json, fileTypes);
-    void loadLabelFile(QString filename, fileTypes);
+    bool loadLabelFile(QString filename, fileTypes);
+    QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
+    void revert();
+
 };
 
 

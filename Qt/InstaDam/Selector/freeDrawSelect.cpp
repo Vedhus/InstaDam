@@ -1,6 +1,7 @@
 #include "freeDrawSelect.h"
 #include "label.h"
 #include <QPainter>
+#include <QBuffer>
 #include <QGraphicsScene>
 #include <QJsonArray>
 #include <algorithm>
@@ -329,13 +330,9 @@ void FreeDrawSelect::setPointsUnchecked(QPixmap map){
   \reimp
   */
 void FreeDrawSelect::read(const QJsonObject &json){
-    QJsonArray pointArray = json["points"].toArray();
-    for(int i = 0; i < pointArray.size(); i += 2){
-        int x = pointArray[i].toInt();
-        int y = pointArray[i+1].toInt();
-        //myMap->insert(coordsToInt(int(x), int(y)), QPoint(int(x), int(y)));
-    }
     myID = json["objectID"].toInt();
+    auto const encoded = json["pixmap"].toString().toLatin1();
+    myPixmap.loadFromData(QByteArray::fromBase64(encoded), "PNG");
     setMirrorMap();
 }
 
@@ -366,15 +363,11 @@ void FreeDrawSelect::updatePen(QPen pen){
   */
 void FreeDrawSelect::write(QJsonObject &json)const{
     json["objectID"] = myID;
-    QJsonArray points;
-    QList<QPointF> pointList;// = myMap->values();
-    QPointF pnt;
-    while(!pointList.isEmpty()){
-        pnt = pointList.takeFirst();
-        points.append(pnt.x());
-        points.append(pnt.y());
-    }
-    json["points"] = points;
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    myPixmap.save(&buffer, "PNG");
+    auto const encoded = buffer.data().toBase64();
+    json["pixmap"] = QLatin1String(encoded);
 }
 
 /*--------------------------------- Mirror ----------------------------*/

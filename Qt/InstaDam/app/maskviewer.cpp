@@ -14,9 +14,9 @@ void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer)
     hasPhoto = true;
     photoViewer = viewer;
     photo->setPixmap(photoViewer->filterIm->pixmap());
-    labels = photoViewer->labels;
+    //labels = photoViewer->labels;
     //labels->setPixmap(photoViewer->labels->pixmap());
-    labelsTemp = photoViewer->labelsTemp;
+    //labelsTemp = photoViewer->labelsTemp;
     imMask = viewer->imMask;
     cvImage = viewer->cvImage;
     cvThumb = viewer->cvThumb;

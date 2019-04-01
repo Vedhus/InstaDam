@@ -48,7 +48,8 @@ FORMS += \
         ../Selector/blankFrame.ui \
         ../Selector/polygonSelect.ui \
         ../Selector/freeSelect.ui \
-        labeldialog.ui
+        labeldialog.ui \
+    projectDialog.ui
 
 
 win32 {

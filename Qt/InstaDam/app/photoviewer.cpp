@@ -13,18 +13,18 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent)
     viewerType = PhotoScene::PHOTO_VIEWER_TYPE;
     scene = new PhotoScene(viewerType, this);
     photo = new QGraphicsPixmapItem();
-    labelsTemp = new QGraphicsPixmapItem();
-    labels = new QGraphicsPixmapItem();
+    //labelsTemp = new QGraphicsPixmapItem();
+    //labels = new QGraphicsPixmapItem();
     filterIm = new QGraphicsPixmapItem();
 
     hasPhoto = false;
 
-    labelsTemp->setOpacity(0);
-    labels->setOpacity(0.5);
+    //labelsTemp->setOpacity(0);
+    //labels->setOpacity(0.5);
 
-    scene->addItem(labelsTemp);
+    //scene->addItem(labelsTemp);
     scene->addItem(photo);
-    scene->addItem(labels);
+    //scene->addItem(labels);
 
     setScene(scene);
     zoom = 1;
@@ -80,29 +80,29 @@ QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname){
     return pixmap.size();
 }
 #endif
-QSize PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
+QSize PhotoViewer::setPhotoFromFile(QString filename)
 {
-
-    QColor whiteColor = QColor(0,0,0,0);
+    cout << "SET" << endl;
+    //QColor whiteColor = QColor(0,0,0,0);
     QPixmap pixmap = QPixmap(filename);
 
     cvImage = cv::imread(filename.toLocal8Bit().constData(), CV_LOAD_IMAGE_COLOR);
 
 
-    QPixmap labelMap;
-    if (labelname.isNull())
-    {
-        labelMap = QPixmap(pixmap.size());
-        labelMap.fill(whiteColor);
+    //QPixmap labelMap;
+    //if (labelname.isNull())
+    //{
+    //    labelMap = QPixmap(pixmap.size());
+    //    labelMap.fill(whiteColor);
 
-    }
-    else
-        labelMap = QPixmap(labelname);
+    //}
+    //else
+    //    labelMap = QPixmap(labelname);
 
-    QPixmap white_temp = QPixmap(pixmap.size());
-    white_temp.fill(whiteColor);
-    setPhoto(pixmap, labelMap, white_temp);
-
+    //QPixmap white_temp = QPixmap(pixmap.size());
+    //white_temp.fill(whiteColor);
+    setPhoto(pixmap);
+    cout << "DONE" << endl;
     return pixmap.size();
 }
 
@@ -111,18 +111,18 @@ QSize PhotoViewer::setPhotoFromFile(QString filename, QString labelname)
 
 
 
-void PhotoViewer::setPhotoFromPixmap(QPixmap px, QPixmap lpx)
+void PhotoViewer::setPhotoFromPixmap(QPixmap px)
 {
     cvImage = QPixmap2Mat(px);
 
-    QPixmap white_temp = QPixmap(px.size());
-    QColor whiteColor = QColor(0,0,0,0);
-    white_temp.fill(whiteColor);
-    setPhoto(px, lpx, white_temp);
+    //QPixmap white_temp = QPixmap(px.size());
+    //QColor whiteColor = QColor(0,0,0,0);
+    //white_temp.fill(whiteColor);
+    setPhoto(px);
 
 }
 
-void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsTempPixmap)
+void PhotoViewer::setPhoto(QPixmap pixmap)
 {
 
     cv::resize(cvImage, cvThumb,cv::Size(200,200) , CV_INTER_LINEAR);
@@ -134,8 +134,8 @@ void PhotoViewer::setPhoto(QPixmap pixmap, QPixmap labelsPixmap, QPixmap labelsT
         if (this->viewerType == PhotoScene::PHOTO_VIEWER_TYPE)
         {
                 this->photo->setPixmap(pixmap);
-                this->labels->setPixmap(labelsPixmap);
-                this->labelsTemp->setPixmap(labelsTempPixmap);
+                //this->labels->setPixmap(labelsPixmap);
+                //this->labelsTemp->setPixmap(labelsTempPixmap);
                 this->hasPhoto = true;
 
         }

@@ -19,6 +19,10 @@ class Project{
 
         void addLabel(QSharedPointer<Label> lb);
 
+        void setLabels(QVector<QSharedPointer<Label> > &newLabels){labels = newLabels;}
+
+        QVector<QSharedPointer<Label> > getLabels(){return labels;}
+
         void resetLabels();
 
         int numLabels();
