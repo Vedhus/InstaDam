@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
+#include <QFile>
 namespace Ui {
 class ImageList;
 }
@@ -16,12 +17,18 @@ public:
     ~ImageList();
     void addItems(QJsonObject);
 
+signals:
+    void fileDownloaded(QString path);
+
 private:
     Ui::ImageList *ui;
     QString access_token;
     QString databaseURL;
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
+    void fileReplyFinished();
+
 private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();

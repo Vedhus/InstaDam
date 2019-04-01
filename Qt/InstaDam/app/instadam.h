@@ -122,6 +122,7 @@ private slots:
 
 public slots:
     void resetPixmapButtons();
+    void fileDownloaded(QString path);
 
 
 private:

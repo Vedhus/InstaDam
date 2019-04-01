@@ -361,7 +361,15 @@ void InstaDam::on_actionSave_triggered()
     #endif
 }
 
+void InstaDam::fileDownloaded(QString path)
+{
+    this->filename = path;
+    this->file = QFileInfo(path);
+    this->path = file.dir();
+    this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
+    qInfo() << imagesList;
 
+}
 
 void InstaDam::imagesReplyFinished()
 {
@@ -379,6 +387,9 @@ void InstaDam::imagesReplyFinished()
           ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
           il->show();
           il->addItems(obj);
+          qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
+
+
       }
 }
 
@@ -399,8 +410,10 @@ void InstaDam::on_actionOpen_File_triggered()
         if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
         {
             this->filename = filename_temp;
+            qInfo() << filename;
             this->file = QFileInfo(filename);
             this->path = file.dir();
+            qInfo() << path;
             this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
 
             if (imagesList.empty())

@@ -70,16 +70,47 @@ void ImageList::addItems(QJsonObject obj){
 }
 
 
+void ImageList::fileReplyFinished()
+{
+    qInfo() << "got a file";
+    if(rep->error())
+    {
+        qInfo() << "error getting file";
+    }
+    QUrl url = rep->url();
+    QString path = QFileInfo(url.path()).fileName();
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qInfo() << "could not save to disk";
+    }
+
+    file.write(rep->readAll());
+    file.close();
+
+    emit fileDownloaded(path);
+
+
+}
 
 
 void ImageList::on_loadButton_clicked()
 {
     qInfo() << "load button clicked";
-    /*open a canvas with the selected image, check if annotations exist for image and load those as well*/
-    InstaDam *id = new InstaDam;
-    id->runningLocally = false;
-    id->show();
-    hide();
+    QTableWidget* table = ui->tableWidget;
+    QList<QTableWidgetItem*> list = table->selectedItems();
+    for(int itemIndex = 2; itemIndex<list.size(); itemIndex+=3)
+    {
+        QTableWidgetItem* item = list.at(itemIndex);
+        qInfo() << item->text();
+        QString filepath = this->databaseURL + "/" + item->text();
+        qInfo() << filepath;
+        QNetworkRequest req = QNetworkRequest(filepath);
+        rep = manager->get(req);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &ImageList::fileReplyFinished);
+    }
+
 }
 
 void ImageList::on_cancelButton_clicked()
