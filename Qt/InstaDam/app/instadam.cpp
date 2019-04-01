@@ -317,7 +317,7 @@ void InstaDam::on_actionSave_Annotation_triggered()
         QHtml5File::save(outFile, "myproject.idantn");
 
     #else
-        outFile.write(saveDoc.toJson());
+        outFile.write(saveDoc.toJson(QJsonDocument::Compact));
     #endif
 }
 
@@ -1226,11 +1226,7 @@ void InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
                     QTextStream(stdout)<<currentProject.getLabel(i)->getText();
                     currentProject.getLabel(i)->clear();
                     currentProject.getLabel(i)->readIdantn(labelObject);
-
-
             }
-
-
         }
     }
 }

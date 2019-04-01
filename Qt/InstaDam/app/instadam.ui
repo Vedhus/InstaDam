@@ -327,8 +327,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>69</width>
-                        <height>640</height>
+                        <width>68</width>
+                        <height>569</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -688,8 +688,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1099</width>
-                    <height>70</height>
+                    <width>1101</width>
+                    <height>88</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -774,7 +774,7 @@
      <x>0</x>
      <y>0</y>
      <width>1129</width>
-     <height>21</height>
+     <height>33</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -785,12 +785,15 @@
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
-     <string>&amp;File</string>
+     <string>Annotations</string>
     </property>
     <addaction name="actionOpen_File"/>
-    <addaction name="actionSave_Annotation"/>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="openAnnotations"/>
+    <addaction name="actionSave_Annotation"/>
+    <addaction name="actionExport"/>
+    <addaction name="actionExport_zip"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -805,8 +808,6 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
-    <addaction name="actionExport"/>
-    <addaction name="actionExport_zip"/>
    </widget>
    <addaction name="menuProject"/>
    <addaction name="menu_File"/>
@@ -883,7 +884,12 @@
   </action>
   <action name="actionSave_Annotation">
    <property name="text">
-    <string>Save Annotation</string>
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="openAnnotations">
+   <property name="text">
+    <string>Open</string>
    </property>
   </action>
  </widget>
