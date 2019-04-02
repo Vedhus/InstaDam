@@ -1,5 +1,7 @@
 #include "projectlist.h"
 #include "ui_projectlist.h"
+#include "ui_newproject.h"
+#include "newproject.h"
 #include <QJsonDocument>
 #include "instadam.h"
 #include <QJsonObject>
@@ -12,6 +14,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "serverprojectname.h"
 
 
 ProjectList::ProjectList(QWidget *parent) :
@@ -128,8 +131,18 @@ void ProjectList::getLabelsReplyFinished()
 
               w->setCurrentProject(newPr);
               w->setLabels();
+              hide();
       }
 }
 
 
 
+
+void ProjectList::on_pushButton_clicked()
+{
+    serverProjectName *spn = new serverProjectName();
+    spn->databaseURL = this->databaseURL;
+    spn->accessToken = this->accessToken;
+    spn->show();
+    hide();
+}

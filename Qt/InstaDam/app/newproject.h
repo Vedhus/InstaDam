@@ -22,6 +22,10 @@ public:
     ~newproject();
 
     Project *newPr;
+    bool runningLocally = true;
+    void saveToServer();
+    QString databaseURL;
+    QString accessToken;
 
 private slots:
     void on_pushButton_clicked();
@@ -36,6 +40,8 @@ private:
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
+
+
 #ifdef WASM_BUILD
     ColorDialog *colorDialog;
 #endif

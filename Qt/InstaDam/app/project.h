@@ -7,6 +7,7 @@ class Project{
     private:
         QVector<QSharedPointer<Label> > labels;
         int id;
+        QString name;
 
     public:
 
@@ -27,6 +28,10 @@ class Project{
         void resetLabels();
 
         int numLabels();
+
+        void setName(QString);
+
+        QString getName();
 
 };
 

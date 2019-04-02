@@ -4,6 +4,8 @@
 #include <QInputDialog>
 #include <QColorDialog>
 #include "QTextStream"
+#include "login.h"
+#include "instadam.h"
 
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
@@ -76,5 +78,31 @@ void newproject::colorPicked(const QColor &oldcolor){
 
 Project* newproject::on_buttonBox_accepted()
 {
-    return this->newPr;
+    if(this->runningLocally)
+    {
+        return this->newPr;
+    }
+    else
+    {
+        this->saveToServer();
+        // start server instadam
+        InstaDam *w = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+        w->show();
+        hide();
+        w->setCurrentProject(newPr);
+        w->setLabels();
+        hide();
+        return this->newPr;
+
+    }
+
+}
+
+void newproject::saveToServer(){
+// create new project
+qInfo() << "saving project to server";
+
+// save labels
+
+qInfo() << "saving labels to server";
 }
