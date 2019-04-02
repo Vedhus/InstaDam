@@ -16,6 +16,9 @@
 #include <QMenu>
 #include <QBuffer>
 
+#include <QWidget>
+#include <QtNetwork/QNetworkReply>
+
 #include "newproject.h"
 #include "picpushbutton.h"
 #include "ui_blankFrame.h"
@@ -50,7 +53,7 @@ class InstaDam : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit InstaDam(QWidget *parent = nullptr);
+    explicit InstaDam(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
     ~InstaDam();
     void fileOpen();
     void connectFilters();
@@ -60,6 +63,7 @@ public:
     QFileInfo file, oldFile;
     QString filename, oldFilename;
     QString labelFile;
+    bool runningLocally = false;
 
     QVector<QString> labelPaths, oldLabelPaths;
     QString annotationPath, oldAnnotationPath;
@@ -71,8 +75,10 @@ public:
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
+    void setCurrentProject(Project*);
     QList<maskTypes> maskTypeList ;
     QList<PicPushButton*> maskButtonList;
+
 
 private slots:
     void on_actionOpen_File_triggered();
@@ -121,6 +127,7 @@ private slots:
 
 public slots:
     void resetPixmapButtons();
+    void fileDownloaded(QString path);
 
 
 private:
@@ -171,6 +178,11 @@ private:
     SelectItem *tempItem;
     SelectItem *mirrorItem;
     SelectItem *maskItem;
+
+    QString accessToken;
+    QString databaseURL;
+    QNetworkReply *rep;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     Qt::PenCapStyle brushMode = Qt::RoundCap;
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
@@ -179,6 +191,7 @@ private:
     QPixmap maskSelection(SelectItem *item);
     bool read(const QJsonObject &json, fileTypes);
     void write(QJsonObject &json, fileTypes);
+    void imagesReplyFinished();
     bool loadLabelFile(QString filename, fileTypes);
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
     void revert();

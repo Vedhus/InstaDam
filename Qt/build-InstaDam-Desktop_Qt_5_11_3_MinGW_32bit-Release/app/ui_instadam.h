@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -49,6 +50,7 @@ public:
     QAction *actionExport;
     QAction *actionExport_zip;
     QAction *actionSave_Annotation;
+    QAction *openAnnotations;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -90,6 +92,7 @@ public:
     QPushButton *polygonSelectButton;
     QPushButton *freeSelectButton;
     QPushButton *cancelSelectionButton;
+    QCheckBox *showMaskSelections;
     QTabWidget *tabWidget;
     QWidget *tab;
     QHBoxLayout *horizontalLayout_3;
@@ -119,7 +122,7 @@ public:
     {
         if (InstaDam->objectName().isEmpty())
             InstaDam->setObjectName(QStringLiteral("InstaDam"));
-        InstaDam->resize(1129, 983);
+        InstaDam->resize(1362, 980);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -158,6 +161,8 @@ public:
         actionExport_zip->setObjectName(QStringLiteral("actionExport_zip"));
         actionSave_Annotation = new QAction(InstaDam);
         actionSave_Annotation->setObjectName(QStringLiteral("actionSave_Annotation"));
+        openAnnotations = new QAction(InstaDam);
+        openAnnotations->setObjectName(QStringLiteral("openAnnotations"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -284,7 +289,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 640));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 566));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -386,6 +391,7 @@ public:
         gridLayout->addWidget(selectControlFrame, 0, 3, 4, 1);
 
         gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(0);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         rectangleSelectButton = new QPushButton(frame_5);
         rectangleSelectButton->setObjectName(QStringLiteral("rectangleSelectButton"));
@@ -435,6 +441,11 @@ public:
 
         gridLayout->addWidget(cancelSelectionButton, 2, 4, 1, 1);
 
+        showMaskSelections = new QCheckBox(frame_5);
+        showMaskSelections->setObjectName(QStringLiteral("showMaskSelections"));
+
+        gridLayout->addWidget(showMaskSelections, 3, 4, 1, 1);
+
 
         verticalLayout_5->addWidget(frame_5);
 
@@ -451,7 +462,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1099, 70));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1334, 86));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -541,7 +552,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1129, 21));
+        menubar->setGeometry(QRect(0, 0, 1362, 33));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -556,15 +567,16 @@ public:
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
         menu_File->addAction(actionOpen_File);
-        menu_File->addAction(actionSave_Annotation);
         menu_File->addSeparator();
-        menu_File->addAction(actionExit);
+        menu_File->addAction(openAnnotations);
+        menu_File->addAction(actionSave_Annotation);
+        menu_File->addAction(actionExport);
+        menu_File->addAction(actionExport_zip);
+        menu_File->addSeparator();
         menuEdit->addAction(actionDelete);
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
-        menuProject->addAction(actionExport);
-        menuProject->addAction(actionExport_zip);
 
         retranslateUi(InstaDam);
 
@@ -598,7 +610,8 @@ public:
 #endif // QT_NO_SHORTCUT
         actionExport->setText(QApplication::translate("InstaDam", "Export", nullptr));
         actionExport_zip->setText(QApplication::translate("InstaDam", "Export zip", nullptr));
-        actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save Annotation", nullptr));
+        actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save", nullptr));
+        openAnnotations->setText(QApplication::translate("InstaDam", "Open", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
@@ -608,6 +621,7 @@ public:
         polygonSelectButton->setText(QApplication::translate("InstaDam", "Polygon Select", nullptr));
         freeSelectButton->setText(QApplication::translate("InstaDam", "Free Select", nullptr));
         cancelSelectionButton->setText(QApplication::translate("InstaDam", "Cancel Selection", nullptr));
+        showMaskSelections->setText(QApplication::translate("InstaDam", "Show Selections on Mask", nullptr));
         label_6->setText(QApplication::translate("InstaDam", "Blur", nullptr));
         label_5->setText(QApplication::translate("InstaDam", "Canny", nullptr));
         label_4->setText(QApplication::translate("InstaDam", "Threshold", nullptr));
@@ -619,7 +633,7 @@ public:
         labelmask_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         colorrange_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Filters", nullptr));
-        menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
+        menu_File->setTitle(QApplication::translate("InstaDam", "Annotations", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
         menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
     } // retranslateUi

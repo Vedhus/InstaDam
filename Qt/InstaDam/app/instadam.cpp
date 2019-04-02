@@ -6,6 +6,7 @@
 #include "labelButton.h"
 #include <string>
 #include <QByteArray>
+#include "imagelist.h"
 #include <QDialog>
 #include <iostream>
 #include <fstream>
@@ -19,14 +20,16 @@ using namespace std;
 #include "Selector/commands.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
+#include "startingwidget.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
 
-InstaDam::InstaDam(QWidget *parent) :
+InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent),
     ui(new Ui::InstaDam)
 {
+
     ui->setupUi(this);
     filterControl = new filterControls();
     maskTypeList = { BLUR, CANNY, THRESHOLD, LABELMASK};
@@ -51,6 +54,9 @@ InstaDam::InstaDam(QWidget *parent) :
     currentSelectType = SelectItem::Ellipse;
     scene = ui->IdmPhotoViewer->scene;
     maskScene = ui->IdmMaskViewer->scene;
+
+    this->databaseURL = databaseURL;
+    this->accessToken = token;
     currentItem = nullptr;
     currentLabel = nullptr;
     currentProject = new Project();
@@ -114,6 +120,9 @@ InstaDam::InstaDam(QWidget *parent) :
             SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
+
+    StartingWidget *sw = new StartingWidget;
+    sw->show();
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
@@ -394,9 +403,72 @@ void InstaDam::on_actionSave_triggered()
     #endif
 }
 
+void InstaDam::fileDownloaded(QString path)
+{
+
+    this->oldFilename = this->filename;
+    this->filename = path;
+    this->oldFile = this->file;
+    this->file = QFileInfo(filename);
+    this->oldPath = this->path;
+    this->path = file.dir();
+    this->oldImagesList = this->imagesList;
+    this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
+    cout << "A" << endl;
+    if (imagesList.empty()){
+        assertError("That doesn't seem to be a valid image file.");
+        revert();
+    }
+    else
+    {
+        int counter = 0;
+        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+        foreach(QString tempFilename, imagesList) {
+           QFileInfo tempInfo = QFileInfo(tempFilename);
+               if (file.completeBaseName()==tempInfo.completeBaseName())
+               {
+
+                   break;
+               }
+              counter++;
+
+            }
+        fileId = counter;
+        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+        openFile_and_labels();
+        QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+    }
+
+}
+
+void InstaDam::imagesReplyFinished()
+{
+
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+      if(jsonError.error != QJsonParseError::NoError){
+            qInfo() << "Error: " << jsonError.errorString();
+      }
+      else{
+          QJsonObject obj = jsonReply.object();
+          ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
+          il->show();
+          il->addItems(obj);
+          qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
+      }
+}
+
 
 void InstaDam::on_actionOpen_File_triggered()
 {
+
+   if(runningLocally)
+   {
+    cout << "HERE" << endl;
+    //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
 #ifdef WASM_BUILD
     if (currentProject->numLabels() == 0){
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
@@ -426,15 +498,14 @@ void InstaDam::on_actionOpen_File_triggered()
             //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
             foreach(QString tempFilename, imagesList) {
                QFileInfo tempInfo = QFileInfo(tempFilename);
+                   if (file.completeBaseName()==tempInfo.completeBaseName())
+                   {
 
-               if (file.completeBaseName()==tempInfo.completeBaseName())
-               {
+                       break;
+                   }
+                  counter++;
 
-                   break;
-               }
-              counter++;
-
-            }
+                }
             fileId = counter;
             //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
             openFile_and_labels();
@@ -444,6 +515,26 @@ void InstaDam::on_actionOpen_File_triggered()
     else {
        assertError("That doesn't seem to be a valid image file.");
     }
+   }
+   else
+   {
+       QString databaseImagesURL = this->databaseURL+"/projects/1/images";
+       QUrl dabaseLink = QUrl(databaseImagesURL);
+
+       qInfo() << databaseImagesURL;
+
+       QNetworkRequest req = QNetworkRequest(dabaseLink);
+       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+      // debugRequest(req);
+
+
+       rep = manager->get(req);
+
+       connect(rep, &QNetworkReply::finished,
+               this, &InstaDam::imagesReplyFinished);
+
+       qInfo() << "waiting for the reply...";
+   }
 
 #endif
 
@@ -1354,6 +1445,10 @@ QPixmap InstaDam::maskSelection(SelectItem *item){
 void InstaDam::on_addSelectionButton_clicked()
 {
 
+}
+
+void InstaDam::setCurrentProject(Project* pr){
+    this->currentProject = pr;
 }
 
 

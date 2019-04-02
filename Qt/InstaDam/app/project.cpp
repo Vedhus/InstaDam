@@ -33,3 +33,13 @@ int Project::numLabels()
     return labels.size();
 }
 
+void Project::setId(int id)
+{
+    this->id = id;
+}
+
+int Project::getId()
+{
+    return this->id;
+}
+
