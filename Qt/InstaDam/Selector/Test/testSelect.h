@@ -37,7 +37,7 @@ private slots:
     void testEraseMove();
 
 private:
-    Label *myLabel = new Label();
+    QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();
     QPointF point = QPointF(5., 10.);
     QPointF brc = QPointF(20.,20.);
     QPointF tlc = QPointF(1.,1.);

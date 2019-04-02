@@ -2,13 +2,6 @@ QT += widgets testlib
 
 SOURCES = testRectangleSelect.cpp \
           testEllipseSelect.cpp \
-          ../boxbasedselector.cpp \
-          ../rectangleSelect.cpp \
-          ../ellipseSelect.cpp \
-          ../freeDrawSelect.cpp \
-          ../freeDrawErase.cpp \
-          ../label.cpp \
-          ../selectItem.cpp \
           testfree.cpp
 
 HEADERS = \
@@ -24,7 +17,7 @@ HEADERS = \
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial1
 INSTALLS += target
-
+LIBS += -L$${PWD}/../.. -lselector
 QMAKE_CXXFLAGS += --coverage
 QMAKE_LFLAGS += --coverage
 

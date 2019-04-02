@@ -35,6 +35,7 @@ InstaDam::InstaDam(QWidget *parent) :
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
+    newProject = new newproject(this);
 
 
 
@@ -232,10 +233,12 @@ void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
 void InstaDam::clearLayout(QLayout * layout) {
     if (! layout)
        return;
+
     while (auto item = layout->takeAt(0)) {
         if(item){
             delete item->widget();
             clearLayout(item->layout());
+            layout->removeItem(item);
         }
     }
  }
@@ -254,10 +257,17 @@ void InstaDam::on_actionOpen_triggered()
     }
     else
     {
+        currentProject = newProject->newPr;
+        currentProject->resetLabels();
+        clearLayout(ui->labelClassLayout);
+        scene->clearItems();
+        maskScene->clearItems();
         loadLabelFile(myfileName, PROJECT);
         mainUndoStack->clear();
         tempUndoStack->clear();
         undoGroup->setActiveStack(mainUndoStack);
+        scene->clearItems();
+        maskScene->clearItems();
         scene->update();
         maskScene->update();
 
@@ -387,8 +397,6 @@ void InstaDam::on_actionSave_triggered()
 
 void InstaDam::on_actionOpen_File_triggered()
 {
-    cout << "HERE" << endl;
-    //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
 #ifdef WASM_BUILD
     if (currentProject->numLabels() == 0){
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
@@ -408,7 +416,6 @@ void InstaDam::on_actionOpen_File_triggered()
         this->path = file.dir();
         this->oldImagesList = this->imagesList;
         this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-        cout << "A" << endl;
         if (imagesList.empty()){
             assertError("That doesn't seem to be a valid image file.");
             revert();
@@ -458,6 +465,12 @@ void InstaDam::on_saveAndNext_clicked()
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     else
     {
+        for(int i = 0; i < currentProject->getLabels().size(); i++){
+            currentProject->getLabel(i)->clear();
+        }
+        scene->clearItems();
+        maskScene->clearItems();
+
         qInfo("Going to save idantn");
         on_actionSave_Annotation_triggered() ; //exportImages();
         qInfo("saved idantn");
@@ -482,6 +495,11 @@ void InstaDam::on_saveAndBack_clicked()
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     else
     {
+        for(int i = 0; i < currentProject->getLabels().size(); i++){
+            currentProject->getLabel(i)->clear();
+        }
+        scene->clearItems();
+        maskScene->clearItems();
         qInfo("Going to save idantn");
         on_actionSave_Annotation_triggered() ; //exportImages();
         qInfo("saved idantn");
@@ -505,12 +523,10 @@ void InstaDam::exportImages(bool asBuffers)
         QSharedPointer<Label> label = currentProject->getLabel(i);
         QString filename = baseName + "_" + label->getText() + ".png";
         if(asBuffers){
-            //cout << "F " << filename.toStdString() << endl;
             QByteArray *bytes = new QByteArray();// = QSharedPointer<QByteArray>::create();
             QBuffer *buffer = new QBuffer(bytes);//QSharedPointer<QBuffer>::create(bytes.data());
             label->exportLabel(SelectItem::myBounds).save(buffer, "PNG");
             exportFiles.insert(filename, buffer);
-            //cout << buffer->size() << endl;
         }
         else{
             label->exportLabel(SelectItem::myBounds).save(filename, "PNG");
@@ -546,15 +562,7 @@ void InstaDam::generateLabelFileName()
     labelPaths.clear();
     this->oldAnnotationPath = this->annotationPath;
     this->annotationPath = aPath+baseName+".idantn";
-    //for(int i=0; i<currentProject->numLabels(); i++){
-
-    //    QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
-    //    cout << "  " << labfilePrefix.toStdString() << endl;
-    //    this->labelPaths.append(exPath+labfilePrefix+"_label.png");
-    //    cout << this->labelPaths.size() << endl;
-    //}
     this->path = file.dir();
-
 }
 
 // This function uses the defined QStringList of images in the path as well as the id of the current file
@@ -569,7 +577,6 @@ void InstaDam::openFile_and_labels()
 #else
     //Open labels
     generateLabelFileName();
-    cout << this->annotationPath.toStdString() << endl;
     if(QFileInfo(this->annotationPath).isFile())
     {
         QTextStream(stdout) <<"Loading labels\n"<<this->annotationPath << endl;
@@ -586,7 +593,6 @@ void InstaDam::openFile_and_labels()
         return;
     }
     QTextStream(stdout) <<"Loading photoX" << endl;;
-    cout << filename.toStdString() << endl;
 
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
     qInfo("my bounds set");
@@ -695,7 +701,6 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType){
         setLabels();
         scene->clearItems();
         maskScene->clearItems();
-        cout << "DONE" << endl;
         return true;
     }
     else{
@@ -967,14 +972,8 @@ void InstaDam::on_actionExport_zip_triggered(){
 }
 
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button){
-    //cout << "CLICK " << type<< endl;
     currentButton = button;
     if(!item){
-        //cout << "QQ" << endl;
-        //if(currentLabel == nullptr){
-        //    cout << "NL" << endl;
-        //}
-        //cout << canDrawOnPhoto << currentItem << endl;
         if(!canDrawOnPhoto && (!currentItem || (currentItem && currentItem->type() != SelectItem::Polygon))){
             scene->inactiveAll();
             maskScene->inactiveAll();
@@ -990,38 +989,29 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
         }
 
         if(!currentLabel || button == Qt::RightButton){
-            //cout << "NO LABEL" << endl;
             return;
         }
-        //cout << "CL" << currentLabel->getText().toStdString() << "__" << endl;
 
         if(currentItem && currentItem->type() == SelectItem::Polygon){
-            //cout << "AA" << endl;
             if(insertVertex && vertex1 >= 0 && vertex2 >= 0){
-                //cout << "BB" << endl;
                 if(abs(vertex2 - vertex1) == 1){
-                    //cout << "CC" << endl;
                     currentItem->insertVertex(min(vertex1, vertex2), pos);
                 }
                 else{
-                    //cout << "DD" << endl;
                     currentItem->insertVertex(max(vertex1, vertex2), pos);
                 }
-                //cout << "EE" << endl;
                 vertex1 = -1;
                 vertex2 = -1;
                 insertVertex = false;
                 polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
             }
             else{
-                //cout << "FF" << endl;
                 currentItem->addPoint(pos);
             }
             scene->update();
             maskScene->update();
             return;
         }
-        //cout << "IAA" << endl;
         scene->inactiveAll();
         maskScene->inactiveAll();
         switch(currentSelectType){
@@ -1123,14 +1113,12 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
         if(!canDrawOnPhoto)
             maskItem = currentItem;
         currentLabel = currentItem->getLabel();
-        //cout << "LABL" << endl;
         scene->inactiveAll();
         maskScene->inactiveAll();
         currentItem->clickPoint(pos);
         currentItem->setItemActive();
         if(currentItem->type() == SelectItem::Polygon && insertVertex){
             int vert = currentItem->getActiveVertex();
-            //cout << vert << endl;
             if(vert != SelectItem::UNSELECTED){
                 if(vertex1 <0){
                     vertex1 = vert;
@@ -1155,11 +1143,9 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
     if(currentItem){
         if(currentButton == Qt::LeftButton){
-            //cout << "MOVED" << endl;
             currentItem->moveItem(fromPos, toPos);
         }
         else{
-            //cout << "ROTATE" << endl;
             currentItem->rotate(fromPos, toPos);
         }
         scene->update();
@@ -1198,7 +1184,6 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos
     }
     else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized() || currentItem->wasRotated())){
         if(currentItem->wasMoved()){
-            //cout << "MOVED" << endl;
             QUndoCommand *moveCommand = new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos);
             undoGroup->activeStack()->push(moveCommand);
         }
@@ -1233,7 +1218,6 @@ void InstaDam::finishPolygonButtonClicked(){
 void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key){
     if(!currentItem){
         return;
-    //    cout << "NO CURRENT" << endl;
     }
     else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
         if(currentItem->type() == SelectItem::Polygon && currentItem->getActiveVertex() != SelectItem::UNSELECTED){
@@ -1254,14 +1238,18 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key){
 bool InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
     if(json.contains("labels") && json["labels"].isArray()){
         QJsonArray labelArray = json["labels"].toArray();
+        tempLabels.clear();
         tempLabels.reserve(labelArray.size());
-        cout << "SIZE " << tempLabels.size() << endl;
         for(int i = 0; i < labelArray.size(); i++){
             QSharedPointer<Label> label = QSharedPointer<Label>::create(labelArray[i].toObject(), i);
             tempLabels.push_back(label);
         }
         if (type == PROJECT)
         {
+            currentProject = newProject->newPr;
+            setLabels();
+            scene->clearItems();
+            maskScene->clearItems();
             currentProject->setLabels(tempLabels);
             QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         }
@@ -1292,7 +1280,6 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
                 }
             }
             currentProject->setLabels(tempLabels);
-            cout << currentProject->getLabels().size() << endl;
             QTextStream(stdout)<<currentProject->numLabels();
         }
     }

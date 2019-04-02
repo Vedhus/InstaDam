@@ -76,10 +76,9 @@ void PhotoScene::removeItem(SelectItem* item){
 
 void PhotoScene::clearItems()
 {
-    cout << "The number of labels is " << labelItems.length() << endl;
+    //cout << "The number of labels is " << labelItems.length() << endl;
     for (int i = 0; i < labelItems.length(); i++)
     {
-        cout << i << endl;
         this->removeItem(labelItems[i]);
     }
     labelItems.clear();
@@ -99,7 +98,6 @@ void PhotoScene::keyPressEvent(QKeyEvent *event){
     emit keyPressed(myViewerType, event->key());
     QGraphicsScene::keyPressEvent(event);
 }
-
 /*!
   \overload mousePressEvent()
 

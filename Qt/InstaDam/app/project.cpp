@@ -25,7 +25,7 @@ void Project::addLabel(QSharedPointer<Label> lb)
 
 void Project::resetLabels()
 {
-    QVector<QSharedPointer<Label> > labels;
+    labels.clear();
 }
 
 int Project::numLabels()

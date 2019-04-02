@@ -82,27 +82,11 @@ QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname){
 #endif
 QSize PhotoViewer::setPhotoFromFile(QString filename)
 {
-    cout << "SET" << endl;
-    //QColor whiteColor = QColor(0,0,0,0);
     QPixmap pixmap = QPixmap(filename);
 
     cvImage = cv::imread(filename.toLocal8Bit().constData(), CV_LOAD_IMAGE_COLOR);
 
-
-    //QPixmap labelMap;
-    //if (labelname.isNull())
-    //{
-    //    labelMap = QPixmap(pixmap.size());
-    //    labelMap.fill(whiteColor);
-
-    //}
-    //else
-    //    labelMap = QPixmap(labelname);
-
-    //QPixmap white_temp = QPixmap(pixmap.size());
-    //white_temp.fill(whiteColor);
     setPhoto(pixmap);
-    cout << "DONE" << endl;
     return pixmap.size();
 }
 
@@ -114,10 +98,6 @@ QSize PhotoViewer::setPhotoFromFile(QString filename)
 void PhotoViewer::setPhotoFromPixmap(QPixmap px)
 {
     cvImage = QPixmap2Mat(px);
-
-    //QPixmap white_temp = QPixmap(px.size());
-    //QColor whiteColor = QColor(0,0,0,0);
-    //white_temp.fill(whiteColor);
     setPhoto(px);
 
 }
