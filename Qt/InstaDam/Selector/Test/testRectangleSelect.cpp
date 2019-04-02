@@ -115,10 +115,10 @@ void TestSelect::testInit()
 {
     return;
     ritem = new RectangleSelect(point, myLabel);
-    QCOMPARE(ritem->type(), Rect);
+    QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
     ritem = new RectangleSelect(point, 5., myLabel);
-    QCOMPARE(ritem->type(), Rect);
+    QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
 }
 
@@ -164,7 +164,7 @@ void TestSelect::testRectAddPoint(){
 void TestSelect::testGetType(){
     return;
     ritem = new RectangleSelect(point, myLabel);
-    QCOMPARE(ritem->type(), Rect);
+    QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
 }
 
