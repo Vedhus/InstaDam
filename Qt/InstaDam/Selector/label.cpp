@@ -29,8 +29,12 @@ Label::Label()
   text are read from the QJsonObject and any SelectItems in the object are
   constructed and added to this Label.
   */
-Label::Label(const QJsonObject &json, int j){
-        read(json);
+Label::Label(const QJsonObject &json, int j, bool server){
+        if(server)
+            readServer(json);
+        else {
+             read(json);
+        }
         labelId = j;
 }
 
@@ -204,6 +208,12 @@ void Label::read(const QJsonObject &json){
     SelectItem::ID += 1;
 }
 
+void Label::readServer(const QJsonObject &json)
+{
+    clear();
+    setText(json["name"].toString());
+    setColor(QColor(json["color"].toString()));
+}
 /*!
   Creates a QPixmap bitmask based on all of the SelectItems that this Label holds.
   It paints each item based on their internal parameters. \a rect specifies the

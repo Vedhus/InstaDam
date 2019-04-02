@@ -116,9 +116,11 @@ void ProjectList::getLabelsReplyFinished()
                            QJsonValue labelValue = labels_values_list.at(i);
                                if(labelValue.isObject()){
                                    QJsonObject label = labelValue.toObject();
-                                   Label lb = Label(label, label.value("id").toInt());
-                                   Label *lb_ = &lb;
-                                   QSharedPointer<Label> LB = QSharedPointer<Label>(lb_);
+                                   Label* lb = new Label(label, label.value("id").toInt(), true);
+
+                                   QSharedPointer<Label> LB = QSharedPointer<Label>(lb);
+                                   qInfo() << lb->getText();
+                                   qInfo() << lb->getColor();
                                    newPr->addLabel(LB);
                                }
                         }

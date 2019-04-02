@@ -22,7 +22,7 @@ class Label: public QEnableSharedFromThis<Label>{
   public:
 
     Label();
-    Label(const QJsonObject &json, int);
+    Label(const QJsonObject &json, int, bool=false);
 
     ~Label();
     void setId(int j);
@@ -47,6 +47,7 @@ class Label: public QEnableSharedFromThis<Label>{
     void removeItem(const int id);
     void clear();
     void read(const QJsonObject &json);
+    void readServer(const QJsonObject &json);
     //void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
     void writeIdantn(QJsonObject &json) const;
