@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1129</width>
-    <height>983</height>
+    <width>1362</width>
+    <height>980</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -328,7 +328,7 @@
                         <x>0</x>
                         <y>0</y>
                         <width>68</width>
-                        <height>569</height>
+                        <height>566</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -544,6 +544,9 @@
               </item>
               <item row="0" column="0" rowspan="4">
                <layout class="QGridLayout" name="gridLayout_2">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
                 <item row="0" column="0">
                  <widget class="QPushButton" name="rectangleSelectButton">
                   <property name="sizePolicy">
@@ -656,6 +659,13 @@
                 </property>
                </widget>
               </item>
+              <item row="3" column="4">
+               <widget class="QCheckBox" name="showMaskSelections">
+                <property name="text">
+                 <string>Show Selections on Mask</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -688,8 +698,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1101</width>
-                    <height>88</height>
+                    <width>1334</width>
+                    <height>86</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -801,7 +811,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1129</width>
+     <width>1362</width>
      <height>33</height>
     </rect>
    </property>

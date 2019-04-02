@@ -117,6 +117,7 @@ private slots:
     void on_saveAndBack_clicked();
 
     void on_actionSave_Annotation_triggered();
+    void processShowHide(int state);
 
 public slots:
     void resetPixmapButtons();

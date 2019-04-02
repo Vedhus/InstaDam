@@ -149,7 +149,29 @@ public:
     bool wasPointAdded()const {return pointAdded;}
     bool wasResized()const {return resized;}
     bool wasRotated()const {return rotated;}
-
+    void setFromMaskScene(bool value){fromMaskScene = value;}
+    void setOnMaskScene(bool value){onMaskScene = value;}
+    bool getOnMaskScene(){return onMaskScene;}
+    bool getFromMaskScene(){return fromMaskScene;}
+    void hideMask(){
+        if(onMaskScene){
+            if(!fromMaskScene)
+                hide();
+        }
+        else if(getMirror() != nullptr && !getMirror()->fromMaskScene){
+            mirrorHide();
+        }
+    }
+    void showMask(){
+        if(onMaskScene){
+            if(!fromMaskScene && getMirror() && getMirror()->isVisible()){
+                show();
+            }
+        }
+        else if(getMirror() != nullptr && !getMirror()->fromMaskScene && isVisible()){
+            mirrorShow();
+        }
+    }
 protected:
     SelectType selectType;
 
@@ -168,6 +190,8 @@ protected:
     bool pointAdded = false;
     bool resized = false;
     bool rotated = false;
+    bool fromMaskScene = false;
+    bool onMaskScene = false;
 
     int mytype;
     int activeV = RIGHT;
