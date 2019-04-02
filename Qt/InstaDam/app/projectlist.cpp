@@ -40,11 +40,12 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
             if(project.isObject()){
                 QJsonObject subObj = project.toObject();
                 QStringList proj_details;
-                proj_details << QString::number(counter); // delete later
+//                proj_details << QString::number(counter); // delete later
                 foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
                     QJsonValue val = subObj.value(k);
                     if(k == "id"){
-                        proj_details.insert(0,val.toString());
+                        qInfo() << QString::number(val.toInt());
+                        proj_details << QString::number(val.toInt());
                     }
                     if(k == "name"){
                         proj_details << val.toString();
@@ -74,8 +75,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 
 void ProjectList::openProject(QListWidgetItem *project_name){
     qInfo() << "inside open a new project" << project_name->text();
-//    QString id="1";
-    QString id = QString(project_name->text().at(0));
+    QString id = QString(project_name->text().at(0)); // change this to split by '-'
     qInfo() << id;
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
@@ -113,7 +113,6 @@ void ProjectList::getLabelsReplyFinished()
               foreach(const QString& k, labels.keys()) {
                   if(k=="labels"){
                     QJsonValue labels_values = labels.value(k);
-//                    if(labels_values.isObject()){
                        QJsonArray labels_values_list = labels_values.toArray();
                        for(int i=0;i<labels_values_list.count();i++){
                            QJsonValue labelValue = labels_values_list.at(i);
@@ -125,7 +124,7 @@ void ProjectList::getLabelsReplyFinished()
                                    newPr->addLabel(LB);
                                }
                         }
-//                    }
+
                   }
               }
 
@@ -134,7 +133,6 @@ void ProjectList::getLabelsReplyFinished()
               hide();
       }
 }
-
 
 
 

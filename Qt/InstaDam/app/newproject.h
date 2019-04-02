@@ -5,6 +5,7 @@
 #include <QVector>
 #include "project.h"
 #include "ui_labeldialog.h"
+#include <QNetworkAccessManager>
 #ifdef WASM_BUILD
 #include "colordialog.h"
 #endif
@@ -40,6 +41,8 @@ private:
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *rep;
 
 
 #ifdef WASM_BUILD

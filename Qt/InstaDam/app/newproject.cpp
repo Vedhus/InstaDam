@@ -7,6 +7,8 @@
 #include "login.h"
 #include "instadam.h"
 
+#include <QJsonDocument>
+
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newproject)
@@ -102,7 +104,27 @@ void newproject::saveToServer(){
 // create new project
 qInfo() << "saving project to server";
 
-// save labels
+    QString databaseLoginURL = this->databaseURL+"/project";
+    QUrl dabaseLink = QUrl(databaseLoginURL);
+    QJsonObject js
+    {
+        {"name", this->newPr->getName()},
+    };
 
-qInfo() << "saving labels to server";
+    qInfo() << databaseLoginURL;
+    qInfo() << js;
+
+    QJsonDocument doc(js);
+    QByteArray bytes = doc.toJson();
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    rep = manager->post(req, bytes);
+
+//    connect(rep, &QNetworkReply::finished,
+//            this, &newproject::replyFinished);
+
+
+    // save labels
+    qInfo() << "saving labels to server";
 }
