@@ -5011,6 +5011,18 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/qtcoreversion.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/QBitmap \
 		../../../../Qt/5.11.3/mingw53_32/include/QtGui/qbitmap.h \
+		../../InstaDam/app/ui_projectDialog.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QHeaderView \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyleoption.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyle.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabbar.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qrubberband.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QTableWidget \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtablewidget.h \
+		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtableview.h \
 		../../InstaDam/app/pixmapops.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtCore/QByteArray \
 		../../InstaDam/app/imagelist.h \

@@ -46,8 +46,8 @@ class Label: public QEnableSharedFromThis<Label>{
     void addItem(FreeDrawErase *item){UNUSED(item);}
     void removeItem(const int id);
     void clear();
-    void readIdpro(const QJsonObject &json);
-    void readIdantn(const QJsonObject &json);
+    void read(const QJsonObject &json);
+    //void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
     void writeIdantn(QJsonObject &json) const;
     QPixmap exportLabel(QSize &rect);

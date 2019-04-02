@@ -50,8 +50,8 @@ public:
     QPixmap imMask;
 
     PhotoScene *scene;
-    QGraphicsPixmapItem *labels;
-    QGraphicsPixmapItem *labelsTemp;
+    //QGraphicsPixmapItem *labels;
+    //QGraphicsPixmapItem *labelsTemp;
     QGraphicsPixmapItem *filterIm;
 
     QPoint lastPos;
@@ -62,13 +62,13 @@ public:
 
     PhotoScene::viewerTypes viewerType;
     PhotoViewer(QWidget *parent = nullptr);
-    QSize setPhotoFromFile(QString filename, QString labelname);
+    QSize setPhotoFromFile(QString filename);
 #ifdef WASM_BUILD
     QSize setPhotoFromByteArray(QByteArray &array, QString labelname);
 #endif
-    void setPhotoFromPixmap(QPixmap, QPixmap );
+    void setPhotoFromPixmap(QPixmap);
 
-    void setPhoto(QPixmap , QPixmap , QPixmap );
+    void setPhoto(QPixmap);
 
     void testPixmap();
     void fitInView();

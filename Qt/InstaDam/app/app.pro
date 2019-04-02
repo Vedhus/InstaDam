@@ -66,6 +66,7 @@ FORMS += \
     login.ui \
     projectlist.ui \
     imagelist.ui
+    projectDialog.ui
 
 
 win32 {

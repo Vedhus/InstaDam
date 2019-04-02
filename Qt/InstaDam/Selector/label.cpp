@@ -30,7 +30,7 @@ Label::Label()
   constructed and added to this Label.
   */
 Label::Label(const QJsonObject &json, int j){
-        readIdpro(json);
+        read(json);
         labelId = j;
 }
 
@@ -162,22 +162,16 @@ void Label::setOpacity(int val)
 }
 
 /*!
-  Reads a QJsonObject \a json and sets the Label class's attrbutes to the data it reads.
-  */
-void Label::readIdpro(const QJsonObject &json){
-    clear();
-    setText(json["text"].toString());
-    setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
-}
-
-/*!
   Reads a QJsonObject \a json and sets the Label annotation's to the data it reads.
 Any SelectItems found in the QJsonObject are also constructed and added to this
 Label.
 */
 
-void Label::readIdantn(const QJsonObject &json){
+void Label::read(const QJsonObject &json){
     clear();
+    setText(json["text"].toString());
+    setColor(QColor(json["red"].toInt(), json["green"].toInt(), json["blue"].toInt(), json["alpha"].toInt()));
+
     if(json.contains("rectangles")){
         QJsonArray rectArray = json["rectangles"].toArray();
         for(QJsonArray::iterator it = rectArray.begin(); it != rectArray.end(); ++it){
@@ -279,6 +273,7 @@ void Label::write(QJsonObject &json) const{
 Any SelectItems this Label holds are written.
   */
 void Label::writeIdantn(QJsonObject &json) const{
+    write(json);
     if(!rectangleObjects.isEmpty()){
         QJsonArray rectangles;
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);

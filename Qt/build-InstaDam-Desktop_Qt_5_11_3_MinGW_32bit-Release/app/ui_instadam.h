@@ -49,6 +49,7 @@ public:
     QAction *actionExport;
     QAction *actionExport_zip;
     QAction *actionSave_Annotation;
+    QAction *openAnnotations;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -158,6 +159,8 @@ public:
         actionExport_zip->setObjectName(QStringLiteral("actionExport_zip"));
         actionSave_Annotation = new QAction(InstaDam);
         actionSave_Annotation->setObjectName(QStringLiteral("actionSave_Annotation"));
+        openAnnotations = new QAction(InstaDam);
+        openAnnotations->setObjectName(QStringLiteral("openAnnotations"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -284,7 +287,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 640));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 569));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -451,7 +454,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1099, 70));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1101, 88));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -541,7 +544,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1129, 21));
+        menubar->setGeometry(QRect(0, 0, 1129, 33));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -556,15 +559,16 @@ public:
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
         menu_File->addAction(actionOpen_File);
-        menu_File->addAction(actionSave_Annotation);
         menu_File->addSeparator();
-        menu_File->addAction(actionExit);
+        menu_File->addAction(openAnnotations);
+        menu_File->addAction(actionSave_Annotation);
+        menu_File->addAction(actionExport);
+        menu_File->addAction(actionExport_zip);
+        menu_File->addSeparator();
         menuEdit->addAction(actionDelete);
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
-        menuProject->addAction(actionExport);
-        menuProject->addAction(actionExport_zip);
 
         retranslateUi(InstaDam);
 
@@ -598,7 +602,8 @@ public:
 #endif // QT_NO_SHORTCUT
         actionExport->setText(QApplication::translate("InstaDam", "Export", nullptr));
         actionExport_zip->setText(QApplication::translate("InstaDam", "Export zip", nullptr));
-        actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save Annotation", nullptr));
+        actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save", nullptr));
+        openAnnotations->setText(QApplication::translate("InstaDam", "Open", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
@@ -619,7 +624,7 @@ public:
         labelmask_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         colorrange_label->setText(QApplication::translate("InstaDam", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("InstaDam", "Filters", nullptr));
-        menu_File->setTitle(QApplication::translate("InstaDam", "&File", nullptr));
+        menu_File->setTitle(QApplication::translate("InstaDam", "Annotations", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
         menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
     } // retranslateUi
