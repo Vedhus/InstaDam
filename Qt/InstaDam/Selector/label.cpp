@@ -30,8 +30,8 @@ Label::Label()
   constructed and added to this Label.
   */
 Label::Label(const QJsonObject &json, int j){
-        read(json);
-        labelId = j;
+    read(json);
+    labelId = j;
 }
 
 /*!
@@ -328,6 +328,45 @@ void Label::writeIdantn(QJsonObject &json) const{
     }
 }
 
+void Label::setMaskState(int state){
+    QHash<int, RectangleSelect*>::iterator rectItem;
+    QHash<int, PolygonSelect*>::iterator polygonItem;
+    QHash<int, FreeDrawSelect*>::iterator freeDrawItem;
+    QHash<int, EllipseSelect*>::iterator ellipseItem;
+    for(rectItem = rectangleObjects.begin(); rectItem != rectangleObjects.end(); ++rectItem){
+        if(state == Qt::Unchecked){
+            rectItem.value()->hideMask();
+        }
+        else{
+            rectItem.value()->showMask();
+        }
+    }
+    for(ellipseItem = ellipseObjects.begin(); ellipseItem != ellipseObjects.end(); ++ellipseItem){
+        if(state == Qt::Unchecked){
+            ellipseItem.value()->hideMask();
+        }
+        else{
+            ellipseItem.value()->showMask();
+        }
+    }
+    for(polygonItem = polygonObjects.begin(); polygonItem != polygonObjects.end(); ++polygonItem){
+        if(state == Qt::Unchecked){
+            polygonItem.value()->hideMask();
+        }
+        else{
+            polygonItem.value()->showMask();
+        }
+    }
+    for(freeDrawItem = freeDrawObjects.begin(); freeDrawItem != freeDrawObjects.end(); ++freeDrawItem){
+        if(state == Qt::Unchecked){
+            freeDrawItem.value()->hideMask();
+        }
+        else{
+            freeDrawItem.value()->showMask();
+        }
+    }
+
+}
 /*!
   \fn Label::addItem(FreeDrawErase *item)
 

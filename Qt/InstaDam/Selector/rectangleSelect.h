@@ -33,7 +33,7 @@ public:
     void setOpacity(qreal);
 
     // Mirror
-    RectangleSelect* getMirror() override {cout << "MIR" << endl;return mirror;}
+    RectangleSelect* getMirror() override {return mirror;}
     void mirrorHide() override;
     void mirrorShow() override;
     void rotateMirror() override;

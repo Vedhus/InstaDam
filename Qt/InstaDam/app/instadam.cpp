@@ -70,6 +70,8 @@ InstaDam::InstaDam(QWidget *parent) :
     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
 
+    connect(ui->showMaskSelections, SIGNAL(stateChanged(int)), this,
+            SLOT(processShowHide(int)));
     connect(ui->addSelectionButton, SIGNAL(clicked()), this, SLOT(addCurrentSelection()));
     connect(ui->cancelSelectionButton, SIGNAL(clicked()), this, SLOT(cancelCurrentSelection()));
     undoAction = undoGroup->createUndoAction(this, tr("&Undo"));
@@ -566,23 +568,19 @@ void InstaDam::openFile_and_labels()
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent,labelNameTemp);
 #else
     //Open labels
-    //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
     generateLabelFileName();
-    //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
     cout << this->annotationPath.toStdString() << endl;
     if(QFileInfo(this->annotationPath).isFile())
     {
         QTextStream(stdout) <<"Loading labels\n"<<this->annotationPath << endl;
         QTextStream(stdout) <<"\n"<<this->file.baseName() << endl;
         if(!loadLabelFile(this->annotationPath, ANNOTATION)){
-            cout << "REV" << endl;
             revert();
             return;
         }
         QTextStream(stdout) <<"Loaded labels" << endl;;
     }
     else if(currentProject != nullptr && currentProject->numLabels() == 0){
-        cout << "XXXXX" << endl;
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
         revert();
         return;
@@ -667,6 +665,7 @@ void InstaDam::openFile_and_labels()
             item->itemWasAdded();
             mirror->itemWasAdded();
         }
+        label->setMaskState(ui->showMaskSelections->checkState());
     }
     scene->inactiveAll();
     mainUndoStack->clear();
@@ -1184,6 +1183,10 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos
         else{
             QUndoCommand *addCommand = new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), scene);
             undoGroup->activeStack()->push(addCommand);
+            if(type == PhotoScene::MASK_VIEWER_TYPE)
+                currentItem->setFromMaskScene(true);
+            if(ui->showMaskSelections->checkState() == Qt::Unchecked)
+                currentItem->hideMask();
         }
         currentItem->resetState();
         if(currentItem->type() != SelectItem::Polygon){
@@ -1385,3 +1388,8 @@ void InstaDam::revert(){
     this->labelPaths = this->oldLabelPaths;
 }
 
+void InstaDam::processShowHide(int state){
+    for(int i = 0; i < currentProject->numLabels(); i++){
+         currentProject->getLabel(i)->setMaskState(state);
+    }
+}
