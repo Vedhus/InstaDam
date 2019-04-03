@@ -1,32 +1,35 @@
 #ifndef PROJECT_H
 #define PROJECT_H
-#include "../Selector/label.h"
+
 #include <QVector>
 
+#include "../Selector/label.h"
+
 class Project{
-    private:
-        QVector<QSharedPointer<Label> > labels;
+ private:
+    QVector<QSharedPointer<Label> > labels;
 
-    public:
+ public:
+    Project();
 
-        Project();
+    ~Project();
 
-        ~Project();
+    QSharedPointer<Label> getLabel(int index) const;
 
-        QSharedPointer<Label> getLabel(int index);
+    void setLabel(int index, QSharedPointer<Label> lb);
 
-        void setLabel(int index, QSharedPointer<Label> lb);
+    void addLabel(QSharedPointer<Label> lb);
 
-        void addLabel(QSharedPointer<Label> lb);
+    void setLabels(QVector<QSharedPointer<Label> > &newLabels) {
+        labels = newLabels;
+    }
 
-        void setLabels(QVector<QSharedPointer<Label> > &newLabels){labels = newLabels;}
+    QVector<QSharedPointer<Label> > getLabels() const {return labels;}
 
-        QVector<QSharedPointer<Label> > getLabels(){return labels;}
+    void resetLabels();
 
-        void resetLabels();
-
-        int numLabels();
+    int numLabels() const;
 
 };
 
-#endif // PROJECT_H
+#endif  // PROJECT_H

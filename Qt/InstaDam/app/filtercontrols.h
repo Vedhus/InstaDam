@@ -1,7 +1,10 @@
 #ifndef FILTERCONTROLS_H
 #define FILTERCONTROLS_H
-#include "photoviewer.h"
-#include<QDialog>
+
+#include <QDialog>
+
+#include <vector>
+
 #include "fslider.h"
 #include "filterproperty.h"
 #include "Selector/label.h"
@@ -10,17 +13,15 @@
 
 class PhotoViewer;
 
-class filterDialog: public QDialog
-
-{
-public:
+class filterDialog: public QDialog {
+ public:
     filterDialog(maskTypes, filterControls*, PhotoViewer*, Project *);
 };
 
-class filterControls: public QObject
-{
+class filterControls: public QObject {
     Q_OBJECT
-public:
+
+ public:
     filterControls();
     void defineProperties();
 
@@ -38,13 +39,12 @@ public:
     PhotoViewer *photoViewer;
     QPixmap labelMask;
 
-
-public slots:
-    void assignVal(maskTypes maskType, int propNum, int value,  threshold_or_filter thof);
+ public slots:
+    void assignVal(maskTypes maskType, int propNum, int value,
+                   threshold_or_filter thof);
     void setLabelMask(QSharedPointer<Label>);
-signals:
+ signals:
     void valAssigned(maskTypes maskType,  threshold_or_filter thof);
-
 };
 
-#endif // FILTERCONTROLS_H
+#endif  // FILTERCONTROLS_H

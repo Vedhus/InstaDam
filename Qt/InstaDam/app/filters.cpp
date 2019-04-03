@@ -1,6 +1,4 @@
 #include "filters.h"
 
-filters::filters()
-{
-
+filters::filters() {
 }

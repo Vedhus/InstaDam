@@ -1,78 +1,71 @@
 #ifndef FSLIDER_H
 #define FSLIDER_H
+
 #include <QObject>
-#include "instadam.h"
 #include <QSlider>
 #include <QSpinBox>
 #include <QCheckBox>
 
-class fSlider : public QSlider
-{
+#include "enumconstants.h"
+
+class fSlider : public QSlider {
     Q_OBJECT
-public:
-    fSlider(maskTypes,  int,threshold_or_filter, QWidget *);
+
+ public:
+    fSlider(maskTypes maskType, int propNums, threshold_or_filter tf,
+            QWidget *parent);
     maskTypes selectedMask;
     int propNum;
     threshold_or_filter thof;
 
-signals:
-    void filterValueChanged(maskTypes selectedMask, int propNum, int value, threshold_or_filter);
-    void fSliderReleased(maskTypes, threshold_or_filter);
-private slots:
+ signals:
+    void filterValueChanged(maskTypes selectedMask, int propNum, int value,
+                            threshold_or_filter thof);
+    void fSliderReleased(maskTypes selectedMask, threshold_or_filter tf);
+
+ private slots:
     void reemitValueChanged(int value);
     void reemitSliderReleased();
-
-
 };
 
-class fSpinBox : public QSpinBox
-{
+class fSpinBox : public QSpinBox {
     Q_OBJECT
-public:
-    fSpinBox(maskTypes,  int ,threshold_or_filter, QWidget*);
+
+ public:
+    fSpinBox(maskTypes maskType, int propNums, threshold_or_filter tf,
+             QWidget *parent);
     maskTypes selectedMask;
     int propNum;
     threshold_or_filter thof;
 
 
-signals:
-    void filterValueChanged(maskTypes selectedMask, int propNum, int value, threshold_or_filter);
-    void fSlotChanged(maskTypes, threshold_or_filter);
+ signals:
+    void filterValueChanged(maskTypes selectedMask, int propNum, int value,
+                            threshold_or_filter tf);
+    void fSlotChanged(maskTypes selectedMask, threshold_or_filter tf);
 
-private slots:
+ private slots:
     void reemitValueChanged(int value);
-
-
-
 };
 
 
-class fCheckBox : public QCheckBox
-{
+class fCheckBox : public QCheckBox {
     Q_OBJECT
-public:
-    fCheckBox(maskTypes,  int ,threshold_or_filter, QWidget*);
+
+ public:
+    fCheckBox(maskTypes maskType,  int propNums, threshold_or_filter tf,
+              QWidget *parent);
     maskTypes selectedMask;
     int propNum;
     threshold_or_filter thof;
 
+ signals:
+    void filterValueChanged(maskTypes selectedMask, int propNum, int value,
+                            threshold_or_filter tf);
+    void fStateChanged(maskTypes selectedMask, threshold_or_filter tf);
 
-signals:
-    void filterValueChanged(maskTypes selectedMask, int propNum, int value, threshold_or_filter);
-    void fStateChanged(maskTypes, threshold_or_filter);
-
-private slots:
+ private slots:
     void reemitStateChanged(int value);
-
-
-
 };
 
-
-
-#endif // FSLIDER_H
-
-
-
-
-
+#endif  // FSLIDER_H

@@ -1,26 +1,22 @@
 #ifndef FILTERPROPERTY_H
 #define FILTERPROPERTY_H
-#include <string>
-#include <QString>
-//#include <QWidget>
 
+#include <QString>
+
+#include <string>
+#include <vector>
 
 #include "instadam.h"
-
-
 
 enum btnTypes{SLIDER, CHECKBOX, LABELLIST};
 enum evenOdds{EVEN, ODD, ANY};
 
-
-class filterProperty
-{
-
-
-public:
-    filterProperty(std::string, btnTypes, int, int, int, evenOdds , threshold_or_filter , bool);
+class filterProperty {
+ public:
+    filterProperty(std::string propertyName, btnTypes bt, int propMin,
+                   int propVal, int propMax, evenOdds eo,
+                   threshold_or_filter thof, bool sb);
     QString name;
-   // ~filterProperty();
     btnTypes btnType;
     int max;
     int val;
@@ -29,18 +25,14 @@ public:
     threshold_or_filter threshold_filter;
     bool signalBool;
     void sliderAssign(int sliderVal);
-
-
-
 };
 
-class filterPropertiesMeta
-{
-public:
-    filterPropertiesMeta(std::vector<filterProperty*>, int, maskTypes);
+class filterPropertiesMeta {
+ public:
+    filterPropertiesMeta(std::vector<filterProperty*> fp, int nc, maskTypes mt);
     int numControls;
     maskTypes maskType;
     std::vector<filterProperty*> propertylist;
 };
 
-#endif // FILTERPROPERTY_H
+#endif  // FILTERPROPERTY_H

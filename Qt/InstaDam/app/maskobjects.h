@@ -2,10 +2,9 @@
 #define MASKOBJECTS_H
 
 
-class maskObjects
-{
-public:
+class maskObjects {
+ public:
     maskObjects();
 };
 
-#endif // MASKOBJECTS_H
+#endif  // MASKOBJECTS_H

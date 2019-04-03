@@ -39,7 +39,7 @@ QSize SelectItem::myBounds = QSize(0, 0);
    as the Label that owns this instance, and \a item as the parent
    QGraphicsItem.
 */
-SelectItem::SelectItem(qreal vertSize, QSharedPointer<const Label> label,
+SelectItem::SelectItem(qreal vertSize, QSharedPointer<Label> label,
                        QGraphicsItem *item) : QGraphicsItem(item) {
     SelectItem::setVertexSize(vertSize);
     myID = SelectItem::ID;
@@ -52,7 +52,7 @@ SelectItem::SelectItem(qreal vertSize, QSharedPointer<const Label> label,
    and \a item as the parent QGraphicsItem.The vertex box size defaults to 10
    pixels.
 */
-SelectItem::SelectItem(QSharedPointer<const Label> label,
+SelectItem::SelectItem(QSharedPointer<Label> label,
                        QGraphicsItem *item) :
     SelectItem(10., label, item) {
 }
@@ -88,7 +88,7 @@ QGraphicsScene* SelectItem::scene() const {
   \a label. \a init is used to indicate whether this is an initialization of the
   base class or of a derived class.
   */
-void SelectItem::setLabel(QSharedPointer<const Label> label, bool init) {
+void SelectItem::setLabel(QSharedPointer<Label> label, bool init) {
     myLabel = label;
     if (label != nullptr) {
         myPen = QPen(label->getColor());

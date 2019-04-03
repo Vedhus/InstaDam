@@ -1,40 +1,38 @@
 #ifndef PICPUSHBUTTON_H
 #define PICPUSHBUTTON_H
 
-#include "instadam.h"
-#include "enumconstants.h"
 #include<QAbstractButton>
 #include<QPushButton>
 #include<QLabel>
 #include<QPixmap>
 
-class PicPushButton : public QLabel
-{
+#include "enumconstants.h"
+
+class PicPushButton : public QLabel {
     Q_OBJECT
-public:
+
+ public:
     int w;
     int h;
     maskTypes filter = CANNY;
     QPixmap pixmap;
     QPixmap pixmap_hover;
     QPixmap pixmap_pressed;
-    PicPushButton(QWidget *parent);
+    explicit PicPushButton(QWidget *parent);
     bool check;
-    void setMaskType(maskTypes);
+    void setMaskType(maskTypes maskType);
     void updatePixmap();
-    void resetPixmaps(QPixmap );
-    QPixmap addText(QPixmap, QString);
-    void paintEvent(QPaintEvent *) override;
+    void resetPixmaps(QPixmap pixmap_input);
+    QPixmap addText(QPixmap pixmap_input, QString text);
+    void paintEvent(QPaintEvent *event) override;
     void manualSelect();
-    virtual void mousePressEvent(QMouseEvent*) override;
-    
+    void mousePressEvent(QMouseEvent *event) override;
 
-signals:
-    void checked(maskTypes);
+ signals:
+    void checked(maskTypes type);
 
-public slots:
-    void otherBoxChecked(maskTypes);
+ public slots:
+    void otherBoxChecked(maskTypes type);
 };
 
-
-#endif // PICPUSHBUTTON_H
+#endif  // PICPUSHBUTTON_H

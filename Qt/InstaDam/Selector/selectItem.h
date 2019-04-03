@@ -62,9 +62,9 @@ class SelectItem : public QGraphicsItem {
     QPen highlightPen, myPen;
 
     SelectItem(qreal vertSize = 10.,
-               QSharedPointer<const Label> label = nullptr,
+               QSharedPointer<Label> label = nullptr,
                QGraphicsItem *item = nullptr);
-    SelectItem(QSharedPointer<const Label> label = nullptr,
+    SelectItem(QSharedPointer<Label> label = nullptr,
                QGraphicsItem *item = nullptr);
     ~SelectItem() override {}
 
@@ -107,7 +107,7 @@ class SelectItem : public QGraphicsItem {
     QGraphicsItem* getParentItem() const;
     void invertColorForPen();
     QGraphicsScene* scene() const;
-    void setLabel(QSharedPointer<const Label> label, bool init = false);
+    void setLabel(QSharedPointer<Label> label, bool init = false);
     QSharedPointer<Label> getLabel() const {return myLabel;}
     static void setVertexSize(qreal size);
     void sortCorners(QRectF &rect, QPointF &newPoint);

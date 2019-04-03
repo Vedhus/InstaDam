@@ -3,4 +3,4 @@
 enum maskTypes{CANNY, THRESHOLD, BLUR, LABELMASK, OTHER};
 
 enum threshold_or_filter{THRESH, FILTER};
-#endif // ENUMCONSTANTS_H
+#endif  // ENUMCONSTANTS_H
