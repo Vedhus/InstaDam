@@ -4,23 +4,24 @@
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
 #include <QFile>
+
 namespace Ui {
 class ImageList;
 }
 
-class ImageList : public QWidget
-{
+class ImageList : public QWidget {
     Q_OBJECT
 
-public:
-    explicit ImageList(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
+ public:
+    explicit ImageList(QWidget *parent = nullptr, QString databseURL = "",
+                       QString token = "");
     ~ImageList();
     void addItems(QJsonObject);
 
-signals:
+ signals:
     void fileDownloaded(QString path);
 
-private:
+ private:
     Ui::ImageList *ui;
     QString access_token;
     QString databaseURL;
@@ -29,11 +30,9 @@ private:
 
     void fileReplyFinished();
 
-private slots:
+ private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();
-
-
 };
 
-#endif // imagelist_H
+#endif  // imagelist_H

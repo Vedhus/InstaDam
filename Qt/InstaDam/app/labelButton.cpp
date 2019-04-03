@@ -1,36 +1,33 @@
 #include "labelButton.h"
 
-LabelButton::LabelButton(QSharedPointer<Label> label) : QPushButton(){
+LabelButton::LabelButton(QSharedPointer<Label> label) : QPushButton() {
     myLabel = label;
     setCheckable(true);
-    connect(this, &QPushButton::clicked, this, &LabelButton::wasClicked );
+    connect(this, &QPushButton::clicked, this, &LabelButton::wasClicked);
     slider = new QSlider;
     slider->setOrientation(Qt::Horizontal);
     slider->setMaximum(100);
     slider->setMinimum(0);
-    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(reemitValueChanged(int)));
+    connect(slider, SIGNAL(valueChanged(int)), this,
+            SLOT(reemitValueChanged(int)));
 }
 
-void LabelButton::wasClicked(){
+void LabelButton::wasClicked() {
     emit cclicked(myLabel);
 }
 
-void LabelButton::reemitValueChanged(int value)
-{
+void LabelButton::reemitValueChanged(int value) {
     emit opacity(myLabel, value);
 }
 
 
-LabelButtonFilter::LabelButtonFilter(QSharedPointer<Label> label) : QPushButton(){
+LabelButtonFilter::LabelButtonFilter(QSharedPointer<Label> label)
+    : QPushButton() {
     myLabel = label;
     setCheckable(true);
-    connect(this, &QPushButton::clicked, this, &LabelButtonFilter::wasClicked );
+    connect(this, &QPushButton::clicked, this, &LabelButtonFilter::wasClicked);
 }
 
-void LabelButtonFilter::wasClicked(){
+void LabelButtonFilter::wasClicked() {
     emit cclicked(myLabel);
 }
-
-
-
-

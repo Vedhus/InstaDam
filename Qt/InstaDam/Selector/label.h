@@ -11,28 +11,26 @@
 #include "ellipseSelect.h"
 #include "polygonSelect.h"
 
-//class SelectItem;
 enum fileTypes {PROJECT, ANNOTATION};
 class Label: public QEnableSharedFromThis<Label>{
-  private:
+ private:
     QColor color;
     QString text;
     int labelId;
 
-  public:
-
+ public:
     Label();
     Label(const QJsonObject &json, int, bool=false);
 
     ~Label();
     void setId(int j);
 
-    QColor getColor();
+    QColor getColor() const;
 
     void setColor(QColor col);
-    QString getText();
+    QString getText() const;
 
-    void setText(QString tx);
+    void setText(const QString tx);
 
     QHash<int, RectangleSelect*> rectangleObjects;
     QHash<int, EllipseSelect*> ellipseObjects;
@@ -43,7 +41,7 @@ class Label: public QEnableSharedFromThis<Label>{
     void addItem(RectangleSelect *item);
     void addItem(EllipseSelect *item);
     void addItem(PolygonSelect *item);
-    void addItem(FreeDrawErase *item){UNUSED(item);}
+    void addItem(FreeDrawErase *item) {UNUSED(item);}
     void removeItem(const int id);
     void clear();
     void read(const QJsonObject &json);
@@ -51,9 +49,9 @@ class Label: public QEnableSharedFromThis<Label>{
     //void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
     void writeIdantn(QJsonObject &json) const;
-    QPixmap exportLabel(QSize &rect);
+    QPixmap exportLabel(const QSize &rect) const;
     void setOpacity(int val);
     void setMaskState(int state);
 };
 
-#endif // LABEL_H
+#endif  // LABEL_H

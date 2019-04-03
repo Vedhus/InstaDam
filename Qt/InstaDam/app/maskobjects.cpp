@@ -1,6 +1,5 @@
 #include "maskobjects.h"
 
-maskObjects::maskObjects()
-{
+maskObjects::maskObjects() {
 
 }

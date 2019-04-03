@@ -1,9 +1,8 @@
+#include "commands.h"
+
 #include <QtWidgets>
 #include <QVector>
-#include <iostream>
-using namespace std;
 
-#include "commands.h"
 #include "selectItem.h"
 /*!
   \class AddCommand
@@ -29,8 +28,7 @@ using namespace std;
  */
 AddCommand::AddCommand(SelectItem *item,
                        PhotoScene *scene, QUndoCommand *parent)
-    : QUndoCommand(parent)
-{
+    : QUndoCommand(parent) {
     myScene = scene;
     myItem = item;
 }
@@ -39,41 +37,32 @@ AddCommand::AddCommand(SelectItem *item,
 /*!
   Destructor
   */
-AddCommand::~AddCommand()
-{
+AddCommand::~AddCommand() {
 }
 
 /*!
    \reimp
  */
-void AddCommand::undo()
-{
-    //cout << "UA" << endl;
+void AddCommand::undo() {
     myItem->hide();
     myItem->mirrorHide();
     myScene->update();
     myItem->updateMirrorScene();
 }
+
 /*!
    \reimp
  */
-void AddCommand::redo()
-{
-    //cout << "RA" << endl;
-    if(init){
-        //cout << "Q" << endl;
+void AddCommand::redo() {
+    if (init) {
         myItem->show();
         myItem->mirrorShow();
         myScene->clearSelection();
         myScene->update();
         myItem->updateMirrorScene();
-    }
-    else{
-        //cout << "X" << endl;
-        cout << myItem->getMirror();
-        if(myItem->getMirror() != nullptr)
+    } else {
+        if (myItem->getMirror() != nullptr)
             myItem->itemWasAdded();
-        //cout << "Y" << endl;
         init = true;
     }
 }
@@ -99,19 +88,17 @@ void AddCommand::redo()
   and/or redone. \a parent refers to parent QUndoCommand, if any.
 
  */
-DeleteCommand::DeleteCommand(SelectItem* item, PhotoScene *scene, QUndoCommand *parent)
-    : QUndoCommand(parent)
-{
+DeleteCommand::DeleteCommand(SelectItem* item, PhotoScene *scene,
+                             QUndoCommand *parent)
+    : QUndoCommand(parent) {
     myScene = scene;
     myItem = item;
 }
+
 /*!
    \reimp
  */
-void DeleteCommand::undo()
-{
-    //cout << "UD" << endl;
-    //myScene->addItem(myItem);
+void DeleteCommand::undo() {
     myItem->show();
     myItem->mirrorShow();
     myScene->update();
@@ -120,20 +107,13 @@ void DeleteCommand::undo()
 /*!
    \reimp
  */
-void DeleteCommand::redo()
-{
-    //cout << "RD" << endl;
-    //myScene->removeItem(myItem);
-    //if(init){
-        myItem->hide();
-        myScene->update();
-        myItem->mirrorHide();
-        myItem->updateMirrorScene();
-    //}
-    //else{
-    //    init = true;
-    //}
+void DeleteCommand::redo() {
+    myItem->hide();
+    myScene->update();
+    myItem->mirrorHide();
+    myItem->updateMirrorScene();
 }
+
 /*!
   \class MoveCommand
   \ingroup Selector
@@ -151,39 +131,38 @@ void DeleteCommand::redo()
 */
 /*!
   Constructs a MoveCommand using the provided \a item
-  so that the it's movement from \a oldPos to \a newPos on the scene can be undone
-  and/or redone. \a parent refers to parent QUndoCommand, if any.
+  so that the it's movement from \a oldPos to \a newPos on the scene can be
+  undone and/or redone. \a parent refers to parent QUndoCommand, if any.
 
 */
 MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
                          const QPointF newPos,
-                         QUndoCommand *parent) : QUndoCommand(parent){
+                         QUndoCommand *parent) : QUndoCommand(parent) {
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
 }
+
 /*!
    \reimp
  */
-void MoveCommand::undo(){
-    //cout << "UM" << endl;
+void MoveCommand::undo() {
     myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
+
 /*!
    \reimp
  */
-void MoveCommand::redo(){
-    //cout << "RM" << endl;
-    if(init){
+void MoveCommand::redo() {
+    if (init) {
         myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
         myItem->scene()->update();
         myItem->updateMirrorScene();
-    }
-    else{
+    } else {
         init = true;
     }
 }
@@ -205,37 +184,39 @@ void MoveCommand::redo(){
    \sa AddCommand, MoveCommand, DeleteCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
  */
 /*!
-  Constructs a MoveVeretxCommand using the provided \a item and \a vertex so that
-  it's movement from \a oldPos to \a newPos on the scene can be undone
+  Constructs a MoveVeretxCommand using the provided \a item and \a vertex
+  so that it's movement from \a oldPos to \a newPos on the scene can be undone
   and/or redone. \a parent refers to parent QUndoCommand, if any.
 
  */
-MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos, const QPointF newPos,
-                             const int vertex, QUndoCommand *parent) : QUndoCommand(parent){
+MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
+                                     const QPointF newPos,
+                             const int vertex, QUndoCommand *parent)
+    : QUndoCommand(parent) {
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
     myVertex = vertex;
 }
+
 /*!
    \reimp
  */
-void MoveVertexCommand::undo(){
+void MoveVertexCommand::undo() {
     myItem->resizeItem(myVertex, myoldPos);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
+
 /*!
   \reimp
 */
-void MoveVertexCommand::redo(){
-    //cout << "MVC" << endl;
-    if(init){
+void MoveVertexCommand::redo() {
+    if (init) {
         myItem->resizeItem(myVertex, mynewPos);
         myItem->scene()->update();
         myItem->updateMirrorScene();
-    }
-    else{
+    } else {
         init = true;
     }
 }
@@ -257,36 +238,36 @@ void MoveVertexCommand::redo(){
  */
 /*!
   Constructs an AddVeretxCommand using the provided \a item and \a point so that
-  the vertex can be added/removed from \a item repeatedly. \a parent refers to parent QUndoCommand, if any.
-
+  the vertex can be added/removed from \a item repeatedly. \a parent refers
+  to parent QUndoCommand, if any.
  */
-AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point, QUndoCommand *parent)
-    : QUndoCommand(parent){
+AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,
+                                   QUndoCommand *parent)
+    : QUndoCommand(parent) {
     myItem = item;
     myPoint = point;
     init = false;
 }
+
 /*!
    \reimp
  */
-void AddVertexCommand::undo(){
-    //cout << "RVC" << endl;
+void AddVertexCommand::undo() {
     myItem->removeVertex();
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
+
 /*!
    \reimp
  */
-void AddVertexCommand::redo(){
-    if(init){
-        //cout << "AVC" << endl;
+void AddVertexCommand::redo() {
+    if (init) {
         myItem->setActiveVertex(SelectItem::UNSELECTED);
         myItem->addPoint(myPoint);
         myItem->scene()->update();
         myItem->updateMirrorScene();
-    }
-    else{
+    } else {
         init = true;
     }
 }
@@ -299,27 +280,28 @@ void AddVertexCommand::redo(){
   \brief The DeleteVertexCommand class provides undo and redo actions
    for deleting a vertex from a SelectItem on a PhotoScene.
 
-   DeleteVertexCommand is used to hold a reference to a SelectItem and it's activeVertex.
-   Using the undo() and redo()
-   commands the vertex can be added to and removed from the SelectItem repeatedly.
+   DeleteVertexCommand is used to hold a reference to a SelectItem and it's
+   activeVertex. Using the undo() and redo() commands the vertex can be added to
+   and removed from the SelectItem repeatedly.
 
    \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, AddVertexCommand, ErasePointsCommand, RotateCommand
  */
 /*!
   Constructs a DeleteVeretxCommand using the provided \a item
-  the vertex can be added/removed from \a item repeatedly. \a parent refers to parent QUndoCommand, if any.
-
+  the vertex can be added/removed from \a item repeatedly. \a parent refers to
+  parent QUndoCommand, if any.
  */
 DeleteVertexCommand::DeleteVertexCommand(SelectItem *item, QUndoCommand *parent)
-    : QUndoCommand(parent){
+    : QUndoCommand(parent) {
     myItem = item;
     myPoint = item->getActivePoint();
     myVertex = item->getActiveVertex();
 }
+
 /*!
    \reimp
  */
-void DeleteVertexCommand::undo(){
+void DeleteVertexCommand::undo() {
     myItem->setActiveVertex(SelectItem::UNSELECTED);
     myItem->addPoint(myPoint, myVertex);
     myItem->scene()->update();
@@ -329,7 +311,7 @@ void DeleteVertexCommand::undo(){
 /*!
    \reimp
  */
-void DeleteVertexCommand::redo(){
+void DeleteVertexCommand::redo() {
     myItem->removeVertex(myVertex);
     myItem->scene()->update();
     myItem->updateMirrorScene();
@@ -351,26 +333,27 @@ void DeleteVertexCommand::redo(){
    \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, DeleteCommand, RotateCommand
  */
 /*!
-  Constructs an ErasePointsCommand using the provided \a item and it's owning \a scene
-  and the \a maskScene which owns it's mirror
-  so that the erasure of points from this \a item can be undone/redone. \a parent refers to parent QUndoCommand, if any.
-
+  Constructs an ErasePointsCommand using the provided \a item and it's owning
+  \a scene and the \a maskScene which owns it's mirror so that the erasure of
+  points from this \a item can be undone/redone. \a parent refers to parent
+  QUndoCommand, if any.
  */
-ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene, PhotoScene *maskScene, QUndoCommand *parent)
-    : QUndoCommand(parent){
+ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene,
+                                       PhotoScene *maskScene,
+                                       QUndoCommand *parent)
+    : QUndoCommand(parent) {
     myItem = item;
     myScene = scene;
     myMask = maskScene;
     myPen.setColor(Qt::transparent);
 }
+
 /*!
    \reimp
  */
-void ErasePointsCommand::undo(){
-    //cout << "UNDO" << endl;
+void ErasePointsCommand::undo() {
     EraseMapIterator it((*myItem->getMap()));
-    while(it.hasNext()){
-        //cout << "ADD P" << endl;
+    while (it.hasNext()) {
         it.next();
         it.key()->addPoints(it.value());
     }
@@ -380,18 +363,14 @@ void ErasePointsCommand::undo(){
 /*!
    \reimp
  */
-void ErasePointsCommand::redo(){
-    if(init){
-        cout << "REDO" << endl;
+void ErasePointsCommand::redo() {
+    if (init) {
         EraseMapIterator it((*myItem->getMap()));
-        //QSharedPointer<FreeMap> tempMap = QSharedPointer<FreeMap>::create();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             it.next();
-            //QVector<int> tempVector = it.value()->keys().toVector();
             it.key()->deletePoints(myPen, it.value());
         }
-    }
-    else{
+    } else {
         init = true;
     }
     myScene->update();
@@ -414,40 +393,39 @@ void ErasePointsCommand::redo(){
    \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, DeleteCommand
  */
 /*!
-  Constructs a RotateCommand using the provided \a item and the starting (\a oldPos)
-  and ending (\a newPos) points of rotation so that the rotation of this \a item
-  can be undone and/or redone. \a parent refers to parent QUndoCommand, if any.
-
+  Constructs a RotateCommand using the provided \a item and the starting
+  (\a oldPos) and ending (\a newPos) points of rotation so that the rotation of
+  this \a item can be undone and/or redone. \a parent refers to parent
+  QUndoCommand, if any.
  */
 RotateCommand::RotateCommand(SelectItem *item, const QPointF oldPos,
                          const QPointF newPos,
-                         QUndoCommand *parent) : QUndoCommand(parent){
+                         QUndoCommand *parent) : QUndoCommand(parent) {
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
 }
+
 /*!
    \reimp
  */
-void RotateCommand::undo(){
-    //cout << "UM" << endl;
+void RotateCommand::undo() {
     myItem->resetActiveVertex();
     myItem->rotate(mynewPos, myoldPos);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
+
 /*!
    \reimp
  */
-void RotateCommand::redo(){
-    //cout << "RM" << endl;
-    if(init){
+void RotateCommand::redo() {
+    if (init) {
         myItem->resetActiveVertex();
         myItem->rotate(myoldPos, mynewPos);
         myItem->scene()->update();
         myItem->updateMirrorScene();
-    }
-    else{
+    } else {
         init = true;
     }
 }

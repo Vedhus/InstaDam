@@ -3,8 +3,8 @@
 #include <QColorDialog>
 
 class ColorDialog : public QColorDialog{
-public:
-    ColorDialog(const QColor &initial, QWidget *parent = nullptr);
+ public:
+    explicit ColorDialog(const QColor &initial, QWidget *parent = nullptr);
 };
 
-#endif // COLORDIALOG_H
+#endif  // COLORDIALOG_H

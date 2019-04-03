@@ -1,12 +1,13 @@
 #ifndef INSTADAM_H
 #define INSTADAM_H
 
+#include <stdio.h>
+
 #include <QFile>
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
-#include "project.h"
 #include <QDialog>
 #include <QGraphicsItem>
 #include <QUndoGroup>
@@ -15,9 +16,13 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QBuffer>
+#include <QUndoStack>
 
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
+
+#include <iostream>
+#include <string>
 
 #include "newproject.h"
 #include "picpushbutton.h"
@@ -26,40 +31,32 @@
 #include "ui_polygonSelect.h"
 #include "../Selector/label.h"
 #include "labelButton.h"
-
-#include <iostream>
-#include <string>
-#include <stdio.h>
+#include "enumconstants.h"
+#include "project.h"
+#include "Selector/photoScene.h"
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
-#include "enumconstants.h"
 #include "opencv2/imgproc.hpp"
 
 class filterControls;
 class PicPushButton;
 
-#include <QUndoStack>
-
-#include "Selector/photoScene.h"
-
-
 namespace Ui {
 class InstaDam;
 }
 
-class InstaDam : public QMainWindow
-{
+class InstaDam : public QMainWindow {
     Q_OBJECT
 
-public:
+ public:
     explicit InstaDam(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
     ~InstaDam();
     void fileOpen();
     void connectFilters();
     filterControls * filterControl;
 
-    int fileId= 0;
+    int fileId = 0;
     QFileInfo file, oldFile;
     QString filename, oldFilename;
     QString labelFile;
@@ -76,61 +73,55 @@ public:
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
     void setCurrentProject(Project*);
-    QList<maskTypes> maskTypeList ;
+    QList<maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
 
-
-private slots:
+ private slots:
+    void on_addSelectionButton_clicked();
+    void on_saveAndBack_clicked();
+    void on_actionSave_Annotation_triggered();
     void on_actionOpen_File_triggered();
     void on_rectangleSelectButton_clicked();
     void on_ellipseSelectButton_clicked();
     void on_polygonSelectButton_clicked();
     void on_freeSelectButton_clicked();
-    void processMouseMoved(QPointF fromPos, QPointF toPos);
-    void processPointClicked(PhotoScene::viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button);
-    void processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
-    void processKeyPressed(PhotoScene::viewerTypes type, const int key);
-    void finishPolygonButtonClicked();
     void on_actionNew_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionSave_triggered();
-
-    void panButton_clicked();
-
-    void roundBrushButtonClicked();
-
-    void squareBrushButtonClicked();
-
     void on_pushButton_14_clicked();
-
     void on_actionExport_triggered();
     void on_actionExport_zip_triggered();
     void on_saveAndNext_clicked();
+
     void setInsert();
     void toggleDrawing();
     void toggleErasing();
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
-    void setOpacity(QSharedPointer<Label>, int);
+    void setOpacity(QSharedPointer<Label>, int val);
     void setCurrentBrushSize(int);
     void setNewProject();
     void addCurrentSelection();
     void cancelCurrentSelection();
-    void on_addSelectionButton_clicked();
+    void finishPolygonButtonClicked();
+    void panButton_clicked();
+    void roundBrushButtonClicked();
+    void squareBrushButtonClicked();
 
-    void on_saveAndBack_clicked();
-
-    void on_actionSave_Annotation_triggered();
+    void processMouseMoved(QPointF fromPos, QPointF toPos);
+    void processPointClicked(PhotoScene::viewerTypes type, SelectItem *item,
+                             QPointF pos, const Qt::MouseButton button);
+    void processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos,
+                              QPointF newPos, const Qt::MouseButton button);
+    void processKeyPressed(PhotoScene::viewerTypes type, const int key);
     void processShowHide(int state);
 
-public slots:
+ public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
 
 
-private:
+ private:
 #ifdef WASM_BUILD
     struct MyConnector{
             std::function<void(void)> onActivate;
@@ -189,16 +180,12 @@ private:
     QVector<QSharedPointer<Label> > tempLabels;
 
     QPixmap maskSelection(SelectItem *item);
-    bool read(const QJsonObject &json, fileTypes);
-    void write(QJsonObject &json, fileTypes);
     void imagesReplyFinished();
-    bool loadLabelFile(QString filename, fileTypes);
+    bool read(const QJsonObject &json, fileTypes type = PROJECT);
+    void write(QJsonObject &json, fileTypes type = PROJECT);
+    bool loadLabelFile(QString filename, fileTypes fileType);
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
     void revert();
-
 };
 
-
-
-
-#endif // INSTADAM_H
+#endif  // INSTADAM_H

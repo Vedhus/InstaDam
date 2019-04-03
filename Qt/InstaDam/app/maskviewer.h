@@ -1,37 +1,32 @@
 #ifndef MASKVIEWER_H
 #define MASKVIEWER_H
 
-
 #include <QGraphicsView>
 #include <QMainWindow>
+
 #include "photoviewer.h"
-#include "filters.h"
-#include "maskobjects.h"
 
 namespace Ui {
 class MaskViewer;
 }
 
-class MaskViewer : public PhotoViewer
-{
+class MaskViewer : public PhotoViewer {
     Q_OBJECT
 
-public:
-    MaskViewer(QWidget *parent = nullptr);
-    void LinkToPhotoViewer(PhotoViewer *);
+ public:
+    explicit MaskViewer(QWidget *parent = nullptr);
+    void LinkToPhotoViewer(PhotoViewer *viewer);
 
     maskObjects *maskObject;
     QPixmap qImg;
     QPixmap qAlpha;
-    PhotoViewer * photoViewer;
+    PhotoViewer *photoViewer;
     void setMaskPixmap();
-public slots:
+ public slots:
     void setImMask(maskTypes);
 
-private:
+ private:
     Ui::MaskViewer *ui;
 };
 
-#endif // MASKVIEWER_H
-
-
+#endif  // MASKVIEWER_H

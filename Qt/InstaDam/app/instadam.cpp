@@ -1,16 +1,18 @@
 #include "instadam.h"
+
+#include <QByteArray>
+#include <QDialog>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+
 #include "ui_instadam.h"
 #include "ui_projectDialog.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
 #include "labelButton.h"
-#include <string>
-#include <QByteArray>
-#include "imagelist.h"
-#include <QDialog>
-#include <iostream>
-#include <fstream>
-using namespace std;
 #include "Selector/selectItem.h"
 #include "Selector/ellipseSelect.h"
 #include "Selector/rectangleSelect.h"
@@ -21,26 +23,23 @@ using namespace std;
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 #include "startingwidget.h"
+#include "imagelist.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
 
 InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
-    QMainWindow(parent),
-    ui(new Ui::InstaDam)
-{
-
+    QMainWindow(parent), ui(new Ui::InstaDam) {
     ui->setupUi(this);
     filterControl = new filterControls();
     maskTypeList = { BLUR, CANNY, THRESHOLD, LABELMASK};
-    maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label, ui->labelmask_label};
+    maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label,
+                      ui->labelmask_label};
     connectFilters();
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
     newProject = new newproject(this);
-
-
 
 #ifdef WASM_BUILD
     ui->actionExport->setVisible(false);
@@ -60,27 +59,37 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     currentItem = nullptr;
     currentLabel = nullptr;
     currentProject = new Project();
-    connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)), this,
-            SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)));
+    connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
+                                       QPointF, const Qt::MouseButton)), this,
+            SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
+                                     QPointF, const Qt::MouseButton)));
     connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
-    connect(scene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF, QPointF, const Qt::MouseButton)), this,
-            SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF, const Qt::MouseButton)));
+    connect(scene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
+                                        QPointF, const Qt::MouseButton)), this,
+            SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
+                                      const Qt::MouseButton)));
     connect(scene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
-    connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)), this,
-            SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*, QPointF, const Qt::MouseButton)));
+    connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
+                                           QPointF, const Qt::MouseButton)), this,
+            SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
+                                     QPointF, const Qt::MouseButton)));
     connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
             SLOT(processMouseMoved(QPointF, QPointF)));
-    connect(maskScene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF, QPointF, const Qt::MouseButton)), this,
-            SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF, const Qt::MouseButton)));
+    connect(maskScene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
+                                            QPointF, const Qt::MouseButton)), this,
+            SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
+                                      const Qt::MouseButton)));
     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
 
     connect(ui->showMaskSelections, SIGNAL(stateChanged(int)), this,
             SLOT(processShowHide(int)));
-    connect(ui->addSelectionButton, SIGNAL(clicked()), this, SLOT(addCurrentSelection()));
-    connect(ui->cancelSelectionButton, SIGNAL(clicked()), this, SLOT(cancelCurrentSelection()));
+    connect(ui->addSelectionButton, SIGNAL(clicked()), this,
+            SLOT(addCurrentSelection()));
+    connect(ui->cancelSelectionButton, SIGNAL(clicked()), this,
+            SLOT(cancelCurrentSelection()));
     undoAction = undoGroup->createUndoAction(this, tr("&Undo"));
     undoAction->setShortcuts(QKeySequence::Undo);
     redoAction = undoGroup->createRedoAction(this, tr("&Redo"));
@@ -104,10 +113,10 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     connect(ui->panButton, SIGNAL(clicked()), this, SLOT(panButton_clicked()));
     connect(freeSelectForm->eraseButton, SIGNAL(clicked()), this,
             SLOT(toggleErasing()));
-    connect(freeSelectForm->brushSizeSlider, SIGNAL(valueChanged(int)), freeSelectForm->brushSizeSpinner,
-            SLOT(setValue(int)));
-    connect(freeSelectForm->brushSizeSpinner, SIGNAL(valueChanged(int)), freeSelectForm->brushSizeSlider,
-            SLOT(setValue(int)));
+    connect(freeSelectForm->brushSizeSlider, SIGNAL(valueChanged(int)),
+            freeSelectForm->brushSizeSpinner, SLOT(setValue(int)));
+    connect(freeSelectForm->brushSizeSpinner, SIGNAL(valueChanged(int)),
+            freeSelectForm->brushSizeSlider, SLOT(setValue(int)));
     connect(freeSelectForm->brushSizeSlider, SIGNAL(valueChanged(int)), this,
             SLOT(setCurrentBrushSize(int)));
     freeSelectForm->brushSizeSlider->setValue(currentBrushSize);
@@ -126,21 +135,18 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
-            QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName){
+            QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName) {
                 imageFileContent = content;
                 this->filename = fileName;
                 imagesList = (QStringList() << filename);
-
                 openFile_and_labels();
             });
         });
 
     addIdproConnector("Load File", [&]() {
-            QHtml5File::load(".idpro", [&](const QByteArray &content, const QString &fileName){
+            QHtml5File::load(".idpro", [&](const QByteArray &content, const QString &fileName) {
                 idproFileContent = content;
                 idproFileName = fileName;
-                //imagesList = (QStringList() << filename);
-
                 loadLabelFile(idproFileName);
             });
         });
@@ -149,34 +155,32 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
 }
 
 #ifdef WASM_BUILD
-void InstaDam::addImageConnector(QString text, std::function<void ()> onActivate){
+void InstaDam::addImageConnector(QString text, std::function<void ()> onActivate) {
     openImageConnector = new MyConnector;
     openImageConnector->onActivate = onActivate;
 }
 
-void InstaDam::addIdproConnector(QString text, std::function<void ()> onActivate){
+void InstaDam::addIdproConnector(QString text, std::function<void ()> onActivate) {
     openIdproConnector = new MyConnector;
     openIdproConnector->onActivate = onActivate;
 }
 
 #endif
-InstaDam::~InstaDam()
-{
+InstaDam::~InstaDam() {
     delete ui;
 }
 
-void InstaDam::setNewProject(){
+void InstaDam::setNewProject() {
     currentProject = newProject->newPr;
     setLabels();
     scene->clearItems();
     maskScene->clearItems();
 }
 
-void InstaDam::setLabels()
-{
+void InstaDam::setLabels() {
     clearLayout(ui->labelClassLayout);
     labelButtons.clear();
-    for(int i=0; i<currentProject->numLabels(); i++){
+    for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
         LabelButton *button = new LabelButton(label);
         button->setText(label->getText());
@@ -192,9 +196,11 @@ void InstaDam::setLabels()
         hl->addWidget(button);
         ui->labelClassLayout->addLayout(hl);
         qInfo("Button Added Start!");
-        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this, SLOT(setCurrentLabel(QSharedPointer<Label>)));
+        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this,
+                SLOT(setCurrentLabel(QSharedPointer<Label>)));
         button->slider->setValue(50);
-        connect(button, SIGNAL(opacity(QSharedPointer<Label>, int)), this, SLOT(setOpacity(QSharedPointer<Label>, int)));
+        connect(button, SIGNAL(opacity(QSharedPointer<Label>, int)), this,
+                SLOT(setOpacity(QSharedPointer<Label>, int)));
 
         labelButtons.push_back(button);
 
@@ -202,8 +208,7 @@ void InstaDam::setLabels()
     }
 }
 
-void InstaDam::on_actionNew_triggered()
-{
+void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
     newProject->setModal(true);
@@ -212,26 +217,24 @@ void InstaDam::on_actionNew_triggered()
     setNewProject();
 }
 
-void InstaDam::setCurrentLabel(LabelButton *button){
+void InstaDam::setCurrentLabel(LabelButton *button) {
     currentLabel = button->myLabel;
 }
 
-void InstaDam::setOpacity(QSharedPointer<Label> label, int val){
+void InstaDam::setOpacity(QSharedPointer<Label> label, int val) {
     qInfo("Instadam Opacity");
     label->setOpacity(val);
     scene->update();
     maskScene->update();
-
 }
 
-void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
-    if(currentLabel == label)
+void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
+    if (currentLabel == label)
         return;
-    for(int i = 0; i < labelButtons.size(); i++){
-        if(label != labelButtons[i]->myLabel){
+    for (int i = 0; i < labelButtons.size(); i++) {
+        if (label != labelButtons[i]->myLabel) {
             labelButtons[i]->setChecked(false);
-        }
-        else{
+        } else {
             labelButtons[i]->setChecked(true);
         }
     }
@@ -240,32 +243,28 @@ void InstaDam::setCurrentLabel(QSharedPointer<Label> label){
 }
 
 void InstaDam::clearLayout(QLayout * layout) {
-    if (! layout)
+    if (!layout)
        return;
 
     while (auto item = layout->takeAt(0)) {
-        if(item){
+        if (item) {
             delete item->widget();
             clearLayout(item->layout());
             layout->removeItem(item);
         }
     }
- }
+}
 
-void InstaDam::on_actionOpen_triggered()
-{
+void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
       openIdproConnector->onActivate();
 #else
-      //QString doc;
     // Reading and Loading
     QString myfileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-    if (myfileName.isEmpty()){
-            return; // remove that part and add an alert
-    }
-    else
-    {
+    if (myfileName.isEmpty()) {
+            return;  // remove that part and add an alert
+    } else {
         currentProject = newProject->newPr;
         currentProject->resetLabels();
         clearLayout(ui->labelClassLayout);
@@ -279,77 +278,57 @@ void InstaDam::on_actionOpen_triggered()
         maskScene->clearItems();
         scene->update();
         maskScene->update();
-
     }
 #endif
 }
 
-void InstaDam::toggleDrawing(){
+void InstaDam::toggleDrawing() {
     drawing = true;
     freeSelectForm->eraseButton->setChecked(false);
     freeSelectForm->drawButton->setChecked(true);
 }
 
-void InstaDam::toggleErasing(){
+void InstaDam::toggleErasing() {
     drawing = false;
     freeSelectForm->eraseButton->setChecked(true);
     freeSelectForm->drawButton->setChecked(false);
 }
 
-void InstaDam::connectFilters()
-{
-   for (int i = 0; i < maskButtonList.size(); ++i) {
-       for (int j = 0; j < maskButtonList.size(); ++j) {
-           if (i == j)
-           {
-              maskButtonList[i]->setMaskType(maskTypeList[i]);
-              connect(maskButtonList[i], SIGNAL(checked(maskTypes)), ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
-           }
-           else {
-            connect(maskButtonList[i], SIGNAL(checked(maskTypes)), maskButtonList[j], SLOT(otherBoxChecked(maskTypes)));
-
-           }
-
-       }
-
-   }
-
-//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
-//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-//   connect(ui->blur_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-
-
-//   connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
-//   connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-//      connect(ui->canny_label, SIGNAL(checked(maskTypes)), ui->threshold_label, SLOT(otherBoxChecked(maskTypes)));
-
-//   connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->canny_label, SLOT(otherBoxChecked(maskTypes)));
-//   connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
-//      connect(ui->threshold_label, SIGNAL(checked(maskTypes)), ui->blur_label, SLOT(otherBoxChecked(maskTypes)));
-
-
-    connect(ui->IdmPhotoViewer, SIGNAL(changedMask(maskTypes)), ui->IdmMaskViewer, SLOT(setImMask(maskTypes)));
-
-    connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
-    connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)), ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
-
-    connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this, SLOT(resetPixmapButtons()));
+void InstaDam::connectFilters() {
+    for (int i = 0; i < maskButtonList.size(); ++i) {
+        for (int j = 0; j < maskButtonList.size(); ++j) {
+            if (i == j) {
+                maskButtonList[i]->setMaskType(maskTypeList[i]);
+                connect(maskButtonList[i], SIGNAL(checked(maskTypes)),
+                        ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+            } else {
+                connect(maskButtonList[i], SIGNAL(checked(maskTypes)),
+                        maskButtonList[j], SLOT(otherBoxChecked(maskTypes)));
+            }
+        }
+    }
+    connect(ui->IdmPhotoViewer, SIGNAL(changedMask(maskTypes)),
+            ui->IdmMaskViewer, SLOT(setImMask(maskTypes)));
+    connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)),
+            ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
+    connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)),
+            ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
+    connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this,
+            SLOT(resetPixmapButtons()));
 }
-void InstaDam::resetPixmapButtons()
-{
+
+void InstaDam::resetPixmapButtons() {
     cv::Mat thumbnail = ui->IdmPhotoViewer->cvThumb;
     for (int i = 0; i < maskButtonList.size(); ++i) {
          maskButtonList[i]->resetPixmaps(filterControl->thumb2pixmap(thumbnail, maskTypeList[i]));
     }
-
 }
 
-void InstaDam::setCurrentBrushSize(int size){
+void InstaDam::setCurrentBrushSize(int size) {
     currentBrushSize = size;
 }
 
-void InstaDam::on_actionSave_Annotation_triggered()
-{
+void InstaDam::on_actionSave_Annotation_triggered() {
     // Saving the file
     #ifdef WASM_BUILD
         QByteArray outFile;
@@ -372,12 +351,7 @@ void InstaDam::on_actionSave_Annotation_triggered()
     #endif
 }
 
-
-
-
-
-void InstaDam::on_actionSave_triggered()
-{
+void InstaDam::on_actionSave_triggered() {
     // Saving the file
     #ifdef WASM_BUILD
         QByteArray outFile;
@@ -403,9 +377,7 @@ void InstaDam::on_actionSave_triggered()
     #endif
 }
 
-void InstaDam::fileDownloaded(QString path)
-{
-
+void InstaDam::fileDownloaded(QString path) {
     this->oldFilename = this->filename;
     this->filename = path;
     this->oldFile = this->file;
@@ -414,45 +386,35 @@ void InstaDam::fileDownloaded(QString path)
     this->path = file.dir();
     this->oldImagesList = this->imagesList;
     this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-    cout << "A" << endl;
-    if (imagesList.empty()){
+    if (imagesList.empty()) {
         assertError("That doesn't seem to be a valid image file.");
         revert();
-    }
-    else
-    {
+    } else {
         int counter = 0;
-        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+
         foreach(QString tempFilename, imagesList) {
            QFileInfo tempInfo = QFileInfo(tempFilename);
-               if (file.completeBaseName()==tempInfo.completeBaseName())
-               {
-
+               if (file.completeBaseName() == tempInfo.completeBaseName()) {
                    break;
                }
               counter++;
-
             }
         fileId = counter;
-        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
-        openFile_and_labels();
-        QTextStream(stdout)<<currentProject->numLabels()<<"\n";
-    }
 
+        openFile_and_labels();
+        QTextStream(stdout) << currentProject->numLabels() << "\n";
+    }
 }
 
-void InstaDam::imagesReplyFinished()
-{
-
+void InstaDam::imagesReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
+      if (jsonError.error != QJsonParseError::NoError) {
             qInfo() << "Error: " << jsonError.errorString();
-      }
-      else{
+      } else {
           QJsonObject obj = jsonReply.object();
           ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
           il->show();
@@ -462,111 +424,91 @@ void InstaDam::imagesReplyFinished()
 }
 
 
-void InstaDam::on_actionOpen_File_triggered()
-{
-
-   if(runningLocally)
-   {
-    cout << "HERE" << endl;
-    //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+void InstaDam::on_actionOpen_File_triggered() {
+    if (runningLocally) {
+        // QTextStream(stdout)<<currentProject->numLabels()<<"\n";
 #ifdef WASM_BUILD
-    if (currentProject->numLabels() == 0){
-        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-        return;
-    }
-    openImageConnector->onActivate();
+        if (currentProject->numLabels() == 0) {
+            assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+            return;
+        }
+        openImageConnector->onActivate();
 #else
-    QString filename_temp = QFileDialog::getOpenFileName(this, tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
-    QString ext = QFileInfo(filename_temp).suffix();
-    if(!ext.compare("png", Qt::CaseInsensitive) || !ext.compare("jpg", Qt::CaseInsensitive) || !ext.compare("jpeg", Qt::CaseInsensitive))
-    {
-        this->oldFilename = this->filename;
-        this->filename = filename_temp;
-        this->oldFile = this->file;
-        this->file = QFileInfo(filename);
-        this->oldPath = this->path;
-        this->path = file.dir();
-        this->oldImagesList = this->imagesList;
-        this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-        if (imagesList.empty()){
-            assertError("That doesn't seem to be a valid image file.");
-            revert();
-        }
-        else
-        {
-            int counter = 0;
-            //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
-            foreach(QString tempFilename, imagesList) {
-               QFileInfo tempInfo = QFileInfo(tempFilename);
-                   if (file.completeBaseName()==tempInfo.completeBaseName())
-                   {
-
-                       break;
-                   }
-                  counter++;
-
+        QString filename_temp = QFileDialog::getOpenFileName(this,
+            tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+        QString ext = QFileInfo(filename_temp).suffix();
+        if (!ext.compare("png", Qt::CaseInsensitive) ||
+            !ext.compare("jpg", Qt::CaseInsensitive) ||
+            !ext.compare("jpeg", Qt::CaseInsensitive)) {
+            this->oldFilename = this->filename;
+            this->filename = filename_temp;
+            this->oldFile = this->file;
+            this->file = QFileInfo(filename);
+            this->oldPath = this->path;
+            this->path = file.dir();
+            this->oldImagesList = this->imagesList;
+            this->imagesList = path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
+            if (imagesList.empty()) {
+                assertError("That doesn't seem to be a valid image file.");
+                revert();
+            } else {
+                int counter = 0;
+                foreach(QString tempFilename, imagesList) {
+                    QFileInfo tempInfo = QFileInfo(tempFilename);
+                    if (file.completeBaseName() == tempInfo.completeBaseName()) {
+                        break;
+                    }
+                    counter++;
                 }
-            fileId = counter;
-            //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
-            openFile_and_labels();
-            QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+                fileId = counter;
+
+                openFile_and_labels();
+                QTextStream(stdout) << currentProject->numLabels() << "\n";
+            }
+        } else {
+            assertError("That doesn't seem to be a valid image file.");
         }
+    } else {
+        QString databaseImagesURL = this->databaseURL+"/projects/1/images";
+        QUrl dabaseLink = QUrl(databaseImagesURL);
+
+        qInfo() << databaseImagesURL;
+
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+        // debugRequest(req);
+        rep = manager->get(req);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &InstaDam::imagesReplyFinished);
+
+        qInfo() << "waiting for the reply...";
     }
-    else {
-       assertError("That doesn't seem to be a valid image file.");
-    }
-   }
-   else
-   {
-       QString databaseImagesURL = this->databaseURL+"/projects/1/images";
-       QUrl dabaseLink = QUrl(databaseImagesURL);
-
-       qInfo() << databaseImagesURL;
-
-       QNetworkRequest req = QNetworkRequest(dabaseLink);
-       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
-      // debugRequest(req);
-
-
-       rep = manager->get(req);
-
-       connect(rep, &QNetworkReply::finished,
-               this, &InstaDam::imagesReplyFinished);
-
-       qInfo() << "waiting for the reply...";
-   }
-
 #endif
-
 }
 
 #ifdef WASM_BUILD
-void InstaDam::loadRawImage(){
-
-
+void InstaDam::loadRawImage() {
     openFile_and_labels();
 }
 #endif
 // Generates the file name for the next file in the folder
 
-void InstaDam::on_saveAndNext_clicked()
-{
-
-    if (imagesList.empty())
+void InstaDam::on_saveAndNext_clicked() {
+    if (imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
-    else
-    {
-        for(int i = 0; i < currentProject->getLabels().size(); i++){
+    } else {
+        for (int i = 0; i < currentProject->getLabels().size(); i++) {
             currentProject->getLabel(i)->clear();
         }
         scene->clearItems();
         maskScene->clearItems();
 
         qInfo("Going to save idantn");
-        on_actionSave_Annotation_triggered() ; //exportImages();
+        on_actionSave_Annotation_triggered();
         qInfo("saved idantn");
         int newId = (fileId+1)%imagesList.size();
-        QTextStream(stdout)<<"NewId = "<<newId<<"\n";
+        QTextStream(stdout) << "NewId = " << newId << "\n";
 
         fileId = newId;
         this->filename = path.absolutePath()+"/"+imagesList[fileId];
@@ -574,25 +516,20 @@ void InstaDam::on_saveAndNext_clicked()
         openFile_and_labels();
 
         qInfo("File opened");
-
     }
-
 }
 
-
-void InstaDam::on_saveAndBack_clicked()
-{
-    if (imagesList.empty())
+void InstaDam::on_saveAndBack_clicked() {
+    if (imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
-    else
-    {
-        for(int i = 0; i < currentProject->getLabels().size(); i++){
+    } else {
+        for (int i = 0; i < currentProject->getLabels().size(); i++) {
             currentProject->getLabel(i)->clear();
         }
         scene->clearItems();
         maskScene->clearItems();
         qInfo("Going to save idantn");
-        on_actionSave_Annotation_triggered() ; //exportImages();
+        on_actionSave_Annotation_triggered();
         qInfo("saved idantn");
         int newId = ((fileId-1)%imagesList.size()+imagesList.size())%imagesList.size();
 
@@ -602,51 +539,40 @@ void InstaDam::on_saveAndBack_clicked()
         openFile_and_labels();
 
         qInfo("File opened");
-
     }
-
 }
 
-void InstaDam::exportImages(bool asBuffers)
-{
+void InstaDam::exportImages(bool asBuffers) {
     QString baseName = this->filename;
-    for(int i = 0; i < currentProject->numLabels(); i++){
+    for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
         QString filename = baseName + "_" + label->getText() + ".png";
-        if(asBuffers){
-            QByteArray *bytes = new QByteArray();// = QSharedPointer<QByteArray>::create();
-            QBuffer *buffer = new QBuffer(bytes);//QSharedPointer<QBuffer>::create(bytes.data());
+        if (asBuffers) {
+            QByteArray *bytes = new QByteArray();
+            QBuffer *buffer = new QBuffer(bytes);
             label->exportLabel(SelectItem::myBounds).save(buffer, "PNG");
             exportFiles.insert(filename, buffer);
-        }
-        else{
+        } else {
             label->exportLabel(SelectItem::myBounds).save(filename, "PNG");
         }
     }
 }
 
-void InstaDam::assertError(std::string errorMessage)
-{
+void InstaDam::assertError(std::string errorMessage) {
     QMessageBox *messageBox = new QMessageBox;
-    messageBox->critical(nullptr,"Error",QString::fromStdString(errorMessage));
-    messageBox->setFixedSize(500,200);
-
+    messageBox->critical(nullptr, "Error", QString::fromStdString(errorMessage));
+    messageBox->setFixedSize(500, 200);
 }
 
 // Uses name of current file and generates name of label image.
-void InstaDam::generateLabelFileName()
-{
+void InstaDam::generateLabelFileName() {
     QString baseName = this->file.baseName();
     QString aPath = this->path.absolutePath()+"/annotations/"+baseName+"/";
     QString exPath = this->path.absolutePath()+"/exports/"+baseName+"/";
-    if (!QDir(aPath).exists())
-    {
-        //qInfo("Creating paths %s", labelPath.toUtf8().constData());
+    if (!QDir(aPath).exists()) {
         QDir().mkpath(aPath);
     }
-    if (!QDir(exPath).exists())
-    {
-        //qInfo("Creating paths %s", labelPath.toUtf8().constData());
+    if (!QDir(exPath).exists()) {
         QDir().mkpath(exPath);
     }
     this->oldLabelPaths = this->labelPaths;
@@ -658,32 +584,26 @@ void InstaDam::generateLabelFileName()
 
 // This function uses the defined QStringList of images in the path as well as the id of the current file
 // and opens the file. If labels exist, the labels are opened
-void InstaDam::openFile_and_labels()
-{
-    QString ext = file.suffix();
-    QString labelNameTemp = QString::null;
-
+void InstaDam::openFile_and_labels() {
 #ifdef WASM_BUILD
-    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent,labelNameTemp);
+    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent, labelNameTemp);
 #else
-    //Open labels
+    // Open labels
     generateLabelFileName();
-    if(QFileInfo(this->annotationPath).isFile())
-    {
-        QTextStream(stdout) <<"Loading labels\n"<<this->annotationPath << endl;
-        QTextStream(stdout) <<"\n"<<this->file.baseName() << endl;
-        if(!loadLabelFile(this->annotationPath, ANNOTATION)){
+    if (QFileInfo(this->annotationPath).isFile()) {
+        QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
+        QTextStream(stdout) << "\n" << this->file.baseName() << endl;
+        if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
             revert();
             return;
         }
-        QTextStream(stdout) <<"Loaded labels" << endl;;
-    }
-    else if(currentProject != nullptr && currentProject->numLabels() == 0){
+        QTextStream(stdout) << "Loaded labels" << endl;;
+    } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
         revert();
         return;
     }
-    QTextStream(stdout) <<"Loading photoX" << endl;;
+    QTextStream(stdout) << "Loading photoX" << endl;;
 
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
     qInfo("my bounds set");
@@ -691,13 +611,12 @@ void InstaDam::openFile_and_labels()
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 
     qInfo("photo viewer linked!");
-    for(int i=0; i<currentProject->numLabels(); i++)
-    {
+    for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
 
-        if(!label->rectangleObjects.isEmpty()){
+        if (!label->rectangleObjects.isEmpty()) {
             QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
-            while(rit.hasNext()){
+            while (rit.hasNext()) {
                 rit.next();
                 RectangleSelect *mirror = new RectangleSelect();
                 rit.value()->setLabel(label);
@@ -713,9 +632,9 @@ void InstaDam::openFile_and_labels()
                 mirror->itemWasAdded();
             }
         }
-        if(!label->ellipseObjects.isEmpty()){
+        if (!label->ellipseObjects.isEmpty()) {
             QHashIterator<int, EllipseSelect*> eit(label->ellipseObjects);
-            while(eit.hasNext()){
+            while (eit.hasNext()) {
                 eit.next();
                 EllipseSelect *mirror = new EllipseSelect();
                 eit.value()->setLabel(label);
@@ -731,9 +650,9 @@ void InstaDam::openFile_and_labels()
                 mirror->itemWasAdded();
             }
         }
-        if(!label->polygonObjects.isEmpty()){
+        if (!label->polygonObjects.isEmpty()) {
             QHashIterator<int, PolygonSelect*> pit(label->polygonObjects);
-            while(pit.hasNext()){
+            while (pit.hasNext()) {
                 pit.next();
                 PolygonSelect *mirror = new PolygonSelect();
                 pit.value()->setLabel(label);
@@ -748,7 +667,7 @@ void InstaDam::openFile_and_labels()
                 mirror->itemWasAdded();
             }
         }
-        if(!label->freeDrawObjects.isEmpty()){
+        if (!label->freeDrawObjects.isEmpty()) {
             FreeDrawSelect *item = label->freeDrawObjects.values()[0];
             FreeDrawSelect *mirror = new FreeDrawSelect();
             item->setLabel(label);
@@ -772,8 +691,7 @@ void InstaDam::openFile_and_labels()
     maskScene->update();
 }
 
-bool InstaDam::loadLabelFile(QString filename, fileTypes fileType){
-
+bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 #ifdef WASM_BUILD
     QByteArray saveData = idproFileContent;
 #else
@@ -788,34 +706,31 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType){
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
-    if(read(loadDoc.object(), fileType)){
+    if (read(loadDoc.object(), fileType)) {
         setLabels();
         scene->clearItems();
         maskScene->clearItems();
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-
-void InstaDam::panButton_clicked()
-{
-    panning = !panning; //!ui->panButton->isChecked();
+void InstaDam::panButton_clicked() {
+    panning = !panning;  // !ui->panButton->isChecked();
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
     ui->IdmMaskViewer->setPanMode(panning);
 }
 
-void InstaDam::on_rectangleSelectButton_clicked(){
+void InstaDam::on_rectangleSelectButton_clicked() {
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
-    switch(currentSelectType){
+    switch (currentSelectType) {
         case SelectItem::Polygon:
-            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")) {
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
@@ -824,7 +739,7 @@ void InstaDam::on_rectangleSelectButton_clicked(){
             break;
         case SelectItem::Freeerase:
         case SelectItem::Freedraw:
-            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")) {
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
@@ -845,14 +760,14 @@ void InstaDam::on_rectangleSelectButton_clicked(){
     maskScene->update();
 }
 
-void InstaDam::on_ellipseSelectButton_clicked(){
+void InstaDam::on_ellipseSelectButton_clicked() {
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
-    switch(currentSelectType){
+    switch (currentSelectType) {
         case SelectItem::Polygon:
-            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")) {
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
@@ -861,7 +776,7 @@ void InstaDam::on_ellipseSelectButton_clicked(){
             break;
         case SelectItem::Freeerase:
         case SelectItem::Freedraw:
-            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")) {
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
@@ -882,15 +797,15 @@ void InstaDam::on_ellipseSelectButton_clicked(){
     maskScene->update();
 }
 
-void InstaDam::on_polygonSelectButton_clicked(){
+void InstaDam::on_polygonSelectButton_clicked() {
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
-    switch(currentSelectType){
+    switch (currentSelectType) {
         case SelectItem::Ellipse:
         case SelectItem::Rectangle:
-            if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("blankForm")) {
                 controlLayout->removeWidget(blankWidget);
                 blankWidget->hide();
             }
@@ -900,7 +815,7 @@ void InstaDam::on_polygonSelectButton_clicked(){
             break;
         case SelectItem::Freeerase:
         case SelectItem::Freedraw:
-            if(ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("freeSelectForm")) {
                 controlLayout->removeWidget(freeSelectWidget);
                 freeSelectWidget->hide();
             }
@@ -917,14 +832,14 @@ void InstaDam::on_polygonSelectButton_clicked(){
     scene->update();
 }
 
-void InstaDam::on_freeSelectButton_clicked(){
+void InstaDam::on_freeSelectButton_clicked() {
     scene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
-    switch(currentSelectType){
+    switch (currentSelectType) {
         case SelectItem::Ellipse:
         case SelectItem::Rectangle:
-            if(ui->selectControlFrame->findChild<QWidget*>("blankForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("blankForm")) {
                 controlLayout->removeWidget(blankWidget);
                 blankWidget->hide();
             }
@@ -933,7 +848,7 @@ void InstaDam::on_freeSelectButton_clicked(){
             ui->rectangleSelectButton->setChecked(false);
             break;
         case SelectItem::Polygon:
-            if(ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")){
+            if (ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")) {
                 controlLayout->removeWidget(polygonSelectWidget);
                 polygonSelectWidget->hide();
             }
@@ -951,8 +866,7 @@ void InstaDam::on_freeSelectButton_clicked(){
     maskScene->update();
 }
 
-void InstaDam::roundBrushButtonClicked()
-{
+void InstaDam::roundBrushButtonClicked() {
     brushMode = Qt::RoundCap;
     freeSelectForm->squareBrushButton->setChecked(false);
     freeSelectForm->roundBrushButton->setChecked(true);
@@ -960,8 +874,7 @@ void InstaDam::roundBrushButtonClicked()
     ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
 }
 
-void InstaDam::squareBrushButtonClicked()
-{
+void InstaDam::squareBrushButtonClicked() {
     brushMode = Qt::SquareCap;
     freeSelectForm->squareBrushButton->setChecked(true);
     freeSelectForm->roundBrushButton->setChecked(false);
@@ -969,29 +882,29 @@ void InstaDam::squareBrushButtonClicked()
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
 }
 
-void InstaDam::on_pushButton_14_clicked()
-{
-    if (currentProject== nullptr)
+void InstaDam::on_pushButton_14_clicked() {
+    if (currentProject== nullptr) {
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-    else {
-
-    filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask, filterControl, ui->IdmPhotoViewer, currentProject);
-    dialogs->show();
+    } else {
+        filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask,
+                                                 filterControl, ui->IdmPhotoViewer,
+                                                 currentProject);
+        dialogs->show();
     }
 }
 
-void InstaDam::setInsert(){
+void InstaDam::setInsert() {
     insertVertex = true;
     vertex1 = -1;
     vertex2 = -1;
     polygonSelectForm->polygonMessageBox->setPlainText("Click the vertices between which you want to insert a point.");
 }
-void InstaDam::on_actionExport_triggered()
-{
+
+void InstaDam::on_actionExport_triggered() {
     exportImages();
 }
 
-void InstaDam::on_actionExport_zip_triggered(){
+void InstaDam::on_actionExport_zip_triggered() {
     exportImages(true);
 #ifdef WASM_BUILD
     QByteArray *outbytes;
@@ -1002,18 +915,17 @@ void InstaDam::on_actionExport_zip_triggered(){
     QuaZip zip(this->filename + "_idpro.zip");
 #endif
     if (!zip.open(QuaZip::mdCreate)) {
-        //myMessageOutput(true, QtDebugMsg, QString("testCreate(): zip.open(): %1").arg(zip.getZipError()));
         return;
     }
 
     QuaZipFile outFile(&zip);
     QHashIterator<QString, QBuffer*> it(exportFiles);
-    while(it.hasNext()){
+    while (it.hasNext()) {
         it.next();
         QString filename = it.key();
         QBuffer *buffer = it.value();
 
-        if(!(*buffer).open(QIODevice::ReadOnly)) {
+        if (!(*buffer).open(QIODevice::ReadOnly)) {
             qInfo("Could not access buffer file.");
             return;
         }
@@ -1026,7 +938,7 @@ void InstaDam::on_actionExport_zip_triggered(){
             char buf[4096];
             qint64 readSize = qMin(static_cast<qint64>(4096), len - pos);
             qint64 l;
-            if ((l = (*buffer).read(buf, readSize)) != readSize){
+            if ((l = (*buffer).read(buf, readSize)) != readSize) {
                 qInfo("Read failure");
 }
             qDebug("Reading %ld bytes from %s at %ld returned %ld",
@@ -1062,41 +974,43 @@ void InstaDam::on_actionExport_zip_triggered(){
 #endif
 }
 
-void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *item, QPointF pos, const Qt::MouseButton button){
+void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
+                                   SelectItem *item, QPointF pos,
+                                   const Qt::MouseButton button) {
     currentButton = button;
-    if(!item){
-        if(!canDrawOnPhoto && (!currentItem || (currentItem && currentItem->type() != SelectItem::Polygon))){
+    if (!item) {
+        if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
+                                SelectItem::Polygon)) {
             scene->inactiveAll();
             maskScene->inactiveAll();
             scene->update();
             maskScene->update();
             return;
         }
-        if(type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType != SelectItem::Freedraw){
+        if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
+            SelectItem::Freedraw) {
             canDrawOnPhoto = false;
             undoGroup->setActiveStack(tempUndoStack);
             ui->addSelectionButton->setEnabled(true);
             ui->cancelSelectionButton->setEnabled(true);
         }
 
-        if(!currentLabel || button == Qt::RightButton){
+        if (!currentLabel || button == Qt::RightButton) {
             return;
         }
 
-        if(currentItem && currentItem->type() == SelectItem::Polygon){
-            if(insertVertex && vertex1 >= 0 && vertex2 >= 0){
-                if(abs(vertex2 - vertex1) == 1){
-                    currentItem->insertVertex(min(vertex1, vertex2), pos);
-                }
-                else{
-                    currentItem->insertVertex(max(vertex1, vertex2), pos);
+        if (currentItem && currentItem->type() == SelectItem::Polygon) {
+            if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
+                if (abs(vertex2 - vertex1) == 1) {
+                    currentItem->insertVertex(std::min(vertex1, vertex2), pos);
+                } else {
+                    currentItem->insertVertex(std::max(vertex1, vertex2), pos);
                 }
                 vertex1 = -1;
                 vertex2 = -1;
                 insertVertex = false;
                 polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
-            }
-            else{
+            } else {
                 currentItem->addPoint(pos);
             }
             scene->update();
@@ -1105,7 +1019,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
         }
         scene->inactiveAll();
         maskScene->inactiveAll();
-        switch(currentSelectType){
+        switch (currentSelectType) {
             case SelectItem::Rectangle:
             {
                 RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
@@ -1133,18 +1047,22 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
             case SelectItem::Freeerase:
             case SelectItem::Freedraw:
             {
-                if(drawing){
-                    FreeDrawSelect *temp = new FreeDrawSelect(pos, currentBrushSize, brushMode, currentLabel);
-                    FreeDrawSelect *mirror = new FreeDrawSelect(pos, temp->myPen);
+                if (drawing) {
+                    FreeDrawSelect *temp = new FreeDrawSelect(pos,
+                                                              currentBrushSize,
+                                                              brushMode,
+                                                              currentLabel);
+                    FreeDrawSelect *mirror = new FreeDrawSelect(pos,
+                                                                temp->myPen);
                     tempItem = temp;
                     mirrorItem = mirror;
                     mirrorItem->setLabel(currentLabel);
                     mirrorItem->updatePen(temp->myPen);
                     tempItem->setMirror(mirrorItem);
                     mirrorItem->setMirror(tempItem);
-                }
-                else{
-                    myErase = new FreeDrawErase(pos, currentBrushSize, brushMode, currentLabel);
+                } else {
+                    myErase = new FreeDrawErase(pos, currentBrushSize,
+                                                brushMode, currentLabel);
                     currentItem = myErase;
                 }
             }
@@ -1162,12 +1080,13 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
             }
                 break;
         }
-        if((currentSelectType != SelectItem::Freedraw && currentSelectType != SelectItem::Freeerase) || drawing){
+        if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
+             SelectItem::Freeerase) || drawing) {
             mirrorItem->setLabel(currentLabel);
             mirrorItem->updatePen(tempItem->myPen);
             scene->addItem(tempItem);
             maskScene->addItem(mirrorItem);
-            switch(type){
+            switch (type) {
                 case PhotoScene::PHOTO_VIEWER_TYPE:
                     currentItem = tempItem;
                     break;
@@ -1175,17 +1094,16 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
                     currentItem = mirrorItem;
                     break;
             }
-            if(!canDrawOnPhoto)
+            if (!canDrawOnPhoto)
                 maskItem = currentItem;
         }
         scene->update();
         maskScene->update();
-    }
-    else{
-        if(item->type() != currentSelectType){
-            if(!canDrawOnPhoto)
+    } else {
+        if (item->type() != currentSelectType) {
+            if (!canDrawOnPhoto)
                 return;
-            switch(item->type()){
+            switch (item->type()) {
                 case SelectItem::Freedraw:
                     on_freeSelectButton_clicked();
                     break;
@@ -1201,25 +1119,24 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
             }
         }
         currentItem = item;
-        if(!canDrawOnPhoto)
+        if (!canDrawOnPhoto)
             maskItem = currentItem;
         currentLabel = currentItem->getLabel();
         scene->inactiveAll();
         maskScene->inactiveAll();
         currentItem->clickPoint(pos);
         currentItem->setItemActive();
-        if(currentItem->type() == SelectItem::Polygon && insertVertex){
+        if (currentItem->type() == SelectItem::Polygon && insertVertex) {
             int vert = currentItem->getActiveVertex();
-            if(vert != SelectItem::UNSELECTED){
-                if(vertex1 <0){
+            if (vert != SelectItem::UNSELECTED) {
+                if (vertex1 <0) {
                     vertex1 = vert;
                     polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
-                }
-                else if(vertex2 < 0){
-                    if(abs(vert - vertex1) != 1 && abs(vert - vertex1) != (currentItem->numberOfVertices() - 1)){
+                } else if (vertex2 < 0) {
+                    if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
+                        (currentItem->numberOfVertices() - 1)) {
                         polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
-                    }
-                    else{
+                    } else {
                         vertex2 = vert;
                         polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
                     }
@@ -1231,12 +1148,11 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type, SelectItem *ite
     }
 }
 
-void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
-    if(currentItem){
-        if(currentButton == Qt::LeftButton){
+void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
+    if (currentItem) {
+        if (currentButton == Qt::LeftButton) {
             currentItem->moveItem(fromPos, toPos);
-        }
-        else{
+        } else {
             currentItem->rotate(fromPos, toPos);
         }
         scene->update();
@@ -1244,52 +1160,56 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos){
     }
 }
 
-void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
-{
+void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
+                                    QPointF oldPos, QPointF newPos,
+                                    const Qt::MouseButton button) {
     UNUSED(button);
-    if(currentItem && !currentItem->isItemAdded()){
-        if(currentItem->type() == SelectItem::Freedraw && type == PhotoScene::MASK_VIEWER_TYPE){
+    if (currentItem && !currentItem->isItemAdded()) {
+        if (currentItem->type() == SelectItem::Freedraw && type ==
+            PhotoScene::MASK_VIEWER_TYPE) {
             FreeDrawSelect fds(maskSelection(currentItem), currentItem->myPen);
             FreeDrawSelect *temp = dynamic_cast<FreeDrawSelect*>(currentItem);
             temp->setPointsUnchecked(fds.getPixmap());
         }
-        if(currentItem->type() == SelectItem::Freeerase){
-            QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene, maskScene);
+        if (currentItem->type() == SelectItem::Freeerase) {
+            QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
+                                                                maskScene);
             undoGroup->activeStack()->push(eraseCommand);
-        }
-        else{
-            QUndoCommand *addCommand = new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), scene);
+        } else {
+            QUndoCommand *addCommand = new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                      scene);
             undoGroup->activeStack()->push(addCommand);
-            if(type == PhotoScene::MASK_VIEWER_TYPE)
+            if (type == PhotoScene::MASK_VIEWER_TYPE)
                 currentItem->setFromMaskScene(true);
-            if(ui->showMaskSelections->checkState() == Qt::Unchecked)
+            if (ui->showMaskSelections->checkState() == Qt::Unchecked)
                 currentItem->hideMask();
         }
         currentItem->resetState();
-        if(currentItem->type() != SelectItem::Polygon){
+        if (currentItem->type() != SelectItem::Polygon) {
             currentItem = nullptr;
-        }
-        else{
+        } else {
             currentItem->setActiveVertex(SelectItem::UNSELECTED);
         }
-    }
-    else if(currentItem && (currentItem->wasMoved() || currentItem->wasResized() || currentItem->wasRotated())){
-        if(currentItem->wasMoved()){
-            QUndoCommand *moveCommand = new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos);
+    } else if (currentItem && (currentItem->wasMoved() ||
+                               currentItem->wasResized() ||
+                               currentItem->wasRotated())) {
+        if (currentItem->wasMoved()) {
+            QUndoCommand *moveCommand = new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                        oldPos, newPos);
             undoGroup->activeStack()->push(moveCommand);
-        }
-        else if(currentItem->wasResized()){
-            QUndoCommand *resizeCommand = new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos, currentItem->getActiveVertex());
+        } else if (currentItem->wasResized()) {
+            QUndoCommand *resizeCommand = new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                                oldPos, newPos, currentItem->getActiveVertex());
             undoGroup->activeStack()->push(resizeCommand);
-        }
-        else{
-            QUndoCommand *rotateCommand = new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), oldPos, newPos);
+        } else {
+            QUndoCommand *rotateCommand = new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                            oldPos, newPos);
             undoGroup->activeStack()->push(rotateCommand);
         }
         currentItem->resetState();
-    }
-    else if(currentItem && currentItem->type() == SelectItem::Polygon && !currentItem->wasPointAdded()){
-        QUndoCommand *addVertexCommand = new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), newPos);
+    } else if (currentItem && currentItem->type() == SelectItem::Polygon && !currentItem->wasPointAdded()) {
+        QUndoCommand *addVertexCommand = new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                              newPos);
         undoGroup->activeStack()->push(addVertexCommand);
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
         currentItem->resetState();
@@ -1299,95 +1219,91 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos
     maskScene->update();
 }
 
-void InstaDam::finishPolygonButtonClicked(){
-    if(currentItem)
+void InstaDam::finishPolygonButtonClicked() {
+    if (currentItem)
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
     currentItem = nullptr;
     scene->update();
     maskScene->update();
 }
-void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key){
-    if(!currentItem){
+
+void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
+    if (!currentItem) {
         return;
-    }
-    else if(key == Qt::Key_Delete || key == Qt::Key_Backspace){
-        if(currentItem->type() == SelectItem::Polygon && currentItem->getActiveVertex() != SelectItem::UNSELECTED){
+    } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
+        if (currentItem->type() == SelectItem::Polygon &&
+            currentItem->getActiveVertex() != SelectItem::UNSELECTED) {
             QUndoCommand *deleteVertexCommand = new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror());
             undoGroup->activeStack()->push(deleteVertexCommand);
-        }
-        else{
-            QUndoCommand *deleteCommand = new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(), scene);
+        } else {
+            QUndoCommand *deleteCommand = new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
+                                                            scene);
             undoGroup->activeStack()->push(deleteCommand);
         }
-    }
-    else if(key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift){
+    } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
     }
-
 }
 
-bool InstaDam::read(const QJsonObject &json, fileTypes type = PROJECT){
-    if(json.contains("labels") && json["labels"].isArray()){
+bool InstaDam::read(const QJsonObject &json, fileTypes type) {
+    if (json.contains("labels") && json["labels"].isArray()) {
         QJsonArray labelArray = json["labels"].toArray();
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
-        for(int i = 0; i < labelArray.size(); i++){
+        for (int i = 0; i < labelArray.size(); i++) {
             QSharedPointer<Label> label = QSharedPointer<Label>::create(labelArray[i].toObject(), i);
             tempLabels.push_back(label);
         }
-        if (type == PROJECT)
-        {
+        if (type == PROJECT) {
             currentProject = newProject->newPr;
             setLabels();
             scene->clearItems();
             maskScene->clearItems();
             currentProject->setLabels(tempLabels);
-            QTextStream(stdout)<<currentProject->numLabels()<<"\n";
-        }
-        else {
+            QTextStream(stdout) << currentProject->numLabels() << "\n";
+        } else {
             QStringList current = getLabelNames(currentProject->getLabels());
             QStringList newList = getLabelNames(tempLabels);
             current.sort(Qt::CaseInsensitive);
             newList.sort(Qt::CaseInsensitive);
-            if(current.size() != 0 && current != newList){
+            if (current.size() != 0 && current != newList) {
                 QDialog *dialog = new QDialog(this);
                 Ui::projectDialog *projectDialog = new Ui::projectDialog;
                 projectDialog->setupUi(dialog);
-                projectDialog->differences->setRowCount(max(current.size(), newList.size()));
-                for(int i = 0; i < current.size(); i++){
+                projectDialog->differences->setRowCount(std::max(current.size(),
+                                                                 newList.size()));
+                for (int i = 0; i < current.size(); i++) {
                     QTableWidgetItem *newItem = new QTableWidgetItem(current.at(i));
                     projectDialog->differences->setItem(i, 0, newItem);
                 }
-                for(int i = 0; i< newList.size(); i++){
+                for (int i = 0; i< newList.size(); i++) {
                     QTableWidgetItem *newItem = new QTableWidgetItem(newList.at(i));
                     projectDialog->differences->setItem(i, 1, newItem);
                 }
 
-                connect(projectDialog->keepButton, SIGNAL(clicked()), dialog, SLOT(accept()));
-                connect(projectDialog->loadNewButton, SIGNAL(clicked()), dialog, SLOT(reject()));
+                connect(projectDialog->keepButton, SIGNAL(clicked()), dialog,
+                        SLOT(accept()));
+                connect(projectDialog->loadNewButton, SIGNAL(clicked()), dialog,
+                        SLOT(reject()));
                 dialog->exec();
-                if(dialog->result() == QDialog::Accepted){
+                if (dialog->result() == QDialog::Accepted) {
                     return false;
                 }
             }
             currentProject->setLabels(tempLabels);
-            QTextStream(stdout)<<currentProject->numLabels();
+            QTextStream(stdout) << currentProject->numLabels();
         }
     }
     return true;
 }
 
-void InstaDam::write(QJsonObject &json, fileTypes type = PROJECT){
-
+void InstaDam::write(QJsonObject &json, fileTypes type) {
     QJsonArray labs;
-    for(int i = 0; i < currentProject->numLabels(); i++){
+    for (int i = 0; i < currentProject->numLabels(); i++) {
         QJsonObject lab;
-        if (type== PROJECT)
-        {
+        if (type== PROJECT) {
             currentProject->getLabel(i)->write(lab);
-        }
-        else if (type == ANNOTATION)
-        {
+        } else if (type == ANNOTATION) {
             currentProject->getLabel(i)->writeIdantn(lab);
         }
         labs.append(lab);
@@ -1395,10 +1311,11 @@ void InstaDam::write(QJsonObject &json, fileTypes type = PROJECT){
     json["labels"] = labs;
 }
 
-void InstaDam::addCurrentSelection(){
+void InstaDam::addCurrentSelection() {
     tempUndoStack->clear();
     undoGroup->setActiveStack(mainUndoStack);
-    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem), currentLabel);
+    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem),
+                                             currentLabel);
     scene->addItem(fds);
     QUndoCommand *addCommand = new AddCommand(fds, scene);
     mainUndoStack->push(addCommand);
@@ -1412,10 +1329,10 @@ void InstaDam::addCurrentSelection(){
     canDrawOnPhoto = true;
 }
 
-void InstaDam::cancelCurrentSelection(){
+void InstaDam::cancelCurrentSelection() {
     undoGroup->setActiveStack(mainUndoStack);
     canDrawOnPhoto = true;
-    if(!ui->addSelectionButton->isEnabled()){
+    if (!ui->addSelectionButton->isEnabled()) {
         return;
     }
     tempUndoStack->clear();
@@ -1428,7 +1345,7 @@ void InstaDam::cancelCurrentSelection(){
     ui->cancelSelectionButton->setDisabled(true);
 }
 
-QPixmap InstaDam::maskSelection(SelectItem *item){
+QPixmap InstaDam::maskSelection(SelectItem *item) {
     QPixmap map(SelectItem::myBounds);
     map.fill(Qt::transparent);
     QPainter *paint = new QPainter(&map);
@@ -1442,26 +1359,23 @@ QPixmap InstaDam::maskSelection(SelectItem *item){
     return map;
 }
 
-void InstaDam::on_addSelectionButton_clicked()
-{
-
+void InstaDam::on_addSelectionButton_clicked() {
 }
 
-void InstaDam::setCurrentProject(Project* pr){
+void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }
 
-
-QStringList InstaDam::getLabelNames(QVector<QSharedPointer<Label> > labels){
+QStringList InstaDam::getLabelNames(QVector<QSharedPointer<Label> > labels) {
     QStringList labelList;
     QVectorIterator<QSharedPointer<Label> > it(labels);
-    while(it.hasNext()){
+    while (it.hasNext()) {
         labelList.append(it.next()->getText());
     }
     return labelList;
 }
 
-void InstaDam::revert(){
+void InstaDam::revert() {
     this->filename = this->oldFilename;
     this->file = this->oldFile;
     this->path = this->oldPath;
@@ -1470,8 +1384,8 @@ void InstaDam::revert(){
     this->labelPaths = this->oldLabelPaths;
 }
 
-void InstaDam::processShowHide(int state){
-    for(int i = 0; i < currentProject->numLabels(); i++){
+void InstaDam::processShowHide(int state) {
+    for (int i = 0; i < currentProject->numLabels(); i++) {
          currentProject->getLabel(i)->setMaskState(state);
     }
 }

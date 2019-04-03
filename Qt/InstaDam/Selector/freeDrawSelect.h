@@ -1,86 +1,99 @@
 #ifndef FREEDRAWSELECT_H
 #define FREEDRAWSELECT_H
 
-#include "selectItem.h"
 #include <QHash>
 #include <QPixmap>
+#include "selectItem.h"
 #ifdef TEST
 class TestSelect;
 
 #endif
 
-//typedef QVector<QVector <bool> > Block;
-class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem
-{
-public:
+class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
+ public:
     static QString baseInstruction;
     FreeDrawSelect();
-    FreeDrawSelect(QPixmap map, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
-    FreeDrawSelect(QPixmap map, QPen pen);
-    FreeDrawSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
-    FreeDrawSelect(const QList<FreeDrawSelect*> items);
-    FreeDrawSelect(QPointF point, QPen pen, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
-    FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
+    FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label = nullptr,
+                   QGraphicsItem *item = nullptr);
+    FreeDrawSelect(const QPixmap map, QPen pen);
+    FreeDrawSelect(const QJsonObject &json,
+                   QSharedPointer<Label> label = nullptr,
+                   QGraphicsItem *item = nullptr);
+    explicit FreeDrawSelect(const QList<FreeDrawSelect*> &items);
+    FreeDrawSelect(QPointF point, QPen pen,
+                   QSharedPointer<Label> label = nullptr,
+                   QGraphicsItem *item = nullptr);
+    FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode,
+                   QSharedPointer<Label> label = nullptr,
+                   QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/
-    void addPoint(QPointF &point, int vertex = UNSELECTED) override;
-    QString baseInstructions() override {return FreeDrawSelect::baseInstruction;}
+    void addPoint(QPointF &point, const int vertex = UNSELECTED) override;
+    QString baseInstructions() const override {
+        return FreeDrawSelect::baseInstruction;
+    }
     QRectF boundingRect() const override;
-    void clickPoint(QPointF &point) override;
-    void insertVertex(int vertex, QPointF &point) override {UNUSED(vertex);UNUSED(point);}
-    bool isInside(QPointF &point) override;
-    void moveItem(QPointF &oldPos, QPointF &newPos) override;
-    int numberOfVertices() override {return 0;}
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    void removeVertex(int vertex=UNSELECTED) override {UNUSED(vertex);}
-    void resetActiveVertex() override{}
-    void resizeItem(int vertex, QPointF &shift) override;
-    void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
+    void clickPoint(const QPointF &point) override;
+    void insertVertex(const int vertex, const QPointF &point) override {
+        UNUSED(vertex);
+        UNUSED(point);
+    }
+    bool isInside(const QPointF &point) const override;
+    void moveItem(const QPointF &oldPos, QPointF &newPos) override;
+    int numberOfVertices() const override {return 0;}
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr) override;
+    void removeVertex(int vertex = UNSELECTED) override {UNUSED(vertex);}
+    void resetActiveVertex() override {}
+    void resizeItem(const int vertex, QPointF &shift) override;
+    void rotate(const QPointF &from, const QPointF &to) override {
+        UNUSED(from);
+        UNUSED(to);
+    }
     void updatePen(QPen pen) override;
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
     void toPixmap(QPainter *painter) override;
 
     // Mirror
-    FreeDrawSelect* getMirror() override {return mirror;}
-    void mirrorHide() override;
-    void mirrorShow() override;
-    void rotateMirror() override {}
+    FreeDrawSelect* getMirror() const override {return mirror;}
+    void mirrorHide() const override;
+    void mirrorShow() const override;
+    void rotateMirror() const override {}
     void setMirror(SelectItem *item) override;
-    void setMirrorActive() override {}
-    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-    void setMirrorMoved() override {}
-    void setMirrorResized() override {}
-    void setMirrorVertex(int vertex) override {UNUSED(vertex);}
-    void updateMirrorScene() override;
+    void setMirrorActive() const override {}
+    void setMirrorAdded() const override {mirror->hasBeenAdded = true;}
+    void setMirrorMoved() const override {}
+    void setMirrorResized() const override {}
+    void setMirrorVertex(int vertex) const override {UNUSED(vertex);}
+    void updateMirrorScene() const override;
 
     void setMirrorMap();
     /*------------- End implemented functions*/
 
     void addPoints(QSharedPointer<QPixmap> points);
     void deletePoints(QPen &pen, QSharedPointer<QPixmap> map);
-    void deletePoints(QPointF &start, QPointF &end, QPen pen, QSharedPointer<QPixmap> outmap);
+    void deletePoints(const QPointF &start, const QPointF &end, QPen pen,
+                      QSharedPointer<QPixmap> outmap);
     void setPointsUnchecked(QPixmap map);
 
-    QGraphicsScene* scene();
-    bool isVisible(){return SelectItem::isVisible();}
-    void setRecalc(){needToPixmap = true;}
-    QPixmap getPixmap(){return myPixmap;}
+    QGraphicsScene* scene() const;
+    bool isVisible() const {return SelectItem::isVisible();}
+    QPixmap getPixmap() const {return myPixmap;}
 
-protected:
+ protected:
     QPixmap myPixmap;
-
-
     QPoint lastPoint;
 
-private:
+ private:
 #ifdef TEST
-
     friend TestSelect;
 #endif
     FreeDrawSelect *mirror = nullptr;
-    bool needToPixmap = false;
     QPainter myPainter;
+    void loadFromPaixmap(const QPixmap map);
+    void setup();
+    void init(QSharedPointer<Label> label = nullptr);
 };
-#endif // POLYGONSELECT_H
+#endif  // POLYGONSELECT_H

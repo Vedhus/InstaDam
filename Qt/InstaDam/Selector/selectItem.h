@@ -18,9 +18,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QJsonObject>
-//#include "freeDrawSelect.h"
 
-//#include "label.h"
 #define UNUSED(x) (void)(x)
 class Label;
 class FreeDrawSelect;
@@ -37,16 +35,14 @@ class QPointF;
 class QGraphicsItemPrivate;
 QT_END_NAMESPACE
 
-class SelectItem : public QGraphicsItem
-{
-public:
-
+class SelectItem : public QGraphicsItem {
+ public:
     enum SelectType {
-        Rectangle=51,
-        Ellipse=52,
-        Polygon=53,
-        Freedraw=54,
-        Freeerase=55};
+        Rectangle = 51,
+        Ellipse = 52,
+        Polygon = 53,
+        Freedraw = 54,
+        Freeerase = 55};
 
     enum Vertex:int{
         NONE = 0x0,
@@ -65,20 +61,24 @@ public:
     int myID;
     QPen highlightPen, myPen;
 
-    SelectItem(qreal vertSize = 10., QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
-    SelectItem(QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
-    virtual ~SelectItem() override {}
+    SelectItem(qreal vertSize = 10.,
+               QSharedPointer<Label> label = nullptr,
+               QGraphicsItem *item = nullptr);
+    SelectItem(QSharedPointer<Label> label = nullptr,
+               QGraphicsItem *item = nullptr);
+    ~SelectItem() override {}
 
     /*---------------- Virtual functions ---------------------------*/
     // manipulating the data
-    virtual void addPoint(QPointF &point, int vertex = UNSELECTED) = 0;
-    virtual void clickPoint(QPointF &point) = 0;
-    virtual void insertVertex(int vertex, QPointF &point) = 0;
-    virtual void moveItem(QPointF &oldPos, QPointF &newPos) = 0;
-    virtual void removeVertex(int vertex = UNSELECTED) = 0;
+    virtual void addPoint(QPointF &point,
+                          const int vertex = UNSELECTED) = 0;
+    virtual void clickPoint(const QPointF &point) = 0;
+    virtual void insertVertex(const int vertex, const QPointF &point) = 0;
+    virtual void moveItem(const QPointF &oldPos, QPointF &newPos) = 0;
+    virtual void removeVertex(const int vertex = UNSELECTED) = 0;
     virtual void resetActiveVertex() = 0;
-    virtual void resizeItem(int vertex, QPointF &shift) = 0;
-    virtual void rotate(QPointF &from, QPointF &to) = 0;
+    virtual void resizeItem(const int vertex, QPointF &shift) = 0;
+    virtual void rotate(const QPointF &from, const QPointF &to) = 0;
     virtual void updatePen(QPen pen) = 0;
 
     // I/O
@@ -86,49 +86,52 @@ public:
     virtual void write(QJsonObject &json) const = 0;
     virtual void toPixmap(QPainter* painter) = 0;
     // get info about the objects
-    virtual QString baseInstructions() = 0;
-    virtual bool isInside(QPointF &point) = 0;
-    virtual int numberOfVertices() = 0;
+    virtual QString baseInstructions() const = 0;
+    virtual bool isInside(const QPointF &point) const = 0;
+    virtual int numberOfVertices() const = 0;
 
     // working with the mirror (photo/maks pair)
-    virtual SelectItem* getMirror() = 0;
-    virtual void mirrorHide() = 0;
-    virtual void mirrorShow() = 0;
-    virtual void rotateMirror() = 0;
+    virtual SelectItem* getMirror() const = 0;
+    virtual void mirrorHide() const = 0;
+    virtual void mirrorShow() const = 0;
+    virtual void rotateMirror() const = 0;
     virtual void setMirror(SelectItem *item) = 0;
-    virtual void setMirrorActive() = 0;
-    virtual void setMirrorAdded() = 0;
-    virtual void setMirrorMoved() = 0;
-    virtual void setMirrorResized() = 0;
-    virtual void setMirrorVertex(int vertex) = 0;
-    virtual void updateMirrorScene() = 0;
+    virtual void setMirrorActive() const = 0;
+    virtual void setMirrorAdded() const = 0;
+    virtual void setMirrorMoved() const = 0;
+    virtual void setMirrorResized() const = 0;
+    virtual void setMirrorVertex(int vertex) const = 0;
+    virtual void updateMirrorScene() const = 0;
     /*-------------- End virtual functions-------------------------*/
 
-    QGraphicsItem* getParentItem();
+    QGraphicsItem* getParentItem() const;
     void invertColorForPen();
-    QGraphicsScene* scene();
+    QGraphicsScene* scene() const;
     void setLabel(QSharedPointer<Label> label, bool init = false);
-    QSharedPointer<Label> getLabel(){return myLabel;}
+    QSharedPointer<Label> getLabel() const {return myLabel;}
     static void setVertexSize(qreal size);
     void sortCorners(QRectF &rect, QPointF &newPoint);
     int type() const override;
 
     /*-------------- Inlines ---------------------------------------*/
-    void flipH(){
+    void flipH() {
         activeVertex ^= (TOP | BOTTOM);
     }
 
-    void flipV(){
+    void flipV() {
         activeVertex ^= (LEFT | RIGHT);
     }
 
-    QPointF getActivePoint(){return activePoint;}
-    int getActiveVertex(){return activeVertex;}
+    QPointF getActivePoint() const {return activePoint;}
+    int getActiveVertex() const {return activeVertex;}
     bool isItemActive()const {return active;}
     bool isItemAdded()const {return hasBeenAdded;}
-    void itemWasAdded(){setMirrorAdded(); hasBeenAdded = true;}
+    void itemWasAdded() {
+        setMirrorAdded();
+        hasBeenAdded = true;
+    }
 
-    void resetState(){
+    void resetState() {
         moved = false;
         resized = false;
         setMirrorMoved();
@@ -138,41 +141,44 @@ public:
         setActiveVertex(SelectItem::UNSELECTED);
     }
 
-    void setActiveVertex(int h, int v = NONE){
+    void setActiveVertex(int h, int v = NONE) {
         activeVertex = 0;
         activeVertex = (h | v);
     }
 
-    void setInactive(){active = false;}
-    void setItemActive(){setMirrorActive(); active = true;}
-    bool wasMoved()const {return moved;}
-    bool wasPointAdded()const {return pointAdded;}
-    bool wasResized()const {return resized;}
-    bool wasRotated()const {return rotated;}
-    void setFromMaskScene(bool value){fromMaskScene = value;}
-    void setOnMaskScene(bool value){onMaskScene = value;}
-    bool getOnMaskScene(){return onMaskScene;}
-    bool getFromMaskScene(){return fromMaskScene;}
-    void hideMask(){
-        if(onMaskScene){
-            if(!fromMaskScene)
+    void setInactive() {active = false;}
+    void setItemActive() {
+        setMirrorActive();
+        active = true;
+    }
+    bool wasMoved() const {return moved;}
+    bool wasPointAdded() const {return pointAdded;}
+    bool wasResized() const {return resized;}
+    bool wasRotated() const {return rotated;}
+    void setFromMaskScene(bool value) {fromMaskScene = value;}
+    void setOnMaskScene(bool value) {onMaskScene = value;}
+    bool getOnMaskScene() const {return onMaskScene;}
+    bool getFromMaskScene() const {return fromMaskScene;}
+    void hideMask() {
+        if (onMaskScene) {
+            if (!fromMaskScene)
                 hide();
-        }
-        else if(getMirror() != nullptr && !getMirror()->fromMaskScene){
+        } else if (getMirror() != nullptr && !getMirror()->fromMaskScene) {
             mirrorHide();
         }
     }
-    void showMask(){
-        if(onMaskScene){
-            if(!fromMaskScene && getMirror() && getMirror()->isVisible()){
+    void showMask() {
+        if (onMaskScene) {
+            if (!fromMaskScene && getMirror() && getMirror()->isVisible()) {
                 show();
             }
-        }
-        else if(getMirror() != nullptr && !getMirror()->fromMaskScene && isVisible()){
+        } else if (getMirror() != nullptr && !getMirror()->fromMaskScene &&
+                isVisible()) {
             mirrorShow();
         }
     }
-protected:
+
+ protected:
     SelectType selectType;
 
     QPointF selectedPoint;
@@ -199,8 +205,8 @@ protected:
     int activeVertex = (activeV | activeH);
 
     FreeDrawSelect* pixmap;
-    void checkBoundaries(QPointF &shift, QRectF &rect);
-    bool isInsideRect(QRectF &rect, QPointF &point);
+    void checkBoundaries(const QPointF &shift, QRectF &rect);
+    bool isInsideRect(const QRectF &rect, const QPointF &point) const;
 };
 
 #endif

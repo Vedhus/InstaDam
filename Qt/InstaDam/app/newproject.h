@@ -13,17 +13,16 @@ namespace Ui {
 class newproject;
 }
 
-class newproject : public QDialog
-{
+class newproject : public QDialog {
     Q_OBJECT
 
-public:
+ public:
     explicit newproject(QWidget *parent = nullptr);
     ~newproject();
 
     Project *newPr;
 
-private slots:
+ private slots:
     void on_pushButton_clicked();
 
     Project* on_buttonBox_accepted();
@@ -32,7 +31,7 @@ private slots:
     void colorPicked(const QColor &color);
 #endif
 
-private:
+ private:
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
@@ -41,4 +40,4 @@ private:
 #endif
 };
 
-#endif // NEWPROJECT_H
+#endif  // NEWPROJECT_H

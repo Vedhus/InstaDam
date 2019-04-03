@@ -2,10 +2,9 @@
 #define FILTERS_H
 
 
-class filters
-{
-public:
+class filters {
+ public:
     filters();
 };
 
-#endif // FILTERS_H
+#endif  // FILTERS_H
