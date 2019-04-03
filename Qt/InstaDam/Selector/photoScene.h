@@ -5,8 +5,9 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include <list>
-//#include <bits/stdc++.h>
 #include <map>
+#include <string>
+
 #include "selectItem.h"
 #include "ellipseSelect.h"
 #include "rectangleSelect.h"
@@ -19,42 +20,43 @@ class QGraphicsViewItem;
 QT_END_NAMESPACE
 
 
-class PhotoScene : public QGraphicsScene
-{
+class PhotoScene : public QGraphicsScene {
     Q_OBJECT
 
-public:
+ public:
     enum viewerTypes{
         PHOTO_VIEWER_TYPE,
         MASK_VIEWER_TYPE};
 
-    PhotoScene(viewerTypes type, QObject *parent = nullptr);
+    explicit PhotoScene(viewerTypes type, QObject *parent = nullptr);
 
-    SelectItem* itemAt(QPointF point);
+    SelectItem* itemAt(QPointF point) const;
     SelectItem* itemAt(QPointF point, std::string label);
     void addLabel(std::string label);
-    void setCurrentLabel(std::string label);
+    void setCurrentLabel(const std::string &label);
     void addLabelItem(SelectItem* item, std::string label);
     void addItem(SelectItem* item);
     void addItem(QGraphicsItem* item);
-    void inactiveAll();
+    void inactiveAll() const;
     viewerTypes myViewerType;
     void removeItem(SelectItem* item);
     void clearItems();
 
-signals:
-    void pointClicked(PhotoScene::viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button);
-    void mouseMoved(QPointF fromPos, QPointF toPos);
-    void mouseReleased(PhotoScene::viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button);
+ signals:
+    void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
+                      const QPointF point, const Qt::MouseButton button);
+    void mouseMoved(const QPointF fromPos, const QPointF toPos);
+    void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
+                       const QPointF newPos, const Qt::MouseButton button);
     void keyPressed(PhotoScene::viewerTypes type, const int key);
 
-protected:
+ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
-private:
+ private:
     QGraphicsItem *movingItem;
     QPointF oldPos;
     QPointF newPos;

@@ -1,8 +1,10 @@
-#include <QtWidgets>
-#include <iostream>
-using namespace std;
-
 #include "photoScene.h"
+
+#include <QtWidgets>
+#include <map>
+#include <string>
+#include <list>
+
 #include "selectItem.h"
 
 /*!
@@ -19,11 +21,11 @@ using namespace std;
   */
 
 /*!
-  Constructs a PhotoScene instance of type \a type, with parent \a parent, if any.
+  Constructs a PhotoScene instance of type \a type, with parent \a parent, if
+  any.
   */
 PhotoScene::PhotoScene(viewerTypes type, QObject *parent)
-    : QGraphicsScene(parent), currentItems(), labelmap()
-{
+    : QGraphicsScene(parent), currentItems(), labelmap() {
     myViewerType = type;
     movingItem = nullptr;
     mousePressed = false;
@@ -33,8 +35,9 @@ PhotoScene::PhotoScene(viewerTypes type, QObject *parent)
 /*!
   Sets all SelectItems in the PhotoScene to inactive.
   */
-void PhotoScene::inactiveAll(){
-    for(std::list<SelectItem*>::const_iterator iterator = currentItems.begin(), end = currentItems.end(); iterator != end; ++iterator) {
+void PhotoScene::inactiveAll() const {
+    for (std::list<SelectItem*>::const_iterator iterator = currentItems.begin(),
+         end = currentItems.end(); iterator != end; ++iterator) {
         (*iterator)->setInactive();
     }
 }
@@ -43,7 +46,7 @@ void PhotoScene::inactiveAll(){
   \overload addItem()
   Adds \a item to the scene.
   */
-void PhotoScene::addItem(QGraphicsItem* item){
+void PhotoScene::addItem(QGraphicsItem* item) {
     QGraphicsScene::addItem(item);
 }
 
@@ -51,22 +54,19 @@ void PhotoScene::addItem(QGraphicsItem* item){
   \overload addItem()
   Adds \a item to the scene.
   */
-void PhotoScene::addItem(SelectItem* item){
+void PhotoScene::addItem(SelectItem* item) {
     currentItems.push_front(item);
     QGraphicsScene::addItem(item);
     labelItems.append(item);
 }
 
-
-
 /*!
   \overload removeItem()
   Adds \a item to the scene.
   */
-void PhotoScene::removeItem(SelectItem* item){
+void PhotoScene::removeItem(SelectItem* item) {
     currentItems.remove(item);
     QGraphicsScene::removeItem(item);
-
 }
 
 /*!
@@ -74,11 +74,8 @@ void PhotoScene::removeItem(SelectItem* item){
   Clears every \a item in the scene.
   */
 
-void PhotoScene::clearItems()
-{
-    //cout << "The number of labels is " << labelItems.length() << endl;
-    for (int i = 0; i < labelItems.length(); i++)
-    {
+void PhotoScene::clearItems() {
+    for (int i = 0; i < labelItems.length(); i++) {
         this->removeItem(labelItems[i]);
     }
     labelItems.clear();
@@ -94,7 +91,7 @@ void PhotoScene::clearItems()
 
   \sa QGraphicsScene::keyPressEvent()
   */
-void PhotoScene::keyPressEvent(QKeyEvent *event){
+void PhotoScene::keyPressEvent(QKeyEvent *event) {
     emit keyPressed(myViewerType, event->key());
     QGraphicsScene::keyPressEvent(event);
 }
@@ -108,9 +105,8 @@ void PhotoScene::keyPressEvent(QKeyEvent *event){
 
   \sa QGraphicsScene::mousePressEvent()
   */
-void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
+void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
         mousePressed = true;
         QPointF mousePos(event->scenePos().x(),
                          event->scenePos().y());
@@ -118,13 +114,11 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         oldPos = mousePos;
         newPos = mousePos;
-        if(item && item->type() != 7){
+        if (item && item->type() != 7) {
             emit pointClicked(myViewerType, item, mousePos, event->button());
-        }
-        else{
+        } else {
             emit pointClicked(myViewerType, nullptr, mousePos, event->button());
         }
-
     }
     QGraphicsScene::mousePressEvent(event);
 }
@@ -138,8 +132,8 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
   \sa QGraphicsScene::mouseMoveEvent()
   */
-void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
-    if(mousePressed){
+void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+    if (mousePressed) {
         QPointF mousePos(event->scenePos().x(),
                      event->scenePos().y());
         emit mouseMoved(newPos, mousePos);
@@ -157,9 +151,8 @@ void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
 
   \sa QGraphicsScene::mouseReleaseEvent()
   */
-void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton || event->button() == Qt::RightButton){
+void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
         mousePressed = false;
         emit mouseReleased(myViewerType, oldPos, newPos, event->button());
     }
@@ -170,14 +163,14 @@ void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
   Returns a pointer to the top SelectItem at \a point in scene coordinates.
   If there is no SelectItem under that position then \c nullptr is returned.
   */
-SelectItem* PhotoScene::itemAt(QPointF point){
-    for(std::list<SelectItem*>::const_iterator iterator = currentItems.begin(), end = currentItems.end(); iterator != end; ++iterator) {
-        if((*iterator)->isVisible() && (*iterator)->isInside(point)){
+SelectItem* PhotoScene::itemAt(QPointF point) const {
+    for (std::list<SelectItem*>::const_iterator iterator = currentItems.begin(),
+         end = currentItems.end(); iterator != end; ++iterator) {
+        if ((*iterator)->isVisible() && (*iterator)->isInside(point)) {
             return (*iterator);
         }
     }
     return nullptr;
-
 }
 
 /*!
@@ -186,12 +179,12 @@ SelectItem* PhotoScene::itemAt(QPointF point){
   Label \a label. If there is no SelectItem from that Label under that position
   then \c nullptr is returned.
   */
-SelectItem* PhotoScene::itemAt(QPointF point, std::string label){
-
-    for(std::list<SelectItem*>::const_iterator iterator = labelmap[label].begin(), end = labelmap[label].end(); iterator != end; ++iterator) {
-        if((*iterator)->isInside(point)){
+SelectItem* PhotoScene::itemAt(QPointF point, std::string label) {
+    for (std::list<SelectItem*>::const_iterator iterator =
+         labelmap[label].begin(),
+         end = labelmap[label].end(); iterator != end; ++iterator) {
+        if ((*iterator)->isInside(point))
             return (*iterator);
-        }
     }
     return nullptr;
 }
@@ -199,9 +192,10 @@ SelectItem* PhotoScene::itemAt(QPointF point, std::string label){
 /*!
   Adds \a label to the PhotoScene
   */
-void PhotoScene::addLabel(std::string label){
-    std::map<string, std::list<SelectItem*> >::iterator it = labelmap.find(label);
-    if (it == labelmap.end()){
+void PhotoScene::addLabel(std::string label) {
+    std::map<std::string, std::list<SelectItem*> >::iterator it =
+            labelmap.find(label);
+    if (it == labelmap.end()) {
         std::list<SelectItem*> newlist;
         labelmap[label] = newlist;
     }
@@ -210,14 +204,14 @@ void PhotoScene::addLabel(std::string label){
 /*!
   Sets the currently active Label to be \a label.
   */
-void PhotoScene::setCurrentLabel(std::string label){
+void PhotoScene::setCurrentLabel(const std::string &label) {
     currentLabel = label;
 }
 
 /*!
   Adds \a item to the Label given by \a label.
   */
-void PhotoScene::addLabelItem(SelectItem* item, std::string label){
+void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
     currentItems.push_front(item);
     labelmap[label].push_front(item);
 }
@@ -225,34 +219,34 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label){
 /*!
   \fn void PhotoScene::pointClicked(viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button)
 
-  Triggered when a mouse button is depressed in the PhotoScene. The signal contains
-  which type of viewer this is as \a type, any SelectItem that exists under the
-  mouse as \a item, the position of the mouse as \a point, and which mouse button
-  was depressed as \a button.
+  Triggered when a mouse button is depressed in the PhotoScene. The signal
+  contains which type of viewer this is as \a type, any SelectItem that exists
+  under the mouse as \a item, the position of the mouse as \a point, and which
+  mouse button was depressed as \a button.
   */
 
 /*!
   \fn void PhotoScene::mouseMoved(QPointF fromPos, QPointF toPos)
 
-  Triggered when the mouse moves in the PhotoScene and a mouse button is depressed.
-  The signal contains the starting (\a fromPos) and ending (\a toPos) positions
-  of the mouse.
+  Triggered when the mouse moves in the PhotoScene and a mouse button is
+  depressed. The signal contains the starting (\a fromPos) and ending (\a toPos)
+  positions of the mouse.
   */
 
 /*!
   \fn void PhotoScene::mouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
 
   Triggered when a mouse button is released. The signal contains which type of
-  viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos) positions
-  of the mouse (during the time the button was depressed), and which mouse button
-  was released as \a button.
+  viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos)
+  positions of the mouse (during the time the button was depressed), and which
+  mouse button was released as \a button.
   */
 
 /*!
   \fn void PhotoScene::keyPressed(viewerTypes type, const int key)
 
-  Triggered when a key is pressed in the PhotoScene. The signal contains which type of
-  viewer this is as \a type and what key was pressed as \a key.
+  Triggered when a key is pressed in the PhotoScene. The signal contains which
+  type of viewer this is as \a type and what key was pressed as \a key.
   */
 
 /*!

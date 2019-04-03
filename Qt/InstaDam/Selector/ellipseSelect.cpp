@@ -1,41 +1,47 @@
 #include "ellipseSelect.h"
-#include "label.h"
-#include <iostream>
-#include <cmath>
+
 #include <QPainter>
 #include <QGraphicsScene>
+
 #include <iostream>
-using namespace std;
+#include <cmath>
+
+#include "./label.h"
 
 /*!
   \class EllipseSelect
   \ingroup Selector
   \inmodule InstaDam
   \inherits SelectItem QGraphicsEllipseItem
-  \brief The EllipseSelect class provides a class for annotating elliptical regions.
+  \brief The EllipseSelect class provides a class for annotating elliptical
+         regions.
 
-  Provides a class for annotating elliptical regions in InstaDam. The region is described
-  by its top-left and lower-right vertices, and by its angle of rotation.
+  Provides a class for annotating elliptical regions in InstaDam. The region is
+  described by its top-left and lower-right vertices, and by its angle of
+  rotation.
   */
 
 /*!
-  Constructs an EllipseSelect object with all vertices at 0,0 in scene coordinates
+  Constructs an EllipseSelect object with all vertices at 0,0 in scene
+  coordinates
   */
-EllipseSelect::EllipseSelect() : EllipseSelect(QPointF(0.,0.)){
+EllipseSelect::EllipseSelect() : EllipseSelect(QPointF(0., 0.)) {
     mirror = nullptr;
 }
 
 /*!
-  Constructs an EllipseSelect object by reading a QJsonObject and setting the internal rectangle and rotation angle
-  to the values given in \a json. \a label is the Label which owns this object and \a item is the
-  parent QGraphicsItem, if any.
+  Constructs an EllipseSelect object by reading a QJsonObject and setting the
+  internal rectangle and rotation angle to the values given in \a json. \a label
+  is the Label which owns this object and \a item is the parent QGraphicsItem,
+  if any.
   */
-EllipseSelect::EllipseSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
-    : QGraphicsEllipseItem(item), BoxBasedSelector(json, label, item){
+EllipseSelect::EllipseSelect(const QJsonObject &json,
+                             QSharedPointer<Label> label, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), BoxBasedSelector(json, label, item) {
     mirror = nullptr;
     setRect(myRect);
     mytype = SelectItem::Ellipse;
-    if(label)
+    if (label)
         label->addItem(this);
     updatePen(myPen);
     calcCorners();
@@ -45,16 +51,17 @@ EllipseSelect::EllipseSelect(const QJsonObject &json, QSharedPointer<Label> labe
 }
 
 /*!
-  Constructs an EllipseSelect object by setting all vertices to be a \a point, \a label is the Label which owns this object and \a item is the
-  parent QGraphicsItem, if any.
+  Constructs an EllipseSelect object by setting all vertices to be a \a point,
+  \a label is the Label which owns this object and \a item is the parent
+  QGraphicsItem, if any.
   */
-EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item)
-    : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item)
-{
+EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label,
+                             QGraphicsItem *item)
+    : QGraphicsEllipseItem(item), BoxBasedSelector(point, label, item) {
     mirror = nullptr;
     setRect(myRect);
     mytype = SelectItem::Ellipse;
-    if(label)
+    if (label)
         label->addItem(this);
     updatePen(myPen);
     invertColorForPen();
@@ -64,23 +71,24 @@ EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label, QGraphi
 /*!
  * Sets the opacity of the label to \a val
 */
-void EllipseSelect::setOpacity(qreal val){
-   SelectItem::setOpacity(val);
-
+void EllipseSelect::setOpacity(qreal val) {
+    SelectItem::setOpacity(val);
 }
 
 /*!
-  Constructs an EllipseSelect object by setting all vertices to be a \a point, \a vertexSize indicates the size of the
-  vertex highlight boxes, \a label is the Label which owns this object and \a item is the
-  parent QGraphicsItem, if any.
+  Constructs an EllipseSelect object by setting all vertices to be a \a point,
+  \a vertexSize indicates the size of the vertex highlight boxes, \a label is
+  the Label which owns this object and \a item is the parent QGraphicsItem, if
+  any.
   */
-EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QSharedPointer<Label> label, QGraphicsItem *item)
-    : QGraphicsEllipseItem(item), BoxBasedSelector(point, vertexSize, label, item)
-{
+EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize,
+                             QSharedPointer<Label> label, QGraphicsItem *item)
+    : QGraphicsEllipseItem(item),
+      BoxBasedSelector(point, vertexSize, label, item) {
     setRect(myRect);
     mytype = SelectItem::Ellipse;
     updatePen(myPen);
-    if(label)
+    if (label)
         label->addItem(this);
 
     setPen(BoxBasedSelector::pen);
@@ -91,44 +99,44 @@ EllipseSelect::EllipseSelect(QPointF point, qreal vertexSize, QSharedPointer<Lab
 /*!
   Destructor
   */
-EllipseSelect::~EllipseSelect(){
-
+EllipseSelect::~EllipseSelect() {
 }
 
 /*------------------------- Overrides ----------------------------*/
 /*!
   \reimp
   */
-void EllipseSelect::addPoint(QPointF &point, int vertex){
+void EllipseSelect::addPoint(QPointF &point, const int vertex) {
     UNUSED(vertex);
     sortCorners(myRect, point);
     calcCorners();
 
     QGraphicsEllipseItem::prepareGeometryChange();
     setRect(myRect);
-    //printScene();
-    if(mirror != nullptr)
+
+    if (mirror != nullptr)
         mirror->setRectUnchecked(myRect);
 }
 
 /*!
   \reimp
   */
-QRectF EllipseSelect::boundingRect() const{
-    return QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
-
+QRectF EllipseSelect::boundingRect() const {
+    return QRectF(0., 0., SelectItem::myBounds.width(),
+                  SelectItem::myBounds.height());
 }
 
 /*!
   \reimp
   */
-bool EllipseSelect::isInside(QPointF &point){
+bool EllipseSelect::isInside(const QPointF &point) const {
     QPointF center = rect().center();
-    if((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
-            (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2)) <= 1.){
+    if ((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
+        (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2))
+        <= 1.) {
         return true;
-    }
-    else if(active && (isInsideRect(tl, point) || isInsideRect(tr, point) || isInsideRect(bl, point) || isInsideRect(br, point))){
+    } else if (active && (isInsideRect(tl, point) || isInsideRect(tr, point) ||
+                          isInsideRect(bl, point) || isInsideRect(br, point))) {
         return true;
     }
     return false;
@@ -137,13 +145,12 @@ bool EllipseSelect::isInside(QPointF &point){
 /*!
   \reimp
   */
-void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
-    if(activeVertex != 0){
+void EllipseSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
+    if (activeVertex != 0) {
         addPoint(newPos);
         resized = true;
         setMirrorResized();
-    }
-    else{
+    } else {
         QPointF shift = newPos - oldPos;
         checkBoundaries(shift, myRect);
         moved = true;
@@ -152,29 +159,30 @@ void EllipseSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     calcCorners();
     QGraphicsEllipseItem::prepareGeometryChange();
     setRect(myRect);
-    if(mirror != nullptr)
+    if (mirror != nullptr)
         mirror->setRectUnchecked(myRect);
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+void EllipseSelect::paint(QPainter *painter,
+                          const QStyleOptionGraphicsItem *option,
+                          QWidget *widget) {
     QGraphicsEllipseItem::paint(painter, option, widget);
-    if(active){
+    if (active) {
         painter->setBrush(brush());
         painter->drawRect(tl);
         painter->drawRect(bl);
         painter->drawRect(tr);
         painter->drawRect(br);
     }
-
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::setRectUnchecked(QRectF rect){
+void EllipseSelect::setRectUnchecked(QRectF rect) {
     QGraphicsEllipseItem::prepareGeometryChange();
     myRect = rect;
     setRect(myRect);
@@ -183,7 +191,7 @@ void EllipseSelect::setRectUnchecked(QRectF rect){
 /*!
   \reimp
   */
-void EllipseSelect::toPixmap(QPainter *painter){
+void EllipseSelect::toPixmap(QPainter *painter) {
     painter->translate(myRect.center());
     painter->rotate(getRotationAngle());
     painter->translate(-myRect.center());
@@ -194,7 +202,7 @@ void EllipseSelect::toPixmap(QPainter *painter){
 /*!
   \reimp
   */
-void EllipseSelect::updatePen(QPen pen){
+void EllipseSelect::updatePen(QPen pen) {
     setPen(pen);
     QColor col = pen.color();
     col.setAlphaF(0.25);
@@ -206,24 +214,24 @@ void EllipseSelect::updatePen(QPen pen){
 /*!
   \reimp
   */
-void EllipseSelect::mirrorHide(){
-    if(mirror != nullptr)
+void EllipseSelect::mirrorHide() const {
+    if (mirror != nullptr)
         mirror->SelectItem::hide();
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::mirrorShow(){
-    if(mirror != nullptr)
+void EllipseSelect::mirrorShow() const {
+    if (mirror != nullptr)
         mirror->SelectItem::show();
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::rotateMirror(){
-    if(mirror != nullptr){
+void EllipseSelect::rotateMirror() const {
+    if (mirror != nullptr) {
         mirror->myRotation = myRotation;
         mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
         mirror->BoxBasedSelector::setRotation(myRotation);
@@ -233,23 +241,24 @@ void EllipseSelect::rotateMirror(){
 /*!
   \reimp
   */
-void EllipseSelect::setMirror(SelectItem *item){
+void EllipseSelect::setMirror(SelectItem *item) {
     mirror = dynamic_cast<EllipseSelect*>(item);
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::setMirrorActive(){
-    if(mirror != nullptr)
+void EllipseSelect::setMirrorActive() const {
+    if (mirror != nullptr)
         mirror->active = true;
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
-    if(mirror != nullptr){
+void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc,
+                                     QRectF brc) const {
+    if (mirror != nullptr) {
         mirror->tl = tlc;
         mirror->bl = blc;
         mirror->tr = trc;
@@ -260,30 +269,30 @@ void EllipseSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF 
 /*!
   \reimp
   */
-void EllipseSelect::setMirrorMoved(){
-    if(mirror != nullptr)
+void EllipseSelect::setMirrorMoved() const {
+    if (mirror != nullptr)
         mirror->moved = moved;
 }
 /*!
   \reimp
   */
-void EllipseSelect::setMirrorResized(){
-    if(mirror != nullptr)
+void EllipseSelect::setMirrorResized() const {
+    if (mirror != nullptr)
         mirror->resized = resized;
 }
 /*!
   \reimp
   */
-void EllipseSelect::setMirrorVertex(int vertex){
-    if(mirror != nullptr)
+void EllipseSelect::setMirrorVertex(int vertex) const {
+    if (mirror != nullptr)
         mirror->setActiveVertex(vertex);
 }
 
 /*!
   \reimp
   */
-void EllipseSelect::updateMirrorScene(){
-    if(mirror != nullptr)
+void EllipseSelect::updateMirrorScene() const {
+    if (mirror != nullptr)
         mirror->scene()->update();
 }
 /*--------------------------------------- End Mirror ------------------*/
@@ -293,7 +302,7 @@ void EllipseSelect::updateMirrorScene(){
 
   Returns the QGraphicsScene to which this item belongs.
   */
-QGraphicsScene* EllipseSelect::scene(){
+QGraphicsScene* EllipseSelect::scene() {
     return SelectItem::scene();
 }
 
@@ -312,7 +321,8 @@ QGraphicsScene* EllipseSelect::scene(){
 /*!
   \fn bool EllipseSelect::isVisible()
 
-  Returns whether the EllipseSelect object is visible (\c true) on the QGraphicsScene or not (\c false).
+  Returns whether the EllipseSelect object is visible (\c true) on the
+  QGraphicsScene or not (\c false).
   */
 
 /*!

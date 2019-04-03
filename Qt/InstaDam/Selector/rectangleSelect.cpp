@@ -1,39 +1,44 @@
-#include "rectangleSelect.h"
-#include "label.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <algorithm>
 #include <iostream>
-using namespace std;
+
+#include "rectangleSelect.h"
+#include "label.h"
 
 /*!
   \class RectangleSelect
   \ingroup Selector
   \inmodule InstaDam
   \inherits SelectItem QGraphicsRectItem
-  \brief The RectangleSelect class provides a class for annotating rectangular regions.
+  \brief The RectangleSelect class provides a class for annotating rectangular
+         regions.
 
-  Provides a class for annotating rectangular regions in InstaDam. The region is described
-  by its top-left and lower-right vertices, and by its angle of rotation.
+  Provides a class for annotating rectangular regions in InstaDam. The region is
+  described by its top-left and lower-right vertices, and by its angle of
+  rotation.
   */
 
 /*!
-  Constructs a RectangleSelect object with all vertices at 0,0 in scene coordinates
+  Constructs a RectangleSelect object with all vertices at 0,0 in scene
+  coordinates
   */
-RectangleSelect::RectangleSelect() : RectangleSelect(QPointF(0.,0.)){
-
+RectangleSelect::RectangleSelect() : RectangleSelect(QPointF(0., 0.)) {
 }
 
 /*!
-  Constructs a RectangleSelect object by reading a QJsonObject and setting the internal rectangle and rotation angle
-  to the values given in \a json. \a label is the Label which owns this object and \a item is the
-  parent QGraphicsItem, if any.
+  Constructs a RectangleSelect object by reading a QJsonObject and setting the
+  internal rectangle and rotation angle to the values given in \a json. \a label
+  is the Label which owns this object and \a item is the parent QGraphicsItem,
+  if any.
   */
-RectangleSelect::RectangleSelect(const QJsonObject &json, QSharedPointer<Label> label, QGraphicsItem *item)
-    : BoxBasedSelector(json, label, item), QGraphicsRectItem(item){
+RectangleSelect::RectangleSelect(const QJsonObject &json,
+                                 QSharedPointer<Label> label,
+                                 QGraphicsItem *item)
+    : BoxBasedSelector(json, label, item), QGraphicsRectItem(item) {
     setRect(myRect);
     mytype = SelectItem::Rectangle;
-    if(label)
+    if (label)
         label->addItem(this);
     updatePen(myPen);
     calcCorners();
@@ -43,15 +48,16 @@ RectangleSelect::RectangleSelect(const QJsonObject &json, QSharedPointer<Label> 
 }
 
 /*!
-  Constructs a RectangleSelect object by setting all vertices to be a \a point, \a label is the Label which owns this object and \a item is the
+  Constructs a RectangleSelect object by setting all vertices to be a \a point,
+  \a label is the Label which owns this object and \a item is the
   parent QGraphicsItem, if any.
   */
-RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label, QGraphicsItem *item)
-    : BoxBasedSelector(point, label, item), QGraphicsRectItem(item)
-{
+RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label,
+                                 QGraphicsItem *item)
+    : BoxBasedSelector(point, label, item), QGraphicsRectItem(item) {
     setRect(myRect);
     mytype = SelectItem::Rectangle;
-    if(label)
+    if (label)
         label->addItem(this);
     updatePen(myPen);
     QGraphicsRectItem::setFlag(QGraphicsItem::ItemIsSelectable);
@@ -61,22 +67,21 @@ RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label, QGr
 /*!
  * Sets the opacity of the label to \a val
  */
-void RectangleSelect::setOpacity(qreal val){
+void RectangleSelect::setOpacity(qreal val) {
     SelectItem::setOpacity(val);
-
 }
 /*!
-  Constructs a RectangleSelect object by setting all vertices to be a \a point, \a vertSize indicates the size of the
-  vertex highlight boxes, \a label is the Label which owns this object and \a item is the
-  parent QGraphicsItem, if any.
+  Constructs a RectangleSelect object by setting all vertices to be a \a point,
+  \a vertSize indicates the size of the vertex highlight boxes, \a label is the
+  Label which owns this object and \a item is the parent QGraphicsItem, if any.
   */
-RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QSharedPointer<Label> label, QGraphicsItem *item)
-    : BoxBasedSelector(point, vertSize,label, item), QGraphicsRectItem(item)
-{
-    //cout << "RR" << endl;
+RectangleSelect::RectangleSelect(QPointF point, qreal vertSize,
+                                 QSharedPointer<Label> label,
+                                 QGraphicsItem *item)
+    : BoxBasedSelector(point, vertSize, label, item), QGraphicsRectItem(item) {
     setRect(myRect);
     mytype = SelectItem::Rectangle;
-    if(label)
+    if (label)
         label->addItem(this);
     updatePen(myPen);
     invertColorForPen();
@@ -87,37 +92,36 @@ RectangleSelect::RectangleSelect(QPointF point, qreal vertSize, QSharedPointer<L
 /*!
   Destructor
   */
-RectangleSelect::~RectangleSelect(){
-
+RectangleSelect::~RectangleSelect() {
 }
 
 /*---------------------- Overrides ---------------------------*/
 /*!
   \reimp
   */
-void RectangleSelect::addPoint(QPointF &point, int vertex){
+void RectangleSelect::addPoint(QPointF &point, const int vertex) {
     UNUSED(vertex);
     sortCorners(myRect, point);
     calcCorners();
 
     QGraphicsRectItem::prepareGeometryChange();
     setRect(myRect);
-    if(mirror != nullptr)
+    if (mirror != nullptr)
         mirror->setRectUnchecked(myRect);
 }
 
 /*!
   \reimp
   */
-QRectF RectangleSelect::boundingRect() const{
-    return QRectF(0.,0.,SelectItem::myBounds.width(), SelectItem::myBounds.height());
-
+QRectF RectangleSelect::boundingRect() const {
+    return QRectF(0., 0., SelectItem::myBounds.width(),
+                  SelectItem::myBounds.height());
 }
 
 /*!
   \reimp
   */
-bool RectangleSelect::isInside(QPointF &point){
+bool RectangleSelect::isInside(const QPointF &point) const {
     return QGraphicsRectItem::contains(point);
 }
 
@@ -125,15 +129,14 @@ bool RectangleSelect::isInside(QPointF &point){
 /*!
   \reimp
   */
-void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
+void RectangleSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     // if there is an active vertex then we are resizing
-    if(activeVertex != 0){
+    if (activeVertex != 0) {
         resized = true;
         setMirrorResized();
         addPoint(newPos);
-    }
-    // otherwise we are moving the entire object
-    else{
+    } else {
+        // otherwise we are moving the entire object
         moved = true;
         setMirrorMoved();
         QPointF shift = newPos - oldPos;
@@ -143,17 +146,18 @@ void RectangleSelect::moveItem(QPointF &oldPos, QPointF &newPos){
     QGraphicsRectItem::prepareGeometryChange();
     setRect(myRect);
     // update the mirror if there is one
-    if(mirror != nullptr)
+    if (mirror != nullptr)
         mirror->setRectUnchecked(myRect);
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+void RectangleSelect::paint(QPainter *painter,
+                            const QStyleOptionGraphicsItem *option,
+                            QWidget *widget) {
     QGraphicsRectItem::paint(painter, option, widget);
-
-    if(active){
+    if (active) {
         painter->setBrush(brush());
         painter->drawRect(tl);
         painter->drawRect(bl);
@@ -165,7 +169,7 @@ void RectangleSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 /*!
   \reimp
   */
-void RectangleSelect::updatePen(QPen pen){
+void RectangleSelect::updatePen(QPen pen) {
     setPen(pen);
     QColor col = pen.color();
     col.setAlphaF(0.25);
@@ -176,9 +180,8 @@ void RectangleSelect::updatePen(QPen pen){
 /*!
   \reimp
   */
-void RectangleSelect::setRectUnchecked(QRectF rect){
+void RectangleSelect::setRectUnchecked(QRectF rect) {
     QGraphicsRectItem::prepareGeometryChange();
-    //cout << "S R U" << endl;
     myRect = rect;
     setRect(myRect);
 }
@@ -186,7 +189,7 @@ void RectangleSelect::setRectUnchecked(QRectF rect){
 /*!
   \reimp
   */
-void RectangleSelect::toPixmap(QPainter *painter){
+void RectangleSelect::toPixmap(QPainter *painter) {
     painter->translate(myRect.center());
     painter->rotate(getRotationAngle());
     painter->translate(-myRect.center());
@@ -197,24 +200,24 @@ void RectangleSelect::toPixmap(QPainter *painter){
 /*!
   \reimp
   */
-void RectangleSelect::mirrorHide(){
-    if(mirror != nullptr)
+void RectangleSelect::mirrorHide() const {
+    if (mirror != nullptr)
         mirror->SelectItem::hide();
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::mirrorShow(){
-    if(mirror != nullptr)
+void RectangleSelect::mirrorShow() const {
+    if (mirror != nullptr)
         mirror->SelectItem::show();
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::rotateMirror(){
-    if(mirror != nullptr){
+void RectangleSelect::rotateMirror() const {
+    if (mirror != nullptr) {
         mirror->myRotation = myRotation;
         mirror->BoxBasedSelector::setTransformOriginPoint(myRect.center());
         mirror->BoxBasedSelector::setRotation(myRotation);
@@ -224,25 +227,24 @@ void RectangleSelect::rotateMirror(){
 /*!
   \reimp
   */
-void RectangleSelect::setMirror(SelectItem *item){
-    //cout << "MIRROR " << myID << endl;
+void RectangleSelect::setMirror(SelectItem *item) {
     mirror = dynamic_cast<RectangleSelect*>(item);
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::setMirrorActive(){
-    if(mirror != nullptr)
+void RectangleSelect::setMirrorActive() const {
+    if (mirror != nullptr)
         mirror->active = true;
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc){
-    if(mirror != nullptr){
-        //cout << " SET M C" << endl;
+void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc,
+                                       QRectF brc) const {
+    if (mirror != nullptr) {
         mirror->tl = tlc;
         mirror->bl = blc;
         mirror->tr = trc;
@@ -253,8 +255,8 @@ void RectangleSelect::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRect
 /*!
   \reimp
   */
-void RectangleSelect::setMirrorMoved(){
-    if(mirror != nullptr)
+void RectangleSelect::setMirrorMoved() const {
+    if (mirror != nullptr)
         mirror->moved = moved;
 }
 
@@ -262,17 +264,16 @@ void RectangleSelect::setMirrorMoved(){
 /*!
   \reimp
   */
-void RectangleSelect::setMirrorResized(){
-    if(mirror != nullptr)
+void RectangleSelect::setMirrorResized() const {
+    if (mirror != nullptr)
         mirror->resized = resized;
 }
 
 /*!
   \reimp
   */
-void RectangleSelect::setMirrorVertex(int vertex){
-    if(mirror != nullptr){
-        //cout << "SET A V M" << endl;
+void RectangleSelect::setMirrorVertex(int vertex) const {
+    if (mirror != nullptr) {
         mirror->setActiveVertex(vertex);
     }
 }
@@ -280,8 +281,8 @@ void RectangleSelect::setMirrorVertex(int vertex){
 /*!
   \reimp
   */
-void RectangleSelect::updateMirrorScene(){
-    if(mirror != nullptr)
+void RectangleSelect::updateMirrorScene() const {
+    if (mirror != nullptr)
         mirror->scene()->update();
 }
 
@@ -290,7 +291,7 @@ void RectangleSelect::updateMirrorScene(){
 
   Returns the QGraphicsScene to which this item belongs.
   */
-QGraphicsScene* RectangleSelect::scene(){
+QGraphicsScene* RectangleSelect::scene() {
     return SelectItem::scene();
 }
 

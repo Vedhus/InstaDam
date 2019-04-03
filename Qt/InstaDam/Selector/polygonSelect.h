@@ -6,62 +6,71 @@
 #include "selectItem.h"
 
 const QString polygonBaseInstruction = QString("Click points to construct a polygon. Individual points can be moved and deleted. Click 'Finish Polygon' when done.");
-class PolygonSelect : public SelectItem, public QGraphicsPolygonItem
-{
-
-public:
+class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
+ public:
     const QString baseInstruction = polygonBaseInstruction;
     PolygonSelect();
-    PolygonSelect(const QJsonObject &json, QSharedPointer<Label> label = nullptr, QGraphicsItem *item = nullptr);
-    PolygonSelect(QPointF point, QSharedPointer<Label> label=nullptr, QGraphicsItem *item = nullptr);
+    PolygonSelect(const QJsonObject &json,
+                  QSharedPointer<Label> label = nullptr,
+                  QGraphicsItem *item = nullptr);
+    PolygonSelect(QPointF point, QSharedPointer<Label> label = nullptr,
+                  QGraphicsItem *item = nullptr);
     ~PolygonSelect() override;
 
     /*-------------- Implemented fvuntions from SelectItem ---------*/
-    void addPoint(QPointF &point, int vertex = UNSELECTED) override;
-    QString baseInstructions() override {return PolygonSelect::baseInstruction;}
+    void addPoint(QPointF &point, const int vertex = UNSELECTED) override;
+    QString baseInstructions() const override {
+        return PolygonSelect::baseInstruction;
+    }
     QRectF boundingRect() const override;
-    void clickPoint(QPointF &point) override;
-    void insertVertex(int vertex, QPointF &point) override;
-    bool isInside(QPointF &point) override;
-    void moveItem(QPointF &oldPos, QPointF &newPos) override;
-    int numberOfVertices() override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    void removeVertex(int vertex=UNSELECTED) override;
+    void clickPoint(const QPointF &point) override;
+    void insertVertex(const int vertex, const QPointF &point) override;
+    bool isInside(const QPointF &point) const override;
+    void moveItem(const QPointF &oldPos, QPointF &newPos) override;
+    int numberOfVertices() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr) override;
+    void removeVertex(int vertex = UNSELECTED) override;
     void resetActiveVertex() override;
-    void resizeItem(int vertex, QPointF &shift) override;
-    void rotate(QPointF &from, QPointF &to) override {UNUSED(from); UNUSED(to);}
+    void resizeItem(const int vertex, QPointF &shift) override;
+    void rotate(const QPointF &from, const QPointF &to) override {
+        UNUSED(from);
+        UNUSED(to);
+    }
     void updatePen(QPen pen) override;
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
     void toPixmap(QPainter *painter) override;
 
     // Mirror
-    PolygonSelect* getMirror() override {return mirror;}
-    void mirrorHide() override;
-    void mirrorShow() override;
-    void rotateMirror() override {}
+    PolygonSelect* getMirror() const override {return mirror;}
+    void mirrorHide() const override;
+    void mirrorShow() const override;
+    void rotateMirror() const override {}
     void setMirror(SelectItem *item) override;
-    void setMirrorActive() override;
-    void setMirrorActivePoint(QPointF point);
-    void setMirrorAdded() override {mirror->hasBeenAdded = true;}
-    void setMirrorMoved() override;
-    void setMirrorResized() override;
-    void setMirrorVertex(int vertex) override;
-    void updateMirrorScene() override;
+    void setMirrorActive() const override;
+    void setMirrorActivePoint(QPointF point) const;
+    void setMirrorAdded() const override {mirror->hasBeenAdded = true;}
+    void setMirrorMoved() const override;
+    void setMirrorResized() const override;
+    void setMirrorVertex(int vertex) const override;
+    void updateMirrorScene() const override;
 
     void setMirrorPolygon(int actVert);
     /*------------- End implemented functions*/
 
     void checkPoint(QPointF &point);
-    bool isVisible(){return SelectItem::isVisible();}
-    qreal magnitude(QPointF point){return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));}
-    void movePoint(QPointF &point);
-    QPolygonF getPolygon(){return polygon;}
+    bool isVisible() const {return SelectItem::isVisible();}
+    qreal magnitude(QPointF point) const {
+        return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));
+    }
+    void movePoint(const QPointF &point);
+    QPolygonF getPolygon() const {return polygon;}
 
-    QGraphicsScene* scene();
+    QGraphicsScene* scene() const;
     void setOpacity(qreal);
 
-private:
+ private:
     bool selected = true;
 
     QPolygonF polygon;
@@ -71,10 +80,8 @@ private:
 
     PolygonSelect *mirror;
 
-    QRectF makeVertex(QPointF &point);
+    QRectF makeVertex(const QPointF &point) const;
 
     void refresh();
-
-    void setMirrorRect(QRectF rect);
 };
-#endif // POLYGONSELECT_H
+#endif  // POLYGONSELECT_H
