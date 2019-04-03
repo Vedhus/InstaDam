@@ -112,20 +112,22 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
                                Qt::PenCapStyle brushMode,
                                QSharedPointer<Label> label,
                                QGraphicsItem *item)
-    :  FreeDrawSelect(point, QPen(QBrush(), brushSize, Qt::SolidLine,
-                                  brushMode, Qt::MiterJoin), label, item) {
-    myPen.setMiterLimit(0.1);
-}
-
-FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
-                               QSharedPointer<Label> label, QGraphicsItem *item)
-    : QGraphicsPixmapItem(item), SelectItem(label, item) {
+    : QGraphicsPixmapItem(item), SelectItem(label, item){
     init(label);
-    myPen = pen;
+    myPen.setWidth(brushSize);
+    myPen.setCapStyle(brushMode);
+    myPen.setJoinStyle(Qt::MiterJoin);
+    myPen.setMiterLimit(0.1);
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
     myPainter.drawPoint(point);
     myPainter.end();
+    setup();
+}
+
+FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
+                               QSharedPointer<Label> label, QGraphicsItem *item)
+    : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {
 }
 
 /*!
