@@ -498,17 +498,17 @@ void InstaDam::on_saveAndNext_clicked() {
     if (imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
-        for (int i = 0; i < currentProject->getLabels().size(); i++) {
-            currentProject->getLabel(i)->clear();
-        }
-        scene->clearItems();
-        maskScene->clearItems();
 
         qInfo("Going to save idantn");
         on_actionSave_Annotation_triggered();
         qInfo("saved idantn");
         int newId = (fileId+1)%imagesList.size();
         QTextStream(stdout) << "NewId = " << newId << "\n";
+        scene->clearItems();
+        maskScene->clearItems();
+        for (int i = 0; i < currentProject->getLabels().size(); i++) {
+            currentProject->getLabel(i)->clear();
+        }
 
         fileId = newId;
         this->filename = path.absolutePath()+"/"+imagesList[fileId];
@@ -523,15 +523,15 @@ void InstaDam::on_saveAndBack_clicked() {
     if (imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
-        for (int i = 0; i < currentProject->getLabels().size(); i++) {
-            currentProject->getLabel(i)->clear();
-        }
-        scene->clearItems();
-        maskScene->clearItems();
         qInfo("Going to save idantn");
         on_actionSave_Annotation_triggered();
         qInfo("saved idantn");
         int newId = ((fileId-1)%imagesList.size()+imagesList.size())%imagesList.size();
+        scene->clearItems();
+        maskScene->clearItems();
+        for (int i = 0; i < currentProject->getLabels().size(); i++) {
+            currentProject->getLabel(i)->clear();
+        }
 
         fileId = newId;
         this->filename = path.absolutePath()+"/"+imagesList[fileId];
@@ -940,7 +940,7 @@ void InstaDam::on_actionExport_zip_triggered() {
             qint64 l;
             if ((l = (*buffer).read(buf, readSize)) != readSize) {
                 qInfo("Read failure");
-}
+            }
             qDebug("Reading %ld bytes from %s at %ld returned %ld",
                    static_cast<long>(readSize),
                    filename.toUtf8().constData(),
