@@ -71,9 +71,8 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 
 void ProjectList::openProject(QListWidgetItem *project_name){
     qInfo() << "inside open a new project" << project_name->text();
-//    QString id="1";
     QString id = QString(project_name->text().at(3));
-    qInfo() << id;
+    selectedProject = id.toInt();
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     qInfo() << databaseGetProjectURL;
@@ -105,7 +104,7 @@ void ProjectList::getLabelsReplyFinished()
               w->show();
               hide();
               Project* newPr = new Project();
-
+              newPr->setId(selectedProject);
               QJsonObject labels = jsonReply.object();
               foreach(const QString& k, labels.keys()) {
                   if(k=="labels"){

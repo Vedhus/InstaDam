@@ -414,7 +414,6 @@ void InstaDam::fileDownloaded(QString path)
     this->path = file.dir();
     this->oldImagesList = this->imagesList;
     this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-    cout << "A" << endl;
     if (imagesList.empty()){
         assertError("That doesn't seem to be a valid image file.");
         revert();
@@ -422,7 +421,6 @@ void InstaDam::fileDownloaded(QString path)
     else
     {
         int counter = 0;
-        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         foreach(QString tempFilename, imagesList) {
            QFileInfo tempInfo = QFileInfo(tempFilename);
                if (file.completeBaseName()==tempInfo.completeBaseName())
@@ -434,7 +432,6 @@ void InstaDam::fileDownloaded(QString path)
 
             }
         fileId = counter;
-        //QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         openFile_and_labels();
         QTextStream(stdout)<<currentProject->numLabels()<<"\n";
     }
@@ -518,7 +515,7 @@ void InstaDam::on_actionOpen_File_triggered()
    }
    else
    {
-       QString databaseImagesURL = this->databaseURL+"/projects/1/images";
+       QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
        QUrl dabaseLink = QUrl(databaseImagesURL);
 
        qInfo() << databaseImagesURL;
