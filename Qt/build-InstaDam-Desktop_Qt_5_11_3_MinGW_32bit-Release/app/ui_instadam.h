@@ -64,7 +64,7 @@ public:
     QPushButton *saveAndNext;
     QSpacerItem *verticalSpacer;
     QPushButton *panButton;
-    QPushButton *pushButton_14;
+    QPushButton *filterOptions;
     QFrame *frame_6;
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter;
@@ -85,14 +85,14 @@ public:
     QFrame *frame_5;
     QGridLayout *gridLayout;
     QPushButton *addSelectionButton;
-    QFrame *selectControlFrame;
     QGridLayout *gridLayout_2;
     QPushButton *rectangleSelectButton;
     QPushButton *ellipseSelectButton;
-    QPushButton *polygonSelectButton;
     QPushButton *freeSelectButton;
+    QPushButton *polygonSelectButton;
     QPushButton *cancelSelectionButton;
     QCheckBox *showMaskSelections;
+    QFrame *selectControlFrame;
     QTabWidget *tabWidget;
     QWidget *tab;
     QHBoxLayout *horizontalLayout_3;
@@ -227,21 +227,21 @@ public:
 
         horizontalLayout_4->addWidget(panButton);
 
-        pushButton_14 = new QPushButton(frame_4);
-        pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
+        filterOptions = new QPushButton(frame_4);
+        filterOptions->setObjectName(QStringLiteral("filterOptions"));
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Maximum);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(pushButton_14->sizePolicy().hasHeightForWidth());
-        pushButton_14->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(filterOptions->sizePolicy().hasHeightForWidth());
+        filterOptions->setSizePolicy(sizePolicy2);
 #ifndef QT_NO_ACCESSIBILITY
-        pushButton_14->setAccessibleName(QStringLiteral(""));
+        filterOptions->setAccessibleName(QStringLiteral(""));
 #endif // QT_NO_ACCESSIBILITY
-        pushButton_14->setAutoFillBackground(false);
-        pushButton_14->setText(QStringLiteral("Filter Options"));
-        pushButton_14->setIconSize(QSize(200, 200));
+        filterOptions->setAutoFillBackground(false);
+        filterOptions->setText(QStringLiteral("Filter Options"));
+        filterOptions->setIconSize(QSize(200, 200));
 
-        horizontalLayout_4->addWidget(pushButton_14);
+        horizontalLayout_4->addWidget(filterOptions);
 
 
         verticalLayout_2->addWidget(frame_4);
@@ -289,7 +289,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 566));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 637));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -376,20 +376,6 @@ public:
 
         gridLayout->addWidget(addSelectionButton, 1, 4, 1, 1);
 
-        selectControlFrame = new QFrame(frame_5);
-        selectControlFrame->setObjectName(QStringLiteral("selectControlFrame"));
-        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(selectControlFrame->sizePolicy().hasHeightForWidth());
-        selectControlFrame->setSizePolicy(sizePolicy6);
-        selectControlFrame->setMinimumSize(QSize(0, 120));
-        selectControlFrame->setSizeIncrement(QSize(0, 0));
-        selectControlFrame->setFrameShape(QFrame::StyledPanel);
-        selectControlFrame->setFrameShadow(QFrame::Raised);
-
-        gridLayout->addWidget(selectControlFrame, 0, 3, 4, 1);
-
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(0);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
@@ -411,6 +397,13 @@ public:
 
         gridLayout_2->addWidget(ellipseSelectButton, 2, 0, 1, 1);
 
+        freeSelectButton = new QPushButton(frame_5);
+        freeSelectButton->setObjectName(QStringLiteral("freeSelectButton"));
+        freeSelectButton->setMinimumSize(QSize(201, 24));
+        freeSelectButton->setCheckable(true);
+
+        gridLayout_2->addWidget(freeSelectButton, 2, 1, 1, 1);
+
         polygonSelectButton = new QPushButton(frame_5);
         polygonSelectButton->setObjectName(QStringLiteral("polygonSelectButton"));
         sizePolicy5.setHeightForWidth(polygonSelectButton->sizePolicy().hasHeightForWidth());
@@ -419,13 +412,6 @@ public:
         polygonSelectButton->setCheckable(true);
 
         gridLayout_2->addWidget(polygonSelectButton, 0, 1, 1, 1);
-
-        freeSelectButton = new QPushButton(frame_5);
-        freeSelectButton->setObjectName(QStringLiteral("freeSelectButton"));
-        freeSelectButton->setMinimumSize(QSize(201, 24));
-        freeSelectButton->setCheckable(true);
-
-        gridLayout_2->addWidget(freeSelectButton, 2, 1, 1, 1);
 
 
         gridLayout->addLayout(gridLayout_2, 0, 0, 4, 1);
@@ -446,6 +432,20 @@ public:
 
         gridLayout->addWidget(showMaskSelections, 3, 4, 1, 1);
 
+        selectControlFrame = new QFrame(frame_5);
+        selectControlFrame->setObjectName(QStringLiteral("selectControlFrame"));
+        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(selectControlFrame->sizePolicy().hasHeightForWidth());
+        selectControlFrame->setSizePolicy(sizePolicy6);
+        selectControlFrame->setMinimumSize(QSize(0, 120));
+        selectControlFrame->setSizeIncrement(QSize(0, 0));
+        selectControlFrame->setFrameShape(QFrame::StyledPanel);
+        selectControlFrame->setFrameShadow(QFrame::Raised);
+
+        gridLayout->addWidget(selectControlFrame, 0, 3, 4, 1);
+
 
         verticalLayout_5->addWidget(frame_5);
 
@@ -462,7 +462,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1334, 86));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1332, 70));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -552,7 +552,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1362, 33));
+        menubar->setGeometry(QRect(0, 0, 1362, 21));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -618,8 +618,8 @@ public:
         addSelectionButton->setText(QApplication::translate("InstaDam", "Add Selection", nullptr));
         rectangleSelectButton->setText(QApplication::translate("InstaDam", "Box Select", nullptr));
         ellipseSelectButton->setText(QApplication::translate("InstaDam", "EllipseSelect", nullptr));
-        polygonSelectButton->setText(QApplication::translate("InstaDam", "Polygon Select", nullptr));
         freeSelectButton->setText(QApplication::translate("InstaDam", "Free Select", nullptr));
+        polygonSelectButton->setText(QApplication::translate("InstaDam", "Polygon Select", nullptr));
         cancelSelectionButton->setText(QApplication::translate("InstaDam", "Cancel Selection", nullptr));
         showMaskSelections->setText(QApplication::translate("InstaDam", "Show Selections on Mask", nullptr));
         label_6->setText(QApplication::translate("InstaDam", "Blur", nullptr));

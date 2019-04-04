@@ -88,7 +88,6 @@ class InstaDam : public QMainWindow {
     void on_actionNew_triggered();
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
-    void on_pushButton_14_clicked();
     void on_actionExport_triggered();
     void on_actionExport_zip_triggered();
     void on_saveAndNext_clicked();
@@ -107,6 +106,7 @@ class InstaDam : public QMainWindow {
     void panButton_clicked();
     void roundBrushButtonClicked();
     void squareBrushButtonClicked();
+    void populateSceneFromProjectLabels();
 
     void processMouseMoved(QPointF fromPos, QPointF toPos);
     void processPointClicked(PhotoScene::viewerTypes type, SelectItem *item,
@@ -116,7 +116,9 @@ class InstaDam : public QMainWindow {
     void processKeyPressed(PhotoScene::viewerTypes type, const int key);
     void processShowHide(int state);
 
- public slots:
+    void on_filterOptions_clicked();
+
+public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
 

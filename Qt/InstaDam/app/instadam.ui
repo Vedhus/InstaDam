@@ -189,7 +189,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_14">
+               <widget class="QPushButton" name="filterOptions">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
@@ -327,8 +327,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>68</width>
-                        <height>566</height>
+                        <width>69</width>
+                        <height>637</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -514,34 +514,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="3" rowspan="4">
-               <widget class="QFrame" name="selectControlFrame">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>120</height>
-                 </size>
-                </property>
-                <property name="sizeIncrement">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="0" rowspan="4">
                <layout class="QGridLayout" name="gridLayout_2">
                 <property name="spacing">
@@ -591,6 +563,22 @@
                   </property>
                  </widget>
                 </item>
+                <item row="2" column="1">
+                 <widget class="QPushButton" name="freeSelectButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>201</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Free Select</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="1">
                  <widget class="QPushButton" name="polygonSelectButton">
                   <property name="sizePolicy">
@@ -607,22 +595,6 @@
                   </property>
                   <property name="text">
                    <string>Polygon Select</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QPushButton" name="freeSelectButton">
-                  <property name="minimumSize">
-                   <size>
-                    <width>201</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Free Select</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -666,6 +638,34 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="3" rowspan="4">
+               <widget class="QFrame" name="selectControlFrame">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>120</height>
+                 </size>
+                </property>
+                <property name="sizeIncrement">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -698,8 +698,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1334</width>
-                    <height>86</height>
+                    <width>1332</width>
+                    <height>70</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -812,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1362</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">

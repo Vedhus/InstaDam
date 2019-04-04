@@ -15,7 +15,6 @@ SOURCES += \
         photoviewer.cpp \
         pixmapops.cpp \
         filterproperty.cpp \
-        filters.cpp \
         picpushbutton.cpp \
         maskobjects.cpp \
         filtercontrols.cpp \
@@ -37,7 +36,6 @@ HEADERS += \
         maskviewer.h \
         pixmapops.h \
         filterproperty.h \
-        filters.h \
         picpushbutton.h \
         maskobjects.h \
         filtercontrols.h \
@@ -76,13 +74,21 @@ win32 {
   CONFIG += c++1z
    INCLUDEPATH += $${PWD}\..\quazip\include
 ## Change paths here depending on your system installation location
-   INCLUDEPATH +=  D:\opencv\build\include $${PWD}/..
-    LIBS += D:\opencv-build\bin\libopencv_core401.dll
-   LIBS += D:\opencv-build\bin\libopencv_highgui401.dll
-   LIBS += D:\opencv-build\bin\libopencv_imgcodecs401.dll
-   LIBS += D:\opencv-build\bin\libopencv_imgproc401.dll
-   LIBS += D:\opencv-build\bin\libopencv_features2d401.dll
-   LIBS += D:\opencv-build\bin\libopencv_calib3d401.dll
+#   INCLUDEPATH +=  D:\opencv\build\include $${PWD}/..
+#    LIBS += D:\opencv-build\bin\libopencv_core401.dll
+#   LIBS += D:\opencv-build\bin\libopencv_highgui401.dll
+#   LIBS += D:\opencv-build\bin\libopencv_imgcodecs401.dll
+#   LIBS += D:\opencv-build\bin\libopencv_imgproc401.dll
+#   LIBS += D:\opencv-build\bin\libopencv_features2d401.dll
+#   LIBS += D:\opencv-build\bin\libopencv_calib3d401.dll
+#   LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
+   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
 ##End change paths
 

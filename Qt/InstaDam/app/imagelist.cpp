@@ -10,6 +10,15 @@
 
 #include "ui_imagelist.h"
 
+
+/*!
+  \class ImageList
+  \ingroup app
+  \inmodule InstaDam
+  \inherits QSlider
+  \brief Handles list of images form the server
+ */
+
 ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :
     QWidget(parent), ui(new Ui::ImageList) {
     ui->setupUi(this);
@@ -17,10 +26,17 @@ ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :
     this->databaseURL = databaseUrl;
 }
 
+/*!
+ * Destructor
+ */
+
 ImageList::~ImageList() {
     delete ui;
 }
 
+/*!
+ * Adds Item \QJsonObject \a obj to the ImageList.
+ */
 void ImageList::addItems(QJsonObject obj) {
 //    QList<QJsonObject> list;
     qInfo() << obj;
@@ -61,6 +77,9 @@ void ImageList::addItems(QJsonObject obj) {
 }
 
 
+/*!
+ * Waits for the file to be received.
+ */
 void ImageList::fileReplyFinished() {
     qInfo() << "got a file";
     if (rep->error()) {
@@ -80,6 +99,9 @@ void ImageList::fileReplyFinished() {
 }
 
 
+/*!
+ * Slot called when the load button is clicked.
+ */
 void ImageList::on_loadButton_clicked() {
     qInfo() << "load button clicked";
     QTableWidget* table = ui->tableWidget;
@@ -97,6 +119,9 @@ void ImageList::on_loadButton_clicked() {
     }
 }
 
+/*!
+ * Slot called when the cancel button is clicked.
+ */
 void ImageList::on_cancelButton_clicked() {
     close();
 }

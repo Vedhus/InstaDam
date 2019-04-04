@@ -12,6 +12,16 @@
 
 #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)
 
+/*!
+  \class filterDialog
+  \ingroup app
+  \inmodule InstaDam
+  \brief Defines a custom QDIalog based on the selected mask.
+  \param selectedMask
+  \param fc
+  \param photoViewer
+  \param currentPro
+ */
 filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
                            PhotoViewer* photoViewer, Project *currentPro)
     : QDialog() {
@@ -116,23 +126,40 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
     QDialog::show();
 }
 
+/*!
+  \class filterControls
+  \ingroup app
+  \inmodule InstaDam
+  \brief Defines the properties of the mask and conducts the filtering operations
+*/
+
 filterControls::filterControls():QObject() {
     defineProperties();
 }
 
+
+/*!
+ * \brief filterControls::assignVal is a slot that sets the int \a value
+ * to the appropriate property indexed by \a maskType and \a propnNum
+ */
 void filterControls::assignVal(maskTypes maskType, int propNum, int value,
                                threshold_or_filter thof) {
     this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->sliderAssign(value);
     emit valAssigned(maskType, thof);
-    qInfo("%d", this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->val);
 }
 
+/*!
+ Obtains the label mask from \a label and sets it to \a labelMask to be used as a mask
+ for the LABELMASK filter operation.
+ */
 void filterControls::setLabelMask(QSharedPointer<Label> label) {
     this->labelMask = label->exportLabel(SelectItem::myBounds);
     emit valAssigned(LABELMASK, FILTER);
-    qInfo("val Assigned");
 }
 
+/*!
+ Defines the properties of the different masks.
+ */
 void filterControls::defineProperties() {
     std::vector<filterProperty*> cannyProperties;
 
@@ -191,6 +218,10 @@ void filterControls::defineProperties() {
 }
 
 
+/*!
+ Filters the cv::Mat \image based on the selected maskTypes \a selectedFilter
+ and returns a binary image cv::Mat \a edge_temp
+ */
 cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
     cv::Mat edge_temp;
     switch (selectedFilter) {
@@ -225,8 +256,9 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
     return edge_temp;
 }
 
-// sets image for the object and stores and returns filtered edges.
-// Also generated pixmaps
+/*!
+ * Sets image for the object and stores and returns filtered edges.
+*/
 cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
                                                maskTypes selectedFilter) {
         img = image;
@@ -235,7 +267,9 @@ cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
         return edges;
 }
 
-// Generates pixmap and is only called by filt() function
+/*!
+ * Binarizes the image and converts it to a pixmap
+ */
 void filterControls::im2pixmap(maskTypes selectedFilter) {
     cv::Mat binary;
     int invert = properties[selectedFilter]->propertylist[0]->val;
@@ -259,7 +293,9 @@ void filterControls::im2pixmap(maskTypes selectedFilter) {
     this->qAlpha = QPixmap::fromImage(qAlphaImg);
 }
 
-// Returns a thubnail pixmap for the filter selection bar at the bottom
+/*!
+ * Returns a thubnail pixmap for the filter selection bar at the bottom of InstaDam.
+ */
 QPixmap filterControls::thumb2pixmap(cv::Mat thumb, maskTypes selectedFilter) {
     qInfo("Enter Thumb");
     cv::Mat thumbEdges = this->filterFunc(thumb, selectedFilter);
