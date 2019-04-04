@@ -36,9 +36,10 @@ public:
     QTableWidget *differences;
     QFrame *frame;
     QGridLayout *gridLayout;
-    QPushButton *keepButton;
-    QPushButton *loadNewButton;
     QLabel *label_2;
+    QPushButton *loadNewButton;
+    QPushButton *keepButton;
+    QPushButton *cancelButton;
 
     void setupUi(QDialog *projectDialog)
     {
@@ -123,16 +124,6 @@ public:
         frame->setFrameShadow(QFrame::Raised);
         gridLayout = new QGridLayout(frame);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        keepButton = new QPushButton(frame);
-        keepButton->setObjectName(QString::fromUtf8("keepButton"));
-
-        gridLayout->addWidget(keepButton, 1, 1, 1, 1);
-
-        loadNewButton = new QPushButton(frame);
-        loadNewButton->setObjectName(QString::fromUtf8("loadNewButton"));
-
-        gridLayout->addWidget(loadNewButton, 1, 2, 1, 1);
-
         label_2 = new QLabel(frame);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         sizePolicy2.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
@@ -140,7 +131,31 @@ public:
         label_2->setSizeIncrement(QSize(2, 0));
         label_2->setWordWrap(true);
 
-        gridLayout->addWidget(label_2, 0, 1, 1, 2);
+        gridLayout->addWidget(label_2, 0, 1, 1, 3);
+
+        loadNewButton = new QPushButton(frame);
+        loadNewButton->setObjectName(QString::fromUtf8("loadNewButton"));
+        QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(loadNewButton->sizePolicy().hasHeightForWidth());
+        loadNewButton->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(loadNewButton, 4, 3, 1, 1);
+
+        keepButton = new QPushButton(frame);
+        keepButton->setObjectName(QString::fromUtf8("keepButton"));
+        sizePolicy3.setHeightForWidth(keepButton->sizePolicy().hasHeightForWidth());
+        keepButton->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(keepButton, 4, 1, 1, 1);
+
+        cancelButton = new QPushButton(frame);
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
+        sizePolicy3.setHeightForWidth(cancelButton->sizePolicy().hasHeightForWidth());
+        cancelButton->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(cancelButton, 4, 2, 1, 1);
 
 
         verticalLayout->addWidget(frame);
@@ -159,9 +174,10 @@ public:
         ___qtablewidgetitem->setText(QApplication::translate("projectDialog", "Current", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = differences->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QApplication::translate("projectDialog", "From File", nullptr));
-        keepButton->setText(QApplication::translate("projectDialog", "Keep", nullptr));
+        label_2->setText(QApplication::translate("projectDialog", "Do you want to keep the original Labels (overwrites annotations of image), or discard the current Labels (loads new ones from image)?", nullptr));
         loadNewButton->setText(QApplication::translate("projectDialog", "Discard", nullptr));
-        label_2->setText(QApplication::translate("projectDialog", "Do you want to keep the original Labels (cancels load of file), or discard the current Labels and load the new ones?", nullptr));
+        keepButton->setText(QApplication::translate("projectDialog", "Keep", nullptr));
+        cancelButton->setText(QApplication::translate("projectDialog", "Cancel", nullptr));
     } // retranslateUi
 
 };

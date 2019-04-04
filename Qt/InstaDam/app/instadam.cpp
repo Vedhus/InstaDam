@@ -1239,6 +1239,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 mirrorItem->updatePen(mirrorItem->myPen);
                 tempItem->setMirror(mirrorItem);
                 mirrorItem->setMirror(tempItem);
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
             }
                 break;
         }
@@ -1271,6 +1272,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                     break;
                 case SelectItem::Polygon:
                     on_polygonSelectButton_clicked();
+                    polygonSelectForm->finishPolygonButton->setEnabled(true);
                     break;
                 case SelectItem::Rectangle:
                     on_rectangleSelectButton_clicked();
@@ -1350,8 +1352,10 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                                                 maskScene);
             undoGroup->activeStack()->push(eraseCommand);
         } else {
-            QUndoCommand *addCommand = new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                      scene);
+            QUndoCommand *addCommand =
+                    new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                       currentItem : currentItem->getMirror(),
+                                   scene);
             undoGroup->activeStack()->push(addCommand);
             if (type == PhotoScene::MASK_VIEWER_TYPE)
                 currentItem->setFromMaskScene(true);
@@ -1368,22 +1372,32 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                currentItem->wasResized() ||
                                currentItem->wasRotated())) {
         if (currentItem->wasMoved()) {
-            QUndoCommand *moveCommand = new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                        oldPos, newPos);
+            QUndoCommand *moveCommand =
+                    new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                        currentItem : currentItem->getMirror(),
+                                    oldPos, newPos);
             undoGroup->activeStack()->push(moveCommand);
         } else if (currentItem->wasResized()) {
-            QUndoCommand *resizeCommand = new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                                oldPos, newPos, currentItem->getActiveVertex());
+            QUndoCommand *resizeCommand =
+                    new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                              currentItem : currentItem->getMirror(),
+                                          oldPos, newPos,
+                                          currentItem->getActiveVertex());
             undoGroup->activeStack()->push(resizeCommand);
         } else {
-            QUndoCommand *rotateCommand = new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                            oldPos, newPos);
+            QUndoCommand *rotateCommand =
+                    new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                          currentItem : currentItem->getMirror(),
+                                      oldPos, newPos);
             undoGroup->activeStack()->push(rotateCommand);
         }
         currentItem->resetState();
-    } else if (currentItem && currentItem->type() == SelectItem::Polygon && !currentItem->wasPointAdded()) {
-        QUndoCommand *addVertexCommand = new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                              newPos);
+    } else if (currentItem && currentItem->type() == SelectItem::Polygon &&
+               !currentItem->wasPointAdded()) {
+        QUndoCommand *addVertexCommand =
+                new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                         currentItem : currentItem->getMirror(),
+                                     newPos);
         undoGroup->activeStack()->push(addVertexCommand);
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
         currentItem->resetState();
@@ -1398,8 +1412,11 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
  Closes the current polygon.
  */
 void InstaDam::finishPolygonButtonClicked() {
-    if (currentItem)
+    if (currentItem) {
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
+        currentItem->setInactive();
+        polygonSelectForm->finishPolygonButton->setEnabled(false);
+    }
     currentItem = nullptr;
     scene->update();
     maskScene->update();
@@ -1414,11 +1431,15 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
         if (currentItem->type() == SelectItem::Polygon &&
             currentItem->getActiveVertex() != SelectItem::UNSELECTED) {
-            QUndoCommand *deleteVertexCommand = new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror());
+            QUndoCommand *deleteVertexCommand =
+                    new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                                currentItem : currentItem->getMirror());
             undoGroup->activeStack()->push(deleteVertexCommand);
         } else {
-            QUndoCommand *deleteCommand = new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ? currentItem : currentItem->getMirror(),
-                                                            scene);
+            QUndoCommand *deleteCommand =
+                    new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                          currentItem : currentItem->getMirror(),
+                                      scene);
             undoGroup->activeStack()->push(deleteCommand);
         }
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
@@ -1435,7 +1456,8 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
-            QSharedPointer<Label> label = QSharedPointer<Label>::create(labelArray[i].toObject(), i);
+            QSharedPointer<Label> label =
+                    QSharedPointer<Label>::create(labelArray[i].toObject(), i);
             tempLabels.push_back(label);
         }
         if (type == PROJECT) {
@@ -1467,14 +1489,19 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
 
                 connect(projectDialog->keepButton, SIGNAL(clicked()), dialog,
                         SLOT(accept()));
-                connect(projectDialog->loadNewButton, SIGNAL(clicked()), dialog,
+                connect(projectDialog->cancelButton, SIGNAL(clicked()), dialog,
                         SLOT(reject()));
+                connect(projectDialog->loadNewButton, &QPushButton::clicked, dialog,
+                        [=]() {dialog->done(2);});
                 dialog->exec();
-                if (dialog->result() == QDialog::Accepted) {
+                if (dialog->result() == QDialog::Rejected) {
                     return false;
+                } else if (dialog->result() == 2) {
+                    currentProject->setLabels(tempLabels);
                 }
+            } else {
+                currentProject->setLabels(tempLabels);
             }
-            currentProject->setLabels(tempLabels);
             QTextStream(stdout) << currentProject->numLabels();
         }
     }
@@ -1551,7 +1578,8 @@ QPixmap InstaDam::maskSelection(SelectItem *item) {
     paint->setCompositionMode(QPainter::CompositionMode_SourceOver);
     item->toPixmap(paint);
     paint->end();
-    map = joinPixmaps(ui->IdmMaskViewer->photo->pixmap(), map, QPainter::CompositionMode_DestinationIn);
+    map = joinPixmaps(ui->IdmMaskViewer->photo->pixmap(), map,
+                      QPainter::CompositionMode_DestinationIn);
     return map;
 }
 

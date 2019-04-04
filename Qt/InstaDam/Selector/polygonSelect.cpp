@@ -183,8 +183,10 @@ void PolygonSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         moved = true;
         setMirrorMoved();
         QPointF shift = newPos - oldPos;
-        QPointF tlcShift = boundingRect().topLeft() + shift;
-        QPointF brcShift = boundingRect().bottomRight() + shift;
+        QPointF tlcShift = QGraphicsPolygonItem::boundingRect().topLeft() +
+                           shift;
+        QPointF brcShift = QGraphicsPolygonItem::boundingRect().bottomRight() +
+                           shift;
         qreal initialMag = magnitude(shift);
         checkPoint(tlcShift);
         checkPoint(brcShift);

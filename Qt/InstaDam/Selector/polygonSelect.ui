@@ -29,6 +29,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QPushButton" name="finishPolygonButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -42,7 +45,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Finish Polygon</string>
+      <string>Done Editing</string>
      </property>
     </widget>
    </item>
