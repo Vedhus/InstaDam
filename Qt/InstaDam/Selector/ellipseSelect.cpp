@@ -186,6 +186,7 @@ void EllipseSelect::setRectUnchecked(QRectF rect) {
     QGraphicsEllipseItem::prepareGeometryChange();
     myRect = rect;
     setRect(myRect);
+    calcCorners();
 }
 
 /*!

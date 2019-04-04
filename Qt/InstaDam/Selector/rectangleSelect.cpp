@@ -184,6 +184,7 @@ void RectangleSelect::setRectUnchecked(QRectF rect) {
     QGraphicsRectItem::prepareGeometryChange();
     myRect = rect;
     setRect(myRect);
+    calcCorners();
 }
 
 /*!
