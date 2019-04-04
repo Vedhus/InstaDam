@@ -1077,6 +1077,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 mirrorItem->updatePen(mirrorItem->myPen);
                 tempItem->setMirror(mirrorItem);
                 mirrorItem->setMirror(tempItem);
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
             }
                 break;
         }
@@ -1109,6 +1110,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                     break;
                 case SelectItem::Polygon:
                     on_polygonSelectButton_clicked();
+                    polygonSelectForm->finishPolygonButton->setEnabled(true);
                     break;
                 case SelectItem::Rectangle:
                     on_rectangleSelectButton_clicked();
@@ -1220,8 +1222,11 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
 }
 
 void InstaDam::finishPolygonButtonClicked() {
-    if (currentItem)
+    if (currentItem) {
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
+        currentItem->setInactive();
+        polygonSelectForm->finishPolygonButton->setEnabled(false);
+    }
     currentItem = nullptr;
     scene->update();
     maskScene->update();
