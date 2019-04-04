@@ -1283,14 +1283,17 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
 
                 connect(projectDialog->keepButton, SIGNAL(clicked()), dialog,
                         SLOT(accept()));
-                connect(projectDialog->loadNewButton, SIGNAL(clicked()), dialog,
+                connect(projectDialog->cancelButton, SIGNAL(clicked()), dialog,
                         SLOT(reject()));
+                connect(projectDialog->loadNewButton, &QPushButton::clicked, dialog,
+                        [=]() {dialog->done(2);});
                 dialog->exec();
-                if (dialog->result() == QDialog::Accepted) {
+                if (dialog->result() == QDialog::Rejected) {
                     return false;
+                } else if (dialog->result() == 2) {
+                    currentProject->setLabels(tempLabels);
                 }
             }
-            currentProject->setLabels(tempLabels);
             QTextStream(stdout) << currentProject->numLabels();
         }
     }

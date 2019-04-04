@@ -65,7 +65,7 @@ FORMS += \
     startingwidget.ui \
     login.ui \
     projectlist.ui \
-    imagelist.ui
+    imagelist.ui \
     projectDialog.ui
 
 
