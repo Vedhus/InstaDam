@@ -171,8 +171,10 @@ void Label::setOpacity(int val) {
 void Label::read(const QJsonObject &json) {
     clear();
     setText(json["text"].toString());
-    setColor(QColor(json["red"].toInt(), json["green"].toInt(),
-            json["blue"].toInt(), json["alpha"].toInt()));
+    setColor(QColor(json["color"].toString()));
+    if (json.contains("label_id")) {
+        setId(json["label_id"].toInt());
+    }
 
     if (json.contains("rectangles")) {
         QJsonArray rectArray = json["rectangles"].toArray();
@@ -277,10 +279,8 @@ QPixmap Label::exportLabel(const QSize &rect) const {
   */
 void Label::write(QJsonObject &json) const {
     json["text"] = text;
-    json["red"] = color.red();
-    json["green"] = color.green();
-    json["blue"] = color.blue();
-    json["alpha"] = color.alpha();
+    json["color"] = color.name();
+    json["label_id"] = labelId;
 }
 
 /*!

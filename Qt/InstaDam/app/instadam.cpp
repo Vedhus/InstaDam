@@ -319,11 +319,7 @@ void InstaDam::on_actionOpen_triggered() {
     if (myfileName.isEmpty()) {
             return;  // remove that part and add an alert
     } else {
-        currentProject = newProject->newPr;
-        currentProject->resetLabels();
-        clearLayout(ui->labelClassLayout);
-        scene->clearItems();
-        maskScene->clearItems();
+
         loadLabelFile(myfileName, PROJECT);
         mainUndoStack->clear();
         tempUndoStack->clear();
@@ -806,7 +802,7 @@ void InstaDam::populateSceneFromProjectLabels()
 }
 
 /*!
- InstaDam::loadLabelFile loads the Qstrina \a filename of fileTypes
+ InstaDam::loadLabelFile loads the Qstring \a filename of fileTypes
  \a fileType where \fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
@@ -823,8 +819,19 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
     QTextStream(stdout) <<"Loaded file";
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    return loadLabelJson(loadDoc.object(), fileType);
+}
 
-    if (read(loadDoc.object(), fileType)) {
+/*!
+ InstaDam::loadLabelFile loads the json object \a json of fileTypes
+ \a fileType where \fileType is either a PROJECT or ANNOTATION
+ */
+bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
+    currentProject = newProject->newPr;
+    currentProject->resetLabels();
+    clearLayout(ui->labelClassLayout);
+
+    if (read(json, fileType)) {
         setLabels();
         scene->clearItems();
         maskScene->clearItems();

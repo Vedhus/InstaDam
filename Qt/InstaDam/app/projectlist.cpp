@@ -103,33 +103,35 @@ void ProjectList::getLabelsReplyFinished()
 
       else{
             qInfo() << jsonReply;
-              InstaDam *w = new InstaDam(nullptr, this->databaseURL, this->accessToken);
-              w->show();
+              InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+              instadamWindow->show();
               hide();
-              Project* newPr = new Project();
+//              Project* newPr = new Project();
 
-              QJsonObject labels = jsonReply.object();
-              foreach(const QString& k, labels.keys()) {
-                  if(k=="labels"){
-                       QJsonValue labels_values = labels.value(k);
-                       QJsonArray labels_values_list = labels_values.toArray();
-                       for(int i=0;i<labels_values_list.count();i++){
-                           QJsonValue labelValue = labels_values_list.at(i);
-                               if(labelValue.isObject()){
-                                   QJsonObject label = labelValue.toObject();
-                                   Label* lb = new Label(label, label.value("id").toInt(), true);
+              QJsonObject jsonLabels = jsonReply.object();
+              instadamWindow->loadLabelJson(jsonLabels, PROJECT);
 
-                                   QSharedPointer<Label> LB = QSharedPointer<Label>(lb);
-                                   qInfo() << lb->getText();
-                                   qInfo() << lb->getColor();
-                                   newPr->addLabel(LB);
-                               }
-                        }
-                  }
-              }
+//              foreach(const QString& k, labels.keys()) {
+//                  if(k=="labels"){
+//                       QJsonValue labels_values = labels.value(k);
+//                       QJsonArray labels_values_list = labels_values.toArray();
+//                       for(int i=0;i<labels_values_list.count();i++){
+//                           QJsonValue labelValue = labels_values_list.at(i);
+//                               if(labelValue.isObject()){
+//                                   QJsonObject label = labelValue.toObject();
+//                                   Label* lb = new Label(label, label.value("id").toInt(), true);
 
-              w->setCurrentProject(newPr);
-              w->setLabels();
+//                                   QSharedPointer<Label> LB = QSharedPointer<Label>(lb);
+//                                   qInfo() << lb->getText();
+//                                   qInfo() << lb->getColor();
+//                                   newPr->addLabel(LB);
+//                               }
+//                        }
+//                  }
+//              }
+
+//              w->setCurrentProject(newPr);
+//              w->setLabels();
       }
 }
 

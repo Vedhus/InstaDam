@@ -75,7 +75,7 @@ class InstaDam : public QMainWindow {
     void setCurrentProject(Project*);
     QList<maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
-
+    bool loadLabelJson(QJsonObject json, fileTypes fileType);
  private slots:
     void on_addSelectionButton_clicked();
     void on_saveAndBack_clicked();
