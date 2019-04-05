@@ -36,3 +36,13 @@ int Project::getId()
     return this->id;
 }
 
+void Project::setName(QString name)
+{
+    this->name = name;
+}
+
+QString Project::getName()
+{
+    return this->name;
+}
+

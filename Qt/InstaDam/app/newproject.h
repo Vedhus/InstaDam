@@ -5,6 +5,7 @@
 #include <QVector>
 #include "project.h"
 #include "ui_labeldialog.h"
+#include <QNetworkAccessManager>
 #ifdef WASM_BUILD
 #include "colordialog.h"
 #endif
@@ -21,6 +22,10 @@ class newproject : public QDialog {
     ~newproject();
 
     Project *newPr;
+    bool runningLocally = true;
+    void saveToServer();
+    QString databaseURL;
+    QString accessToken;
 
  private slots:
     void on_pushButton_clicked();
@@ -35,6 +40,13 @@ class newproject : public QDialog {
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *rep;
+    int backendId;
+
+    void replyFinished();
+    void labelReplyFinished();
+
 #ifdef WASM_BUILD
     ColorDialog *colorDialog;
 #endif

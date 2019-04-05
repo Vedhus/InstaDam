@@ -25,7 +25,8 @@ SOURCES += \
     startingwidget.cpp \
     login.cpp \
     projectlist.cpp \
-    imagelist.cpp
+    imagelist.cpp \
+    serverprojectname.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -47,7 +48,8 @@ HEADERS += \
     startingwidget.h \
     login.h \
     projectlist.h \
-    imagelist.h
+    imagelist.h \
+    serverprojectname.h
     enumconstants.h
 
 wasm: HEADERS += colordialog.h
@@ -64,7 +66,8 @@ FORMS += \
     login.ui \
     projectlist.ui \
     imagelist.ui \
-    projectDialog.ui
+    projectDialog.ui \
+    serverprojectname.ui
 
 
 win32 {
@@ -73,22 +76,15 @@ win32 {
 
   CONFIG += c++1z
    INCLUDEPATH += $${PWD}\..\quazip\include
+
 ## Change paths here depending on your system installation location
-#   INCLUDEPATH +=  D:\opencv\build\include $${PWD}/..
-#    LIBS += D:\opencv-build\bin\libopencv_core401.dll
-#   LIBS += D:\opencv-build\bin\libopencv_highgui401.dll
-#   LIBS += D:\opencv-build\bin\libopencv_imgcodecs401.dll
-#   LIBS += D:\opencv-build\bin\libopencv_imgproc401.dll
-#   LIBS += D:\opencv-build\bin\libopencv_features2d401.dll
-#   LIBS += D:\opencv-build\bin\libopencv_calib3d401.dll
-#   LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
-   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+   INCLUDEPATH += C:\opencv\opencv\build\include $${PWD}/..
+   LIBS += C:\opencv\opencv-build\bin\libopencv_core401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_highgui401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_imgcodecs401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_imgproc401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_features2d401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_calib3d401.dll
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
 ##End change paths
 

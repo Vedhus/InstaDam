@@ -3,9 +3,12 @@
 #include <QInputDialog>
 #include <QColorDialog>
 #include <QTextStream>
+#include <QJsonDocument>
 
 #include "ui_newproject.h"
 #include "../Selector/label.h"
+#include "login.h"
+#include "instadam.h"
 
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
@@ -62,6 +65,115 @@ void newproject::colorPicked(const QColor &oldcolor) {
 #endif
 }
 
-Project* newproject::on_buttonBox_accepted() {
-    return this->newPr;
+Project* newproject::on_buttonBox_accepted()
+{
+    if(this->runningLocally)
+    {
+        return this->newPr;
+    }
+    else
+    {
+        this->saveToServer();
+        // start server instadam
+        InstaDam *w = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+        w->show();
+        hide();
+        w->setCurrentProject(newPr);
+        w->setLabels();
+        hide();
+        return this->newPr;
+
+    }
+
+}
+
+void newproject::saveToServer(){
+// create new project
+qInfo() << "saving project to server";
+
+    QUrl dabaseLink = QUrl(this->databaseURL+"/project");
+    qInfo() << this->newPr->getName();
+
+    QJsonObject js
+    {
+        {"project_name", this->newPr->getName()}
+    };
+
+    QJsonDocument doc(js);
+    QByteArray bytes = doc.toJson();
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    QString loginToken = "Bearer "+this->accessToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    rep = manager->post(req, bytes);
+
+    connect(rep, &QNetworkReply::finished,
+            this, &newproject::replyFinished);
+
+}
+
+void newproject::replyFinished()
+{
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if(jsonError.error != QJsonParseError::NoError)
+    {
+        qInfo() << "Error: " << jsonError.errorString();
+    }
+
+    else
+    {
+        QJsonObject reply = jsonReply.object();
+        this->backendId = reply.value("project_id").toInt();
+
+        // save labels
+        qInfo() << "saving labels to server";
+
+        QUrl lablesDatabaseLink = QUrl(this->databaseURL+"/project/"+QString::number(this->backendId)+"/labels");
+        QString loginToken = "Bearer "+this->accessToken;
+
+        for(int i=0; i<newPr->numLabels();i++)
+
+        {
+            QJsonObject jsLabel
+            {
+                {"label_name", newPr->getLabel(i)->getText()},
+                {"label_color", newPr->getLabel(i)->getColor().name()}
+            };
+
+            QJsonDocument docLabel(jsLabel);
+            QByteArray bytesLabel = docLabel.toJson();
+            QNetworkRequest reqLabel = QNetworkRequest(lablesDatabaseLink);
+
+            reqLabel.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+            reqLabel.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+            rep = manager->post(reqLabel, bytesLabel);
+
+            connect(rep, &QNetworkReply::finished,
+                    this, &newproject::labelReplyFinished);
+        }
+
+
+    }
+}
+
+void newproject::labelReplyFinished()
+{
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if(jsonError.error != QJsonParseError::NoError)
+    {
+        qInfo() << "Error: " << jsonError.errorString();
+    }
+
+    else
+    {
+        qInfo() << jsonReply;
+    }
 }

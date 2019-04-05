@@ -45,6 +45,7 @@ public:
 
         finishPolygonButton = new QPushButton(polygonSelectForm);
         finishPolygonButton->setObjectName(QStringLiteral("finishPolygonButton"));
+        finishPolygonButton->setEnabled(false);
         sizePolicy.setHeightForWidth(finishPolygonButton->sizePolicy().hasHeightForWidth());
         finishPolygonButton->setSizePolicy(sizePolicy);
         finishPolygonButton->setMinimumSize(QSize(252, 36));
@@ -68,7 +69,7 @@ public:
     {
         polygonSelectForm->setWindowTitle(QApplication::translate("polygonSelectForm", "Form", nullptr));
         insertPointButton->setText(QApplication::translate("polygonSelectForm", "Insert Point Between", nullptr));
-        finishPolygonButton->setText(QApplication::translate("polygonSelectForm", "Finish Polygon", nullptr));
+        finishPolygonButton->setText(QApplication::translate("polygonSelectForm", "Done Editing", nullptr));
     } // retranslateUi
 
 };

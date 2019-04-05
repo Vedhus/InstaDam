@@ -48,9 +48,6 @@ void Login::on_pushButton_clicked()
         {"password", pass}
     };
 
-    qInfo() << databaseLoginURL;
-    qInfo() << js;
-
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);

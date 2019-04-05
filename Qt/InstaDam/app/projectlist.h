@@ -18,10 +18,11 @@ public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
     void addItems(QJsonObject);
-
     void addItems(QJsonDocument, QString, QString);
 public slots:
     void openProject(QListWidgetItem *);
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::ProjectList *ui;

@@ -1,17 +1,23 @@
 #include "projectlist.h"
+
 #include "ui_projectlist.h"
-#include <QJsonDocument>
-#include "instadam.h"
+#include "ui_newproject.h"
+
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
-#include "imagelist.h"
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+
+#include "instadam.h"
+#include "newproject.h"
+#include "serverprojectname.h"
+#include "imagelist.h"
+
 
 
 ProjectList::ProjectList(QWidget *parent) :
@@ -31,18 +37,16 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
     qInfo() << obj;
-    int counter = 1; // delete once the id is returned from the server
     for(int i =0; i<projects_list.count();i++){
         QJsonValue project = projects_list.at(i);
             if(project.isObject()){
                 QJsonObject subObj = project.toObject();
                 QStringList proj_details;
-                proj_details << QString::number(counter); // delete later
                 foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
                     QJsonValue val = subObj.value(k);
                     if(k == "id"){
-                        proj_details.insert(0,val.toString());
-                    }
+                        proj_details << QString::number(val.toInt());
+                        }
                     if(k == "name"){
                         proj_details << val.toString();
                         }
@@ -56,14 +60,13 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                         }
 
                     }
-                ui->projectsTable->addItem(proj_details.join(" - "));
+               ui->projectsTable->addItem(proj_details.join(" - "));
                connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
             }
             else{
                 qInfo() << "The returned object does not satisfy the requirements";
                 qInfo() << project;
             }
-    counter++; //delete later
     }
 
 
@@ -71,8 +74,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 
 void ProjectList::openProject(QListWidgetItem *project_name){
     qInfo() << "inside open a new project" << project_name->text();
-//    QString id="1";
-    QString id = QString(project_name->text().at(3));
+    QString id = QString(project_name->text().split('-')[0]);
     qInfo() << id;
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
@@ -109,8 +111,7 @@ void ProjectList::getLabelsReplyFinished()
               QJsonObject labels = jsonReply.object();
               foreach(const QString& k, labels.keys()) {
                   if(k=="labels"){
-                    QJsonValue labels_values = labels.value(k);
-//                    if(labels_values.isObject()){
+                       QJsonValue labels_values = labels.value(k);
                        QJsonArray labels_values_list = labels_values.toArray();
                        for(int i=0;i<labels_values_list.count();i++){
                            QJsonValue labelValue = labels_values_list.at(i);
@@ -124,14 +125,22 @@ void ProjectList::getLabelsReplyFinished()
                                    newPr->addLabel(LB);
                                }
                         }
-//                    }
                   }
               }
 
               w->setCurrentProject(newPr);
               w->setLabels();
+
       }
 }
 
+void ProjectList::on_pushButton_clicked()
+{
+    serverProjectName *spn = new serverProjectName();
+    spn->databaseURL = this->databaseURL;
+    spn->accessToken = this->accessToken;
+    spn->show();
+    hide();
+}
 
 

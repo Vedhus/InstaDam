@@ -38,7 +38,7 @@ public:
     {
         if (freeSelectForm->objectName().isEmpty())
             freeSelectForm->setObjectName(QStringLiteral("freeSelectForm"));
-        freeSelectForm->resize(1421, 152);
+        freeSelectForm->resize(899, 152);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(2);

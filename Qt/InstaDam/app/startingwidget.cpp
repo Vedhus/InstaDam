@@ -24,9 +24,7 @@ void StartingWidget::runLocalVersion()
     InstaDam *w = new InstaDam;
     w->runningLocally = true;
     w->show();
-    hide();
-//    run the local main instadam window
-
+    on_pushButton_3_clicked();
 }
 
 void StartingWidget::runServerVersion()
@@ -34,8 +32,7 @@ void StartingWidget::runServerVersion()
     qInfo() << "running on a server";
     Login *log = new Login;
     log->show();
-    hide();
-
+    on_pushButton_3_clicked();
 }
 
 void StartingWidget::on_pushButton_clicked()

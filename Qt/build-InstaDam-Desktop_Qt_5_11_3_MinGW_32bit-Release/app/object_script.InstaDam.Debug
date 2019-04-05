@@ -17,6 +17,7 @@ INPUT(
 ./debug\login.o
 ./debug\projectlist.o
 ./debug\imagelist.o
+./debug\serverprojectname.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o
@@ -30,4 +31,5 @@ INPUT(
 ./debug\moc_login.o
 ./debug\moc_projectlist.o
 ./debug\moc_imagelist.o
+./debug\moc_serverprojectname.o
 );

@@ -7,7 +7,7 @@
 #include <vector>
 #include <iostream>
 
-#include "filters.h"
+//#include "filters.h"
 #include "pixmapops.h"
 
 #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)

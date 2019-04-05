@@ -17,6 +17,7 @@ INPUT(
 ./release\login.o
 ./release\projectlist.o
 ./release\imagelist.o
+./release\serverprojectname.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
@@ -30,4 +31,5 @@ INPUT(
 ./release\moc_login.o
 ./release\moc_projectlist.o
 ./release\moc_imagelist.o
+./release\moc_serverprojectname.o
 );
