@@ -106,6 +106,7 @@ void Register::projectsReplyFinished()
       else{
           QJsonObject obj = jsonReply.object();
           qInfo()<< "implement a function to read the returned object";
+
       }
 }
 

@@ -130,7 +130,6 @@ void ProjectList::getLabelsReplyFinished()
 
               w->setCurrentProject(newPr);
               w->setLabels();
-
       }
 }
 
