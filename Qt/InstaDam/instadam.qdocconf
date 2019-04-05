@@ -1,0 +1,34 @@
+#include(/home/friedel/qtt/doc/global/qt-module-defaults.qdocconf)
+indexes = /home/friedel/qtt/doc/qtcore/qtcore.index /home/friedel/qtt/doc/qtgui/qtgui.index /home/friedel/qtt/doc/qtnetwork/qtnetwork.index /home/friedel/qtt/doc/qtwidgets/qtwidgets.index
+depends += qtcore qtgui qtwidgets
+project = Instadam
+description = InstaDam Reference Documentation
+moduleheader = moduleheader.h
+headerdirs += Selector app
+sourcedirs += Selector app
+imagedirs += Selector/images
+excludedirs += Selector/Test
+sources.fileextensions = "*.cpp *.qdoc"
+headers.fileextensions = "*.h *.hh *.hpp"
+outputdir = ./doc/
+outputformats = HTML
+HTML.stylesheets = /home/friedel/qtt/doc/global/template/style/offline.css
+HTML.headerstyles = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\"/>\n"
+HTML.postheader = "<p class=\"header\"><small>InstaDam Documentation</small></p><hr/>"
+HTML.footer = "<hr/><p class=\"footer\"><small></small></p>"
+HTML.extraimages += Selector/images/draw_mirror.gif \
+Selector/images/ellipse.gif \
+Selector/images/erase.gif \
+Selector/images/free_draw.gif \
+Selector/images/move.gif \
+Selector/images/polygon_add.gif \
+Selector/images/polygon.gif \
+Selector/images/polygon_manipulate.gif \
+Selector/images/rect.gif \
+Selector/images/rect-mirror.gif \
+Selector/images/resize.gif \
+Selector/images/rotate.gif \
+Selector/images/polygon_delete.gif \
+Selector/images/undo_redo.gif \
+Selector/images/undo_redo_mask.gif \
+Selector/images/undo_redo_after.gif

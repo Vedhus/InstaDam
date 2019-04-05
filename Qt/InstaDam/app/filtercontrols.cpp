@@ -7,7 +7,6 @@
 #include <vector>
 #include <iostream>
 
-#include "filters.h"
 #include "pixmapops.h"
 
 #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)
@@ -17,11 +16,13 @@
   \ingroup app
   \inmodule InstaDam
   \brief Defines a custom QDIalog based on the selected mask.
-  \param selectedMask
-  \param fc
-  \param photoViewer
-  \param currentPro
+
  */
+
+/*!
+  Creates an instance based on \a selectedMask, \a fc, \a photoViewer, and
+  \a currentPro.
+  */
 filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
                            PhotoViewer* photoViewer, Project *currentPro)
     : QDialog() {
@@ -133,14 +134,17 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
   \brief Defines the properties of the mask and conducts the filtering operations
 */
 
+/*!
+  Creates an instance
+  */
 filterControls::filterControls():QObject() {
     defineProperties();
 }
 
 
 /*!
- * \brief filterControls::assignVal is a slot that sets the int \a value
- * to the appropriate property indexed by \a maskType and \a propnNum
+  Slot that sets the int \a value
+  to the appropriate property indexed by \a maskType and \a propnNum
  */
 void filterControls::assignVal(maskTypes maskType, int propNum, int value,
                                threshold_or_filter thof) {
@@ -257,7 +261,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
 }
 
 /*!
- * Sets image for the object and stores and returns filtered edges.
+  Sets image for the object and stores and returns filtered edges.
 */
 cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
                                                maskTypes selectedFilter) {
@@ -268,7 +272,7 @@ cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
 }
 
 /*!
- * Binarizes the image and converts it to a pixmap
+  Binarizes the image and converts it to a pixmap
  */
 void filterControls::im2pixmap(maskTypes selectedFilter) {
     cv::Mat binary;
@@ -294,7 +298,7 @@ void filterControls::im2pixmap(maskTypes selectedFilter) {
 }
 
 /*!
- * Returns a thubnail pixmap for the filter selection bar at the bottom of InstaDam.
+  Returns a thubnail pixmap for the filter selection bar at the bottom of InstaDam.
  */
 QPixmap filterControls::thumb2pixmap(cv::Mat thumb, maskTypes selectedFilter) {
     qInfo("Enter Thumb");

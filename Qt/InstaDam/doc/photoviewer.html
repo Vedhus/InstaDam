@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- photoviewer.cpp -->
+  <title>PhotoViewer Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>PhotoViewer</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">PhotoViewer Class</h1>
+<!-- $$$PhotoViewer-brief -->
+<p>Viewer for displaying an image and drawing SelectItems on it. <a href="#details">More...</a></p>
+<!-- @@@PhotoViewer -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;PhotoViewer&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qgraphicsview.html">QGraphicsView</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="maskviewer.html">MaskViewer</a></p>
+</td></tr></table></div><ul>
+<li><a href="photoviewer-members.html">List of all members, including inherited members</a></li>
+<li><a href="photoviewer-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#PhotoViewer">PhotoViewer</a></b>(QWidget *<i>parent</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#QImage2Mat">QImage2Mat</a></b>(<i>const QImage &amp;</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#QPixmap2Mat">QPixmap2Mat</a></b>(<i>QPixmap</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#fitInView">fitInView</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#resetBrush">resetBrush</a></b>(int <i>size</i> = 10, Qt::PenCapStyle <i>capStyle_input</i> = Qt::RoundCap)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setBrushMode">setBrushMode</a></b>(Qt::PenCapStyle <i>cap</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setFilterControls">setFilterControls</a></b>(filterControls *<i>fc</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setMaskPixmap">setMaskPixmap</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPanMode">setPanMode</a></b>(bool <i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPhoto">setPhoto</a></b>(QPixmap <i>pixmap</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSize </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPhotoFromFile">setPhotoFromFile</a></b>(QString <i>filename</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPhotoFromPixmap">setPhotoFromPixmap</a></b>(QPixmap <i>px</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#testPixmap">testPixmap</a></b>()</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#mouseMoveEvent">mouseMoveEvent</a></b>(QMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#mousePressEvent">mousePressEvent</a></b>(QMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#mouseReleaseEvent">mouseReleaseEvent</a></b>(QMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#resizeEvent">resizeEvent</a></b>(QResizeEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#wheelEvent">wheelEvent</a></b>(QWheelEvent *<i>event</i>) override</td></tr>
+</table></div>
+<ul>
+<li class="fn">78 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#public-functions">QGraphicsView</a></li>
+<li class="fn">20 public functions inherited from <a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#public-functions">QAbstractScrollArea</a></li>
+<li class="fn">14 public functions inherited from <a href="http://doc.qt.io/qt-5/qframe.html#public-functions">QFrame</a></li>
+<li class="fn">222 public functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-functions">QWidget</a></li>
+<li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
+<li class="fn">15 public functions inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#public-functions">QPaintDevice</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setImMask">setImMask</a></b>(maskTypes <i>filterName</i>, threshold_or_filter <i>thof</i> = FILTER)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoomedInADifferentView">zoomedInADifferentView</a></b>(int <i>zoom_input</i>, float <i>factor</i>, QPointF <i>point</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">3 public slots inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#public-slots">QGraphicsView</a></li>
+<li class="fn">19 public slots inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-slots">QWidget</a></li>
+<li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#changedMask">changedMask</a></b>(<i>maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#loadedPhoto">loadedPhoto</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoomed">zoomed</a></b>(<i>int</i>, <i>float</i>, <i>QPointF</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 signal inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#signals">QGraphicsView</a></li>
+<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#signals">QWidget</a></li>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QGraphicsPathItem *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#brush-var">brush</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#brushSize-var">brushSize</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> brushTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#brushType-var">brushType</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Qt::PenCapStyle </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#capStyle-var">capStyle</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int **</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#colors-var">colors</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#currentMap-var">currentMap</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#cvImage-var">cvImage</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#cvThumb-var">cvThumb</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> filterControls *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#filterControl-var">filterControl</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QGraphicsPixmapItem *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#filterIm-var">filterIm</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#hasPhoto-var">hasPhoto</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#imMask-var">imMask</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPoint </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#lastPos-var">lastPos</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> maskObjects *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#maskObject-var">maskObject</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#paintMode-var">paintMode</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPainterPath </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#path-var">path</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPen </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#pen-var">pen</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QGraphicsPixmapItem *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#photo-var">photo</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#pixmapFilt-var">pixmapFilt</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoScene *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#scene-var">scene</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> maskTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#selectedMask-var">selectedMask</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoScene::viewerTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#viewerType-var">viewerType</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoom-var">zoom</a></b></td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QMetaObject </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#staticMetaObject-var">staticMetaObject</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">5 static public members inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#static-public-members">QWidget</a></li>
+<li class="fn">9 static public members inherited from <a href="http://doc.qt.io/qt-5/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">1 static public member inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#static-public-members">QPaintDevice</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">13 properties inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#properties">QGraphicsView</a></li>
+<li class="fn">3 properties inherited from <a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#properties">QAbstractScrollArea</a></li>
+<li class="fn">6 properties inherited from <a href="http://doc.qt.io/qt-5/qframe.html#properties">QFrame</a></li>
+<li class="fn">59 properties inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#properties">QWidget</a></li>
+<li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
+<li class="fn">24 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#protected-functions">QGraphicsView</a></li>
+<li class="fn">20 protected functions inherited from <a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#protected-functions">QAbstractScrollArea</a></li>
+<li class="fn">4 protected functions inherited from <a href="http://doc.qt.io/qt-5/qframe.html#protected-functions">QFrame</a></li>
+<li class="fn">35 protected functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-functions">QWidget</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">1 protected function inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#protected-functions">QPaintDevice</a></li>
+<li class="fn">1 protected slot inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#protected-slots">QGraphicsView</a></li>
+<li class="fn">1 protected slot inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-slots">QWidget</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$PhotoViewer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Viewer for displaying an image and drawing SelectItems on it.</p>
+</div>
+<!-- @@@PhotoViewer -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$PhotoViewer[overload1]$$$PhotoViewerQWidget* -->
+<h3 class="fn" id="PhotoViewer"><a name="PhotoViewer"></a>PhotoViewer::<span class="name">PhotoViewer</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html#QWidget">QWidget</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Craetes an instance with parent <a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a> <i>parent</i>.</p>
+<!-- @@@PhotoViewer -->
+<!-- $$$QImage2Mat[overload1]$$$QImage2MatconstQImage& -->
+<h3 class="fn" id="QImage2Mat"><a name="QImage2Mat"></a><span class="type">int</span> PhotoViewer::<span class="name">QImage2Mat</span>(<i>const QImage &amp;</i>) const</h3>
+<p>Converts <i>src</i> to a cv::Mat.</p>
+<!-- @@@QImage2Mat -->
+<!-- $$$QPixmap2Mat[overload1]$$$QPixmap2MatQPixmap -->
+<h3 class="fn" id="QPixmap2Mat"><a name="QPixmap2Mat"></a><span class="type">int</span> PhotoViewer::<span class="name">QPixmap2Mat</span>(<i>QPixmap</i>) const</h3>
+<p>This function overloads <a href="photoviewer.html#QImage2Mat">QImage2Mat</a>.</p>
+<p>Converts <i>px</i> to a cv::Mat.</p>
+<!-- @@@QPixmap2Mat -->
+<!-- $$$changedMask[overload1]$$$changedMaskmaskTypes -->
+<h3 class="fn" id="changedMask"><a name="changedMask"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">changedMask</span>(<i>maskTypes</i>)</h3>
+<!-- @@@changedMask -->
+<!-- $$$fitInView[overload1]$$$fitInView -->
+<h3 class="fn" id="fitInView"><a name="fitInView"></a><span class="type">void</span> PhotoViewer::<span class="name">fitInView</span>()</h3>
+<p>Something</p>
+<!-- @@@fitInView -->
+<!-- $$$loadedPhoto[overload1]$$$loadedPhoto -->
+<h3 class="fn" id="loadedPhoto"><a name="loadedPhoto"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">loadedPhoto</span>()</h3>
+<!-- @@@loadedPhoto -->
+<!-- $$$mouseMoveEvent[overload1]$$$mouseMoveEventQMouseEvent* -->
+<h3 class="fn" id="mouseMoveEvent"><a name="mouseMoveEvent"></a><code>[override virtual] </code><span class="type">void</span> PhotoViewer::<span class="name">mouseMoveEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qmouseevent.html">QMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#mouseMoveEvent">QGraphicsView::mouseMoveEvent</a>().</p>
+<!-- @@@mouseMoveEvent -->
+<!-- $$$mousePressEvent[overload1]$$$mousePressEventQMouseEvent* -->
+<h3 class="fn" id="mousePressEvent"><a name="mousePressEvent"></a><code>[override virtual] </code><span class="type">void</span> PhotoViewer::<span class="name">mousePressEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qmouseevent.html">QMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#mousePressEvent">QGraphicsView::mousePressEvent</a>().</p>
+<!-- @@@mousePressEvent -->
+<!-- $$$mouseReleaseEvent[overload1]$$$mouseReleaseEventQMouseEvent* -->
+<h3 class="fn" id="mouseReleaseEvent"><a name="mouseReleaseEvent"></a><code>[override virtual] </code><span class="type">void</span> PhotoViewer::<span class="name">mouseReleaseEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qmouseevent.html">QMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#mouseReleaseEvent">QGraphicsView::mouseReleaseEvent</a>().</p>
+<!-- @@@mouseReleaseEvent -->
+<!-- $$$resetBrush[overload1]$$$resetBrushintQt::PenCapStyle -->
+<h3 class="fn" id="resetBrush"><a name="resetBrush"></a><span class="type">void</span> PhotoViewer::<span class="name">resetBrush</span>(<span class="type">int</span> <i>size</i> = 10, <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#PenCapStyle-enum">Qt::PenCapStyle</a></span> <i>capStyle_input</i> = Qt::RoundCap)</h3>
+<p>Resets the internal brush to <i>size</i> and style <i>capStyle_input</i>.</p>
+<!-- @@@resetBrush -->
+<!-- $$$resizeEvent[overload1]$$$resizeEventQResizeEvent* -->
+<h3 class="fn" id="resizeEvent"><a name="resizeEvent"></a><code>[override virtual] </code><span class="type">void</span> PhotoViewer::<span class="name">resizeEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qresizeevent.html">QResizeEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#resizeEvent">QGraphicsView::resizeEvent</a>().</p>
+<!-- @@@resizeEvent -->
+<!-- $$$setBrushMode[overload1]$$$setBrushModeQt::PenCapStyle -->
+<h3 class="fn" id="setBrushMode"><a name="setBrushMode"></a><span class="type">void</span> PhotoViewer::<span class="name">setBrushMode</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qt.html#PenCapStyle-enum">Qt::PenCapStyle</a></span> <i>cap</i>)</h3>
+<p>Sets the brush mode to <i>cap</i>.</p>
+<!-- @@@setBrushMode -->
+<!-- $$$setFilterControls[overload1]$$$setFilterControlsfilterControls* -->
+<h3 class="fn" id="setFilterControls"><a name="setFilterControls"></a><span class="type">void</span> PhotoViewer::<span class="name">setFilterControls</span>(<span class="type"><a href="filtercontrols.html">filterControls</a></span> *<i>fc</i>)</h3>
+<p>Sets the internal filter controls to <b class="redFont"><code>\fc</code></b>.</p>
+<!-- @@@setFilterControls -->
+<!-- $$$setImMask[overload1]$$$setImMaskmaskTypesthreshold_or_filter -->
+<h3 class="fn" id="setImMask"><a name="setImMask"></a><code>[slot] </code><span class="type">void</span> PhotoViewer::<span class="name">setImMask</span>(<span class="type">maskTypes</span> <i>filterName</i>, <span class="type">threshold_or_filter</span> <i>thof</i> = FILTER)</h3>
+<p>Sets the internal mask based on <i>filterName</i> and <i>thof</i>.</p>
+<!-- @@@setImMask -->
+<!-- $$$setMaskPixmap[overload1]$$$setMaskPixmap -->
+<h3 class="fn" id="setMaskPixmap"><a name="setMaskPixmap"></a><span class="type">void</span> PhotoViewer::<span class="name">setMaskPixmap</span>()</h3>
+<!-- @@@setMaskPixmap -->
+<!-- $$$setPanMode[overload1]$$$setPanModebool -->
+<h3 class="fn" id="setPanMode"><a name="setPanMode"></a><span class="type">void</span> PhotoViewer::<span class="name">setPanMode</span>(<span class="type">bool</span> <i>mode</i>)</h3>
+<p>Sets the pan mode to either PAN (<i>mode</i> = true) or PAINTBRUSH (<i>mode</i> = false).</p>
+<!-- @@@setPanMode -->
+<!-- $$$setPhoto[overload1]$$$setPhotoQPixmap -->
+<h3 class="fn" id="setPhoto"><a name="setPhoto"></a><span class="type">void</span> PhotoViewer::<span class="name">setPhoto</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>pixmap</i>)</h3>
+<p>Sets the internal image based on <i>pixmap</i>.</p>
+<!-- @@@setPhoto -->
+<!-- $$$setPhotoFromFile[overload1]$$$setPhotoFromFileQString -->
+<h3 class="fn" id="setPhotoFromFile"><a name="setPhotoFromFile"></a><span class="type"><a href="http://doc.qt.io/qt-5/qsize.html">QSize</a></span> PhotoViewer::<span class="name">setPhotoFromFile</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>filename</i>)</h3>
+<p>Sets the internal image based on data from <i>filename</i>.</p>
+<!-- @@@setPhotoFromFile -->
+<!-- $$$setPhotoFromPixmap[overload1]$$$setPhotoFromPixmapQPixmap -->
+<h3 class="fn" id="setPhotoFromPixmap"><a name="setPhotoFromPixmap"></a><span class="type">void</span> PhotoViewer::<span class="name">setPhotoFromPixmap</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>px</i>)</h3>
+<p>Sets the internal image based on <i>px</i>.</p>
+<!-- @@@setPhotoFromPixmap -->
+<!-- $$$testPixmap[overload1]$$$testPixmap -->
+<h3 class="fn" id="testPixmap"><a name="testPixmap"></a><span class="type">void</span> PhotoViewer::<span class="name">testPixmap</span>()</h3>
+<p>For testing</p>
+<!-- @@@testPixmap -->
+<!-- $$$wheelEvent[overload1]$$$wheelEventQWheelEvent* -->
+<h3 class="fn" id="wheelEvent"><a name="wheelEvent"></a><code>[override virtual] </code><span class="type">void</span> PhotoViewer::<span class="name">wheelEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qwheelevent.html">QWheelEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#wheelEvent">QGraphicsView::wheelEvent</a>().</p>
+<!-- @@@wheelEvent -->
+<!-- $$$zoomed[overload1]$$$zoomedintfloatQPointF -->
+<h3 class="fn" id="zoomed"><a name="zoomed"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">zoomed</span>(<i>int</i>, <i>float</i>, <i>QPointF</i>)</h3>
+<!-- @@@zoomed -->
+<!-- $$$zoomedInADifferentView[overload1]$$$zoomedInADifferentViewintfloatQPointF -->
+<h3 class="fn" id="zoomedInADifferentView"><a name="zoomedInADifferentView"></a><code>[slot] </code><span class="type">void</span> PhotoViewer::<span class="name">zoomedInADifferentView</span>(<span class="type">int</span> <i>zoom_input</i>, <span class="type">float</span> <i>factor</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>)</h3>
+<p>Something based on <i>zoom_input</i>, <i>factor</i>, <i>point</i>.</p>
+<!-- @@@zoomedInADifferentView -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

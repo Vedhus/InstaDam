@@ -1,0 +1,34 @@
+/*!
+  \page index.html index
+
+  \title InstaDam
+
+  The following documentation is available:
+  \list
+  \li \l{All Classes}
+  \li \l{All Functions}
+  \li \l{Introduction to SelectItems}
+  \li \l{Mirror Items}
+  \endlist
+  */
+
+/*!
+  \page classes.html
+  \title All Classes
+  \ingroup classlists
+
+  This is a listing of all InstaDam classes.
+
+  \generatelist{classesbymodule InstaDam}
+
+  */
+
+/*!
+  \page functions.html
+  \title All Functions
+  \ingroup funclist
+
+  All InstaDam functions
+
+  \generatelist functionlist
+  */

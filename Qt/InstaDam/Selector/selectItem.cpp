@@ -143,7 +143,7 @@ void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint) {
 }
 
 /*!
-  \overload QGraphicsItem::type()
+  \overload QGraphicsItem::type() const
 
   This function returns the type of this item.
 
@@ -194,8 +194,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
 }
 
 /*!
-    \fn virtual void SelectItem::addPoint(const QPointF &point,
-                                          int vertex = UNSELECTED) = 0
+    \fn virtual void SelectItem::addPoint(QPointF &point, const int vertex = UNSELECTED) = 0
 
     This pure virtual function adds a point to object being drawn. It is
     up to the reimplimentation of this function to determine how to handle
@@ -205,7 +204,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa removeVertex(), insertVertex()
 */
 /*!
-    \fn virtual void SelectItem::clickPoint(QPointF &point) = 0
+    \fn virtual void SelectItem::clickPoint(const QPointF &point) = 0
 
     This pure virtual function is used to signal an object that the mouse
     has been clicked within its boundaries. It is up to the individual
@@ -213,7 +212,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     indicated the coordinates (on the canvas) where the click took place.
 */
 /*!
-    \fn virtual void SelectItem::insertVertex(int vertex, QPointF &point) = 0
+    \fn virtual void SelectItem::insertVertex(const int vertex, const QPointF &point) = 0
 
     This pure virtual function inserts a new vertex, given as \a point, at
     position \a vertex in the internal list of vertices. It is up to the
@@ -222,7 +221,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa addPoint(), removeVertex()
 */
 /*!
-    \fn virtual void SelectItem::moveItem(QPointF &oldPos, QPointF &newPos) = 0
+    \fn virtual void SelectItem::moveItem(const QPointF &oldPos, QPointF &newPos) = 0
 
     This pure virtual function moves the SelectItem on the canvas. \a oldPos
     indicates the position of the mouse at the begining of the move and
@@ -233,7 +232,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa rotate(), resizeItem()
 */
 /*!
-    \fn virtual void SelectItem::removeVertex(int vertex = UNSELECTED) = 0
+    \fn virtual void SelectItem::removeVertex(const int vertex = UNSELECTED) = 0
 
     This pure virtual function removes vertex \a vertex from the internal
     list of vertices. It is up to the individual reimplementations to determine
@@ -248,7 +247,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     value of SelectItem::UNSELECTED.
 */
 /*!
-    \fn virtual void SelectItem::resizeItem(int vertex, QPointF &shift) = 0
+    \fn virtual void SelectItem::resizeItem(const int vertex, QPointF &shift) = 0
 
     This pure virtual function is used to resize the item. \a vertex indicates
     which vertex is moving and \a shift indicates the relative shift in position
@@ -258,7 +257,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa moveItem(), rotate()
 */
 /*!
-    \fn virtual void SelectItem::rotate(QPointF &from, QPointF &to) = 0
+    \fn virtual void SelectItem::rotate(const QPointF &from, const QPointF &to) = 0
 
     This pure virtual funcion is used to rotate a SelectItem. \a from indicates
     the starting position of the rotation and \a to indicates the end of the
@@ -298,14 +297,14 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa read()
 */
 /*!
-    \fn virtual QString SelectItem::baseInstructions() = 0
+    \fn virtual QString SelectItem::baseInstructions() const = 0
 
     Returns a QString representing the instructions on how to draw this
     SelectItem type on the scene. It is up to the individual reimplementations
     to construct the string.
 */
 /*!
-    \fn virtual bool SelectItem::isInside(QPointF &point) = 0
+    \fn virtual bool SelectItem::isInside(const QPointF &point) const = 0
 
     Returns a bool indicating whether \a point is inside the boundaries of the
     SelectItem. \c true indicates the QPointF is within the bounds, \c false
@@ -313,34 +312,34 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     this is done.
 */
 /*!
-    \fn virtual int SelectItem::numberOfVertices() = 0
+    \fn virtual int SelectItem::numberOfVertices() const = 0
 
     Returns an int indicating the number of vertices in the SelectItem. It is
     up to the individual reimplementations to do the calculation.
 */
 /*!
-    \fn virtual SelectItem* SelectItem::getMirror() = 0
+    \fn virtual SelectItem* SelectItem::getMirror() const = 0
 
     Returns a SelectItem* to the mirror of this SelectItem. If this SelectItem
     is a member of the photoScene then it will return the corresponding
     member from the maskScene.
 */
 /*!
-    \fn virtual void SelectItem::mirrorHide() = 0
+    \fn virtual void SelectItem::mirrorHide() const = 0
 
     Pure virtual function to hide the mirror item on its scene.
 
     \sa QGraphicsItem::hide()
 */
 /*!
-    \fn virtual void SelectItem::mirrorShow() = 0
+    \fn virtual void SelectItem::mirrorShow() const = 0
 
     Pure virtual function to show the mirror item on its scene.
 
     \sa QGraphicsItem::show()
 */
 /*!
-    \fn virtual void SelectItem::rotateMirror() = 0
+    \fn virtual void SelectItem::rotateMirror() const = 0
 
     Pure virtual function to indicate rotation to the mirror SelectItem.
 */
@@ -352,42 +351,42 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     description of mirrors.
 */
 /*!
-    \fn virtual void SelectItem::setMirrorActive() = 0
+    \fn virtual void SelectItem::setMirrorActive() const = 0
 
     Pure virtual function which sets the mirror SelectItem to be active.
 */
 /*!
-    \fn virtual void SelectItem::setMirrorAdded() = 0
+    \fn virtual void SelectItem::setMirrorAdded() const = 0
 
     Pure virtual function which adds the mirror SelectItem to its corresponding
     scene.
 */
 /*!
-    \fn virtual void SelectItem::setMirrorMoved() = 0
+    \fn virtual void SelectItem::setMirrorMoved() const = 0
 
     Pure virtual function which sets the \c moved attribute of the SelectItem's
     mirror.
 */
 /*!
-    \fn virtual void SelectItem::setMirrorResized() = 0
+    \fn virtual void SelectItem::setMirrorResized() const = 0
 
     Pure virtual function which sets the resized attribute of the SelectItem's
     mirror.
 */
 /*!
-    \fn virtual void SelectItem::setMirrorVertex(int vertex) = 0
+    \fn virtual void SelectItem::setMirrorVertex(int vertex) const = 0
 
     Pure virtual function which sets the active vertex of the SelectItem's
     mirror to \a vertex.
 */
 /*!
-    \fn virtual void SelectItem::updateMirrorScene() = 0
+    \fn virtual void SelectItem::updateMirrorScene() const = 0
 
     Pure virtual function which requests an update of the QGraphicsScene which
     owns the mirror.
 */
 /*!
-    \fn QSharedPointer<Label> SelectItem::getLabel()
+    \fn QSharedPointer<Label> SelectItem::getLabel() const
 
     Returns a Label*, pointing to the Label that owns the SelectItem.
 
@@ -412,13 +411,13 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa setActiveVertex(), flipH()
 */
 /*!
-    \fn QPointF SelectItem::getActivePoint()
+    \fn QPointF SelectItem::getActivePoint() const
 
     Returns a QPointF which contains the QGraphicsScene coordinates of the
     currently active vertex.
 */
 /*!
-    \fn int SelectItem::getActiveVertex()
+    \fn int SelectItem::getActiveVertex() const
 
     Returns an \c int indicating the currently active vertex. Returns
     SelectItem::UNSELECTED if there is no currently active vertex.
@@ -537,9 +536,59 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
 
 /*!
   \fn void SelectItem::toPixmap(QPainter* painter)
+
   Rasterizes the SelectItem and draws it on the given \a painter.
   */
 
+/*!
+  \fn bool SelectItem::getFromMaskScene() const
+
+  Returns whether this item was generated by the mask scene
+
+  \sa setFromMaskScene()
+  */
+
+/*!
+  \fn void SelectItem::setFromMaskScene(bool value)
+
+  Sets the \c fromMaskScene variable to \a value, indicating whether (\c true)
+  or not (\c false) the item was generated from the mask scene.
+
+  \sa getOnMaskScene()
+  */
+
+/*!
+  \fn bool SelectItem::getOnMaskScene() const
+
+  Returns the value of \c onMaskScene.
+
+  \sa setFromMaskScene()
+  */
+
+/*!
+  \fn void SelectItem::setOnMaskScene(bool value)
+
+  Sets the \c onMaskScene to \a value, indicating whether (\c true) or not
+  (\c false) the item is on the mask scene.
+
+  \sa getFromMaskScene()
+  */
+
+/*!
+  \fn void SelectItem::hideMask()
+
+  Hides any items on the mask scene that were generated on the photo scene.
+
+  \sa showMask()
+  */
+
+/*!
+  \fn void SelectItem::showMask()
+
+  Shows any items on the mask scene that were generated on the photo scene.
+
+  \sa hideMask()
+  */
 /*!
   \enum SelectItem::SelectType
 

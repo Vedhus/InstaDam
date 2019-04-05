@@ -8,6 +8,10 @@
   \brief Slider widget for filterDialog
  */
 
+/*!
+  Creates an instance based on \a maskType, \a propNums, \a tf, and parent
+  QWidget \a parent, if any.
+  */
 fSlider::fSlider(maskTypes maskType, int propNums, threshold_or_filter tf,
                  QWidget *parent) : QSlider(parent) {
     selectedMask = maskType;
@@ -20,18 +24,16 @@ fSlider::fSlider(maskTypes maskType, int propNums, threshold_or_filter tf,
 }
 
 /*!
- * This slot reemits the \a value through the filterValueChanged signal
- * along with other information like the selected mask, property number and the threhold or filter type
+  This slot reemits the \a value through the filterValueChanged signal
+  along with other information like the selected mask, property number and the threhold or filter type
  */
-
 void fSlider::reemitValueChanged(int value) {
     emit filterValueChanged(selectedMask, propNum, value, thof);
 }
 
 /*!
- * This slot emits the fSlider released with the selected mask and the threhold or filter type
+  This slot emits the fSlider released with the selected mask and the threhold or filter type
  */
-
 void fSlider::reemitSliderReleased() {
     emit  fSliderReleased(selectedMask, thof);
 }
@@ -44,6 +46,11 @@ void fSlider::reemitSliderReleased() {
   \inherits QSlider
   \brief Spinbox widget for filterDialog
  */
+
+/*!
+  Creates an instance based on \a maskType, \a propNums, \a tf, and parent
+  QWidget \a parent, if any.
+  */
 fSpinBox::fSpinBox(maskTypes maskType, int propNums, threshold_or_filter tf,
                    QWidget *parent) : QSpinBox(parent) {
     selectedMask = maskType;
@@ -54,10 +61,9 @@ fSpinBox::fSpinBox(maskTypes maskType, int propNums, threshold_or_filter tf,
 }
 
 /*!
- * This slot reemits the \a value through the filterValueChanged signal
- * along with other information like the selected mask, property number and the threhold or filter type
+  This slot reemits the \a value through the filterValueChanged signal
+  along with other information like the selected mask, property number and the threhold or filter type
  */
-
 void fSpinBox::reemitValueChanged(int value) {
     emit filterValueChanged(selectedMask, propNum, value, thof);
     emit fSlotChanged(selectedMask, thof);
@@ -71,6 +77,11 @@ void fSpinBox::reemitValueChanged(int value) {
   \inherits QSlider
   \brief Checbox widget for filterDialog
  */
+
+/*!
+  Creates an instance based on \a maskType, \a propNums, \a tf, and parent
+  QWidget \a parent, if any.
+  */
 fCheckBox::fCheckBox(maskTypes maskType, int propNums, threshold_or_filter tf,
                      QWidget *parent) : QCheckBox(parent) {
     selectedMask = maskType;
@@ -81,8 +92,8 @@ fCheckBox::fCheckBox(maskTypes maskType, int propNums, threshold_or_filter tf,
 }
 
 /*!
- * This slot reemits the \a value through the filterValueChanged signal
- * along with other information like the selected mask, property number and the threhold or filter type
+  This slot reemits the \a value through the filterValueChanged signal
+  along with other information like the selected mask, property number and the threhold or filter type
  */
 void fCheckBox::reemitStateChanged(int value) {
     emit filterValueChanged(selectedMask, propNum, value, thof);

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- instadam.cpp -->
+  <title>InstaDam Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>InstaDam</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">InstaDam Class</h1>
+<!-- $$$InstaDam-brief -->
+<p>The <a href="instadam.html">InstaDam</a> class defined the main window for the app. <a href="#details">More...</a></p>
+<!-- @@@InstaDam -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;InstaDam&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qmainwindow.html">QMainWindow</a></td></tr></table></div><ul>
+<li><a href="instadam-members.html">List of all members, including inherited members</a></li>
+<li><a href="instadam-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#InstaDam">InstaDam</a></b>(QWidget *<i>parent</i> = nullptr, QString <i>databaseURL</i> = &quot;&quot;, QString <i>token</i> = &quot;&quot;)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#dtor.InstaDam">~InstaDam</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#assertError">assertError</a></b>(std::string <i>errorMessage</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#clearLayout">clearLayout</a></b>(QLayout *<i>layout</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#connectFilters">connectFilters</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#exportImages">exportImages</a></b>(bool <i>asBuffers</i> = false)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#fileOpen">fileOpen</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#generateLabelFileName">generateLabelFileName</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#openFile_and_labels">openFile_and_labels</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setCurrentProject">setCurrentProject</a></b>(Project *<i>pr</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setLabels">setLabels</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">48 public functions inherited from <a href="http://doc.qt.io/qt-5/qmainwindow.html#public-functions">QMainWindow</a></li>
+<li class="fn">222 public functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-functions">QWidget</a></li>
+<li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
+<li class="fn">15 public functions inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#public-functions">QPaintDevice</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#fileDownloaded">fileDownloaded</a></b>(QString <i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#resetPixmapButtons">resetPixmapButtons</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">3 public slots inherited from <a href="http://doc.qt.io/qt-5/qmainwindow.html#public-slots">QMainWindow</a></li>
+<li class="fn">19 public slots inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-slots">QWidget</a></li>
+<li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#annotationPath-var">annotationPath</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QFileInfo </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#file-var">file</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#fileId-var">fileId</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#filename-var">filename</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> filterControls *</td><td class="memItemRight bottomAlign"><b><a href="instadam.html#filterControl-var">filterControl</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#imagesList-var">imagesList</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#labelFile-var">labelFile</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QString&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#labelPaths-var">labelPaths</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkAccessManager *</td><td class="memItemRight bottomAlign"><b><a href="instadam.html#manager-var">manager</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;PicPushButton *&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#maskButtonList-var">maskButtonList</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;maskTypes&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#maskTypeList-var">maskTypeList</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldAnnotationPath-var">oldAnnotationPath</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QFileInfo </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldFile-var">oldFile</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldFilename-var">oldFilename</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldImagesList-var">oldImagesList</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QString&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldLabelPaths-var">oldLabelPaths</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDir </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldPath-var">oldPath</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDir </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#path-var">path</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#runningLocally-var">runningLocally</a></b></td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QMetaObject </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#staticMetaObject-var">staticMetaObject</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">5 static public members inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#static-public-members">QWidget</a></li>
+<li class="fn">9 static public members inherited from <a href="http://doc.qt.io/qt-5/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">1 static public member inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#static-public-members">QPaintDevice</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">8 properties inherited from <a href="http://doc.qt.io/qt-5/qmainwindow.html#properties">QMainWindow</a></li>
+<li class="fn">59 properties inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#properties">QWidget</a></li>
+<li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
+<li class="fn">3 signals inherited from <a href="http://doc.qt.io/qt-5/qmainwindow.html#signals">QMainWindow</a></li>
+<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#signals">QWidget</a></li>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+<li class="fn">2 protected functions inherited from <a href="http://doc.qt.io/qt-5/qmainwindow.html#protected-functions">QMainWindow</a></li>
+<li class="fn">35 protected functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-functions">QWidget</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">1 protected function inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#protected-functions">QPaintDevice</a></li>
+<li class="fn">1 protected slot inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-slots">QWidget</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$InstaDam-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="instadam.html">InstaDam</a> class defined the main window for the app.</p>
+<p><a href="instadam.html">InstaDam</a> is the main window class for the <a href="instadam.html">InstaDam</a> app. The class includes all the signals, initialization and slots of the various buttons and tools that can be selected from the main window.</p>
+</div>
+<!-- @@@InstaDam -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$InstaDam[overload1]$$$InstaDamQWidget*QStringQString -->
+<h3 class="fn" id="InstaDam"><a name="InstaDam"></a>InstaDam::<span class="name">InstaDam</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html#QWidget">QWidget</a></span> *<i>parent</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>databaseURL</i> = &quot;&quot;, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>token</i> = &quot;&quot;)</h3>
+<p>Constructs an <a href="instadam.html">InstaDam</a> window given <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> <i>databaseURL</i>, Qstring <i>token</i> and <a href="http://doc.qt.io/qt-5/qmainwindow.html">QMainWindow</a> <i>parent</i>, if any. The constructor connects all the buttons in the main window.</p>
+<!-- @@@InstaDam -->
+<!-- $$$~InstaDam[overload1]$$$~InstaDam -->
+<h3 class="fn" id="dtor.InstaDam"><a name="dtor.InstaDam"></a><code>[virtual] </code>InstaDam::<span class="name">~InstaDam</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~InstaDam -->
+<!-- $$$assertError[overload1]$$$assertErrorstd::string -->
+<h3 class="fn" id="assertError"><a name="assertError"></a><span class="type">void</span> InstaDam::<span class="name">assertError</span>(<span class="type">std::string</span> <i>errorMessage</i>)</h3>
+<p>Displays the std::string <i>errorMessage</i> as a <a href="http://doc.qt.io/qt-5/qmessagebox.html">QMessageBox</a>.</p>
+<!-- @@@assertError -->
+<!-- $$$clearLayout[overload1]$$$clearLayoutQLayout* -->
+<h3 class="fn" id="clearLayout"><a name="clearLayout"></a><span class="type">void</span> InstaDam::<span class="name">clearLayout</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlayout.html">QLayout</a></span> *<i>layout</i>)</h3>
+<p>Removes all items from the <a href="http://doc.qt.io/qt-5/qlayout.html">QLayout</a> <b class="redFont"><code>\layout</code></b>.</p>
+<!-- @@@clearLayout -->
+<!-- $$$connectFilters[overload1]$$$connectFilters -->
+<h3 class="fn" id="connectFilters"><a name="connectFilters"></a><span class="type">void</span> InstaDam::<span class="name">connectFilters</span>()</h3>
+<p>Connects the filter buttons to the corresponding maskType.</p>
+<!-- @@@connectFilters -->
+<!-- $$$exportImages[overload1]$$$exportImagesbool -->
+<h3 class="fn" id="exportImages"><a name="exportImages"></a><span class="type">void</span> InstaDam::<span class="name">exportImages</span>(<span class="type">bool</span> <i>asBuffers</i> = false)</h3>
+<p>Saves the current annotations as rasterized PNGs or as a buffer depending on the value of <i>asBuffers</i></p>
+<!-- @@@exportImages -->
+<!-- $$$fileDownloaded[overload1]$$$fileDownloadedQString -->
+<h3 class="fn" id="fileDownloaded"><a name="fileDownloaded"></a><code>[slot] </code><span class="type">void</span> InstaDam::<span class="name">fileDownloaded</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>path</i>)</h3>
+<p>Opens a file stored at Qstring <i>path</i> for the web-assembly version.</p>
+<!-- @@@fileDownloaded -->
+<!-- $$$fileOpen[overload1]$$$fileOpen -->
+<h3 class="fn" id="fileOpen"><a name="fileOpen"></a><span class="type">void</span> InstaDam::<span class="name">fileOpen</span>()</h3>
+<!-- @@@fileOpen -->
+<!-- $$$generateLabelFileName[overload1]$$$generateLabelFileName -->
+<h3 class="fn" id="generateLabelFileName"><a name="generateLabelFileName"></a><span class="type">void</span> InstaDam::<span class="name">generateLabelFileName</span>()</h3>
+<p>Generates the annotation and export file names to be stored locally based on the location and name of the image files.</p>
+<!-- @@@generateLabelFileName -->
+<!-- $$$openFile_and_labels[overload1]$$$openFile_and_labels -->
+<h3 class="fn" id="openFile_and_labels"><a name="openFile_and_labels"></a><span class="type">void</span> InstaDam::<span class="name">openFile_and_labels</span>()</h3>
+<p>Uses defined <a href="http://doc.qt.io/qt-5/qstringlist.html">QStringList</a> of images in the path as well as the id of the current file and opens the file. If annotations exist, the annotations are opened.</p>
+<!-- @@@openFile_and_labels -->
+<!-- $$$resetPixmapButtons[overload1]$$$resetPixmapButtons -->
+<h3 class="fn" id="resetPixmapButtons"><a name="resetPixmapButtons"></a><code>[slot] </code><span class="type">void</span> InstaDam::<span class="name">resetPixmapButtons</span>()</h3>
+<p>Resets the pixmaps of the filter buttons.</p>
+<!-- @@@resetPixmapButtons -->
+<!-- $$$setCurrentProject[overload1]$$$setCurrentProjectProject* -->
+<h3 class="fn" id="setCurrentProject"><a name="setCurrentProject"></a><span class="type">void</span> InstaDam::<span class="name">setCurrentProject</span>(<span class="type"><a href="project.html">Project</a></span> *<i>pr</i>)</h3>
+<p>Sets the current project to <i>pr</i>.</p>
+<!-- @@@setCurrentProject -->
+<!-- $$$setLabels[overload1]$$$setLabels -->
+<h3 class="fn" id="setLabels"><a name="setLabels"></a><span class="type">void</span> InstaDam::<span class="name">setLabels</span>()</h3>
+<p>Creates sets the label buttons to the labels of the current project.</p>
+<!-- @@@setLabels -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

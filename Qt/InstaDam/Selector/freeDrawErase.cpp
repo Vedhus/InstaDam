@@ -73,7 +73,7 @@ void FreeDrawErase::moveItem(const QPointF &oldPos, QPointF &newPos) {
 
 
 /*!
-  \fn bool FreeDrawErase::isInside(QPointF &point)
+  \fn bool FreeDrawErase::isInside(const QPointF &point) const
   \reimp
 
   Empty function as a point is not in an erased region.
@@ -87,7 +87,7 @@ void FreeDrawErase::moveItem(const QPointF &oldPos, QPointF &newPos) {
   */
 
 /*!
-  \fn QSharedPointer<EraseMap> FreeDrawErase::getMap()
+  \fn QSharedPointer<EraseMap> FreeDrawErase::getMap() const
 
   Returns a pointer to an EraseMap containing a map of the points deleted from
   each FreeDrawSelect object.

@@ -9,6 +9,17 @@
 #include "opencv2/core/mat.hpp"
 #include "ui_instadam.h"
 
+/*!
+  \class PhotoViewer
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits QGraphicsView
+  \brief Viewer for displaying an image and drawing SelectItems on it.
+  */
+
+/*!
+  Craetes an instance with parent QWidget \a parent.
+  */
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
     viewerType = PhotoScene::PHOTO_VIEWER_TYPE;
     scene = new PhotoScene(viewerType, this);
@@ -35,16 +46,25 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
     selectedMask = CANNY;
 }
 
+/*!
+  For testing
+  */
 void PhotoViewer::testPixmap() {
     QPixmap pixmap2 =  QPixmap("G:/My Drive/SSTL/DCNN/Labellers/Python Labeller/InstaDamPublic/Qt/InstaDam/im2.JPG");
     this->photo->setPixmap(pixmap2);
 }
 
+/*!
+  Sets the internal filter controls to \fc.
+  */
 void PhotoViewer::setFilterControls(filterControls *fc) {
     filterControl = fc;
 }
 
 #ifdef WASM_BUILD
+/*!
+  Sets the internal image based on the input \a array, with Label \a labelname
+  */
 QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname) {
     QPixmap pixmap;
     QColor whiteColor = QColor(1, 1, 1, 0);
@@ -67,6 +87,10 @@ QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname) {
     return pixmap.size();
 }
 #endif
+
+/*!
+  Sets the internal image based on data from \a filename.
+  */
 QSize PhotoViewer::setPhotoFromFile(QString filename) {
     QPixmap pixmap = QPixmap(filename);
 
@@ -77,11 +101,17 @@ QSize PhotoViewer::setPhotoFromFile(QString filename) {
     return pixmap.size();
 }
 
+/*!
+  Sets the internal image based on \a px.
+  */
 void PhotoViewer::setPhotoFromPixmap(QPixmap px) {
     cvImage = QPixmap2Mat(px);
     setPhoto(px);
 }
 
+/*!
+  Sets the internal image based on \a pixmap.
+  */
 void PhotoViewer::setPhoto(QPixmap pixmap) {
     cv::resize(cvImage, cvThumb, cv::Size(200, 200), CV_INTER_LINEAR);
 
@@ -102,6 +132,9 @@ void PhotoViewer::setPhoto(QPixmap pixmap) {
     }
 }
 
+/*!
+  Converts \a src to a cv::Mat.
+  */
 cv::Mat PhotoViewer::QImage2Mat(QImage const& src) const {
      cv::Mat tmp(src.height(), src.width(), CV_8UC3,
                  const_cast<uchar*>(src.bits()),
@@ -111,6 +144,10 @@ cv::Mat PhotoViewer::QImage2Mat(QImage const& src) const {
      return result;
 }
 
+/*!
+  \overload QImage2Mat
+  Converts \a px to a cv::Mat.
+  */
 cv::Mat PhotoViewer::QPixmap2Mat(QPixmap px) const {
      QImage src = px.toImage();
      cv::Mat tmp(src.height(), src.width(), CV_8UC3,
@@ -121,6 +158,9 @@ cv::Mat PhotoViewer::QPixmap2Mat(QPixmap px) const {
      return result;
 }
 
+/*!
+  Sets the internal mask based on \a filterName and \a thof.
+  */
 void PhotoViewer::setImMask(maskTypes filterName, threshold_or_filter thof) {
     selectedMask = filterName;
     qInfo("SettingMask");
@@ -141,6 +181,9 @@ void PhotoViewer::setImMask(maskTypes filterName, threshold_or_filter thof) {
     }
 }
 
+/*!
+  Something based on \a zoom_input, \a factor, \a point.
+  */
 void PhotoViewer::zoomedInADifferentView(int zoom_input, float factor,
                                          QPointF point) {
     zoom = zoom_input;
@@ -155,6 +198,9 @@ void PhotoViewer::zoomedInADifferentView(int zoom_input, float factor,
     centerOn(point);
 }
 
+/*!
+  Something
+  */
 void PhotoViewer::fitInView() {
     int MAX = 100;
     QRectF rect = QRectF(photo->pixmap().rect());
@@ -184,6 +230,10 @@ void PhotoViewer::fitInView() {
 }
 
 
+/*!
+  Sets the pan mode to either PAN (\a mode = true) or PAINTBRUSH (\a mode =
+  false).
+  */
 void PhotoViewer::setPanMode(bool mode) {
     if (mode) {
         this->brushType = PAN;
@@ -194,6 +244,9 @@ void PhotoViewer::setPanMode(bool mode) {
     }
 }
 
+/*!
+  Resets the internal brush to \a size and style \a capStyle_input.
+  */
 void PhotoViewer::resetBrush(int size, Qt::PenCapStyle capStyle_input) {
     brushSize = size;
 
@@ -212,6 +265,9 @@ void PhotoViewer::resetBrush(int size, Qt::PenCapStyle capStyle_input) {
     paintMode = false;
 }
 
+/*!
+  Sets the brush mode to \a cap.
+  */
 void PhotoViewer::setBrushMode(Qt::PenCapStyle cap) {
     if (this->hasPhoto) {
         setDragMode(QGraphicsView::NoDrag);
@@ -222,6 +278,9 @@ void PhotoViewer::setBrushMode(Qt::PenCapStyle cap) {
     }
 }
 
+/*!
+  \reimp
+  */
 void PhotoViewer::wheelEvent(QWheelEvent* event) {
     float factor = 1;
     QRect viewrect = this->viewport()->rect();
@@ -250,11 +309,17 @@ void PhotoViewer::wheelEvent(QWheelEvent* event) {
     }
 }
 
+/*!
+  \reimp
+  */
 void PhotoViewer::resizeEvent(QResizeEvent *event) {
     fitInView();
     QGraphicsView::resizeEvent(event);
 }
 
+/*!
+  \reimp
+  */
 void PhotoViewer::mousePressEvent(QMouseEvent* event) {
     QGraphicsView::mousePressEvent(event);
 
@@ -264,6 +329,9 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event) {
     }
 }
 
+/*!
+  \reimp
+  */
 void PhotoViewer::mouseMoveEvent(QMouseEvent* event) {
     if (hasPhoto) {
         if (!paintMode) {
@@ -276,6 +344,9 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event) {
     QGraphicsView::mouseMoveEvent(event);
 }
 
+/*!
+  \reimp
+  */
 void PhotoViewer::mouseReleaseEvent(QMouseEvent* event) {
     QGraphicsView::mouseReleaseEvent(event);
     paintMode = false;

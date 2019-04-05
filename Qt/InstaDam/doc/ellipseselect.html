@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- ellipseSelect.cpp -->
+  <title>EllipseSelect Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>EllipseSelect</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">EllipseSelect Class</h1>
+<!-- $$$EllipseSelect-brief -->
+<p>The <a href="ellipseselect.html">EllipseSelect</a> class provides a class for annotating elliptical regions. <a href="#details">More...</a></p>
+<!-- @@@EllipseSelect -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;EllipseSelect&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qgraphicsellipseitem.html">QGraphicsEllipseItem</a> and <a href="boxbasedselector.html">BoxBasedSelector</a></td></tr></table></div><ul>
+<li><a href="ellipseselect-members.html">List of all members, including inherited members</a></li>
+<li><a href="ellipseselect-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#EllipseSelect">EllipseSelect</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#EllipseSelect-1">EllipseSelect</a></b>(const QJsonObject &amp;<i>json</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#EllipseSelect-2">EllipseSelect</a></b>(QPointF <i>point</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#EllipseSelect-3">EllipseSelect</a></b>(QPointF <i>point</i>, qreal <i>vertexSize</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#dtor.EllipseSelect">~EllipseSelect</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#isVisible">isVisible</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QGraphicsScene *</td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#scene">scene</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setOpacity">setOpacity</a></b>(qreal <i>val</i>)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#addPoint">addPoint</a></b>(QPointF &amp;<i>point</i>, const int <i>vertex</i> = UNSELECTED) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#baseInstructions">baseInstructions</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QRectF </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#boundingRect">boundingRect</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual EllipseSelect *</td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#getMirror">getMirror</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#isInside">isInside</a></b>(const QPointF &amp;<i>point</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#mirrorHide">mirrorHide</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#mirrorShow">mirrorShow</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#moveItem">moveItem</a></b>(const QPointF &amp;<i>oldPos</i>, QPointF &amp;<i>newPos</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#paint">paint</a></b>(QPainter *<i>painter</i>, const QStyleOptionGraphicsItem *<i>option</i>, QWidget *<i>widget</i> = nullptr) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#rotateMirror">rotateMirror</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirror">setMirror</a></b>(SelectItem *<i>item</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorActive">setMirrorActive</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorAdded">setMirrorAdded</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorCorners">setMirrorCorners</a></b>(QRectF <i>tlc</i>, QRectF <i>blc</i>, QRectF <i>trc</i>, QRectF <i>brc</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorMoved">setMirrorMoved</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorResized">setMirrorResized</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setMirrorVertex">setMirrorVertex</a></b>(int <i>vertex</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#setRectUnchecked">setRectUnchecked</a></b>(QRectF <i>rect</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#toPixmap">toPixmap</a></b>(QPainter *<i>painter</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#type">type</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#updateMirrorScene">updateMirrorScene</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#updatePen">updatePen</a></b>(QPen <i>pen</i>) override</td></tr>
+</table></div>
+<ul>
+<li class="fn">14 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsellipseitem.html#public-functions">QGraphicsEllipseItem</a></li>
+<li class="fn">14 public functions inherited from <a href="boxbasedselector.html#public-functions">BoxBasedSelector</a></li>
+<li class="fn">6 public functions inherited from <a href="http://doc.qt.io/qt-5/qabstractgraphicsshapeitem.html#public-functions">QAbstractGraphicsShapeItem</a></li>
+<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">366 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="ellipseselect.html#baseInstruction-var">baseInstruction</a></b></td></tr>
+</table></div>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 static public member inherited from <a href="selectitem.html#static-public-members">SelectItem</a></li>
+<li class="fn">1 protected function inherited from <a href="boxbasedselector.html#protected-functions">BoxBasedSelector</a></li>
+<li class="fn">2 protected functions inherited from <a href="selectitem.html#protected-functions">SelectItem</a></li>
+<li class="fn">48 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#protected-functions">QGraphicsItem</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$EllipseSelect-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="ellipseselect.html">EllipseSelect</a> class provides a class for annotating elliptical regions.</p>
+<p>Provides a class for annotating elliptical regions in <a href="instadam.html">InstaDam</a>. The region is described by its top-left and lower-right vertices, and by its angle of rotation.</p>
+</div>
+<!-- @@@EllipseSelect -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$EllipseSelect[overload1]$$$EllipseSelect -->
+<h3 class="fn" id="EllipseSelect"><a name="EllipseSelect"></a>EllipseSelect::<span class="name">EllipseSelect</span>()</h3>
+<p>Constructs an <a href="ellipseselect.html">EllipseSelect</a> object with all vertices at 0,0 in scene coordinates</p>
+<!-- @@@EllipseSelect -->
+<!-- $$$EllipseSelect$$$EllipseSelectconstQJsonObject&QSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="EllipseSelect-1"><a name="EllipseSelect-1"></a>EllipseSelect::<span class="name">EllipseSelect</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs an <a href="ellipseselect.html">EllipseSelect</a> object by reading a <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> and setting the internal rectangle and rotation angle to the values given in <i>json</i>. <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@EllipseSelect -->
+<!-- $$$EllipseSelect$$$EllipseSelectQPointFQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="EllipseSelect-2"><a name="EllipseSelect-2"></a>EllipseSelect::<span class="name">EllipseSelect</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs an <a href="ellipseselect.html">EllipseSelect</a> object by setting all vertices to be a <i>point</i>, <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@EllipseSelect -->
+<!-- $$$EllipseSelect$$$EllipseSelectQPointFqrealQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="EllipseSelect-3"><a name="EllipseSelect-3"></a>EllipseSelect::<span class="name">EllipseSelect</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>vertexSize</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs an <a href="ellipseselect.html">EllipseSelect</a> object by setting all vertices to be a <i>point</i>, <i>vertexSize</i> indicates the size of the vertex highlight boxes, <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@EllipseSelect -->
+<!-- $$$~EllipseSelect[overload1]$$$~EllipseSelect -->
+<h3 class="fn" id="dtor.EllipseSelect"><a name="dtor.EllipseSelect"></a><code>[override virtual] </code>EllipseSelect::<span class="name">~EllipseSelect</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~EllipseSelect -->
+<!-- $$$addPoint[overload1]$$$addPointQPointF&constint -->
+<h3 class="fn" id="addPoint"><a name="addPoint"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">addPoint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>, const <span class="type">int</span> <i>vertex</i> = UNSELECTED)</h3>
+<p>Reimplemented from <a href="selectitem.html#addPoint">SelectItem::addPoint</a>().</p>
+<!-- @@@addPoint -->
+<!-- $$$baseInstructions[overload1]$$$baseInstructions -->
+<h3 class="fn" id="baseInstructions"><a name="baseInstructions"></a><code>[override virtual] </code><span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> EllipseSelect::<span class="name">baseInstructions</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#baseInstructions">SelectItem::baseInstructions</a>().</p>
+<!-- @@@baseInstructions -->
+<!-- $$$boundingRect[overload1]$$$boundingRect -->
+<h3 class="fn" id="boundingRect"><a name="boundingRect"></a><code>[override virtual] </code><span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> EllipseSelect::<span class="name">boundingRect</span>() const</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsellipseitem.html#boundingRect">QGraphicsEllipseItem::boundingRect</a>().</p>
+<!-- @@@boundingRect -->
+<!-- $$$getMirror[overload1]$$$getMirror -->
+<h3 class="fn" id="getMirror"><a name="getMirror"></a><code>[override virtual] </code><span class="type"><a href="ellipseselect.html#EllipseSelect">EllipseSelect</a></span> *EllipseSelect::<span class="name">getMirror</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#getMirror">SelectItem::getMirror</a>().</p>
+<!-- @@@getMirror -->
+<!-- $$$isInside[overload1]$$$isInsideconstQPointF& -->
+<h3 class="fn" id="isInside"><a name="isInside"></a><code>[override virtual] </code><span class="type">bool</span> EllipseSelect::<span class="name">isInside</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#isInside">SelectItem::isInside</a>().</p>
+<!-- @@@isInside -->
+<!-- $$$isVisible[overload1]$$$isVisible -->
+<h3 class="fn" id="isVisible"><a name="isVisible"></a><span class="type">bool</span> EllipseSelect::<span class="name">isVisible</span>() const</h3>
+<p>Returns whether the <a href="ellipseselect.html">EllipseSelect</a> object is visible (<code>true</code>) on the <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a> or not (<code>false</code>).</p>
+<!-- @@@isVisible -->
+<!-- $$$mirrorHide[overload1]$$$mirrorHide -->
+<h3 class="fn" id="mirrorHide"><a name="mirrorHide"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">mirrorHide</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#mirrorHide">SelectItem::mirrorHide</a>().</p>
+<!-- @@@mirrorHide -->
+<!-- $$$mirrorShow[overload1]$$$mirrorShow -->
+<h3 class="fn" id="mirrorShow"><a name="mirrorShow"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">mirrorShow</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#mirrorShow">SelectItem::mirrorShow</a>().</p>
+<!-- @@@mirrorShow -->
+<!-- $$$moveItem[overload1]$$$moveItemconstQPointF&QPointF& -->
+<h3 class="fn" id="moveItem"><a name="moveItem"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">moveItem</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newPos</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#moveItem">SelectItem::moveItem</a>().</p>
+<!-- @@@moveItem -->
+<!-- $$$paint[overload1]$$$paintQPainter*constQStyleOptionGraphicsItem*QWidget* -->
+<h3 class="fn" id="paint"><a name="paint"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">paint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qstyleoptiongraphicsitem.html">QStyleOptionGraphicsItem</a></span> *<i>option</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a></span> *<i>widget</i> = nullptr)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsellipseitem.html#paint">QGraphicsEllipseItem::paint</a>().</p>
+<!-- @@@paint -->
+<!-- $$$rotateMirror[overload1]$$$rotateMirror -->
+<h3 class="fn" id="rotateMirror"><a name="rotateMirror"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">rotateMirror</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#rotateMirror">SelectItem::rotateMirror</a>().</p>
+<!-- @@@rotateMirror -->
+<!-- $$$scene[overload1]$$$scene -->
+<h3 class="fn" id="scene"><a name="scene"></a><span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a></span> *EllipseSelect::<span class="name">scene</span>()</h3>
+<p>This function overloads <a href="selectitem.html#scene">SelectItem::scene</a>().</p>
+<p>Returns the <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a> to which this item belongs.</p>
+<!-- @@@scene -->
+<!-- $$$setMirror[overload1]$$$setMirrorSelectItem* -->
+<h3 class="fn" id="setMirror"><a name="setMirror"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirror</span>(<span class="type"><a href="selectitem.html#SelectItem">SelectItem</a></span> *<i>item</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirror">SelectItem::setMirror</a>().</p>
+<!-- @@@setMirror -->
+<!-- $$$setMirrorActive[overload1]$$$setMirrorActive -->
+<h3 class="fn" id="setMirrorActive"><a name="setMirrorActive"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorActive</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorActive">SelectItem::setMirrorActive</a>().</p>
+<!-- @@@setMirrorActive -->
+<!-- $$$setMirrorAdded[overload1]$$$setMirrorAdded -->
+<h3 class="fn" id="setMirrorAdded"><a name="setMirrorAdded"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorAdded</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorAdded">SelectItem::setMirrorAdded</a>().</p>
+<!-- @@@setMirrorAdded -->
+<!-- $$$setMirrorCorners[overload1]$$$setMirrorCornersQRectFQRectFQRectFQRectF -->
+<h3 class="fn" id="setMirrorCorners"><a name="setMirrorCorners"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorCorners</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>tlc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>blc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>trc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>brc</i>) const</h3>
+<p>Reimplemented from <a href="boxbasedselector.html#setMirrorCorners">BoxBasedSelector::setMirrorCorners</a>().</p>
+<!-- @@@setMirrorCorners -->
+<!-- $$$setMirrorMoved[overload1]$$$setMirrorMoved -->
+<h3 class="fn" id="setMirrorMoved"><a name="setMirrorMoved"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorMoved</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorMoved">SelectItem::setMirrorMoved</a>().</p>
+<!-- @@@setMirrorMoved -->
+<!-- $$$setMirrorResized[overload1]$$$setMirrorResized -->
+<h3 class="fn" id="setMirrorResized"><a name="setMirrorResized"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorResized</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorResized">SelectItem::setMirrorResized</a>().</p>
+<!-- @@@setMirrorResized -->
+<!-- $$$setMirrorVertex[overload1]$$$setMirrorVertexint -->
+<h3 class="fn" id="setMirrorVertex"><a name="setMirrorVertex"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setMirrorVertex</span>(<span class="type">int</span> <i>vertex</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorVertex">SelectItem::setMirrorVertex</a>().</p>
+<!-- @@@setMirrorVertex -->
+<!-- $$$setOpacity[overload1]$$$setOpacityqreal -->
+<h3 class="fn" id="setOpacity"><a name="setOpacity"></a><span class="type">void</span> EllipseSelect::<span class="name">setOpacity</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>val</i>)</h3>
+<p>* Sets the opacity of the label to <i>val</i></p>
+<!-- @@@setOpacity -->
+<!-- $$$setRectUnchecked[overload1]$$$setRectUncheckedQRectF -->
+<h3 class="fn" id="setRectUnchecked"><a name="setRectUnchecked"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">setRectUnchecked</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>rect</i>)</h3>
+<p>Reimplemented from <a href="boxbasedselector.html#setRectUnchecked">BoxBasedSelector::setRectUnchecked</a>().</p>
+<!-- @@@setRectUnchecked -->
+<!-- $$$toPixmap[overload1]$$$toPixmapQPainter* -->
+<h3 class="fn" id="toPixmap"><a name="toPixmap"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">toPixmap</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#toPixmap">SelectItem::toPixmap</a>().</p>
+<!-- @@@toPixmap -->
+<!-- $$$type[overload1]$$$type -->
+<h3 class="fn" id="type"><a name="type"></a><code>[override virtual] </code><span class="type">int</span> EllipseSelect::<span class="name">type</span>() const</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsellipseitem.html#type">QGraphicsEllipseItem::type</a>().</p>
+<p>This function overloads <a href="selectitem.html#type">SelectItem::type</a>().</p>
+<p>This function returns the type of this item.</p>
+<p><b>See also </b><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#type">QGraphicsItem::type</a>() and <a href="selectitem.html#type">SelectItem::type</a>().</p>
+<!-- @@@type -->
+<!-- $$$updateMirrorScene[overload1]$$$updateMirrorScene -->
+<h3 class="fn" id="updateMirrorScene"><a name="updateMirrorScene"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">updateMirrorScene</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#updateMirrorScene">SelectItem::updateMirrorScene</a>().</p>
+<!-- @@@updateMirrorScene -->
+<!-- $$$updatePen[overload1]$$$updatePenQPen -->
+<h3 class="fn" id="updatePen"><a name="updatePen"></a><code>[override virtual] </code><span class="type">void</span> EllipseSelect::<span class="name">updatePen</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpen.html">QPen</a></span> <i>pen</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#updatePen">SelectItem::updatePen</a>().</p>
+<!-- @@@updatePen -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

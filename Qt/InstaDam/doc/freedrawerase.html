@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- freeDrawErase.cpp -->
+  <title>FreeDrawErase Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>FreeDrawErase</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">FreeDrawErase Class</h1>
+<!-- $$$FreeDrawErase-brief -->
+<p>The <a href="freedrawerase.html">FreeDrawErase</a> class provides a class for erasing regions breated by a <a href="select.html#freedrawselect">FreeDrawSelect</a>. <a href="#details">More...</a></p>
+<!-- @@@FreeDrawErase -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;FreeDrawErase&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="freedrawselect.html">FreeDrawSelect</a></td></tr></table></div><ul>
+<li><a href="freedrawerase-members.html">List of all members, including inherited members</a></li>
+<li><a href="freedrawerase-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#FreeDrawErase">FreeDrawErase</a></b>(QPointF <i>point</i>, int <i>brushSize</i>, Qt::PenCapStyle <i>brushMode</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#dtor.FreeDrawErase">~FreeDrawErase</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSharedPointer&lt;EraseMap&gt; </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#getMap">getMap</a></b>() const</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#isInside">isInside</a></b>(const QPointF &amp;<i>point</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#moveItem">moveItem</a></b>(const QPointF &amp;<i>oldPos</i>, QPointF &amp;<i>newPos</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#paint">paint</a></b>(QPainter *<i>painter</i>, const QStyleOptionGraphicsItem *<i>option</i>, QWidget *<i>widget</i> = ...) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#toPixmap">toPixmap</a></b>(QPainter *<i>painter</i>) override</td></tr>
+</table></div>
+<ul>
+<li class="fn">36 public functions inherited from <a href="freedrawselect.html#public-functions">FreeDrawSelect</a></li>
+<li class="fn">16 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicspixmapitem.html#public-functions">QGraphicsPixmapItem</a></li>
+<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">366 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
+</ul>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#baseInstruction-var">baseInstruction</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">1 static public member inherited from <a href="selectitem.html#static-public-members">SelectItem</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">2 protected functions inherited from <a href="selectitem.html#protected-functions">SelectItem</a></li>
+<li class="fn">48 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#protected-functions">QGraphicsItem</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$FreeDrawErase-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="freedrawerase.html">FreeDrawErase</a> class provides a class for erasing regions breated by a <a href="select.html#freedrawselect">FreeDrawSelect</a>.</p>
+<p>Provides a class for erasing from selection regions created by <a href="select.html#freedrawselect">FreeDrawSelect</a> objects. This is done by painting on the canvas with a brush. The region is defined by the pixels that are painted on. This class exists only to remove pixels from existing <a href="select.html#freedrawselect">FreeDrawSelect</a> objects and provide undo/redo capabilities to the deletion.</p>
+</div>
+<!-- @@@FreeDrawErase -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$FreeDrawErase[overload1]$$$FreeDrawEraseQPointFintQt::PenCapStyleQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="FreeDrawErase"><a name="FreeDrawErase"></a>FreeDrawErase::<span class="name">FreeDrawErase</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type">int</span> <i>brushSize</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#PenCapStyle-enum">Qt::PenCapStyle</a></span> <i>brushMode</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="freedrawerase.html">FreeDrawErase</a> instance withan initial selected point <i>point</i>, with a brush size of <i>brushSize</i> pixels, brush type of <i>brushMode</i>, <i>label</i> as the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any. Acceptable values for the <i>brushMode</i> are:</p>
+<ul>
+<li><a href="http://doc.qt.io/qt-5/qt.html#PenCapStyle-enum">Qt::SquareCap</a></li>
+<li><a href="http://doc.qt.io/qt-5/qt.html#PenCapStyle-enum">Qt::RoundCap</a></li>
+</ul>
+<!-- @@@FreeDrawErase -->
+<!-- $$$~FreeDrawErase[overload1]$$$~FreeDrawErase -->
+<h3 class="fn" id="dtor.FreeDrawErase"><a name="dtor.FreeDrawErase"></a><code>[override virtual] </code>FreeDrawErase::<span class="name">~FreeDrawErase</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~FreeDrawErase -->
+<!-- $$$getMap[overload1]$$$getMap -->
+<h3 class="fn" id="getMap"><a name="getMap"></a><span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type">EraseMap</span>&gt; FreeDrawErase::<span class="name">getMap</span>() const</h3>
+<p>Returns a pointer to an EraseMap containing a map of the points deleted from each <a href="select.html#freedrawselect">FreeDrawSelect</a> object.</p>
+<!-- @@@getMap -->
+<!-- $$$isInside[overload1]$$$isInsideconstQPointF& -->
+<h3 class="fn" id="isInside"><a name="isInside"></a><code>[override virtual] </code><span class="type">bool</span> FreeDrawErase::<span class="name">isInside</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>) const</h3>
+<p>Reimplemented from <a href="freedrawselect.html#isInside">FreeDrawSelect::isInside</a>().</p>
+<p>Empty function as a point is not in an erased region.</p>
+<!-- @@@isInside -->
+<!-- $$$moveItem[overload1]$$$moveItemconstQPointF&QPointF& -->
+<h3 class="fn" id="moveItem"><a name="moveItem"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawErase::<span class="name">moveItem</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newPos</i>)</h3>
+<p>Reimplemented from <a href="freedrawselect.html#moveItem">FreeDrawSelect::moveItem</a>().</p>
+<!-- @@@moveItem -->
+<!-- $$$paint[overload1]$$$paintQPainter*constQStyleOptionGraphicsItem*QWidget* -->
+<h3 class="fn" id="paint"><a name="paint"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawErase::<span class="name">paint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qstyleoptiongraphicsitem.html">QStyleOptionGraphicsItem</a></span> *<i>option</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a></span> *<i>widget</i> = ...)</h3>
+<p>Reimplemented from <a href="freedrawselect.html#paint">FreeDrawSelect::paint</a>().</p>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted</p>
+<!-- @@@paint -->
+<!-- $$$toPixmap[overload1]$$$toPixmapQPainter* -->
+<h3 class="fn" id="toPixmap"><a name="toPixmap"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawErase::<span class="name">toPixmap</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>)</h3>
+<p>Reimplemented from <a href="freedrawselect.html#toPixmap">FreeDrawSelect::toPixmap</a>().</p>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted</p>
+<!-- @@@toPixmap -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

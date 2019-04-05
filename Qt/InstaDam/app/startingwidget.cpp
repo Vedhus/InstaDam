@@ -1,54 +1,72 @@
-///////////////////////////////////////////////////////////////////
 #include "startingwidget.h"
+#include <QDebug>
+#include <QCoreApplication>
 #include "login.h"
 #include "instadam.h"
 #include "ui_startingwidget.h"
-#include<QDebug>
-#include <QCoreApplication>
+/*!
+  \class StartingWidget
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits QWidget
+  \brief Starting widget for selecting user mode, either Local or Server.
 
+  */
+
+/*!
+  Constructs a Qwidget with parent QWidget \a parent, if any.
+  */
 StartingWidget::StartingWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::StartingWidget)
-{
+    QWidget(parent), ui(new Ui::StartingWidget) {
     ui->setupUi(this);
 }
 
-StartingWidget::~StartingWidget()
-{
+/*!
+  Destructor
+  */
+StartingWidget::~StartingWidget() {
     delete ui;
 }
 
-void StartingWidget::runLocalVersion()
-{
+/*!
+  Sets the mode to run locally.
+  */
+void StartingWidget::runLocalVersion() {
     qInfo() << "running locally";
     InstaDam *w = new InstaDam;
     w->runningLocally = true;
     w->show();
     hide();
 //    run the local main instadam window
-
 }
 
-void StartingWidget::runServerVersion()
-{
+/*!
+  Sets the mode to run of a server.
+  */
+void StartingWidget::runServerVersion() {
     qInfo() << "running on a server";
     Login *log = new Login;
     log->show();
     hide();
-
 }
 
-void StartingWidget::on_pushButton_clicked()
-{
+/*!
+  Responds to the Local Version button being clicked.
+  */
+void StartingWidget::on_pushButton_clicked() {
     runLocalVersion();
 }
 
-void StartingWidget::on_pushButton_2_clicked()
-{
+/*!
+  Responds to the Run from Server button being clicked.
+  */
+void StartingWidget::on_pushButton_2_clicked() {
     runServerVersion();
 }
 
-void StartingWidget::on_pushButton_3_clicked()
-{
+/*!
+  Responds to the widget closing.
+  */
+void StartingWidget::on_pushButton_3_clicked() {
     close();
 }

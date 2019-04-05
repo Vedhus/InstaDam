@@ -474,48 +474,48 @@ void PolygonSelect::setMirrorPolygon(int actVert) {
 }
 
 /*!
-  \fn QString PolygonSelect::baseInstructions()
+  \fn QString PolygonSelect::baseInstructions() const
 
   \reimp
   */
 
 /*!
-  \fn void PolygonSelect::rotate(QPointF &from, QPointF &to)
+  \fn void PolygonSelect::rotate(const QPointF &from, const QPointF &to)
   \reimp
   Empty function as a PolygonSelect cannot be rotated.
   */
 
 /*!
-  \fn PolygonSelect* PolygonSelect::getMirror()
+  \fn PolygonSelect* PolygonSelect::getMirror() const
   \reimp
   */
 
 /*!
-  \fn void PolygonSelect::rotateMirror()
+  \fn void PolygonSelect::rotateMirror() const
   \reimp
   Empty funtion as a PolygonSelect cannot be rotated.
   */
 
 /*!
-  \fn void PolygonSelect::setMirrorAdded()
+  \fn void PolygonSelect::setMirrorAdded() const
   \reimp
   */
 
 /*!
-  \fn bool PolygonSelect::isVisible()
+  \fn bool PolygonSelect::isVisible() const
 
   Returns a \c bool indicating whether the PolygonSelect object is visible
   (\c true) in its owning QGraphicsScene or not (\c false).
   */
 
 /*!
-  \fn qreal PolygonSelect::magnitude(QPointF point)
+  \fn qreal PolygonSelect::magnitude(QPointF point) const
 
   Returns a \c qreal indicating the absolute magnitude of a vector from 0,0 to
   \a point.
   */
 
 /*!
-  \fn QPolygonF PolygonSelect::getPolygon()
+  \fn QPolygonF PolygonSelect::getPolygon() const
   Returns the PolygonSelect object's internal QPolygonF.
   */

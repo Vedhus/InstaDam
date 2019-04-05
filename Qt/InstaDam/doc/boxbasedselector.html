@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- boxbasedselector.cpp -->
+  <title>BoxBasedSelector Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>BoxBasedSelector</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#protected-variables">Protected Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">BoxBasedSelector Class</h1>
+<!-- $$$BoxBasedSelector-brief -->
+<p>The <a href="boxbasedselector.html">BoxBasedSelector</a> class provides a base class for <a href="selectitem.html">SelectItem</a> subclasses that can be described with a box. <a href="#details">More...</a></p>
+<!-- @@@BoxBasedSelector -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;BoxBasedSelector&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="selectitem.html">SelectItem</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="ellipseselect.html">EllipseSelect</a> and <a href="rectangleselect.html">RectangleSelect</a></p>
+</td></tr></table></div><ul>
+<li><a href="boxbasedselector-members.html">List of all members, including inherited members</a></li>
+<li><a href="boxbasedselector-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#BoxBasedSelector">BoxBasedSelector</a></b>(const QJsonObject &amp;<i>json</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#BoxBasedSelector-1">BoxBasedSelector</a></b>(QPointF <i>point</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#BoxBasedSelector-2">BoxBasedSelector</a></b>(QPointF <i>point</i>, qreal <i>vertSize</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#dtor.BoxBasedSelector">~BoxBasedSelector</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QRectF </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#getRect">getRect</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#getRotationAngle">getRotationAngle</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#setMirrorCorners">setMirrorCorners</a></b>(QRectF <i>tlc</i>, QRectF <i>blc</i>, QRectF <i>trc</i>, QRectF <i>brc</i>) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#setRectUnchecked">setRectUnchecked</a></b>(QRectF <i>rect</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#setRotationAngle">setRotationAngle</a></b>(qreal <i>angle</i>)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#clickPoint">clickPoint</a></b>(const QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#insertVertex">insertVertex</a></b>(const int <i>vertex</i>, const QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#numberOfVertices">numberOfVertices</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#removeVertex">removeVertex</a></b>(int <i>vertex</i> = UNSELECTED) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#resetActiveVertex">resetActiveVertex</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>newPos</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#write">write</a></b>(QJsonObject &amp;<i>json</i>) const override</td></tr>
+</table></div>
+<ul>
+<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">183 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
+</ul>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#calcCorners">calcCorners</a></b>(bool <i>mir</i> = true)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 protected functions inherited from <a href="selectitem.html#protected-functions">SelectItem</a></li>
+<li class="fn">24 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#protected-functions">QGraphicsItem</a></li>
+</ul>
+<a name="protected-variables"></a>
+<h2 id="protected-variables">Protected Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QRectF </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#bl-var">bl</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QRectF </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#br-var">br</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#myRotation-var">myRotation</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QRectF </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#tl-var">tl</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QRectF </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#tr-var">tr</a></b></td></tr>
+</table></div>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 static public member inherited from <a href="selectitem.html#static-public-members">SelectItem</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$BoxBasedSelector-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="boxbasedselector.html">BoxBasedSelector</a> class provides a base class for <a href="selectitem.html">SelectItem</a> subclasses that can be described with a box.</p>
+<p>The <a href="boxbasedselector.html">BoxBasedSelector</a> class provides a base class for <a href="selectitem.html">SelectItem</a> subclasses that can be described with a box, such as <a href="rectangleselect.html">RectangleSelect</a> and <a href="ellipseselect.html">EllipseSelect</a>. It implements several of the virtual functions from <a href="selectitem.html">SelectItem</a> which will have identical implementations on all its subclasses:</p>
+<ul>
+<li><a href="rectangleselect.html">RectangleSelect</a></li>
+<li><a href="ellipseselect.html">EllipseSelect</a></li>
+</ul>
+</div>
+<!-- @@@BoxBasedSelector -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$BoxBasedSelector[overload1]$$$BoxBasedSelectorconstQJsonObject&QSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="BoxBasedSelector"><a name="BoxBasedSelector"></a>BoxBasedSelector::<span class="name">BoxBasedSelector</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="boxbasedselector.html">BoxBasedSelector</a> object by reading a <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> and setting the internal rectangle and rotation angle to the values given in <i>json</i>. <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@BoxBasedSelector -->
+<!-- $$$BoxBasedSelector$$$BoxBasedSelectorQPointFQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="BoxBasedSelector-1"><a name="BoxBasedSelector-1"></a>BoxBasedSelector::<span class="name">BoxBasedSelector</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="boxbasedselector.html">BoxBasedSelector</a> object by setting all vertices to be a <i>point</i>, <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@BoxBasedSelector -->
+<!-- $$$BoxBasedSelector$$$BoxBasedSelectorQPointFqrealQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="BoxBasedSelector-2"><a name="BoxBasedSelector-2"></a>BoxBasedSelector::<span class="name">BoxBasedSelector</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>vertSize</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="boxbasedselector.html">BoxBasedSelector</a> object by setting all vertices to be a <i>point</i>, <i>vertSize</i> indicates the size of the vertex highlight boxes, <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@BoxBasedSelector -->
+<!-- $$$~BoxBasedSelector[overload1]$$$~BoxBasedSelector -->
+<h3 class="fn" id="dtor.BoxBasedSelector"><a name="dtor.BoxBasedSelector"></a><code>[override virtual] </code>BoxBasedSelector::<span class="name">~BoxBasedSelector</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~BoxBasedSelector -->
+<!-- $$$calcCorners[overload1]$$$calcCornersbool -->
+<h3 class="fn" id="calcCorners"><a name="calcCorners"></a><code>[protected] </code><span class="type">void</span> BoxBasedSelector::<span class="name">calcCorners</span>(<span class="type">bool</span> <i>mir</i> = true)</h3>
+<p>Calculates the vertex boxes in the corners of the defining rectangle. The boxes are used to indicate the <a href="boxbasedselector.html">BoxBasedSelector</a> is active and to act as points to click and drag to resize the item. If the mirror needs to be updated as well the <i>mir</i> should be <code>true</code>.</p>
+<!-- @@@calcCorners -->
+<!-- $$$clickPoint[overload1]$$$clickPointconstQPointF& -->
+<h3 class="fn" id="clickPoint"><a name="clickPoint"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">clickPoint</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#clickPoint">SelectItem::clickPoint</a>().</p>
+<!-- @@@clickPoint -->
+<!-- $$$getRect[overload1]$$$getRect -->
+<h3 class="fn" id="getRect"><a name="getRect"></a><span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> BoxBasedSelector::<span class="name">getRect</span>() const</h3>
+<p>Returns a <a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a> which denotes the bounding rectanlge of the <a href="boxbasedselector.html">BoxBasedSelector</a>.</p>
+<!-- @@@getRect -->
+<!-- $$$getRotationAngle[overload1]$$$getRotationAngle -->
+<h3 class="fn" id="getRotationAngle"><a name="getRotationAngle"></a><span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> BoxBasedSelector::<span class="name">getRotationAngle</span>() const</h3>
+<p>Returns a <code>qreal</code> containing the rotation angle of the <a href="boxbasedselector.html">BoxBasedSelector</a> in degrees.</p>
+<p><b>See also </b><a href="boxbasedselector.html#setRotationAngle">setRotationAngle</a>().</p>
+<!-- @@@getRotationAngle -->
+<!-- $$$insertVertex[overload1]$$$insertVertexconstintconstQPointF& -->
+<h3 class="fn" id="insertVertex"><a name="insertVertex"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">insertVertex</span>(const <span class="type">int</span> <i>vertex</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#insertVertex">SelectItem::insertVertex</a>().</p>
+<p>Empty function as this and any derived classes can have two, and only two vertices.</p>
+<!-- @@@insertVertex -->
+<!-- $$$numberOfVertices[overload1]$$$numberOfVertices -->
+<h3 class="fn" id="numberOfVertices"><a name="numberOfVertices"></a><code>[override virtual] </code><span class="type">int</span> BoxBasedSelector::<span class="name">numberOfVertices</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#numberOfVertices">SelectItem::numberOfVertices</a>().</p>
+<p>Always returns 2, as this and any derived classes can have two, and only two vertices.</p>
+<!-- @@@numberOfVertices -->
+<!-- $$$read[overload1]$$$readconstQJsonObject& -->
+<h3 class="fn" id="read"><a name="read"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">read</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#read">SelectItem::read</a>().</p>
+<!-- @@@read -->
+<!-- $$$removeVertex[overload1]$$$removeVertexint -->
+<h3 class="fn" id="removeVertex"><a name="removeVertex"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">removeVertex</span>(<span class="type">int</span> <i>vertex</i> = UNSELECTED)</h3>
+<!-- @@@removeVertex -->
+<!-- $$$resetActiveVertex[overload1]$$$resetActiveVertex -->
+<h3 class="fn" id="resetActiveVertex"><a name="resetActiveVertex"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">resetActiveVertex</span>()</h3>
+<p>Reimplemented from <a href="selectitem.html#resetActiveVertex">SelectItem::resetActiveVertex</a>().</p>
+<!-- @@@resetActiveVertex -->
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newPos</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#resizeItem">SelectItem::resizeItem</a>().</p>
+<!-- @@@resizeItem -->
+<!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->
+<h3 class="fn" id="rotate"><a name="rotate"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">rotate</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>from</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>to</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#rotate">SelectItem::rotate</a>().</p>
+<!-- @@@rotate -->
+<!-- $$$setMirrorCorners[overload1]$$$setMirrorCornersQRectFQRectFQRectFQRectF -->
+<h3 class="fn" id="setMirrorCorners"><a name="setMirrorCorners"></a><code>[pure virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">setMirrorCorners</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>tlc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>blc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>trc</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>brc</i>) const</h3>
+<p>Pure virtual function to set the corner vertex boxes of the mirror object. <i>tlc</i> is the top-left corner, <i>blc</i> is the bottom-left corner, <i>trc</i> is the top-right corner, and <i>brc</i> is the bottom right corner.</p>
+<!-- @@@setMirrorCorners -->
+<!-- $$$setRectUnchecked[overload1]$$$setRectUncheckedQRectF -->
+<h3 class="fn" id="setRectUnchecked"><a name="setRectUnchecked"></a><code>[pure virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">setRectUnchecked</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> <i>rect</i>)</h3>
+<p>Pure virtual function to set the internal rectangle of the <a href="boxbasedselector.html">BoxBasedSelector</a> to <i>rect</i> without checking to see if it completely fits in the <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a>. This is used when setting the internal rectangle of the mirror after checking has been done in this instance.</p>
+<!-- @@@setRectUnchecked -->
+<!-- $$$setRotationAngle[overload1]$$$setRotationAngleqreal -->
+<h3 class="fn" id="setRotationAngle"><a name="setRotationAngle"></a><span class="type">void</span> BoxBasedSelector::<span class="name">setRotationAngle</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>angle</i>)</h3>
+<p>Sets the rotation angle of the <a href="boxbasedselector.html">BoxBasedSelector</a> to <i>angle</i> degrees, measured from the horizontal going counterclockwise.</p>
+<p><b>See also </b><a href="boxbasedselector.html#getRotationAngle">getRotationAngle</a>().</p>
+<!-- @@@setRotationAngle -->
+<!-- $$$write[overload1]$$$writeQJsonObject& -->
+<h3 class="fn" id="write"><a name="write"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">write</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#write">SelectItem::write</a>().</p>
+<!-- @@@write -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

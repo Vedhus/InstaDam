@@ -1,9 +1,4 @@
 #include "login.h"
-#include "ui_login.h"
-#include "register.h"
-#include "instadam.h"
-#include "startingwidget.h"
-#include "projectlist.h"
 #include <QDebug>
 #include <QFile>
 
@@ -12,29 +7,49 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include "ui_login.h"
+#include "register.h"
+#include "instadam.h"
+#include "startingwidget.h"
+#include "projectlist.h"
+
+/*!
+  \class Login
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits QWidget
+  \brief Creates a login dialog.
+  */
+
+/*!
+  Creates an instance with parent QWidget \a parent, if any.
+  */
 Login::Login(QWidget *parent) :
-    QWidget(parent),
-   ui(new Ui::Login)
-{
+    QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
 }
 
-
-Login::~Login()
-{
+/*!
+  Destructor
+  */
+Login::~Login() {
     delete ui;
 }
 
-void Login::on_pushButton_3_clicked()
-{
+/*!
+  Processes the X button click.
+  */
+void Login::on_pushButton_3_clicked() {
     qInfo() << "registering a new user";
     Register *reg = new Register;
     reg->show();
     hide();
 }
 
-void Login::on_pushButton_clicked()
-{
+/*!
+  Processes the Y button click.
+  */
+void Login::on_pushButton_clicked() {
     QString user = ui->username->toPlainText();
     QString pass = ui->password->toPlainText();
     this->databaseURL = ui->url->toPlainText();
@@ -64,64 +79,67 @@ void Login::on_pushButton_clicked()
     qInfo() << "waiting for the reply...";
 }
 
-void Login::replyFinished()
-{
+/*!
+  Something
+  */
+void Login::replyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
-            qInfo() << "Error: " << jsonError.errorString();
-      }
-
-      else{
-          QJsonObject obj = jsonReply.object();
-          if(obj.contains("access_token")){
-              this->accessToken = obj.value("access_token").toString().toUtf8();
-              //qInfo() << this->accessToken;
-              Login::dumpToken();
-              Login::listProjects();
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        if (obj.contains("access_token")) {
+            this->accessToken = obj.value("access_token").toString().toUtf8();
+            //qInfo() << this->accessToken;
+            Login::dumpToken();
+            Login::listProjects();
+        } else {
+            qInfo() << obj;
         }
-         else{
-              qInfo() << obj;
-          }
-      }
+    }
 }
 
-void Login::projectsReplyFinished()
-{
+/*!
+  Something
+  */
+void Login::projectsReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
-            qInfo() << "Error: " << jsonError.errorString();
-      }
-
-      else{
-          QJsonObject obj = jsonReply.object();
-          //qInfo()<< "implement a function to read the returned object";
-          qInfo() << obj;
-          ProjectList *pl = new ProjectList;
-          pl->show();
-          pl->addItems(jsonReply, this->databaseURL, this->accessToken);
-          hide();
-      }
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        //qInfo()<< "implement a function to read the returned object";
+        qInfo() << obj;
+        ProjectList *pl = new ProjectList;
+        pl->show();
+        pl->addItems(jsonReply, this->databaseURL, this->accessToken);
+        hide();
+    }
 }
 
-void debugRequest(QNetworkRequest request)
-{
-
-  qDebug() << request.url().toString();
-  const QList<QByteArray>& rawHeaderList(request.rawHeaderList());
-  foreach (QByteArray rawHeader, rawHeaderList) {
-    qDebug() << request.rawHeader(rawHeader);
-  }
+/*!
+  Something
+  */
+void debugRequest(QNetworkRequest request) {
+    qDebug() << request.url().toString();
+    const QList<QByteArray>& rawHeaderList(request.rawHeaderList());
+    foreach (QByteArray rawHeader, rawHeaderList) {
+        qDebug() << request.rawHeader(rawHeader);
+    }
 }
 
-void Login::listProjects(){
+/*!
+  Lists the projects.
+  */
+void Login::listProjects() {
     QString databaseProjectsURL = this->databaseURL+"/projects";
     QUrl dabaseLink = QUrl(databaseProjectsURL);
 
@@ -137,12 +155,13 @@ void Login::listProjects(){
             this, &Login::projectsReplyFinished);
 
     qInfo() << "waiting for the reply...";
-
-
 }
 
 
-void Login::dumpToken(){
+/*!
+  Something
+  */
+void Login::dumpToken() {
     QFile file("token.txt");
     if (file.open(QIODevice::ReadWrite)) {
         QTextStream stream(&file);
@@ -150,14 +169,17 @@ void Login::dumpToken(){
     }
 }
 
-
-void Login::on_pushButton_2_clicked()
-{
+/*!
+  Processes Z button click.
+  */
+void Login::on_pushButton_2_clicked() {
     close();
 }
 
-void Login::on_pushButton_4_clicked()
-{
+/*!
+  Processes W button click.
+  */
+void Login::on_pushButton_4_clicked() {
     qInfo() << "going back to the main widget";
     StartingWidget *wid = new StartingWidget;
     wid->show();

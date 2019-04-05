@@ -1,5 +1,16 @@
 #include "maskviewer.h"
 
+/*!
+  \class MaskViewer
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits PhotoViewer
+  \brief A masked view of the image in the associated PhotoViewer
+  */
+
+/*!
+  Creates an instance with parent QWidget \a parent, if any.
+  */
 MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {
     zoom = 0;
     hasPhoto = false;
@@ -8,6 +19,9 @@ MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {
     selectedMask = CANNY;
 }
 
+/*!
+  Links this object to \a viewer.
+  */
 void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {
     hasPhoto = true;
     photoViewer = viewer;
@@ -20,6 +34,9 @@ void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {
     fitInView();
 }
 
+/*!
+  Sets the image mask to \a filterName.
+  */
 void MaskViewer::setImMask(maskTypes filterName) {
     selectedMask = filterName;
     if (hasPhoto == true) {

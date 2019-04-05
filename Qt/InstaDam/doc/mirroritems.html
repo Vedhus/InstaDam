@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- mirrors.qdoc -->
+  <title>Mirror Items | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>Mirror Items</li>
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Mirror Items</h1>
+<span class="subtitle"></span>
+<!-- $$$mirroritems.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>Any given derivative of <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a> can only be owned by a single <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a>. But in <a href="instadam.html">InstaDam</a> select regions are plotted on both the Photo Scene and Mask Scene. To get around this, when a selection region is created on one of the scenes an identical, but distinct copy, is made and added to the other scene. These two instances are called mirrors, and each has a reference to the other in their data structures.</p>
+<p>Using these references allows each <a href="selectitem.html">SelectItem</a> to communicate to its mirror any changes that are made (resize, move, etc.)&#x2e; Any class that derives from <a href="selectitem.html">SelectItem</a> must implement the following virtual functions that deal with mirrors:</p>
+<ul>
+<li><a href="selectitem.html#getMirror">getMirror()</a></li>
+<li><a href="selectitem.html#mirrorHide">mirrorHide()</a></li>
+<li><a href="selectitem.html#mirrorShow">mirrorShow()</a></li>
+<li><a href="selectitem.html#rotateMirror">rotateMirror()</a></li>
+<li><a href="selectitem.html#setMirror">setMirror()</a></li>
+<li><a href="selectitem.html#setMirrorActive">setMirrorActive()</a></li>
+<li><a href="selectitem.html#setMirrorAdded">setMirrorAdded()</a></li>
+<li><a href="selectitem.html#setMirrorMoved">setMirrorMoved()</a></li>
+<li><a href="selectitem.html#setMirrorResized">setMirrorResized()</a></li>
+<li><a href="selectitem.html#setMirrorVertex">setMirrorVertex()</a></li>
+<li><a href="selectitem.html#updateMirrorScene">updateMirrorScene()</a></li>
+</ul>
+<p>When implementing the following virtual functions be sure to send updates to the mirror (check for null pointer first):</p>
+<ul>
+<li><a href="selectitem.html#addPoint">addPoint()</a></li>
+<li><a href="selectitem.html#clickPoint">clickPoint()</a></li>
+<li><a href="selectitem.html#insertVertex">insertVertex()</a></li>
+<li><a href="selectitem.html#moveItem">moveItem()</a></li>
+<li><a href="selectitem.html#removeVertex">removeVertex()</a></li>
+<li><a href="selectitem.html#resetActiveVertex">resetActiveVertex()</a></li>
+<li><a href="selectitem.html#resizeItem">resizeItem()</a></li>
+<li><a href="selectitem.html#rotate">rotate()</a></li>
+<li><a href="selectitem.html#updatePen">updatePen()</a></li>
+</ul>
+<p>Below is an example implementation</p>
+<pre class="cpp"><span class="type">void</span> RectangleSelect<span class="operator">::</span>moveItem(<span class="keyword">const</span> <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <span class="operator">&amp;</span>oldPos<span class="operator">,</span> <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <span class="operator">&amp;</span>newPos) {
+    <span class="comment">// if there is an active vertex then we are resizing</span>
+    <span class="keyword">if</span> (activeVertex <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>) {
+        resized <span class="operator">=</span> <span class="keyword">true</span>;
+        setMirrorResized();
+        addPoint(newPos);
+    } <span class="keyword">else</span> {
+        <span class="comment">// otherwise we are moving the entire object</span>
+        moved <span class="operator">=</span> <span class="keyword">true</span>;
+        setMirrorMoved();
+        <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> shift <span class="operator">=</span> newPos <span class="operator">-</span> oldPos;
+        checkBoundaries(shift<span class="operator">,</span> myRect);
+    }
+    calcCorners();
+    <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsrectitem.html">QGraphicsRectItem</a></span><span class="operator">::</span>prepareGeometryChange();
+    setRect(myRect);
+    <span class="comment">// update the mirror if there is one</span>
+    <span class="keyword">if</span> (mirror <span class="operator">!</span><span class="operator">=</span> nullptr)
+        mirror<span class="operator">-</span><span class="operator">&gt;</span>setRectUnchecked(myRect);
+}</pre>
+</div>
+<!-- @@@mirroritems.html -->
+<hr/><p class="footer"><small></small></p></body>
+</html>

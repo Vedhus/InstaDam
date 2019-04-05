@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- filterproperty.cpp -->
+  <title>filterProperty Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>filterProperty</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">filterProperty Class</h1>
+<!-- $$$filterProperty-brief -->
+<p>Holds the filter properties. <a href="#details">More...</a></p>
+<!-- @@@filterProperty -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;filterProperty&gt;</span>
+</td></tr></table></div><ul>
+<li><a href="filterproperty-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#filterProperty">filterProperty</a></b>(std::string <i>propertyName</i>, btnTypes <i>bt</i>, int <i>propMin</i>, int <i>propVal</i>, int <i>propMax</i>, evenOdds <i>eo</i>, threshold_or_filter <i>thof</i>, bool <i>sb</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#sliderAssign">sliderAssign</a></b>(int <i>sliderVal</i>)</td></tr>
+</table></div>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> btnTypes </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#btnType-var">btnType</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> evenOdds </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#evenOdd-var">evenOdd</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#max-var">max</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#min-var">min</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#name-var">name</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#signalBool-var">signalBool</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> threshold_or_filter </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#threshold_filter-var">threshold_filter</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filterproperty.html#val-var">val</a></b></td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$filterProperty-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Holds the filter properties.</p>
+<p>Initializes the filter properties to the provided parameter values</p>
+</div>
+<!-- @@@filterProperty -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$filterProperty[overload1]$$$filterPropertystd::stringbtnTypesintintintevenOddsthreshold_or_filterbool -->
+<h3 class="fn" id="filterProperty"><a name="filterProperty"></a>filterProperty::<span class="name">filterProperty</span>(<span class="type">std::string</span> <i>propertyName</i>, <span class="type">btnTypes</span> <i>bt</i>, <span class="type">int</span> <i>propMin</i>, <span class="type">int</span> <i>propVal</i>, <span class="type">int</span> <i>propMax</i>, <span class="type">evenOdds</span> <i>eo</i>, <span class="type">threshold_or_filter</span> <i>thof</i>, <span class="type">bool</span> <i>sb</i>)</h3>
+<p>Default constructs an instance of filterProperty.</p><!-- @@@filterProperty -->
+<!-- $$$sliderAssign[overload1]$$$sliderAssignint -->
+<h3 class="fn" id="sliderAssign"><a name="sliderAssign"></a><span class="type">void</span> filterProperty::<span class="name">sliderAssign</span>(<span class="type">int</span> <i>sliderVal</i>)</h3>
+<p>Assigns the slider value to the nearest odd or even numbber close to <i>sliderVal</i></p>
+<!-- @@@sliderAssign -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

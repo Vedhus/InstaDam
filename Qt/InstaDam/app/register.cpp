@@ -1,36 +1,52 @@
 #include "register.h"
-#include "login.h"
-#include "ui_register.h"
+
 #include <QDebug>
 #include <QFile>
-
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include "login.h"
+#include "ui_register.h"
+
+/*!
+  \class Register
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits QWidget
+  \brief Registers a user.
+  */
+
+/*!
+  Creates a Register instance with parent QWidget \a parent.
+  */
 Register::Register(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Register)
-{
+    QWidget(parent), ui(new Ui::Register) {
     ui->setupUi(this);
 }
 
-Register::~Register()
-{
+/*!
+  Destructor
+  */
+Register::~Register() {
     delete ui;
 }
 
-void Register::on_pushButton_2_clicked()
-{
+/*!
+  Responds to the cancel button being clicked.
+  */
+void Register::on_pushButton_2_clicked() {
     qInfo() << "Cancelling and going back to the login window";
     Login *log = new Login;
     log->show();
     hide();
 }
 
-void Register::on_pushButton_clicked()
-{
+/*!
+  Responds to a button being clicked.
+  */
+void Register::on_pushButton_clicked() {
     QString em = ui->email->toPlainText();
     QString user = ui->username->toPlainText();
     QString pass = ui->password->toPlainText();
@@ -62,8 +78,10 @@ void Register::on_pushButton_clicked()
     qInfo() << "waiting for the reply...";
 }
 
-void Register::replyFinished()
-{
+/*!
+  Something.
+  */
+void Register::replyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
 //    qInfo() << strReply;
@@ -72,25 +90,24 @@ void Register::replyFinished()
 
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
-            qInfo() << "Error: " << jsonError.errorString();
-      }
-
-      else{
-          QJsonObject obj = jsonReply.object();
-          if(obj.contains("access_token")){
-              this->accessToken = obj.value("access_token").toString();
-              qInfo() << this->accessToken;
-              Register::dumpToken();
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        if (obj.contains("access_token")) {
+            this->accessToken = obj.value("access_token").toString();
+            qInfo() << this->accessToken;
+            Register::dumpToken();
+        } else {
+            qInfo() << obj;
         }
-         else{
-              qInfo() << obj;
-          }
-      }
+    }
 }
 
-void Register::projectsReplyFinished()
-{
+/*!
+  Something.
+  */
+void Register::projectsReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
 //    qInfo() << strReply;
@@ -99,17 +116,18 @@ void Register::projectsReplyFinished()
 
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
-            qInfo() << "Error: " << jsonError.errorString();
-      }
-
-      else{
-          QJsonObject obj = jsonReply.object();
-          qInfo()<< "implement a function to read the returned object";
-      }
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        qInfo()<< "implement a function to read the returned object";
+    }
 }
 
-void Register::dumpToken(){
+/*!
+  Dumps the token to a stream.
+  */
+void Register::dumpToken() {
     QFile file("token.txt");
     if (file.open(QIODevice::ReadWrite)) {
         QTextStream stream(&file);

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- filtercontrols.cpp -->
+  <title>filterControls Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>filterControls</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">filterControls Class</h1>
+<!-- $$$filterControls-brief -->
+<p>Defines the properties of the mask and conducts the filtering operations. <a href="#details">More...</a></p>
+<!-- @@@filterControls -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;filterControls&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="filtercontrols-members.html">List of all members, including inherited members</a></li>
+<li><a href="filtercontrols-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filterControls">filterControls</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#defineProperties">defineProperties</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filtAndGeneratePixmaps">filtAndGeneratePixmaps</a></b>(<i>int</i>, <i>maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filterFunc">filterFunc</a></b>(<i>int</i>, <i>maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#im2pixmap">im2pixmap</a></b>(maskTypes <i>selectedFilter</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#show">show</a></b>(<i>maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#thumb2pixmap">thumb2pixmap</a></b>(int <i>thumb</i>, maskTypes <i>selectedFilter</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#assignVal">assignVal</a></b>(maskTypes <i>maskType</i>, int <i>propNum</i>, int <i>value</i>, threshold_or_filter <i>thof</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#setLabelMask">setLabelMask</a></b>(QSharedPointer&lt;Label&gt; <i>label</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#valAssigned">valAssigned</a></b>(maskTypes <i>maskType</i>, threshold_or_filter <i>thof</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#edges-var">edges</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#img-var">img</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#labelMask-var">labelMask</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoViewer *</td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#photoViewer-var">photoViewer</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#properties-var">properties</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qAlpha-var">qAlpha</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qImg-var">qImg</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qImgThumb-var">qImgThumb</a></b></td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QMetaObject </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#staticMetaObject-var">staticMetaObject</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">9 static public members inherited from <a href="http://doc.qt.io/qt-5/qobject.html#static-public-members">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$filterControls-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Defines the properties of the mask and conducts the filtering operations</p>
+</div>
+<!-- @@@filterControls -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$filterControls[overload1]$$$filterControls -->
+<h3 class="fn" id="filterControls"><a name="filterControls"></a>filterControls::<span class="name">filterControls</span>()</h3>
+<p>Creates an instance</p>
+<!-- @@@filterControls -->
+<!-- $$$assignVal[overload1]$$$assignValmaskTypesintintthreshold_or_filter -->
+<h3 class="fn" id="assignVal"><a name="assignVal"></a><code>[slot] </code><span class="type">void</span> filterControls::<span class="name">assignVal</span>(<span class="type">maskTypes</span> <i>maskType</i>, <span class="type">int</span> <i>propNum</i>, <span class="type">int</span> <i>value</i>, <span class="type">threshold_or_filter</span> <i>thof</i>)</h3>
+<p>Slot that sets the int <i>value</i> to the appropriate property indexed by <i>maskType</i> and <i>propnNum</i></p>
+<!-- @@@assignVal -->
+<!-- $$$defineProperties[overload1]$$$defineProperties -->
+<h3 class="fn" id="defineProperties"><a name="defineProperties"></a><span class="type">void</span> filterControls::<span class="name">defineProperties</span>()</h3>
+<p>Defines the properties of the different masks.</p>
+<!-- @@@defineProperties -->
+<!-- $$$filtAndGeneratePixmaps[overload1]$$$filtAndGeneratePixmapsintmaskTypes -->
+<h3 class="fn" id="filtAndGeneratePixmaps"><a name="filtAndGeneratePixmaps"></a><span class="type">int</span> filterControls::<span class="name">filtAndGeneratePixmaps</span>(<i>int</i>, <i>maskTypes</i>)</h3>
+<p>Sets image for the object and stores and returns filtered edges.</p>
+<!-- @@@filtAndGeneratePixmaps -->
+<!-- $$$filterFunc[overload1]$$$filterFuncintmaskTypes -->
+<h3 class="fn" id="filterFunc"><a name="filterFunc"></a><span class="type">int</span> filterControls::<span class="name">filterFunc</span>(<i>int</i>, <i>maskTypes</i>)</h3>
+<p>Filters the cv::Mat</p>
+<p class="centerAlign"><font color="red">[Missing image based]</font></p><p>and returns a binary image cv::Mat <i>edge_temp</i></p>
+<!-- @@@filterFunc -->
+<!-- $$$im2pixmap[overload1]$$$im2pixmapmaskTypes -->
+<h3 class="fn" id="im2pixmap"><a name="im2pixmap"></a><span class="type">void</span> filterControls::<span class="name">im2pixmap</span>(<span class="type">maskTypes</span> <i>selectedFilter</i>)</h3>
+<p>Binarizes the image and converts it to a pixmap</p>
+<!-- @@@im2pixmap -->
+<!-- $$$setLabelMask[overload1]$$$setLabelMaskQSharedPointer<Label> -->
+<h3 class="fn" id="setLabelMask"><a name="setLabelMask"></a><code>[slot] </code><span class="type">void</span> filterControls::<span class="name">setLabelMask</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i>)</h3>
+<p>Obtains the label mask from <i>label</i> and sets it to <i>labelMask</i> to be used as a mask for the LABELMASK filter operation.</p>
+<!-- @@@setLabelMask -->
+<!-- $$$show[overload1]$$$showmaskTypes -->
+<h3 class="fn" id="show"><a name="show"></a><span class="type">void</span> filterControls::<span class="name">show</span>(<i>maskTypes</i>)</h3>
+<!-- @@@show -->
+<!-- $$$thumb2pixmap[overload1]$$$thumb2pixmapintmaskTypes -->
+<h3 class="fn" id="thumb2pixmap"><a name="thumb2pixmap"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> filterControls::<span class="name">thumb2pixmap</span>(<span class="type">int</span> <i>thumb</i>, <span class="type">maskTypes</span> <i>selectedFilter</i>)</h3>
+<p>Returns a thubnail pixmap for the filter selection bar at the bottom of <a href="instadam.html">InstaDam</a>.</p>
+<!-- @@@thumb2pixmap -->
+<!-- $$$valAssigned[overload1]$$$valAssignedmaskTypesthreshold_or_filter -->
+<h3 class="fn" id="valAssigned"><a name="valAssigned"></a><code>[signal] </code><span class="type">void</span> filterControls::<span class="name">valAssigned</span>(<span class="type">maskTypes</span> <i>maskType</i>, <span class="type">threshold_or_filter</span> <i>thof</i>)</h3>
+<!-- @@@valAssigned -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

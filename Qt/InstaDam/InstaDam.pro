@@ -33,3 +33,8 @@ wasm {
     win32: app.depends = selector
 }
 
+DISTFILES += \
+    instadam.qdocconf \
+    Selector/mirrors.qdoc \
+    Selector/select.qdoc \
+    index.qdoc

@@ -7,6 +7,17 @@
 #include "ui_newproject.h"
 #include "../Selector/label.h"
 
+/*!
+  \class newproject
+  \ingroup InstaDam
+  \inmodule InstaDam
+  \inherits QDialog
+  \brief Creates a dialog for starting a new project.
+  */
+
+/*!
+  Creates a new instance with parent QWidget \a parent, if any
+  */
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newproject) {
@@ -14,10 +25,16 @@ newproject::newproject(QWidget *parent) :
     this->newPr = new Project();
 }
 
+/*!
+  Destructor
+  */
 newproject::~newproject() {
     delete ui;
 }
 #ifdef WASM_BUILD
+/*!
+  Processes a button click.
+  */
 void newproject::nameAcceptClicked() {
     tempName = labelDialog->labelName->text();
     colorDialog = new ColorDialog(Qt::black, this);
@@ -28,6 +45,9 @@ void newproject::nameAcceptClicked() {
 }
 #endif
 
+/*!
+  Processes a button click.
+  */
 void newproject::on_pushButton_clicked() {
     QDialog *dialog = new QDialog(this);
     labelDialog = new Ui::labelDialog;
@@ -44,6 +64,9 @@ void newproject::on_pushButton_clicked() {
                                               QColorDialog::DontUseNativeDialog);
 #else
 }
+/*!
+  Processes a color choice based on \a oldcolor.
+  */
 void newproject::colorPicked(const QColor &oldcolor) {
     QColor color = colorDialog->selectedColor();
 #endif
@@ -62,6 +85,9 @@ void newproject::colorPicked(const QColor &oldcolor) {
 #endif
 }
 
+/*!
+  Processes the "OK" button being clicked.
+  */
 Project* newproject::on_buttonBox_accepted() {
     return this->newPr;
 }

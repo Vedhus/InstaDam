@@ -26,10 +26,10 @@ Label::Label() {
 /*!
   Constructs a Label object based on data read in from \a json. The Label color
   and text are read from the QJsonObject and any SelectItems in the object are
-  constructed and added to this Label.
+  constructed and added to this Label. \a j indicates the Label id, and \a server
+  denotes whether to read the file from a server (\c true) or local file
+  (\c false).
   */
-
-
 Label::Label(const QJsonObject &json, int j, bool server){
         if(server)
             readServer(json);
@@ -60,9 +60,8 @@ void Label::setColor(QColor col) {
 }
 
 /*!
-  Convenience funtion for setting the id this Label as the \a labelId .
+  Convenience funtion for setting the id of this Label as \a j.
   */
-
 void Label::setId(int j) {
     labelId = j;
 }
@@ -144,6 +143,9 @@ void Label::clear() {
     freeDrawObjects.clear();
 }
 
+/*!
+  Set the opacity of the related SelectItems to \a val as an integer percentage.
+  */
 void Label::setOpacity(int val) {
     double normalizedValue = val/100.0;
     qInfo("Opacity\n%f", normalizedValue);
@@ -213,6 +215,9 @@ void Label::read(const QJsonObject &json) {
     SelectItem::ID += 1;
 }
 
+/*!
+  Read a QJsonObject \a json into this object.
+  */
 void Label::readServer(const QJsonObject &json) {
     clear();
     setText(json["name"].toString());
@@ -285,7 +290,7 @@ void Label::write(QJsonObject &json) const {
 
 /*!
   Writes the contents of the Label data to QJsonObject \a json.
-Any SelectItems this Label holds are written.
+  Any SelectItems this Label holds are written.
   */
 void Label::writeIdantn(QJsonObject &json) const {
     write(json);
@@ -343,6 +348,15 @@ void Label::writeIdantn(QJsonObject &json) const {
     }
 }
 
+/*!
+  Sets the state of the associated SelectItems to be hidden or shown depending
+  on \a state. Values are
+
+  \list
+  \li Qt::Unchecked hidden
+  \li Qt::Checked Shown
+  \endlist
+  */
 void Label::setMaskState(int state) {
     QHash<int, RectangleSelect*>::iterator rectItem;
     QHash<int, PolygonSelect*>::iterator polygonItem;

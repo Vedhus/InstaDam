@@ -1130,11 +1130,8 @@ void InstaDam::on_actionExport_zip_triggered() {
 }
 
 /*!
- * \brief InstaDam::processPointClicked handles the scene actions when a point is clicked on the PhotoViewer
- * \param type defines the viewerType
- * \param item corresponds to the selectItem type
- * \param pos is the position at which the click was made
- * \param button is the button click type
+  Processes a point being clicked in the scene \a type, any SelectItem at \a pos
+  is given by \a item, andthe button clicked is given as \a button.
  */
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
@@ -1313,9 +1310,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 }
 
 /*!
- * \brief InstaDam::processMouseMoved deals with selection moving or rotation
- * \param fromPos
- * \param toPos
+  Processes a mouse movement from \a fromPos to \a toPos.
  */
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
     if (currentItem) {
@@ -1330,11 +1325,8 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 }
 
 /*!
- * \brief InstaDam::processMouseReleased defines the behaviour on mouse release
- * \param type
- * \param oldPos
- * \param newPos
- * \param button
+  Processes a mouse button being released from scene \a type, mouse movement
+  from \a oldPos to \a newPos, and the button released \a button.
  */
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
@@ -1587,6 +1579,9 @@ void InstaDam::on_addSelectionButton_clicked() {
 }
 
 
+/*!
+  Sets the current project to \a pr.
+  */
 void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }

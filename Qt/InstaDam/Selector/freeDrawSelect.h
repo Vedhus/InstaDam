@@ -92,7 +92,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
 #endif
     FreeDrawSelect *mirror = nullptr;
     QPainter myPainter;
-    void loadFromPaixmap(const QPixmap map);
+    void loadFromPixmap(const QPixmap map);
     void setup();
     void init(QSharedPointer<Label> label = nullptr);
 };
