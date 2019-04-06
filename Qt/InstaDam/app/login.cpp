@@ -15,7 +15,7 @@
 
 /*!
   \class Login
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QWidget
   \brief Creates a login dialog.
@@ -125,9 +125,6 @@ void Login::projectsReplyFinished() {
     }
 }
 
-/*!
-  Something
-  */
 void debugRequest(QNetworkRequest request) {
     qDebug() << request.url().toString();
     const QList<QByteArray>& rawHeaderList(request.rawHeaderList());

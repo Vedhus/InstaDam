@@ -1,12 +1,13 @@
 #include "picpushbutton.h"
 #include "pixmapops.h"
+#include "enumconstants.h"
 
 /*!
   \class PicPushButton
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QLabel
-  \brief A PushButton
+  \brief A PushButton.
   */
 
 /*!
@@ -29,7 +30,7 @@ void PicPushButton::updatePixmap() {
 /*!
   Sets the mask type to \a maskType.
   */
-void PicPushButton::setMaskType(maskTypes maskType) {
+void PicPushButton::setMaskType(EnumConstants::maskTypes maskType) {
     filter = maskType;
 }
 
@@ -94,7 +95,10 @@ void PicPushButton::mousePressEvent(QMouseEvent* event) {
     emit checked(filter);
 }
 
-void PicPushButton::otherBoxChecked(maskTypes type) {
+/*!
+  Slot for when another button is pressed taking \a type.
+  */
+void PicPushButton::otherBoxChecked(EnumConstants::maskTypes type) {
     if (check) {
         check = false;
         this->setPixmap(pixmap);

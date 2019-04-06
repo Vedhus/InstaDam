@@ -57,7 +57,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qgraphicsview.html#centerOn">centerOn</a></b></span>(const QPointF &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qgraphicsview.html#centerOn-2">centerOn</a></b></span>(const QGraphicsItem *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qframe.html#changeEvent">changeEvent</a></b></span>(QEvent *)</li>
-<li class="fn"><span class="name"><b><a href="photoviewer.html#changedMask">changedMask</a></b></span>(<i>maskTypes</i>)</li>
+<li class="fn"><span class="name"><b><a href="photoviewer.html#changedMask">changedMask</a></b></span>(EnumConstants::maskTypes )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#childAt">childAt</a></b></span>(int , int ) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#childAt-1">childAt</a></b></span>(const QPoint &amp;) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#childEvent">childEvent</a></b></span>(QChildEvent *)</li>
@@ -321,7 +321,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#scroll-1">scroll</a></b></span>(int , int , const QRect &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#scrollBarWidgets">scrollBarWidgets</a></b></span>(Qt::Alignment )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qgraphicsview.html#scrollContentsBy">scrollContentsBy</a></b></span>(int , int )</li>
-<li class="fn"><span class="name"><b><a href="photoviewer.html#selectedMask-var">selectedMask</a></b></span> : maskTypes</li>
+<li class="fn"><span class="name"><b><a href="photoviewer.html#selectedMask-var">selectedMask</a></b></span> : EnumConstants::maskTypes</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#sender">sender</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#senderSignalIndex">senderSignalIndex</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#acceptDrops-prop">setAcceptDrops</a></b></span>(bool )</li>
@@ -364,7 +364,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setHidden">setHidden</a></b></span>(bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#setHorizontalScrollBar">setHorizontalScrollBar</a></b></span>(QScrollBar *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qabstractscrollarea.html#horizontalScrollBarPolicy-prop">setHorizontalScrollBarPolicy</a></b></span>(<i>Qt::ScrollBarPolicy</i>)</li>
-<li class="fn"><span class="name"><b><a href="maskviewer.html#setImMask">setImMask</a></b></span>(maskTypes )</li>
+<li class="fn"><span class="name"><b><a href="maskviewer.html#setImMask">setImMask</a></b></span>(EnumConstants::maskTypes )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#inputMethodHints-prop">setInputMethodHints</a></b></span>(Qt::InputMethodHints )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qgraphicsview.html#interactive-prop">setInteractive</a></b></span>(bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setLayout">setLayout</a></b></span>(<i>QLayout *</i>)</li>
@@ -372,7 +372,6 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qframe.html#lineWidth-prop">setLineWidth</a></b></span>(<i>int</i>)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#locale-prop">setLocale</a></b></span>(const QLocale &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setMask">setMask</a></b></span>(<i>const QBitmap &amp;</i>)</li>
-<li class="fn"><span class="name"><b><a href="maskviewer.html#setMaskPixmap">setMaskPixmap</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qgraphicsview.html#setMatrix">setMatrix</a></b></span>(const QMatrix &amp;, bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#maximumHeight-prop">setMaximumHeight</a></b></span>(int )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#maximumSize-prop">setMaximumSize</a></b></span>(<i>const QSize &amp;</i>)</li>
@@ -517,7 +516,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#x-prop">x</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#y-prop">y</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="photoviewer.html#zoom-var">zoom</a></b></span> : int</li>
-<li class="fn"><span class="name"><b><a href="photoviewer.html#zoomed">zoomed</a></b></span>(<i>int</i>, <i>float</i>, <i>QPointF</i>)</li>
+<li class="fn"><span class="name"><b><a href="photoviewer.html#zoomed">zoomed</a></b></span>(int , float , QPointF )</li>
 <li class="fn"><span class="name"><b><a href="photoviewer.html#zoomedInADifferentView">zoomedInADifferentView</a></b></span>(int , float , QPointF )</li>
 </ul>
 </td></tr>

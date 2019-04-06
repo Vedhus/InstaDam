@@ -9,7 +9,7 @@
 
 /*!
   \class newproject
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QDialog
   \brief Creates a dialog for starting a new project.
@@ -32,9 +32,6 @@ newproject::~newproject() {
     delete ui;
 }
 #ifdef WASM_BUILD
-/*!
-  Processes a button click.
-  */
 void newproject::nameAcceptClicked() {
     tempName = labelDialog->labelName->text();
     colorDialog = new ColorDialog(Qt::black, this);
@@ -64,9 +61,7 @@ void newproject::on_pushButton_clicked() {
                                               QColorDialog::DontUseNativeDialog);
 #else
 }
-/*!
-  Processes a color choice based on \a oldcolor.
-  */
+
 void newproject::colorPicked(const QColor &oldcolor) {
     QColor color = colorDialog->selectedColor();
 #endif

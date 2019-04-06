@@ -6,7 +6,7 @@
 #include "ui_startingwidget.h"
 /*!
   \class StartingWidget
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QWidget
   \brief Starting widget for selecting user mode, either Local or Server.

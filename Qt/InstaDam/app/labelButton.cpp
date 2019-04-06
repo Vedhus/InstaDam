@@ -2,10 +2,11 @@
 
 /*!
   \class LabelButton
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QPushButton
   \brief A button for seleting the Label for annotation.
+
   */
 
 /*!
@@ -37,12 +38,14 @@ void LabelButton::reemitValueChanged(int value) {
     emit opacity(myLabel, value);
 }
 
+
 /*!
   \class LabelButtonFilter
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QPushButton
-  \brief Button for filters
+  \brief Button for filters.
+
   */
 
 /*!

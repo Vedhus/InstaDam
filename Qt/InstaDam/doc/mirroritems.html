@@ -14,7 +14,7 @@
 <span class="subtitle"></span>
 <!-- $$$mirroritems.html-description -->
 <div class="descr"> <a name="details"></a>
-<p>Any given derivative of <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a> can only be owned by a single <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a>. But in <a href="instadam.html">InstaDam</a> select regions are plotted on both the Photo Scene and Mask Scene. To get around this, when a selection region is created on one of the scenes an identical, but distinct copy, is made and added to the other scene. These two instances are called mirrors, and each has a reference to the other in their data structures.</p>
+<p>Any given derivative of <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a> can only be owned by a single <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a>. But in <a href="index.html">InstaDam</a> select regions are plotted on both the Photo Scene and Mask Scene. To get around this, when a selection region is created on one of the scenes an identical, but distinct copy, is made and added to the other scene. These two instances are called mirrors, and each has a reference to the other in their data structures.</p>
 <p>Using these references allows each <a href="selectitem.html">SelectItem</a> to communicate to its mirror any changes that are made (resize, move, etc.)&#x2e; Any class that derives from <a href="selectitem.html">SelectItem</a> must implement the following virtual functions that deal with mirrors:</p>
 <ul>
 <li><a href="selectitem.html#getMirror">getMirror()</a></li>

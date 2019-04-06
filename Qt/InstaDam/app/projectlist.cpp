@@ -15,10 +15,10 @@
 
 /*!
   \class ProjectList
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QWidget
-  \brief A list of projects
+  \brief A list of projects.
   */
 
 /*!

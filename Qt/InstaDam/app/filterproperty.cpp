@@ -1,4 +1,5 @@
 #include "filterproperty.h"
+#include "enumconstants.h"
 
 /*!
   \class filterProperty
@@ -13,9 +14,9 @@
   Creates an instance nased on \a propertyName, \a bt, \a propMin, \a propVal,
   \a propMax, \a eo, \a thof, and \a sb.
   */
-filterProperty::filterProperty(std::string propertyName, btnTypes bt,
-                               int propMin, int propVal, int propMax,
-                               evenOdds eo, threshold_or_filter thof, bool sb) {
+filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMin,
+                               int propVal, int propMax, evenOdds eo,
+                               EnumConstants::threshold_or_filter thof, bool sb) {
     this->name = QString::fromStdString(propertyName);
     this->btnType = bt;
     this->val = propVal;
@@ -43,14 +44,14 @@ void filterProperty::sliderAssign(int sliderVal) {
   \inmodule InstaDam
 
   Holds information about the particular maskType \a mt including the number of controls
-  and the list of properties \fp.
+  and the list of properties \a fp.
  */
 
 /*!
   Creates an instance based on \a fp, \a nc, and \a mt.
   */
-filterPropertiesMeta::filterPropertiesMeta(std::vector<filterProperty*> fp,
-                                           int nc, maskTypes mt) {
+filterPropertiesMeta::filterPropertiesMeta(std::vector<filterProperty*> fp, int nc,
+                                           EnumConstants::maskTypes mt) {
     numControls = nc;
     maskType = mt;
     propertylist = fp;

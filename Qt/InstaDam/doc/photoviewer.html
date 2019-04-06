@@ -44,7 +44,6 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#resetBrush">resetBrush</a></b>(int <i>size</i> = 10, Qt::PenCapStyle <i>capStyle_input</i> = Qt::RoundCap)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setBrushMode">setBrushMode</a></b>(Qt::PenCapStyle <i>cap</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setFilterControls">setFilterControls</a></b>(filterControls *<i>fc</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setMaskPixmap">setMaskPixmap</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPanMode">setPanMode</a></b>(bool <i>mode</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPhoto">setPhoto</a></b>(QPixmap <i>pixmap</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QSize </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setPhotoFromFile">setPhotoFromFile</a></b>(QString <i>filename</i>)</td></tr>
@@ -71,7 +70,7 @@
 <a name="public-slots"></a>
 <h2 id="public-slots">Public Slots</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setImMask">setImMask</a></b>(maskTypes <i>filterName</i>, threshold_or_filter <i>thof</i> = FILTER)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#setImMask">setImMask</a></b>(EnumConstants::maskTypes <i>filterName</i>, EnumConstants::threshold_or_filter <i>thof</i> = EnumConstants::FILTER)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoomedInADifferentView">zoomedInADifferentView</a></b>(int <i>zoom_input</i>, float <i>factor</i>, QPointF <i>point</i>)</td></tr>
 </table></div>
 <ul>
@@ -82,9 +81,9 @@
 <a name="signals"></a>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#changedMask">changedMask</a></b>(<i>maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#changedMask">changedMask</a></b>(EnumConstants::maskTypes <i>type</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#loadedPhoto">loadedPhoto</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoomed">zoomed</a></b>(<i>int</i>, <i>float</i>, <i>QPointF</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoomed">zoomed</a></b>(int <i>i</i>, float <i>a</i>, QPointF <i>point</i>)</td></tr>
 </table></div>
 <ul>
 <li class="fn">1 signal inherited from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#signals">QGraphicsView</a></li>
@@ -114,7 +113,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QGraphicsPixmapItem *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#photo-var">photo</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#pixmapFilt-var">pixmapFilt</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> PhotoScene *</td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#scene-var">scene</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> maskTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#selectedMask-var">selectedMask</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> EnumConstants::maskTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#selectedMask-var">selectedMask</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> PhotoScene::viewerTypes </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#viewerType-var">viewerType</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="photoviewer.html#zoom-var">zoom</a></b></td></tr>
 </table></div>
@@ -166,8 +165,8 @@
 <p>This function overloads <a href="photoviewer.html#QImage2Mat">QImage2Mat</a>.</p>
 <p>Converts <i>px</i> to a cv::Mat.</p>
 <!-- @@@QPixmap2Mat -->
-<!-- $$$changedMask[overload1]$$$changedMaskmaskTypes -->
-<h3 class="fn" id="changedMask"><a name="changedMask"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">changedMask</span>(<i>maskTypes</i>)</h3>
+<!-- $$$changedMask[overload1]$$$changedMaskEnumConstants::maskTypes -->
+<h3 class="fn" id="changedMask"><a name="changedMask"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">changedMask</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>type</i>)</h3>
 <!-- @@@changedMask -->
 <!-- $$$fitInView[overload1]$$$fitInView -->
 <h3 class="fn" id="fitInView"><a name="fitInView"></a><span class="type">void</span> PhotoViewer::<span class="name">fitInView</span>()</h3>
@@ -202,15 +201,12 @@
 <!-- @@@setBrushMode -->
 <!-- $$$setFilterControls[overload1]$$$setFilterControlsfilterControls* -->
 <h3 class="fn" id="setFilterControls"><a name="setFilterControls"></a><span class="type">void</span> PhotoViewer::<span class="name">setFilterControls</span>(<span class="type"><a href="filtercontrols.html">filterControls</a></span> *<i>fc</i>)</h3>
-<p>Sets the internal filter controls to <b class="redFont"><code>\fc</code></b>.</p>
+<p>Sets the internal filter controls to <i>fc</i>.</p>
 <!-- @@@setFilterControls -->
-<!-- $$$setImMask[overload1]$$$setImMaskmaskTypesthreshold_or_filter -->
-<h3 class="fn" id="setImMask"><a name="setImMask"></a><code>[slot] </code><span class="type">void</span> PhotoViewer::<span class="name">setImMask</span>(<span class="type">maskTypes</span> <i>filterName</i>, <span class="type">threshold_or_filter</span> <i>thof</i> = FILTER)</h3>
+<!-- $$$setImMask[overload1]$$$setImMaskEnumConstants::maskTypesEnumConstants::threshold_or_filter -->
+<h3 class="fn" id="setImMask"><a name="setImMask"></a><code>[slot] </code><span class="type">void</span> PhotoViewer::<span class="name">setImMask</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>filterName</i>, <span class="type"><a href="enumconstants.html#threshold_or_filter-enum">EnumConstants::threshold_or_filter</a></span> <i>thof</i> = EnumConstants::FILTER)</h3>
 <p>Sets the internal mask based on <i>filterName</i> and <i>thof</i>.</p>
 <!-- @@@setImMask -->
-<!-- $$$setMaskPixmap[overload1]$$$setMaskPixmap -->
-<h3 class="fn" id="setMaskPixmap"><a name="setMaskPixmap"></a><span class="type">void</span> PhotoViewer::<span class="name">setMaskPixmap</span>()</h3>
-<!-- @@@setMaskPixmap -->
 <!-- $$$setPanMode[overload1]$$$setPanModebool -->
 <h3 class="fn" id="setPanMode"><a name="setPanMode"></a><span class="type">void</span> PhotoViewer::<span class="name">setPanMode</span>(<span class="type">bool</span> <i>mode</i>)</h3>
 <p>Sets the pan mode to either PAN (<i>mode</i> = true) or PAINTBRUSH (<i>mode</i> = false).</p>
@@ -236,7 +232,7 @@
 <p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsview.html#wheelEvent">QGraphicsView::wheelEvent</a>().</p>
 <!-- @@@wheelEvent -->
 <!-- $$$zoomed[overload1]$$$zoomedintfloatQPointF -->
-<h3 class="fn" id="zoomed"><a name="zoomed"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">zoomed</span>(<i>int</i>, <i>float</i>, <i>QPointF</i>)</h3>
+<h3 class="fn" id="zoomed"><a name="zoomed"></a><code>[signal] </code><span class="type">void</span> PhotoViewer::<span class="name">zoomed</span>(<span class="type">int</span> <i>i</i>, <span class="type">float</span> <i>a</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>)</h3>
 <!-- @@@zoomed -->
 <!-- $$$zoomedInADifferentView[overload1]$$$zoomedInADifferentViewintfloatQPointF -->
 <h3 class="fn" id="zoomedInADifferentView"><a name="zoomedInADifferentView"></a><code>[slot] </code><span class="type">void</span> PhotoViewer::<span class="name">zoomedInADifferentView</span>(<span class="type">int</span> <i>zoom_input</i>, <span class="type">float</span> <i>factor</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>)</h3>

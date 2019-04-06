@@ -37,4 +37,4 @@ DISTFILES += \
     instadam.qdocconf \
     Selector/mirrors.qdoc \
     Selector/select.qdoc \
-    index.qdoc
+    app/main.qdoc

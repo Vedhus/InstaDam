@@ -2,7 +2,7 @@
 
 /*!
   \class Project
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \brief Holds project related information.
   */

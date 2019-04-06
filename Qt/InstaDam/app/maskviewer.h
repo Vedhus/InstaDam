@@ -21,9 +21,9 @@ class MaskViewer : public PhotoViewer {
     QPixmap qImg;
     QPixmap qAlpha;
     PhotoViewer *photoViewer;
-    void setMaskPixmap();
+    //void setMaskPixmap();
  public slots:
-    void setImMask(maskTypes);
+    void setImMask(EnumConstants::maskTypes);
 
  private:
     Ui::MaskViewer *ui;

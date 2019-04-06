@@ -2,10 +2,10 @@
 
 /*!
   \class MaskViewer
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits PhotoViewer
-  \brief A masked view of the image in the associated PhotoViewer
+  \brief A masked view of the image in the associated PhotoViewer.
   */
 
 /*!
@@ -16,7 +16,7 @@ MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {
     hasPhoto = false;
     viewerType = PhotoScene::MASK_VIEWER_TYPE;
     scene->myViewerType = viewerType;
-    selectedMask = CANNY;
+    selectedMask = EnumConstants::CANNY;
 }
 
 /*!
@@ -37,7 +37,7 @@ void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {
 /*!
   Sets the image mask to \a filterName.
   */
-void MaskViewer::setImMask(maskTypes filterName) {
+void MaskViewer::setImMask(EnumConstants::maskTypes filterName) {
     selectedMask = filterName;
     if (hasPhoto == true) {
         pixmapFilt = filterControl->qImg.copy();

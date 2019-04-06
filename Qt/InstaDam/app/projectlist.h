@@ -17,7 +17,7 @@ class ProjectList : public QWidget
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
-    void addItems(QJsonObject);
+    //void addItems(QJsonObject);
 
     void addItems(QJsonDocument, QString, QString);
 public slots:

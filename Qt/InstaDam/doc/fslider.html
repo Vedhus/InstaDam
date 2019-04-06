@@ -34,7 +34,7 @@
 <a name="public-functions"></a>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#fSlider">fSlider</a></b>(maskTypes <i>maskType</i>, int <i>propNums</i>, threshold_or_filter <i>tf</i>, QWidget *<i>parent</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#fSlider">fSlider</a></b>(EnumConstants::maskTypes <i>maskType</i>, int <i>propNums</i>, EnumConstants::threshold_or_filter <i>tf</i>, QWidget *<i>parent</i>)</td></tr>
 </table></div>
 <ul>
 <li class="fn">7 public functions inherited from <a href="http://doc.qt.io/qt-5/qslider.html#public-functions">QSlider</a></li>
@@ -46,8 +46,8 @@
 <a name="signals"></a>
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#fSliderReleased">fSliderReleased</a></b>(maskTypes <i>selectedMask</i>, threshold_or_filter <i>tf</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#filterValueChanged">filterValueChanged</a></b>(maskTypes <i>selectedMask</i>, int <i>propNum</i>, int <i>value</i>, threshold_or_filter <i>thof</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#fSliderReleased">fSliderReleased</a></b>(EnumConstants::maskTypes <i>selectedMask</i>, EnumConstants::threshold_or_filter <i>tf</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#filterValueChanged">filterValueChanged</a></b>(EnumConstants::maskTypes <i>selectedMask</i>, int <i>propNum</i>, int <i>value</i>, EnumConstants::threshold_or_filter <i>thof</i>)</td></tr>
 </table></div>
 <ul>
 <li class="fn">6 signals inherited from <a href="http://doc.qt.io/qt-5/qabstractslider.html#signals">QAbstractSlider</a></li>
@@ -58,8 +58,8 @@
 <h2 id="public-variables">Public Variables</h2>
 <div class="table"><table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#propNum-var">propNum</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> maskTypes </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#selectedMask-var">selectedMask</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> threshold_or_filter </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#thof-var">thof</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> EnumConstants::maskTypes </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#selectedMask-var">selectedMask</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> EnumConstants::threshold_or_filter </td><td class="memItemRight bottomAlign"><b><a href="fslider.html#thof-var">thof</a></b></td></tr>
 </table></div>
 <a name="static-public-members"></a>
 <h2 id="static-public-members">Static Public Members</h2>
@@ -91,20 +91,20 @@
 <!-- $$$fSlider-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
-<p>Slider widget for <a href="filterdialog.html">filterDialog</a></p>
+<p>Slider widget for <a href="filterdialog.html">filterDialog</a>.</p>
 </div>
 <!-- @@@fSlider -->
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$fSlider[overload1]$$$fSlidermaskTypesintthreshold_or_filterQWidget* -->
-<h3 class="fn" id="fSlider"><a name="fSlider"></a>fSlider::<span class="name">fSlider</span>(<span class="type">maskTypes</span> <i>maskType</i>, <span class="type">int</span> <i>propNums</i>, <span class="type">threshold_or_filter</span> <i>tf</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html#QWidget">QWidget</a></span> *<i>parent</i>)</h3>
+<!-- $$$fSlider[overload1]$$$fSliderEnumConstants::maskTypesintEnumConstants::threshold_or_filterQWidget* -->
+<h3 class="fn" id="fSlider"><a name="fSlider"></a>fSlider::<span class="name">fSlider</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>maskType</i>, <span class="type">int</span> <i>propNums</i>, <span class="type"><a href="enumconstants.html#threshold_or_filter-enum">EnumConstants::threshold_or_filter</a></span> <i>tf</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html#QWidget">QWidget</a></span> *<i>parent</i>)</h3>
 <p>Creates an instance based on <i>maskType</i>, <i>propNums</i>, <i>tf</i>, and parent <a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a> <i>parent</i>, if any.</p>
 <!-- @@@fSlider -->
-<!-- $$$fSliderReleased[overload1]$$$fSliderReleasedmaskTypesthreshold_or_filter -->
-<h3 class="fn" id="fSliderReleased"><a name="fSliderReleased"></a><code>[signal] </code><span class="type">void</span> fSlider::<span class="name">fSliderReleased</span>(<span class="type">maskTypes</span> <i>selectedMask</i>, <span class="type">threshold_or_filter</span> <i>tf</i>)</h3>
+<!-- $$$fSliderReleased[overload1]$$$fSliderReleasedEnumConstants::maskTypesEnumConstants::threshold_or_filter -->
+<h3 class="fn" id="fSliderReleased"><a name="fSliderReleased"></a><code>[signal] </code><span class="type">void</span> fSlider::<span class="name">fSliderReleased</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedMask</i>, <span class="type"><a href="enumconstants.html#threshold_or_filter-enum">EnumConstants::threshold_or_filter</a></span> <i>tf</i>)</h3>
 <!-- @@@fSliderReleased -->
-<!-- $$$filterValueChanged[overload1]$$$filterValueChangedmaskTypesintintthreshold_or_filter -->
-<h3 class="fn" id="filterValueChanged"><a name="filterValueChanged"></a><code>[signal] </code><span class="type">void</span> fSlider::<span class="name">filterValueChanged</span>(<span class="type">maskTypes</span> <i>selectedMask</i>, <span class="type">int</span> <i>propNum</i>, <span class="type">int</span> <i>value</i>, <span class="type">threshold_or_filter</span> <i>thof</i>)</h3>
+<!-- $$$filterValueChanged[overload1]$$$filterValueChangedEnumConstants::maskTypesintintEnumConstants::threshold_or_filter -->
+<h3 class="fn" id="filterValueChanged"><a name="filterValueChanged"></a><code>[signal] </code><span class="type">void</span> fSlider::<span class="name">filterValueChanged</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedMask</i>, <span class="type">int</span> <i>propNum</i>, <span class="type">int</span> <i>value</i>, <span class="type"><a href="enumconstants.html#threshold_or_filter-enum">EnumConstants::threshold_or_filter</a></span> <i>thof</i>)</h3>
 <!-- @@@filterValueChanged -->
 </div>
 <hr/><p class="footer"><small></small></p></body>

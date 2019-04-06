@@ -12,7 +12,7 @@
 
 /*!
   \class Register
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QWidget
   \brief Registers a user.

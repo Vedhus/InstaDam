@@ -26,9 +26,9 @@
 /*!
   \page functions.html
   \title All Functions
-  \ingroup funclist
+  \ingroup funclists
 
   All InstaDam functions
 
-  \generatelist functionlist
+  \generatelist functionindex
   */

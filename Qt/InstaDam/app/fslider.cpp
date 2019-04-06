@@ -1,19 +1,21 @@
 #include "fslider.h"
-
+#include "enumconstants.h"
 /*!
   \class fSlider
   \ingroup app
   \inmodule InstaDam
   \inherits QSlider
-  \brief Slider widget for filterDialog
+  \brief Slider widget for filterDialog.
+
  */
 
 /*!
   Creates an instance based on \a maskType, \a propNums, \a tf, and parent
   QWidget \a parent, if any.
   */
-fSlider::fSlider(maskTypes maskType, int propNums, threshold_or_filter tf,
-                 QWidget *parent) : QSlider(parent) {
+fSlider::fSlider(EnumConstants::maskTypes maskType, int propNums,
+                 EnumConstants::threshold_or_filter tf, QWidget *parent)
+    : QSlider(parent) {
     selectedMask = maskType;
     propNum = propNums;
     thof = tf;
@@ -40,19 +42,21 @@ void fSlider::reemitSliderReleased() {
 
 
 /*!
-  \class fSpinbox
+  \class fSpinBox
   \ingroup app
   \inmodule InstaDam
   \inherits QSlider
-  \brief Spinbox widget for filterDialog
+  \brief Spinbox widget for filterDialog.
+
  */
 
 /*!
   Creates an instance based on \a maskType, \a propNums, \a tf, and parent
   QWidget \a parent, if any.
   */
-fSpinBox::fSpinBox(maskTypes maskType, int propNums, threshold_or_filter tf,
-                   QWidget *parent) : QSpinBox(parent) {
+fSpinBox::fSpinBox(EnumConstants::maskTypes maskType, int propNums,
+                   EnumConstants::threshold_or_filter tf, QWidget *parent)
+    : QSpinBox(parent) {
     selectedMask = maskType;
     propNum = propNums;
     thof = tf;
@@ -71,19 +75,21 @@ void fSpinBox::reemitValueChanged(int value) {
 
 
 /*!
-  \class fCheckbox
+  \class fCheckBox
   \ingroup app
   \inmodule InstaDam
   \inherits QSlider
-  \brief Checbox widget for filterDialog
+  \brief Checbox widget for filterDialog.
+
  */
 
 /*!
   Creates an instance based on \a maskType, \a propNums, \a tf, and parent
   QWidget \a parent, if any.
   */
-fCheckBox::fCheckBox(maskTypes maskType, int propNums, threshold_or_filter tf,
-                     QWidget *parent) : QCheckBox(parent) {
+fCheckBox::fCheckBox(EnumConstants::maskTypes maskType, int propNums,
+                     EnumConstants::threshold_or_filter tf, QWidget *parent)
+    : QCheckBox(parent) {
     selectedMask = maskType;
     propNum = propNums;
     thof = tf;

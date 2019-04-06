@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "pixmapops.h"
+#include "enumconstants.h"
 
 #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)
 
@@ -23,8 +24,9 @@
   Creates an instance based on \a selectedMask, \a fc, \a photoViewer, and
   \a currentPro.
   */
-filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
-                           PhotoViewer* photoViewer, Project *currentPro)
+filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
+                           filterControls* fc, PhotoViewer* photoViewer,
+                           Project *currentPro)
     : QDialog() {
     qInfo("1");
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
@@ -38,7 +40,8 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
 
         QHBoxLayout *HBlayout = new QHBoxLayout();
         HBlayout->addWidget(name);
-        threshold_or_filter thof = fc->properties[selectedMask]->propertylist[i]->threshold_filter;
+        EnumConstants::threshold_or_filter thof =
+                fc->properties[selectedMask]->propertylist[i]->threshold_filter;
         switch (fc->properties[selectedMask]->propertylist[i]->btnType) {
             case SLIDER:
             {
@@ -131,7 +134,8 @@ filterDialog::filterDialog(maskTypes selectedMask, filterControls* fc,
   \class filterControls
   \ingroup app
   \inmodule InstaDam
-  \brief Defines the properties of the mask and conducts the filtering operations
+  \brief Defines the properties of the mask and conducts the filtering operations.
+
 */
 
 /*!
@@ -144,21 +148,22 @@ filterControls::filterControls():QObject() {
 
 /*!
   Slot that sets the int \a value
-  to the appropriate property indexed by \a maskType and \a propnNum
+  to the appropriate property indexed by \a maskType, \a propNum and \a thof.
  */
-void filterControls::assignVal(maskTypes maskType, int propNum, int value,
-                               threshold_or_filter thof) {
+void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,
+                               int value,
+                               EnumConstants::threshold_or_filter thof) {
     this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->sliderAssign(value);
     emit valAssigned(maskType, thof);
 }
 
 /*!
- Obtains the label mask from \a label and sets it to \a labelMask to be used as a mask
+ Obtains the label mask from \a label and sets it to be used as a mask
  for the LABELMASK filter operation.
  */
 void filterControls::setLabelMask(QSharedPointer<Label> label) {
     this->labelMask = label->exportLabel(SelectItem::myBounds);
-    emit valAssigned(LABELMASK, FILTER);
+    emit valAssigned(EnumConstants::LABELMASK, EnumConstants::FILTER);
 }
 
 /*!
@@ -168,51 +173,69 @@ void filterControls::defineProperties() {
     std::vector<filterProperty*> cannyProperties;
 
     cannyProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
-                                                 ANY, THRESH, false));
+                                                 ANY, EnumConstants::THRESH,
+                                                 false));
     cannyProperties.push_back(new filterProperty("Threshold min", SLIDER, 0, 60,
-                                                 255, ANY, THRESH, false));
+                                                 255, ANY, EnumConstants::THRESH,
+                                                 false));
     cannyProperties.push_back(new filterProperty("Low", SLIDER, 3, 5, 801, ODD,
-                                                 FILTER, false));
+                                                 EnumConstants::FILTER, false));
     cannyProperties.push_back(new filterProperty("High", SLIDER, 3, 5, 801, ODD,
-                                                 FILTER, false));
+                                                 EnumConstants::FILTER, false));
     cannyProperties.push_back(new filterProperty("Kernal", SLIDER, 3, 5, 7, ODD,
-                                                 FILTER, false));
+                                                 EnumConstants::FILTER, false));
 
     std::vector<filterProperty*> blurProperties;
 
     blurProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
-                                                ODD, THRESH, false));
+                                                ODD, EnumConstants::THRESH,
+                                                false));
     blurProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
-                                                60, 255, ANY, THRESH, false));
+                                                60, 255, ANY,
+                                                EnumConstants::THRESH, false));
     blurProperties.push_back(new filterProperty("Kernel X", SLIDER, 3, 15, 51,
-                                                ODD, FILTER, false));
+                                                ODD, EnumConstants::FILTER,
+                                                false));
     blurProperties.push_back(new filterProperty("Kernel Y", SLIDER, 3, 15, 51,
-                                                ODD, FILTER, false));
+                                                ODD, EnumConstants::FILTER,
+                                                false));
     blurProperties.push_back(new filterProperty("Sigma", SLIDER, 3, 5, 55,
-                                                ODD, FILTER, false));
+                                                ODD, EnumConstants::FILTER,
+                                                false));
 
     std::vector<filterProperty*> thresholdProperties;
     thresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
-                                                     1, ANY, THRESH, false));
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
     thresholdProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
-                                                     60, 255, ANY, THRESH, false));
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
 
     std::vector<filterProperty*> labelmaskProperties;
     labelmaskProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
-                                                     ANY, THRESH, false));
+                                                     ANY, EnumConstants:: THRESH,
+                                                     false));
     labelmaskProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
-                                                     60, 255, ANY, THRESH, false));
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
     labelmaskProperties.push_back(new filterProperty("Label List", LABELLIST, 0,
-                                                     2, 1, ANY, FILTER, false));
+                                                     2, 1, ANY,
+                                                     EnumConstants::FILTER,
+                                                     false));
 
     filterPropertiesMeta *cannyPropertiesMeta =
-            new filterPropertiesMeta(cannyProperties, 5, CANNY);
+            new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);
     filterPropertiesMeta *blurPropertiesMeta =
-            new filterPropertiesMeta(blurProperties, 5, BLUR);
+            new filterPropertiesMeta(blurProperties, 5, EnumConstants::BLUR);
     filterPropertiesMeta *thresholdPropertiesMeta =
-            new filterPropertiesMeta(thresholdProperties, 2, THRESHOLD);
+            new filterPropertiesMeta(thresholdProperties, 2,
+                                     EnumConstants::THRESHOLD);
     filterPropertiesMeta *labelmaskPropertiesMeta =
-            new filterPropertiesMeta(labelmaskProperties, 3, LABELMASK);
+            new filterPropertiesMeta(labelmaskProperties, 3,
+                                     EnumConstants::LABELMASK);
 
     // Order follows order of enum defined in instadam.h
     properties.push_back(cannyPropertiesMeta);
@@ -223,27 +246,28 @@ void filterControls::defineProperties() {
 
 
 /*!
- Filters the cv::Mat \image based on the selected maskTypes \a selectedFilter
- and returns a binary image cv::Mat \a edge_temp
+ Filters the cv::Mat \a image based on the selected maskTypes \a selectedFilter
+ and returns a binary image cv::Mat.
  */
-cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
+cv::Mat filterControls::filterFunc(cv::Mat image,
+                                   EnumConstants::maskTypes selectedFilter) {
     cv::Mat edge_temp;
     switch (selectedFilter) {
-        case CANNY:
-            cv::Canny(image, edge_temp, properties[CANNY]->propertylist[2]->val,
-                                        properties[CANNY]->propertylist[3]->val,
-                                        properties[CANNY]->propertylist[4]->val);
+        case EnumConstants::CANNY:
+            cv::Canny(image, edge_temp, properties[EnumConstants::CANNY]->propertylist[2]->val,
+                                        properties[EnumConstants::CANNY]->propertylist[3]->val,
+                                        properties[EnumConstants::CANNY]->propertylist[4]->val);
             break;
-        case BLUR:
+        case EnumConstants::BLUR:
             cv::GaussianBlur(image, edge_temp,
-                             cv::Size(properties[BLUR]->propertylist[2]->val,
-                                      properties[BLUR]->propertylist[3]->val),
-                                      properties[BLUR]->propertylist[4]->val);
+                             cv::Size(properties[EnumConstants::BLUR]->propertylist[2]->val,
+                                      properties[EnumConstants::BLUR]->propertylist[3]->val),
+                                      properties[EnumConstants::BLUR]->propertylist[4]->val);
             break;
-        case THRESHOLD:
+        case EnumConstants::THRESHOLD:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             break;
-        case LABELMASK:
+        case EnumConstants::LABELMASK:
             if (!this->labelMask.isNull()) {
                 QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888));
                 cv::Mat mat(image_pixmap.height(), image_pixmap.width(),
@@ -254,7 +278,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
                 cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             }
             break;
-        case OTHER:
+        case EnumConstants::OTHER:
             break;
     }
     return edge_temp;
@@ -264,7 +288,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image, maskTypes selectedFilter) {
   Sets image for the object and stores and returns filtered edges.
 */
 cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
-                                               maskTypes selectedFilter) {
+                                               EnumConstants::maskTypes selectedFilter) {
         img = image;
         edges = filterFunc(img, selectedFilter);
         im2pixmap(selectedFilter);
@@ -272,9 +296,9 @@ cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
 }
 
 /*!
-  Binarizes the image and converts it to a pixmap
+  Binarizes the image and converts it to a pixmap using \a selectedFilter.
  */
-void filterControls::im2pixmap(maskTypes selectedFilter) {
+void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
     cv::Mat binary;
     int invert = properties[selectedFilter]->propertylist[0]->val;
 
@@ -298,9 +322,11 @@ void filterControls::im2pixmap(maskTypes selectedFilter) {
 }
 
 /*!
-  Returns a thubnail pixmap for the filter selection bar at the bottom of InstaDam.
+  Returns a thubnail pixmap for the filter selection bar at the bottom of
+  InstaDam, based on \a thumb and \a selectedFilter.
  */
-QPixmap filterControls::thumb2pixmap(cv::Mat thumb, maskTypes selectedFilter) {
+QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
+                                     EnumConstants::maskTypes selectedFilter) {
     qInfo("Enter Thumb");
     cv::Mat thumbEdges = this->filterFunc(thumb, selectedFilter);
     qInfo("Filtered thumbnail!");

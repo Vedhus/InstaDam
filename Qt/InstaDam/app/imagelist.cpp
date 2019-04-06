@@ -16,7 +16,8 @@
   \ingroup app
   \inmodule InstaDam
   \inherits QSlider
-  \brief Handles list of images form the server
+  \brief Handles list of images form the server.
+
  */
 
 ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :

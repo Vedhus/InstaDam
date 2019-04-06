@@ -11,7 +11,7 @@
 
 /*!
   \class PhotoViewer
-  \ingroup InstaDam
+  \ingroup app
   \inmodule InstaDam
   \inherits QGraphicsView
   \brief Viewer for displaying an image and drawing SelectItems on it.
@@ -43,7 +43,7 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
     setDragMode(QGraphicsView::NoDrag);
     resetBrush(10, Qt::RoundCap);
     maskObject = new maskObjects();
-    selectedMask = CANNY;
+    selectedMask = EnumConstants::CANNY;
 }
 
 /*!
@@ -55,16 +55,13 @@ void PhotoViewer::testPixmap() {
 }
 
 /*!
-  Sets the internal filter controls to \fc.
+  Sets the internal filter controls to \a fc.
   */
 void PhotoViewer::setFilterControls(filterControls *fc) {
     filterControl = fc;
 }
 
 #ifdef WASM_BUILD
-/*!
-  Sets the internal image based on the input \a array, with Label \a labelname
-  */
 QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname) {
     QPixmap pixmap;
     QColor whiteColor = QColor(1, 1, 1, 0);
@@ -135,7 +132,7 @@ void PhotoViewer::setPhoto(QPixmap pixmap) {
 /*!
   Converts \a src to a cv::Mat.
   */
-cv::Mat PhotoViewer::QImage2Mat(QImage const& src) const {
+cv::Mat PhotoViewer::QImage2Mat(const QImage &src) const {
      cv::Mat tmp(src.height(), src.width(), CV_8UC3,
                  const_cast<uchar*>(src.bits()),
                  static_cast<size_t>(src.bytesPerLine()));
@@ -161,15 +158,16 @@ cv::Mat PhotoViewer::QPixmap2Mat(QPixmap px) const {
 /*!
   Sets the internal mask based on \a filterName and \a thof.
   */
-void PhotoViewer::setImMask(maskTypes filterName, threshold_or_filter thof) {
+void PhotoViewer::setImMask(EnumConstants::maskTypes filterName,
+                            EnumConstants::threshold_or_filter thof) {
     selectedMask = filterName;
     qInfo("SettingMask");
     if (hasPhoto == true) {
         switch (thof) {
-            case FILTER:
+            case EnumConstants::FILTER:
                 filterControl->filtAndGeneratePixmaps(cvImage, selectedMask);
                 break;
-            case THRESH:
+            case EnumConstants::THRESH:
                 qInfo("Case Threshold");
                 filterControl->im2pixmap(selectedMask);
                 break;
