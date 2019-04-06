@@ -52,7 +52,6 @@ class InstaDam : public QMainWindow {
  public:
     explicit InstaDam(QWidget *parent = nullptr, QString databseURL ="", QString token = "");
     ~InstaDam();
-    void fileOpen();
     void connectFilters();
     filterControls * filterControl;
 
@@ -73,7 +72,7 @@ class InstaDam : public QMainWindow {
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
     void setCurrentProject(Project*);
-    QList<maskTypes> maskTypeList;
+    QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
  private slots:

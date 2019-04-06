@@ -17,22 +17,34 @@
 #include "newproject.h"
 #include "serverprojectname.h"
 #include "imagelist.h"
+/*!
+  \class ProjectList
+  \ingroup app
+  \inmodule InstaDam
+  \inherits QWidget
+  \brief A list of projects.
+  */
 
-
-
+/*!
+  Creates a ProjectList with parent QWidget \a parent, if any.
+  */
 ProjectList::ProjectList(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ProjectList)
-{
+    QWidget(parent), ui(new Ui::ProjectList) {
     ui->setupUi(this);
 }
 
-ProjectList::~ProjectList()
-{
+/*!
+  Destructor.
+  */
+ProjectList::~ProjectList() {
     delete ui;
 }
 
-void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString accessToken){
+/*!
+  Adds Projects to this object based on the input \a obj, \a databaseURL,
+  and \a accessToken.
+  */
+void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString accessToken) {
     this->databaseURL = databaseURL;
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
@@ -68,11 +80,12 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                 qInfo() << project;
             }
     }
-
-
 }
 
-void ProjectList::openProject(QListWidgetItem *project_name){
+/*!
+  Opens the Project based on \a project_name.
+  */
+void ProjectList::openProject(QListWidgetItem *project_name) {
     qInfo() << "inside open a new project" << project_name->text();
     QString id = QString(project_name->text().split('-')[0]);
     qInfo() << id;
@@ -86,22 +99,20 @@ void ProjectList::openProject(QListWidgetItem *project_name){
 
     connect(rep, &QNetworkReply::finished,
             this, &ProjectList::getLabelsReplyFinished);
-
-
 }
 
-void ProjectList::getLabelsReplyFinished()
-{
+/*!
+  Something.
+  */
+void ProjectList::getLabelsReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-      if(jsonError.error != QJsonParseError::NoError){
-            qInfo() << "Error: " << jsonError.errorString();
-      }
-
-      else{
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    }  else {
             qInfo() << jsonReply;
               InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
               instadamWindow->show();

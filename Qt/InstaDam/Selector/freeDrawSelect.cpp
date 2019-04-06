@@ -8,19 +8,6 @@
 #include "label.h"
 
 /*!
-  \typedef FreeMap
-  \relates QPointF
-
-  Synonym for QHash<int, QPointF>.
-  */
-
-/*!
-  \typedef FreeMapIterator
-  \relates QPointF
-  Synonym for QHashIterator<int, QPointF>.
-  */
-
-/*!
   \class FreeDrawSelect
   \ingroup Selector
   \inmodule InstaDam
@@ -44,15 +31,18 @@ FreeDrawSelect::FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label,
     : QGraphicsPixmapItem(item), SelectItem(label, item) {
     init(label);
     myPen.setWidth(1);
-    loadFromPaixmap(map);
+    loadFromPixmap(map);
     setup();
 }
 
+/*!
+  Constructs a FreeDwarSelect object based on the given \a map and \a pen.
+  */
 FreeDrawSelect::FreeDrawSelect(const QPixmap map, QPen pen)
     : QGraphicsPixmapItem(nullptr), SelectItem(nullptr, nullptr) {
     init();
     myPen = pen;
-    loadFromPaixmap(map);
+    loadFromPixmap(map);
     setup();
 }
 
@@ -125,6 +115,12 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
     setup();
 }
 
+/*!
+  Constructs a FreeDrawSelect object with an initial selected point \a point,
+  with a QPen \a pen, \a label
+  as the Label which owns this object and \a item is the parent QGraphicsItem,
+  if any.
+  */
 FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
                                QSharedPointer<Label> label, QGraphicsItem *item)
     : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {
@@ -140,7 +136,7 @@ FreeDrawSelect::~FreeDrawSelect() {
 /*!
   \reimp
   */
-void FreeDrawSelect::addPoint(QPointF &point, int vertex ) {
+void FreeDrawSelect::addPoint(QPointF &point, const int vertex) {
     UNUSED(point);
     UNUSED(vertex);
 }
@@ -192,6 +188,9 @@ void FreeDrawSelect::paint(QPainter *painter,
     QGraphicsPixmapItem::paint(painter, option, widget);
 }
 
+/*!
+  Sets the objects internal map to \a map without boundary checking.
+  */
 void FreeDrawSelect::setPointsUnchecked(QPixmap map) {
     myPixmap = map;
     setMirrorMap();
@@ -208,7 +207,7 @@ void FreeDrawSelect::read(const QJsonObject &json) {
 /*!
   \reimp
   */
-void FreeDrawSelect::resizeItem(int vertex, QPointF &point) {
+void FreeDrawSelect::resizeItem(const int vertex, QPointF &point) {
     UNUSED(vertex);
     UNUSED(point);
 }
@@ -285,6 +284,10 @@ void FreeDrawSelect::addPoints(QSharedPointer<QPixmap> points) {
     setMirrorMap();
 }
 
+/*!
+  Deletes points along the brush stroke defined by \a start and \a end, with
+  the given \a pen, with the changes put in \a outmap.
+  */
 void FreeDrawSelect::deletePoints(const QPointF &start, const QPointF &end,
                                   QPen pen, QSharedPointer<QPixmap> outmap) {
     QPixmap temp = myPixmap.copy();
@@ -314,6 +317,11 @@ void FreeDrawSelect::deletePoints(const QPointF &start, const QPointF &end,
 QGraphicsScene* FreeDrawSelect::scene() const {
     return SelectItem::scene();
 }
+
+/*!
+  \overload FreeDrawSelect::deletePoints()
+  Deletes points based on the pixmap \a map with the given \a pen.
+  */
 void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map) {
     myPainter.begin(&myPixmap);
     pen.setColor(Qt::red);
@@ -337,7 +345,10 @@ void FreeDrawSelect::setMirrorMap() {
     }
 }
 
-void FreeDrawSelect::loadFromPaixmap(const QPixmap map) {
+/*!
+  Loads QPixmap \a map into the current object.
+  */
+void FreeDrawSelect::loadFromPixmap(const QPixmap map) {
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
     myRect = QRectF(0., 0., SelectItem::myBounds.width(),
@@ -358,6 +369,7 @@ void FreeDrawSelect::loadFromPaixmap(const QPixmap map) {
     myPainter.end();
 }
 
+
 inline void FreeDrawSelect::setup() {
     setMirrorMap();
     QGraphicsPixmapItem::prepareGeometryChange();
@@ -377,20 +389,20 @@ inline void FreeDrawSelect::init(QSharedPointer<Label> label) {
     myPixmap.fill(Qt::transparent);
 }
 /*!
-  \fn QString FreeDrawSelect::baseInstructions()
+  \fn QString FreeDrawSelect::baseInstructions() const
 
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::insertVertex(int vertex, QPointF &point)
+  \fn void FreeDrawSelect::insertVertex(const int vertex, const QPointF &point)
   \reimp
 
   Empty function since FreeDrawSelect items have no vertices.
   */
 
 /*!
-  \fn int FreeDrawSelect::numberOfVertices()
+  \fn int FreeDrawSelect::numberOfVertices() const
   \reimp
 
   Returns 0 since FreeDrawSelect items have no vertices.
@@ -411,81 +423,58 @@ inline void FreeDrawSelect::init(QSharedPointer<Label> label) {
   */
 
 /*!
-  \fn void FreeDrawSelect::rotate(QPointF &from, QPointF &to)
+  \fn void FreeDrawSelect::rotate(const QPointF &from, const QPointF &to)
   \reimp
 
   Empty function since FreeDrawSelect items cannot be rotated.
   */
 
 /*!
-  \fn FreeDrawSelect* FreeDrawSelect::getMirror()
+  \fn FreeDrawSelect* FreeDrawSelect::getMirror() const
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::rotateMirror()
+  \fn void FreeDrawSelect::rotateMirror() const
   \reimp
 
   Empty function since FreeDrawSelect items cannot be rotated.
   */
 
 /*!
-  \fn void FreeDrawSelect::setMirrorActive()
+  \fn void FreeDrawSelect::setMirrorActive() const
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::setMirrorAdded()
+  \fn void FreeDrawSelect::setMirrorAdded() const
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::setMirrorMoved()
+  \fn void FreeDrawSelect::setMirrorMoved() const
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::setMirrorResized()
+  \fn void FreeDrawSelect::setMirrorResized() const
   \reimp
   */
 
 /*!
-  \fn void FreeDrawSelect::setMirrorVertex(int vertex)
+  \fn void FreeDrawSelect::setMirrorVertex(int vertex) const
   \reimp
   */
 
 /*!
-  \fn QPolygonF FreeDrawSelect::getPoints()
-
-  Returns a QPolygonF containing all of the points in the pixel map.
-  */
-
-/*!
-  \fn bool FreeDrawSelect::isVisible()
+  \fn bool FreeDrawSelect::isVisible() const
 
   Returns whether the FreeDrawSelect object is visible (\c true) on the
   QGraphicsScene or not (\c false).
   */
 
 /*!
-  \fn int FreeDrawSelect::coordsToInt(int x, int y)
+  \fn QPixmap FreeDrawSelect::getPixmap() const
 
-  Converts the \a x and \a y coordinates into an integer representation of the
-  pixel.
-
-  \sa pointToInt()
-  */
-
-/*!
-  \fn int FreeDrawSelect::pointToInt(QPoint point)
-
-  Converts \a point into an integer representation of the pixel.
-
-  \sa coordsToInt()
-  */
-
-/*!
-  \fn QSharedPointer<FreeMap> FreeDrawSelect::getMap()
-
-  Returns the internal map of points.
+  Returns the internal pixmap.
   */

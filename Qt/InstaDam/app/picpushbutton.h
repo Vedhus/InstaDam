@@ -14,13 +14,13 @@ class PicPushButton : public QLabel {
  public:
     int w;
     int h;
-    maskTypes filter = CANNY;
+    EnumConstants::maskTypes filter = EnumConstants::CANNY;
     QPixmap pixmap;
     QPixmap pixmap_hover;
     QPixmap pixmap_pressed;
     explicit PicPushButton(QWidget *parent);
     bool check;
-    void setMaskType(maskTypes maskType);
+    void setMaskType(EnumConstants::maskTypes maskType);
     void updatePixmap();
     void resetPixmaps(QPixmap pixmap_input);
     QPixmap addText(QPixmap pixmap_input, QString text);
@@ -29,10 +29,10 @@ class PicPushButton : public QLabel {
     void mousePressEvent(QMouseEvent *event) override;
 
  signals:
-    void checked(maskTypes type);
+    void checked(EnumConstants::maskTypes type);
 
  public slots:
-    void otherBoxChecked(maskTypes type);
+    void otherBoxChecked(EnumConstants::maskTypes type);
 };
 
 #endif  // PICPUSHBUTTON_H

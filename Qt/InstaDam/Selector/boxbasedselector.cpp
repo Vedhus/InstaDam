@@ -181,7 +181,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
 }
 
 /*!
-  \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) = 0;
+  \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;
 
   Pure virtual function to set the corner vertex boxes of the mirror object.
   \a tlc is the top-left corner, \a blc is the bottom-left corner, \a trc is the
@@ -198,7 +198,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
   */
 
 /*!
-  \fn void BoxBasedSelector::insertVertex(int vertex, QPointF &point)
+  \fn void BoxBasedSelector::insertVertex(const int vertex, const QPointF &point)
   \reimp
 
   Empty function as this and any derived classes can have two, and only two
@@ -206,7 +206,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
   */
 
 /*!
-  \fn int BoxBasedSelector::numberOfVertices()
+  \fn int BoxBasedSelector::numberOfVertices() const
 
   \reimp
 
@@ -224,7 +224,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
   */
 
 /*!
-  \fn qreal BoxBasedSelector::getRotationAngle()
+  \fn qreal BoxBasedSelector::getRotationAngle() const
 
   Returns a \c qreal containing the rotation angle of the BoxBasedSelector in
   degrees.
@@ -233,7 +233,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
   */
 
 /*!
-  \fn QRectF BoxBasedSelector::getRect()
+  \fn QRectF BoxBasedSelector::getRect() const
 
   Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
   */

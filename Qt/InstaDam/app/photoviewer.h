@@ -38,7 +38,7 @@ class PhotoViewer : public QGraphicsView {
     filterControls *filterControl;
 
     brushTypes brushType;
-    maskTypes selectedMask;
+    EnumConstants::maskTypes selectedMask;
     QPen pen;
     QPainterPath path;
     int **colors;
@@ -74,21 +74,22 @@ class PhotoViewer : public QGraphicsView {
     void resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt::RoundCap);
     void setBrushMode(Qt::PenCapStyle cap);
 
-    void setMaskPixmap();
+    //void setMaskPixmap();
 
-    cv::Mat QImage2Mat(QImage const& src) const;
+    cv::Mat QImage2Mat(const QImage &src) const;
 
-    cv::Mat QPixmap2Mat(QPixmap src) const;
+    cv::Mat QPixmap2Mat(QPixmap px) const;
 
  signals:
     // void photoClicked(QPoint);
-    void zoomed(int, float, QPointF);
-    void changedMask(maskTypes);
+    void zoomed(int i, float a, QPointF point);
+    void changedMask(EnumConstants::maskTypes type);
     void loadedPhoto();
 
  public slots:
     void zoomedInADifferentView(int zoom_input, float factor, QPointF point);
-    void setImMask(maskTypes filterName, threshold_or_filter thof = FILTER);
+    void setImMask(EnumConstants::maskTypes filterName,
+                   EnumConstants::threshold_or_filter thof = EnumConstants::FILTER);
 
  private:
     Ui::PhotoViewer *ui;

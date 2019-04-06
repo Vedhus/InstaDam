@@ -1,6 +1,9 @@
 #include "pixmapops.h"
 
 
+/*!
+  Testing withn QColor based on \a r, \a g, \a b, \a a.
+  */
 QPixmap testPixmap(int r = 255, int g = 0, int b = 0, int a = 255) {
     QPixmap px = QPixmap(200, 200);
     QColor color  = QColor(r, g, b, a);
@@ -8,11 +11,18 @@ QPixmap testPixmap(int r = 255, int g = 0, int b = 0, int a = 255) {
     return px;
 }
 
+/*!
+  Returns a QPixmap which is \a p2 masked by \a mask, and merged with \a p1,
+  using \a brushType to determine the operation.
+  */
 QPixmap maskPixmaps(QPixmap p1, QPixmap p2, QPixmap mask, brushTypes brushType) {
     QPixmap maskp2 = joinPixmaps(mask, p2, QPainter::CompositionMode_SourceIn);
     return directPixmaps(p1, maskp2, brushType);
 }
 
+/*!
+  Maps \a p1 and \a p2, using the \a brushType.
+  */
 QPixmap directPixmaps(QPixmap p1, QPixmap p2, brushTypes brushType) {
     QPainter::CompositionMode mode;
     if (brushType == ERASER)
@@ -22,6 +32,9 @@ QPixmap directPixmaps(QPixmap p1, QPixmap p2, brushTypes brushType) {
     return joinPixmaps(p1, p2, mode);
 }
 
+/*!
+  Returns a QPixmap of \a p1 and \a p2 merged using \a mode.
+  */
 QPixmap joinPixmaps(QPixmap p1, QPixmap p2,
                     QPainter::CompositionMode mode) {
     QPixmap result =  QPixmap(p1.size().expandedTo(p2.size()));
@@ -41,6 +54,9 @@ QPixmap joinPixmaps(QPixmap p1, QPixmap p2,
 // data with the cv::Mat directly
 //    NOTE: Format_RGB888 is an exception since we need to use a local QImage and thus must clone the data regardless
 //    NOTE: This does not cover all cases - it should be easy to add new ones as required.
+/*!
+  Returns a cv::Mat based on \a inImage and \a inCloneImageData.
+  */
 cv::Mat QImageToCvMat(QImage inImage, bool inCloneImageData) {
     switch ( inImage.format() ) {
         // 8-bit, 4 channel

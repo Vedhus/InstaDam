@@ -10,12 +10,14 @@
 #include "Selector/label.h"
 #include "labelButton.h"
 #include "project.h"
+#include "enumconstants.h"
 
 class PhotoViewer;
 
 class filterDialog: public QDialog {
  public:
-    filterDialog(maskTypes, filterControls*, PhotoViewer*, Project *);
+    filterDialog(EnumConstants::maskTypes selectedMask, filterControls* fc,
+                 PhotoViewer* photoViewer, Project *currentPro);
 };
 
 class filterControls: public QObject {
@@ -27,24 +29,25 @@ class filterControls: public QObject {
 
     cv::Mat img;
     cv::Mat edges;
-    cv::Mat filterFunc(cv::Mat, maskTypes);
+    cv::Mat filterFunc(cv::Mat image, EnumConstants::maskTypes selectedFilter);
     QPixmap qImg;
     QPixmap qAlpha;
     QPixmap qImgThumb;
-    cv::Mat filtAndGeneratePixmaps(cv::Mat, maskTypes);
-    void im2pixmap(maskTypes selectedFilter);
+    cv::Mat filtAndGeneratePixmaps(cv::Mat image, EnumConstants::maskTypes selectedFilter);
+    void im2pixmap(EnumConstants::maskTypes selectedFilter);
     std::vector<filterPropertiesMeta* > properties;
-    QPixmap thumb2pixmap(cv::Mat, maskTypes);
-    void show(maskTypes);
+    QPixmap thumb2pixmap(cv::Mat thumb, EnumConstants::maskTypes selectedFilter);
+    //void show(maskTypes);
     PhotoViewer *photoViewer;
     QPixmap labelMask;
 
  public slots:
-    void assignVal(maskTypes maskType, int propNum, int value,
-                   threshold_or_filter thof);
-    void setLabelMask(QSharedPointer<Label>);
+    void assignVal(EnumConstants::maskTypes maskType, int propNum, int value,
+                   EnumConstants::threshold_or_filter thof);
+    void setLabelMask(QSharedPointer<Label> label);
  signals:
-    void valAssigned(maskTypes maskType,  threshold_or_filter thof);
+    void valAssigned(EnumConstants::maskTypes maskType,
+                     EnumConstants::threshold_or_filter thof);
 };
 
 #endif  // FILTERCONTROLS_H

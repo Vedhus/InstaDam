@@ -36,7 +36,7 @@ class FreeDrawErase : public FreeDrawSelect {
     /*------------- End implemented functions*/
 
 
-    QSharedPointer<EraseMap> getMap() {return undoMap;}
+    QSharedPointer<EraseMap> getMap() const {return undoMap;}
 
  private:
 #ifdef TEST

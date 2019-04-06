@@ -26,7 +26,8 @@ SOURCES += \
     login.cpp \
     projectlist.cpp \
     imagelist.cpp \
-    serverprojectname.cpp
+    serverprojectname.cpp \
+    enumconstants.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -49,7 +50,7 @@ HEADERS += \
     login.h \
     projectlist.h \
     imagelist.h \
-    serverprojectname.h
+    serverprojectname.h \
     enumconstants.h
 
 wasm: HEADERS += colordialog.h

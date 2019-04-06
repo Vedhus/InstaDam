@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- commands.cpp -->
+  <title>MoveVertexCommand Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>MoveVertexCommand</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">MoveVertexCommand Class</h1>
+<!-- $$$MoveVertexCommand-brief -->
+<p>The <a href="movevertexcommand.html">MoveVertexCommand</a> class provides undo and redo actions for moving a vertex of a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>. <a href="#details">More...</a></p>
+<!-- @@@MoveVertexCommand -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;MoveVertexCommand&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a></td></tr></table></div><ul>
+<li><a href="movevertexcommand-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="movevertexcommand.html#MoveVertexCommand">MoveVertexCommand</a></b>(SelectItem *<i>item</i>, const QPointF <i>oldPos</i>, const QPointF <i>newPos</i>, const int <i>vertex</i>, QUndoCommand *<i>parent</i> = nullptr)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="movevertexcommand.html#redo">redo</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="movevertexcommand.html#undo">undo</a></b>() override</td></tr>
+</table></div>
+<ul>
+<li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qundocommand.html#public-functions">QUndoCommand</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$MoveVertexCommand-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="movevertexcommand.html">MoveVertexCommand</a> class provides undo and redo actions for moving a vertex of a <a href="selectitem.html">SelectItem</a> on a <a href="photoscene.html">PhotoScene</a>.</p>
+<p><a href="movevertexcommand.html">MoveVertexCommand</a> is used to hold a reference to a <a href="selectitem.html">SelectItem</a>, the starting and ending positions, and which vertex is moving. Using the <a href="movevertexcommand.html#undo">undo</a>() and <a href="movevertexcommand.html#redo">redo</a>() commands the vertex can be moved from and to its original position in the scene repeatedly.</p>
+</div>
+<p><b>See also </b><a href="addcommand.html">AddCommand</a>, <a href="movecommand.html">MoveCommand</a>, <a href="deletecommand.html">DeleteCommand</a>, <a href="addvertexcommand.html">AddVertexCommand</a>, <a href="deletevertexcommand.html">DeleteVertexCommand</a>, <a href="erasepointscommand.html">ErasePointsCommand</a>, and <a href="rotatecommand.html">RotateCommand</a>.</p>
+<!-- @@@MoveVertexCommand -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$MoveVertexCommand[overload1]$$$MoveVertexCommandSelectItem*constQPointFconstQPointFconstintQUndoCommand* -->
+<h3 class="fn" id="MoveVertexCommand"><a name="MoveVertexCommand"></a>MoveVertexCommand::<span class="name">MoveVertexCommand</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>oldPos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>newPos</i>, const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qundocommand.html#QUndoCommand">QUndoCommand</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs a MoveVeretxCommand using the provided <i>item</i> and <i>vertex</i> so that it's movement from <i>oldPos</i> to <i>newPos</i> on the scene can be undone and/or redone. <i>parent</i> refers to parent <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a>, if any.</p>
+<!-- @@@MoveVertexCommand -->
+<!-- $$$redo[overload1]$$$redo -->
+<h3 class="fn" id="redo"><a name="redo"></a><code>[override virtual] </code><span class="type">void</span> MoveVertexCommand::<span class="name">redo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#redo">QUndoCommand::redo</a>().</p>
+<!-- @@@redo -->
+<!-- $$$undo[overload1]$$$undo -->
+<h3 class="fn" id="undo"><a name="undo"></a><code>[override virtual] </code><span class="type">void</span> MoveVertexCommand::<span class="name">undo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#undo">QUndoCommand::undo</a>().</p>
+<!-- @@@undo -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

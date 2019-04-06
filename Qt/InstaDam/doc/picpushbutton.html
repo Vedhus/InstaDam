@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- picpushbutton.cpp -->
+  <title>PicPushButton Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>PicPushButton</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">PicPushButton Class</h1>
+<!-- $$$PicPushButton-brief -->
+<p>A PushButton. <a href="#details">More...</a></p>
+<!-- @@@PicPushButton -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;PicPushButton&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qlabel.html">QLabel</a></td></tr></table></div><ul>
+<li><a href="picpushbutton-members.html">List of all members, including inherited members</a></li>
+<li><a href="picpushbutton-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#PicPushButton">PicPushButton</a></b>(QWidget *<i>parent</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#addText">addText</a></b>(QPixmap <i>pixmap_input</i>, QString <i>text</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#manualSelect">manualSelect</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#resetPixmaps">resetPixmaps</a></b>(QPixmap <i>pixmap_input</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#setMaskType">setMaskType</a></b>(EnumConstants::maskTypes <i>maskType</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#updatePixmap">updatePixmap</a></b>()</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#mousePressEvent">mousePressEvent</a></b>(QMouseEvent *<i>event</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#paintEvent">paintEvent</a></b>(QPaintEvent *<i>event</i>) override</td></tr>
+</table></div>
+<ul>
+<li class="fn">29 public functions inherited from <a href="http://doc.qt.io/qt-5/qlabel.html#public-functions">QLabel</a></li>
+<li class="fn">14 public functions inherited from <a href="http://doc.qt.io/qt-5/qframe.html#public-functions">QFrame</a></li>
+<li class="fn">222 public functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-functions">QWidget</a></li>
+<li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
+<li class="fn">15 public functions inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#public-functions">QPaintDevice</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#otherBoxChecked">otherBoxChecked</a></b>(EnumConstants::maskTypes <i>type</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">7 public slots inherited from <a href="http://doc.qt.io/qt-5/qlabel.html#public-slots">QLabel</a></li>
+<li class="fn">19 public slots inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-slots">QWidget</a></li>
+<li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#checked">checked</a></b>(EnumConstants::maskTypes <i>type</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qlabel.html#signals">QLabel</a></li>
+<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#signals">QWidget</a></li>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#check-var">check</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> EnumConstants::maskTypes </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#filter-var">filter</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#h-var">h</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#pixmap-var">pixmap</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#pixmap_hover-var">pixmap_hover</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#pixmap_pressed-var">pixmap_pressed</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#w-var">w</a></b></td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QMetaObject </td><td class="memItemRight bottomAlign"><b><a href="picpushbutton.html#staticMetaObject-var">staticMetaObject</a></b></td></tr>
+</table></div>
+<ul>
+<li class="fn">5 static public members inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#static-public-members">QWidget</a></li>
+<li class="fn">9 static public members inherited from <a href="http://doc.qt.io/qt-5/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">1 static public member inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#static-public-members">QPaintDevice</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">12 properties inherited from <a href="http://doc.qt.io/qt-5/qlabel.html#properties">QLabel</a></li>
+<li class="fn">6 properties inherited from <a href="http://doc.qt.io/qt-5/qframe.html#properties">QFrame</a></li>
+<li class="fn">59 properties inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#properties">QWidget</a></li>
+<li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
+<li class="fn">11 protected functions inherited from <a href="http://doc.qt.io/qt-5/qlabel.html#protected-functions">QLabel</a></li>
+<li class="fn">4 protected functions inherited from <a href="http://doc.qt.io/qt-5/qframe.html#protected-functions">QFrame</a></li>
+<li class="fn">35 protected functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-functions">QWidget</a></li>
+<li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">1 protected function inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#protected-functions">QPaintDevice</a></li>
+<li class="fn">1 protected slot inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-slots">QWidget</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$PicPushButton-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>A PushButton.</p>
+</div>
+<!-- @@@PicPushButton -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$PicPushButton[overload1]$$$PicPushButtonQWidget* -->
+<h3 class="fn" id="PicPushButton"><a name="PicPushButton"></a>PicPushButton::<span class="name">PicPushButton</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html#QWidget">QWidget</a></span> *<i>parent</i>)</h3>
+<p>Creates an instance with parent <a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a> <i>parent</i>.</p>
+<!-- @@@PicPushButton -->
+<!-- $$$addText[overload1]$$$addTextQPixmapQString -->
+<h3 class="fn" id="addText"><a name="addText"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> PicPushButton::<span class="name">addText</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>pixmap_input</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>text</i>)</h3>
+<p>Returns a <a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a> based on <i>pixmap_input</i> with <i>text</i> written on it.</p>
+<!-- @@@addText -->
+<!-- $$$checked[overload1]$$$checkedEnumConstants::maskTypes -->
+<h3 class="fn" id="checked"><a name="checked"></a><code>[signal] </code><span class="type">void</span> PicPushButton::<span class="name">checked</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>type</i>)</h3>
+<!-- @@@checked -->
+<!-- $$$manualSelect[overload1]$$$manualSelect -->
+<h3 class="fn" id="manualSelect"><a name="manualSelect"></a><span class="type">void</span> PicPushButton::<span class="name">manualSelect</span>()</h3>
+<p>Something</p>
+<!-- @@@manualSelect -->
+<!-- $$$mousePressEvent[overload1]$$$mousePressEventQMouseEvent* -->
+<h3 class="fn" id="mousePressEvent"><a name="mousePressEvent"></a><code>[override virtual] </code><span class="type">void</span> PicPushButton::<span class="name">mousePressEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qmouseevent.html">QMouseEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qlabel.html#mousePressEvent">QLabel::mousePressEvent</a>().</p>
+<!-- @@@mousePressEvent -->
+<!-- $$$otherBoxChecked[overload1]$$$otherBoxCheckedEnumConstants::maskTypes -->
+<h3 class="fn" id="otherBoxChecked"><a name="otherBoxChecked"></a><code>[slot] </code><span class="type">void</span> PicPushButton::<span class="name">otherBoxChecked</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>type</i>)</h3>
+<p>Slot for when another button is pressed taking <i>type</i>.</p>
+<!-- @@@otherBoxChecked -->
+<!-- $$$paintEvent[overload1]$$$paintEventQPaintEvent* -->
+<h3 class="fn" id="paintEvent"><a name="paintEvent"></a><code>[override virtual] </code><span class="type">void</span> PicPushButton::<span class="name">paintEvent</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpaintevent.html">QPaintEvent</a></span> *<i>event</i>)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qlabel.html#paintEvent">QLabel::paintEvent</a>().</p>
+<!-- @@@paintEvent -->
+<!-- $$$resetPixmaps[overload1]$$$resetPixmapsQPixmap -->
+<h3 class="fn" id="resetPixmaps"><a name="resetPixmaps"></a><span class="type">void</span> PicPushButton::<span class="name">resetPixmaps</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>pixmap_input</i>)</h3>
+<p>Resets the pixmaps based on <i>pixmap_input</i>.</p>
+<!-- @@@resetPixmaps -->
+<!-- $$$setMaskType[overload1]$$$setMaskTypeEnumConstants::maskTypes -->
+<h3 class="fn" id="setMaskType"><a name="setMaskType"></a><span class="type">void</span> PicPushButton::<span class="name">setMaskType</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>maskType</i>)</h3>
+<p>Sets the mask type to <i>maskType</i>.</p>
+<!-- @@@setMaskType -->
+<!-- $$$updatePixmap[overload1]$$$updatePixmap -->
+<h3 class="fn" id="updatePixmap"><a name="updatePixmap"></a><span class="type">void</span> PicPushButton::<span class="name">updatePixmap</span>()</h3>
+<p>Updates the internal pixmaps.</p>
+<!-- @@@updatePixmap -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

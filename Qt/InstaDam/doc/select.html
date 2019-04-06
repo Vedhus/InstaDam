@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- select.qdoc -->
+  <title>Introduction to SelectItems | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>Introduction to SelectItems</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#rectangleselect-and-ellipseselect">RectangleSelect and EllipseSelect</a></li>
+<li class="level2"><a href="#drawing">Drawing</a></li>
+<li class="level2"><a href="#moving">Moving</a></li>
+<li class="level2"><a href="#resizing">Resizing</a></li>
+<li class="level2"><a href="#rotating">Rotating</a></li>
+<li class="level1"><a href="#polygonselect">PolygonSelect</a></li>
+<li class="level2"><a href="#drawing">Drawing</a></li>
+<li class="level2"><a href="#adding-vertices">Adding Vertices</a></li>
+<li class="level2"><a href="#manipulating-a-polygon">Manipulating a Polygon</a></li>
+<li class="level1"><a href="#freedrawselect">FreeDrawSelect</a></li>
+<li class="level2"><a href="#drawing">Drawing</a></li>
+<li class="level2"><a href="#manipulating">Manipulating</a></li>
+<li class="level1"><a href="#drawing-on-the-mask">Drawing on the Mask</a></li>
+<li class="level1"><a href="#undo-and-redo">Undo and Redo</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Introduction to SelectItems</h1>
+<span class="subtitle"></span>
+<!-- $$$select.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>SelectItems are used to annotate regions of images. There are four basic types of SelectItems:</p>
+<ul>
+<li><a href="rectangleselect.html">RectangleSelect</a> for selecting rectangular regions</li>
+<li><a href="ellipseselect.html">EllipseSelect</a> for selecting elliptical regions</li>
+<li><a href="select.html#polygonselect">PolygonSelect</a> for irregularly shaped regions</li>
+<li><a href="select.html#freedrawselect">FreeDrawSelect</a> for drawing regions with a brush</li>
+</ul>
+<p>Every selection region must be associated with a Label so that it is properly annotated. The following sections describe how to use each of the tools. Note: In each of the graphical demonstrations a red circle around the mouse indicates a mouse button is being pressed.</p>
+<a name="rectangleselect-and-ellipseselect"></a>
+<h2 id="rectangleselect-and-ellipseselect">RectangleSelect and EllipseSelect</h2>
+<p>Both of these tools are described by an enclosing rectangular box and are interacted with in the same way. Only the rendering of the shape of the selected region differs between the two.</p>
+<a name="drawing"></a>
+<h3 >Drawing</h3>
+<p>In order to draw either of these shapes, select a Label and the appropriate tool button. Left click to define the top left corner, then drag the mouse (while keeping the button depressed) to define the region, and release the button to complete the selection.</p>
+<p class="centerAlign"><img src="images/rect.gif" alt="" /></p><p class="figCaption">Drawing a rectangular region.</p>
+<a name="moving"></a>
+<h3 >Moving</h3>
+<p>These items can be moved by clicking on them and dragging the mouse with the left button pressed. Release to button to place the item.</p>
+<p class="centerAlign"><img src="images/move.gif" alt="" /></p><p class="figCaption">Moving a rectangular region.</p>
+<a name="resizing"></a>
+<h3 >Resizing</h3>
+<p><a href="rectangleselect.html">RectangleSelect</a> and <a href="ellipseselect.html">EllipseSelect</a> items can also be resized. This is done by left clicking on one of the corners of the defining box and dragging the mouse while keeping the button depressed. Release the button to place the corner.</p>
+<p class="centerAlign"><img src="images/resize.gif" alt="" /></p><p class="figCaption">Resizing a rectangle.</p>
+<a name="rotating"></a>
+<h3 >Rotating</h3>
+<p>These items can also be rotated about their center. This is done by right clicking on the object and dragging the mouse while keeping the button depressed. Release the button to place the item.</p>
+<p class="centerAlign"><img src="images/rotate.gif" alt="" /></p><p class="figCaption">Rotating a rectangle.</p>
+<p class="centerAlign"><img src="images/ellipse.gif" alt="" /></p><p class="figCaption">Manipulating an elliptical region.</p>
+<a name="polygonselect"></a>
+<h2 id="polygonselect">PolygonSelect</h2>
+<p><a href="select.html#polygonselect">PolygonSelect</a> items can be used to select any region which can be desribed by straight line segments.</p>
+<a name="drawing"></a>
+<h3 >Drawing</h3>
+<p>To draw a polygon region, select a Label and the Polygon button. Vertices of the polygon are denoted by clicking the left mouse button. Click the &quot;Finish Polygon&quot; button when done.</p>
+<p class="centerAlign"><img src="images/polygon.gif" alt="" /></p><p class="figCaption">Defining a polygon region.</p>
+<a name="adding-vertices"></a>
+<h3 >Adding Vertices</h3>
+<p>Vertices can be added one after another by clicking the left mouse button. A vertex can also be added between two existing vertices by first clicking on the &quot;Insert Point Between&quot; button, then clicking on the two vertices which you want to insert a vertex between. Then click a point to add a vertex.</p>
+<p class="centerAlign"><img src="images/polygon_add.gif" alt="" /></p><p class="figCaption">Adding a vertex to a polygon.</p>
+<a name="manipulating-a-polygon"></a>
+<h3 >Manipulating a Polygon</h3>
+<p><a href="select.html#polygonselect">PolygonSelect</a> items can be manipulated in the same way as <a href="rectangleselect.html">RectangleSelect</a> and <a href="ellipseselect.html">EllipseSelect</a> items. Click and drag in the center to move, and click and drag on a vertex to change its position. <a href="select.html#polygonselect">PolygonSelect</a> items cannot be rotated.</p>
+<p class="centerAlign"><img src="images/polygon_manipulate.gif" alt="" /></p><p class="figCaption">Manipulating a polygon region.</p>
+<p>Individual vertices can be deleted from a polygon by left clicking to select the vertex, then press the backspace key to delete it.</p>
+<p class="centerAlign"><img src="images/polygon_delete.gif" alt="" /></p><a name="freedrawselect"></a>
+<h2 id="freedrawselect">FreeDrawSelect</h2>
+<p><a href="select.html#freedrawselect">FreeDrawSelect</a> items are used to create selections based on drawing with a brush. Both round and square brushes are available and the brush size can be adjusted.</p>
+<a name="drawing"></a>
+<h3 >Drawing</h3>
+<p>To use this tool, select a Label and the FreeDraw button. Then left click and move the mouse (while holding the button down) to paint the region.</p>
+<p class="centerAlign"><img src="images/free_draw.gif" alt="" /></p><p class="figCaption">Painting a selection region.</p>
+<a name="manipulating"></a>
+<h3 >Manipulating</h3>
+<p><a href="select.html#freedrawselect">FreeDrawSelect</a> items cannot be moved, resized, or rotated, however you can use the &quot;Erase&quot; button to select an eraser. &quot;Draw&quot; on the image to erase points.</p>
+<p class="centerAlign"><img src="images/erase.gif" alt="" /></p><p class="figCaption">Erasing paint strokes.</p>
+<a name="drawing-on-the-mask"></a>
+<h2 id="drawing-on-the-mask">Drawing on the Mask</h2>
+<p>When you draw SelectItems on the Mask (right had side), only pixels which are not masked (white on the Mask) will be included in the final selection. For <a href="rectangleselect.html">RectangleSelect</a>, <a href="ellipseselect.html">EllipseSelect</a>, and <a href="select.html#polygonselect">PolygonSelect</a> items draw on the Mask as normal, but you must click on the &quot;Add Selection&quot; button to compute the actual pixels selected and add them to the display. Once ths button is clicked the original <a href="selectitem.html">SelectItem</a> is discarded for the new pixel selection. Clicking on the &quot;Cancel Selection&quot; button to discard the selected region before applying it.</p>
+<p class="centerAlign"><img src="images/rect-mirror.gif" alt="" /></p><p class="figCaption">Drawing a rectangle region on the Mask and applying the results.</p>
+<p>For the <a href="select.html#freedrawselect">FreeDrawSelect</a> the drawing is done as it is on the image, however there is no need to add the selection as the masked pixels are calculated when the mouse button is released.</p>
+<p class="centerAlign"><img src="images/draw_mirror.gif" alt="" /></p><p class="figCaption">Free drawing on the Mask.</p>
+<a name="undo-and-redo"></a>
+<h2 id="undo-and-redo">Undo and Redo</h2>
+<p>Any selection action (add, move, rotate, resize, erase) can be undone and redone by using the menu or the shortcut keys (Ctrl-z and Crtl-Shift-Z).</p>
+<p class="centerAlign"><img src="images/undo_redo.gif" alt="" /></p><p class="figCaption">Undo and redo</p>
+<p>In the case of drawing on the Mask, actions can be undone and redone for <a href="rectangleselect.html">RectangleSelect</a>, <a href="ellipseselect.html">EllipseSelect</a>, and <a href="select.html#polygonselect">PolygonSelect</a> before the &quot;Add Selection&quot; button is clicked. Once the selection has been merged with the mask the undo/redo actions will only remove or add back the computed pixels.</p>
+<p class="centerAlign"><img src="images/undo_redo_mask.gif" alt="" /></p><p class="figCaption">Undo/redo on the mask.</p>
+<p class="centerAlign"><img src="images/undo_redo_after.gif" alt="" /></p><p class="figCaption">Undo/redo after adding.</p>
+</div>
+<!-- @@@select.html -->
+<hr/><p class="footer"><small></small></p></body>
+</html>

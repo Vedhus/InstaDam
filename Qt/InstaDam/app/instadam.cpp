@@ -52,7 +52,8 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent), ui(new Ui::InstaDam) {
     ui->setupUi(this);
     filterControl = new filterControls();
-    maskTypeList = { BLUR, CANNY, THRESHOLD, LABELMASK};
+    maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,
+                     EnumConstants::THRESHOLD, EnumConstants::LABELMASK};
     maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label,
                       ui->labelmask_label};
     connectFilters();
@@ -175,19 +176,11 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
 }
 
 #ifdef WASM_BUILD
-/*!
-  Defines a connector to open an image in the web-assembly version of the software (using emcripten)
-  and takes a QString \a text and std::function \a onActivate as input.
-  */
 void InstaDam::addImageConnector(QString text, std::function<void ()> onActivate) {
     openImageConnector = new MyConnector;
     openImageConnector->onActivate = onActivate;
 }
 
-/*!
-  Defines a connector to open a project in the web-assembly version of the software (using emcripten)
-  and takes a QString \a text and std::function \a onActivate as input.
-  */
 void InstaDam::addIdproConnector(QString text, std::function<void ()> onActivate) {
     openIdproConnector = new MyConnector;
     openIdproConnector->onActivate = onActivate;
@@ -290,9 +283,9 @@ void InstaDam::setOpacity(QSharedPointer<Label> label, int val) {
 
 
 /*!
- Removes all items from the QLayout \layout.
+ Removes all items from the QLayout \a layout.
   */
-void InstaDam::clearLayout(QLayout * layout) {
+void InstaDam::clearLayout(QLayout *layout) {
     if (!layout)
        return;
 
@@ -358,16 +351,16 @@ void InstaDam::connectFilters() {
         for (int j = 0; j < maskButtonList.size(); ++j) {
             if (i == j) {
                 maskButtonList[i]->setMaskType(maskTypeList[i]);
-                connect(maskButtonList[i], SIGNAL(checked(maskTypes)),
-                        ui->IdmPhotoViewer, SLOT(setImMask(maskTypes)));
+                connect(maskButtonList[i], SIGNAL(checked(EnumConstants::maskTypes)),
+                        ui->IdmPhotoViewer, SLOT(setImMask(EnumConstants::maskTypes)));
             } else {
-                connect(maskButtonList[i], SIGNAL(checked(maskTypes)),
-                        maskButtonList[j], SLOT(otherBoxChecked(maskTypes)));
+                connect(maskButtonList[i], SIGNAL(checked(EnumConstants::maskTypes)),
+                        maskButtonList[j], SLOT(otherBoxChecked(EnumConstants::maskTypes)));
             }
         }
     }
-    connect(ui->IdmPhotoViewer, SIGNAL(changedMask(maskTypes)),
-            ui->IdmMaskViewer, SLOT(setImMask(maskTypes)));
+    connect(ui->IdmPhotoViewer, SIGNAL(changedMask(EnumConstants::maskTypes)),
+            ui->IdmMaskViewer, SLOT(setImMask(EnumConstants::maskTypes)));
     connect(ui->IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)),
             ui->IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
     connect(ui->IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)),
@@ -566,9 +559,6 @@ void InstaDam::on_actionOpen_File_triggered() {
 #endif
 }
 
-/*!
- Opens an image for the web-assembly version.
-  */
 #ifdef WASM_BUILD
 void InstaDam::loadRawImage() {
     openFile_and_labels();
@@ -1137,11 +1127,8 @@ void InstaDam::on_actionExport_zip_triggered() {
 }
 
 /*!
- * \brief InstaDam::processPointClicked handles the scene actions when a point is clicked on the PhotoViewer
- * \param type defines the viewerType
- * \param item corresponds to the selectItem type
- * \param pos is the position at which the click was made
- * \param button is the button click type
+  Processes a point being clicked in the scene \a type, any SelectItem at \a pos
+  is given by \a item, andthe button clicked is given as \a button.
  */
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
@@ -1320,9 +1307,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 }
 
 /*!
- * \brief InstaDam::processMouseMoved deals with selection moving or rotation
- * \param fromPos
- * \param toPos
+  Processes a mouse movement from \a fromPos to \a toPos.
  */
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
     if (currentItem) {
@@ -1337,11 +1322,8 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 }
 
 /*!
- * \brief InstaDam::processMouseReleased defines the behaviour on mouse release
- * \param type
- * \param oldPos
- * \param newPos
- * \param button
+  Processes a mouse button being released from scene \a type, mouse movement
+  from \a oldPos to \a newPos, and the button released \a button.
  */
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
@@ -1430,7 +1412,8 @@ void InstaDam::finishPolygonButtonClicked() {
 }
 
 /*!
- Defines keyboard modifier actions (delet and X) \key for a viewerTypes of \type.
+ Defines keyboard modifier actions (delet and X) \a key for a viewerTypes of
+ \a type.
  */
 void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
     if (!currentItem) {
@@ -1455,7 +1438,7 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 }
 
 /*!
-  Reads a QJsonObject \json of fileTypes \a type.
+  Reads a QJsonObject \a json of fileTypes \a type.
  */
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains("labels") && json["labels"].isArray()) {
@@ -1516,7 +1499,7 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
 }
 
 /*!
-  Writes a QJsonObject \json of fileTypes \a type.
+  Writes a QJsonObject \a json of fileTypes \a type.
  */
 void InstaDam::write(QJsonObject &json, fileTypes type) {
     QJsonArray labs;
@@ -1594,6 +1577,9 @@ void InstaDam::on_addSelectionButton_clicked() {
 }
 
 
+/*!
+  Sets the current project to \a pr.
+  */
 void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }

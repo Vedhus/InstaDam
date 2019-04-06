@@ -297,13 +297,13 @@ QGraphicsScene* RectangleSelect::scene() {
 }
 
 /*!
-  \fn QString RectangleSelect::baseInstructions()
+  \fn QString RectangleSelect::baseInstructions() const
 
   \reimp
   */
 
 /*!
-  \fn RectangleSelect* RectangleSelect::getMirror()
+  \fn RectangleSelect* RectangleSelect::getMirror() const
 
   \reimp
   */
@@ -315,13 +315,13 @@ QGraphicsScene* RectangleSelect::scene() {
   */
 
 /*!
-  \fn void RectangleSelect::setMirrorAdded()
+  \fn void RectangleSelect::setMirrorAdded() const
 
   \reimp
   */
 
 /*!
-  \fn int RectangleSelect::type()
+  \fn int RectangleSelect::type() const
   \overload SelectItem::type()
 
   This function returns the type of this item.

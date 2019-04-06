@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- polygonSelect.cpp -->
+  <title>PolygonSelect Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>PolygonSelect</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">PolygonSelect Class</h1>
+<!-- $$$PolygonSelect-brief -->
+<p>The <a href="select.html#polygonselect">PolygonSelect</a> class provides a class for annotating irregular regions. <a href="#details">More...</a></p>
+<!-- @@@PolygonSelect -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;PolygonSelect&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="selectitem.html">SelectItem</a> and <a href="http://doc.qt.io/qt-5/qgraphicspolygonitem.html">QGraphicsPolygonItem</a></td></tr></table></div><ul>
+<li><a href="polygonselect-members.html">List of all members, including inherited members</a></li>
+<li><a href="polygonselect-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#PolygonSelect">PolygonSelect</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#PolygonSelect-1">PolygonSelect</a></b>(const QJsonObject &amp;<i>json</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#PolygonSelect-2">PolygonSelect</a></b>(QPointF <i>point</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#dtor.PolygonSelect">~PolygonSelect</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#checkPoint">checkPoint</a></b>(QPointF &amp;<i>point</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPolygonF </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#getPolygon">getPolygon</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#isVisible">isVisible</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qreal </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#magnitude">magnitude</a></b>(QPointF <i>point</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#movePoint">movePoint</a></b>(const QPointF &amp;<i>point</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QGraphicsScene *</td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#scene">scene</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorActivePoint">setMirrorActivePoint</a></b>(QPointF <i>point</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorPolygon">setMirrorPolygon</a></b>(int <i>actVert</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setOpacity">setOpacity</a></b>(qreal <i>val</i>)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#addPoint">addPoint</a></b>(QPointF &amp;<i>point</i>, const int <i>vertex</i> = UNSELECTED) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#baseInstructions">baseInstructions</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QRectF </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#boundingRect">boundingRect</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#clickPoint">clickPoint</a></b>(const QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual PolygonSelect *</td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#getMirror">getMirror</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#insertVertex">insertVertex</a></b>(const int <i>vertex</i>, const QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#isInside">isInside</a></b>(const QPointF &amp;<i>point</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#mirrorHide">mirrorHide</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#mirrorShow">mirrorShow</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#moveItem">moveItem</a></b>(const QPointF &amp;<i>oldPos</i>, QPointF &amp;<i>newPos</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#numberOfVertices">numberOfVertices</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#paint">paint</a></b>(QPainter *<i>painter</i>, const QStyleOptionGraphicsItem *<i>option</i>, QWidget *<i>widget</i> = nullptr) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#removeVertex">removeVertex</a></b>(int <i>vertex</i> = UNSELECTED) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#resetActiveVertex">resetActiveVertex</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#rotateMirror">rotateMirror</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirror">setMirror</a></b>(SelectItem *<i>item</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorActive">setMirrorActive</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorAdded">setMirrorAdded</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorMoved">setMirrorMoved</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorResized">setMirrorResized</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirrorVertex">setMirrorVertex</a></b>(int <i>vertex</i>) const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#toPixmap">toPixmap</a></b>(QPainter *<i>painter</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#updateMirrorScene">updateMirrorScene</a></b>() const override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#updatePen">updatePen</a></b>(QPen <i>pen</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#write">write</a></b>(QJsonObject &amp;<i>json</i>) const override</td></tr>
+</table></div>
+<ul>
+<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicspolygonitem.html#public-functions">QGraphicsPolygonItem</a></li>
+<li class="fn">183 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
+<li class="fn">6 public functions inherited from <a href="http://doc.qt.io/qt-5/qabstractgraphicsshapeitem.html#public-functions">QAbstractGraphicsShapeItem</a></li>
+<li class="fn">183 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#baseInstruction-var">baseInstruction</a></b></td></tr>
+</table></div>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 static public member inherited from <a href="selectitem.html#static-public-members">SelectItem</a></li>
+<li class="fn">2 protected functions inherited from <a href="selectitem.html#protected-functions">SelectItem</a></li>
+<li class="fn">48 protected functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#protected-functions">QGraphicsItem</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$PolygonSelect-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="select.html#polygonselect">PolygonSelect</a> class provides a class for annotating irregular regions.</p>
+<p>Provides a class for annotating irregular regions in <a href="index.html">InstaDam</a>. The region is described by a set of vertices.</p>
+</div>
+<!-- @@@PolygonSelect -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$PolygonSelect[overload1]$$$PolygonSelect -->
+<h3 class="fn" id="PolygonSelect"><a name="PolygonSelect"></a>PolygonSelect::<span class="name">PolygonSelect</span>()</h3>
+<p>Constructs a <a href="select.html#polygonselect">PolygonSelect</a> object with the first vertex at 0,0 in scene coordinates</p>
+<!-- @@@PolygonSelect -->
+<!-- $$$PolygonSelect$$$PolygonSelectconstQJsonObject&QSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="PolygonSelect-1"><a name="PolygonSelect-1"></a>PolygonSelect::<span class="name">PolygonSelect</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="select.html#polygonselect">PolygonSelect</a> object by reading a <a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> and setting the internal vertex list to the values given in <i>json</i>. <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@PolygonSelect -->
+<!-- $$$PolygonSelect$$$PolygonSelectQPointFQSharedPointer<Label>QGraphicsItem* -->
+<h3 class="fn" id="PolygonSelect-2"><a name="PolygonSelect-2"></a>PolygonSelect::<span class="name">PolygonSelect</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<p>Constructs a <a href="select.html#polygonselect">PolygonSelect</a> object by setting the first vertex to <i>point</i>, <i>label</i> is the Label which owns this object and <i>item</i> is the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>, if any.</p>
+<!-- @@@PolygonSelect -->
+<!-- $$$~PolygonSelect[overload1]$$$~PolygonSelect -->
+<h3 class="fn" id="dtor.PolygonSelect"><a name="dtor.PolygonSelect"></a><code>[override virtual] </code>PolygonSelect::<span class="name">~PolygonSelect</span>()</h3>
+<p>Destructor</p>
+<!-- @@@~PolygonSelect -->
+<!-- $$$addPoint[overload1]$$$addPointQPointF&constint -->
+<h3 class="fn" id="addPoint"><a name="addPoint"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">addPoint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>, const <span class="type">int</span> <i>vertex</i> = UNSELECTED)</h3>
+<p>Reimplemented from <a href="selectitem.html#addPoint">SelectItem::addPoint</a>().</p>
+<!-- @@@addPoint -->
+<!-- $$$baseInstructions[overload1]$$$baseInstructions -->
+<h3 class="fn" id="baseInstructions"><a name="baseInstructions"></a><code>[override virtual] </code><span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> PolygonSelect::<span class="name">baseInstructions</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#baseInstructions">SelectItem::baseInstructions</a>().</p>
+<!-- @@@baseInstructions -->
+<!-- $$$boundingRect[overload1]$$$boundingRect -->
+<h3 class="fn" id="boundingRect"><a name="boundingRect"></a><code>[override virtual] </code><span class="type"><a href="http://doc.qt.io/qt-5/qrectf.html">QRectF</a></span> PolygonSelect::<span class="name">boundingRect</span>() const</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#boundingRect">QGraphicsItem::boundingRect</a>().</p>
+<!-- @@@boundingRect -->
+<!-- $$$checkPoint[overload1]$$$checkPointQPointF& -->
+<h3 class="fn" id="checkPoint"><a name="checkPoint"></a><span class="type">void</span> PolygonSelect::<span class="name">checkPoint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Checks whether <i>point</i> is inside of the <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a> which owns this <a href="select.html#polygonselect">PolygonSelect</a> object. If it is outside the scene then <i>point</i> is adjusted so that it is inside.</p>
+<!-- @@@checkPoint -->
+<!-- $$$clickPoint[overload1]$$$clickPointconstQPointF& -->
+<h3 class="fn" id="clickPoint"><a name="clickPoint"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">clickPoint</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#clickPoint">SelectItem::clickPoint</a>().</p>
+<!-- @@@clickPoint -->
+<!-- $$$getMirror[overload1]$$$getMirror -->
+<h3 class="fn" id="getMirror"><a name="getMirror"></a><code>[override virtual] </code><span class="type"><a href="polygonselect.html#PolygonSelect">PolygonSelect</a></span> *PolygonSelect::<span class="name">getMirror</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#getMirror">SelectItem::getMirror</a>().</p>
+<!-- @@@getMirror -->
+<!-- $$$getPolygon[overload1]$$$getPolygon -->
+<h3 class="fn" id="getPolygon"><a name="getPolygon"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpolygonf.html">QPolygonF</a></span> PolygonSelect::<span class="name">getPolygon</span>() const</h3>
+<p>Returns the <a href="select.html#polygonselect">PolygonSelect</a> object's internal <a href="http://doc.qt.io/qt-5/qpolygonf.html">QPolygonF</a>.</p>
+<!-- @@@getPolygon -->
+<!-- $$$insertVertex[overload1]$$$insertVertexconstintconstQPointF& -->
+<h3 class="fn" id="insertVertex"><a name="insertVertex"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">insertVertex</span>(const <span class="type">int</span> <i>vertex</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#insertVertex">SelectItem::insertVertex</a>().</p>
+<!-- @@@insertVertex -->
+<!-- $$$isInside[overload1]$$$isInsideconstQPointF& -->
+<h3 class="fn" id="isInside"><a name="isInside"></a><code>[override virtual] </code><span class="type">bool</span> PolygonSelect::<span class="name">isInside</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#isInside">SelectItem::isInside</a>().</p>
+<!-- @@@isInside -->
+<!-- $$$isVisible[overload1]$$$isVisible -->
+<h3 class="fn" id="isVisible"><a name="isVisible"></a><span class="type">bool</span> PolygonSelect::<span class="name">isVisible</span>() const</h3>
+<p>Returns a <code>bool</code> indicating whether the <a href="select.html#polygonselect">PolygonSelect</a> object is visible (<code>true</code>) in its owning <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a> or not (<code>false</code>).</p>
+<!-- @@@isVisible -->
+<!-- $$$magnitude[overload1]$$$magnitudeQPointF -->
+<h3 class="fn" id="magnitude"><a name="magnitude"></a><span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> PolygonSelect::<span class="name">magnitude</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>) const</h3>
+<p>Returns a <code>qreal</code> indicating the absolute magnitude of a vector from 0,0 to <i>point</i>.</p>
+<!-- @@@magnitude -->
+<!-- $$$mirrorHide[overload1]$$$mirrorHide -->
+<h3 class="fn" id="mirrorHide"><a name="mirrorHide"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">mirrorHide</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#mirrorHide">SelectItem::mirrorHide</a>().</p>
+<!-- @@@mirrorHide -->
+<!-- $$$mirrorShow[overload1]$$$mirrorShow -->
+<h3 class="fn" id="mirrorShow"><a name="mirrorShow"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">mirrorShow</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#mirrorShow">SelectItem::mirrorShow</a>().</p>
+<!-- @@@mirrorShow -->
+<!-- $$$moveItem[overload1]$$$moveItemconstQPointF&QPointF& -->
+<h3 class="fn" id="moveItem"><a name="moveItem"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">moveItem</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldPos</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newPos</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#moveItem">SelectItem::moveItem</a>().</p>
+<!-- @@@moveItem -->
+<!-- $$$movePoint[overload1]$$$movePointconstQPointF& -->
+<h3 class="fn" id="movePoint"><a name="movePoint"></a><span class="type">void</span> PolygonSelect::<span class="name">movePoint</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Moves the currently active vertex to <i>point</i> in scene coordinates</p>
+<!-- @@@movePoint -->
+<!-- $$$numberOfVertices[overload1]$$$numberOfVertices -->
+<h3 class="fn" id="numberOfVertices"><a name="numberOfVertices"></a><code>[override virtual] </code><span class="type">int</span> PolygonSelect::<span class="name">numberOfVertices</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#numberOfVertices">SelectItem::numberOfVertices</a>().</p>
+<!-- @@@numberOfVertices -->
+<!-- $$$paint[overload1]$$$paintQPainter*constQStyleOptionGraphicsItem*QWidget* -->
+<h3 class="fn" id="paint"><a name="paint"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">paint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qstyleoptiongraphicsitem.html">QStyleOptionGraphicsItem</a></span> *<i>option</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a></span> *<i>widget</i> = nullptr)</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#paint">QGraphicsItem::paint</a>().</p>
+<!-- @@@paint -->
+<!-- $$$read[overload1]$$$readconstQJsonObject& -->
+<h3 class="fn" id="read"><a name="read"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">read</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#read">SelectItem::read</a>().</p>
+<!-- @@@read -->
+<!-- $$$removeVertex[overload1]$$$removeVertexint -->
+<h3 class="fn" id="removeVertex"><a name="removeVertex"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">removeVertex</span>(<span class="type">int</span> <i>vertex</i> = UNSELECTED)</h3>
+<!-- @@@removeVertex -->
+<!-- $$$resetActiveVertex[overload1]$$$resetActiveVertex -->
+<h3 class="fn" id="resetActiveVertex"><a name="resetActiveVertex"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">resetActiveVertex</span>()</h3>
+<p>Reimplemented from <a href="selectitem.html#resetActiveVertex">SelectItem::resetActiveVertex</a>().</p>
+<!-- @@@resetActiveVertex -->
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#resizeItem">SelectItem::resizeItem</a>().</p>
+<!-- @@@resizeItem -->
+<!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->
+<h3 class="fn" id="rotate"><a name="rotate"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">rotate</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>from</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>to</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#rotate">SelectItem::rotate</a>().</p>
+<p>Empty function as a <a href="select.html#polygonselect">PolygonSelect</a> cannot be rotated.</p>
+<!-- @@@rotate -->
+<!-- $$$rotateMirror[overload1]$$$rotateMirror -->
+<h3 class="fn" id="rotateMirror"><a name="rotateMirror"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">rotateMirror</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#rotateMirror">SelectItem::rotateMirror</a>().</p>
+<p>Empty funtion as a <a href="select.html#polygonselect">PolygonSelect</a> cannot be rotated.</p>
+<!-- @@@rotateMirror -->
+<!-- $$$scene[overload1]$$$scene -->
+<h3 class="fn" id="scene"><a name="scene"></a><span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a></span> *PolygonSelect::<span class="name">scene</span>() const</h3>
+<p>This function overloads <a href="selectitem.html#scene">SelectItem::scene</a>().</p>
+<p>Returns the <a href="http://doc.qt.io/qt-5/qgraphicsscene.html">QGraphicsScene</a> to which this item belongs.</p>
+<!-- @@@scene -->
+<!-- $$$setMirror[overload1]$$$setMirrorSelectItem* -->
+<h3 class="fn" id="setMirror"><a name="setMirror"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirror</span>(<span class="type"><a href="selectitem.html#SelectItem">SelectItem</a></span> *<i>item</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirror">SelectItem::setMirror</a>().</p>
+<!-- @@@setMirror -->
+<!-- $$$setMirrorActive[overload1]$$$setMirrorActive -->
+<h3 class="fn" id="setMirrorActive"><a name="setMirrorActive"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirrorActive</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorActive">SelectItem::setMirrorActive</a>().</p>
+<!-- @@@setMirrorActive -->
+<!-- $$$setMirrorActivePoint[overload1]$$$setMirrorActivePointQPointF -->
+<h3 class="fn" id="setMirrorActivePoint"><a name="setMirrorActivePoint"></a><span class="type">void</span> PolygonSelect::<span class="name">setMirrorActivePoint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>point</i>) const</h3>
+<p>Sets the <a href="select.html#polygonselect">PolygonSelect</a> object's active vertex to <i>point</i>.</p>
+<!-- @@@setMirrorActivePoint -->
+<!-- $$$setMirrorAdded[overload1]$$$setMirrorAdded -->
+<h3 class="fn" id="setMirrorAdded"><a name="setMirrorAdded"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirrorAdded</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorAdded">SelectItem::setMirrorAdded</a>().</p>
+<!-- @@@setMirrorAdded -->
+<!-- $$$setMirrorMoved[overload1]$$$setMirrorMoved -->
+<h3 class="fn" id="setMirrorMoved"><a name="setMirrorMoved"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirrorMoved</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorMoved">SelectItem::setMirrorMoved</a>().</p>
+<!-- @@@setMirrorMoved -->
+<!-- $$$setMirrorPolygon[overload1]$$$setMirrorPolygonint -->
+<h3 class="fn" id="setMirrorPolygon"><a name="setMirrorPolygon"></a><span class="type">void</span> PolygonSelect::<span class="name">setMirrorPolygon</span>(<span class="type">int</span> <i>actVert</i>)</h3>
+<p>Updates the mirror object and sets <i>actVert</i> as the active vertex.</p>
+<!-- @@@setMirrorPolygon -->
+<!-- $$$setMirrorResized[overload1]$$$setMirrorResized -->
+<h3 class="fn" id="setMirrorResized"><a name="setMirrorResized"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirrorResized</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorResized">SelectItem::setMirrorResized</a>().</p>
+<!-- @@@setMirrorResized -->
+<!-- $$$setMirrorVertex[overload1]$$$setMirrorVertexint -->
+<h3 class="fn" id="setMirrorVertex"><a name="setMirrorVertex"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">setMirrorVertex</span>(<span class="type">int</span> <i>vertex</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#setMirrorVertex">SelectItem::setMirrorVertex</a>().</p>
+<!-- @@@setMirrorVertex -->
+<!-- $$$setOpacity[overload1]$$$setOpacityqreal -->
+<h3 class="fn" id="setOpacity"><a name="setOpacity"></a><span class="type">void</span> PolygonSelect::<span class="name">setOpacity</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>val</i>)</h3>
+<p>* Sets the opacity of the label to <i>val</i></p>
+<!-- @@@setOpacity -->
+<!-- $$$toPixmap[overload1]$$$toPixmapQPainter* -->
+<h3 class="fn" id="toPixmap"><a name="toPixmap"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">toPixmap</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#toPixmap">SelectItem::toPixmap</a>().</p>
+<!-- @@@toPixmap -->
+<!-- $$$updateMirrorScene[overload1]$$$updateMirrorScene -->
+<h3 class="fn" id="updateMirrorScene"><a name="updateMirrorScene"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">updateMirrorScene</span>() const</h3>
+<p>Reimplemented from <a href="selectitem.html#updateMirrorScene">SelectItem::updateMirrorScene</a>().</p>
+<!-- @@@updateMirrorScene -->
+<!-- $$$updatePen[overload1]$$$updatePenQPen -->
+<h3 class="fn" id="updatePen"><a name="updatePen"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">updatePen</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpen.html">QPen</a></span> <i>pen</i>)</h3>
+<p>Reimplemented from <a href="selectitem.html#updatePen">SelectItem::updatePen</a>().</p>
+<!-- @@@updatePen -->
+<!-- $$$write[overload1]$$$writeQJsonObject& -->
+<h3 class="fn" id="write"><a name="write"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">write</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> &amp;<i>json</i>) const</h3>
+<p>Reimplemented from <a href="selectitem.html#write">SelectItem::write</a>().</p>
+<!-- @@@write -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

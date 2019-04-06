@@ -10,6 +10,17 @@
 #include "login.h"
 #include "instadam.h"
 
+/*!
+  \class newproject
+  \ingroup app
+  \inmodule InstaDam
+  \inherits QDialog
+  \brief Creates a dialog for starting a new project.
+  */
+
+/*!
+  Creates a new instance with parent QWidget \a parent, if any
+  */
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newproject) {
@@ -17,6 +28,9 @@ newproject::newproject(QWidget *parent) :
     this->newPr = new Project();
 }
 
+/*!
+  Destructor
+  */
 newproject::~newproject() {
     delete ui;
 }
@@ -31,6 +45,9 @@ void newproject::nameAcceptClicked() {
 }
 #endif
 
+/*!
+  Processes a button click.
+  */
 void newproject::on_pushButton_clicked() {
     QDialog *dialog = new QDialog(this);
     labelDialog = new Ui::labelDialog;
@@ -47,6 +64,7 @@ void newproject::on_pushButton_clicked() {
                                               QColorDialog::DontUseNativeDialog);
 #else
 }
+
 void newproject::colorPicked(const QColor &oldcolor) {
     QColor color = colorDialog->selectedColor();
 #endif
@@ -65,24 +83,24 @@ void newproject::colorPicked(const QColor &oldcolor) {
 #endif
 }
 
+/*!
+  Processes the "OK" button being clicked.
+  */
 Project* newproject::on_buttonBox_accepted()
 {
     if(this->runningLocally)
     {
         return this->newPr;
-    }
-    else
-    {
-        this->saveToServer();
+    } else {
         // start server instadam
         InstaDam *w = new InstaDam(nullptr, this->databaseURL, this->accessToken);
         w->show();
         hide();
-        w->setCurrentProject(newPr);
         w->setLabels();
+        w->setCurrentProject(newPr);
         hide();
-        return this->newPr;
 
+        return this->newPr;
     }
 
 }

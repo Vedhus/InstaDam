@@ -15,7 +15,7 @@ class LabelButton : public QPushButton {
     QSharedPointer<Label> myLabel;
  signals:
     void cclicked(QSharedPointer<Label> label);
-    void opacity(QSharedPointer<Label> label, int);
+    void opacity(QSharedPointer<Label> label, int op);
  public slots:
     void wasClicked();
     void reemitValueChanged(int);

@@ -308,32 +308,32 @@ QGraphicsScene* EllipseSelect::scene() {
 }
 
 /*!
-  \fn QString EllipseSelect::baseInstructions()
+  \fn QString EllipseSelect::baseInstructions() const
 
   \reimp
   */
 
 /*!
-  \fn EllipseSelect* EllipseSelect::getMirror()
+  \fn EllipseSelect* EllipseSelect::getMirror() const
 
   \reimp
   */
 
 /*!
-  \fn bool EllipseSelect::isVisible()
+  \fn bool EllipseSelect::isVisible() const
 
   Returns whether the EllipseSelect object is visible (\c true) on the
   QGraphicsScene or not (\c false).
   */
 
 /*!
-  \fn void EllipseSelect::setMirrorAdded()
+  \fn void EllipseSelect::setMirrorAdded() const
 
   \reimp
   */
 
 /*!
-  \fn int EllipseSelect::type()
+  \fn int EllipseSelect::type() const
   \overload SelectItem::type()
 
   This function returns the type of this item.

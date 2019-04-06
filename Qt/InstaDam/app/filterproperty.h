@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "instadam.h"
+#include "enumconstants.h"
 
 enum btnTypes{SLIDER, CHECKBOX, LABELLIST};
 enum evenOdds{EVEN, ODD, ANY};
@@ -15,23 +16,24 @@ class filterProperty {
  public:
     filterProperty(std::string propertyName, btnTypes bt, int propMin,
                    int propVal, int propMax, evenOdds eo,
-                   threshold_or_filter thof, bool sb);
+                   EnumConstants::threshold_or_filter thof, bool sb);
     QString name;
     btnTypes btnType;
     int max;
     int val;
     int min;
     evenOdds evenOdd;
-    threshold_or_filter threshold_filter;
+    EnumConstants::threshold_or_filter threshold_filter;
     bool signalBool;
     void sliderAssign(int sliderVal);
 };
 
 class filterPropertiesMeta {
  public:
-    filterPropertiesMeta(std::vector<filterProperty*> fp, int nc, maskTypes mt);
+    filterPropertiesMeta(std::vector<filterProperty*> fp, int nc,
+                         EnumConstants::maskTypes mt);
     int numControls;
-    maskTypes maskType;
+    EnumConstants::maskTypes maskType;
     std::vector<filterProperty*> propertylist;
 };
 

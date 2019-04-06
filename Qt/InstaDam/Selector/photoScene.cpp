@@ -71,9 +71,8 @@ void PhotoScene::removeItem(SelectItem* item) {
 
 /*!
   \overload clearItems()
-  Clears every \a item in the scene.
+  Clears every item in the scene.
   */
-
 void PhotoScene::clearItems() {
     for (int i = 0; i < labelItems.length(); i++) {
         this->removeItem(labelItems[i]);
@@ -217,7 +216,7 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
 }
 
 /*!
-  \fn void PhotoScene::pointClicked(viewerTypes type, SelectItem* item, QPointF point, const Qt::MouseButton button)
+  \fn void PhotoScene::pointClicked(const PhotoScene::viewerTypes type, SelectItem* item, const QPointF point, const Qt::MouseButton button)
 
   Triggered when a mouse button is depressed in the PhotoScene. The signal
   contains which type of viewer this is as \a type, any SelectItem that exists
@@ -226,7 +225,7 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
   */
 
 /*!
-  \fn void PhotoScene::mouseMoved(QPointF fromPos, QPointF toPos)
+  \fn void PhotoScene::mouseMoved(const QPointF fromPos, const QPointF toPos)
 
   Triggered when the mouse moves in the PhotoScene and a mouse button is
   depressed. The signal contains the starting (\a fromPos) and ending (\a toPos)
@@ -234,7 +233,7 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
   */
 
 /*!
-  \fn void PhotoScene::mouseReleased(viewerTypes type, QPointF oldPos, QPointF newPos, const Qt::MouseButton button)
+  \fn void PhotoScene::mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos, const QPointF newPos, const Qt::MouseButton button)
 
   Triggered when a mouse button is released. The signal contains which type of
   viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos)
@@ -243,7 +242,7 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
   */
 
 /*!
-  \fn void PhotoScene::keyPressed(viewerTypes type, const int key)
+  \fn void PhotoScene::keyPressed(PhotoScene::viewerTypes type, const int key)
 
   Triggered when a key is pressed in the PhotoScene. The signal contains which
   type of viewer this is as \a type and what key was pressed as \a key.
