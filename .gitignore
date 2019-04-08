@@ -102,3 +102,7 @@ Qt/InstaDam/Selector/html/
 Qt/InstaDam/instadam-cppcheck-build-dir/
 
 Qt/InstaDam/Selector/doc\.old/
+
+Qt/InstaDam/Test/html/
+
+Qt/InstaDam/Test/appTest/appTest

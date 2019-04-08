@@ -69,16 +69,19 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
 
     QGraphicsScene* scene() const;
     void setOpacity(qreal);
+#ifdef TEST
+    friend class TestSelect;
+#endif
+ protected:
+    QVector<QPointF> myPoints;
+    QVector<QRectF> myVertices;
 
  private:
     bool selected = true;
 
     QPolygonF polygon;
 
-    QVector<QPointF> myPoints;
-    QVector<QRectF> myVertices;
-
-    PolygonSelect *mirror;
+    PolygonSelect *mirror = nullptr;
 
     QRectF makeVertex(const QPointF &point) const;
 

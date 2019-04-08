@@ -4,7 +4,6 @@
 using namespace std;
 
 void TestSelect::testEllipseClickPoint(){
-    return;
     eitem = new EllipseSelect(point, 3., myLabel);
     eitem->addPoint(brc);
     eitem->clickPoint(outsidePoint);
@@ -23,7 +22,6 @@ void TestSelect::testEllipseClickPoint(){
 }
 
 void TestSelect::testEllipseBoundingRect(){
-    return;
     eitem = new EllipseSelect(point, 3., myLabel);
     eitem->addPoint(brc);
     QRectF bb = eitem->boundingRect();
@@ -32,7 +30,6 @@ void TestSelect::testEllipseBoundingRect(){
 }
 
 void TestSelect::testEllipseResizeItem(){
-    return;
     QRectF myRect = QRectF(point, outsidePoint);
     eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
@@ -42,12 +39,12 @@ void TestSelect::testEllipseResizeItem(){
 }
 
 void TestSelect::testEllipseMoveItem(){
-    return;
     eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
-    myScene->addItem((SelectItem *)eitem);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene->setSceneRect(sceneRect);
+    myScene->addItem(eitem);
     QRectF myRect = QRectF(point, insidePoint);
     eitem->moveItem(brc, insidePoint);
     QCOMPARE(eitem->myRect, myRect);
@@ -62,7 +59,6 @@ void TestSelect::testEllipseMoveItem(){
 }
 
 void TestSelect::testEllipseIsInside(){
-    return;
     eitem = new EllipseSelect(point, 2., myLabel);
     eitem->addPoint(brc);
     QVERIFY(eitem->isInside(insidePoint));
@@ -75,7 +71,6 @@ void TestSelect::testEllipseIsInside(){
 }
 
 void TestSelect::testEllipseAddPoint(){
-    return;
     eitem = new EllipseSelect(point, myLabel);
     QRectF myRect = QRectF(point, brc);
     eitem->addPoint(brc);
@@ -85,6 +80,82 @@ void TestSelect::testEllipseAddPoint(){
     myRect = QRectF(tlc, point);
     eitem->addPoint(tlc);
     QVERIFY(eitem->myRect == myRect);
+    delete eitem;
+}
+
+void TestSelect::testEMirror(){
+    eitem = new EllipseSelect(point, myLabel);
+    EllipseSelect *mitem = new EllipseSelect(point);
+    mitem->setLabel(myLabel);
+    mitem->updatePen(mitem->myPen);
+    eitem->setMirror(mitem);
+    mitem->setMirror(eitem);
+    eitem->addPoint(brc);
+    eitem->setMirrorActive();
+    QCOMPARE(eitem->myRect, mitem->myRect);
+    mitem->moveItem(point, brc);
+    QCOMPARE(eitem->myRect, mitem->myRect);
+    eitem->mirrorHide();
+    QCOMPARE(mitem->isVisible(), false);
+    eitem->mirrorShow();
+    QCOMPARE(mitem->isVisible(), true);
+    eitem->setActiveVertex(SelectItem::NONE);
+    eitem->moveItem(point, tlc);
+    //QRectF sceneRect = QRectF(0., 0., 50., 50.);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    myScene->addItem(mitem);
+    mitem->itemWasAdded();
+    eitem->updateMirrorScene();
+    //QCOMPARE(ritem->scene(), myScene);
+    eitem->resetActiveVertex();
+    QCOMPARE(eitem->getActiveVertex(), 0);
+    delete eitem;
+    delete mitem;
+}
+
+void TestSelect::testEToPixmap(){
+    QPixmap pix(QSize(100,100));
+    pix.fill(Qt::transparent);
+    eitem = new EllipseSelect(point, myLabel);
+    QPainter *paint = new QPainter(&pix);
+    eitem->toPixmap(paint);
+    delete eitem;
+    delete paint;
+}
+
+void TestSelect::testERotate(){
+    eitem = new EllipseSelect(point, myLabel);
+    EllipseSelect *mitem = new EllipseSelect(point);
+    mitem->setLabel(myLabel);
+    mitem->updatePen(mitem->myPen);
+    eitem->setMirror(mitem);
+    mitem->setMirror(eitem);
+    eitem->addPoint(brc);
+
+    eitem->rotate(brc, tlc);
+    QCOMPARE(eitem->myRect, mitem->myRect);
+    delete eitem;
+    delete mitem;
+
+}
+
+void TestSelect::testEReadWrite(){
+    eitem = new EllipseSelect(point, myLabel);
+    eitem->addPoint(brc);
+    eitem->rotate(brc, tlc);
+    QJsonObject json;
+    eitem->write(json);
+    EllipseSelect *item = new EllipseSelect(json, myLabel);
+    QCOMPARE(eitem->myRect, item->myRect);
+    QCOMPARE(eitem->myRotation, item->myRotation);
+    delete eitem;
+    delete item;
+}
+
+void TestSelect::testEOpacity(){
+    eitem = new EllipseSelect();
+    eitem->setOpacity(.5);
+    QCOMPARE(eitem->SelectItem::opacity(), 0.5);
     delete eitem;
 }
 

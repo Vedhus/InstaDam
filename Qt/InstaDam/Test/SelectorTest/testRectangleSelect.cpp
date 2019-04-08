@@ -1,6 +1,4 @@
 
-
-#include <QGraphicsScene>
 #include "testSelect.h"
 #include <iostream>
 using namespace std;
@@ -8,7 +6,6 @@ using namespace std;
 QSize SelectItem::myBounds = QSize(50,50);
 int SelectItem::ID = 0;
 void TestSelect::testRectClickPoint(){
-    return;
     ritem = new RectangleSelect(point, 3., myLabel);
     ritem->addPoint(brc);
     ritem->clickPoint(outsidePoint);
@@ -27,7 +24,6 @@ void TestSelect::testRectClickPoint(){
 }
 
 void TestSelect::testRectBoundingRect(){
-    return;
     ritem = new RectangleSelect(point, 3., myLabel);
     ritem->addPoint(brc);
     QRectF bb = ritem->boundingRect();
@@ -36,7 +32,6 @@ void TestSelect::testRectBoundingRect(){
 }
 
 void TestSelect::testRectResizeItem(){
-    return;
     QRectF myRect = QRectF(point, outsidePoint);
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
@@ -46,12 +41,12 @@ void TestSelect::testRectResizeItem(){
 }
 
 void TestSelect::testRectMoveItem(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
-    myScene->addItem((SelectItem *)ritem);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene->setSceneRect(sceneRect);
+    myScene->addItem(ritem);
     QRectF myRect = QRectF(point, insidePoint);
     ritem->moveItem(brc, insidePoint);
     QCOMPARE(ritem->myRect, myRect);
@@ -66,13 +61,13 @@ void TestSelect::testRectMoveItem(){
 }
 
 void TestSelect::testCheckBoundaries(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QRectF origRect = ritem->myRect;
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
-    myScene->addItem((SelectItem *)ritem);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene->setSceneRect(sceneRect);
+    myScene->addItem(ritem);
     QPointF shift = QPointF(5., 10.);
     ritem->checkBoundaries(shift, ritem->myRect);
     origRect.setTopLeft(origRect.topLeft() + shift);
@@ -93,7 +88,6 @@ void TestSelect::testCheckBoundaries(){
 }
 
 void TestSelect::testSortCorners(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     ritem->setActiveVertex(TOP, LEFT);
     ritem->addPoint(tlc);
@@ -102,7 +96,6 @@ void TestSelect::testSortCorners(){
     delete ritem;
 }
 void TestSelect::testRectIsInside(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QVERIFY(ritem->isInside(insidePoint));
@@ -111,19 +104,20 @@ void TestSelect::testRectIsInside(){
     delete ritem;
 }
 
-void TestSelect::testInit()
-{
-    return;
+void TestSelect::testInit() {
     ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
     ritem = new RectangleSelect(point, 5., myLabel);
     QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
+    ritem = new RectangleSelect();
+    QCOMPARE(ritem->type(), SelectItem::Rectangle);
+    ritem->baseInstructions();
+    delete ritem;
 }
 
 void TestSelect::testActive(){
-    return;
     ritem = new RectangleSelect(point);
     QCOMPARE(ritem->isItemActive(), true);
     ritem->setInactive();
@@ -134,7 +128,6 @@ void TestSelect::testActive(){
 }
 
 void TestSelect::testActiveVertex(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     ritem->setActiveVertex(TOP, LEFT);
     QCOMPARE((ritem->getActiveVertex() & TOP), TOP);
@@ -148,7 +141,6 @@ void TestSelect::testActiveVertex(){
 }
 
 void TestSelect::testRectAddPoint(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     QRectF myRect = QRectF(point, brc);
     ritem->addPoint(brc);
@@ -162,30 +154,151 @@ void TestSelect::testRectAddPoint(){
 }
 
 void TestSelect::testGetType(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->type(), SelectItem::Rectangle);
     delete ritem;
 }
 
 void TestSelect::testScene(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->scene(), nullptr);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    QGraphicsScene *myScene = new QGraphicsScene(sceneRect);
-    myScene->addItem((SelectItem *)ritem);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene->setSceneRect(sceneRect);
+    myScene->addItem(ritem);
     QCOMPARE(ritem->scene(), myScene);
     delete ritem;
     delete myScene;
 }
 
 void TestSelect::testGetParentItem(){
-    return;
     ritem = new RectangleSelect(point, myLabel);
     QCOMPARE(ritem->getParentItem(), nullptr);
     delete ritem;
+}
+
+void TestSelect::testRMirror(){
+    ritem = new RectangleSelect(point, myLabel);
+    RectangleSelect *mitem = new RectangleSelect(point);
+    mitem->setLabel(myLabel);
+    mitem->updatePen(mitem->myPen);
+    ritem->setMirror(mitem);
+    mitem->setMirror(ritem);
+    ritem->addPoint(brc);
+    ritem->setMirrorActive();
+    QCOMPARE(ritem->myRect, mitem->myRect);
+    mitem->moveItem(point, brc);
+    QCOMPARE(ritem->myRect, mitem->myRect);
+    ritem->mirrorHide();
+    QCOMPARE(mitem->isVisible(), false);
+    ritem->mirrorShow();
+    QCOMPARE(mitem->isVisible(), true);
+    ritem->setActiveVertex(SelectItem::NONE);
+    ritem->moveItem(point, tlc);
+    //QRectF sceneRect = QRectF(0., 0., 50., 50.);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    myScene->addItem(mitem);
+    mitem->itemWasAdded();
+    ritem->updateMirrorScene();
+    //QCOMPARE(ritem->scene(), myScene);
+    ritem->resetActiveVertex();
+    QCOMPARE(ritem->getActiveVertex(), 0);
+    delete ritem;
+    delete mitem;
+}
+
+void TestSelect::testRToPixmap(){
+    QPixmap pix(QSize(100,100));
+    pix.fill(Qt::transparent);
+    ritem = new RectangleSelect(point, myLabel);
+    QPainter *paint = new QPainter(&pix);
+    ritem->toPixmap(paint);
+    delete ritem;
+    delete paint;
+}
+
+void TestSelect::testRRotate(){
+    ritem = new RectangleSelect(point, myLabel);
+    RectangleSelect *mitem = new RectangleSelect(point);
+    mitem->setLabel(myLabel);
+    mitem->updatePen(mitem->myPen);
+    ritem->setMirror(mitem);
+    mitem->setMirror(ritem);
+    ritem->addPoint(brc);
+
+    ritem->rotate(brc, tlc);
+    QCOMPARE(ritem->myRect, mitem->myRect);
+    delete ritem;
+    delete mitem;
+
+}
+
+void TestSelect::testRReadWrite(){
+    ritem = new RectangleSelect(point, myLabel);
+    ritem->addPoint(brc);
+    ritem->rotate(brc, tlc);
+    QJsonObject json;
+    ritem->write(json);
+    RectangleSelect *item = new RectangleSelect(json, myLabel);
+    QCOMPARE(ritem->myRect, item->myRect);
+    QCOMPARE(ritem->myRotation, item->myRotation);
+    delete ritem;
+    delete item;
+}
+
+void TestSelect::testROpacity(){
+    ritem = new RectangleSelect(point, myLabel);
+    ritem->setOpacity(.5);
+    QCOMPARE(ritem->SelectItem::opacity(), 0.5);
+    delete ritem;
+}
+
+void TestSelect::testSelectInlines(){
+    ritem = new RectangleSelect(point, myLabel);
+    ritem->addPoint(brc);
+    ritem->setActiveVertex(SelectItem::TOP | SelectItem::LEFT);
+    ritem->flipH();
+    QCOMPARE(ritem->getActiveVertex(), SelectItem::BOTTOM | SelectItem::LEFT);
+    ritem->flipV();
+    QCOMPARE(ritem->getActiveVertex(), SelectItem::BOTTOM | SelectItem::RIGHT);
+    QCOMPARE(ritem->isItemActive(), true);
+    QCOMPARE(ritem->getActivePoint(), QPointF(0.,0.));
+    delete ritem;
+}
+
+void TestSelect::testMaskShowHide(){
+    ritem = new RectangleSelect(point, myLabel);
+    RectangleSelect *mitem = new RectangleSelect(point);
+    mitem->setLabel(myLabel);
+    mitem->updatePen(mitem->myPen);
+    ritem->setMirror(mitem);
+    mitem->setMirror(ritem);
+    ritem->addPoint(brc);
+    ritem->setMirrorActive();
+
+    PhotoScene *mScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    mScene->addItem(mitem);
+    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene->addItem(ritem);
+    mitem->setOnMaskScene(true);
+    ritem->hideMask();
+    QCOMPARE(mitem->isVisible(), false);
+    ritem->showMask();
+    QCOMPARE(mitem->isVisible(), true);
+    mitem->hideMask();
+    QCOMPARE(mitem->isVisible(), false);
+    mitem->showMask();
+    QCOMPARE(mitem->isVisible(), true);
+    mitem->setFromMaskScene(true);
+    ritem->hideMask();
+    QCOMPARE(mitem->isVisible(), true);
+    ritem->showMask();
+    QCOMPARE(mitem->isVisible(), true);
+
+    delete ritem;
+    delete mitem;
+
 }
 
 QTEST_MAIN(TestSelect)
