@@ -20,7 +20,7 @@ void TestSelect::testPAddPoint() {
 void TestSelect::testPMove() {
     pitem = new PolygonSelect(p1, myLabel);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(pitem);
     pitem->setActiveVertex(SelectItem::UNSELECTED);
@@ -41,8 +41,8 @@ void TestSelect::testPMove() {
     pitem->addPoint(p5);
     QCOMPARE(pitem->myPoints[0], p5);
     QCOMPARE(pitem->myPoints[2], p2 + pshift);
-
-    delete pitem;
+    delete myScene;
+    //delete pitem;
 }
 
 void TestSelect::testPisInside(){
@@ -157,9 +157,9 @@ void TestSelect::testPShowHide() {
     pitem->addPoint(brc);
     pitem->setMirrorActive();
 
-    PhotoScene *mScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
-    mScene->addItem(mitem);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    maskScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    maskScene->addItem(mitem);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->addItem(pitem);
     pitem->updateMirrorScene();
     mitem->setOnMaskScene(true);
@@ -177,20 +177,22 @@ void TestSelect::testPShowHide() {
     pitem->showMask();
     QCOMPARE(mitem->isVisible(), true);
 
-    delete pitem;
-    delete mitem;
-
+    //delete pitem;
+    //delete mitem;
+    delete myScene;
+    delete maskScene;
 }
+
 void TestSelect::testPScene() {
     pitem = new PolygonSelect(point, myLabel);
     QCOMPARE(pitem->scene(), nullptr);
     pitem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(pitem);
     QCOMPARE(pitem->scene(), myScene);
-    delete pitem;
+    //delete pitem;
     delete myScene;
 
 }

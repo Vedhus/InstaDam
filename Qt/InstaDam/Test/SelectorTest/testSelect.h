@@ -1,6 +1,7 @@
 #ifndef TESTRECTANGLESELECT_H
 #define TESTRECTANGLESELECT_H
 #include <QtTest/QtTest>
+#include <QUndoStack>
 #include "rectangleSelect.h"
 #include "ellipseSelect.h"
 #include "polygonSelect.h"
@@ -8,6 +9,7 @@
 #include "freeDrawSelect.h"
 #include "photoScene.h"
 #include "label.h"
+#include "commands.h"
 
 //int SelectItem::ID = 0;
 class TestSelect: public QObject
@@ -79,6 +81,26 @@ private slots:
     void testLabelExportLabel();
     void testLabelSetMaskState();
 
+    void testPhotoRemoveItem();
+    void testPhotoClearItems();
+    void testPhotoKeyPress();
+    void testPhotoMousePress();
+    void testPhotoMouseMove();
+    void testPhotoMouseRelease();
+    void testPhotoItemAt();
+    void testPhotoAddLabel();
+    void testPhotoAddLabelItems();
+
+    void testCommandAdd();
+    void testCommandDelete();
+    void testCommandMove();
+    void testCommandMoveVertex();
+    void testCommandAddVertex();
+    void testCommandDeleteVertex();
+    void testCommandErasePoints();
+    void testCommandRotate();
+    void setupUndo();
+
 private:
     QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();
     QPointF point = QPointF(5., 10.);
@@ -108,7 +130,9 @@ private:
     PolygonSelect *pitem;
     FreeDrawSelect *fitem;
     FreeDrawErase *feitem;
-
+    QUndoStack *myUndo;
+    PhotoScene *myScene;
+    PhotoScene *maskScene;
     void generateData();
 
 };

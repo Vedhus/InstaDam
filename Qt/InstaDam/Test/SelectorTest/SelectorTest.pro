@@ -25,7 +25,9 @@ SOURCES = \
     label.cpp \
     freeDrawErase.cpp \
     testpolygonselect.cpp \
-    testlabel.cpp
+    testlabel.cpp \
+    testphotoscene.cpp \
+    testcommands.cpp
 
 LIBS += -lQt5Widgets
 

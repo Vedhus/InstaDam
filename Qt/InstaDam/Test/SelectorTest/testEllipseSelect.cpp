@@ -42,7 +42,7 @@ void TestSelect::testEllipseMoveItem(){
     eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(eitem);
     QRectF myRect = QRectF(point, insidePoint);
@@ -54,7 +54,7 @@ void TestSelect::testEllipseMoveItem(){
     myRect.setTopLeft(myRect.topLeft() + point);
     myRect.setBottomRight(myRect.bottomRight() + point);
     QCOMPARE(eitem->myRect, myRect);
-    delete eitem;
+    //delete eitem;
     delete myScene;
 }
 
@@ -102,7 +102,7 @@ void TestSelect::testEMirror(){
     eitem->setActiveVertex(SelectItem::NONE);
     eitem->moveItem(point, tlc);
     //QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
     myScene->addItem(mitem);
     mitem->itemWasAdded();
     eitem->updateMirrorScene();
@@ -110,7 +110,8 @@ void TestSelect::testEMirror(){
     eitem->resetActiveVertex();
     QCOMPARE(eitem->getActiveVertex(), 0);
     delete eitem;
-    delete mitem;
+    //delete mitem;
+    delete myScene;
 }
 
 void TestSelect::testEToPixmap(){

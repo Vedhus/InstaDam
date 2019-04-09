@@ -32,7 +32,7 @@ void TestSelect::testFreeMove(){
 void TestSelect::testEraseMove(){
     myLabel->clear();
     QRectF sceneRect = QRectF(0., 0., 500., 500.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     SelectItem::myBounds = QSize(500, 500);
     myScene->setSceneRect(sceneRect);
     myLabel->setColor(Qt::blue);
@@ -47,8 +47,9 @@ void TestSelect::testEraseMove(){
     myLabel->addItem(feitem);
     feitem->moveItem(point, brc);
 
-    delete fitem;
+    //delete fitem;
     delete feitem;
+    delete myScene;
 }
 
 void TestSelect::testFreeStubs(){
@@ -92,9 +93,9 @@ void TestSelect::testFreeShowHide() {
     fitem->addPoint(brc);
     fitem->setMirrorActive();
 
-    PhotoScene *mScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
-    mScene->addItem(mitem);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    maskScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    maskScene->addItem(mitem);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->addItem(fitem);
     fitem->updateMirrorScene();
     mitem->setOnMaskScene(true);
@@ -112,7 +113,9 @@ void TestSelect::testFreeShowHide() {
     fitem->showMask();
     QCOMPARE(mitem->isVisible(), true);
 
-    delete fitem;
-    delete mitem;
+    //delete fitem;
+    //delete mitem;
+    delete maskScene;
+    delete myScene;
 
 }

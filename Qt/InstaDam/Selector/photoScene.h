@@ -42,6 +42,9 @@ class PhotoScene : public QGraphicsScene {
     void removeItem(SelectItem* item);
     void clearItems();
 
+#ifdef TEST
+    friend class TestSelect;
+#endif
  signals:
     void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
                       const QPointF point, const Qt::MouseButton button);

@@ -44,7 +44,7 @@ void TestSelect::testRectMoveItem(){
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(ritem);
     QRectF myRect = QRectF(point, insidePoint);
@@ -56,7 +56,7 @@ void TestSelect::testRectMoveItem(){
     myRect.setTopLeft(myRect.topLeft() + point);
     myRect.setBottomRight(myRect.bottomRight() + point);
     QCOMPARE(ritem->myRect, myRect);
-    delete ritem;
+    //delete ritem;
     delete myScene;
 }
 
@@ -65,7 +65,7 @@ void TestSelect::testCheckBoundaries(){
     ritem->addPoint(brc);
     QRectF origRect = ritem->myRect;
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(ritem);
     QPointF shift = QPointF(5., 10.);
@@ -83,7 +83,7 @@ void TestSelect::testCheckBoundaries(){
     origRect.setTopLeft(QPointF(34., 39.));
     origRect.setBottomRight(QPointF(49., 49.));
     QCOMPARE(origRect, ritem->myRect);
-    delete ritem;
+    //delete ritem;
     delete myScene;
 }
 
@@ -114,6 +114,7 @@ void TestSelect::testInit() {
     ritem = new RectangleSelect();
     QCOMPARE(ritem->type(), SelectItem::Rectangle);
     ritem->baseInstructions();
+    ritem->removeVertex(0);
     delete ritem;
 }
 
@@ -164,11 +165,11 @@ void TestSelect::testScene(){
     QCOMPARE(ritem->scene(), nullptr);
     ritem->addPoint(brc);
     QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->setSceneRect(sceneRect);
     myScene->addItem(ritem);
     QCOMPARE(ritem->scene(), myScene);
-    delete ritem;
+    //delete ritem;
     delete myScene;
 }
 
@@ -197,7 +198,7 @@ void TestSelect::testRMirror(){
     ritem->setActiveVertex(SelectItem::NONE);
     ritem->moveItem(point, tlc);
     //QRectF sceneRect = QRectF(0., 0., 50., 50.);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    myScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
     myScene->addItem(mitem);
     mitem->itemWasAdded();
     ritem->updateMirrorScene();
@@ -205,7 +206,8 @@ void TestSelect::testRMirror(){
     ritem->resetActiveVertex();
     QCOMPARE(ritem->getActiveVertex(), 0);
     delete ritem;
-    delete mitem;
+    //delete mitem;
+    delete myScene;
 }
 
 void TestSelect::testRToPixmap(){
@@ -277,9 +279,9 @@ void TestSelect::testMaskShowHide(){
     ritem->addPoint(brc);
     ritem->setMirrorActive();
 
-    PhotoScene *mScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
-    mScene->addItem(mitem);
-    PhotoScene *myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
+    maskScene = new PhotoScene(PhotoScene::MASK_VIEWER_TYPE);
+    maskScene->addItem(mitem);
+    myScene = new PhotoScene(PhotoScene::PHOTO_VIEWER_TYPE);
     myScene->addItem(ritem);
     mitem->setOnMaskScene(true);
     ritem->hideMask();
@@ -296,9 +298,10 @@ void TestSelect::testMaskShowHide(){
     ritem->showMask();
     QCOMPARE(mitem->isVisible(), true);
 
-    delete ritem;
-    delete mitem;
-
+    //delete ritem;
+    //delete mitem;
+    delete myScene;
+    delete maskScene;
 }
 
 QTEST_MAIN(TestSelect)
