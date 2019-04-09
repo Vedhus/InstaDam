@@ -179,6 +179,13 @@ void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
 /*!
   \reimp
   */
+void FreeDrawSelect::setOpacity(qreal val) {
+    SelectItem::setOpacity(val);
+}
+
+/*!
+  \reimp
+  */
 void FreeDrawSelect::paint(QPainter *painter,
                            const QStyleOptionGraphicsItem *option,
                            QWidget *widget) {

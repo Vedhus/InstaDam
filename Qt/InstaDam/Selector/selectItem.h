@@ -80,6 +80,7 @@ class SelectItem : public QGraphicsItem {
     virtual void resizeItem(const int vertex, QPointF &shift) = 0;
     virtual void rotate(const QPointF &from, const QPointF &to) = 0;
     virtual void updatePen(QPen pen) = 0;
+    void setOpacity(qreal val) {QGraphicsItem::setOpacity(val);}
 
     // I/O
     virtual void read(const QJsonObject &json) = 0;

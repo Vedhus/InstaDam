@@ -34,6 +34,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
         return FreeDrawSelect::baseInstruction;
     }
     QRectF boundingRect() const override;
+    void setOpacity(qreal val);
     void clickPoint(const QPointF &point) override;
     void insertVertex(const int vertex, const QPointF &point) override {
         UNUSED(vertex);
