@@ -3,6 +3,7 @@
 #include "label.h"
 #include <fstream>
 #include <QJsonArray>
+#include <iostream>
 
 using namespace std;
 
@@ -125,9 +126,9 @@ void Label::addItem(FreeDrawSelect *item) {
   Removes a SelectItem from the Label based on it's unique ID given as \a id.
   */
 void Label::removeItem(const int id) {
-    if (rectangleObjects.remove(id) != 0) {
-        if (ellipseObjects.remove(id) != 0) {
-            if (polygonObjects.remove(id) != 0) {
+    if (rectangleObjects.remove(id) == 0) {
+        if (ellipseObjects.remove(id) == 0) {
+            if (polygonObjects.remove(id) == 0) {
                 freeDrawObjects.remove(id);
             }
         }

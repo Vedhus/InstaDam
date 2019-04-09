@@ -59,12 +59,12 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem {
     int type() const override {return SelectItem::type();}
 
     QGraphicsScene* scene();
+#ifdef TEST
+    friend TestSelect;
+#endif
 
  private:
     RectangleSelect *mirror = nullptr;
-#ifdef TEST
-        friend TestSelect;
-#endif
 };
 
 #endif  // RECTANGLE_SELECT_H

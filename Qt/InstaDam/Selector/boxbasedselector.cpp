@@ -64,7 +64,7 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize,
     SelectItem(vertSize, label, item) {
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
-    calcCorners();
+    calcCorners(false);
     active = true;
 }
 

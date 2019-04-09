@@ -52,6 +52,9 @@ class Label: public QEnableSharedFromThis<Label>{
     QPixmap exportLabel(const QSize &rect) const;
     void setOpacity(int val);
     void setMaskState(int state);
+#ifdef TEST
+    friend class TestSelect;
+#endif
 };
 
 #endif  // LABEL_H
