@@ -519,8 +519,13 @@ void InstaDam::on_actionOpen_File_triggered() {
         }
         openImageConnector->onActivate();
 #else
+
+#ifndef TEST
         QString filename_temp = QFileDialog::getOpenFileName(this,
             tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+#else
+        QString filename_temp = "img2.png"
+#endif
         QString ext = QFileInfo(filename_temp).suffix();
         if (!ext.compare("png", Qt::CaseInsensitive) ||
             !ext.compare("jpg", Qt::CaseInsensitive) ||

@@ -109,8 +109,6 @@ private slots:
 
     void testLabelButton();
 
-    void integrationTest();
-
 private:
     QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();
     QPointF point = QPointF(5., 10.);

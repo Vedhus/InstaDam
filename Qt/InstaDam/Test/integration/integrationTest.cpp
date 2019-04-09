@@ -7,6 +7,8 @@ void IntegrationTest::initTestCase() {
     idm->addLabelHash("Label3", Qt::green);
     idm->on_actionNew_triggered();
     QCOMPARE(idm->currentProject->labels.size(), 3);
+    idm->on_actionOpen_File_triggered();
+
 }
 
 void IntegrationTest::cleanupTestCase() {
