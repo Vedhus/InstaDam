@@ -1134,175 +1134,186 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
                                    const Qt::MouseButton button) {
     currentButton = button;
-    if (!item) {
-        if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
-                                SelectItem::Polygon)) {
+
+    if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
+    {
+        ctrlPanning = true;
+        ui->panButton->setChecked(ctrlPanning);
+        ui->IdmPhotoViewer->setPanMode(ctrlPanning);
+        ui->IdmMaskViewer->setPanMode(ctrlPanning);
+    }
+    if (!panning && !ctrlPanning){
+
+        if (!item) {
+            if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
+                                    SelectItem::Polygon)) {
+                scene->inactiveAll();
+                maskScene->inactiveAll();
+                scene->update();
+                maskScene->update();
+                return;
+            }
+            if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
+                SelectItem::Freedraw) {
+                canDrawOnPhoto = false;
+                undoGroup->setActiveStack(tempUndoStack);
+                ui->addSelectionButton->setEnabled(true);
+                ui->cancelSelectionButton->setEnabled(true);
+            }
+
+            if (!currentLabel || button == Qt::RightButton) {
+                return;
+            }
+
+            if (currentItem && currentItem->type() == SelectItem::Polygon) {
+                if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
+                    if (abs(vertex2 - vertex1) == 1) {
+                        currentItem->insertVertex(std::min(vertex1, vertex2), pos);
+                    } else {
+                        currentItem->insertVertex(std::max(vertex1, vertex2), pos);
+                    }
+                    vertex1 = -1;
+                    vertex2 = -1;
+                    insertVertex = false;
+                    polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
+                } else {
+                    currentItem->addPoint(pos);
+                }
+                scene->update();
+                maskScene->update();
+                return;
+            }
             scene->inactiveAll();
             maskScene->inactiveAll();
-            scene->update();
-            maskScene->update();
-            return;
-        }
-        if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
-            SelectItem::Freedraw) {
-            canDrawOnPhoto = false;
-            undoGroup->setActiveStack(tempUndoStack);
-            ui->addSelectionButton->setEnabled(true);
-            ui->cancelSelectionButton->setEnabled(true);
-        }
-
-        if (!currentLabel || button == Qt::RightButton) {
-            return;
-        }
-
-        if (currentItem && currentItem->type() == SelectItem::Polygon) {
-            if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
-                if (abs(vertex2 - vertex1) == 1) {
-                    currentItem->insertVertex(std::min(vertex1, vertex2), pos);
-                } else {
-                    currentItem->insertVertex(std::max(vertex1, vertex2), pos);
-                }
-                vertex1 = -1;
-                vertex2 = -1;
-                insertVertex = false;
-                polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
-            } else {
-                currentItem->addPoint(pos);
-            }
-            scene->update();
-            maskScene->update();
-            return;
-        }
-        scene->inactiveAll();
-        maskScene->inactiveAll();
-        switch (currentSelectType) {
-            case SelectItem::Rectangle:
-            {
-                RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
-                RectangleSelect *mirror = new RectangleSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-            }
-                break;
-            case SelectItem::Ellipse:
-            {
-                EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
-                EllipseSelect *mirror = new EllipseSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-            }
-                break;
-            case SelectItem::Freeerase:
-            case SelectItem::Freedraw:
-            {
-                if (drawing) {
-                    FreeDrawSelect *temp = new FreeDrawSelect(pos,
-                                                              currentBrushSize,
-                                                              brushMode,
-                                                              currentLabel);
-                    FreeDrawSelect *mirror = new FreeDrawSelect(pos,
-                                                                temp->myPen);
+            switch (currentSelectType) {
+                case SelectItem::Rectangle:
+                {
+                    RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
+                    RectangleSelect *mirror = new RectangleSelect(pos);
                     tempItem = temp;
                     mirrorItem = mirror;
                     mirrorItem->setLabel(currentLabel);
-                    mirrorItem->updatePen(temp->myPen);
+                    mirrorItem->updatePen(mirrorItem->myPen);
                     tempItem->setMirror(mirrorItem);
                     mirrorItem->setMirror(tempItem);
-                } else {
-                    myErase = new FreeDrawErase(pos, currentBrushSize,
-                                                brushMode, currentLabel);
-                    currentItem = myErase;
                 }
-            }
-                break;
-            case SelectItem::Polygon:
-            {
-                PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
-                PolygonSelect *mirror = new PolygonSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-                polygonSelectForm->finishPolygonButton->setEnabled(true);
-            }
-                break;
-        }
-        if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
-             SelectItem::Freeerase) || drawing) {
-            mirrorItem->setLabel(currentLabel);
-            mirrorItem->updatePen(tempItem->myPen);
-            scene->addItem(tempItem);
-            maskScene->addItem(mirrorItem);
-            switch (type) {
-                case PhotoScene::PHOTO_VIEWER_TYPE:
-                    currentItem = tempItem;
-                    break;
-                case PhotoScene::MASK_VIEWER_TYPE:
-                    currentItem = mirrorItem;
-                    break;
-            }
-            if (!canDrawOnPhoto)
-                maskItem = currentItem;
-        }
-        scene->update();
-        maskScene->update();
-    } else {
-        if (item->type() != currentSelectType) {
-            if (!canDrawOnPhoto)
-                return;
-            switch (item->type()) {
-                case SelectItem::Freedraw:
-                    on_freeSelectButton_clicked();
-                    break;
-                case SelectItem::Polygon:
-                    on_polygonSelectButton_clicked();
-                    polygonSelectForm->finishPolygonButton->setEnabled(true);
-                    break;
-                case SelectItem::Rectangle:
-                    on_rectangleSelectButton_clicked();
                     break;
                 case SelectItem::Ellipse:
-                    on_ellipseSelectButton_clicked();
+                {
+                    EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
+                    EllipseSelect *mirror = new EllipseSelect(pos);
+                    tempItem = temp;
+                    mirrorItem = mirror;
+                    mirrorItem->setLabel(currentLabel);
+                    mirrorItem->updatePen(mirrorItem->myPen);
+                    tempItem->setMirror(mirrorItem);
+                    mirrorItem->setMirror(tempItem);
+                }
+                    break;
+                case SelectItem::Freeerase:
+                case SelectItem::Freedraw:
+                {
+                    if (drawing) {
+                        FreeDrawSelect *temp = new FreeDrawSelect(pos,
+                                                                  currentBrushSize,
+                                                                  brushMode,
+                                                                  currentLabel);
+                        FreeDrawSelect *mirror = new FreeDrawSelect(pos,
+                                                                    temp->myPen);
+                        tempItem = temp;
+                        mirrorItem = mirror;
+                        mirrorItem->setLabel(currentLabel);
+                        mirrorItem->updatePen(temp->myPen);
+                        tempItem->setMirror(mirrorItem);
+                        mirrorItem->setMirror(tempItem);
+                    } else {
+                        myErase = new FreeDrawErase(pos, currentBrushSize,
+                                                    brushMode, currentLabel);
+                        currentItem = myErase;
+                    }
+                }
+                    break;
+                case SelectItem::Polygon:
+                {
+                    PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
+                    PolygonSelect *mirror = new PolygonSelect(pos);
+                    tempItem = temp;
+                    mirrorItem = mirror;
+                    mirrorItem->setLabel(currentLabel);
+                    mirrorItem->updatePen(mirrorItem->myPen);
+                    tempItem->setMirror(mirrorItem);
+                    mirrorItem->setMirror(tempItem);
+                    polygonSelectForm->finishPolygonButton->setEnabled(true);
+                }
                     break;
             }
-        }
-        currentItem = item;
-        if (!canDrawOnPhoto)
-            maskItem = currentItem;
-        currentLabel = currentItem->getLabel();
-        scene->inactiveAll();
-        maskScene->inactiveAll();
-        currentItem->clickPoint(pos);
-        currentItem->setItemActive();
-        if (currentItem->type() == SelectItem::Polygon && insertVertex) {
-            int vert = currentItem->getActiveVertex();
-            if (vert != SelectItem::UNSELECTED) {
-                if (vertex1 <0) {
-                    vertex1 = vert;
-                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
-                } else if (vertex2 < 0) {
-                    if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
-                        (currentItem->numberOfVertices() - 1)) {
-                        polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
-                    } else {
-                        vertex2 = vert;
-                        polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+            if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
+                 SelectItem::Freeerase) || drawing) {
+                mirrorItem->setLabel(currentLabel);
+                mirrorItem->updatePen(tempItem->myPen);
+                scene->addItem(tempItem);
+                maskScene->addItem(mirrorItem);
+                switch (type) {
+                    case PhotoScene::PHOTO_VIEWER_TYPE:
+                        currentItem = tempItem;
+                        break;
+                    case PhotoScene::MASK_VIEWER_TYPE:
+                        currentItem = mirrorItem;
+                        break;
+                }
+                if (!canDrawOnPhoto)
+                    maskItem = currentItem;
+            }
+            scene->update();
+            maskScene->update();
+        } else {
+            if (item->type() != currentSelectType) {
+                if (!canDrawOnPhoto)
+                    return;
+                switch (item->type()) {
+                    case SelectItem::Freedraw:
+                        on_freeSelectButton_clicked();
+                        break;
+                    case SelectItem::Polygon:
+                        on_polygonSelectButton_clicked();
+                        polygonSelectForm->finishPolygonButton->setEnabled(true);
+                        break;
+                    case SelectItem::Rectangle:
+                        on_rectangleSelectButton_clicked();
+                        break;
+                    case SelectItem::Ellipse:
+                        on_ellipseSelectButton_clicked();
+                        break;
+                }
+            }
+            currentItem = item;
+            if (!canDrawOnPhoto)
+                maskItem = currentItem;
+            currentLabel = currentItem->getLabel();
+            scene->inactiveAll();
+            maskScene->inactiveAll();
+            currentItem->clickPoint(pos);
+            currentItem->setItemActive();
+            if (currentItem->type() == SelectItem::Polygon && insertVertex) {
+                int vert = currentItem->getActiveVertex();
+                if (vert != SelectItem::UNSELECTED) {
+                    if (vertex1 <0) {
+                        vertex1 = vert;
+                        polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                    } else if (vertex2 < 0) {
+                        if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
+                            (currentItem->numberOfVertices() - 1)) {
+                            polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                        } else {
+                            vertex2 = vert;
+                            polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                        }
                     }
                 }
             }
+            scene->update();
+            maskScene->update();
         }
-        scene->update();
-        maskScene->update();
     }
 }
 
@@ -1310,6 +1321,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
   Processes a mouse movement from \a fromPos to \a toPos.
  */
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
+
+
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
             currentItem->moveItem(fromPos, toPos);
@@ -1328,7 +1341,13 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button) {
-    UNUSED(button);
+    //UNUSED(button);
+    ctrlPanning = false;
+    ui->panButton->setChecked(panning);
+    ui->IdmPhotoViewer->setPanMode(panning);
+    ui->IdmMaskViewer->setPanMode(panning);
+
+//    else if (!panning){
     if (currentItem && !currentItem->isItemAdded()) {
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
@@ -1394,6 +1413,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     currentButton = Qt::NoButton;
     scene->update();
     maskScene->update();
+//    }
 }
 
 

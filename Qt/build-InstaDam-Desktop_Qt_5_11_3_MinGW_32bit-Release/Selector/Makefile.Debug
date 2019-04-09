@@ -67,9 +67,7 @@ OBJECTS       = debug/polygonSelect.o \
 		debug/freeDrawErase.o \
 		debug/moc_photoScene.o
 
-DIST          = selector.qdocconf \
-		mirrors.qdoc \
-		select.qdoc ..\..\InstaDam\Selector\polygonSelect.h \
+DIST          =  ..\..\InstaDam\Selector\polygonSelect.h \
 		..\..\InstaDam\Selector\commands.h \
 		..\..\InstaDam\Selector\ellipseSelect.h \
 		..\..\InstaDam\Selector\photoScene.h \

@@ -18,6 +18,7 @@ INPUT(
 ./debug\projectlist.o
 ./debug\imagelist.o
 ./debug\serverprojectname.o
+./debug\enumconstants.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o

@@ -160,6 +160,7 @@ public slots:
     Ui::polygonSelectForm *polygonSelectForm;
     bool drawing = true;
     bool panning = false;
+    bool ctrlPanning = false;
     bool canDrawOnPhoto = true;
     int lastType = -1;
     bool insertVertex = false;

@@ -18,6 +18,7 @@ INPUT(
 ./release\projectlist.o
 ./release\imagelist.o
 ./release\serverprojectname.o
+./release\enumconstants.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
