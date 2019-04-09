@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/selectItem.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - selectItem.h<span style="font-size: 80%;"> (source / <a href="selectItem.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntryMed">75.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-08 16:12:03</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryLo">23.1 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * To change this license header, choose License Headers in Project Properties.
+<span class="lineNum">       3 </span>                :            :  * To change this template file, choose Tools | Templates
+<span class="lineNum">       4 </span>                :            :  * and open the template in the editor.
+<span class="lineNum">       5 </span>                :            :  */
+<span class="lineNum">       6 </span>                :            : 
+<span class="lineNum">       7 </span>                :            : /* 
+<span class="lineNum">       8 </span>                :            :  * File:   diagramitem.h
+<span class="lineNum">       9 </span>                :            :  * Author: friedel
+<span class="lineNum">      10 </span>                :            :  *
+<span class="lineNum">      11 </span>                :            :  * Created on February 6, 2019, 9:00 PM
+<span class="lineNum">      12 </span>                :            :  */
+<span class="lineNum">      13 </span>                :            : 
+<span class="lineNum">      14 </span>                :            : #ifndef SELECTITEM_H
+<span class="lineNum">      15 </span>                :            : #define SELECTITEM_H
+<span class="lineNum">      16 </span>                :            : 
+<span class="lineNum">      17 </span>                :            : #include &lt;QGraphicsItem&gt;
+<span class="lineNum">      18 </span>                :            : #include &lt;QWidget&gt;
+<span class="lineNum">      19 </span>                :            : #include &lt;QPainter&gt;
+<span class="lineNum">      20 </span>                :            : #include &lt;QJsonObject&gt;
+<span class="lineNum">      21 </span>                :            : 
+<span class="lineNum">      22 </span>                :            : #define UNUSED(x) (void)(x)
+<span class="lineNum">      23 </span>                :            : class Label;
+<span class="lineNum">      24 </span>                :            : class FreeDrawSelect;
+<span class="lineNum">      25 </span>                :            : 
+<span class="lineNum">      26 </span>                :            : const int TOP = 0x1;
+<span class="lineNum">      27 </span>                :            : const int BOTTOM = 0x2;
+<span class="lineNum">      28 </span>                :            : const int LEFT = 0x4;
+<span class="lineNum">      29 </span>                :            : const int RIGHT = 0x8;
+<span class="lineNum">      30 </span>                :            : QT_BEGIN_NAMESPACE
+<span class="lineNum">      31 </span>                :            : class QGraphicsItem;
+<span class="lineNum">      32 </span>                :            : class QGraphicsScene;
+<span class="lineNum">      33 </span>                :            : class QGraphicsSceneMouseEvent;
+<span class="lineNum">      34 </span>                :            : class QPointF;
+<span class="lineNum">      35 </span>                :            : class QGraphicsItemPrivate;
+<span class="lineNum">      36 </span>                :            : QT_END_NAMESPACE
+<span class="lineNum">      37 </span>                :            : 
+<span class="lineNum">      38 </span>                :            : class SelectItem : public QGraphicsItem {
+<span class="lineNum">      39 </span>                :            :  public:
+<span class="lineNum">      40 </span>                :            :     enum SelectType {
+<span class="lineNum">      41 </span>                :            :         Rectangle = 51,
+<span class="lineNum">      42 </span>                :            :         Ellipse = 52,
+<span class="lineNum">      43 </span>                :            :         Polygon = 53,
+<span class="lineNum">      44 </span>                :            :         Freedraw = 54,
+<span class="lineNum">      45 </span>                :            :         Freeerase = 55};
+<span class="lineNum">      46 </span>                :            : 
+<span class="lineNum">      47 </span>                :            :     enum Vertex:int{
+<span class="lineNum">      48 </span>                :            :         NONE = 0x0,
+<span class="lineNum">      49 </span>                :            :         TOP = 0x1,
+<span class="lineNum">      50 </span>                :            :         BOTTOM = 0x2,
+<span class="lineNum">      51 </span>                :            :         LEFT = 0x4,
+<span class="lineNum">      52 </span>                :            :         RIGHT = 0x8,
+<span class="lineNum">      53 </span>                :            :         UNSELECTED = INT_MAX
+<span class="lineNum">      54 </span>                :            :     };
+<span class="lineNum">      55 </span>                :            : 
+<span class="lineNum">      56 </span>                :            :     static int ID;
+<span class="lineNum">      57 </span>                :            :     static QSize myBounds;
+<span class="lineNum">      58 </span>                :            :     static qreal vertexSize;
+<span class="lineNum">      59 </span>                :            :     static QPointF xoffset;
+<span class="lineNum">      60 </span>                :            :     static QPointF yoffset;
+<span class="lineNum">      61 </span>                :            :     int myID;
+<span class="lineNum">      62 </span>                :            :     QPen highlightPen, myPen;
+<span class="lineNum">      63 </span>                :            : 
+<span class="lineNum">      64 </span>                :            :     SelectItem(qreal vertSize = 10.,
+<span class="lineNum">      65 </span>                :            :                QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      66 </span>                :            :                QGraphicsItem *item = nullptr);
+<a name="67"><span class="lineNum">      67 </span>                :            :     SelectItem(QSharedPointer&lt;Label&gt; label = nullptr,</a>
+<span class="lineNum">      68 </span>                :            :                QGraphicsItem *item = nullptr);
+<span class="lineNum">      69 </span>                :<span class="lineCov">        888 :     ~SelectItem() override {}</span>
+<span class="lineNum">      70 </span>                :            : 
+<span class="lineNum">      71 </span>                :            :     /*---------------- Virtual functions ---------------------------*/
+<span class="lineNum">      72 </span>                :            :     // manipulating the data
+<span class="lineNum">      73 </span>                :            :     virtual void addPoint(QPointF &amp;point,
+<span class="lineNum">      74 </span>                :            :                           const int vertex = UNSELECTED) = 0;
+<span class="lineNum">      75 </span>                :            :     virtual void clickPoint(const QPointF &amp;point) = 0;
+<span class="lineNum">      76 </span>                :            :     virtual void insertVertex(const int vertex, const QPointF &amp;point) = 0;
+<span class="lineNum">      77 </span>                :            :     virtual void moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) = 0;
+<span class="lineNum">      78 </span>                :            :     virtual void removeVertex(const int vertex = UNSELECTED) = 0;
+<span class="lineNum">      79 </span>                :            :     virtual void resetActiveVertex() = 0;
+<span class="lineNum">      80 </span>                :            :     virtual void resizeItem(const int vertex, QPointF &amp;shift) = 0;
+<span class="lineNum">      81 </span>                :            :     virtual void rotate(const QPointF &amp;from, const QPointF &amp;to) = 0;
+<span class="lineNum">      82 </span>                :            :     virtual void updatePen(QPen pen) = 0;
+<span class="lineNum">      83 </span>                :            : 
+<span class="lineNum">      84 </span>                :            :     // I/O
+<span class="lineNum">      85 </span>                :            :     virtual void read(const QJsonObject &amp;json) = 0;
+<span class="lineNum">      86 </span>                :            :     virtual void write(QJsonObject &amp;json) const = 0;
+<span class="lineNum">      87 </span>                :            :     virtual void toPixmap(QPainter* painter) = 0;
+<span class="lineNum">      88 </span>                :            :     // get info about the objects
+<span class="lineNum">      89 </span>                :            :     virtual QString baseInstructions() const = 0;
+<span class="lineNum">      90 </span>                :            :     virtual bool isInside(const QPointF &amp;point) const = 0;
+<span class="lineNum">      91 </span>                :            :     virtual int numberOfVertices() const = 0;
+<span class="lineNum">      92 </span>                :            : 
+<span class="lineNum">      93 </span>                :            :     // working with the mirror (photo/maks pair)
+<span class="lineNum">      94 </span>                :            :     virtual SelectItem* getMirror() const = 0;
+<span class="lineNum">      95 </span>                :            :     virtual void mirrorHide() const = 0;
+<span class="lineNum">      96 </span>                :            :     virtual void mirrorShow() const = 0;
+<span class="lineNum">      97 </span>                :            :     virtual void rotateMirror() const = 0;
+<span class="lineNum">      98 </span>                :            :     virtual void setMirror(SelectItem *item) = 0;
+<span class="lineNum">      99 </span>                :            :     virtual void setMirrorActive() const = 0;
+<span class="lineNum">     100 </span>                :            :     virtual void setMirrorAdded() const = 0;
+<span class="lineNum">     101 </span>                :            :     virtual void setMirrorMoved() const = 0;
+<span class="lineNum">     102 </span>                :            :     virtual void setMirrorResized() const = 0;
+<span class="lineNum">     103 </span>                :            :     virtual void setMirrorVertex(int vertex) const = 0;
+<span class="lineNum">     104 </span>                :            :     virtual void updateMirrorScene() const = 0;
+<span class="lineNum">     105 </span>                :            :     /*-------------- End virtual functions-------------------------*/
+<span class="lineNum">     106 </span>                :            : 
+<span class="lineNum">     107 </span>                :            :     QGraphicsItem* getParentItem() const;
+<span class="lineNum">     108 </span>                :            :     void invertColorForPen();
+<span class="lineNum">     109 </span>                :            :     QGraphicsScene* scene() const;
+<span class="lineNum">     110 </span>                :            :     void setLabel(QSharedPointer&lt;Label&gt; label, bool init = false);
+<span class="lineNum">     111 </span>                :            :     QSharedPointer&lt;Label&gt; getLabel() const {return myLabel;}
+<span class="lineNum">     112 </span>                :            :     static void setVertexSize(qreal size);
+<span class="lineNum">     113 </span>                :            :     void sortCorners(QRectF &amp;rect, QPointF &amp;newPoint);
+<span class="lineNum">     114 </span>                :            :     int type() const override;
+<a name="115"><span class="lineNum">     115 </span>                :            : </a>
+<span class="lineNum">     116 </span>                :            :     /*-------------- Inlines ---------------------------------------*/
+<span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 :     void flipH() {</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">         28 :         activeVertex ^= (TOP | BOTTOM);</span>
+<a name="119"><span class="lineNum">     119 </span>                :<span class="lineNoCov">          0 :     }</span></a>
+<span class="lineNum">     120 </span>                :            : 
+<span class="lineNum">     121 </span>                :<span class="lineNoCov">          0 :     void flipV() {</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">         28 :         activeVertex ^= (LEFT | RIGHT);</span>
+<a name="123"><span class="lineNum">     123 </span>                :<span class="lineNoCov">          0 :     }</span></a>
+<a name="124"><span class="lineNum">     124 </span>                :            : </a>
+<a name="125"><span class="lineNum">     125 </span>                :<span class="lineNoCov">          0 :     QPointF getActivePoint() const {return activePoint;}</span></a>
+<span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :     int getActiveVertex() const {return activeVertex;}</span>
+<span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :     bool isItemActive()const {return active;}</span>
+<span class="lineNum">     128 </span>                :            :     bool isItemAdded()const {return hasBeenAdded;}
+<span class="lineNum">     129 </span>                :            :     void itemWasAdded() {
+<span class="lineNum">     130 </span>                :<span class="lineCov">         14 :         setMirrorAdded();</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">         14 :         hasBeenAdded = true;</span>
+<span class="lineNum">     132 </span>                :            :     }
+<span class="lineNum">     133 </span>                :            : 
+<span class="lineNum">     134 </span>                :            :     void resetState() {
+<span class="lineNum">     135 </span>                :            :         moved = false;
+<span class="lineNum">     136 </span>                :            :         resized = false;
+<span class="lineNum">     137 </span>                :            :         setMirrorMoved();
+<span class="lineNum">     138 </span>                :            :         setMirrorResized();
+<span class="lineNum">     139 </span>                :            :         pointAdded = false;
+<span class="lineNum">     140 </span>                :            :         rotated = false;
+<span class="lineNum">     141 </span>                :            :         setActiveVertex(SelectItem::UNSELECTED);
+<a name="142"><span class="lineNum">     142 </span>                :            :     }</a>
+<span class="lineNum">     143 </span>                :            : 
+<span class="lineNum">     144 </span>                :<span class="lineNoCov">          0 :     void setActiveVertex(int h, int v = NONE) {</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">        560 :         activeVertex = 0;</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">        336 :         activeVertex = (h | v);</span>
+<a name="147"><span class="lineNum">     147 </span>                :<span class="lineNoCov">          0 :     }</span></a>
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :<span class="lineCov">         14 :     void setInactive() {active = false;}</span>
+<span class="lineNum">     150 </span>                :            :     void setItemActive() {
+<span class="lineNum">     151 </span>                :<span class="lineCov">          7 :         setMirrorActive();</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">          7 :         active = true;</span>
+<span class="lineNum">     153 </span>                :            :     }
+<span class="lineNum">     154 </span>                :            :     bool wasMoved() const {return moved;}
+<span class="lineNum">     155 </span>                :            :     bool wasPointAdded() const {return pointAdded;}
+<a name="156"><span class="lineNum">     156 </span>                :            :     bool wasResized() const {return resized;}</a>
+<a name="157"><span class="lineNum">     157 </span>                :            :     bool wasRotated() const {return rotated;}</a>
+<span class="lineNum">     158 </span>                :<span class="lineCov">         16 :     void setFromMaskScene(bool value) {fromMaskScene = value;}</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">         16 :     void setOnMaskScene(bool value) {onMaskScene = value;}</span>
+<a name="160"><span class="lineNum">     160 </span>                :            :     bool getOnMaskScene() const {return onMaskScene;}</a>
+<span class="lineNum">     161 </span>                :            :     bool getFromMaskScene() const {return fromMaskScene;}
+<span class="lineNum">     162 </span>                :<span class="lineCov">         48 :     void hideMask() {</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">         48 :         if (onMaskScene) {</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">         16 :             if (!fromMaskScene)</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">         16 :                 hide();</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">         32 :         } else if (getMirror() != nullptr &amp;&amp; !getMirror()-&gt;fromMaskScene) {</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">         16 :             mirrorHide();</span>
+<a name="168"><span class="lineNum">     168 </span>                :            :         }</a>
+<span class="lineNum">     169 </span>                :<span class="lineCov">         48 :     }</span>
+<span class="lineNum">     170 </span>                :<span class="lineCov">         48 :     void showMask() {</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">         48 :         if (onMaskScene) {</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">         16 :             if (!fromMaskScene &amp;&amp; getMirror() &amp;&amp; getMirror()-&gt;isVisible()) {</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">         16 :                 show();</span>
+<span class="lineNum">     174 </span>                :            :             }
+<span class="lineNum">     175 </span>                :<span class="lineCov">         48 :         } else if (getMirror() != nullptr &amp;&amp; !getMirror()-&gt;fromMaskScene &amp;&amp;</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">         16 :                 isVisible()) {</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         16 :             mirrorShow();</span>
+<span class="lineNum">     178 </span>                :            :         }
+<span class="lineNum">     179 </span>                :<span class="lineCov">         48 :     }</span>
+<span class="lineNum">     180 </span>                :            : 
+<span class="lineNum">     181 </span>                :            :  protected:
+<span class="lineNum">     182 </span>                :            :     SelectType selectType;
+<span class="lineNum">     183 </span>                :            : 
+<span class="lineNum">     184 </span>                :            :     QPointF selectedPoint;
+<span class="lineNum">     185 </span>                :            :     QPointF activePoint;
+<span class="lineNum">     186 </span>                :            : 
+<span class="lineNum">     187 </span>                :            :     QRectF myRect;
+<span class="lineNum">     188 </span>                :            : 
+<span class="lineNum">     189 </span>                :            :     QPen pen;
+<span class="lineNum">     190 </span>                :            : 
+<span class="lineNum">     191 </span>                :            :     QSharedPointer&lt;Label&gt; myLabel;
+<span class="lineNum">     192 </span>                :            : 
+<span class="lineNum">     193 </span>                :            :     bool active = false;
+<span class="lineNum">     194 </span>                :            :     bool hasBeenAdded = false;
+<span class="lineNum">     195 </span>                :            :     bool moved = false;
+<span class="lineNum">     196 </span>                :            :     bool pointAdded = false;
+<span class="lineNum">     197 </span>                :            :     bool resized = false;
+<span class="lineNum">     198 </span>                :            :     bool rotated = false;
+<span class="lineNum">     199 </span>                :            :     bool fromMaskScene = false;
+<span class="lineNum">     200 </span>                :            :     bool onMaskScene = false;
+<span class="lineNum">     201 </span>                :            : 
+<span class="lineNum">     202 </span>                :            :     int mytype;
+<span class="lineNum">     203 </span>                :            :     int activeV = RIGHT;
+<span class="lineNum">     204 </span>                :            :     int activeH = BOTTOM;
+<span class="lineNum">     205 </span>                :            :     int activeVertex = (activeV | activeH);
+<span class="lineNum">     206 </span>                :            : 
+<span class="lineNum">     207 </span>                :            :     FreeDrawSelect* pixmap;
+<span class="lineNum">     208 </span>                :            :     void checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect);
+<span class="lineNum">     209 </span>                :            :     bool isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const;
+<span class="lineNum">     210 </span>                :            : };
+<span class="lineNum">     211 </span>                :            : 
+<span class="lineNum">     212 </span>                :            : #endif
+<span class="lineNum">     213 </span>                :            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

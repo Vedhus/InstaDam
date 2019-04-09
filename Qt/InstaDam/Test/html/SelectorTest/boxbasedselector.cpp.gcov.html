@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/boxbasedselector.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - boxbasedselector.cpp<span style="font-size: 80%;"> (source / <a href="boxbasedselector.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">70</td>
+            <td class="headerCovTableEntry">70</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-09 13:07:45</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">93.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &lt;math.h&gt;</a>
+<span class="lineNum">       2 </span>                :            : #include &lt;QPainter&gt;
+<span class="lineNum">       3 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">       4 </span>                :            : 
+<span class="lineNum">       5 </span>                :            : #include &quot;boxbasedselector.h&quot;
+<span class="lineNum">       6 </span>                :            : 
+<span class="lineNum">       7 </span>                :            : #define PI 3.14159265
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : /*!
+<span class="lineNum">      10 </span>                :            :   \class BoxBasedSelector
+<span class="lineNum">      11 </span>                :            :   \ingroup Selector
+<span class="lineNum">      12 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      13 </span>                :            :   \inherits SelectItem
+<span class="lineNum">      14 </span>                :            :   \brief The BoxBasedSelector class provides a base class for SelectItem
+<span class="lineNum">      15 </span>                :            :          subclasses that can be described with a box.
+<span class="lineNum">      16 </span>                :            : 
+<span class="lineNum">      17 </span>                :            :   The BoxBasedSelector class provides a base class for SelectItem subclasses
+<span class="lineNum">      18 </span>                :            :   that can be described with a box, such as RectangleSelect and EllipseSelect.
+<span class="lineNum">      19 </span>                :            :   It implements several of the virtual functions from SelectItem which will
+<span class="lineNum">      20 </span>                :            :   have identical implementations on all its subclasses:
+<span class="lineNum">      21 </span>                :            : 
+<span class="lineNum">      22 </span>                :            :   \list
+<span class="lineNum">      23 </span>                :            :   \li RectangleSelect
+<span class="lineNum">      24 </span>                :            :   \li EllipseSelect
+<span class="lineNum">      25 </span>                :            :   \endlist
+<span class="lineNum">      26 </span>                :            : 
+<span class="lineNum">      27 </span>                :            :   */
+<span class="lineNum">      28 </span>                :            : 
+<span class="lineNum">      29 </span>                :            : /*!
+<span class="lineNum">      30 </span>                :            :   Constructs a BoxBasedSelector object by reading a QJsonObject and setting the
+<span class="lineNum">      31 </span>                :            :   internal rectangle and rotation angle to the values given in \a json. \a label
+<span class="lineNum">      32 </span>                :            :   is the Label which owns this object and \a item is the parent QGraphicsItem,
+<a name="33"><span class="lineNum">      33 </span>                :            :   if any.</a>
+<span class="lineNum">      34 </span>                :            :   */
+<span class="lineNum">      35 </span>                :<span class="lineCov">          4 : BoxBasedSelector::BoxBasedSelector(const QJsonObject &amp;json,</span>
+<span class="lineNum">      36 </span>                :            :                                    QSharedPointer&lt;Label&gt; label,
+<span class="lineNum">      37 </span>                :            :                                    QGraphicsItem *item) :
+<span class="lineNum">      38 </span>                :<span class="lineCov">          8 :     SelectItem(label, item) {</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">          4 :     read(json);</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">      41 </span>                :            : 
+<span class="lineNum">      42 </span>                :            : /*!
+<span class="lineNum">      43 </span>                :            :   Constructs a BoxBasedSelector object by setting all vertices to be a \a point,
+<span class="lineNum">      44 </span>                :            :   \a label is the Label which owns this object and \a item is the parent
+<span class="lineNum">      45 </span>                :            :   QGraphicsItem, if any.
+<span class="lineNum">      46 </span>                :            :   */
+<span class="lineNum">      47 </span>                :<span class="lineCov">         59 : BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      48 </span>                :            :                                    QGraphicsItem *item) :
+<span class="lineNum">      49 </span>                :<span class="lineCov">        118 :     SelectItem(label, item) {</span>
+<span class="lineNum">      50 </span>                :            :     myRect.setTopLeft(point);
+<span class="lineNum">      51 </span>                :            :     myRect.setBottomRight(point);
+<span class="lineNum">      52 </span>                :<span class="lineCov">         59 :     calcCorners(false);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">         59 :     active = true;</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">         59 : }</span>
+<span class="lineNum">      55 </span>                :            : 
+<span class="lineNum">      56 </span>                :            : /*!
+<span class="lineNum">      57 </span>                :            :   Constructs a BoxBasedSelector object by setting all vertices to be a \a point,
+<span class="lineNum">      58 </span>                :            :   \a vertSize indicates the size of the vertex highlight boxes, \a label is the
+<span class="lineNum">      59 </span>                :            :   Label which owns this object and \a item is the parent QGraphicsItem, if any.
+<span class="lineNum">      60 </span>                :            :   */
+<span class="lineNum">      61 </span>                :<span class="lineCov">          6 : BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize,</span>
+<span class="lineNum">      62 </span>                :            :                                    QSharedPointer&lt;Label&gt; label,
+<span class="lineNum">      63 </span>                :            :                                    QGraphicsItem *item) :
+<span class="lineNum">      64 </span>                :<span class="lineCov">         12 :     SelectItem(vertSize, label, item) {</span>
+<span class="lineNum">      65 </span>                :            :     myRect.setTopLeft(point);
+<span class="lineNum">      66 </span>                :            :     myRect.setBottomRight(point);
+<span class="lineNum">      67 </span>                :<span class="lineCov">          6 :     calcCorners(false);</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">          6 :     active = true;</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">      70 </span>                :            : 
+<span class="lineNum">      71 </span>                :            : /*!
+<a name="72"><span class="lineNum">      72 </span>                :            :   Destructor</a>
+<span class="lineNum">      73 </span>                :            :   */
+<span class="lineNum">      74 </span>                :<span class="lineCov">         67 : BoxBasedSelector::~BoxBasedSelector() {</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">         67 : }</span>
+<span class="lineNum">      76 </span>                :            : 
+<span class="lineNum">      77 </span>                :            : /*-------------------------- Overrides -------------------------*/
+<span class="lineNum">      78 </span>                :            : /*!
+<span class="lineNum">      79 </span>                :            :   \reimp
+<span class="lineNum">      80 </span>                :            :   */
+<span class="lineNum">      81 </span>                :<span class="lineCov">         12 : void BoxBasedSelector::clickPoint(const QPointF &amp;point) {</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">         12 :     active = true;</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         24 :     if (isInsideRect(tl, point)) {</span>
+<span class="lineNum">      84 </span>                :            :         setActiveVertex(TOP, LEFT);
+<span class="lineNum">      85 </span>                :<span class="lineCov">          2 :         activePoint = myRect.topLeft();</span>
+<span class="lineNum">      86 </span>                :<span class="lineCov">         10 :     } else if (isInsideRect(tr, point)) {</span>
+<span class="lineNum">      87 </span>                :            :         setActiveVertex(TOP, RIGHT);
+<span class="lineNum">      88 </span>                :<span class="lineCov">          2 :         activePoint = myRect.topRight();</span>
+<span class="lineNum">      89 </span>                :<span class="lineCov">          8 :     } else if (isInsideRect(bl, point)) {</span>
+<span class="lineNum">      90 </span>                :            :         setActiveVertex(BOTTOM, LEFT);
+<span class="lineNum">      91 </span>                :<span class="lineCov">          2 :         activePoint = myRect.bottomLeft();</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">          6 :     } else if (isInsideRect(br, point)) {</span>
+<span class="lineNum">      93 </span>                :            :         setActiveVertex(BOTTOM, RIGHT);
+<span class="lineNum">      94 </span>                :<span class="lineCov">          2 :         activePoint = myRect.bottomRight();</span>
+<span class="lineNum">      95 </span>                :            :     } else {
+<span class="lineNum">      96 </span>                :            :         setActiveVertex(0, 0);
+<span class="lineNum">      97 </span>                :            :     }
+<span class="lineNum">      98 </span>                :<span class="lineCov">         24 :     setMirrorVertex(getActiveVertex());</span>
+<span class="lineNum">      99 </span>                :<span class="lineCov">         12 : }</span>
+<span class="lineNum">     100 </span>                :            : 
+<span class="lineNum">     101 </span>                :            : /*!
+<a name="102"><span class="lineNum">     102 </span>                :            :   \reimp</a>
+<span class="lineNum">     103 </span>                :            :   */
+<span class="lineNum">     104 </span>                :<span class="lineCov">          1 : void BoxBasedSelector::removeVertex(int vertex) {</span>
+<span class="lineNum">     105 </span>                :            :     UNUSED(vertex);
+<span class="lineNum">     106 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     107 </span>                :            : 
+<span class="lineNum">     108 </span>                :            : /*!
+<a name="109"><span class="lineNum">     109 </span>                :            :   \reimp</a>
+<span class="lineNum">     110 </span>                :            :   */
+<span class="lineNum">     111 </span>                :<span class="lineCov">          6 : void BoxBasedSelector::resetActiveVertex() {</span>
+<span class="lineNum">     112 </span>                :            :     setActiveVertex(0);
+<span class="lineNum">     113 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     114 </span>                :            : 
+<span class="lineNum">     115 </span>                :            : /*!
+<a name="116"><span class="lineNum">     116 </span>                :            :   \reimp</a>
+<span class="lineNum">     117 </span>                :            :   */
+<span class="lineNum">     118 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::resizeItem(const int vertex, QPointF &amp;newPos) {</span>
+<span class="lineNum">     119 </span>                :            :     setActiveVertex(vertex);
+<span class="lineNum">     120 </span>                :<span class="lineCov">          4 :     setMirrorVertex(getActiveVertex());</span>
+<span class="lineNum">     121 </span>                :<span class="lineCov">          4 :     addPoint(newPos);</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     123 </span>                :            : 
+<span class="lineNum">     124 </span>                :            : /*!
+<span class="lineNum">     125 </span>                :            :   \reimp
+<span class="lineNum">     126 </span>                :            :   */
+<span class="lineNum">     127 </span>                :<span class="lineCov">          7 : void BoxBasedSelector::rotate(const QPointF &amp;from, const QPointF &amp;to) {</span>
+<span class="lineNum">     128 </span>                :<span class="lineCov">          7 :     setTransformOriginPoint(myRect.center());</span>
+<span class="lineNum">     129 </span>                :            :     QPointF start = from - myRect.center();
+<span class="lineNum">     130 </span>                :            :     QPointF end = to - myRect.center();
+<span class="lineNum">     131 </span>                :<span class="lineCov">         14 :     myRotation += (atan2(end.y(), end.x()) -</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">         14 :                    atan2(start.y(), start.x())) * 180. / PI;</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          7 :     setRotation(myRotation);</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">          7 :     rotated = true;</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">          7 :     rotateMirror();</span>
+<span class="lineNum">     136 </span>                :<span class="lineCov">          7 : }</span>
+<span class="lineNum">     137 </span>                :            : 
+<span class="lineNum">     138 </span>                :            : /*!
+<span class="lineNum">     139 </span>                :            :   \reimp
+<span class="lineNum">     140 </span>                :            :   */
+<span class="lineNum">     141 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::read(const QJsonObject &amp;json) {</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">          4 :     QPointF tlc = QPointF(json[&quot;left&quot;].toDouble(), json[&quot;top&quot;].toDouble());</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">          4 :     QPointF brc = QPointF(json[&quot;right&quot;].toDouble(), json[&quot;bottom&quot;].toDouble());</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">          4 :     myRect = QRectF(tlc, brc);</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          4 :     myRotation = json[&quot;rotation&quot;].toDouble();</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          4 :     myID = json[&quot;objectID&quot;].toInt();</span>
+<span class="lineNum">     147 </span>                :<span class="lineCov">          4 :     setTransformOriginPoint(myRect.center());</span>
+<span class="lineNum">     148 </span>                :<span class="lineCov">          4 :     setRotation(myRotation);</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     150 </span>                :            : 
+<span class="lineNum">     151 </span>                :            : /*!
+<span class="lineNum">     152 </span>                :            :   \reimp
+<span class="lineNum">     153 </span>                :            :   */
+<span class="lineNum">     154 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::write(QJsonObject &amp;json) const {</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          4 :     json[&quot;objectID&quot;] = myID;</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          4 :     json[&quot;rotation&quot;] = myRotation;</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">         12 :     json[&quot;left&quot;] = myRect.left();</span>
+<span class="lineNum">     158 </span>                :<span class="lineCov">          4 :     json[&quot;right&quot;] = myRect.right();</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">          4 :     json[&quot;top&quot;] = myRect.top();</span>
+<span class="lineNum">     160 </span>                :<span class="lineCov">          4 :     json[&quot;bottom&quot;] = myRect.bottom();</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     162 </span>                :            : 
+<span class="lineNum">     163 </span>                :            : /*-------------------------- Protected ------------------------*/
+<span class="lineNum">     164 </span>                :            : /*!
+<span class="lineNum">     165 </span>                :            :   Calculates the vertex boxes in the corners of the defining rectangle. The
+<span class="lineNum">     166 </span>                :            :   boxes are used to indicate the BoxBasedSelector is active and to act as points
+<span class="lineNum">     167 </span>                :            :   to click and drag to resize the item. If the mirror needs to be updated as
+<span class="lineNum">     168 </span>                :            :   well the \a mir should be \c true.
+<span class="lineNum">     169 </span>                :            :   */
+<span class="lineNum">     170 </span>                :<span class="lineCov">        155 : void BoxBasedSelector::calcCorners(bool mir) {</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">        155 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">        155 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     173 </span>                :            :     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() +
+<span class="lineNum">     174 </span>                :<span class="lineCov">        155 :                 SelectItem::xoffset);</span>
+<span class="lineNum">     175 </span>                :            :     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() +
+<span class="lineNum">     176 </span>                :<span class="lineCov">        155 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     177 </span>                :            :     br = QRectF(myRect.bottomRight() - SelectItem::xoffset -
+<span class="lineNum">     178 </span>                :<span class="lineCov">        155 :                 SelectItem::yoffset, myRect.bottomRight());</span>
+<a name="179"><span class="lineNum">     179 </span>                :<span class="lineCov">        155 :     if (mir)</span></a>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         90 :         setMirrorCorners(tl, bl, tr, br);</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">        158 : }</span>
+<span class="lineNum">     182 </span>                :            : 
+<span class="lineNum">     183 </span>                :            : /*!
+<span class="lineNum">     184 </span>                :            :   \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;
+<span class="lineNum">     185 </span>                :            : 
+<span class="lineNum">     186 </span>                :            :   Pure virtual function to set the corner vertex boxes of the mirror object.
+<span class="lineNum">     187 </span>                :            :   \a tlc is the top-left corner, \a blc is the bottom-left corner, \a trc is the
+<span class="lineNum">     188 </span>                :            :   top-right corner, and \a brc is the bottom right corner.
+<span class="lineNum">     189 </span>                :            :   */
+<span class="lineNum">     190 </span>                :            : 
+<span class="lineNum">     191 </span>                :            : /*!
+<span class="lineNum">     192 </span>                :            :   \fn virtual void BoxBasedSelector::setRectUnchecked(QRectF rect) = 0;
+<span class="lineNum">     193 </span>                :            : 
+<span class="lineNum">     194 </span>                :            :   Pure virtual function to set the internal rectangle of the BoxBasedSelector to
+<span class="lineNum">     195 </span>                :            :   \a rect without checking to see if it completely fits in the QGraphicsScene.
+<span class="lineNum">     196 </span>                :            :   This is used when setting the internal rectangle of the mirror after checking
+<span class="lineNum">     197 </span>                :            :   has been done in this instance.
+<span class="lineNum">     198 </span>                :            :   */
+<span class="lineNum">     199 </span>                :            : 
+<span class="lineNum">     200 </span>                :            : /*!
+<span class="lineNum">     201 </span>                :            :   \fn void BoxBasedSelector::insertVertex(const int vertex, const QPointF &amp;point)
+<span class="lineNum">     202 </span>                :            :   \reimp
+<span class="lineNum">     203 </span>                :            : 
+<span class="lineNum">     204 </span>                :            :   Empty function as this and any derived classes can have two, and only two
+<span class="lineNum">     205 </span>                :            :   vertices.
+<span class="lineNum">     206 </span>                :            :   */
+<span class="lineNum">     207 </span>                :            : 
+<span class="lineNum">     208 </span>                :            : /*!
+<span class="lineNum">     209 </span>                :            :   \fn int BoxBasedSelector::numberOfVertices() const
+<span class="lineNum">     210 </span>                :            : 
+<span class="lineNum">     211 </span>                :            :   \reimp
+<span class="lineNum">     212 </span>                :            : 
+<span class="lineNum">     213 </span>                :            :   Always returns 2, as this and any derived classes can have two, and only two
+<span class="lineNum">     214 </span>                :            :   vertices.
+<span class="lineNum">     215 </span>                :            :   */
+<span class="lineNum">     216 </span>                :            : 
+<span class="lineNum">     217 </span>                :            : /*!
+<span class="lineNum">     218 </span>                :            :   \fn void BoxBasedSelector::setRotationAngle(qreal angle)
+<span class="lineNum">     219 </span>                :            : 
+<span class="lineNum">     220 </span>                :            :   Sets the rotation angle of the BoxBasedSelector to \a angle degrees, measured
+<span class="lineNum">     221 </span>                :            :   from the horizontal going counterclockwise.
+<span class="lineNum">     222 </span>                :            : 
+<span class="lineNum">     223 </span>                :            :   \sa getRotationAngle()
+<span class="lineNum">     224 </span>                :            :   */
+<span class="lineNum">     225 </span>                :            : 
+<span class="lineNum">     226 </span>                :            : /*!
+<span class="lineNum">     227 </span>                :            :   \fn qreal BoxBasedSelector::getRotationAngle() const
+<span class="lineNum">     228 </span>                :            : 
+<span class="lineNum">     229 </span>                :            :   Returns a \c qreal containing the rotation angle of the BoxBasedSelector in
+<span class="lineNum">     230 </span>                :            :   degrees.
+<span class="lineNum">     231 </span>                :            : 
+<span class="lineNum">     232 </span>                :            :   \sa setRotationAngle()
+<span class="lineNum">     233 </span>                :            :   */
+<span class="lineNum">     234 </span>                :            : 
+<span class="lineNum">     235 </span>                :            : /*!
+<span class="lineNum">     236 </span>                :            :   \fn QRectF BoxBasedSelector::getRect() const
+<span class="lineNum">     237 </span>                :            : 
+<span class="lineNum">     238 </span>                :            :   Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
+<span class="lineNum">     239 </span>                :            :   */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

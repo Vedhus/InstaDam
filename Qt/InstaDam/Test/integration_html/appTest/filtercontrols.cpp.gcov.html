@@ -1,0 +1,440 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - appTest/filtercontrols.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">appTest</a> - filtercontrols.cpp<span style="font-size: 80%;"> (source / <a href="filtercontrols.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntry">136</td>
+            <td class="headerCovTableEntryLo">21.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryLo">36.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;filtercontrols.h&quot;</a>
+<span class="lineNum">       2 </span>                :            : 
+<span class="lineNum">       3 </span>                :            : #include &lt;QtGlobal&gt;
+<span class="lineNum">       4 </span>                :            : #include &lt;QVBoxLayout&gt;
+<span class="lineNum">       5 </span>                :            : #include &lt;QLabel&gt;
+<span class="lineNum">       6 </span>                :            : #include &lt;QString&gt;
+<span class="lineNum">       7 </span>                :            : #include &lt;vector&gt;
+<span class="lineNum">       8 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">       9 </span>                :            : 
+<span class="lineNum">      10 </span>                :            : #include &quot;pixmapops.h&quot;
+<span class="lineNum">      11 </span>                :            : #include &quot;enumconstants.h&quot;
+<span class="lineNum">      12 </span>                :            : 
+<span class="lineNum">      13 </span>                :            : #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast&lt;void(OBJECT::*)(TYPE)&gt;(&amp;OBJECT::FUNC)
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            : /*!
+<span class="lineNum">      16 </span>                :            :   \class filterDialog
+<span class="lineNum">      17 </span>                :            :   \ingroup app
+<span class="lineNum">      18 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      19 </span>                :            :   \brief Defines a custom QDIalog based on the selected mask.
+<span class="lineNum">      20 </span>                :            : 
+<span class="lineNum">      21 </span>                :            :  */
+<span class="lineNum">      22 </span>                :            : 
+<span class="lineNum">      23 </span>                :            : /*!
+<span class="lineNum">      24 </span>                :            :   Creates an instance based on \a selectedMask, \a fc, \a photoViewer, and
+<a name="25"><span class="lineNum">      25 </span>                :            :   \a currentPro.</a>
+<span class="lineNum">      26 </span>                :            :   */
+<span class="lineNum">      27 </span>                :<span class="lineNoCov">          0 : filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,</span>
+<span class="lineNum">      28 </span>                :            :                            filterControls* fc, PhotoViewer* photoViewer,
+<span class="lineNum">      29 </span>                :            :                            Project *currentPro)
+<span class="lineNum">      30 </span>                :<span class="lineNoCov">          0 :     : QDialog() {</span>
+<span class="lineNum">      31 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;1&quot;);</span>
+<span class="lineNum">      32 </span>                :<span class="lineNoCov">          0 :     size_t numControls = static_cast&lt;size_t&gt;(fc-&gt;properties[selectedMask]-&gt;numControls);</span>
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 :     this-&gt;setWindowTitle(&quot;Filter Options&quot;);</span>
+<span class="lineNum">      34 </span>                :            : 
+<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 :     QVBoxLayout *VBlayout = new QVBoxLayout(this);</span>
+<span class="lineNum">      36 </span>                :            :     Project* currentProject = currentPro;
+<span class="lineNum">      37 </span>                :<span class="lineNoCov">          0 :     for (size_t i = 0; i &lt; numControls; i++) {</span>
+<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :         QLabel *name = new QLabel();</span>
+<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 :         name-&gt;setText(QString(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;name));</span>
+<span class="lineNum">      40 </span>                :            : 
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 :         QHBoxLayout *HBlayout = new QHBoxLayout();</span>
+<span class="lineNum">      42 </span>                :<span class="lineNoCov">          0 :         HBlayout-&gt;addWidget(name);</span>
+<span class="lineNum">      43 </span>                :            :         EnumConstants::threshold_or_filter thof =
+<span class="lineNum">      44 </span>                :<span class="lineNoCov">          0 :                 fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;threshold_filter;</span>
+<span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 :         switch (fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;btnType) {</span>
+<span class="lineNum">      46 </span>                :            :             case SLIDER:
+<span class="lineNum">      47 </span>                :            :             {
+<span class="lineNum">      48 </span>                :            :                 fSlider *itemSlider = new fSlider(selectedMask,
+<span class="lineNum">      49 </span>                :            :                                                   static_cast&lt;int&gt;(i), thof,
+<span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 :                                                   this);</span>
+<span class="lineNum">      51 </span>                :            :                 fSpinBox* itemNumbox = new fSpinBox(selectedMask,
+<span class="lineNum">      52 </span>                :            :                                                     static_cast&lt;int&gt;(i), thof,
+<span class="lineNum">      53 </span>                :<span class="lineNoCov">          0 :                                                     this);</span>
+<span class="lineNum">      54 </span>                :            :                 connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox,
+<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :                         SLOT(setValue(int)));</span>
+<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :                 itemSlider-&gt;setOrientation(Qt::Horizontal);</span>
+<span class="lineNum">      57 </span>                :            :                 connect(itemNumbox, SIGNAL(valueChanged(int)), itemSlider,
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 :                         SLOT(setValue(int)));</span>
+<span class="lineNum">      59 </span>                :            : 
+<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :                 HBlayout-&gt;addWidget(itemSlider);</span>
+<span class="lineNum">      61 </span>                :<span class="lineNoCov">          0 :                 HBlayout-&gt;addWidget(itemNumbox);</span>
+<span class="lineNum">      62 </span>                :            : 
+<span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :                 qInfo(&quot;max = %d&quot;, fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;max);</span>
+<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 :                 qInfo(&quot;3&quot;);</span>
+<span class="lineNum">      65 </span>                :<span class="lineNoCov">          0 :                 itemSlider-&gt;setMaximum(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;max);</span>
+<span class="lineNum">      66 </span>                :<span class="lineNoCov">          0 :                 itemNumbox-&gt;setMaximum(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;max);</span>
+<span class="lineNum">      67 </span>                :<span class="lineNoCov">          0 :                 itemSlider-&gt;setMinimum(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;min);</span>
+<span class="lineNum">      68 </span>                :<span class="lineNoCov">          0 :                 itemNumbox-&gt;setMinimum(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;min);</span>
+<span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 :                 itemNumbox-&gt;setValue(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;val);</span>
+<span class="lineNum">      70 </span>                :<span class="lineNoCov">          0 :                 itemSlider-&gt;setValue(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;val);</span>
+<span class="lineNum">      71 </span>                :            : 
+<span class="lineNum">      72 </span>                :            :                 connect(itemSlider, SIGNAL(filterValueChanged(maskTypes, int,
+<span class="lineNum">      73 </span>                :            :                                                               int,
+<span class="lineNum">      74 </span>                :            :                                                               threshold_or_filter)),
+<span class="lineNum">      75 </span>                :            :                         fc, SLOT(assignVal(maskTypes, int, int,
+<span class="lineNum">      76 </span>                :<span class="lineNoCov">          0 :                                            threshold_or_filter)));</span>
+<span class="lineNum">      77 </span>                :            :                 connect(itemNumbox, SIGNAL(filterValueChanged(maskTypes, int,
+<span class="lineNum">      78 </span>                :            :                                                               int,
+<span class="lineNum">      79 </span>                :            :                                                               threshold_or_filter)),
+<span class="lineNum">      80 </span>                :            :                         fc, SLOT(assignVal(maskTypes, int, int,
+<span class="lineNum">      81 </span>                :<span class="lineNoCov">          0 :                                            threshold_or_filter)));</span>
+<span class="lineNum">      82 </span>                :            : 
+<span class="lineNum">      83 </span>                :<span class="lineNoCov">          0 :                 VBlayout-&gt;addLayout(HBlayout);</span>
+<span class="lineNum">      84 </span>                :            :                 break;
+<span class="lineNum">      85 </span>                :            :             }
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :            :             case CHECKBOX:
+<span class="lineNum">      88 </span>                :            :             {
+<span class="lineNum">      89 </span>                :            :                 fCheckBox *itemCBox = new fCheckBox(selectedMask,
+<span class="lineNum">      90 </span>                :            :                                                     static_cast&lt;int&gt;(i), thof,
+<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :                                                     this);</span>
+<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 :                 itemCBox-&gt;setCheckState(Qt::CheckState(fc-&gt;properties[selectedMask]-&gt;propertylist[i]-&gt;val));</span>
+<span class="lineNum">      93 </span>                :            : 
+<span class="lineNum">      94 </span>                :            :                 connect(itemCBox, SIGNAL(filterValueChanged(maskTypes, int, int,
+<span class="lineNum">      95 </span>                :            :                                                             threshold_or_filter)),
+<span class="lineNum">      96 </span>                :            :                         fc, SLOT(assignVal(maskTypes, int, int,
+<span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 :                                            threshold_or_filter)));</span>
+<span class="lineNum">      98 </span>                :            : 
+<span class="lineNum">      99 </span>                :<span class="lineNoCov">          0 :                 HBlayout-&gt;addWidget(itemCBox);</span>
+<span class="lineNum">     100 </span>                :<span class="lineNoCov">          0 :                 VBlayout-&gt;addLayout(HBlayout);</span>
+<span class="lineNum">     101 </span>                :            : 
+<span class="lineNum">     102 </span>                :            :                 break;
+<span class="lineNum">     103 </span>                :            :             }
+<span class="lineNum">     104 </span>                :            :             case LABELLIST:
+<span class="lineNum">     105 </span>                :            :             {
+<span class="lineNum">     106 </span>                :<span class="lineNoCov">          0 :                 VBlayout-&gt;addLayout(HBlayout);</span>
+<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 :                 for (int i=0; i &lt; currentProject-&gt;numLabels(); i++) {</span>
+<span class="lineNum">     108 </span>                :<span class="lineNoCov">          0 :                     QSharedPointer&lt;Label&gt; label = currentProject-&gt;getLabel(i);</span>
+<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :                     LabelButtonFilter *button = new LabelButtonFilter(label);</span>
+<span class="lineNum">     110 </span>                :<span class="lineNoCov">          0 :                     button-&gt;setText(label-&gt;getText());</span>
+<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :                     QPalette pal = button-&gt;palette();</span>
+<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :                     pal.setColor(QPalette::ButtonText, Qt::black);</span>
+<span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :                     pal.setColor(QPalette::Button, label-&gt;getColor());</span>
+<span class="lineNum">     114 </span>                :<span class="lineNoCov">          0 :                     button-&gt;setAutoFillBackground(true);</span>
+<span class="lineNum">     115 </span>                :<span class="lineNoCov">          0 :                     button-&gt;setPalette(pal);</span>
+<span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 :                     button-&gt;update();</span>
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>                :<span class="lineNoCov">          0 :                     VBlayout-&gt;addWidget(button);</span>
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :            :                     connect(button, SIGNAL(cclicked(QSharedPointer&lt;Label&gt;)), fc,
+<span class="lineNum">     121 </span>                :<span class="lineNoCov">          0 :                             SLOT(setLabelMask(QSharedPointer&lt;Label&gt;)));</span>
+<span class="lineNum">     122 </span>                :            :                 }
+<span class="lineNum">     123 </span>                :            :                 break;
+<span class="lineNum">     124 </span>                :            :             }
+<span class="lineNum">     125 </span>                :            :         }
+<span class="lineNum">     126 </span>                :            :         connect(fc, SIGNAL(valAssigned(maskTypes, threshold_or_filter)),
+<span class="lineNum">     127 </span>                :            :                 photoViewer, SLOT(setImMask(maskTypes,
+<span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 :                                             threshold_or_filter)));</span>
+<span class="lineNum">     129 </span>                :            :     }
+<span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 :     QDialog::show();</span>
+<span class="lineNum">     131 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     132 </span>                :            : 
+<span class="lineNum">     133 </span>                :            : /*!
+<span class="lineNum">     134 </span>                :            :   \class filterControls
+<span class="lineNum">     135 </span>                :            :   \ingroup app
+<span class="lineNum">     136 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">     137 </span>                :            :   \brief Defines the properties of the mask and conducts the filtering operations.
+<span class="lineNum">     138 </span>                :            : 
+<span class="lineNum">     139 </span>                :            : */
+<span class="lineNum">     140 </span>                :            : 
+<span class="lineNum">     141 </span>                :            : /*!
+<span class="lineNum">     142 </span>                :            :   Creates an instance
+<span class="lineNum">     143 </span>                :            :   */
+<span class="lineNum">     144 </span>                :<span class="lineCov">          3 : filterControls::filterControls():QObject() {</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          1 :     defineProperties();</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     147 </span>                :            : 
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :            : /*!
+<span class="lineNum">     150 </span>                :            :   Slot that sets the int \a value
+<a name="151"><span class="lineNum">     151 </span>                :            :   to the appropriate property indexed by \a maskType, \a propNum and \a thof.</a>
+<span class="lineNum">     152 </span>                :            :  */
+<span class="lineNum">     153 </span>                :<span class="lineNoCov">          0 : void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,</span>
+<span class="lineNum">     154 </span>                :            :                                int value,
+<span class="lineNum">     155 </span>                :            :                                EnumConstants::threshold_or_filter thof) {
+<span class="lineNum">     156 </span>                :<span class="lineNoCov">          0 :     this-&gt;properties[maskType]-&gt;propertylist[static_cast&lt;size_t&gt;(propNum)]-&gt;sliderAssign(value);</span>
+<span class="lineNum">     157 </span>                :<span class="lineNoCov">          0 :     emit valAssigned(maskType, thof);</span>
+<span class="lineNum">     158 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     159 </span>                :            : 
+<span class="lineNum">     160 </span>                :            : /*!
+<span class="lineNum">     161 </span>                :            :  Obtains the label mask from \a label and sets it to be used as a mask
+<a name="162"><span class="lineNum">     162 </span>                :            :  for the LABELMASK filter operation.</a>
+<span class="lineNum">     163 </span>                :            :  */
+<span class="lineNum">     164 </span>                :<span class="lineNoCov">          0 : void filterControls::setLabelMask(QSharedPointer&lt;Label&gt; label) {</span>
+<span class="lineNum">     165 </span>                :<span class="lineNoCov">          0 :     this-&gt;labelMask = label-&gt;exportLabel(SelectItem::myBounds);</span>
+<span class="lineNum">     166 </span>                :<span class="lineNoCov">          0 :     emit valAssigned(EnumConstants::LABELMASK, EnumConstants::FILTER);</span>
+<span class="lineNum">     167 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     168 </span>                :            : 
+<span class="lineNum">     169 </span>                :            : /*!
+<span class="lineNum">     170 </span>                :            :  Defines the properties of the different masks.
+<span class="lineNum">     171 </span>                :            :  */
+<span class="lineNum">     172 </span>                :<span class="lineCov">          1 : void filterControls::defineProperties() {</span>
+<span class="lineNum">     173 </span>                :            :     std::vector&lt;filterProperty*&gt; cannyProperties;
+<span class="lineNum">     174 </span>                :            : 
+<span class="lineNum">     175 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
+<span class="lineNum">     176 </span>                :            :                                                  ANY, EnumConstants::THRESH,
+<span class="lineNum">     177 </span>                :<span class="lineCov">          3 :                                                  false));</span>
+<span class="lineNum">     178 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0, 60,
+<span class="lineNum">     179 </span>                :            :                                                  255, ANY, EnumConstants::THRESH,
+<span class="lineNum">     180 </span>                :<span class="lineCov">          3 :                                                  false));</span>
+<span class="lineNum">     181 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Low&quot;, SLIDER, 3, 5, 801, ODD,
+<span class="lineNum">     182 </span>                :<span class="lineCov">          3 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     183 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;High&quot;, SLIDER, 3, 5, 801, ODD,
+<span class="lineNum">     184 </span>                :<span class="lineCov">          3 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     185 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Kernal&quot;, SLIDER, 3, 5, 7, ODD,
+<span class="lineNum">     186 </span>                :<span class="lineCov">          3 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     187 </span>                :            : 
+<span class="lineNum">     188 </span>                :            :     std::vector&lt;filterProperty*&gt; blurProperties;
+<span class="lineNum">     189 </span>                :            : 
+<span class="lineNum">     190 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
+<span class="lineNum">     191 </span>                :            :                                                 ODD, EnumConstants::THRESH,
+<span class="lineNum">     192 </span>                :<span class="lineCov">          3 :                                                 false));</span>
+<span class="lineNum">     193 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
+<span class="lineNum">     194 </span>                :            :                                                 60, 255, ANY,
+<span class="lineNum">     195 </span>                :<span class="lineCov">          3 :                                                 EnumConstants::THRESH, false));</span>
+<span class="lineNum">     196 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Kernel X&quot;, SLIDER, 3, 15, 51,
+<span class="lineNum">     197 </span>                :            :                                                 ODD, EnumConstants::FILTER,
+<span class="lineNum">     198 </span>                :<span class="lineCov">          3 :                                                 false));</span>
+<span class="lineNum">     199 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Kernel Y&quot;, SLIDER, 3, 15, 51,
+<span class="lineNum">     200 </span>                :            :                                                 ODD, EnumConstants::FILTER,
+<span class="lineNum">     201 </span>                :<span class="lineCov">          3 :                                                 false));</span>
+<span class="lineNum">     202 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Sigma&quot;, SLIDER, 3, 5, 55,
+<span class="lineNum">     203 </span>                :            :                                                 ODD, EnumConstants::FILTER,
+<span class="lineNum">     204 </span>                :<span class="lineCov">          3 :                                                 false));</span>
+<span class="lineNum">     205 </span>                :            : 
+<span class="lineNum">     206 </span>                :            :     std::vector&lt;filterProperty*&gt; thresholdProperties;
+<span class="lineNum">     207 </span>                :            :     thresholdProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2,
+<span class="lineNum">     208 </span>                :            :                                                      1, ANY,
+<span class="lineNum">     209 </span>                :            :                                                      EnumConstants::THRESH,
+<span class="lineNum">     210 </span>                :<span class="lineCov">          3 :                                                      false));</span>
+<span class="lineNum">     211 </span>                :            :     thresholdProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
+<span class="lineNum">     212 </span>                :            :                                                      60, 255, ANY,
+<span class="lineNum">     213 </span>                :            :                                                      EnumConstants::THRESH,
+<span class="lineNum">     214 </span>                :<span class="lineCov">          3 :                                                      false));</span>
+<span class="lineNum">     215 </span>                :            : 
+<span class="lineNum">     216 </span>                :            :     std::vector&lt;filterProperty*&gt; labelmaskProperties;
+<span class="lineNum">     217 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
+<span class="lineNum">     218 </span>                :            :                                                      ANY, EnumConstants:: THRESH,
+<span class="lineNum">     219 </span>                :<span class="lineCov">          3 :                                                      false));</span>
+<span class="lineNum">     220 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
+<span class="lineNum">     221 </span>                :            :                                                      60, 255, ANY,
+<span class="lineNum">     222 </span>                :            :                                                      EnumConstants::THRESH,
+<span class="lineNum">     223 </span>                :<span class="lineCov">          3 :                                                      false));</span>
+<span class="lineNum">     224 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Label List&quot;, LABELLIST, 0,
+<span class="lineNum">     225 </span>                :            :                                                      2, 1, ANY,
+<span class="lineNum">     226 </span>                :            :                                                      EnumConstants::FILTER,
+<span class="lineNum">     227 </span>                :<span class="lineCov">          3 :                                                      false));</span>
+<span class="lineNum">     228 </span>                :            : 
+<span class="lineNum">     229 </span>                :            :     filterPropertiesMeta *cannyPropertiesMeta =
+<span class="lineNum">     230 </span>                :<span class="lineCov">          2 :             new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);</span>
+<span class="lineNum">     231 </span>                :            :     filterPropertiesMeta *blurPropertiesMeta =
+<span class="lineNum">     232 </span>                :<span class="lineCov">          2 :             new filterPropertiesMeta(blurProperties, 5, EnumConstants::BLUR);</span>
+<span class="lineNum">     233 </span>                :            :     filterPropertiesMeta *thresholdPropertiesMeta =
+<span class="lineNum">     234 </span>                :            :             new filterPropertiesMeta(thresholdProperties, 2,
+<span class="lineNum">     235 </span>                :<span class="lineCov">          2 :                                      EnumConstants::THRESHOLD);</span>
+<span class="lineNum">     236 </span>                :            :     filterPropertiesMeta *labelmaskPropertiesMeta =
+<span class="lineNum">     237 </span>                :            :             new filterPropertiesMeta(labelmaskProperties, 3,
+<span class="lineNum">     238 </span>                :<span class="lineCov">          2 :                                      EnumConstants::LABELMASK);</span>
+<span class="lineNum">     239 </span>                :            : 
+<span class="lineNum">     240 </span>                :            :     // Order follows order of enum defined in instadam.h
+<span class="lineNum">     241 </span>                :<span class="lineCov">          1 :     properties.push_back(cannyPropertiesMeta);</span>
+<span class="lineNum">     242 </span>                :<span class="lineCov">          1 :     properties.push_back(thresholdPropertiesMeta);</span>
+<span class="lineNum">     243 </span>                :<span class="lineCov">          1 :     properties.push_back(blurPropertiesMeta);</span>
+<span class="lineNum">     244 </span>                :<span class="lineCov">          1 :     properties.push_back(labelmaskPropertiesMeta);</span>
+<span class="lineNum">     245 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     246 </span>                :            : 
+<span class="lineNum">     247 </span>                :            : 
+<span class="lineNum">     248 </span>                :            : /*!
+<span class="lineNum">     249 </span>                :            :  Filters the cv::Mat \a image based on the selected maskTypes \a selectedFilter
+<a name="250"><span class="lineNum">     250 </span>                :            :  and returns a binary image cv::Mat.</a>
+<span class="lineNum">     251 </span>                :            :  */
+<span class="lineNum">     252 </span>                :<span class="lineNoCov">          0 : cv::Mat filterControls::filterFunc(cv::Mat image,</span>
+<span class="lineNum">     253 </span>                :            :                                    EnumConstants::maskTypes selectedFilter) {
+<span class="lineNum">     254 </span>                :            :     cv::Mat edge_temp;
+<span class="lineNum">     255 </span>                :<span class="lineNoCov">          0 :     switch (selectedFilter) {</span>
+<span class="lineNum">     256 </span>                :            :         case EnumConstants::CANNY:
+<span class="lineNum">     257 </span>                :            :             cv::Canny(image, edge_temp, properties[EnumConstants::CANNY]-&gt;propertylist[2]-&gt;val,
+<span class="lineNum">     258 </span>                :            :                                         properties[EnumConstants::CANNY]-&gt;propertylist[3]-&gt;val,
+<span class="lineNum">     259 </span>                :<span class="lineNoCov">          0 :                                         properties[EnumConstants::CANNY]-&gt;propertylist[4]-&gt;val);</span>
+<span class="lineNum">     260 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     261 </span>                :            :         case EnumConstants::BLUR:
+<span class="lineNum">     262 </span>                :            :             cv::GaussianBlur(image, edge_temp,
+<span class="lineNum">     263 </span>                :            :                              cv::Size(properties[EnumConstants::BLUR]-&gt;propertylist[2]-&gt;val,
+<span class="lineNum">     264 </span>                :            :                                       properties[EnumConstants::BLUR]-&gt;propertylist[3]-&gt;val),
+<span class="lineNum">     265 </span>                :<span class="lineNoCov">          0 :                                       properties[EnumConstants::BLUR]-&gt;propertylist[4]-&gt;val);</span>
+<span class="lineNum">     266 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     267 </span>                :            :         case EnumConstants::THRESHOLD:
+<span class="lineNum">     268 </span>                :<span class="lineNoCov">          0 :             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
+<span class="lineNum">     269 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     270 </span>                :            :         case EnumConstants::LABELMASK:
+<span class="lineNum">     271 </span>                :<span class="lineNoCov">          0 :             if (!this-&gt;labelMask.isNull()) {</span>
+<span class="lineNum">     272 </span>                :<span class="lineNoCov">          0 :                 QImage image_pixmap(this-&gt;labelMask.toImage().convertToFormat(QImage::Format_RGB888));</span>
+<span class="lineNum">     273 </span>                :            :                 cv::Mat mat(image_pixmap.height(), image_pixmap.width(),
+<span class="lineNum">     274 </span>                :<span class="lineNoCov">          0 :                             CV_8UC3, image_pixmap.bits());</span>
+<span class="lineNum">     275 </span>                :            : 
+<span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);</span>
+<span class="lineNum">     277 </span>                :            :             } else {
+<span class="lineNum">     278 </span>                :<span class="lineNoCov">          0 :                 cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
+<span class="lineNum">     279 </span>                :            :             }
+<span class="lineNum">     280 </span>                :            :             break;
+<span class="lineNum">     281 </span>                :            :         case EnumConstants::OTHER:
+<span class="lineNum">     282 </span>                :            :             break;
+<span class="lineNum">     283 </span>                :            :     }
+<span class="lineNum">     284 </span>                :<span class="lineNoCov">          0 :     return edge_temp;</span>
+<span class="lineNum">     285 </span>                :            : }
+<span class="lineNum">     286 </span>                :            : 
+<span class="lineNum">     287 </span>                :            : /*!
+<a name="288"><span class="lineNum">     288 </span>                :            :   Sets image for the object and stores and returns filtered edges.</a>
+<span class="lineNum">     289 </span>                :            : */
+<span class="lineNum">     290 </span>                :<span class="lineNoCov">          0 : cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,</span>
+<span class="lineNum">     291 </span>                :            :                                                EnumConstants::maskTypes selectedFilter) {
+<span class="lineNum">     292 </span>                :<span class="lineNoCov">          0 :         img = image;</span>
+<span class="lineNum">     293 </span>                :<span class="lineNoCov">          0 :         edges = filterFunc(img, selectedFilter);</span>
+<span class="lineNum">     294 </span>                :<span class="lineNoCov">          0 :         im2pixmap(selectedFilter);</span>
+<span class="lineNum">     295 </span>                :<span class="lineNoCov">          0 :         return edges;</span>
+<span class="lineNum">     296 </span>                :            : }
+<span class="lineNum">     297 </span>                :            : 
+<span class="lineNum">     298 </span>                :            : /*!
+<a name="299"><span class="lineNum">     299 </span>                :            :   Binarizes the image and converts it to a pixmap using \a selectedFilter.</a>
+<span class="lineNum">     300 </span>                :            :  */
+<span class="lineNum">     301 </span>                :<span class="lineNoCov">          0 : void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {</span>
+<span class="lineNum">     302 </span>                :            :     cv::Mat binary;
+<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>                :            : 
+<span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;%d&quot;, invert);</span>
+<span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :     if (invert == 2)</span>
+<span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :         cv::threshold(edges, binary, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,</span>
+<span class="lineNum">     309 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY_INV);</span>
+<span class="lineNum">     310 </span>                :            :     else
+<span class="lineNum">     311 </span>                :<span class="lineNoCov">          0 :         cv::threshold(edges, binary, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,</span>
+<span class="lineNum">     312 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY);</span>
+<span class="lineNum">     313 </span>                :            : 
+<span class="lineNum">     314 </span>                :            :     QImage qImgImg = QImage(reinterpret_cast&lt;uchar*&gt;(binary.data), binary.cols,
+<span class="lineNum">     315 </span>                :<span class="lineNoCov">          0 :                             binary.rows, static_cast&lt;int&gt;(binary.step),</span>
+<span class="lineNum">     316 </span>                :<span class="lineNoCov">          0 :                             QImage::Format_Grayscale8);</span>
+<span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 :     this-&gt;qImg = QPixmap::fromImage(qImgImg);</span>
+<span class="lineNum">     318 </span>                :            :     QImage qAlphaImg = QImage(reinterpret_cast&lt;uchar*&gt;(binary.data), binary.cols,
+<span class="lineNum">     319 </span>                :<span class="lineNoCov">          0 :                               binary.rows, static_cast&lt;int&gt;(binary.step),</span>
+<span class="lineNum">     320 </span>                :<span class="lineNoCov">          0 :                               QImage::Format_Alpha8);</span>
+<span class="lineNum">     321 </span>                :<span class="lineNoCov">          0 :     this-&gt;qAlpha = QPixmap::fromImage(qAlphaImg);</span>
+<span class="lineNum">     322 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     323 </span>                :            : 
+<span class="lineNum">     324 </span>                :            : /*!
+<span class="lineNum">     325 </span>                :            :   Returns a thubnail pixmap for the filter selection bar at the bottom of
+<a name="326"><span class="lineNum">     326 </span>                :            :   InstaDam, based on \a thumb and \a selectedFilter.</a>
+<span class="lineNum">     327 </span>                :            :  */
+<span class="lineNum">     328 </span>                :<span class="lineNoCov">          0 : QPixmap filterControls::thumb2pixmap(cv::Mat thumb,</span>
+<span class="lineNum">     329 </span>                :            :                                      EnumConstants::maskTypes selectedFilter) {
+<span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;Enter Thumb&quot;);</span>
+<span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :     cv::Mat thumbEdges = this-&gt;filterFunc(thumb, selectedFilter);</span>
+<span class="lineNum">     332 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;Filtered thumbnail!&quot;);</span>
+<span class="lineNum">     333 </span>                :<span class="lineNoCov">          0 :     cv::Mat binaryThumb;</span>
+<span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
+<span class="lineNum">     335 </span>                :            : 
+<span class="lineNum">     336 </span>                :<span class="lineNoCov">          0 :     if (invert == 2)</span>
+<span class="lineNum">     337 </span>                :            :         cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,
+<span class="lineNum">     338 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY_INV);</span>
+<span class="lineNum">     339 </span>                :            :     else
+<span class="lineNum">     340 </span>                :            :         cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,
+<span class="lineNum">     341 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY);</span>
+<span class="lineNum">     342 </span>                :            :     QImage qImgImg_temp = QImage(reinterpret_cast&lt;uchar*&gt;(binaryThumb.data),
+<span class="lineNum">     343 </span>                :            :                                  binaryThumb.cols, binaryThumb.rows,
+<span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :                                  static_cast&lt;int&gt;(binaryThumb.step),</span>
+<span class="lineNum">     345 </span>                :<span class="lineNoCov">          0 :                                  QImage::Format_Grayscale8);</span>
+<a name="346"><span class="lineNum">     346 </span>                :<span class="lineNoCov">          0 :     qImgThumb = QPixmap::fromImage(qImgImg_temp);</span></a>
+<span class="lineNum">     347 </span>                :<span class="lineNoCov">          0 :     return qImgThumb;</span>
+<span class="lineNum">     348 </span>                :<span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

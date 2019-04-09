@@ -38,6 +38,9 @@ class Project{
 
     QString getName();
 
+#ifdef TEST
+    friend class IntegrationTest;
+#endif
 };
 
 #endif  // PROJECT_H

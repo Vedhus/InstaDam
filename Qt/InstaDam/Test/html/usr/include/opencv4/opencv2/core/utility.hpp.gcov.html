@@ -1,0 +1,1406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - /usr/include/opencv4/opencv2/core/utility.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">usr/include/opencv4/opencv2/core</a> - utility.hpp<span style="font-size: 80%;"> (source / <a href="utility.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-09 11:21:13</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*M///////////////////////////////////////////////////////////////////////////////////////</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : //  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : //  By downloading, copying, installing or using the software you agree to this license.
+<span class="lineNum">       6 </span>                :            : //  If you do not agree to this license, do not download, install,
+<span class="lineNum">       7 </span>                :            : //  copy or use the software.
+<span class="lineNum">       8 </span>                :            : //
+<span class="lineNum">       9 </span>                :            : //
+<span class="lineNum">      10 </span>                :            : //                          License Agreement
+<span class="lineNum">      11 </span>                :            : //                For Open Source Computer Vision Library
+<span class="lineNum">      12 </span>                :            : //
+<span class="lineNum">      13 </span>                :            : // Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
+<span class="lineNum">      14 </span>                :            : // Copyright (C) 2009, Willow Garage Inc., all rights reserved.
+<span class="lineNum">      15 </span>                :            : // Copyright (C) 2013, OpenCV Foundation, all rights reserved.
+<span class="lineNum">      16 </span>                :            : // Copyright (C) 2015, Itseez Inc., all rights reserved.
+<span class="lineNum">      17 </span>                :            : // Third party copyrights are property of their respective owners.
+<span class="lineNum">      18 </span>                :            : //
+<span class="lineNum">      19 </span>                :            : // Redistribution and use in source and binary forms, with or without modification,
+<span class="lineNum">      20 </span>                :            : // are permitted provided that the following conditions are met:
+<span class="lineNum">      21 </span>                :            : //
+<span class="lineNum">      22 </span>                :            : //   * Redistribution's of source code must retain the above copyright notice,
+<span class="lineNum">      23 </span>                :            : //     this list of conditions and the following disclaimer.
+<span class="lineNum">      24 </span>                :            : //
+<span class="lineNum">      25 </span>                :            : //   * Redistribution's in binary form must reproduce the above copyright notice,
+<span class="lineNum">      26 </span>                :            : //     this list of conditions and the following disclaimer in the documentation
+<span class="lineNum">      27 </span>                :            : //     and/or other materials provided with the distribution.
+<span class="lineNum">      28 </span>                :            : //
+<span class="lineNum">      29 </span>                :            : //   * The name of the copyright holders may not be used to endorse or promote products
+<span class="lineNum">      30 </span>                :            : //     derived from this software without specific prior written permission.
+<span class="lineNum">      31 </span>                :            : //
+<span class="lineNum">      32 </span>                :            : // This software is provided by the copyright holders and contributors &quot;as is&quot; and
+<span class="lineNum">      33 </span>                :            : // any express or implied warranties, including, but not limited to, the implied
+<span class="lineNum">      34 </span>                :            : // warranties of merchantability and fitness for a particular purpose are disclaimed.
+<span class="lineNum">      35 </span>                :            : // In no event shall the Intel Corporation or contributors be liable for any direct,
+<span class="lineNum">      36 </span>                :            : // indirect, incidental, special, exemplary, or consequential damages
+<span class="lineNum">      37 </span>                :            : // (including, but not limited to, procurement of substitute goods or services;
+<span class="lineNum">      38 </span>                :            : // loss of use, data, or profits; or business interruption) however caused
+<span class="lineNum">      39 </span>                :            : // and on any theory of liability, whether in contract, strict liability,
+<span class="lineNum">      40 </span>                :            : // or tort (including negligence or otherwise) arising in any way out of
+<span class="lineNum">      41 </span>                :            : // the use of this software, even if advised of the possibility of such damage.
+<span class="lineNum">      42 </span>                :            : //
+<span class="lineNum">      43 </span>                :            : //M*/
+<span class="lineNum">      44 </span>                :            : 
+<span class="lineNum">      45 </span>                :            : #ifndef OPENCV_CORE_UTILITY_H
+<span class="lineNum">      46 </span>                :            : #define OPENCV_CORE_UTILITY_H
+<span class="lineNum">      47 </span>                :            : 
+<span class="lineNum">      48 </span>                :            : #ifndef __cplusplus
+<span class="lineNum">      49 </span>                :            : #  error utility.hpp header must be compiled as C++
+<span class="lineNum">      50 </span>                :            : #endif
+<span class="lineNum">      51 </span>                :            : 
+<span class="lineNum">      52 </span>                :            : #if defined(check)
+<span class="lineNum">      53 </span>                :            : #  warning Detected Apple 'check' macro definition, it can cause build conflicts. Please, include this header before any Apple headers.
+<span class="lineNum">      54 </span>                :            : #endif
+<span class="lineNum">      55 </span>                :            : 
+<span class="lineNum">      56 </span>                :            : #include &quot;opencv2/core.hpp&quot;
+<span class="lineNum">      57 </span>                :            : #include &lt;ostream&gt;
+<span class="lineNum">      58 </span>                :            : 
+<span class="lineNum">      59 </span>                :            : #include &lt;functional&gt;
+<span class="lineNum">      60 </span>                :            : 
+<span class="lineNum">      61 </span>                :            : #if !defined(_M_CEE)
+<span class="lineNum">      62 </span>                :            : #include &lt;mutex&gt;  // std::mutex, std::lock_guard
+<span class="lineNum">      63 </span>                :            : #endif
+<span class="lineNum">      64 </span>                :            : 
+<span class="lineNum">      65 </span>                :            : namespace cv
+<span class="lineNum">      66 </span>                :            : {
+<span class="lineNum">      67 </span>                :            : 
+<span class="lineNum">      68 </span>                :            : #ifdef CV_COLLECT_IMPL_DATA
+<span class="lineNum">      69 </span>                :            : CV_EXPORTS void setImpl(int flags); // set implementation flags and reset storage arrays
+<span class="lineNum">      70 </span>                :            : CV_EXPORTS void addImpl(int flag, const char* func = 0); // add implementation and function name to storage arrays
+<span class="lineNum">      71 </span>                :            : // Get stored implementation flags and functions names arrays
+<span class="lineNum">      72 </span>                :            : // Each implementation entry correspond to function name entry, so you can find which implementation was executed in which function
+<span class="lineNum">      73 </span>                :            : CV_EXPORTS int getImpl(std::vector&lt;int&gt; &amp;impl, std::vector&lt;String&gt; &amp;funName);
+<span class="lineNum">      74 </span>                :            : 
+<span class="lineNum">      75 </span>                :            : CV_EXPORTS bool useCollection(); // return implementation collection state
+<span class="lineNum">      76 </span>                :            : CV_EXPORTS void setUseCollection(bool flag); // set implementation collection state
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            : #define CV_IMPL_PLAIN  0x01 // native CPU OpenCV implementation
+<span class="lineNum">      79 </span>                :            : #define CV_IMPL_OCL    0x02 // OpenCL implementation
+<span class="lineNum">      80 </span>                :            : #define CV_IMPL_IPP    0x04 // IPP implementation
+<span class="lineNum">      81 </span>                :            : #define CV_IMPL_MT     0x10 // multithreaded implementation
+<span class="lineNum">      82 </span>                :            : 
+<span class="lineNum">      83 </span>                :            : #define CV_IMPL_ADD(impl)                                                   \
+<span class="lineNum">      84 </span>                :            :     if(cv::useCollection())                                                 \
+<span class="lineNum">      85 </span>                :            :     {                                                                       \
+<span class="lineNum">      86 </span>                :            :         cv::addImpl(impl, CV_Func);                                         \
+<span class="lineNum">      87 </span>                :            :     }
+<span class="lineNum">      88 </span>                :            : #else
+<span class="lineNum">      89 </span>                :            : #define CV_IMPL_ADD(impl)
+<span class="lineNum">      90 </span>                :            : #endif
+<span class="lineNum">      91 </span>                :            : 
+<span class="lineNum">      92 </span>                :            : //! @addtogroup core_utils
+<span class="lineNum">      93 </span>                :            : //! @{
+<span class="lineNum">      94 </span>                :            : 
+<span class="lineNum">      95 </span>                :            : /** @brief  Automatically Allocated Buffer Class
+<span class="lineNum">      96 </span>                :            : 
+<span class="lineNum">      97 </span>                :            :  The class is used for temporary buffers in functions and methods.
+<span class="lineNum">      98 </span>                :            :  If a temporary buffer is usually small (a few K's of memory),
+<span class="lineNum">      99 </span>                :            :  but its size depends on the parameters, it makes sense to create a small
+<span class="lineNum">     100 </span>                :            :  fixed-size array on stack and use it if it's large enough. If the required buffer size
+<span class="lineNum">     101 </span>                :            :  is larger than the fixed size, another buffer of sufficient size is allocated dynamically
+<span class="lineNum">     102 </span>                :            :  and released after the processing. Therefore, in typical cases, when the buffer size is small,
+<span class="lineNum">     103 </span>                :            :  there is no overhead associated with malloc()/free().
+<span class="lineNum">     104 </span>                :            :  At the same time, there is no limit on the size of processed data.
+<span class="lineNum">     105 </span>                :            : 
+<span class="lineNum">     106 </span>                :            :  This is what AutoBuffer does. The template takes 2 parameters - type of the buffer elements and
+<span class="lineNum">     107 </span>                :            :  the number of stack-allocated elements. Here is how the class is used:
+<span class="lineNum">     108 </span>                :            : 
+<span class="lineNum">     109 </span>                :            :  \code
+<span class="lineNum">     110 </span>                :            :  void my_func(const cv::Mat&amp; m)
+<span class="lineNum">     111 </span>                :            :  {
+<span class="lineNum">     112 </span>                :            :     cv::AutoBuffer&lt;float&gt; buf(1000); // create automatic buffer containing 1000 floats
+<span class="lineNum">     113 </span>                :            : 
+<span class="lineNum">     114 </span>                :            :     buf.allocate(m.rows); // if m.rows &lt;= 1000, the pre-allocated buffer is used,
+<span class="lineNum">     115 </span>                :            :                           // otherwise the buffer of &quot;m.rows&quot; floats will be allocated
+<span class="lineNum">     116 </span>                :            :                           // dynamically and deallocated in cv::AutoBuffer destructor
+<span class="lineNum">     117 </span>                :            :     ...
+<span class="lineNum">     118 </span>                :            :  }
+<span class="lineNum">     119 </span>                :            :  \endcode
+<span class="lineNum">     120 </span>                :            : */
+<span class="lineNum">     121 </span>                :            : template&lt;typename _Tp, size_t fixed_size = 1024/sizeof(_Tp)+8&gt; class AutoBuffer
+<span class="lineNum">     122 </span>                :            : {
+<span class="lineNum">     123 </span>                :            : public:
+<span class="lineNum">     124 </span>                :            :     typedef _Tp value_type;
+<span class="lineNum">     125 </span>                :            : 
+<span class="lineNum">     126 </span>                :            :     //! the default constructor
+<span class="lineNum">     127 </span>                :            :     AutoBuffer();
+<span class="lineNum">     128 </span>                :            :     //! constructor taking the real buffer size
+<span class="lineNum">     129 </span>                :            :     explicit AutoBuffer(size_t _size);
+<span class="lineNum">     130 </span>                :            : 
+<span class="lineNum">     131 </span>                :            :     //! the copy constructor
+<span class="lineNum">     132 </span>                :            :     AutoBuffer(const AutoBuffer&lt;_Tp, fixed_size&gt;&amp; buf);
+<span class="lineNum">     133 </span>                :            :     //! the assignment operator
+<span class="lineNum">     134 </span>                :            :     AutoBuffer&lt;_Tp, fixed_size&gt;&amp; operator = (const AutoBuffer&lt;_Tp, fixed_size&gt;&amp; buf);
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>                :            :     //! destructor. calls deallocate()
+<span class="lineNum">     137 </span>                :            :     ~AutoBuffer();
+<span class="lineNum">     138 </span>                :            : 
+<span class="lineNum">     139 </span>                :            :     //! allocates the new buffer of size _size. if the _size is small enough, stack-allocated buffer is used
+<span class="lineNum">     140 </span>                :            :     void allocate(size_t _size);
+<span class="lineNum">     141 </span>                :            :     //! deallocates the buffer if it was dynamically allocated
+<span class="lineNum">     142 </span>                :            :     void deallocate();
+<span class="lineNum">     143 </span>                :            :     //! resizes the buffer and preserves the content
+<span class="lineNum">     144 </span>                :            :     void resize(size_t _size);
+<span class="lineNum">     145 </span>                :            :     //! returns the current buffer size
+<span class="lineNum">     146 </span>                :            :     size_t size() const;
+<span class="lineNum">     147 </span>                :            :     //! returns pointer to the real buffer, stack-allocated or heap-allocated
+<span class="lineNum">     148 </span>                :            :     inline _Tp* data() { return ptr; }
+<span class="lineNum">     149 </span>                :            :     //! returns read-only pointer to the real buffer, stack-allocated or heap-allocated
+<span class="lineNum">     150 </span>                :            :     inline const _Tp* data() const { return ptr; }
+<span class="lineNum">     151 </span>                :            : 
+<span class="lineNum">     152 </span>                :            : #if !defined(OPENCV_DISABLE_DEPRECATED_COMPATIBILITY) // use to .data() calls instead
+<span class="lineNum">     153 </span>                :            :     //! returns pointer to the real buffer, stack-allocated or heap-allocated
+<span class="lineNum">     154 </span>                :            :     operator _Tp* () { return ptr; }
+<span class="lineNum">     155 </span>                :            :     //! returns read-only pointer to the real buffer, stack-allocated or heap-allocated
+<span class="lineNum">     156 </span>                :            :     operator const _Tp* () const { return ptr; }
+<span class="lineNum">     157 </span>                :            : #else
+<span class="lineNum">     158 </span>                :            :     //! returns a reference to the element at specified location. No bounds checking is performed in Release builds.
+<span class="lineNum">     159 </span>                :            :     inline _Tp&amp; operator[] (size_t i) { CV_DbgCheckLT(i, sz, &quot;out of range&quot;); return ptr[i]; }
+<span class="lineNum">     160 </span>                :            :     //! returns a reference to the element at specified location. No bounds checking is performed in Release builds.
+<span class="lineNum">     161 </span>                :            :     inline const _Tp&amp; operator[] (size_t i) const { CV_DbgCheckLT(i, sz, &quot;out of range&quot;); return ptr[i]; }
+<span class="lineNum">     162 </span>                :            : #endif
+<span class="lineNum">     163 </span>                :            : 
+<span class="lineNum">     164 </span>                :            : protected:
+<span class="lineNum">     165 </span>                :            :     //! pointer to the real buffer, can point to buf if the buffer is small enough
+<span class="lineNum">     166 </span>                :            :     _Tp* ptr;
+<span class="lineNum">     167 </span>                :            :     //! size of the real buffer
+<span class="lineNum">     168 </span>                :            :     size_t sz;
+<span class="lineNum">     169 </span>                :            :     //! pre-allocated buffer. At least 1 element to confirm C++ standard requirements
+<span class="lineNum">     170 </span>                :            :     _Tp buf[(fixed_size &gt; 0) ? fixed_size : 1];
+<span class="lineNum">     171 </span>                :            : };
+<span class="lineNum">     172 </span>                :            : 
+<span class="lineNum">     173 </span>                :            : /**  @brief Sets/resets the break-on-error mode.
+<span class="lineNum">     174 </span>                :            : 
+<span class="lineNum">     175 </span>                :            : When the break-on-error mode is set, the default error handler issues a hardware exception, which
+<span class="lineNum">     176 </span>                :            : can make debugging more convenient.
+<span class="lineNum">     177 </span>                :            : 
+<span class="lineNum">     178 </span>                :            : \return the previous state
+<span class="lineNum">     179 </span>                :            :  */
+<span class="lineNum">     180 </span>                :            : CV_EXPORTS bool setBreakOnError(bool flag);
+<span class="lineNum">     181 </span>                :            : 
+<span class="lineNum">     182 </span>                :            : extern &quot;C&quot; typedef int (*ErrorCallback)( int status, const char* func_name,
+<span class="lineNum">     183 </span>                :            :                                        const char* err_msg, const char* file_name,
+<span class="lineNum">     184 </span>                :            :                                        int line, void* userdata );
+<span class="lineNum">     185 </span>                :            : 
+<span class="lineNum">     186 </span>                :            : 
+<span class="lineNum">     187 </span>                :            : /** @brief Sets the new error handler and the optional user data.
+<span class="lineNum">     188 </span>                :            : 
+<span class="lineNum">     189 </span>                :            :   The function sets the new error handler, called from cv::error().
+<span class="lineNum">     190 </span>                :            : 
+<span class="lineNum">     191 </span>                :            :   \param errCallback the new error handler. If NULL, the default error handler is used.
+<span class="lineNum">     192 </span>                :            :   \param userdata the optional user data pointer, passed to the callback.
+<span class="lineNum">     193 </span>                :            :   \param prevUserdata the optional output parameter where the previous user data pointer is stored
+<span class="lineNum">     194 </span>                :            : 
+<span class="lineNum">     195 </span>                :            :   \return the previous error handler
+<span class="lineNum">     196 </span>                :            : */
+<span class="lineNum">     197 </span>                :            : CV_EXPORTS ErrorCallback redirectError( ErrorCallback errCallback, void* userdata=0, void** prevUserdata=0);
+<span class="lineNum">     198 </span>                :            : 
+<span class="lineNum">     199 </span>                :            : CV_EXPORTS String tempfile( const char* suffix = 0);
+<span class="lineNum">     200 </span>                :            : CV_EXPORTS void glob(String pattern, std::vector&lt;String&gt;&amp; result, bool recursive = false);
+<span class="lineNum">     201 </span>                :            : 
+<span class="lineNum">     202 </span>                :            : /** @brief OpenCV will try to set the number of threads for the next parallel region.
+<span class="lineNum">     203 </span>                :            : 
+<span class="lineNum">     204 </span>                :            : If threads == 0, OpenCV will disable threading optimizations and run all it's functions
+<span class="lineNum">     205 </span>                :            : sequentially. Passing threads \&lt; 0 will reset threads number to system default. This function must
+<span class="lineNum">     206 </span>                :            : be called outside of parallel region.
+<span class="lineNum">     207 </span>                :            : 
+<span class="lineNum">     208 </span>                :            : OpenCV will try to run its functions with specified threads number, but some behaviour differs from
+<span class="lineNum">     209 </span>                :            : framework:
+<span class="lineNum">     210 </span>                :            : -   `TBB` - User-defined parallel constructions will run with the same threads number, if
+<span class="lineNum">     211 </span>                :            :     another is not specified. If later on user creates his own scheduler, OpenCV will use it.
+<span class="lineNum">     212 </span>                :            : -   `OpenMP` - No special defined behaviour.
+<span class="lineNum">     213 </span>                :            : -   `Concurrency` - If threads == 1, OpenCV will disable threading optimizations and run its
+<span class="lineNum">     214 </span>                :            :     functions sequentially.
+<span class="lineNum">     215 </span>                :            : -   `GCD` - Supports only values \&lt;= 0.
+<span class="lineNum">     216 </span>                :            : -   `C=` - No special defined behaviour.
+<span class="lineNum">     217 </span>                :            : @param nthreads Number of threads used by OpenCV.
+<span class="lineNum">     218 </span>                :            : @sa getNumThreads, getThreadNum
+<span class="lineNum">     219 </span>                :            :  */
+<span class="lineNum">     220 </span>                :            : CV_EXPORTS_W void setNumThreads(int nthreads);
+<span class="lineNum">     221 </span>                :            : 
+<span class="lineNum">     222 </span>                :            : /** @brief Returns the number of threads used by OpenCV for parallel regions.
+<span class="lineNum">     223 </span>                :            : 
+<span class="lineNum">     224 </span>                :            : Always returns 1 if OpenCV is built without threading support.
+<span class="lineNum">     225 </span>                :            : 
+<span class="lineNum">     226 </span>                :            : The exact meaning of return value depends on the threading framework used by OpenCV library:
+<span class="lineNum">     227 </span>                :            : - `TBB` - The number of threads, that OpenCV will try to use for parallel regions. If there is
+<span class="lineNum">     228 </span>                :            :   any tbb::thread_scheduler_init in user code conflicting with OpenCV, then function returns
+<span class="lineNum">     229 </span>                :            :   default number of threads used by TBB library.
+<span class="lineNum">     230 </span>                :            : - `OpenMP` - An upper bound on the number of threads that could be used to form a new team.
+<span class="lineNum">     231 </span>                :            : - `Concurrency` - The number of threads, that OpenCV will try to use for parallel regions.
+<span class="lineNum">     232 </span>                :            : - `GCD` - Unsupported; returns the GCD thread pool limit (512) for compatibility.
+<span class="lineNum">     233 </span>                :            : - `C=` - The number of threads, that OpenCV will try to use for parallel regions, if before
+<span class="lineNum">     234 </span>                :            :   called setNumThreads with threads \&gt; 0, otherwise returns the number of logical CPUs,
+<span class="lineNum">     235 </span>                :            :   available for the process.
+<span class="lineNum">     236 </span>                :            : @sa setNumThreads, getThreadNum
+<span class="lineNum">     237 </span>                :            :  */
+<span class="lineNum">     238 </span>                :            : CV_EXPORTS_W int getNumThreads();
+<span class="lineNum">     239 </span>                :            : 
+<span class="lineNum">     240 </span>                :            : /** @brief Returns the index of the currently executed thread within the current parallel region. Always
+<span class="lineNum">     241 </span>                :            : returns 0 if called outside of parallel region.
+<span class="lineNum">     242 </span>                :            : 
+<span class="lineNum">     243 </span>                :            : @deprecated Current implementation doesn't corresponding to this documentation.
+<span class="lineNum">     244 </span>                :            : 
+<span class="lineNum">     245 </span>                :            : The exact meaning of the return value depends on the threading framework used by OpenCV library:
+<span class="lineNum">     246 </span>                :            : - `TBB` - Unsupported with current 4.1 TBB release. Maybe will be supported in future.
+<span class="lineNum">     247 </span>                :            : - `OpenMP` - The thread number, within the current team, of the calling thread.
+<span class="lineNum">     248 </span>                :            : - `Concurrency` - An ID for the virtual processor that the current context is executing on (0
+<span class="lineNum">     249 </span>                :            :   for master thread and unique number for others, but not necessary 1,2,3,...).
+<span class="lineNum">     250 </span>                :            : - `GCD` - System calling thread's ID. Never returns 0 inside parallel region.
+<span class="lineNum">     251 </span>                :            : - `C=` - The index of the current parallel task.
+<span class="lineNum">     252 </span>                :            : @sa setNumThreads, getNumThreads
+<span class="lineNum">     253 </span>                :            :  */
+<span class="lineNum">     254 </span>                :            : CV_EXPORTS_W int getThreadNum();
+<span class="lineNum">     255 </span>                :            : 
+<span class="lineNum">     256 </span>                :            : /** @brief Returns full configuration time cmake output.
+<span class="lineNum">     257 </span>                :            : 
+<span class="lineNum">     258 </span>                :            : Returned value is raw cmake output including version control system revision, compiler version,
+<span class="lineNum">     259 </span>                :            : compiler flags, enabled modules and third party libraries, etc. Output format depends on target
+<span class="lineNum">     260 </span>                :            : architecture.
+<span class="lineNum">     261 </span>                :            :  */
+<span class="lineNum">     262 </span>                :            : CV_EXPORTS_W const String&amp; getBuildInformation();
+<span class="lineNum">     263 </span>                :            : 
+<span class="lineNum">     264 </span>                :            : /** @brief Returns library version string
+<span class="lineNum">     265 </span>                :            : 
+<span class="lineNum">     266 </span>                :            : For example &quot;3.4.1-dev&quot;.
+<span class="lineNum">     267 </span>                :            : 
+<span class="lineNum">     268 </span>                :            : @sa getMajorVersion, getMinorVersion, getRevisionVersion
+<span class="lineNum">     269 </span>                :            : */
+<span class="lineNum">     270 </span>                :            : CV_EXPORTS_W String getVersionString();
+<span class="lineNum">     271 </span>                :            : 
+<span class="lineNum">     272 </span>                :            : /** @brief Returns major library version */
+<span class="lineNum">     273 </span>                :            : CV_EXPORTS_W int getVersionMajor();
+<span class="lineNum">     274 </span>                :            : 
+<span class="lineNum">     275 </span>                :            : /** @brief Returns minor library version */
+<span class="lineNum">     276 </span>                :            : CV_EXPORTS_W int getVersionMinor();
+<span class="lineNum">     277 </span>                :            : 
+<span class="lineNum">     278 </span>                :            : /** @brief Returns revision field of the library version */
+<span class="lineNum">     279 </span>                :            : CV_EXPORTS_W int getVersionRevision();
+<span class="lineNum">     280 </span>                :            : 
+<span class="lineNum">     281 </span>                :            : /** @brief Returns the number of ticks.
+<span class="lineNum">     282 </span>                :            : 
+<span class="lineNum">     283 </span>                :            : The function returns the number of ticks after the certain event (for example, when the machine was
+<span class="lineNum">     284 </span>                :            : turned on). It can be used to initialize RNG or to measure a function execution time by reading the
+<span class="lineNum">     285 </span>                :            : tick count before and after the function call.
+<span class="lineNum">     286 </span>                :            : @sa getTickFrequency, TickMeter
+<span class="lineNum">     287 </span>                :            :  */
+<span class="lineNum">     288 </span>                :            : CV_EXPORTS_W int64 getTickCount();
+<span class="lineNum">     289 </span>                :            : 
+<span class="lineNum">     290 </span>                :            : /** @brief Returns the number of ticks per second.
+<span class="lineNum">     291 </span>                :            : 
+<span class="lineNum">     292 </span>                :            : The function returns the number of ticks per second. That is, the following code computes the
+<span class="lineNum">     293 </span>                :            : execution time in seconds:
+<span class="lineNum">     294 </span>                :            : @code
+<span class="lineNum">     295 </span>                :            :     double t = (double)getTickCount();
+<span class="lineNum">     296 </span>                :            :     // do something ...
+<span class="lineNum">     297 </span>                :            :     t = ((double)getTickCount() - t)/getTickFrequency();
+<span class="lineNum">     298 </span>                :            : @endcode
+<span class="lineNum">     299 </span>                :            : @sa getTickCount, TickMeter
+<span class="lineNum">     300 </span>                :            :  */
+<span class="lineNum">     301 </span>                :            : CV_EXPORTS_W double getTickFrequency();
+<span class="lineNum">     302 </span>                :            : 
+<span class="lineNum">     303 </span>                :            : /** @brief a Class to measure passing time.
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>                :            : The class computes passing time by counting the number of ticks per second. That is, the following code computes the
+<span class="lineNum">     306 </span>                :            : execution time in seconds:
+<span class="lineNum">     307 </span>                :            : @code
+<span class="lineNum">     308 </span>                :            : TickMeter tm;
+<span class="lineNum">     309 </span>                :            : tm.start();
+<span class="lineNum">     310 </span>                :            : // do something ...
+<span class="lineNum">     311 </span>                :            : tm.stop();
+<span class="lineNum">     312 </span>                :            : std::cout &lt;&lt; tm.getTimeSec();
+<span class="lineNum">     313 </span>                :            : @endcode
+<span class="lineNum">     314 </span>                :            : 
+<span class="lineNum">     315 </span>                :            : It is also possible to compute the average time over multiple runs:
+<span class="lineNum">     316 </span>                :            : @code
+<span class="lineNum">     317 </span>                :            : TickMeter tm;
+<span class="lineNum">     318 </span>                :            : for (int i = 0; i &lt; 100; i++)
+<span class="lineNum">     319 </span>                :            : {
+<span class="lineNum">     320 </span>                :            :     tm.start();
+<span class="lineNum">     321 </span>                :            :     // do something ...
+<span class="lineNum">     322 </span>                :            :     tm.stop();
+<span class="lineNum">     323 </span>                :            : }
+<span class="lineNum">     324 </span>                :            : double average_time = tm.getTimeSec() / tm.getCounter();
+<span class="lineNum">     325 </span>                :            : std::cout &lt;&lt; &quot;Average time in second per iteration is: &quot; &lt;&lt; average_time &lt;&lt; std::endl;
+<span class="lineNum">     326 </span>                :            : @endcode
+<span class="lineNum">     327 </span>                :            : @sa getTickCount, getTickFrequency
+<span class="lineNum">     328 </span>                :            : */
+<span class="lineNum">     329 </span>                :            : 
+<span class="lineNum">     330 </span>                :            : class CV_EXPORTS_W TickMeter
+<span class="lineNum">     331 </span>                :            : {
+<span class="lineNum">     332 </span>                :            : public:
+<span class="lineNum">     333 </span>                :            :     //! the default constructor
+<span class="lineNum">     334 </span>                :            :     CV_WRAP TickMeter()
+<span class="lineNum">     335 </span>                :            :     {
+<span class="lineNum">     336 </span>                :            :     reset();
+<span class="lineNum">     337 </span>                :            :     }
+<span class="lineNum">     338 </span>                :            : 
+<span class="lineNum">     339 </span>                :            :     /**
+<span class="lineNum">     340 </span>                :            :     starts counting ticks.
+<span class="lineNum">     341 </span>                :            :     */
+<span class="lineNum">     342 </span>                :            :     CV_WRAP void start()
+<span class="lineNum">     343 </span>                :            :     {
+<span class="lineNum">     344 </span>                :            :     startTime = cv::getTickCount();
+<span class="lineNum">     345 </span>                :            :     }
+<span class="lineNum">     346 </span>                :            : 
+<span class="lineNum">     347 </span>                :            :     /**
+<span class="lineNum">     348 </span>                :            :     stops counting ticks.
+<span class="lineNum">     349 </span>                :            :     */
+<span class="lineNum">     350 </span>                :            :     CV_WRAP void stop()
+<span class="lineNum">     351 </span>                :            :     {
+<span class="lineNum">     352 </span>                :            :     int64 time = cv::getTickCount();
+<span class="lineNum">     353 </span>                :            :     if (startTime == 0)
+<span class="lineNum">     354 </span>                :            :     return;
+<span class="lineNum">     355 </span>                :            :     ++counter;
+<span class="lineNum">     356 </span>                :            :     sumTime += (time - startTime);
+<span class="lineNum">     357 </span>                :            :     startTime = 0;
+<span class="lineNum">     358 </span>                :            :     }
+<span class="lineNum">     359 </span>                :            : 
+<span class="lineNum">     360 </span>                :            :     /**
+<span class="lineNum">     361 </span>                :            :     returns counted ticks.
+<span class="lineNum">     362 </span>                :            :     */
+<span class="lineNum">     363 </span>                :            :     CV_WRAP int64 getTimeTicks() const
+<span class="lineNum">     364 </span>                :            :     {
+<span class="lineNum">     365 </span>                :            :     return sumTime;
+<span class="lineNum">     366 </span>                :            :     }
+<span class="lineNum">     367 </span>                :            : 
+<span class="lineNum">     368 </span>                :            :     /**
+<span class="lineNum">     369 </span>                :            :     returns passed time in microseconds.
+<span class="lineNum">     370 </span>                :            :     */
+<span class="lineNum">     371 </span>                :            :     CV_WRAP double getTimeMicro() const
+<span class="lineNum">     372 </span>                :            :     {
+<span class="lineNum">     373 </span>                :            :     return getTimeMilli()*1e3;
+<span class="lineNum">     374 </span>                :            :     }
+<span class="lineNum">     375 </span>                :            : 
+<span class="lineNum">     376 </span>                :            :     /**
+<span class="lineNum">     377 </span>                :            :     returns passed time in milliseconds.
+<span class="lineNum">     378 </span>                :            :     */
+<span class="lineNum">     379 </span>                :            :     CV_WRAP double getTimeMilli() const
+<span class="lineNum">     380 </span>                :            :     {
+<span class="lineNum">     381 </span>                :            :     return getTimeSec()*1e3;
+<span class="lineNum">     382 </span>                :            :     }
+<span class="lineNum">     383 </span>                :            : 
+<span class="lineNum">     384 </span>                :            :     /**
+<span class="lineNum">     385 </span>                :            :     returns passed time in seconds.
+<span class="lineNum">     386 </span>                :            :     */
+<span class="lineNum">     387 </span>                :            :     CV_WRAP double getTimeSec()   const
+<span class="lineNum">     388 </span>                :            :     {
+<span class="lineNum">     389 </span>                :            :     return (double)getTimeTicks() / getTickFrequency();
+<span class="lineNum">     390 </span>                :            :     }
+<span class="lineNum">     391 </span>                :            : 
+<span class="lineNum">     392 </span>                :            :     /**
+<span class="lineNum">     393 </span>                :            :     returns internal counter value.
+<span class="lineNum">     394 </span>                :            :     */
+<span class="lineNum">     395 </span>                :            :     CV_WRAP int64 getCounter() const
+<span class="lineNum">     396 </span>                :            :     {
+<span class="lineNum">     397 </span>                :            :     return counter;
+<span class="lineNum">     398 </span>                :            :     }
+<span class="lineNum">     399 </span>                :            : 
+<span class="lineNum">     400 </span>                :            :     /**
+<span class="lineNum">     401 </span>                :            :     resets internal values.
+<span class="lineNum">     402 </span>                :            :     */
+<span class="lineNum">     403 </span>                :            :     CV_WRAP void reset()
+<span class="lineNum">     404 </span>                :            :     {
+<span class="lineNum">     405 </span>                :            :     startTime = 0;
+<span class="lineNum">     406 </span>                :            :     sumTime = 0;
+<span class="lineNum">     407 </span>                :            :     counter = 0;
+<span class="lineNum">     408 </span>                :            :     }
+<span class="lineNum">     409 </span>                :            : 
+<span class="lineNum">     410 </span>                :            : private:
+<span class="lineNum">     411 </span>                :            :     int64 counter;
+<span class="lineNum">     412 </span>                :            :     int64 sumTime;
+<span class="lineNum">     413 </span>                :            :     int64 startTime;
+<span class="lineNum">     414 </span>                :            : };
+<span class="lineNum">     415 </span>                :            : 
+<span class="lineNum">     416 </span>                :            : /** @brief output operator
+<span class="lineNum">     417 </span>                :            : @code
+<span class="lineNum">     418 </span>                :            : TickMeter tm;
+<span class="lineNum">     419 </span>                :            : tm.start();
+<span class="lineNum">     420 </span>                :            : // do something ...
+<span class="lineNum">     421 </span>                :            : tm.stop();
+<span class="lineNum">     422 </span>                :            : std::cout &lt;&lt; tm;
+<span class="lineNum">     423 </span>                :            : @endcode
+<span class="lineNum">     424 </span>                :            : */
+<span class="lineNum">     425 </span>                :            : 
+<span class="lineNum">     426 </span>                :            : static inline
+<span class="lineNum">     427 </span>                :            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const TickMeter&amp; tm)
+<span class="lineNum">     428 </span>                :            : {
+<span class="lineNum">     429 </span>                :            :     return out &lt;&lt; tm.getTimeSec() &lt;&lt; &quot;sec&quot;;
+<span class="lineNum">     430 </span>                :            : }
+<span class="lineNum">     431 </span>                :            : 
+<span class="lineNum">     432 </span>                :            : /** @brief Returns the number of CPU ticks.
+<span class="lineNum">     433 </span>                :            : 
+<span class="lineNum">     434 </span>                :            : The function returns the current number of CPU ticks on some architectures (such as x86, x64,
+<span class="lineNum">     435 </span>                :            : PowerPC). On other platforms the function is equivalent to getTickCount. It can also be used for
+<span class="lineNum">     436 </span>                :            : very accurate time measurements, as well as for RNG initialization. Note that in case of multi-CPU
+<span class="lineNum">     437 </span>                :            : systems a thread, from which getCPUTickCount is called, can be suspended and resumed at another CPU
+<span class="lineNum">     438 </span>                :            : with its own counter. So, theoretically (and practically) the subsequent calls to the function do
+<span class="lineNum">     439 </span>                :            : not necessary return the monotonously increasing values. Also, since a modern CPU varies the CPU
+<span class="lineNum">     440 </span>                :            : frequency depending on the load, the number of CPU clocks spent in some code cannot be directly
+<span class="lineNum">     441 </span>                :            : converted to time units. Therefore, getTickCount is generally a preferable solution for measuring
+<span class="lineNum">     442 </span>                :            : execution time.
+<span class="lineNum">     443 </span>                :            :  */
+<span class="lineNum">     444 </span>                :            : CV_EXPORTS_W int64 getCPUTickCount();
+<span class="lineNum">     445 </span>                :            : 
+<span class="lineNum">     446 </span>                :            : /** @brief Returns true if the specified feature is supported by the host hardware.
+<span class="lineNum">     447 </span>                :            : 
+<span class="lineNum">     448 </span>                :            : The function returns true if the host hardware supports the specified feature. When user calls
+<span class="lineNum">     449 </span>                :            : setUseOptimized(false), the subsequent calls to checkHardwareSupport() will return false until
+<span class="lineNum">     450 </span>                :            : setUseOptimized(true) is called. This way user can dynamically switch on and off the optimized code
+<span class="lineNum">     451 </span>                :            : in OpenCV.
+<span class="lineNum">     452 </span>                :            : @param feature The feature of interest, one of cv::CpuFeatures
+<span class="lineNum">     453 </span>                :            :  */
+<span class="lineNum">     454 </span>                :            : CV_EXPORTS_W bool checkHardwareSupport(int feature);
+<span class="lineNum">     455 </span>                :            : 
+<span class="lineNum">     456 </span>                :            : /** @brief Returns feature name by ID
+<span class="lineNum">     457 </span>                :            : 
+<span class="lineNum">     458 </span>                :            : Returns empty string if feature is not defined
+<span class="lineNum">     459 </span>                :            : */
+<span class="lineNum">     460 </span>                :            : CV_EXPORTS_W String getHardwareFeatureName(int feature);
+<span class="lineNum">     461 </span>                :            : 
+<span class="lineNum">     462 </span>                :            : /** @brief Returns list of CPU features enabled during compilation.
+<span class="lineNum">     463 </span>                :            : 
+<span class="lineNum">     464 </span>                :            : Returned value is a string containing space separated list of CPU features with following markers:
+<span class="lineNum">     465 </span>                :            : 
+<span class="lineNum">     466 </span>                :            : - no markers - baseline features
+<span class="lineNum">     467 </span>                :            : - prefix `*` - features enabled in dispatcher
+<span class="lineNum">     468 </span>                :            : - suffix `?` - features enabled but not available in HW
+<span class="lineNum">     469 </span>                :            : 
+<span class="lineNum">     470 </span>                :            : Example: `SSE SSE2 SSE3 *SSE4.1 *SSE4.2 *FP16 *AVX *AVX2 *AVX512-SKX?`
+<span class="lineNum">     471 </span>                :            : */
+<span class="lineNum">     472 </span>                :            : CV_EXPORTS std::string getCPUFeaturesLine();
+<span class="lineNum">     473 </span>                :            : 
+<span class="lineNum">     474 </span>                :            : /** @brief Returns the number of logical CPUs available for the process.
+<span class="lineNum">     475 </span>                :            :  */
+<span class="lineNum">     476 </span>                :            : CV_EXPORTS_W int getNumberOfCPUs();
+<span class="lineNum">     477 </span>                :            : 
+<span class="lineNum">     478 </span>                :            : 
+<span class="lineNum">     479 </span>                :            : /** @brief Aligns a pointer to the specified number of bytes.
+<span class="lineNum">     480 </span>                :            : 
+<span class="lineNum">     481 </span>                :            : The function returns the aligned pointer of the same type as the input pointer:
+<span class="lineNum">     482 </span>                :            : \f[\texttt{(_Tp*)(((size_t)ptr + n-1) &amp; -n)}\f]
+<span class="lineNum">     483 </span>                :            : @param ptr Aligned pointer.
+<span class="lineNum">     484 </span>                :            : @param n Alignment size that must be a power of two.
+<span class="lineNum">     485 </span>                :            :  */
+<span class="lineNum">     486 </span>                :            : template&lt;typename _Tp&gt; static inline _Tp* alignPtr(_Tp* ptr, int n=(int)sizeof(_Tp))
+<span class="lineNum">     487 </span>                :            : {
+<span class="lineNum">     488 </span>                :            :     CV_DbgAssert((n &amp; (n - 1)) == 0); // n is a power of 2
+<span class="lineNum">     489 </span>                :            :     return (_Tp*)(((size_t)ptr + n-1) &amp; -n);
+<span class="lineNum">     490 </span>                :            : }
+<span class="lineNum">     491 </span>                :            : 
+<span class="lineNum">     492 </span>                :            : /** @brief Aligns a buffer size to the specified number of bytes.
+<span class="lineNum">     493 </span>                :            : 
+<span class="lineNum">     494 </span>                :            : The function returns the minimum number that is greater than or equal to sz and is divisible by n :
+<span class="lineNum">     495 </span>                :            : \f[\texttt{(sz + n-1) &amp; -n}\f]
+<span class="lineNum">     496 </span>                :            : @param sz Buffer size to align.
+<span class="lineNum">     497 </span>                :            : @param n Alignment size that must be a power of two.
+<span class="lineNum">     498 </span>                :            :  */
+<span class="lineNum">     499 </span>                :            : static inline size_t alignSize(size_t sz, int n)
+<span class="lineNum">     500 </span>                :            : {
+<span class="lineNum">     501 </span>                :            :     CV_DbgAssert((n &amp; (n - 1)) == 0); // n is a power of 2
+<span class="lineNum">     502 </span>                :            :     return (sz + n-1) &amp; -n;
+<span class="lineNum">     503 </span>                :            : }
+<span class="lineNum">     504 </span>                :            : 
+<span class="lineNum">     505 </span>                :            : /** @brief Integer division with result round up.
+<span class="lineNum">     506 </span>                :            : 
+<span class="lineNum">     507 </span>                :            : Use this function instead of `ceil((float)a / b)` expressions.
+<span class="lineNum">     508 </span>                :            : 
+<span class="lineNum">     509 </span>                :            : @sa alignSize
+<span class="lineNum">     510 </span>                :            : */
+<span class="lineNum">     511 </span>                :            : static inline int divUp(int a, unsigned int b)
+<span class="lineNum">     512 </span>                :            : {
+<span class="lineNum">     513 </span>                :            :     CV_DbgAssert(a &gt;= 0);
+<span class="lineNum">     514 </span>                :            :     return (a + b - 1) / b;
+<span class="lineNum">     515 </span>                :            : }
+<span class="lineNum">     516 </span>                :            : /** @overload */
+<span class="lineNum">     517 </span>                :            : static inline size_t divUp(size_t a, unsigned int b)
+<span class="lineNum">     518 </span>                :            : {
+<span class="lineNum">     519 </span>                :            :     return (a + b - 1) / b;
+<span class="lineNum">     520 </span>                :            : }
+<span class="lineNum">     521 </span>                :            : 
+<span class="lineNum">     522 </span>                :            : /** @brief Round first value up to the nearest multiple of second value.
+<span class="lineNum">     523 </span>                :            : 
+<span class="lineNum">     524 </span>                :            : Use this function instead of `ceil((float)a / b) * b` expressions.
+<span class="lineNum">     525 </span>                :            : 
+<span class="lineNum">     526 </span>                :            : @sa divUp
+<span class="lineNum">     527 </span>                :            : */
+<span class="lineNum">     528 </span>                :            : static inline int roundUp(int a, unsigned int b)
+<span class="lineNum">     529 </span>                :            : {
+<span class="lineNum">     530 </span>                :            :     CV_DbgAssert(a &gt;= 0);
+<span class="lineNum">     531 </span>                :            :     return a + b - 1 - (a + b -1) % b;
+<span class="lineNum">     532 </span>                :            : }
+<span class="lineNum">     533 </span>                :            : /** @overload */
+<span class="lineNum">     534 </span>                :            : static inline size_t roundUp(size_t a, unsigned int b)
+<span class="lineNum">     535 </span>                :            : {
+<span class="lineNum">     536 </span>                :            :     return a + b - 1 - (a + b - 1) % b;
+<span class="lineNum">     537 </span>                :            : }
+<span class="lineNum">     538 </span>                :            : 
+<span class="lineNum">     539 </span>                :            : /** @brief Enables or disables the optimized code.
+<span class="lineNum">     540 </span>                :            : 
+<span class="lineNum">     541 </span>                :            : The function can be used to dynamically turn on and off optimized dispatched code (code that uses SSE4.2, AVX/AVX2,
+<span class="lineNum">     542 </span>                :            : and other instructions on the platforms that support it). It sets a global flag that is further
+<span class="lineNum">     543 </span>                :            : checked by OpenCV functions. Since the flag is not checked in the inner OpenCV loops, it is only
+<span class="lineNum">     544 </span>                :            : safe to call the function on the very top level in your application where you can be sure that no
+<span class="lineNum">     545 </span>                :            : other OpenCV function is currently executed.
+<span class="lineNum">     546 </span>                :            : 
+<span class="lineNum">     547 </span>                :            : By default, the optimized code is enabled unless you disable it in CMake. The current status can be
+<span class="lineNum">     548 </span>                :            : retrieved using useOptimized.
+<span class="lineNum">     549 </span>                :            : @param onoff The boolean flag specifying whether the optimized code should be used (onoff=true)
+<span class="lineNum">     550 </span>                :            : or not (onoff=false).
+<span class="lineNum">     551 </span>                :            :  */
+<span class="lineNum">     552 </span>                :            : CV_EXPORTS_W void setUseOptimized(bool onoff);
+<span class="lineNum">     553 </span>                :            : 
+<span class="lineNum">     554 </span>                :            : /** @brief Returns the status of optimized code usage.
+<span class="lineNum">     555 </span>                :            : 
+<span class="lineNum">     556 </span>                :            : The function returns true if the optimized code is enabled. Otherwise, it returns false.
+<span class="lineNum">     557 </span>                :            :  */
+<span class="lineNum">     558 </span>                :            : CV_EXPORTS_W bool useOptimized();
+<span class="lineNum">     559 </span>                :            : 
+<span class="lineNum">     560 </span>                :            : static inline size_t getElemSize(int type) { return (size_t)CV_ELEM_SIZE(type); }
+<span class="lineNum">     561 </span>                :            : 
+<span class="lineNum">     562 </span>                :            : /////////////////////////////// Parallel Primitives //////////////////////////////////
+<span class="lineNum">     563 </span>                :            : 
+<span class="lineNum">     564 </span>                :            : /** @brief Base class for parallel data processors
+<span class="lineNum">     565 </span>                :            : */
+<span class="lineNum">     566 </span>                :            : class CV_EXPORTS ParallelLoopBody
+<span class="lineNum">     567 </span>                :            : {
+<span class="lineNum">     568 </span>                :            : public:
+<span class="lineNum">     569 </span>                :            :     virtual ~ParallelLoopBody();
+<span class="lineNum">     570 </span>                :            :     virtual void operator() (const Range&amp; range) const = 0;
+<span class="lineNum">     571 </span>                :            : };
+<span class="lineNum">     572 </span>                :            : 
+<span class="lineNum">     573 </span>                :            : /** @brief Parallel data processor
+<span class="lineNum">     574 </span>                :            : */
+<a name="575"><span class="lineNum">     575 </span>                :            : CV_EXPORTS void parallel_for_(const Range&amp; range, const ParallelLoopBody&amp; body, double nstripes=-1.);</a>
+<span class="lineNum">     576 </span>                :            : 
+<span class="lineNum">     577 </span>                :<span class="lineNoCov">          0 : class ParallelLoopBodyLambdaWrapper : public ParallelLoopBody</span>
+<span class="lineNum">     578 </span>                :            : {
+<span class="lineNum">     579 </span>                :            : private:
+<span class="lineNum">     580 </span>                :            :     std::function&lt;void(const Range&amp;)&gt; m_functor;
+<span class="lineNum">     581 </span>                :            : public:
+<span class="lineNum">     582 </span>                :            :     ParallelLoopBodyLambdaWrapper(std::function&lt;void(const Range&amp;)&gt; functor) :
+<span class="lineNum">     583 </span>                :            :         m_functor(functor)
+<a name="584"><span class="lineNum">     584 </span>                :            :     { }</a>
+<span class="lineNum">     585 </span>                :            : 
+<span class="lineNum">     586 </span>                :<span class="lineNoCov">          0 :     virtual void operator() (const cv::Range&amp; range) const CV_OVERRIDE</span>
+<span class="lineNum">     587 </span>                :            :     {
+<span class="lineNum">     588 </span>                :<span class="lineNoCov">          0 :         m_functor(range);</span>
+<span class="lineNum">     589 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     590 </span>                :            : };
+<span class="lineNum">     591 </span>                :            : 
+<span class="lineNum">     592 </span>                :            : inline void parallel_for_(const Range&amp; range, std::function&lt;void(const Range&amp;)&gt; functor, double nstripes=-1.)
+<span class="lineNum">     593 </span>                :            : {
+<span class="lineNum">     594 </span>                :            :     parallel_for_(range, ParallelLoopBodyLambdaWrapper(functor), nstripes);
+<span class="lineNum">     595 </span>                :            : }
+<span class="lineNum">     596 </span>                :            : 
+<span class="lineNum">     597 </span>                :            : /////////////////////////////// forEach method of cv::Mat ////////////////////////////
+<span class="lineNum">     598 </span>                :            : template&lt;typename _Tp, typename Functor&gt; inline
+<span class="lineNum">     599 </span>                :            : void Mat::forEach_impl(const Functor&amp; operation) {
+<span class="lineNum">     600 </span>                :            :     if (false) {
+<span class="lineNum">     601 </span>                :            :         operation(*reinterpret_cast&lt;_Tp*&gt;(0), reinterpret_cast&lt;int*&gt;(0));
+<span class="lineNum">     602 </span>                :            :         // If your compiler fails in this line.
+<span class="lineNum">     603 </span>                :            :         // Please check that your functor signature is
+<span class="lineNum">     604 </span>                :            :         //     (_Tp&amp;, const int*)   &lt;- multi-dimensional
+<span class="lineNum">     605 </span>                :            :         //  or (_Tp&amp;, void*)        &lt;- in case you don't need current idx.
+<span class="lineNum">     606 </span>                :            :     }
+<span class="lineNum">     607 </span>                :            : 
+<span class="lineNum">     608 </span>                :            :     CV_Assert(this-&gt;total() / this-&gt;size[this-&gt;dims - 1] &lt;= INT_MAX);
+<span class="lineNum">     609 </span>                :            :     const int LINES = static_cast&lt;int&gt;(this-&gt;total() / this-&gt;size[this-&gt;dims - 1]);
+<span class="lineNum">     610 </span>                :            : 
+<span class="lineNum">     611 </span>                :            :     class PixelOperationWrapper :public ParallelLoopBody
+<span class="lineNum">     612 </span>                :            :     {
+<span class="lineNum">     613 </span>                :            :     public:
+<span class="lineNum">     614 </span>                :            :         PixelOperationWrapper(Mat_&lt;_Tp&gt;* const frame, const Functor&amp; _operation)
+<span class="lineNum">     615 </span>                :            :             : mat(frame), op(_operation) {}
+<span class="lineNum">     616 </span>                :            :         virtual ~PixelOperationWrapper(){}
+<span class="lineNum">     617 </span>                :            :         // ! Overloaded virtual operator
+<span class="lineNum">     618 </span>                :            :         // convert range call to row call.
+<span class="lineNum">     619 </span>                :            :         virtual void operator()(const Range &amp;range) const CV_OVERRIDE
+<span class="lineNum">     620 </span>                :            :         {
+<span class="lineNum">     621 </span>                :            :             const int DIMS = mat-&gt;dims;
+<span class="lineNum">     622 </span>                :            :             const int COLS = mat-&gt;size[DIMS - 1];
+<span class="lineNum">     623 </span>                :            :             if (DIMS &lt;= 2) {
+<span class="lineNum">     624 </span>                :            :                 for (int row = range.start; row &lt; range.end; ++row) {
+<span class="lineNum">     625 </span>                :            :                     this-&gt;rowCall2(row, COLS);
+<span class="lineNum">     626 </span>                :            :                 }
+<span class="lineNum">     627 </span>                :            :             } else {
+<span class="lineNum">     628 </span>                :            :                 std::vector&lt;int&gt; idx(DIMS); /// idx is modified in this-&gt;rowCall
+<span class="lineNum">     629 </span>                :            :                 idx[DIMS - 2] = range.start - 1;
+<span class="lineNum">     630 </span>                :            : 
+<span class="lineNum">     631 </span>                :            :                 for (int line_num = range.start; line_num &lt; range.end; ++line_num) {
+<span class="lineNum">     632 </span>                :            :                     idx[DIMS - 2]++;
+<span class="lineNum">     633 </span>                :            :                     for (int i = DIMS - 2; i &gt;= 0; --i) {
+<span class="lineNum">     634 </span>                :            :                         if (idx[i] &gt;= mat-&gt;size[i]) {
+<span class="lineNum">     635 </span>                :            :                             idx[i - 1] += idx[i] / mat-&gt;size[i];
+<span class="lineNum">     636 </span>                :            :                             idx[i] %= mat-&gt;size[i];
+<span class="lineNum">     637 </span>                :            :                             continue; // carry-over;
+<span class="lineNum">     638 </span>                :            :                         }
+<span class="lineNum">     639 </span>                :            :                         else {
+<span class="lineNum">     640 </span>                :            :                             break;
+<span class="lineNum">     641 </span>                :            :                         }
+<span class="lineNum">     642 </span>                :            :                     }
+<span class="lineNum">     643 </span>                :            :                     this-&gt;rowCall(&amp;idx[0], COLS, DIMS);
+<span class="lineNum">     644 </span>                :            :                 }
+<span class="lineNum">     645 </span>                :            :             }
+<span class="lineNum">     646 </span>                :            :         }
+<span class="lineNum">     647 </span>                :            :     private:
+<span class="lineNum">     648 </span>                :            :         Mat_&lt;_Tp&gt;* const mat;
+<span class="lineNum">     649 </span>                :            :         const Functor op;
+<span class="lineNum">     650 </span>                :            :         // ! Call operator for each elements in this row.
+<span class="lineNum">     651 </span>                :            :         inline void rowCall(int* const idx, const int COLS, const int DIMS) const {
+<span class="lineNum">     652 </span>                :            :             int &amp;col = idx[DIMS - 1];
+<span class="lineNum">     653 </span>                :            :             col = 0;
+<span class="lineNum">     654 </span>                :            :             _Tp* pixel = &amp;(mat-&gt;template at&lt;_Tp&gt;(idx));
+<span class="lineNum">     655 </span>                :            : 
+<span class="lineNum">     656 </span>                :            :             while (col &lt; COLS) {
+<span class="lineNum">     657 </span>                :            :                 op(*pixel, const_cast&lt;const int*&gt;(idx));
+<span class="lineNum">     658 </span>                :            :                 pixel++; col++;
+<span class="lineNum">     659 </span>                :            :             }
+<span class="lineNum">     660 </span>                :            :             col = 0;
+<span class="lineNum">     661 </span>                :            :         }
+<span class="lineNum">     662 </span>                :            :         // ! Call operator for each elements in this row. 2d mat special version.
+<span class="lineNum">     663 </span>                :            :         inline void rowCall2(const int row, const int COLS) const {
+<span class="lineNum">     664 </span>                :            :             union Index{
+<span class="lineNum">     665 </span>                :            :                 int body[2];
+<span class="lineNum">     666 </span>                :            :                 operator const int*() const {
+<span class="lineNum">     667 </span>                :            :                     return reinterpret_cast&lt;const int*&gt;(this);
+<span class="lineNum">     668 </span>                :            :                 }
+<span class="lineNum">     669 </span>                :            :                 int&amp; operator[](const int i) {
+<span class="lineNum">     670 </span>                :            :                     return body[i];
+<span class="lineNum">     671 </span>                :            :                 }
+<span class="lineNum">     672 </span>                :            :             } idx = {{row, 0}};
+<span class="lineNum">     673 </span>                :            :             // Special union is needed to avoid
+<span class="lineNum">     674 </span>                :            :             // &quot;error: array subscript is above array bounds [-Werror=array-bounds]&quot;
+<span class="lineNum">     675 </span>                :            :             // when call the functor `op` such that access idx[3].
+<span class="lineNum">     676 </span>                :            : 
+<span class="lineNum">     677 </span>                :            :             _Tp* pixel = &amp;(mat-&gt;template at&lt;_Tp&gt;(idx));
+<span class="lineNum">     678 </span>                :            :             const _Tp* const pixel_end = pixel + COLS;
+<span class="lineNum">     679 </span>                :            :             while(pixel &lt; pixel_end) {
+<span class="lineNum">     680 </span>                :            :                 op(*pixel++, static_cast&lt;const int*&gt;(idx));
+<span class="lineNum">     681 </span>                :            :                 idx[1]++;
+<span class="lineNum">     682 </span>                :            :             }
+<span class="lineNum">     683 </span>                :            :         }
+<span class="lineNum">     684 </span>                :            :         PixelOperationWrapper&amp; operator=(const PixelOperationWrapper &amp;) {
+<span class="lineNum">     685 </span>                :            :             CV_Assert(false);
+<span class="lineNum">     686 </span>                :            :             // We can not remove this implementation because Visual Studio warning C4822.
+<span class="lineNum">     687 </span>                :            :             return *this;
+<span class="lineNum">     688 </span>                :            :         }
+<span class="lineNum">     689 </span>                :            :     };
+<span class="lineNum">     690 </span>                :            : 
+<span class="lineNum">     691 </span>                :            :     parallel_for_(cv::Range(0, LINES), PixelOperationWrapper(reinterpret_cast&lt;Mat_&lt;_Tp&gt;*&gt;(this), operation));
+<span class="lineNum">     692 </span>                :            : }
+<span class="lineNum">     693 </span>                :            : 
+<span class="lineNum">     694 </span>                :            : /////////////////////////// Synchronization Primitives ///////////////////////////////
+<span class="lineNum">     695 </span>                :            : 
+<span class="lineNum">     696 </span>                :            : #if !defined(_M_CEE)
+<span class="lineNum">     697 </span>                :            : typedef std::recursive_mutex Mutex;
+<span class="lineNum">     698 </span>                :            : typedef std::lock_guard&lt;cv::Mutex&gt; AutoLock;
+<span class="lineNum">     699 </span>                :            : #endif
+<span class="lineNum">     700 </span>                :            : 
+<span class="lineNum">     701 </span>                :            : // TLS interface
+<span class="lineNum">     702 </span>                :            : class CV_EXPORTS TLSDataContainer
+<span class="lineNum">     703 </span>                :            : {
+<span class="lineNum">     704 </span>                :            : protected:
+<span class="lineNum">     705 </span>                :            :     TLSDataContainer();
+<span class="lineNum">     706 </span>                :            :     virtual ~TLSDataContainer();
+<span class="lineNum">     707 </span>                :            : 
+<span class="lineNum">     708 </span>                :            :     void  gatherData(std::vector&lt;void*&gt; &amp;data) const;
+<span class="lineNum">     709 </span>                :            :     void* getData() const;
+<span class="lineNum">     710 </span>                :            :     void  release();
+<span class="lineNum">     711 </span>                :            : 
+<span class="lineNum">     712 </span>                :            : private:
+<span class="lineNum">     713 </span>                :            :     virtual void* createDataInstance() const = 0;
+<span class="lineNum">     714 </span>                :            :     virtual void  deleteDataInstance(void* pData) const = 0;
+<span class="lineNum">     715 </span>                :            : 
+<span class="lineNum">     716 </span>                :            :     int key_;
+<span class="lineNum">     717 </span>                :            : 
+<span class="lineNum">     718 </span>                :            : public:
+<span class="lineNum">     719 </span>                :            :     void cleanup(); //! Release created TLS data container objects. It is similar to release() call, but it keeps TLS container valid.
+<span class="lineNum">     720 </span>                :            : };
+<span class="lineNum">     721 </span>                :            : 
+<span class="lineNum">     722 </span>                :            : // Main TLS data class
+<span class="lineNum">     723 </span>                :            : template &lt;typename T&gt;
+<span class="lineNum">     724 </span>                :            : class TLSData : protected TLSDataContainer
+<span class="lineNum">     725 </span>                :            : {
+<span class="lineNum">     726 </span>                :            : public:
+<span class="lineNum">     727 </span>                :            :     inline TLSData()        {}
+<span class="lineNum">     728 </span>                :            :     inline ~TLSData()       { release();            } // Release key and delete associated data
+<span class="lineNum">     729 </span>                :            :     inline T* get() const   { return (T*)getData(); } // Get data associated with key
+<span class="lineNum">     730 </span>                :            :     inline T&amp; getRef() const { T* ptr = (T*)getData(); CV_Assert(ptr); return *ptr; } // Get data associated with key
+<span class="lineNum">     731 </span>                :            : 
+<span class="lineNum">     732 </span>                :            :     // Get data from all threads
+<span class="lineNum">     733 </span>                :            :     inline void gather(std::vector&lt;T*&gt; &amp;data) const
+<span class="lineNum">     734 </span>                :            :     {
+<span class="lineNum">     735 </span>                :            :         std::vector&lt;void*&gt; &amp;dataVoid = reinterpret_cast&lt;std::vector&lt;void*&gt;&amp;&gt;(data);
+<span class="lineNum">     736 </span>                :            :         gatherData(dataVoid);
+<span class="lineNum">     737 </span>                :            :     }
+<span class="lineNum">     738 </span>                :            : 
+<span class="lineNum">     739 </span>                :            :     inline void cleanup() { TLSDataContainer::cleanup(); }
+<span class="lineNum">     740 </span>                :            : 
+<span class="lineNum">     741 </span>                :            : private:
+<span class="lineNum">     742 </span>                :            :     virtual void* createDataInstance() const CV_OVERRIDE {return new T;}                // Wrapper to allocate data by template
+<span class="lineNum">     743 </span>                :            :     virtual void  deleteDataInstance(void* pData) const CV_OVERRIDE {delete (T*)pData;} // Wrapper to release data by template
+<span class="lineNum">     744 </span>                :            : 
+<span class="lineNum">     745 </span>                :            :     // Disable TLS copy operations
+<span class="lineNum">     746 </span>                :            :     TLSData(TLSData &amp;) {}
+<span class="lineNum">     747 </span>                :            :     TLSData&amp; operator =(const TLSData &amp;) {return *this;}
+<span class="lineNum">     748 </span>                :            : };
+<span class="lineNum">     749 </span>                :            : 
+<span class="lineNum">     750 </span>                :            : /** @brief Designed for command line parsing
+<span class="lineNum">     751 </span>                :            : 
+<span class="lineNum">     752 </span>                :            : The sample below demonstrates how to use CommandLineParser:
+<span class="lineNum">     753 </span>                :            : @code
+<span class="lineNum">     754 </span>                :            :     CommandLineParser parser(argc, argv, keys);
+<span class="lineNum">     755 </span>                :            :     parser.about(&quot;Application name v1.0.0&quot;);
+<span class="lineNum">     756 </span>                :            : 
+<span class="lineNum">     757 </span>                :            :     if (parser.has(&quot;help&quot;))
+<span class="lineNum">     758 </span>                :            :     {
+<span class="lineNum">     759 </span>                :            :         parser.printMessage();
+<span class="lineNum">     760 </span>                :            :         return 0;
+<span class="lineNum">     761 </span>                :            :     }
+<span class="lineNum">     762 </span>                :            : 
+<span class="lineNum">     763 </span>                :            :     int N = parser.get&lt;int&gt;(&quot;N&quot;);
+<span class="lineNum">     764 </span>                :            :     double fps = parser.get&lt;double&gt;(&quot;fps&quot;);
+<span class="lineNum">     765 </span>                :            :     String path = parser.get&lt;String&gt;(&quot;path&quot;);
+<span class="lineNum">     766 </span>                :            : 
+<span class="lineNum">     767 </span>                :            :     use_time_stamp = parser.has(&quot;timestamp&quot;);
+<span class="lineNum">     768 </span>                :            : 
+<span class="lineNum">     769 </span>                :            :     String img1 = parser.get&lt;String&gt;(0);
+<span class="lineNum">     770 </span>                :            :     String img2 = parser.get&lt;String&gt;(1);
+<span class="lineNum">     771 </span>                :            : 
+<span class="lineNum">     772 </span>                :            :     int repeat = parser.get&lt;int&gt;(2);
+<span class="lineNum">     773 </span>                :            : 
+<span class="lineNum">     774 </span>                :            :     if (!parser.check())
+<span class="lineNum">     775 </span>                :            :     {
+<span class="lineNum">     776 </span>                :            :         parser.printErrors();
+<span class="lineNum">     777 </span>                :            :         return 0;
+<span class="lineNum">     778 </span>                :            :     }
+<span class="lineNum">     779 </span>                :            : @endcode
+<span class="lineNum">     780 </span>                :            : 
+<span class="lineNum">     781 </span>                :            : ### Keys syntax
+<span class="lineNum">     782 </span>                :            : 
+<span class="lineNum">     783 </span>                :            : The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
+<span class="lineNum">     784 </span>                :            : describes one argument. Each argument contains three parts separated by the `|` symbol:
+<span class="lineNum">     785 </span>                :            : 
+<span class="lineNum">     786 </span>                :            : -# argument names is a space-separated list of option synonyms (to mark argument as positional, prefix it with the `@` symbol)
+<span class="lineNum">     787 </span>                :            : -# default value will be used if the argument was not provided (can be empty)
+<span class="lineNum">     788 </span>                :            : -# help message (can be empty)
+<span class="lineNum">     789 </span>                :            : 
+<span class="lineNum">     790 </span>                :            : For example:
+<span class="lineNum">     791 </span>                :            : 
+<span class="lineNum">     792 </span>                :            : @code{.cpp}
+<span class="lineNum">     793 </span>                :            :     const String keys =
+<span class="lineNum">     794 </span>                :            :         &quot;{help h usage ? |      | print this message   }&quot;
+<span class="lineNum">     795 </span>                :            :         &quot;{@image1        |      | image1 for compare   }&quot;
+<span class="lineNum">     796 </span>                :            :         &quot;{@image2        |&lt;none&gt;| image2 for compare   }&quot;
+<span class="lineNum">     797 </span>                :            :         &quot;{@repeat        |1     | number               }&quot;
+<span class="lineNum">     798 </span>                :            :         &quot;{path           |.     | path to file         }&quot;
+<span class="lineNum">     799 </span>                :            :         &quot;{fps            | -1.0 | fps for output video }&quot;
+<span class="lineNum">     800 </span>                :            :         &quot;{N count        |100   | count of objects     }&quot;
+<span class="lineNum">     801 </span>                :            :         &quot;{ts timestamp   |      | use time stamp       }&quot;
+<span class="lineNum">     802 </span>                :            :         ;
+<span class="lineNum">     803 </span>                :            : }
+<span class="lineNum">     804 </span>                :            : @endcode
+<span class="lineNum">     805 </span>                :            : 
+<span class="lineNum">     806 </span>                :            : Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
+<span class="lineNum">     807 </span>                :            : Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
+<span class="lineNum">     808 </span>                :            : actual value instead.
+<span class="lineNum">     809 </span>                :            : 
+<span class="lineNum">     810 </span>                :            : String keys like `get&lt;String&gt;(&quot;@image1&quot;)` return the empty string `&quot;&quot;` by default - even with an empty default value.
+<span class="lineNum">     811 </span>                :            : Use the special `&lt;none&gt;` default value to enforce that the returned string must not be empty. (like in `get&lt;String&gt;(&quot;@image2&quot;)`)
+<span class="lineNum">     812 </span>                :            : 
+<span class="lineNum">     813 </span>                :            : ### Usage
+<span class="lineNum">     814 </span>                :            : 
+<span class="lineNum">     815 </span>                :            : For the described keys:
+<span class="lineNum">     816 </span>                :            : 
+<span class="lineNum">     817 </span>                :            : @code{.sh}
+<span class="lineNum">     818 </span>                :            :     # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
+<span class="lineNum">     819 </span>                :            :     $ ./app -N=200 1.png 2.jpg 19 -ts
+<span class="lineNum">     820 </span>                :            : 
+<span class="lineNum">     821 </span>                :            :     # Bad call
+<span class="lineNum">     822 </span>                :            :     $ ./app -fps=aaa
+<span class="lineNum">     823 </span>                :            :     ERRORS:
+<span class="lineNum">     824 </span>                :            :     Parameter 'fps': can not convert: [aaa] to [double]
+<span class="lineNum">     825 </span>                :            : @endcode
+<span class="lineNum">     826 </span>                :            :  */
+<span class="lineNum">     827 </span>                :            : class CV_EXPORTS CommandLineParser
+<span class="lineNum">     828 </span>                :            : {
+<span class="lineNum">     829 </span>                :            : public:
+<span class="lineNum">     830 </span>                :            : 
+<span class="lineNum">     831 </span>                :            :     /** @brief Constructor
+<span class="lineNum">     832 </span>                :            : 
+<span class="lineNum">     833 </span>                :            :     Initializes command line parser object
+<span class="lineNum">     834 </span>                :            : 
+<span class="lineNum">     835 </span>                :            :     @param argc number of command line arguments (from main())
+<span class="lineNum">     836 </span>                :            :     @param argv array of command line arguments (from main())
+<span class="lineNum">     837 </span>                :            :     @param keys string describing acceptable command line parameters (see class description for syntax)
+<span class="lineNum">     838 </span>                :            :     */
+<span class="lineNum">     839 </span>                :            :     CommandLineParser(int argc, const char* const argv[], const String&amp; keys);
+<span class="lineNum">     840 </span>                :            : 
+<span class="lineNum">     841 </span>                :            :     /** @brief Copy constructor */
+<span class="lineNum">     842 </span>                :            :     CommandLineParser(const CommandLineParser&amp; parser);
+<span class="lineNum">     843 </span>                :            : 
+<span class="lineNum">     844 </span>                :            :     /** @brief Assignment operator */
+<span class="lineNum">     845 </span>                :            :     CommandLineParser&amp; operator = (const CommandLineParser&amp; parser);
+<span class="lineNum">     846 </span>                :            : 
+<span class="lineNum">     847 </span>                :            :     /** @brief Destructor */
+<span class="lineNum">     848 </span>                :            :     ~CommandLineParser();
+<span class="lineNum">     849 </span>                :            : 
+<span class="lineNum">     850 </span>                :            :     /** @brief Returns application path
+<span class="lineNum">     851 </span>                :            : 
+<span class="lineNum">     852 </span>                :            :     This method returns the path to the executable from the command line (`argv[0]`).
+<span class="lineNum">     853 </span>                :            : 
+<span class="lineNum">     854 </span>                :            :     For example, if the application has been started with such a command:
+<span class="lineNum">     855 </span>                :            :     @code{.sh}
+<span class="lineNum">     856 </span>                :            :     $ ./bin/my-executable
+<span class="lineNum">     857 </span>                :            :     @endcode
+<span class="lineNum">     858 </span>                :            :     this method will return `./bin`.
+<span class="lineNum">     859 </span>                :            :     */
+<span class="lineNum">     860 </span>                :            :     String getPathToApplication() const;
+<span class="lineNum">     861 </span>                :            : 
+<span class="lineNum">     862 </span>                :            :     /** @brief Access arguments by name
+<span class="lineNum">     863 </span>                :            : 
+<span class="lineNum">     864 </span>                :            :     Returns argument converted to selected type. If the argument is not known or can not be
+<span class="lineNum">     865 </span>                :            :     converted to selected type, the error flag is set (can be checked with @ref check).
+<span class="lineNum">     866 </span>                :            : 
+<span class="lineNum">     867 </span>                :            :     For example, define:
+<span class="lineNum">     868 </span>                :            :     @code{.cpp}
+<span class="lineNum">     869 </span>                :            :     String keys = &quot;{N count||}&quot;;
+<span class="lineNum">     870 </span>                :            :     @endcode
+<span class="lineNum">     871 </span>                :            : 
+<span class="lineNum">     872 </span>                :            :     Call:
+<span class="lineNum">     873 </span>                :            :     @code{.sh}
+<span class="lineNum">     874 </span>                :            :     $ ./my-app -N=20
+<span class="lineNum">     875 </span>                :            :     # or
+<span class="lineNum">     876 </span>                :            :     $ ./my-app --count=20
+<span class="lineNum">     877 </span>                :            :     @endcode
+<span class="lineNum">     878 </span>                :            : 
+<span class="lineNum">     879 </span>                :            :     Access:
+<span class="lineNum">     880 </span>                :            :     @code{.cpp}
+<span class="lineNum">     881 </span>                :            :     int N = parser.get&lt;int&gt;(&quot;N&quot;);
+<span class="lineNum">     882 </span>                :            :     @endcode
+<span class="lineNum">     883 </span>                :            : 
+<span class="lineNum">     884 </span>                :            :     @param name name of the argument
+<span class="lineNum">     885 </span>                :            :     @param space_delete remove spaces from the left and right of the string
+<span class="lineNum">     886 </span>                :            :     @tparam T the argument will be converted to this type if possible
+<span class="lineNum">     887 </span>                :            : 
+<span class="lineNum">     888 </span>                :            :     @note You can access positional arguments by their `@`-prefixed name:
+<span class="lineNum">     889 </span>                :            :     @code{.cpp}
+<span class="lineNum">     890 </span>                :            :     parser.get&lt;String&gt;(&quot;@image&quot;);
+<span class="lineNum">     891 </span>                :            :     @endcode
+<span class="lineNum">     892 </span>                :            :      */
+<span class="lineNum">     893 </span>                :            :     template &lt;typename T&gt;
+<span class="lineNum">     894 </span>                :            :     T get(const String&amp; name, bool space_delete = true) const
+<span class="lineNum">     895 </span>                :            :     {
+<span class="lineNum">     896 </span>                :            :         T val = T();
+<span class="lineNum">     897 </span>                :            :         getByName(name, space_delete, ParamType&lt;T&gt;::type, (void*)&amp;val);
+<span class="lineNum">     898 </span>                :            :         return val;
+<span class="lineNum">     899 </span>                :            :     }
+<span class="lineNum">     900 </span>                :            : 
+<span class="lineNum">     901 </span>                :            :     /** @brief Access positional arguments by index
+<span class="lineNum">     902 </span>                :            : 
+<span class="lineNum">     903 </span>                :            :     Returns argument converted to selected type. Indexes are counted from zero.
+<span class="lineNum">     904 </span>                :            : 
+<span class="lineNum">     905 </span>                :            :     For example, define:
+<span class="lineNum">     906 </span>                :            :     @code{.cpp}
+<span class="lineNum">     907 </span>                :            :     String keys = &quot;{@arg1||}{@arg2||}&quot;
+<span class="lineNum">     908 </span>                :            :     @endcode
+<span class="lineNum">     909 </span>                :            : 
+<span class="lineNum">     910 </span>                :            :     Call:
+<span class="lineNum">     911 </span>                :            :     @code{.sh}
+<span class="lineNum">     912 </span>                :            :     ./my-app abc qwe
+<span class="lineNum">     913 </span>                :            :     @endcode
+<span class="lineNum">     914 </span>                :            : 
+<span class="lineNum">     915 </span>                :            :     Access arguments:
+<span class="lineNum">     916 </span>                :            :     @code{.cpp}
+<span class="lineNum">     917 </span>                :            :     String val_1 = parser.get&lt;String&gt;(0); // returns &quot;abc&quot;, arg1
+<span class="lineNum">     918 </span>                :            :     String val_2 = parser.get&lt;String&gt;(1); // returns &quot;qwe&quot;, arg2
+<span class="lineNum">     919 </span>                :            :     @endcode
+<span class="lineNum">     920 </span>                :            : 
+<span class="lineNum">     921 </span>                :            :     @param index index of the argument
+<span class="lineNum">     922 </span>                :            :     @param space_delete remove spaces from the left and right of the string
+<span class="lineNum">     923 </span>                :            :     @tparam T the argument will be converted to this type if possible
+<span class="lineNum">     924 </span>                :            :      */
+<span class="lineNum">     925 </span>                :            :     template &lt;typename T&gt;
+<span class="lineNum">     926 </span>                :            :     T get(int index, bool space_delete = true) const
+<span class="lineNum">     927 </span>                :            :     {
+<span class="lineNum">     928 </span>                :            :         T val = T();
+<span class="lineNum">     929 </span>                :            :         getByIndex(index, space_delete, ParamType&lt;T&gt;::type, (void*)&amp;val);
+<span class="lineNum">     930 </span>                :            :         return val;
+<span class="lineNum">     931 </span>                :            :     }
+<span class="lineNum">     932 </span>                :            : 
+<span class="lineNum">     933 </span>                :            :     /** @brief Check if field was provided in the command line
+<span class="lineNum">     934 </span>                :            : 
+<span class="lineNum">     935 </span>                :            :     @param name argument name to check
+<span class="lineNum">     936 </span>                :            :     */
+<span class="lineNum">     937 </span>                :            :     bool has(const String&amp; name) const;
+<span class="lineNum">     938 </span>                :            : 
+<span class="lineNum">     939 </span>                :            :     /** @brief Check for parsing errors
+<span class="lineNum">     940 </span>                :            : 
+<span class="lineNum">     941 </span>                :            :     Returns false if error occurred while accessing the parameters (bad conversion, missing arguments,
+<span class="lineNum">     942 </span>                :            :     etc.). Call @ref printErrors to print error messages list.
+<span class="lineNum">     943 </span>                :            :      */
+<span class="lineNum">     944 </span>                :            :     bool check() const;
+<span class="lineNum">     945 </span>                :            : 
+<span class="lineNum">     946 </span>                :            :     /** @brief Set the about message
+<span class="lineNum">     947 </span>                :            : 
+<span class="lineNum">     948 </span>                :            :     The about message will be shown when @ref printMessage is called, right before arguments table.
+<span class="lineNum">     949 </span>                :            :      */
+<span class="lineNum">     950 </span>                :            :     void about(const String&amp; message);
+<span class="lineNum">     951 </span>                :            : 
+<span class="lineNum">     952 </span>                :            :     /** @brief Print help message
+<span class="lineNum">     953 </span>                :            : 
+<span class="lineNum">     954 </span>                :            :     This method will print standard help message containing the about message and arguments description.
+<span class="lineNum">     955 </span>                :            : 
+<span class="lineNum">     956 </span>                :            :     @sa about
+<span class="lineNum">     957 </span>                :            :     */
+<span class="lineNum">     958 </span>                :            :     void printMessage() const;
+<span class="lineNum">     959 </span>                :            : 
+<span class="lineNum">     960 </span>                :            :     /** @brief Print list of errors occurred
+<span class="lineNum">     961 </span>                :            : 
+<span class="lineNum">     962 </span>                :            :     @sa check
+<span class="lineNum">     963 </span>                :            :     */
+<span class="lineNum">     964 </span>                :            :     void printErrors() const;
+<span class="lineNum">     965 </span>                :            : 
+<span class="lineNum">     966 </span>                :            : protected:
+<span class="lineNum">     967 </span>                :            :     void getByName(const String&amp; name, bool space_delete, Param type, void* dst) const;
+<span class="lineNum">     968 </span>                :            :     void getByIndex(int index, bool space_delete, Param type, void* dst) const;
+<span class="lineNum">     969 </span>                :            : 
+<span class="lineNum">     970 </span>                :            :     struct Impl;
+<span class="lineNum">     971 </span>                :            :     Impl* impl;
+<span class="lineNum">     972 </span>                :            : };
+<span class="lineNum">     973 </span>                :            : 
+<span class="lineNum">     974 </span>                :            : //! @} core_utils
+<span class="lineNum">     975 </span>                :            : 
+<span class="lineNum">     976 </span>                :            : //! @cond IGNORED
+<span class="lineNum">     977 </span>                :            : 
+<span class="lineNum">     978 </span>                :            : /////////////////////////////// AutoBuffer implementation ////////////////////////////////////////
+<span class="lineNum">     979 </span>                :            : 
+<span class="lineNum">     980 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline
+<span class="lineNum">     981 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::AutoBuffer()
+<span class="lineNum">     982 </span>                :            : {
+<span class="lineNum">     983 </span>                :            :     ptr = buf;
+<span class="lineNum">     984 </span>                :            :     sz = fixed_size;
+<span class="lineNum">     985 </span>                :            : }
+<span class="lineNum">     986 </span>                :            : 
+<span class="lineNum">     987 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline
+<span class="lineNum">     988 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::AutoBuffer(size_t _size)
+<span class="lineNum">     989 </span>                :            : {
+<span class="lineNum">     990 </span>                :            :     ptr = buf;
+<span class="lineNum">     991 </span>                :            :     sz = fixed_size;
+<span class="lineNum">     992 </span>                :            :     allocate(_size);
+<span class="lineNum">     993 </span>                :            : }
+<span class="lineNum">     994 </span>                :            : 
+<span class="lineNum">     995 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline
+<span class="lineNum">     996 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::AutoBuffer(const AutoBuffer&lt;_Tp, fixed_size&gt;&amp; abuf )
+<span class="lineNum">     997 </span>                :            : {
+<span class="lineNum">     998 </span>                :            :     ptr = buf;
+<span class="lineNum">     999 </span>                :            :     sz = fixed_size;
+<span class="lineNum">    1000 </span>                :            :     allocate(abuf.size());
+<span class="lineNum">    1001 </span>                :            :     for( size_t i = 0; i &lt; sz; i++ )
+<span class="lineNum">    1002 </span>                :            :         ptr[i] = abuf.ptr[i];
+<span class="lineNum">    1003 </span>                :            : }
+<span class="lineNum">    1004 </span>                :            : 
+<span class="lineNum">    1005 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline AutoBuffer&lt;_Tp, fixed_size&gt;&amp;
+<span class="lineNum">    1006 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::operator = (const AutoBuffer&lt;_Tp, fixed_size&gt;&amp; abuf)
+<span class="lineNum">    1007 </span>                :            : {
+<span class="lineNum">    1008 </span>                :            :     if( this != &amp;abuf )
+<span class="lineNum">    1009 </span>                :            :     {
+<span class="lineNum">    1010 </span>                :            :         deallocate();
+<span class="lineNum">    1011 </span>                :            :         allocate(abuf.size());
+<span class="lineNum">    1012 </span>                :            :         for( size_t i = 0; i &lt; sz; i++ )
+<span class="lineNum">    1013 </span>                :            :             ptr[i] = abuf.ptr[i];
+<span class="lineNum">    1014 </span>                :            :     }
+<span class="lineNum">    1015 </span>                :            :     return *this;
+<span class="lineNum">    1016 </span>                :            : }
+<span class="lineNum">    1017 </span>                :            : 
+<span class="lineNum">    1018 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline
+<span class="lineNum">    1019 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::~AutoBuffer()
+<span class="lineNum">    1020 </span>                :            : { deallocate(); }
+<span class="lineNum">    1021 </span>                :            : 
+<span class="lineNum">    1022 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline void
+<span class="lineNum">    1023 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::allocate(size_t _size)
+<span class="lineNum">    1024 </span>                :            : {
+<span class="lineNum">    1025 </span>                :            :     if(_size &lt;= sz)
+<span class="lineNum">    1026 </span>                :            :     {
+<span class="lineNum">    1027 </span>                :            :         sz = _size;
+<span class="lineNum">    1028 </span>                :            :         return;
+<span class="lineNum">    1029 </span>                :            :     }
+<span class="lineNum">    1030 </span>                :            :     deallocate();
+<span class="lineNum">    1031 </span>                :            :     sz = _size;
+<span class="lineNum">    1032 </span>                :            :     if(_size &gt; fixed_size)
+<span class="lineNum">    1033 </span>                :            :     {
+<span class="lineNum">    1034 </span>                :            :         ptr = new _Tp[_size];
+<span class="lineNum">    1035 </span>                :            :     }
+<span class="lineNum">    1036 </span>                :            : }
+<span class="lineNum">    1037 </span>                :            : 
+<span class="lineNum">    1038 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline void
+<span class="lineNum">    1039 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::deallocate()
+<span class="lineNum">    1040 </span>                :            : {
+<span class="lineNum">    1041 </span>                :            :     if( ptr != buf )
+<span class="lineNum">    1042 </span>                :            :     {
+<span class="lineNum">    1043 </span>                :            :         delete[] ptr;
+<span class="lineNum">    1044 </span>                :            :         ptr = buf;
+<span class="lineNum">    1045 </span>                :            :         sz = fixed_size;
+<span class="lineNum">    1046 </span>                :            :     }
+<span class="lineNum">    1047 </span>                :            : }
+<span class="lineNum">    1048 </span>                :            : 
+<span class="lineNum">    1049 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline void
+<span class="lineNum">    1050 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::resize(size_t _size)
+<span class="lineNum">    1051 </span>                :            : {
+<span class="lineNum">    1052 </span>                :            :     if(_size &lt;= sz)
+<span class="lineNum">    1053 </span>                :            :     {
+<span class="lineNum">    1054 </span>                :            :         sz = _size;
+<span class="lineNum">    1055 </span>                :            :         return;
+<span class="lineNum">    1056 </span>                :            :     }
+<span class="lineNum">    1057 </span>                :            :     size_t i, prevsize = sz, minsize = MIN(prevsize, _size);
+<span class="lineNum">    1058 </span>                :            :     _Tp* prevptr = ptr;
+<span class="lineNum">    1059 </span>                :            : 
+<span class="lineNum">    1060 </span>                :            :     ptr = _size &gt; fixed_size ? new _Tp[_size] : buf;
+<span class="lineNum">    1061 </span>                :            :     sz = _size;
+<span class="lineNum">    1062 </span>                :            : 
+<span class="lineNum">    1063 </span>                :            :     if( ptr != prevptr )
+<span class="lineNum">    1064 </span>                :            :         for( i = 0; i &lt; minsize; i++ )
+<span class="lineNum">    1065 </span>                :            :             ptr[i] = prevptr[i];
+<span class="lineNum">    1066 </span>                :            :     for( i = prevsize; i &lt; _size; i++ )
+<span class="lineNum">    1067 </span>                :            :         ptr[i] = _Tp();
+<span class="lineNum">    1068 </span>                :            : 
+<span class="lineNum">    1069 </span>                :            :     if( prevptr != buf )
+<span class="lineNum">    1070 </span>                :            :         delete[] prevptr;
+<span class="lineNum">    1071 </span>                :            : }
+<span class="lineNum">    1072 </span>                :            : 
+<span class="lineNum">    1073 </span>                :            : template&lt;typename _Tp, size_t fixed_size&gt; inline size_t
+<span class="lineNum">    1074 </span>                :            : AutoBuffer&lt;_Tp, fixed_size&gt;::size() const
+<span class="lineNum">    1075 </span>                :            : { return sz; }
+<span class="lineNum">    1076 </span>                :            : 
+<span class="lineNum">    1077 </span>                :            : //! @endcond
+<span class="lineNum">    1078 </span>                :            : 
+<span class="lineNum">    1079 </span>                :            : 
+<span class="lineNum">    1080 </span>                :            : // Basic Node class for tree building
+<span class="lineNum">    1081 </span>                :            : template&lt;class OBJECT&gt;
+<span class="lineNum">    1082 </span>                :            : class CV_EXPORTS Node
+<span class="lineNum">    1083 </span>                :            : {
+<span class="lineNum">    1084 </span>                :            : public:
+<span class="lineNum">    1085 </span>                :            :     Node()
+<span class="lineNum">    1086 </span>                :            :     {
+<span class="lineNum">    1087 </span>                :            :         m_pParent  = 0;
+<span class="lineNum">    1088 </span>                :            :     }
+<span class="lineNum">    1089 </span>                :            :     Node(OBJECT&amp; payload) : m_payload(payload)
+<span class="lineNum">    1090 </span>                :            :     {
+<span class="lineNum">    1091 </span>                :            :         m_pParent  = 0;
+<span class="lineNum">    1092 </span>                :            :     }
+<span class="lineNum">    1093 </span>                :            :     ~Node()
+<span class="lineNum">    1094 </span>                :            :     {
+<span class="lineNum">    1095 </span>                :            :         removeChilds();
+<span class="lineNum">    1096 </span>                :            :         if (m_pParent)
+<span class="lineNum">    1097 </span>                :            :         {
+<span class="lineNum">    1098 </span>                :            :             int idx = m_pParent-&gt;findChild(this);
+<span class="lineNum">    1099 </span>                :            :             if (idx &gt;= 0)
+<span class="lineNum">    1100 </span>                :            :                 m_pParent-&gt;m_childs.erase(m_pParent-&gt;m_childs.begin() + idx);
+<span class="lineNum">    1101 </span>                :            :         }
+<span class="lineNum">    1102 </span>                :            :     }
+<span class="lineNum">    1103 </span>                :            : 
+<span class="lineNum">    1104 </span>                :            :     Node&lt;OBJECT&gt;* findChild(OBJECT&amp; payload) const
+<span class="lineNum">    1105 </span>                :            :     {
+<span class="lineNum">    1106 </span>                :            :         for(size_t i = 0; i &lt; this-&gt;m_childs.size(); i++)
+<span class="lineNum">    1107 </span>                :            :         {
+<span class="lineNum">    1108 </span>                :            :             if(this-&gt;m_childs[i]-&gt;m_payload == payload)
+<span class="lineNum">    1109 </span>                :            :                 return this-&gt;m_childs[i];
+<span class="lineNum">    1110 </span>                :            :         }
+<span class="lineNum">    1111 </span>                :            :         return NULL;
+<span class="lineNum">    1112 </span>                :            :     }
+<span class="lineNum">    1113 </span>                :            : 
+<span class="lineNum">    1114 </span>                :            :     int findChild(Node&lt;OBJECT&gt; *pNode) const
+<span class="lineNum">    1115 </span>                :            :     {
+<span class="lineNum">    1116 </span>                :            :         for (size_t i = 0; i &lt; this-&gt;m_childs.size(); i++)
+<span class="lineNum">    1117 </span>                :            :         {
+<span class="lineNum">    1118 </span>                :            :             if(this-&gt;m_childs[i] == pNode)
+<span class="lineNum">    1119 </span>                :            :                 return (int)i;
+<span class="lineNum">    1120 </span>                :            :         }
+<span class="lineNum">    1121 </span>                :            :         return -1;
+<span class="lineNum">    1122 </span>                :            :     }
+<span class="lineNum">    1123 </span>                :            : 
+<span class="lineNum">    1124 </span>                :            :     void addChild(Node&lt;OBJECT&gt; *pNode)
+<span class="lineNum">    1125 </span>                :            :     {
+<span class="lineNum">    1126 </span>                :            :         if(!pNode)
+<span class="lineNum">    1127 </span>                :            :             return;
+<span class="lineNum">    1128 </span>                :            : 
+<span class="lineNum">    1129 </span>                :            :         CV_Assert(pNode-&gt;m_pParent == 0);
+<span class="lineNum">    1130 </span>                :            :         pNode-&gt;m_pParent = this;
+<span class="lineNum">    1131 </span>                :            :         this-&gt;m_childs.push_back(pNode);
+<span class="lineNum">    1132 </span>                :            :     }
+<span class="lineNum">    1133 </span>                :            : 
+<span class="lineNum">    1134 </span>                :            :     void removeChilds()
+<span class="lineNum">    1135 </span>                :            :     {
+<span class="lineNum">    1136 </span>                :            :         for(size_t i = 0; i &lt; m_childs.size(); i++)
+<span class="lineNum">    1137 </span>                :            :         {
+<span class="lineNum">    1138 </span>                :            :             m_childs[i]-&gt;m_pParent = 0; // avoid excessive parent vector trimming
+<span class="lineNum">    1139 </span>                :            :             delete m_childs[i];
+<span class="lineNum">    1140 </span>                :            :         }
+<span class="lineNum">    1141 </span>                :            :         m_childs.clear();
+<span class="lineNum">    1142 </span>                :            :     }
+<span class="lineNum">    1143 </span>                :            : 
+<span class="lineNum">    1144 </span>                :            :     int getDepth()
+<span class="lineNum">    1145 </span>                :            :     {
+<span class="lineNum">    1146 </span>                :            :         int   count   = 0;
+<span class="lineNum">    1147 </span>                :            :         Node *pParent = m_pParent;
+<span class="lineNum">    1148 </span>                :            :         while(pParent) count++, pParent = pParent-&gt;m_pParent;
+<span class="lineNum">    1149 </span>                :            :         return count;
+<span class="lineNum">    1150 </span>                :            :     }
+<span class="lineNum">    1151 </span>                :            : 
+<span class="lineNum">    1152 </span>                :            : public:
+<span class="lineNum">    1153 </span>                :            :     OBJECT                     m_payload;
+<span class="lineNum">    1154 </span>                :            :     Node&lt;OBJECT&gt;*              m_pParent;
+<span class="lineNum">    1155 </span>                :            :     std::vector&lt;Node&lt;OBJECT&gt;*&gt; m_childs;
+<span class="lineNum">    1156 </span>                :            : };
+<span class="lineNum">    1157 </span>                :            : 
+<span class="lineNum">    1158 </span>                :            : // Instrumentation external interface
+<span class="lineNum">    1159 </span>                :            : namespace instr
+<span class="lineNum">    1160 </span>                :            : {
+<span class="lineNum">    1161 </span>                :            : 
+<span class="lineNum">    1162 </span>                :            : #if !defined OPENCV_ABI_CHECK
+<span class="lineNum">    1163 </span>                :            : 
+<span class="lineNum">    1164 </span>                :            : enum TYPE
+<span class="lineNum">    1165 </span>                :            : {
+<span class="lineNum">    1166 </span>                :            :     TYPE_GENERAL = 0,   // OpenCV API function, e.g. exported function
+<span class="lineNum">    1167 </span>                :            :     TYPE_MARKER,        // Information marker
+<span class="lineNum">    1168 </span>                :            :     TYPE_WRAPPER,       // Wrapper function for implementation
+<span class="lineNum">    1169 </span>                :            :     TYPE_FUN,           // Simple function call
+<span class="lineNum">    1170 </span>                :            : };
+<span class="lineNum">    1171 </span>                :            : 
+<span class="lineNum">    1172 </span>                :            : enum IMPL
+<span class="lineNum">    1173 </span>                :            : {
+<span class="lineNum">    1174 </span>                :            :     IMPL_PLAIN = 0,
+<span class="lineNum">    1175 </span>                :            :     IMPL_IPP,
+<span class="lineNum">    1176 </span>                :            :     IMPL_OPENCL,
+<span class="lineNum">    1177 </span>                :            : };
+<span class="lineNum">    1178 </span>                :            : 
+<span class="lineNum">    1179 </span>                :            : struct NodeDataTls
+<span class="lineNum">    1180 </span>                :            : {
+<span class="lineNum">    1181 </span>                :            :     NodeDataTls()
+<span class="lineNum">    1182 </span>                :            :     {
+<span class="lineNum">    1183 </span>                :            :         m_ticksTotal = 0;
+<span class="lineNum">    1184 </span>                :            :     }
+<span class="lineNum">    1185 </span>                :            :     uint64      m_ticksTotal;
+<span class="lineNum">    1186 </span>                :            : };
+<span class="lineNum">    1187 </span>                :            : 
+<span class="lineNum">    1188 </span>                :            : class CV_EXPORTS NodeData
+<span class="lineNum">    1189 </span>                :            : {
+<span class="lineNum">    1190 </span>                :            : public:
+<span class="lineNum">    1191 </span>                :            :     NodeData(const char* funName = 0, const char* fileName = NULL, int lineNum = 0, void* retAddress = NULL, bool alwaysExpand = false, cv::instr::TYPE instrType = TYPE_GENERAL, cv::instr::IMPL implType = IMPL_PLAIN);
+<span class="lineNum">    1192 </span>                :            :     NodeData(NodeData &amp;ref);
+<span class="lineNum">    1193 </span>                :            :     ~NodeData();
+<span class="lineNum">    1194 </span>                :            :     NodeData&amp; operator=(const NodeData&amp;);
+<span class="lineNum">    1195 </span>                :            : 
+<span class="lineNum">    1196 </span>                :            :     cv::String          m_funName;
+<span class="lineNum">    1197 </span>                :            :     cv::instr::TYPE     m_instrType;
+<span class="lineNum">    1198 </span>                :            :     cv::instr::IMPL     m_implType;
+<span class="lineNum">    1199 </span>                :            :     const char*         m_fileName;
+<span class="lineNum">    1200 </span>                :            :     int                 m_lineNum;
+<span class="lineNum">    1201 </span>                :            :     void*               m_retAddress;
+<span class="lineNum">    1202 </span>                :            :     bool                m_alwaysExpand;
+<span class="lineNum">    1203 </span>                :            :     bool                m_funError;
+<span class="lineNum">    1204 </span>                :            : 
+<span class="lineNum">    1205 </span>                :            :     volatile int         m_counter;
+<span class="lineNum">    1206 </span>                :            :     volatile uint64      m_ticksTotal;
+<span class="lineNum">    1207 </span>                :            :     TLSData&lt;NodeDataTls&gt; m_tls;
+<span class="lineNum">    1208 </span>                :            :     int                  m_threads;
+<span class="lineNum">    1209 </span>                :            : 
+<span class="lineNum">    1210 </span>                :            :     // No synchronization
+<span class="lineNum">    1211 </span>                :            :     double getTotalMs()   const { return ((double)m_ticksTotal / cv::getTickFrequency()) * 1000; }
+<span class="lineNum">    1212 </span>                :            :     double getMeanMs()    const { return (((double)m_ticksTotal/m_counter) / cv::getTickFrequency()) * 1000; }
+<span class="lineNum">    1213 </span>                :            : };
+<span class="lineNum">    1214 </span>                :            : bool operator==(const NodeData&amp; lhs, const NodeData&amp; rhs);
+<span class="lineNum">    1215 </span>                :            : 
+<span class="lineNum">    1216 </span>                :            : typedef Node&lt;NodeData&gt; InstrNode;
+<span class="lineNum">    1217 </span>                :            : 
+<span class="lineNum">    1218 </span>                :            : CV_EXPORTS InstrNode* getTrace();
+<span class="lineNum">    1219 </span>                :            : 
+<span class="lineNum">    1220 </span>                :            : #endif // !defined OPENCV_ABI_CHECK
+<span class="lineNum">    1221 </span>                :            : 
+<span class="lineNum">    1222 </span>                :            : 
+<span class="lineNum">    1223 </span>                :            : CV_EXPORTS bool       useInstrumentation();
+<span class="lineNum">    1224 </span>                :            : CV_EXPORTS void       setUseInstrumentation(bool flag);
+<span class="lineNum">    1225 </span>                :            : CV_EXPORTS void       resetTrace();
+<span class="lineNum">    1226 </span>                :            : 
+<span class="lineNum">    1227 </span>                :            : enum FLAGS
+<span class="lineNum">    1228 </span>                :            : {
+<span class="lineNum">    1229 </span>                :            :     FLAGS_NONE              = 0,
+<span class="lineNum">    1230 </span>                :            :     FLAGS_MAPPING           = 0x01,
+<span class="lineNum">    1231 </span>                :            :     FLAGS_EXPAND_SAME_NAMES = 0x02,
+<span class="lineNum">    1232 </span>                :            : };
+<span class="lineNum">    1233 </span>                :            : 
+<span class="lineNum">    1234 </span>                :            : CV_EXPORTS void       setFlags(FLAGS modeFlags);
+<span class="lineNum">    1235 </span>                :            : static inline void    setFlags(int modeFlags) { setFlags((FLAGS)modeFlags); }
+<span class="lineNum">    1236 </span>                :            : CV_EXPORTS FLAGS      getFlags();
+<span class="lineNum">    1237 </span>                :            : 
+<span class="lineNum">    1238 </span>                :            : } // namespace instr
+<span class="lineNum">    1239 </span>                :            : 
+<span class="lineNum">    1240 </span>                :            : 
+<span class="lineNum">    1241 </span>                :            : namespace samples {
+<span class="lineNum">    1242 </span>                :            : 
+<span class="lineNum">    1243 </span>                :            : //! @addtogroup core_utils_samples
+<span class="lineNum">    1244 </span>                :            : // This section describes utility functions for OpenCV samples.
+<span class="lineNum">    1245 </span>                :            : //
+<span class="lineNum">    1246 </span>                :            : // @note Implementation of these utilities is not thread-safe.
+<span class="lineNum">    1247 </span>                :            : //
+<span class="lineNum">    1248 </span>                :            : //! @{
+<span class="lineNum">    1249 </span>                :            : 
+<span class="lineNum">    1250 </span>                :            : /** @brief Try to find requested data file
+<span class="lineNum">    1251 </span>                :            : 
+<span class="lineNum">    1252 </span>                :            : Search directories:
+<span class="lineNum">    1253 </span>                :            : 
+<span class="lineNum">    1254 </span>                :            : 1. Directories passed via `addSamplesDataSearchPath()`
+<span class="lineNum">    1255 </span>                :            : 2. OPENCV_SAMPLES_DATA_PATH_HINT environment variable
+<span class="lineNum">    1256 </span>                :            : 3. OPENCV_SAMPLES_DATA_PATH environment variable
+<span class="lineNum">    1257 </span>                :            :    If parameter value is not empty and nothing is found then stop searching.
+<span class="lineNum">    1258 </span>                :            : 4. Detects build/install path based on:
+<span class="lineNum">    1259 </span>                :            :    a. current working directory (CWD)
+<span class="lineNum">    1260 </span>                :            :    b. and/or binary module location (opencv_core/opencv_world, doesn't work with static linkage)
+<span class="lineNum">    1261 </span>                :            : 5. Scan `&lt;source&gt;/{,data,samples/data}` directories if build directory is detected or the current directory is in source tree.
+<span class="lineNum">    1262 </span>                :            : 6. Scan `&lt;install&gt;/share/OpenCV` directory if install directory is detected.
+<span class="lineNum">    1263 </span>                :            : 
+<span class="lineNum">    1264 </span>                :            : @see cv::utils::findDataFile
+<span class="lineNum">    1265 </span>                :            : 
+<span class="lineNum">    1266 </span>                :            : @param relative_path Relative path to data file
+<span class="lineNum">    1267 </span>                :            : @param required Specify &quot;file not found&quot; handling.
+<span class="lineNum">    1268 </span>                :            :        If true, function prints information message and raises cv::Exception.
+<span class="lineNum">    1269 </span>                :            :        If false, function returns empty result
+<span class="lineNum">    1270 </span>                :            : @param silentMode Disables messages
+<span class="lineNum">    1271 </span>                :            : @return Returns path (absolute or relative to the current directory) or empty string if file is not found
+<span class="lineNum">    1272 </span>                :            : */
+<span class="lineNum">    1273 </span>                :            : CV_EXPORTS_W cv::String findFile(const cv::String&amp; relative_path, bool required = true, bool silentMode = false);
+<span class="lineNum">    1274 </span>                :            : 
+<span class="lineNum">    1275 </span>                :            : CV_EXPORTS_W cv::String findFileOrKeep(const cv::String&amp; relative_path, bool silentMode = false);
+<span class="lineNum">    1276 </span>                :            : 
+<span class="lineNum">    1277 </span>                :            : inline cv::String findFileOrKeep(const cv::String&amp; relative_path, bool silentMode)
+<span class="lineNum">    1278 </span>                :            : {
+<span class="lineNum">    1279 </span>                :            :     cv::String res = findFile(relative_path, false, silentMode);
+<span class="lineNum">    1280 </span>                :            :     if (res.empty())
+<span class="lineNum">    1281 </span>                :            :         return relative_path;
+<span class="lineNum">    1282 </span>                :            :     return res;
+<span class="lineNum">    1283 </span>                :            : }
+<span class="lineNum">    1284 </span>                :            : 
+<span class="lineNum">    1285 </span>                :            : /** @brief Override search data path by adding new search location
+<span class="lineNum">    1286 </span>                :            : 
+<span class="lineNum">    1287 </span>                :            : Use this only to override default behavior
+<span class="lineNum">    1288 </span>                :            : Passed paths are used in LIFO order.
+<span class="lineNum">    1289 </span>                :            : 
+<span class="lineNum">    1290 </span>                :            : @param path Path to used samples data
+<span class="lineNum">    1291 </span>                :            : */
+<span class="lineNum">    1292 </span>                :            : CV_EXPORTS_W void addSamplesDataSearchPath(const cv::String&amp; path);
+<span class="lineNum">    1293 </span>                :            : 
+<span class="lineNum">    1294 </span>                :            : /** @brief Append samples search data sub directory
+<span class="lineNum">    1295 </span>                :            : 
+<span class="lineNum">    1296 </span>                :            : General usage is to add OpenCV modules name (`&lt;opencv_contrib&gt;/modules/&lt;name&gt;/samples/data` -&gt; `&lt;name&gt;/samples/data` + `modules/&lt;name&gt;/samples/data`).
+<span class="lineNum">    1297 </span>                :            : Passed subdirectories are used in LIFO order.
+<span class="lineNum">    1298 </span>                :            : 
+<span class="lineNum">    1299 </span>                :            : @param subdir samples data sub directory
+<span class="lineNum">    1300 </span>                :            : */
+<span class="lineNum">    1301 </span>                :            : CV_EXPORTS_W void addSamplesDataSearchSubDirectory(const cv::String&amp; subdir);
+<span class="lineNum">    1302 </span>                :            : 
+<span class="lineNum">    1303 </span>                :            : //! @}
+<span class="lineNum">    1304 </span>                :            : } // namespace samples
+<span class="lineNum">    1305 </span>                :            : 
+<span class="lineNum">    1306 </span>                :            : namespace utils {
+<span class="lineNum">    1307 </span>                :            : 
+<span class="lineNum">    1308 </span>                :            : CV_EXPORTS int getThreadID();
+<span class="lineNum">    1309 </span>                :            : 
+<span class="lineNum">    1310 </span>                :            : } // namespace
+<span class="lineNum">    1311 </span>                :            : 
+<span class="lineNum">    1312 </span>                :            : } //namespace cv
+<span class="lineNum">    1313 </span>                :            : 
+<span class="lineNum">    1314 </span>                :            : #endif //OPENCV_CORE_UTILITY_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

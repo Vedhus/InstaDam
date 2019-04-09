@@ -11,7 +11,8 @@ SOURCES = testPolygonSelect.cpp \
     testFreeDrawSelect.cpp \
     testFilters.cpp \
     testproject.cpp \
-    testlabelbutton.cpp
+    testlabelbutton.cpp \
+    integrationtest.cpp
 
 HEADERS = testSelect.h \
     testapp.h

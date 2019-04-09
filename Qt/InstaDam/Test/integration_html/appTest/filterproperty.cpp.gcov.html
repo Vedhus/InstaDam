@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - appTest/filterproperty.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">appTest</a> - filterproperty.cpp<span style="font-size: 80%;"> (source / <a href="filterproperty.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntryLo">65.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;filterproperty.h&quot;</a>
+<span class="lineNum">       2 </span>                :            : #include &quot;enumconstants.h&quot;
+<span class="lineNum">       3 </span>                :            : 
+<span class="lineNum">       4 </span>                :            : /*!
+<span class="lineNum">       5 </span>                :            :   \class filterProperty
+<span class="lineNum">       6 </span>                :            :   \ingroup app
+<span class="lineNum">       7 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">       8 </span>                :            :   \brief Holds the filter properties.
+<span class="lineNum">       9 </span>                :            : 
+<span class="lineNum">      10 </span>                :            :   Initializes the filter properties to the provided parameter values
+<span class="lineNum">      11 </span>                :            :  */
+<span class="lineNum">      12 </span>                :            : 
+<span class="lineNum">      13 </span>                :            : /*!
+<span class="lineNum">      14 </span>                :            :   Creates an instance nased on \a propertyName, \a bt, \a propMin, \a propVal,
+<a name="15"><span class="lineNum">      15 </span>                :            :   \a propMax, \a eo, \a thof, and \a sb.</a>
+<span class="lineNum">      16 </span>                :            :   */
+<span class="lineNum">      17 </span>                :<span class="lineCov">         15 : filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMin,</span>
+<span class="lineNum">      18 </span>                :            :                                int propVal, int propMax, evenOdds eo,
+<span class="lineNum">      19 </span>                :<span class="lineNoCov">          0 :                                EnumConstants::threshold_or_filter thof, bool sb) {</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">         15 :     this-&gt;name = QString::fromStdString(propertyName);</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">         15 :     this-&gt;btnType = bt;</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">         15 :     this-&gt;val = propVal;</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">         15 :     this-&gt;max = propMax;</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">         15 :     this-&gt;min = propMin;</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">         15 :     this-&gt;evenOdd = eo;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">         15 :     this-&gt;threshold_filter = thof;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">         15 :     this-&gt;signalBool = sb;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">         15 : }</span>
+<span class="lineNum">      29 </span>                :            : 
+<span class="lineNum">      30 </span>                :            : /*!
+<a name="31"><span class="lineNum">      31 </span>                :            :   Assigns the slider value to the nearest odd or even numbber close to \a sliderVal</a>
+<span class="lineNum">      32 </span>                :            :  */
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 : void filterProperty::sliderAssign(int sliderVal) {</span>
+<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 :     val = sliderVal;</span>
+<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 :     if (evenOdd == ODD)</span>
+<span class="lineNum">      36 </span>                :<span class="lineNoCov">          0 :         val = (val / 2) * 2 + 1;</span>
+<span class="lineNum">      37 </span>                :<span class="lineNoCov">          0 :     else if (evenOdd == EVEN)</span>
+<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :         val = (val / 2) * 2;</span>
+<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      40 </span>                :            : 
+<span class="lineNum">      41 </span>                :            : /*!
+<span class="lineNum">      42 </span>                :            :   \class filterPropertiesMeta
+<span class="lineNum">      43 </span>                :            :   \ingroup app
+<span class="lineNum">      44 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      45 </span>                :            : 
+<span class="lineNum">      46 </span>                :            :   Holds information about the particular maskType \a mt including the number of controls
+<span class="lineNum">      47 </span>                :            :   and the list of properties \a fp.
+<span class="lineNum">      48 </span>                :            :  */
+<span class="lineNum">      49 </span>                :            : 
+<span class="lineNum">      50 </span>                :            : /*!
+<span class="lineNum">      51 </span>                :            :   Creates an instance based on \a fp, \a nc, and \a mt.
+<span class="lineNum">      52 </span>                :            :   */
+<span class="lineNum">      53 </span>                :<span class="lineCov">          4 : filterPropertiesMeta::filterPropertiesMeta(std::vector&lt;filterProperty*&gt; fp, int nc,</span>
+<span class="lineNum">      54 </span>                :            :                                            EnumConstants::maskTypes mt) {
+<span class="lineNum">      55 </span>                :<span class="lineCov">          4 :     numControls = nc;</span>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">          4 :     maskType = mt;</span></a>
+<span class="lineNum">      57 </span>                :<span class="lineCov">          4 :     propertylist = fp;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">          7 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

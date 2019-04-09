@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/polygonSelect.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - polygonSelect.h<span style="font-size: 80%;"> (source / <a href="polygonSelect.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryLo">36.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-08 16:12:03</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">16.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #ifndef POLYGONSELECT_H</a>
+<span class="lineNum">       2 </span>                :            : #define POLYGONSELECT_H
+<span class="lineNum">       3 </span>                :            : 
+<span class="lineNum">       4 </span>                :            : #include &lt;vector&gt;
+<span class="lineNum">       5 </span>                :            : #include &lt;cmath&gt;
+<span class="lineNum">       6 </span>                :            : #include &quot;selectItem.h&quot;
+<span class="lineNum">       7 </span>                :            : 
+<span class="lineNum">       8 </span>                :<span class="lineCov">         89 : const QString polygonBaseInstruction = QString(&quot;Click points to construct a polygon. Individual points can be moved and deleted. Click 'Finish Polygon' when done.&quot;);</span>
+<span class="lineNum">       9 </span>                :            : class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
+<span class="lineNum">      10 </span>                :            :  public:
+<span class="lineNum">      11 </span>                :            :     const QString baseInstruction = polygonBaseInstruction;
+<span class="lineNum">      12 </span>                :            :     PolygonSelect();
+<span class="lineNum">      13 </span>                :            :     PolygonSelect(const QJsonObject &amp;json,
+<span class="lineNum">      14 </span>                :            :                   QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      15 </span>                :            :                   QGraphicsItem *item = nullptr);
+<span class="lineNum">      16 </span>                :            :     PolygonSelect(QPointF point, QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      17 </span>                :            :                   QGraphicsItem *item = nullptr);
+<span class="lineNum">      18 </span>                :            :     ~PolygonSelect() override;
+<span class="lineNum">      19 </span>                :            : 
+<a name="20"><span class="lineNum">      20 </span>                :            :     /*-------------- Implemented fvuntions from SelectItem ---------*/</a>
+<span class="lineNum">      21 </span>                :            :     void addPoint(QPointF &amp;point, const int vertex = UNSELECTED) override;
+<span class="lineNum">      22 </span>                :<span class="lineNoCov">          0 :     QString baseInstructions() const override {</span>
+<span class="lineNum">      23 </span>                :<span class="lineNoCov">          0 :         return PolygonSelect::baseInstruction;</span>
+<span class="lineNum">      24 </span>                :            :     }
+<span class="lineNum">      25 </span>                :            :     QRectF boundingRect() const override;
+<span class="lineNum">      26 </span>                :            :     void clickPoint(const QPointF &amp;point) override;
+<span class="lineNum">      27 </span>                :            :     void insertVertex(const int vertex, const QPointF &amp;point) override;
+<span class="lineNum">      28 </span>                :            :     bool isInside(const QPointF &amp;point) const override;
+<span class="lineNum">      29 </span>                :            :     void moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) override;
+<span class="lineNum">      30 </span>                :            :     int numberOfVertices() const override;
+<span class="lineNum">      31 </span>                :            :     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+<span class="lineNum">      32 </span>                :            :                QWidget *widget = nullptr) override;
+<span class="lineNum">      33 </span>                :            :     void removeVertex(int vertex = UNSELECTED) override;
+<a name="34"><span class="lineNum">      34 </span>                :            :     void resetActiveVertex() override;</a>
+<span class="lineNum">      35 </span>                :            :     void resizeItem(const int vertex, QPointF &amp;shift) override;
+<span class="lineNum">      36 </span>                :<span class="lineNoCov">          0 :     void rotate(const QPointF &amp;from, const QPointF &amp;to) override {</span>
+<span class="lineNum">      37 </span>                :            :         UNUSED(from);
+<span class="lineNum">      38 </span>                :            :         UNUSED(to);
+<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">      40 </span>                :            :     void updatePen(QPen pen) override;
+<span class="lineNum">      41 </span>                :            :     void read(const QJsonObject &amp;json) override;
+<span class="lineNum">      42 </span>                :            :     void write(QJsonObject &amp;json) const override;
+<span class="lineNum">      43 </span>                :            :     void toPixmap(QPainter *painter) override;
+<a name="44"><span class="lineNum">      44 </span>                :            : </a>
+<span class="lineNum">      45 </span>                :            :     // Mirror
+<span class="lineNum">      46 </span>                :<span class="lineCov">         70 :     PolygonSelect* getMirror() const override {return mirror;}</span>
+<a name="47"><span class="lineNum">      47 </span>                :            :     void mirrorHide() const override;</a>
+<span class="lineNum">      48 </span>                :            :     void mirrorShow() const override;
+<span class="lineNum">      49 </span>                :<span class="lineNoCov">          0 :     void rotateMirror() const override {}</span>
+<span class="lineNum">      50 </span>                :            :     void setMirror(SelectItem *item) override;
+<a name="51"><span class="lineNum">      51 </span>                :            :     void setMirrorActive() const override;</a>
+<span class="lineNum">      52 </span>                :            :     void setMirrorActivePoint(QPointF point) const;
+<span class="lineNum">      53 </span>                :<span class="lineNoCov">          0 :     void setMirrorAdded() const override {mirror-&gt;hasBeenAdded = true;}</span>
+<span class="lineNum">      54 </span>                :            :     void setMirrorMoved() const override;
+<span class="lineNum">      55 </span>                :            :     void setMirrorResized() const override;
+<span class="lineNum">      56 </span>                :            :     void setMirrorVertex(int vertex) const override;
+<span class="lineNum">      57 </span>                :            :     void updateMirrorScene() const override;
+<span class="lineNum">      58 </span>                :            : 
+<span class="lineNum">      59 </span>                :            :     void setMirrorPolygon(int actVert);
+<span class="lineNum">      60 </span>                :            :     /*------------- End implemented functions*/
+<span class="lineNum">      61 </span>                :            : 
+<a name="62"><span class="lineNum">      62 </span>                :            :     void checkPoint(QPointF &amp;point);</a>
+<span class="lineNum">      63 </span>                :<span class="lineCov">         42 :     bool isVisible() const {return SelectItem::isVisible();}</span>
+<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 :     qreal magnitude(QPointF point) const {</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">         28 :         return std::sqrt(std::pow(point.x(), 2.) + std::pow(point.y(), 2.));</span>
+<span class="lineNum">      66 </span>                :            :     }
+<span class="lineNum">      67 </span>                :            :     void movePoint(const QPointF &amp;point);
+<span class="lineNum">      68 </span>                :            :     QPolygonF getPolygon() const {return polygon;}
+<span class="lineNum">      69 </span>                :            : 
+<span class="lineNum">      70 </span>                :            :     QGraphicsScene* scene() const;
+<span class="lineNum">      71 </span>                :            :     void setOpacity(qreal);
+<span class="lineNum">      72 </span>                :            : #ifdef TEST
+<span class="lineNum">      73 </span>                :            :     friend class TestSelect;
+<span class="lineNum">      74 </span>                :            : #endif
+<span class="lineNum">      75 </span>                :            :  protected:
+<span class="lineNum">      76 </span>                :            :     QVector&lt;QPointF&gt; myPoints;
+<span class="lineNum">      77 </span>                :            :     QVector&lt;QRectF&gt; myVertices;
+<span class="lineNum">      78 </span>                :            : 
+<span class="lineNum">      79 </span>                :            :  private:
+<span class="lineNum">      80 </span>                :            :     bool selected = true;
+<span class="lineNum">      81 </span>                :            : 
+<span class="lineNum">      82 </span>                :            :     QPolygonF polygon;
+<span class="lineNum">      83 </span>                :            : 
+<span class="lineNum">      84 </span>                :            :     PolygonSelect *mirror = nullptr;
+<span class="lineNum">      85 </span>                :            : 
+<span class="lineNum">      86 </span>                :            :     QRectF makeVertex(const QPointF &amp;point) const;
+<span class="lineNum">      87 </span>                :            : 
+<span class="lineNum">      88 </span>                :            :     void refresh();
+<span class="lineNum">      89 </span>                :            : };
+<span class="lineNum">      90 </span>                :            : #endif  // POLYGONSELECT_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

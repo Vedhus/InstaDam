@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - appTest/maskviewer.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">appTest</a> - maskviewer.cpp<span style="font-size: 80%;"> (source / <a href="maskviewer.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryLo">32.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryLo">60.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;maskviewer.h&quot;</a>
+<span class="lineNum">       2 </span>                :            : 
+<span class="lineNum">       3 </span>                :            : /*!
+<span class="lineNum">       4 </span>                :            :   \class MaskViewer
+<span class="lineNum">       5 </span>                :            :   \ingroup app
+<span class="lineNum">       6 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">       7 </span>                :            :   \inherits PhotoViewer
+<span class="lineNum">       8 </span>                :            :   \brief A masked view of the image in the associated PhotoViewer.
+<span class="lineNum">       9 </span>                :            :   */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /*!
+<a name="12"><span class="lineNum">      12 </span>                :            :   Creates an instance with parent QWidget \a parent, if any.</a>
+<span class="lineNum">      13 </span>                :            :   */
+<span class="lineNum">      14 </span>                :<span class="lineCov">          1 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">          1 :     zoom = 0;</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">          1 :     hasPhoto = false;</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">          1 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">          1 :     scene-&gt;myViewerType = viewerType;</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">          1 :     selectedMask = EnumConstants::CANNY;</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">      21 </span>                :            : 
+<span class="lineNum">      22 </span>                :            : /*!
+<a name="23"><span class="lineNum">      23 </span>                :            :   Links this object to \a viewer.</a>
+<span class="lineNum">      24 </span>                :            :   */
+<span class="lineNum">      25 </span>                :<span class="lineNoCov">          0 : void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {</span>
+<span class="lineNum">      26 </span>                :<span class="lineNoCov">          0 :     hasPhoto = true;</span>
+<span class="lineNum">      27 </span>                :<span class="lineNoCov">          0 :     photoViewer = viewer;</span>
+<span class="lineNum">      28 </span>                :<span class="lineNoCov">          0 :     photo-&gt;setPixmap(photoViewer-&gt;filterIm-&gt;pixmap());</span>
+<span class="lineNum">      29 </span>                :<span class="lineNoCov">          0 :     imMask = viewer-&gt;imMask;</span>
+<span class="lineNum">      30 </span>                :<span class="lineNoCov">          0 :     cvImage = viewer-&gt;cvImage;</span>
+<span class="lineNum">      31 </span>                :<span class="lineNoCov">          0 :     cvThumb = viewer-&gt;cvThumb;</span>
+<span class="lineNum">      32 </span>                :<span class="lineNoCov">          0 :     setImMask(selectedMask);</span>
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 :     update();</span>
+<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 :     fitInView();</span>
+<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      36 </span>                :            : 
+<span class="lineNum">      37 </span>                :            : /*!
+<a name="38"><span class="lineNum">      38 </span>                :            :   Sets the image mask to \a filterName.</a>
+<span class="lineNum">      39 </span>                :            :   */
+<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 : void MaskViewer::setImMask(EnumConstants::maskTypes filterName) {</span>
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 :     selectedMask = filterName;</span>
+<span class="lineNum">      42 </span>                :<span class="lineNoCov">          0 :     if (hasPhoto == true) {</span>
+<span class="lineNum">      43 </span>                :<span class="lineNoCov">          0 :         pixmapFilt = filterControl-&gt;qImg.copy();</span>
+<span class="lineNum">      44 </span>                :<span class="lineNoCov">          0 :         imMask = filterControl-&gt;qAlpha.copy();</span>
+<a name="45"><span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 :         photo-&gt;setPixmap(pixmapFilt);</span></a>
+<span class="lineNum">      46 </span>                :            :     }
+<span class="lineNum">      47 </span>                :<span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

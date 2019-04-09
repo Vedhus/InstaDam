@@ -150,9 +150,10 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
             SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
-
+#ifndef TEST
     StartingWidget *sw = new StartingWidget;
     sw->show();
+#endif
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
@@ -241,9 +242,17 @@ void InstaDam::setLabels() {
 void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
+#ifndef TEST
     newProject->setModal(true);
     connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
     newProject->exec();
+#else
+    QHashIterator<QString, QColor> it(labelHash);
+    while (it.hasNext()) {
+        it.next();
+        newProject->setLabel(it.key(), it.value());
+    }
+#endif
     setNewProject();
 }
 
@@ -306,9 +315,13 @@ void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
       openIdproConnector->onActivate();
 #else
+#ifndef TEST
     // Reading and Loading
     QString myfileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+#else
+    QString myfileName = "";
+#endif
     if (myfileName.isEmpty()) {
             return;  // remove that part and add an alert
     } else {
