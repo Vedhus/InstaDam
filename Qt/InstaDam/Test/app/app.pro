@@ -9,7 +9,9 @@ SOURCES = testPolygonSelect.cpp \
     testRectangleSelect.cpp \
     testEllipseSelect.cpp \
     testFreeDrawSelect.cpp \
-    testFilterProperty.cpp
+    testFilters.cpp \
+    testproject.cpp \
+    testlabelbutton.cpp
 
 HEADERS = testSelect.h \
     testapp.h

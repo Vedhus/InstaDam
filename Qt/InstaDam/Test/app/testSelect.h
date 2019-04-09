@@ -102,7 +102,12 @@ private slots:
     void setupUndo();
 
     void testFilterProperty();
+    void testFSlider();
+    void testFilterControls();
 
+    void testProject();
+
+    void testLabelButton();
 
 private:
     QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();
