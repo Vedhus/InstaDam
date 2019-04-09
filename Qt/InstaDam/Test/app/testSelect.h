@@ -2,14 +2,14 @@
 #define TESTRECTANGLESELECT_H
 #include <QtTest/QtTest>
 #include <QUndoStack>
-#include "rectangleSelect.h"
-#include "ellipseSelect.h"
-#include "polygonSelect.h"
-#include "freeDrawErase.h"
-#include "freeDrawSelect.h"
-#include "photoScene.h"
-#include "label.h"
-#include "commands.h"
+#include "../Selector/rectangleSelect.h"
+#include "../Selector/ellipseSelect.h"
+#include "../Selector/polygonSelect.h"
+#include "../Selector/freeDrawErase.h"
+#include "../Selector/freeDrawSelect.h"
+#include "../Selector/photoScene.h"
+#include "../Selector/label.h"
+#include "../Selector/commands.h"
 
 //int SelectItem::ID = 0;
 class TestSelect: public QObject
@@ -100,6 +100,9 @@ private slots:
     void testCommandErasePoints();
     void testCommandRotate();
     void setupUndo();
+
+    void testFilterProperty();
+
 
 private:
     QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();

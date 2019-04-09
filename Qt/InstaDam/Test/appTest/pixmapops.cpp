@@ -1,0 +1,1 @@
+../../app/pixmapops.cpp
