@@ -35,8 +35,6 @@ private slots:
     void testEllipseClickPoint();
     void testEllipseBoundingRect();
     void testEllipseIsInside();
-    void testFreeMove();
-    void testEraseMove();
     void testRMirror();
     void testRToPixmap();
     void testRRotate();
@@ -65,6 +63,21 @@ private slots:
     void testPisInside();
     void testPToPixmap();
 
+    void testFreeMove();
+    void testFreeStubs();
+    void testFreeReadWrite();
+
+    void testEraseMove();
+    void testFreeShowHide();
+    void testFreeToPixmap();
+
+    void testLabelSetId();
+    void testLabelReadWrite();
+    void testLabelText();
+    void testLabelAddRemoveItem();
+    void testLabelSetOpacity();
+    void testLabelExportLabel();
+    void testLabelSetMaskState();
 
 private:
     QSharedPointer<Label> myLabel = QSharedPointer<Label>::create();
@@ -95,6 +108,8 @@ private:
     PolygonSelect *pitem;
     FreeDrawSelect *fitem;
     FreeDrawErase *feitem;
+
+    void generateData();
 
 };
 

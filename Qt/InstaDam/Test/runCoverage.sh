@@ -19,7 +19,7 @@ mkdir -p ${HTML_RESULTS}
 
 "${LCOV}" -a "${SRC_DIR}/app_base.info" -a "${SRC_DIR}/run.info" -o "${SRC_DIR}/coverage.info"
 # remove some paths
-"${LCOV}" -r "${SRC_DIR}/coverage.info" "*test*" "*include/Qt*.h" "*/include/c++/*" "*Qt*.framework*" "*Xcode.app*" "*.moc" "*moc_*.cpp" "*/test/*" -o "${SRC_DIR}/coverage-filtered.info"
+"${LCOV}" -r "${SRC_DIR}/coverage.info" "*.h" "*test*" "*include/Qt*.h" "*/include/c++/*" "*Qt*.framework*" "*Xcode.app*" "*.moc" "*moc_*.cpp" "*/test/*" -o "${SRC_DIR}/coverage-filtered.info"
 
 # generate our HTML
 "${GENHTML}" --legend --branch-coverage --function-coverage --demangle-cpp -o "${HTML_RESULTS}" "${SRC_DIR}/coverage-filtered.info"

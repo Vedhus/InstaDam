@@ -24,7 +24,8 @@ SOURCES = \
     boxbasedselector.cpp \
     label.cpp \
     freeDrawErase.cpp \
-    testpolygonselect.cpp
+    testpolygonselect.cpp \
+    testlabel.cpp
 
 LIBS += -lQt5Widgets
 

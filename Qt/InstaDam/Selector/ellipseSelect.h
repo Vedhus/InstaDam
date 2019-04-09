@@ -59,7 +59,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     void setOpacity(qreal);
 
  private:
-    EllipseSelect *mirror;
+    EllipseSelect *mirror = nullptr;
 #ifdef TEST
     friend TestSelect;
 #endif
