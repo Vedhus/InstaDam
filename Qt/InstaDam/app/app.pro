@@ -27,7 +27,9 @@ SOURCES += \
     projectlist.cpp \
     imagelist.cpp \
     serverprojectname.cpp \
-    enumconstants.cpp
+    enumconstants.cpp \
+    addusertoproject.cpp \
+    userprivilege.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -45,13 +47,15 @@ HEADERS += \
         fslider.h \
         newproject.h \
         labelButton.h \
-    register.h \
-    startingwidget.h \
-    login.h \
-    projectlist.h \
-    imagelist.h \
-    serverprojectname.h \
-    enumconstants.h
+        register.h \
+        startingwidget.h \
+        login.h \
+        projectlist.h \
+        imagelist.h \
+        serverprojectname.h \
+        enumconstants.h \
+    addusertoproject.h \
+    userprivilege.h
 
 wasm: HEADERS += colordialog.h
 
@@ -62,39 +66,38 @@ FORMS += \
         ../Selector/polygonSelect.ui \
         ../Selector/freeSelect.ui \
         labeldialog.ui \
-    register.ui \
-    startingwidget.ui \
-    login.ui \
-    projectlist.ui \
-    imagelist.ui \
-    projectDialog.ui \
-    serverprojectname.ui
-
+        register.ui \
+        startingwidget.ui \
+        login.ui \
+        projectlist.ui \
+        imagelist.ui \
+        projectDialog.ui \
+        serverprojectname.ui \
+    addusertoproject.ui \
+    userprivilege.ui
 
 win32 {
-
-
 
   CONFIG += c++1z
    INCLUDEPATH += $${PWD}\..\quazip\include
 
 ## Change paths here depending on your system installation location
-#   INCLUDEPATH += C:\opencv\opencv\build\include $${PWD}/..
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_core401.dll
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_highgui401.dll
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_imgcodecs401.dll
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_imgproc401.dll
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_features2d401.dll
-#   LIBS += C:\opencv\opencv-build\bin\libopencv_calib3d401.dll
+   INCLUDEPATH += C:\opencv\opencv\build\include $${PWD}/..
+   LIBS += C:\opencv\opencv-build\bin\libopencv_core401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_highgui401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_imgcodecs401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_imgproc401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_features2d401.dll
+   LIBS += C:\opencv\opencv-build\bin\libopencv_calib3d401.dll
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
 
-   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
-   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+#   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
+#   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
 ##End change paths
 
   LIBS += -L$${PWD}\..\quazip\lib

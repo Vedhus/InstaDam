@@ -51,6 +51,8 @@ public:
     QAction *actionExport_zip;
     QAction *actionSave_Annotation;
     QAction *openAnnotations;
+    QAction *actionSearch;
+    QAction *actionUpdate_Privilege;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -117,6 +119,7 @@ public:
     QMenu *menu_File;
     QMenu *menuEdit;
     QMenu *menuProject;
+    QMenu *menuUser;
 
     void setupUi(QMainWindow *InstaDam)
     {
@@ -163,6 +166,10 @@ public:
         actionSave_Annotation->setObjectName(QStringLiteral("actionSave_Annotation"));
         openAnnotations = new QAction(InstaDam);
         openAnnotations->setObjectName(QStringLiteral("openAnnotations"));
+        actionSearch = new QAction(InstaDam);
+        actionSearch->setObjectName(QStringLiteral("actionSearch"));
+        actionUpdate_Privilege = new QAction(InstaDam);
+        actionUpdate_Privilege->setObjectName(QStringLiteral("actionUpdate_Privilege"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -289,7 +296,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 637));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 638));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -462,7 +469,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1332, 70));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1334, 70));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -552,7 +559,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1362, 21));
+        menubar->setGeometry(QRect(0, 0, 1362, 20));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -561,11 +568,14 @@ public:
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuProject = new QMenu(menubar);
         menuProject->setObjectName(QStringLiteral("menuProject"));
+        menuUser = new QMenu(menubar);
+        menuUser->setObjectName(QStringLiteral("menuUser"));
         InstaDam->setMenuBar(menubar);
 
         menubar->addAction(menuProject->menuAction());
         menubar->addAction(menu_File->menuAction());
         menubar->addAction(menuEdit->menuAction());
+        menubar->addAction(menuUser->menuAction());
         menu_File->addAction(actionOpen_File);
         menu_File->addSeparator();
         menu_File->addAction(openAnnotations);
@@ -577,6 +587,8 @@ public:
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
+        menuUser->addAction(actionSearch);
+        menuUser->addAction(actionUpdate_Privilege);
 
         retranslateUi(InstaDam);
 
@@ -612,6 +624,8 @@ public:
         actionExport_zip->setText(QApplication::translate("InstaDam", "Export zip", nullptr));
         actionSave_Annotation->setText(QApplication::translate("InstaDam", "Save", nullptr));
         openAnnotations->setText(QApplication::translate("InstaDam", "Open", nullptr));
+        actionSearch->setText(QApplication::translate("InstaDam", "Search", nullptr));
+        actionUpdate_Privilege->setText(QApplication::translate("InstaDam", "Update Privilege", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
@@ -636,6 +650,7 @@ public:
         menu_File->setTitle(QApplication::translate("InstaDam", "Annotations", nullptr));
         menuEdit->setTitle(QApplication::translate("InstaDam", "Edit", nullptr));
         menuProject->setTitle(QApplication::translate("InstaDam", "Project", nullptr));
+        menuUser->setTitle(QApplication::translate("InstaDam", "User", nullptr));
     } // retranslateUi
 
 };

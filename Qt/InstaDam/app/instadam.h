@@ -117,6 +117,10 @@ class InstaDam : public QMainWindow {
 
     void on_filterOptions_clicked();
 
+    void on_actionSearch_triggered();
+
+    void on_actionUpdate_Privilege_triggered();
+
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);

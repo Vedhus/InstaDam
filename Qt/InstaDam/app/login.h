@@ -27,6 +27,12 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_username_selectionChanged();
+
+    void on_password_textChanged();
+
+    void on_url_textChanged();
+
 private:
     Ui::Login *ui;
     void replyFinished();

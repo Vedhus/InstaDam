@@ -179,3 +179,18 @@ void Login::on_pushButton_4_clicked() {
     wid->show();
     hide();
 }
+
+void Login::on_username_selectionChanged()
+{
+    ui->username->clear();
+}
+
+void Login::on_password_textChanged()
+{
+    ui->password->clear();
+}
+
+void Login::on_url_textChanged()
+{
+    ui->url->clear();
+}

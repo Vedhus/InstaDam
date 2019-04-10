@@ -327,8 +327,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>69</width>
-                        <height>637</height>
+                        <width>68</width>
+                        <height>638</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -698,7 +698,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1332</width>
+                    <width>1334</width>
                     <height>70</height>
                    </rect>
                   </property>
@@ -812,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1362</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -847,9 +847,17 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
    </widget>
+   <widget class="QMenu" name="menuUser">
+    <property name="title">
+     <string>User</string>
+    </property>
+    <addaction name="actionSearch"/>
+    <addaction name="actionUpdate_Privilege"/>
+   </widget>
    <addaction name="menuProject"/>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuUser"/>
   </widget>
   <action name="action_Open">
    <property name="text">
@@ -928,6 +936,16 @@
   <action name="openAnnotations">
    <property name="text">
     <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Privilege">
+   <property name="text">
+    <string>Update Privilege</string>
    </property>
   </action>
  </widget>

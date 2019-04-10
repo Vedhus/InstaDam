@@ -24,6 +24,8 @@
 #include "quazip/quazipfile.h"
 #include "startingwidget.h"
 #include "imagelist.h"
+#include "ui_addusertoproject.h"
+#include "addusertoproject.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
@@ -1618,3 +1620,19 @@ void InstaDam::processShowHide(int state) {
 }
 
 
+void InstaDam::on_actionSearch_triggered()
+{
+    if(this->runningLocally==false){
+        AddUserToProject *addUserToProjectInterface = new AddUserToProject;
+        addUserToProjectInterface->accessToken = this->accessToken;
+        addUserToProjectInterface->databaseURL = this->databaseURL;
+        addUserToProjectInterface->show();
+    }
+}
+
+void InstaDam::on_actionUpdate_Privilege_triggered()
+{
+    if(this->runningLocally==false){
+        on_actionSearch_triggered();
+    }
+}
