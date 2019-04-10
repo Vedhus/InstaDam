@@ -35,6 +35,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     void setRectUnchecked(QRectF rect) override;
     void updatePen(QPen pen) override;
     void toPixmap(QPainter *painter) override;
+    void setOpacity(qreal val);
 
     // Mirror functions
     EllipseSelect* getMirror() const override {return mirror;}
@@ -56,7 +57,6 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     QGraphicsScene* scene();
     bool isVisible() const {return SelectItem::isVisible();}
     int type() const override {return SelectItem::type();}
-    void setOpacity(qreal);
 
  private:
     EllipseSelect *mirror = nullptr;

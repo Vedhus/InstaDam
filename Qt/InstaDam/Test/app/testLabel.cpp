@@ -69,6 +69,9 @@ void TestSelect::testLabelSetOpacity() {
     generateData();
     myLabel->setOpacity(2);
     QCOMPARE(ritem->SelectItem::opacity(), .02);
+    QCOMPARE(eitem->SelectItem::opacity(), .02);
+    QCOMPARE(pitem->SelectItem::opacity(), .02);
+    QCOMPARE(fitem->SelectItem::opacity(), .02);
     delete ritem;
     delete eitem;
     delete pitem;

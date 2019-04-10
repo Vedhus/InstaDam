@@ -41,6 +41,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
     void toPixmap(QPainter *painter) override;
+    void setOpacity(qreal);
 
     // Mirror
     PolygonSelect* getMirror() const override {return mirror;}
@@ -68,7 +69,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
     QPolygonF getPolygon() const {return polygon;}
 
     QGraphicsScene* scene() const;
-    void setOpacity(qreal);
+
 #ifdef TEST
     friend class TestSelect;
 #endif

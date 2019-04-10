@@ -148,22 +148,26 @@ void Label::clear() {
   Set the opacity of the related SelectItems to \a val as an integer percentage.
   */
 void Label::setOpacity(int val) {
-    double normalizedValue = val/100.0;
-    qInfo("Opacity\n%f", normalizedValue);
+    float normalizedValue = val/100.0;
     QHash<int, RectangleSelect*>::iterator rectItems;
     QHash<int, PolygonSelect*>::iterator polygonItems;
     QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
     QHash<int, EllipseSelect*>::iterator ellipseItems;
 
-    for (rectItems = rectangleObjects.begin();
-         rectItems != rectangleObjects.end(); ++rectItems)
+    for (rectItems = rectangleObjects.begin(); rectItems != rectangleObjects.end(); ++rectItems)
         rectItems.value()->setOpacity(normalizedValue);
-    qInfo("Opacity Rectangle\n");
-    for (polygonItems = polygonObjects.begin();
-         polygonItems != polygonObjects.end(); ++polygonItems)
+
+    for (polygonItems = polygonObjects.begin(); polygonItems != polygonObjects.end(); ++polygonItems)
         polygonItems.value()->setOpacity(normalizedValue);
-    qInfo("Opacity Polygon\n");
+
+    for (ellipseItems = ellipseObjects.begin(); ellipseItems != ellipseObjects.end(); ++ellipseItems)
+        ellipseItems.value()->setOpacity(normalizedValue);
+
+    for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
+        freeDrawItems.value()->setOpacity(normalizedValue);
+
 }
+
 
 /*!
   Reads a QJsonObject \a json and sets the Label annotation's to the data it
