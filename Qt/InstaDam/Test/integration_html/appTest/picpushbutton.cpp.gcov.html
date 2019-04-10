@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td class="headerValue">2019-04-10 14:42:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -123,15 +123,15 @@
 <span class="lineNum">      45 </span>                :            : /*!
 <a name="46"><span class="lineNum">      46 </span>                :            :   Resets the pixmaps based on \a pixmap_input.</a>
 <span class="lineNum">      47 </span>                :            :   */
-<span class="lineNum">      48 </span>                :<span class="lineCov">          5 : void PicPushButton::resetPixmaps(QPixmap pixmap_input) {</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">         10 :     pixmap_hover = testPixmap(20, 125, 200, 128);</span>
-<span class="lineNum">      50 </span>                :<span class="lineCov">         10 :     pixmap_pressed = testPixmap(30, 180, 200, 128);</span>
-<span class="lineNum">      51 </span>                :<span class="lineCov">          5 :     pixmap = pixmap_input;</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">         10 :     pixmap_hover = joinPixmaps(pixmap, pixmap_hover,</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">          9 : void PicPushButton::resetPixmaps(QPixmap pixmap_input) {</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">         18 :     pixmap_hover = testPixmap(20, 125, 200, 128);</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">         18 :     pixmap_pressed = testPixmap(30, 180, 200, 128);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">          9 :     pixmap = pixmap_input;</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">         18 :     pixmap_hover = joinPixmaps(pixmap, pixmap_hover,</span>
 <span class="lineNum">      53 </span>                :            :                                QPainter::CompositionMode_SourceOver);
-<span class="lineNum">      54 </span>                :<span class="lineCov">         10 :     pixmap_pressed = joinPixmaps(pixmap, pixmap_pressed,</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">         18 :     pixmap_pressed = joinPixmaps(pixmap, pixmap_pressed,</span>
 <span class="lineNum">      55 </span>                :            :                                  QPainter::CompositionMode_SourceOver);
-<span class="lineNum">      56 </span>                :<span class="lineCov">          5 : }</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">          9 : }</span>
 <span class="lineNum">      57 </span>                :            : 
 <span class="lineNum">      58 </span>                :            : /*!
 <a name="59"><span class="lineNum">      59 </span>                :            :   Returns a QPixmap based on \a pixmap_input with \a text written on it.</a>

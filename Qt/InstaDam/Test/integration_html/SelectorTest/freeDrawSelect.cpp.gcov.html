@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">105</td>
             <td class="headerCovTableEntry">188</td>
-            <td class="headerCovTableEntryLo">1.1 %</td>
+            <td class="headerCovTableEntryLo">55.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td class="headerValue">2019-04-10 14:42:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">20</td>
             <td class="headerCovTableEntry">35</td>
-            <td class="headerCovTableEntryLo">5.7 %</td>
+            <td class="headerCovTableEntryLo">57.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -176,22 +176,22 @@
 <span class="lineNum">      98 </span>                :            :   \li Qt::RoundCap
 <a name="99"><span class="lineNum">      99 </span>                :            :   \endlist</a>
 <span class="lineNum">     100 </span>                :            :   */
-<span class="lineNum">     101 </span>                :<span class="lineNoCov">          0 : FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">          3 : FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,</span>
 <span class="lineNum">     102 </span>                :            :                                Qt::PenCapStyle brushMode,
 <span class="lineNum">     103 </span>                :            :                                QSharedPointer&lt;Label&gt; label,
 <span class="lineNum">     104 </span>                :            :                                QGraphicsItem *item)
-<span class="lineNum">     105 </span>                :<span class="lineNoCov">          0 :     : QGraphicsPixmapItem(item), SelectItem(label, item){</span>
-<span class="lineNum">     106 </span>                :<span class="lineNoCov">          0 :     init(label);</span>
-<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 :     myPen.setWidth(brushSize);</span>
-<span class="lineNum">     108 </span>                :<span class="lineNoCov">          0 :     myPen.setCapStyle(brushMode);</span>
-<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :     myPen.setJoinStyle(Qt::MiterJoin);</span>
-<span class="lineNum">     110 </span>                :<span class="lineNoCov">          0 :     myPen.setMiterLimit(0.1);</span>
-<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;myPixmap);</span>
-<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(myPen);</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">          9 :     : QGraphicsPixmapItem(item), SelectItem(label, item){</span>
+<span class="lineNum">     106 </span>                :<span class="lineCov">          6 :     init(label);</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">          3 :     myPen.setWidth(brushSize);</span>
+<span class="lineNum">     108 </span>                :<span class="lineCov">          3 :     myPen.setCapStyle(brushMode);</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">          3 :     myPen.setJoinStyle(Qt::MiterJoin);</span>
+<span class="lineNum">     110 </span>                :<span class="lineCov">          3 :     myPen.setMiterLimit(0.1);</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">          3 :     myPainter.begin(&amp;myPixmap);</span>
+<span class="lineNum">     112 </span>                :<span class="lineCov">          3 :     myPainter.setPen(myPen);</span>
 <span class="lineNum">     113 </span>                :            :     myPainter.drawPoint(point);
-<span class="lineNum">     114 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     115 </span>                :<span class="lineNoCov">          0 :     setup();</span>
-<span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     114 </span>                :<span class="lineCov">          3 :     myPainter.end();</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">          3 :     setup();</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     117 </span>                :            : 
 <span class="lineNum">     118 </span>                :            : /*!
 <span class="lineNum">     119 </span>                :            :   Constructs a FreeDrawSelect object with an initial selected point \a point,
@@ -199,16 +199,16 @@
 <span class="lineNum">     121 </span>                :            :   as the Label which owns this object and \a item is the parent QGraphicsItem,
 <a name="122"><span class="lineNum">     122 </span>                :            :   if any.</a>
 <span class="lineNum">     123 </span>                :            :   */
-<span class="lineNum">     124 </span>                :<span class="lineNoCov">          0 : FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,</span>
+<span class="lineNum">     124 </span>                :<span class="lineCov">          1 : FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,</span>
 <span class="lineNum">     125 </span>                :            :                                QSharedPointer&lt;Label&gt; label, QGraphicsItem *item)
-<span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :     : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {</span>
-<span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     126 </span>                :<span class="lineCov">          2 :     : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {</span>
+<span class="lineNum">     127 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     128 </span>                :            : 
 <span class="lineNum">     129 </span>                :            : /*!
 <a name="130"><span class="lineNum">     130 </span>                :            :   Destructor</a>
 <span class="lineNum">     131 </span>                :            :   */
-<span class="lineNum">     132 </span>                :<span class="lineNoCov">          0 : FreeDrawSelect::~FreeDrawSelect() {</span>
-<span class="lineNum">     133 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">          4 : FreeDrawSelect::~FreeDrawSelect() {</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     134 </span>                :            : 
 <span class="lineNum">     135 </span>                :            : /*---------------------------- Overrides ------------------------*/
 <span class="lineNum">     136 </span>                :            : /*!
@@ -238,21 +238,21 @@
 <span class="lineNum">     160 </span>                :            : /*!
 <a name="161"><span class="lineNum">     161 </span>                :            :   \reimp</a>
 <span class="lineNum">     162 </span>                :            :   */
-<span class="lineNum">     163 </span>                :<span class="lineNoCov">          0 : bool FreeDrawSelect::isInside(const QPointF &amp;point) const {</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">          1 : bool FreeDrawSelect::isInside(const QPointF &amp;point) const {</span>
 <span class="lineNum">     164 </span>                :            :     UNUSED(point);
-<span class="lineNum">     165 </span>                :<span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">          1 :     return false;</span>
 <span class="lineNum">     166 </span>                :            : }
 <span class="lineNum">     167 </span>                :            : 
 <span class="lineNum">     168 </span>                :            : /*!
 <a name="169"><span class="lineNum">     169 </span>                :            :   \reimp</a>
 <span class="lineNum">     170 </span>                :            :   */
-<span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) {</span>
-<span class="lineNum">     172 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;myPixmap);</span>
-<span class="lineNum">     173 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(myPen);</span>
-<span class="lineNum">     174 </span>                :<span class="lineNoCov">          0 :     myPainter.drawLine(oldPos, newPos);</span>
-<span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :     setMirrorMap();</span>
-<span class="lineNum">     177 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">          5 : void FreeDrawSelect::moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) {</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">          5 :     myPainter.begin(&amp;myPixmap);</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">          5 :     myPainter.setPen(myPen);</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          5 :     myPainter.drawLine(oldPos, newPos);</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">          5 :     myPainter.end();</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">          5 :     setMirrorMap();</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">          5 : }</span>
 <span class="lineNum">     178 </span>                :            : 
 <span class="lineNum">     179 </span>                :            : /*!
 <a name="180"><span class="lineNum">     180 </span>                :            :   \reimp</a>
@@ -300,9 +300,9 @@
 <span class="lineNum">     222 </span>                :            : /*!
 <a name="223"><span class="lineNum">     223 </span>                :            :   \reimp</a>
 <span class="lineNum">     224 </span>                :            :   */
-<span class="lineNum">     225 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::updatePen(QPen pen) {</span>
-<span class="lineNum">     226 </span>                :<span class="lineNoCov">          0 :     myPen = pen;</span>
-<span class="lineNum">     227 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     225 </span>                :<span class="lineCov">          4 : void FreeDrawSelect::updatePen(QPen pen) {</span>
+<span class="lineNum">     226 </span>                :<span class="lineCov">          4 :     myPen = pen;</span>
+<span class="lineNum">     227 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     228 </span>                :            : 
 <span class="lineNum">     229 </span>                :            : /*!
 <a name="230"><span class="lineNum">     230 </span>                :            :   \reimp</a>
@@ -320,95 +320,95 @@
 <span class="lineNum">     242 </span>                :            : /*!
 <a name="243"><span class="lineNum">     243 </span>                :            :   \reimp</a>
 <span class="lineNum">     244 </span>                :            :   */
-<span class="lineNum">     245 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::mirrorHide() const {</span>
-<span class="lineNum">     246 </span>                :<span class="lineNoCov">          0 :     if (mirror != nullptr)</span>
-<span class="lineNum">     247 </span>                :<span class="lineNoCov">          0 :         mirror-&gt;SelectItem::hide();</span>
-<span class="lineNum">     248 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     245 </span>                :<span class="lineCov">          2 : void FreeDrawSelect::mirrorHide() const {</span>
+<span class="lineNum">     246 </span>                :<span class="lineCov">          2 :     if (mirror != nullptr)</span>
+<span class="lineNum">     247 </span>                :<span class="lineCov">          2 :         mirror-&gt;SelectItem::hide();</span>
+<span class="lineNum">     248 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     249 </span>                :            : 
 <span class="lineNum">     250 </span>                :            : /*!
 <a name="251"><span class="lineNum">     251 </span>                :            :   \reimp</a>
 <span class="lineNum">     252 </span>                :            :   */
-<span class="lineNum">     253 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::mirrorShow() const {</span>
-<span class="lineNum">     254 </span>                :<span class="lineNoCov">          0 :     if (mirror != nullptr)</span>
-<span class="lineNum">     255 </span>                :<span class="lineNoCov">          0 :         mirror-&gt;SelectItem::show();</span>
-<span class="lineNum">     256 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     253 </span>                :<span class="lineCov">          1 : void FreeDrawSelect::mirrorShow() const {</span>
+<span class="lineNum">     254 </span>                :<span class="lineCov">          1 :     if (mirror != nullptr)</span>
+<span class="lineNum">     255 </span>                :<span class="lineCov">          1 :         mirror-&gt;SelectItem::show();</span>
+<span class="lineNum">     256 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     257 </span>                :            : 
 <span class="lineNum">     258 </span>                :            : /*!
 <a name="259"><span class="lineNum">     259 </span>                :            :   \reimp</a>
 <span class="lineNum">     260 </span>                :            :   */
-<span class="lineNum">     261 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::setMirror(SelectItem *item) {</span>
-<span class="lineNum">     262 </span>                :<span class="lineNoCov">          0 :     mirror = dynamic_cast&lt;FreeDrawSelect*&gt;(item);</span>
-<span class="lineNum">     263 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     261 </span>                :<span class="lineCov">          2 : void FreeDrawSelect::setMirror(SelectItem *item) {</span>
+<span class="lineNum">     262 </span>                :<span class="lineCov">          2 :     mirror = dynamic_cast&lt;FreeDrawSelect*&gt;(item);</span>
+<span class="lineNum">     263 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     264 </span>                :            : 
 <span class="lineNum">     265 </span>                :            : /*!
 <a name="266"><span class="lineNum">     266 </span>                :            :   \reimp</a>
 <span class="lineNum">     267 </span>                :            :   */
-<span class="lineNum">     268 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::updateMirrorScene() const {</span>
-<span class="lineNum">     269 </span>                :<span class="lineNoCov">          0 :     if (mirror != nullptr)</span>
-<span class="lineNum">     270 </span>                :<span class="lineNoCov">          0 :         mirror-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     271 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     268 </span>                :<span class="lineCov">          2 : void FreeDrawSelect::updateMirrorScene() const {</span>
+<span class="lineNum">     269 </span>                :<span class="lineCov">          2 :     if (mirror != nullptr)</span>
+<span class="lineNum">     270 </span>                :<span class="lineCov">          2 :         mirror-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     272 </span>                :            : 
 <span class="lineNum">     273 </span>                :            : /*---------------------------- End Mirror ------------------------------*/
 <span class="lineNum">     274 </span>                :            : 
 <span class="lineNum">     275 </span>                :            : /*!
 <a name="276"><span class="lineNum">     276 </span>                :            :   Adds \a points to the internal pixel map of selected points.</a>
 <span class="lineNum">     277 </span>                :            :   */
-<span class="lineNum">     278 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::addPoints(QSharedPointer&lt;QPixmap&gt; points) {</span>
-<span class="lineNum">     279 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;myPixmap);</span>
-<span class="lineNum">     280 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(myPen);</span>
-<span class="lineNum">     281 </span>                :<span class="lineNoCov">          0 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOver);</span>
-<span class="lineNum">     282 </span>                :<span class="lineNoCov">          0 :     myPainter.drawPixmap(QPointF(0., 0.), (*points.data()));</span>
-<span class="lineNum">     283 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     284 </span>                :<span class="lineNoCov">          0 :     setMirrorMap();</span>
-<span class="lineNum">     285 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">          2 : void FreeDrawSelect::addPoints(QSharedPointer&lt;QPixmap&gt; points) {</span>
+<span class="lineNum">     279 </span>                :<span class="lineCov">          1 :     myPainter.begin(&amp;myPixmap);</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">          1 :     myPainter.setPen(myPen);</span>
+<span class="lineNum">     281 </span>                :<span class="lineCov">          1 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOver);</span>
+<span class="lineNum">     282 </span>                :<span class="lineCov">          1 :     myPainter.drawPixmap(QPointF(0., 0.), (*points.data()));</span>
+<span class="lineNum">     283 </span>                :<span class="lineCov">          1 :     myPainter.end();</span>
+<span class="lineNum">     284 </span>                :<span class="lineCov">          1 :     setMirrorMap();</span>
+<span class="lineNum">     285 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     286 </span>                :            : 
 <span class="lineNum">     287 </span>                :            : /*!
 <span class="lineNum">     288 </span>                :            :   Deletes points along the brush stroke defined by \a start and \a end, with
 <a name="289"><span class="lineNum">     289 </span>                :            :   the given \a pen, with the changes put in \a outmap.</a>
 <span class="lineNum">     290 </span>                :            :   */
-<span class="lineNum">     291 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::deletePoints(const QPointF &amp;start, const QPointF &amp;end,</span>
-<span class="lineNum">     292 </span>                :<span class="lineNoCov">          0 :                                   QPen pen, QSharedPointer&lt;QPixmap&gt; outmap) {</span>
-<span class="lineNum">     293 </span>                :<span class="lineNoCov">          0 :     QPixmap temp = myPixmap.copy();</span>
-<span class="lineNum">     294 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;myPixmap);</span>
-<span class="lineNum">     295 </span>                :<span class="lineNoCov">          0 :     myPainter.setCompositionMode(QPainter::CompositionMode_SourceOut);</span>
-<span class="lineNum">     296 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(pen);</span>
-<span class="lineNum">     297 </span>                :<span class="lineNoCov">          0 :     myPainter.drawLine(start, end);</span>
-<span class="lineNum">     298 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     299 </span>                :<span class="lineNoCov">          0 :     pen.setColor(myPen.color());</span>
-<span class="lineNum">     300 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;temp);</span>
-<span class="lineNum">     301 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(pen);</span>
-<span class="lineNum">     302 </span>                :<span class="lineNoCov">          0 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);</span>
-<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 :     myPainter.drawPixmap(QPointF(0., 0.), myPixmap);</span>
-<span class="lineNum">     304 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     305 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(outmap.data());</span>
-<span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(pen);</span>
-<span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :     myPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);</span>
-<span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :     myPainter.drawPixmap(QPointF(0., 0.), temp);</span>
-<span class="lineNum">     309 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
+<span class="lineNum">     291 </span>                :<span class="lineCov">          3 : void FreeDrawSelect::deletePoints(const QPointF &amp;start, const QPointF &amp;end,</span>
+<span class="lineNum">     292 </span>                :<span class="lineCov">          3 :                                   QPen pen, QSharedPointer&lt;QPixmap&gt; outmap) {</span>
+<span class="lineNum">     293 </span>                :<span class="lineCov">          3 :     QPixmap temp = myPixmap.copy();</span>
+<span class="lineNum">     294 </span>                :<span class="lineCov">          3 :     myPainter.begin(&amp;myPixmap);</span>
+<span class="lineNum">     295 </span>                :<span class="lineCov">          3 :     myPainter.setCompositionMode(QPainter::CompositionMode_SourceOut);</span>
+<span class="lineNum">     296 </span>                :<span class="lineCov">          3 :     myPainter.setPen(pen);</span>
+<span class="lineNum">     297 </span>                :<span class="lineCov">          3 :     myPainter.drawLine(start, end);</span>
+<span class="lineNum">     298 </span>                :<span class="lineCov">          3 :     myPainter.end();</span>
+<span class="lineNum">     299 </span>                :<span class="lineCov">          3 :     pen.setColor(myPen.color());</span>
+<span class="lineNum">     300 </span>                :<span class="lineCov">          3 :     myPainter.begin(&amp;temp);</span>
+<span class="lineNum">     301 </span>                :<span class="lineCov">          3 :     myPainter.setPen(pen);</span>
+<span class="lineNum">     302 </span>                :<span class="lineCov">          3 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);</span>
+<span class="lineNum">     303 </span>                :<span class="lineCov">          3 :     myPainter.drawPixmap(QPointF(0., 0.), myPixmap);</span>
+<span class="lineNum">     304 </span>                :<span class="lineCov">          3 :     myPainter.end();</span>
+<span class="lineNum">     305 </span>                :<span class="lineCov">          3 :     myPainter.begin(outmap.data());</span>
+<span class="lineNum">     306 </span>                :<span class="lineCov">          3 :     myPainter.setPen(pen);</span>
+<span class="lineNum">     307 </span>                :<span class="lineCov">          3 :     myPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">          3 :     myPainter.drawPixmap(QPointF(0., 0.), temp);</span>
+<span class="lineNum">     309 </span>                :<span class="lineCov">          3 :     myPainter.end();</span>
 <span class="lineNum">     310 </span>                :            : 
-<span class="lineNum">     311 </span>                :<span class="lineNoCov">          0 :     setMirrorMap();</span>
-<span class="lineNum">     312 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     311 </span>                :<span class="lineCov">          3 :     setMirrorMap();</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     313 </span>                :            : 
 <span class="lineNum">     314 </span>                :            : /*!
 <a name="315"><span class="lineNum">     315 </span>                :            :   Returns the QGraphicsScene to which this item belongs.</a>
 <span class="lineNum">     316 </span>                :            :   */
-<span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 : QGraphicsScene* FreeDrawSelect::scene() const {</span>
-<span class="lineNum">     318 </span>                :<span class="lineNoCov">          0 :     return SelectItem::scene();</span>
+<span class="lineNum">     317 </span>                :<span class="lineCov">          2 : QGraphicsScene* FreeDrawSelect::scene() const {</span>
+<span class="lineNum">     318 </span>                :<span class="lineCov">          2 :     return SelectItem::scene();</span>
 <span class="lineNum">     319 </span>                :            : }
 <span class="lineNum">     320 </span>                :            : 
 <span class="lineNum">     321 </span>                :            : /*!
 <span class="lineNum">     322 </span>                :            :   \overload FreeDrawSelect::deletePoints()
 <a name="323"><span class="lineNum">     323 </span>                :            :   Deletes points based on the pixmap \a map with the given \a pen.</a>
 <span class="lineNum">     324 </span>                :            :   */
-<span class="lineNum">     325 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::deletePoints(QPen &amp;pen, QSharedPointer&lt;QPixmap&gt; map) {</span>
-<span class="lineNum">     326 </span>                :<span class="lineNoCov">          0 :     myPainter.begin(&amp;myPixmap);</span>
-<span class="lineNum">     327 </span>                :<span class="lineNoCov">          0 :     pen.setColor(Qt::red);</span>
-<span class="lineNum">     328 </span>                :<span class="lineNoCov">          0 :     myPainter.setPen(pen);</span>
-<span class="lineNum">     329 </span>                :<span class="lineNoCov">          0 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);</span>
-<span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 :     myPainter.drawPixmap(QPointF(0., 0.), (*map.data()));</span>
-<span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :     myPainter.end();</span>
-<span class="lineNum">     332 </span>                :<span class="lineNoCov">          0 :     setMirrorMap();</span>
-<span class="lineNum">     333 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">          2 : void FreeDrawSelect::deletePoints(QPen &amp;pen, QSharedPointer&lt;QPixmap&gt; map) {</span>
+<span class="lineNum">     326 </span>                :<span class="lineCov">          1 :     myPainter.begin(&amp;myPixmap);</span>
+<span class="lineNum">     327 </span>                :<span class="lineCov">          1 :     pen.setColor(Qt::red);</span>
+<span class="lineNum">     328 </span>                :<span class="lineCov">          1 :     myPainter.setPen(pen);</span>
+<span class="lineNum">     329 </span>                :<span class="lineCov">          1 :     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);</span>
+<span class="lineNum">     330 </span>                :<span class="lineCov">          1 :     myPainter.drawPixmap(QPointF(0., 0.), (*map.data()));</span>
+<span class="lineNum">     331 </span>                :<span class="lineCov">          1 :     myPainter.end();</span>
+<span class="lineNum">     332 </span>                :<span class="lineCov">          1 :     setMirrorMap();</span>
+<span class="lineNum">     333 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     334 </span>                :            : 
 <span class="lineNum">     335 </span>                :            : 
 <span class="lineNum">     336 </span>                :            : /*------------------------------- Private ---------------------------*/
@@ -417,11 +417,11 @@
 <span class="lineNum">     339 </span>                :            :   Sets the bounding rectangle and pixel map of the mirror, based on the values
 <a name="340"><span class="lineNum">     340 </span>                :            :   of this instance.</a>
 <span class="lineNum">     341 </span>                :            :   */
-<span class="lineNum">     342 </span>                :<span class="lineNoCov">          0 : void FreeDrawSelect::setMirrorMap() {</span>
-<span class="lineNum">     343 </span>                :<span class="lineNoCov">          0 :     if (mirror != nullptr) {</span>
-<span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :         mirror-&gt;myPixmap = myPixmap;</span>
+<span class="lineNum">     342 </span>                :<span class="lineCov">         13 : void FreeDrawSelect::setMirrorMap() {</span>
+<span class="lineNum">     343 </span>                :<span class="lineCov">         13 :     if (mirror != nullptr) {</span>
+<span class="lineNum">     344 </span>                :<span class="lineCov">         10 :         mirror-&gt;myPixmap = myPixmap;</span>
 <span class="lineNum">     345 </span>                :            :     }
-<span class="lineNum">     346 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     346 </span>                :<span class="lineCov">         13 : }</span>
 <span class="lineNum">     347 </span>                :            : 
 <span class="lineNum">     348 </span>                :            : /*!
 <a name="349"><span class="lineNum">     349 </span>                :            :   Loads QPixmap \a map into the current object.</a>
@@ -448,24 +448,24 @@
 <span class="lineNum">     370 </span>                :<span class="lineNoCov">          0 : }</span>
 <a name="371"><span class="lineNum">     371 </span>                :            : </a>
 <span class="lineNum">     372 </span>                :            : 
-<span class="lineNum">     373 </span>                :<span class="lineNoCov">          0 : inline void FreeDrawSelect::setup() {</span>
-<span class="lineNum">     374 </span>                :<span class="lineNoCov">          0 :     setMirrorMap();</span>
-<span class="lineNum">     375 </span>                :<span class="lineNoCov">          0 :     QGraphicsPixmapItem::prepareGeometryChange();</span>
-<span class="lineNum">     376 </span>                :<span class="lineNoCov">          0 :     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);</span>
-<span class="lineNum">     377 </span>                :<span class="lineNoCov">          0 :     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);</span>
-<a name="378"><span class="lineNum">     378 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">     373 </span>                :<span class="lineCov">          3 : inline void FreeDrawSelect::setup() {</span>
+<span class="lineNum">     374 </span>                :<span class="lineCov">          3 :     setMirrorMap();</span>
+<span class="lineNum">     375 </span>                :<span class="lineCov">          3 :     QGraphicsPixmapItem::prepareGeometryChange();</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">          3 :     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);</span>
+<span class="lineNum">     377 </span>                :<span class="lineCov">          3 :     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);</span>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">          3 : }</span></a>
 <span class="lineNum">     379 </span>                :            : 
-<span class="lineNum">     380 </span>                :<span class="lineNoCov">          0 : inline void FreeDrawSelect::init(QSharedPointer&lt;Label&gt; label) {</span>
+<span class="lineNum">     380 </span>                :<span class="lineCov">          3 : inline void FreeDrawSelect::init(QSharedPointer&lt;Label&gt; label) {</span>
 <span class="lineNum">     381 </span>                :            :     setActiveVertex(0);
-<span class="lineNum">     382 </span>                :<span class="lineNoCov">          0 :     mytype = SelectItem::Freedraw;</span>
-<span class="lineNum">     383 </span>                :<span class="lineNoCov">          0 :     active = true;</span>
-<span class="lineNum">     384 </span>                :<span class="lineNoCov">          0 :     if (label != nullptr)</span>
-<span class="lineNum">     385 </span>                :<span class="lineNoCov">          0 :         label-&gt;addItem(this);</span>
-<span class="lineNum">     386 </span>                :<span class="lineNoCov">          0 :     myRect = QRectF(0., 0., SelectItem::myBounds.width(),</span>
-<span class="lineNum">     387 </span>                :<span class="lineNoCov">          0 :                     SelectItem::myBounds.height());</span>
-<a name="388"><span class="lineNum">     388 </span>                :<span class="lineNoCov">          0 :     myPixmap = QPixmap(SelectItem::myBounds);</span></a>
-<span class="lineNum">     389 </span>                :<span class="lineNoCov">          0 :     myPixmap.fill(Qt::transparent);</span>
-<span class="lineNum">     390 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">          3 :     mytype = SelectItem::Freedraw;</span>
+<span class="lineNum">     383 </span>                :<span class="lineCov">          3 :     active = true;</span>
+<span class="lineNum">     384 </span>                :<span class="lineCov">          3 :     if (label != nullptr)</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">          1 :         label-&gt;addItem(this);</span>
+<span class="lineNum">     386 </span>                :<span class="lineCov">          3 :     myRect = QRectF(0., 0., SelectItem::myBounds.width(),</span>
+<span class="lineNum">     387 </span>                :<span class="lineCov">          6 :                     SelectItem::myBounds.height());</span>
+<a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">          6 :     myPixmap = QPixmap(SelectItem::myBounds);</span></a>
+<span class="lineNum">     389 </span>                :<span class="lineCov">          3 :     myPixmap.fill(Qt::transparent);</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     391 </span>                :            : /*!
 <span class="lineNum">     392 </span>                :            :   \fn QString FreeDrawSelect::baseInstructions() const
 <span class="lineNum">     393 </span>                :            : 

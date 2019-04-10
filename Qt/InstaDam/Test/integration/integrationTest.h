@@ -1,6 +1,7 @@
 #ifndef INTEGRATIONTEST_H
 #define INTEGRATIONTEST_H
 #include <QtTest/QtTest>
+#include <QVector>
 #include "../appTest/instadam.h"
 #include "../appTest/ui_instadam.h"
 
@@ -9,13 +10,14 @@ class IntegrationTest: public QObject {
 
 private slots:
     void initTestCase();
-    void cleanupTestCase();
+    void cleanup();
+    void init();
     void testWriteAndReadLocal();
-    void testAnnotateMove();
-    void testOpenProjectAndAnnotate();
-    void testSaveAndNext();
-    void testExport();
-    void testAsserts();
+    //void testAnnotateMove();
+    //void testOpenProjectAndAnnotate();
+    //void testSaveAndNext();
+    //void testExport();
+    //void testAsserts();
 
 private:
     InstaDam *idm;
@@ -54,9 +56,12 @@ private:
     QPointF free4 = QPointF(10., 10.);
     QPointF free5 = QPointF(10., 10.);
     QPointF free6 = QPointF(10., 10.);
+    QVector<QPointF> freePoints;
+
     QPointF erase1 = QPointF(10., 10.);
     QPointF erase2 = QPointF(10., 10.);
     QPointF erase3 = QPointF(10., 10.);
+    QVector<QPointF> erasePoints;
 
     void makeMouseDownEvent(QPointF point, Qt::MouseButton button = Qt::LeftButton,
                             PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE);
@@ -84,11 +89,22 @@ private:
     void clickMaskSelections() {idm->ui->showMaskSelections->click();}
     void clickAddSelection() {idm->ui->addSelectionButton->click();}
     void clickCancelSelection() {idm->ui->cancelSelectionButton->click();}
-    void draw(QPointF from, QPointF to) {
-        makeMouseDownEvent(from);
-        makeMouseMoveEvent(from, to);
-        makeMouseReleaseEvent(from, to);
+    void draw(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+              PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
+        makeMouseDownEvent(from, button, type);
+        makeMouseMoveEvent(from, to, button, type);
+        makeMouseReleaseEvent(from, to, button, type);
     }
+
+    void freeDraw(QVector<QPointF> points, Qt::MouseButton button = Qt::LeftButton,
+              PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
+        makeMouseDownEvent(points[0], button, type);
+        for (int i = 0; i < points.size() - 1; i++) {
+            makeMouseMoveEvent(points[i], points[i + 1], button, type);
+        }
+        makeMouseReleaseEvent(points[0], points[points.size() - 1], button, type);
+    }
+
     SelectItem* getItem(int type, ushort num = 1);
 };
 

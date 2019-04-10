@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td class="headerValue">2019-04-10 14:42:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -82,11 +82,11 @@
 <span class="lineNum">       4 </span>                :            : /*!
 <a name="5"><span class="lineNum">       5 </span>                :            :   Testing withn QColor based on \a r, \a g, \a b, \a a.</a>
 <span class="lineNum">       6 </span>                :            :   */
-<span class="lineNum">       7 </span>                :<span class="lineCov">         15 : QPixmap testPixmap(int r = 255, int g = 0, int b = 0, int a = 255) {</span>
-<span class="lineNum">       8 </span>                :<span class="lineCov">         15 :     QPixmap px = QPixmap(200, 200);</span>
+<span class="lineNum">       7 </span>                :<span class="lineCov">         23 : QPixmap testPixmap(int r = 255, int g = 0, int b = 0, int a = 255) {</span>
+<span class="lineNum">       8 </span>                :<span class="lineCov">         23 :     QPixmap px = QPixmap(200, 200);</span>
 <span class="lineNum">       9 </span>                :            :     QColor color  = QColor(r, g, b, a);
-<span class="lineNum">      10 </span>                :<span class="lineCov">         15 :     px.fill(color);</span>
-<span class="lineNum">      11 </span>                :<span class="lineCov">         15 :     return px;</span>
+<span class="lineNum">      10 </span>                :<span class="lineCov">         23 :     px.fill(color);</span>
+<span class="lineNum">      11 </span>                :<span class="lineCov">         23 :     return px;</span>
 <span class="lineNum">      12 </span>                :            : }
 <span class="lineNum">      13 </span>                :            : 
 <span class="lineNum">      14 </span>                :            : /*!
@@ -113,17 +113,17 @@
 <span class="lineNum">      35 </span>                :            : /*!
 <a name="36"><span class="lineNum">      36 </span>                :            :   Returns a QPixmap of \a p1 and \a p2 merged using \a mode.</a>
 <span class="lineNum">      37 </span>                :            :   */
-<span class="lineNum">      38 </span>                :<span class="lineCov">         10 : QPixmap joinPixmaps(QPixmap p1, QPixmap p2,</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">         18 : QPixmap joinPixmaps(QPixmap p1, QPixmap p2,</span>
 <span class="lineNum">      39 </span>                :            :                     QPainter::CompositionMode mode) {
-<span class="lineNum">      40 </span>                :<span class="lineCov">         20 :     QPixmap result =  QPixmap(p1.size().expandedTo(p2.size()));</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">         10 :     result.fill(Qt::transparent);</span>
-<span class="lineNum">      42 </span>                :<span class="lineCov">         20 :     QPainter painter(&amp;result);</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">         10 :     painter.setRenderHint(QPainter::Antialiasing);</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">         36 :     QPixmap result =  QPixmap(p1.size().expandedTo(p2.size()));</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         18 :     result.fill(Qt::transparent);</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">         36 :     QPainter painter(&amp;result);</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">         18 :     painter.setRenderHint(QPainter::Antialiasing);</span>
 <span class="lineNum">      44 </span>                :            :     painter.drawPixmap(QPoint(), p1);
-<span class="lineNum">      45 </span>                :<span class="lineCov">         10 :     painter.setCompositionMode(mode);</span>
-<span class="lineNum">      46 </span>                :<span class="lineCov">         10 :     painter.drawPixmap(result.rect(), p2, p2.rect());</span>
-<span class="lineNum">      47 </span>                :<span class="lineCov">         10 :     painter.end();</span>
-<span class="lineNum">      48 </span>                :<span class="lineCov">         10 :     return result;</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">         18 :     painter.setCompositionMode(mode);</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">         18 :     painter.drawPixmap(result.rect(), p2, p2.rect());</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">         18 :     painter.end();</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">         18 :     return result;</span>
 <span class="lineNum">      49 </span>                :            : }
 <span class="lineNum">      50 </span>                :            : 
 <span class="lineNum">      51 </span>                :            : 

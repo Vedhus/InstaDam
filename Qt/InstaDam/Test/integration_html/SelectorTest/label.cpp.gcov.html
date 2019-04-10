@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">27</td>
             <td class="headerCovTableEntry">191</td>
-            <td class="headerCovTableEntryLo">6.8 %</td>
+            <td class="headerCovTableEntryLo">14.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td class="headerValue">2019-04-10 14:42:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">11</td>
             <td class="headerCovTableEntry">23</td>
-            <td class="headerCovTableEntryLo">30.4 %</td>
+            <td class="headerCovTableEntryLo">47.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -127,8 +127,8 @@
 <span class="lineNum">      49 </span>                :            : /*!
 <a name="50"><span class="lineNum">      50 </span>                :            :   Convenience function which returns the QColor of this Label.</a>
 <span class="lineNum">      51 </span>                :            :   */
-<span class="lineNum">      52 </span>                :<span class="lineCov">          6 : QColor Label::getColor() const {</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">          6 :     return color;</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">         18 : QColor Label::getColor() const {</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">         18 :     return color;</span>
 <span class="lineNum">      54 </span>                :            : }
 <span class="lineNum">      55 </span>                :            : 
 <span class="lineNum">      56 </span>                :            : /*!
@@ -165,9 +165,9 @@
 <span class="lineNum">      87 </span>                :            : 
 <a name="88"><span class="lineNum">      88 </span>                :            :   This convenience function adds a RectangleSelect object to the Label</a>
 <span class="lineNum">      89 </span>                :            :   */
-<span class="lineNum">      90 </span>                :<span class="lineNoCov">          0 : void Label::addItem(RectangleSelect *item) {</span>
-<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :     rectangleObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">          1 : void Label::addItem(RectangleSelect *item) {</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">          1 :     rectangleObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">      93 </span>                :            : 
 <span class="lineNum">      94 </span>                :            : /*!
 <span class="lineNum">      95 </span>                :            :   \overload addItem()
@@ -175,9 +175,9 @@
 <span class="lineNum">      97 </span>                :            :   This convenience function adds an EllipseSelect object to the Label
 <a name="98"><span class="lineNum">      98 </span>                :            : </a>
 <span class="lineNum">      99 </span>                :            :   */
-<span class="lineNum">     100 </span>                :<span class="lineNoCov">          0 : void Label::addItem(EllipseSelect *item) {</span>
-<span class="lineNum">     101 </span>                :<span class="lineNoCov">          0 :     ellipseObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">     102 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">          2 : void Label::addItem(EllipseSelect *item) {</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">          2 :     ellipseObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     103 </span>                :            : 
 <span class="lineNum">     104 </span>                :            : /*!
 <span class="lineNum">     105 </span>                :            :   \overload addItem()
@@ -195,9 +195,9 @@
 <span class="lineNum">     117 </span>                :            :   This convenience function adds a FreeDrawSelect object to the Label
 <a name="118"><span class="lineNum">     118 </span>                :            : </a>
 <span class="lineNum">     119 </span>                :            :   */
-<span class="lineNum">     120 </span>                :<span class="lineNoCov">          0 : void Label::addItem(FreeDrawSelect *item) {</span>
-<span class="lineNum">     121 </span>                :<span class="lineNoCov">          0 :     freeDrawObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">          1 : void Label::addItem(FreeDrawSelect *item) {</span>
+<span class="lineNum">     121 </span>                :<span class="lineCov">          1 :     freeDrawObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     123 </span>                :            : 
 <span class="lineNum">     124 </span>                :            : 
 <span class="lineNum">     125 </span>                :            : /*!
@@ -436,12 +436,12 @@
 <span class="lineNum">     358 </span>                :            :   \li Qt::Checked Shown
 <span class="lineNum">     359 </span>                :            :   \endlist
 <span class="lineNum">     360 </span>                :            :   */
-<span class="lineNum">     361 </span>                :<span class="lineNoCov">          0 : void Label::setMaskState(int state) {</span>
+<span class="lineNum">     361 </span>                :<span class="lineCov">          3 : void Label::setMaskState(int state) {</span>
 <span class="lineNum">     362 </span>                :            :     QHash&lt;int, RectangleSelect*&gt;::iterator rectItem;
 <span class="lineNum">     363 </span>                :            :     QHash&lt;int, PolygonSelect*&gt;::iterator polygonItem;
 <span class="lineNum">     364 </span>                :            :     QHash&lt;int, FreeDrawSelect*&gt;::iterator freeDrawItem;
 <span class="lineNum">     365 </span>                :            :     QHash&lt;int, EllipseSelect*&gt;::iterator ellipseItem;
-<span class="lineNum">     366 </span>                :<span class="lineNoCov">          0 :     for (rectItem = rectangleObjects.begin();</span>
+<span class="lineNum">     366 </span>                :<span class="lineCov">          6 :     for (rectItem = rectangleObjects.begin();</span>
 <span class="lineNum">     367 </span>                :            :          rectItem != rectangleObjects.end(); ++rectItem) {
 <span class="lineNum">     368 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
 <span class="lineNum">     369 </span>                :<span class="lineNoCov">          0 :             rectItem.value()-&gt;hideMask();</span>
@@ -449,7 +449,7 @@
 <span class="lineNum">     371 </span>                :<span class="lineNoCov">          0 :             rectItem.value()-&gt;showMask();</span>
 <span class="lineNum">     372 </span>                :            :         }
 <span class="lineNum">     373 </span>                :            :     }
-<span class="lineNum">     374 </span>                :<span class="lineNoCov">          0 :     for (ellipseItem = ellipseObjects.begin();</span>
+<span class="lineNum">     374 </span>                :<span class="lineCov">          6 :     for (ellipseItem = ellipseObjects.begin();</span>
 <span class="lineNum">     375 </span>                :            :          ellipseItem != ellipseObjects.end(); ++ellipseItem) {
 <span class="lineNum">     376 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
 <span class="lineNum">     377 </span>                :<span class="lineNoCov">          0 :             ellipseItem.value()-&gt;hideMask();</span>
@@ -457,7 +457,7 @@
 <span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :             ellipseItem.value()-&gt;showMask();</span>
 <span class="lineNum">     380 </span>                :            :         }
 <span class="lineNum">     381 </span>                :            :     }
-<span class="lineNum">     382 </span>                :<span class="lineNoCov">          0 :     for (polygonItem = polygonObjects.begin();</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">          6 :     for (polygonItem = polygonObjects.begin();</span>
 <span class="lineNum">     383 </span>                :            :          polygonItem != polygonObjects.end(); ++polygonItem) {
 <span class="lineNum">     384 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
 <span class="lineNum">     385 </span>                :<span class="lineNoCov">          0 :             polygonItem.value()-&gt;hideMask();</span>
@@ -465,7 +465,7 @@
 <span class="lineNum">     387 </span>                :<span class="lineNoCov">          0 :             polygonItem.value()-&gt;showMask();</span>
 <span class="lineNum">     388 </span>                :            :         }
 <span class="lineNum">     389 </span>                :            :     }
-<span class="lineNum">     390 </span>                :<span class="lineNoCov">          0 :     for (freeDrawItem = freeDrawObjects.begin();</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">          6 :     for (freeDrawItem = freeDrawObjects.begin();</span>
 <span class="lineNum">     391 </span>                :            :          freeDrawItem != freeDrawObjects.end(); ++freeDrawItem) {
 <span class="lineNum">     392 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
 <span class="lineNum">     393 </span>                :<span class="lineNoCov">          0 :             freeDrawItem.value()-&gt;hideMask();</span>
@@ -473,7 +473,7 @@
 <span class="lineNum">     395 </span>                :<span class="lineNoCov">          0 :             freeDrawItem.value()-&gt;showMask();</span>
 <a name="396"><span class="lineNum">     396 </span>                :            :         }</a>
 <span class="lineNum">     397 </span>                :            :     }
-<span class="lineNum">     398 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     398 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     399 </span>                :            : /*!
 <span class="lineNum">     400 </span>                :            :   \fn Label::addItem(FreeDrawErase *item)
 <span class="lineNum">     401 </span>                :            : 

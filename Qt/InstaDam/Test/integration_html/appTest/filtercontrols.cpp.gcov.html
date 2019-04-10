@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntry">70</td>
             <td class="headerCovTableEntry">136</td>
-            <td class="headerCovTableEntryLo">21.3 %</td>
+            <td class="headerCovTableEntryLo">51.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-09 15:05:23</td>
+            <td class="headerValue">2019-04-10 14:42:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">8</td>
             <td class="headerCovTableEntry">11</td>
-            <td class="headerCovTableEntryLo">36.4 %</td>
+            <td class="headerCovTableEntryLo">72.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -327,102 +327,102 @@
 <span class="lineNum">     249 </span>                :            :  Filters the cv::Mat \a image based on the selected maskTypes \a selectedFilter
 <a name="250"><span class="lineNum">     250 </span>                :            :  and returns a binary image cv::Mat.</a>
 <span class="lineNum">     251 </span>                :            :  */
-<span class="lineNum">     252 </span>                :<span class="lineNoCov">          0 : cv::Mat filterControls::filterFunc(cv::Mat image,</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">          5 : cv::Mat filterControls::filterFunc(cv::Mat image,</span>
 <span class="lineNum">     253 </span>                :            :                                    EnumConstants::maskTypes selectedFilter) {
 <span class="lineNum">     254 </span>                :            :     cv::Mat edge_temp;
-<span class="lineNum">     255 </span>                :<span class="lineNoCov">          0 :     switch (selectedFilter) {</span>
+<span class="lineNum">     255 </span>                :<span class="lineCov">          5 :     switch (selectedFilter) {</span>
 <span class="lineNum">     256 </span>                :            :         case EnumConstants::CANNY:
 <span class="lineNum">     257 </span>                :            :             cv::Canny(image, edge_temp, properties[EnumConstants::CANNY]-&gt;propertylist[2]-&gt;val,
 <span class="lineNum">     258 </span>                :            :                                         properties[EnumConstants::CANNY]-&gt;propertylist[3]-&gt;val,
-<span class="lineNum">     259 </span>                :<span class="lineNoCov">          0 :                                         properties[EnumConstants::CANNY]-&gt;propertylist[4]-&gt;val);</span>
-<span class="lineNum">     260 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     259 </span>                :<span class="lineCov">          5 :                                         properties[EnumConstants::CANNY]-&gt;propertylist[4]-&gt;val);</span>
+<span class="lineNum">     260 </span>                :<span class="lineCov">          2 :             break;</span>
 <span class="lineNum">     261 </span>                :            :         case EnumConstants::BLUR:
 <span class="lineNum">     262 </span>                :            :             cv::GaussianBlur(image, edge_temp,
 <span class="lineNum">     263 </span>                :            :                              cv::Size(properties[EnumConstants::BLUR]-&gt;propertylist[2]-&gt;val,
 <span class="lineNum">     264 </span>                :            :                                       properties[EnumConstants::BLUR]-&gt;propertylist[3]-&gt;val),
-<span class="lineNum">     265 </span>                :<span class="lineNoCov">          0 :                                       properties[EnumConstants::BLUR]-&gt;propertylist[4]-&gt;val);</span>
-<span class="lineNum">     266 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     265 </span>                :<span class="lineCov">          2 :                                       properties[EnumConstants::BLUR]-&gt;propertylist[4]-&gt;val);</span>
+<span class="lineNum">     266 </span>                :<span class="lineCov">          1 :             break;</span>
 <span class="lineNum">     267 </span>                :            :         case EnumConstants::THRESHOLD:
-<span class="lineNum">     268 </span>                :<span class="lineNoCov">          0 :             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
-<span class="lineNum">     269 </span>                :<span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     268 </span>                :<span class="lineCov">          1 :             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
+<span class="lineNum">     269 </span>                :<span class="lineCov">          1 :             break;</span>
 <span class="lineNum">     270 </span>                :            :         case EnumConstants::LABELMASK:
-<span class="lineNum">     271 </span>                :<span class="lineNoCov">          0 :             if (!this-&gt;labelMask.isNull()) {</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">          1 :             if (!this-&gt;labelMask.isNull()) {</span>
 <span class="lineNum">     272 </span>                :<span class="lineNoCov">          0 :                 QImage image_pixmap(this-&gt;labelMask.toImage().convertToFormat(QImage::Format_RGB888));</span>
 <span class="lineNum">     273 </span>                :            :                 cv::Mat mat(image_pixmap.height(), image_pixmap.width(),
 <span class="lineNum">     274 </span>                :<span class="lineNoCov">          0 :                             CV_8UC3, image_pixmap.bits());</span>
 <span class="lineNum">     275 </span>                :            : 
 <span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);</span>
 <span class="lineNum">     277 </span>                :            :             } else {
-<span class="lineNum">     278 </span>                :<span class="lineNoCov">          0 :                 cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">          1 :                 cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);</span>
 <span class="lineNum">     279 </span>                :            :             }
 <span class="lineNum">     280 </span>                :            :             break;
 <span class="lineNum">     281 </span>                :            :         case EnumConstants::OTHER:
 <span class="lineNum">     282 </span>                :            :             break;
 <span class="lineNum">     283 </span>                :            :     }
-<span class="lineNum">     284 </span>                :<span class="lineNoCov">          0 :     return edge_temp;</span>
+<span class="lineNum">     284 </span>                :<span class="lineCov">          5 :     return edge_temp;</span>
 <span class="lineNum">     285 </span>                :            : }
 <span class="lineNum">     286 </span>                :            : 
 <span class="lineNum">     287 </span>                :            : /*!
 <a name="288"><span class="lineNum">     288 </span>                :            :   Sets image for the object and stores and returns filtered edges.</a>
 <span class="lineNum">     289 </span>                :            : */
-<span class="lineNum">     290 </span>                :<span class="lineNoCov">          0 : cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,</span>
+<span class="lineNum">     290 </span>                :<span class="lineCov">          1 : cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,</span>
 <span class="lineNum">     291 </span>                :            :                                                EnumConstants::maskTypes selectedFilter) {
-<span class="lineNum">     292 </span>                :<span class="lineNoCov">          0 :         img = image;</span>
-<span class="lineNum">     293 </span>                :<span class="lineNoCov">          0 :         edges = filterFunc(img, selectedFilter);</span>
-<span class="lineNum">     294 </span>                :<span class="lineNoCov">          0 :         im2pixmap(selectedFilter);</span>
-<span class="lineNum">     295 </span>                :<span class="lineNoCov">          0 :         return edges;</span>
+<span class="lineNum">     292 </span>                :<span class="lineCov">          1 :         img = image;</span>
+<span class="lineNum">     293 </span>                :<span class="lineCov">          1 :         edges = filterFunc(img, selectedFilter);</span>
+<span class="lineNum">     294 </span>                :<span class="lineCov">          1 :         im2pixmap(selectedFilter);</span>
+<span class="lineNum">     295 </span>                :<span class="lineCov">          1 :         return edges;</span>
 <span class="lineNum">     296 </span>                :            : }
 <span class="lineNum">     297 </span>                :            : 
 <span class="lineNum">     298 </span>                :            : /*!
 <a name="299"><span class="lineNum">     299 </span>                :            :   Binarizes the image and converts it to a pixmap using \a selectedFilter.</a>
 <span class="lineNum">     300 </span>                :            :  */
-<span class="lineNum">     301 </span>                :<span class="lineNoCov">          0 : void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {</span>
+<span class="lineNum">     301 </span>                :<span class="lineCov">          1 : void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {</span>
 <span class="lineNum">     302 </span>                :            :     cv::Mat binary;
-<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
+<span class="lineNum">     303 </span>                :<span class="lineCov">          3 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
 <span class="lineNum">     304 </span>                :            : 
 <span class="lineNum">     305 </span>                :            : 
-<span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;%d&quot;, invert);</span>
-<span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :     if (invert == 2)</span>
-<span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :         cv::threshold(edges, binary, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,</span>
-<span class="lineNum">     309 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY_INV);</span>
+<span class="lineNum">     306 </span>                :<span class="lineCov">          1 :     qInfo(&quot;%d&quot;, invert);</span>
+<span class="lineNum">     307 </span>                :<span class="lineCov">          1 :     if (invert == 2)</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">          1 :         cv::threshold(edges, binary, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,</span>
+<span class="lineNum">     309 </span>                :<span class="lineCov">          3 :                 255, cv::THRESH_BINARY_INV);</span>
 <span class="lineNum">     310 </span>                :            :     else
 <span class="lineNum">     311 </span>                :<span class="lineNoCov">          0 :         cv::threshold(edges, binary, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,</span>
 <span class="lineNum">     312 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY);</span>
 <span class="lineNum">     313 </span>                :            : 
 <span class="lineNum">     314 </span>                :            :     QImage qImgImg = QImage(reinterpret_cast&lt;uchar*&gt;(binary.data), binary.cols,
-<span class="lineNum">     315 </span>                :<span class="lineNoCov">          0 :                             binary.rows, static_cast&lt;int&gt;(binary.step),</span>
-<span class="lineNum">     316 </span>                :<span class="lineNoCov">          0 :                             QImage::Format_Grayscale8);</span>
-<span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 :     this-&gt;qImg = QPixmap::fromImage(qImgImg);</span>
+<span class="lineNum">     315 </span>                :<span class="lineCov">          1 :                             binary.rows, static_cast&lt;int&gt;(binary.step),</span>
+<span class="lineNum">     316 </span>                :<span class="lineCov">          2 :                             QImage::Format_Grayscale8);</span>
+<span class="lineNum">     317 </span>                :<span class="lineCov">          2 :     this-&gt;qImg = QPixmap::fromImage(qImgImg);</span>
 <span class="lineNum">     318 </span>                :            :     QImage qAlphaImg = QImage(reinterpret_cast&lt;uchar*&gt;(binary.data), binary.cols,
-<span class="lineNum">     319 </span>                :<span class="lineNoCov">          0 :                               binary.rows, static_cast&lt;int&gt;(binary.step),</span>
-<span class="lineNum">     320 </span>                :<span class="lineNoCov">          0 :                               QImage::Format_Alpha8);</span>
-<span class="lineNum">     321 </span>                :<span class="lineNoCov">          0 :     this-&gt;qAlpha = QPixmap::fromImage(qAlphaImg);</span>
-<span class="lineNum">     322 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     319 </span>                :<span class="lineCov">          1 :                               binary.rows, static_cast&lt;int&gt;(binary.step),</span>
+<span class="lineNum">     320 </span>                :<span class="lineCov">          2 :                               QImage::Format_Alpha8);</span>
+<span class="lineNum">     321 </span>                :<span class="lineCov">          3 :     this-&gt;qAlpha = QPixmap::fromImage(qAlphaImg);</span>
+<span class="lineNum">     322 </span>                :<span class="lineCov">          1 : }</span>
 <span class="lineNum">     323 </span>                :            : 
 <span class="lineNum">     324 </span>                :            : /*!
 <span class="lineNum">     325 </span>                :            :   Returns a thubnail pixmap for the filter selection bar at the bottom of
 <a name="326"><span class="lineNum">     326 </span>                :            :   InstaDam, based on \a thumb and \a selectedFilter.</a>
 <span class="lineNum">     327 </span>                :            :  */
-<span class="lineNum">     328 </span>                :<span class="lineNoCov">          0 : QPixmap filterControls::thumb2pixmap(cv::Mat thumb,</span>
+<span class="lineNum">     328 </span>                :<span class="lineCov">          4 : QPixmap filterControls::thumb2pixmap(cv::Mat thumb,</span>
 <span class="lineNum">     329 </span>                :            :                                      EnumConstants::maskTypes selectedFilter) {
-<span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;Enter Thumb&quot;);</span>
-<span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :     cv::Mat thumbEdges = this-&gt;filterFunc(thumb, selectedFilter);</span>
-<span class="lineNum">     332 </span>                :<span class="lineNoCov">          0 :     qInfo(&quot;Filtered thumbnail!&quot;);</span>
-<span class="lineNum">     333 </span>                :<span class="lineNoCov">          0 :     cv::Mat binaryThumb;</span>
-<span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
+<span class="lineNum">     330 </span>                :<span class="lineCov">          4 :     qInfo(&quot;Enter Thumb&quot;);</span>
+<span class="lineNum">     331 </span>                :<span class="lineCov">          4 :     cv::Mat thumbEdges = this-&gt;filterFunc(thumb, selectedFilter);</span>
+<span class="lineNum">     332 </span>                :<span class="lineCov">          4 :     qInfo(&quot;Filtered thumbnail!&quot;);</span>
+<span class="lineNum">     333 </span>                :<span class="lineCov">          4 :     cv::Mat binaryThumb;</span>
+<span class="lineNum">     334 </span>                :<span class="lineCov">          8 :     int invert = properties[selectedFilter]-&gt;propertylist[0]-&gt;val;</span>
 <span class="lineNum">     335 </span>                :            : 
-<span class="lineNum">     336 </span>                :<span class="lineNoCov">          0 :     if (invert == 2)</span>
+<span class="lineNum">     336 </span>                :<span class="lineCov">          4 :     if (invert == 2)</span>
 <span class="lineNum">     337 </span>                :            :         cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,
-<span class="lineNum">     338 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY_INV);</span>
+<span class="lineNum">     338 </span>                :<span class="lineCov">          8 :                 255, cv::THRESH_BINARY_INV);</span>
 <span class="lineNum">     339 </span>                :            :     else
 <span class="lineNum">     340 </span>                :            :         cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]-&gt;propertylist[1]-&gt;val,
 <span class="lineNum">     341 </span>                :<span class="lineNoCov">          0 :                 255, cv::THRESH_BINARY);</span>
 <span class="lineNum">     342 </span>                :            :     QImage qImgImg_temp = QImage(reinterpret_cast&lt;uchar*&gt;(binaryThumb.data),
 <span class="lineNum">     343 </span>                :            :                                  binaryThumb.cols, binaryThumb.rows,
-<span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :                                  static_cast&lt;int&gt;(binaryThumb.step),</span>
-<span class="lineNum">     345 </span>                :<span class="lineNoCov">          0 :                                  QImage::Format_Grayscale8);</span>
-<a name="346"><span class="lineNum">     346 </span>                :<span class="lineNoCov">          0 :     qImgThumb = QPixmap::fromImage(qImgImg_temp);</span></a>
-<span class="lineNum">     347 </span>                :<span class="lineNoCov">          0 :     return qImgThumb;</span>
+<span class="lineNum">     344 </span>                :<span class="lineCov">          4 :                                  static_cast&lt;int&gt;(binaryThumb.step),</span>
+<span class="lineNum">     345 </span>                :<span class="lineCov">          8 :                                  QImage::Format_Grayscale8);</span>
+<a name="346"><span class="lineNum">     346 </span>                :<span class="lineCov">          8 :     qImgThumb = QPixmap::fromImage(qImgImg_temp);</span></a>
+<span class="lineNum">     347 </span>                :<span class="lineCov">          8 :     return qImgThumb;</span>
 <span class="lineNum">     348 </span>                :<span class="lineCov">          3 : }</span>
 </pre>
       </td>

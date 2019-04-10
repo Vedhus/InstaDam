@@ -2,7 +2,9 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-void IntegrationTest::initTestCase() {
+#include <unistd.h>
+#include <stdio.h>
+void IntegrationTest::init() {
     idm = new InstaDam();
     idm->runningLocally = true;
     idm->addLabelHash("Label1", Qt::red);
@@ -11,10 +13,21 @@ void IntegrationTest::initTestCase() {
     idm->on_actionNew_triggered();
     QCOMPARE(idm->currentProject->labels.size(), 3);
     idm->on_actionOpen_File_triggered();
-
 }
 
-void IntegrationTest::cleanupTestCase() {
+void IntegrationTest::initTestCase() {
+    freePoints.append(free1);
+    freePoints.append(free2);
+    freePoints.append(free3);
+    freePoints.append(free4);
+    freePoints.append(free5);
+    freePoints.append(free6);
+    erasePoints.append(erase1);
+    erasePoints.append(erase2);
+    erasePoints.append(erase3);
+}
+
+void IntegrationTest::cleanup() {
     delete idm;
 }
 
@@ -81,7 +94,6 @@ int IntegrationTest::findLabelIndex(const QString name) const {
 }
 
 SelectItem* IntegrationTest::getItem(int type, ushort num) {
-    //size_t start = 0;//lastIdx + 1;
     ushort count = 0;
     for (std::list<SelectItem*>::reverse_iterator it = idm->scene->currentItems.rbegin();
          it != idm->scene->currentItems.rend(); ++it) {
@@ -95,7 +107,11 @@ SelectItem* IntegrationTest::getItem(int type, ushort num) {
 }
 
 void IntegrationTest::testWriteAndReadLocal() {
-    idm->setImgInName("testImg1.jpg");
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
     idm->on_actionOpen_File_triggered();
 
     // draw a rectangle
@@ -103,6 +119,7 @@ void IntegrationTest::testWriteAndReadLocal() {
     clickRectangleSelect();
     draw(rect1, rect2);
     QCOMPARE(getItem(SelectItem::Rectangle)->myRect, QRectF(rect1, rect2));
+
 
     // draw an ellipse
     clickLabel("Label1");
@@ -130,9 +147,56 @@ void IntegrationTest::testWriteAndReadLocal() {
     draw(inEllipse, ellipseMove);
     QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
 
+    // rotate the rectangle
+    draw(rectRotate1, rectRotate2, Qt::RightButton);
+    qreal angle = getItem(SelectItem::Rectangle)->rotation();
+    QVERIFY(angle != 0.);
+
+    // undo rotate
+    idm->undoGroup->undo();
+    QCOMPARE(getItem(SelectItem::Rectangle)->rotation(), 0.);
+
+    // redo rotate
+    idm->undoGroup->redo();
+    QCOMPARE(getItem(SelectItem::Rectangle)->rotation(), angle);
+
+    // FreeDraw
+    clickFreeDrawSelect();
+    clickDrawButton();
+    clickRoundBrush();
+    setBrushSize(20);
+    freeDraw(freePoints);
+    QCOMPARE(getItem(SelectItem::Freedraw)->myPen.width(), 20);
+    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
+
+    // undo
+    idm->undoGroup->undo();
+    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), false);
+
+    // redo
+    idm->undoGroup->redo();
+    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
+
+    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+
+    // FreeErase
+    clickEraseButton();
+    clickSquareBrush();
+    freeDraw(erasePoints);
+    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+    QVERIFY(orig != erased);
+
+    // undo
+    idm->undoGroup->undo();
+    QCOMPARE(orig, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage());
+
+    // redo
+    idm->undoGroup->redo();
+    QCOMPARE(erased, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage());
+
 }
 
-void IntegrationTest::testAnnotateMove() {
+/*void IntegrationTest::testAnnotateMove() {
 
 }
 
@@ -150,7 +214,7 @@ void IntegrationTest::testExport() {
 
 void IntegrationTest::testAsserts() {
 
-}
+}*/
 
 QTEST_MAIN(IntegrationTest)
 #include "moc_integrationTest.cpp"
