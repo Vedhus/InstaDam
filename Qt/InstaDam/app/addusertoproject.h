@@ -22,6 +22,7 @@ public:
     QString accessToken;
     QString databaseURL;
     QString userDetails;
+    UserPrivilege *userPrivilege = new UserPrivilege;
 
 private slots:
     void on_pushButton_clicked();
@@ -42,6 +43,7 @@ private:
     void listUsers(QJsonObject);
     void updateUser();
     void add();
+    void privilegeReplyFinished();
 };
 
 #endif // ADDUSERTOPROJECT_H

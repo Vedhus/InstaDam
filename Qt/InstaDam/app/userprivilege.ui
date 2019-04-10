@@ -49,7 +49,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Please specify the privilege of the new user:</string>
+    <string>Please specify user privilege:</string>
    </property>
   </widget>
  </widget>

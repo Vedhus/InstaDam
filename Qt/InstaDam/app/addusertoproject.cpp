@@ -11,6 +11,7 @@
 #include <QUrlQuery>
 #include <QjsonArray>
 
+
 AddUserToProject::AddUserToProject(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddUserToProject)
@@ -107,28 +108,69 @@ void AddUserToProject::updateUser()
     QListWidgetItem *item = ui->userList->selectedItems()[0];
     this->userDetails = item->text();
     qInfo() << this->userDetails;
-    UserPrivilege *userPrivilege = new UserPrivilege;
+//    UserPrivilege *userPrivilege = new UserPrivilege;
+
     userPrivilege->show();
-    connect(userPrivilege, SIGNAL(on_pushButton_clicked()), this, SLOT(addAsAnnotator()));
-    connect(userPrivilege, SIGNAL(on_pushButton_2_clicked()), this, SLOT(addAsAdmin()));
+    connect(userPrivilege, SIGNAL(on_pushButton_clicked()), this, SLOT(addAsAdmin()));
+    connect(userPrivilege, SIGNAL(on_pushButton_2_clicked()), this, SLOT(addAsAnnotator()));
 }
 
 void AddUserToProject::addAsAnnotator(){
     this->privilege = "ANNOTATOR";
     this->add();
+    userPrivilege->hide();
 }
 
 void AddUserToProject::addAsAdmin(){
     this->privilege = "ADMIN";
     this->add();
+    userPrivilege->hide();
 }
 
 void AddUserToProject::add(){
     qInfo() << this->privilege;
-    if(this->userInProject){
-        qInfo() << "user in project";
-    }
-    else{
-        qInfo() << "user NOT in project";
+//    if(this->userInProject){
+//        qInfo() << "user in project";
+        QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
+        QString privilege = this->privilege.toLower();
+
+        QString databaseLoginURL = this->databaseURL+"/user/privilege/";
+        QUrl dabaseLink = QUrl(databaseLoginURL);
+
+        QJsonObject js
+        {
+            {"username", userName},
+            {"privilege", privilege}
+        };
+
+        QJsonDocument doc(js);
+        QByteArray bytes = doc.toJson();
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
+        req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        rep = manager->put(req, bytes);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &AddUserToProject::privilegeReplyFinished);
+
+        qInfo() << "waiting for the reply...";
+//   }
+//    else{
+//        qInfo() << "user not in project";
+//    }
+}
+
+void AddUserToProject::privilegeReplyFinished(){
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        qInfo() << obj;
     }
 }
