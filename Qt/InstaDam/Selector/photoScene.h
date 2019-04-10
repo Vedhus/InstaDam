@@ -44,6 +44,7 @@ class PhotoScene : public QGraphicsScene {
 
 #ifdef TEST
     friend class TestSelect;
+    friend class IntegrationTest;
 #endif
  signals:
     void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,

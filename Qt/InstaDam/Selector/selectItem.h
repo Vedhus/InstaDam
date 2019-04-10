@@ -177,7 +177,9 @@ class SelectItem : public QGraphicsItem {
             mirrorShow();
         }
     }
-
+#ifdef TEST
+    friend class IntegrationTest;
+#endif
  protected:
     SelectType selectType;
 
