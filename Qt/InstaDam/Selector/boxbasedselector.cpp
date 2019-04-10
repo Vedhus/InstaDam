@@ -50,6 +50,7 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer<Label> label,
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
     calcCorners(false);
+    activePoint = point;
     active = true;
 }
 
@@ -65,6 +66,7 @@ BoxBasedSelector::BoxBasedSelector(QPointF point, qreal vertSize,
     myRect.setTopLeft(point);
     myRect.setBottomRight(point);
     calcCorners(false);
+    activePoint = point;
     active = true;
 }
 

@@ -194,8 +194,15 @@ MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
                              const int vertex, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myItem = item;
-    myoldPos = oldPos;
-    mynewPos = newPos;
+    //QTextStream(stdout) << "OO " << oldPos.x() << "," << oldPos.y() << endl;
+    //QTextStream(stdout) << "NN " << newPos.x() << "," << newPos.y() << endl;
+
+    QPointF shift = newPos - oldPos;
+    mynewPos = item->getActivePoint();
+    //QTextStream(stdout) << "N " << item->getActivePoint().x() << "," << item->getActivePoint().y() << endl;
+    myoldPos = mynewPos - shift;
+    //QTextStream(stdout) << "S " << shift.x() << "," << shift.y() << endl;
+    //QTextStream(stdout) << "O " << myoldPos.x() << "," << myoldPos.y() << endl;
     myVertex = vertex;
 }
 

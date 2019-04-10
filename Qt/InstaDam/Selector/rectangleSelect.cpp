@@ -132,9 +132,10 @@ bool RectangleSelect::isInside(const QPointF &point) const {
 void RectangleSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     // if there is an active vertex then we are resizing
     if (activeVertex != 0) {
+        QPointF newPoint = getActivePoint() + (newPos - oldPos);
+        addPoint(newPoint);
         resized = true;
         setMirrorResized();
-        addPoint(newPos);
     } else {
         // otherwise we are moving the entire object
         moved = true;
