@@ -233,6 +233,7 @@ void InstaDam::setLabels() {
 
         labelButtons.push_back(button);
     }
+    setCurrentLabel(currentProject->getLabel(0));
 }
 
 /*!
@@ -258,8 +259,8 @@ void InstaDam::setCurrentLabel(LabelButton *button) {
  Sets the \a currentLabel to the Label \a label
   */
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
-    if (currentLabel == label)
-        return;
+//    if (currentLabel == label)
+//        return;
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
             labelButtons[i]->setChecked(false);
@@ -1202,6 +1203,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                     break;
                 case SelectItem::Ellipse:
                 {
+                     qInfo("Ellipse button was clicked0");
                     EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
                     EllipseSelect *mirror = new EllipseSelect(pos);
                     tempItem = temp;
@@ -1284,6 +1286,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                         on_rectangleSelectButton_clicked();
                         break;
                     case SelectItem::Ellipse:
+                        qInfo("Ellipse button was clicked 2");
                         on_ellipseSelectButton_clicked();
                         break;
                 }
@@ -1291,7 +1294,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             currentItem = item;
             if (!canDrawOnPhoto)
                 maskItem = currentItem;
-            currentLabel = currentItem->getLabel();
+            setCurrentLabel(currentItem->getLabel());
             scene->inactiveAll();
             maskScene->inactiveAll();
             currentItem->clickPoint(pos);
