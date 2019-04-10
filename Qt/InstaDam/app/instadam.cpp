@@ -1147,7 +1147,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
     if (!panning && !ctrlPanning){
 
-        if (!item) {
+        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false) {
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 scene->inactiveAll();
@@ -1270,7 +1270,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
-        } else {
+        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true) {
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
                     return;
@@ -1286,7 +1286,6 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                         on_rectangleSelectButton_clicked();
                         break;
                     case SelectItem::Ellipse:
-                        qInfo("Ellipse button was clicked 2");
                         on_ellipseSelectButton_clicked();
                         break;
                 }
@@ -1326,7 +1325,6 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
   Processes a mouse movement from \a fromPos to \a toPos.
  */
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
-
 
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
