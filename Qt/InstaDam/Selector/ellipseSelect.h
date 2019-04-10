@@ -6,7 +6,7 @@
 class TestSelect;
 
 #endif
-const QString ellipseBaseString = QString("Click to define a corner, then drag the mouse (while holding the button down) to define the ellipse. Use the right mouse button to rotate.");
+const QString ellipseBaseString = QString("Click to define a corner, then drag the mouse (while holding the button down) to define the ellipse. Hold the sift button down to modify. Use the right mouse button to rotate.");
 
 class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
  public:
