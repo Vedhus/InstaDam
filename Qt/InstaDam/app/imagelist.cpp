@@ -7,6 +7,11 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QFileInfo>
+#include <QUrlQuery>
+#include <QPixmap>
+#include <QByteArray>
+
+
 
 #include "ui_imagelist.h"
 
@@ -23,7 +28,7 @@
 ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :
     QWidget(parent), ui(new Ui::ImageList) {
     ui->setupUi(this);
-    access_token = token;
+    accessToken = token;
     this->databaseURL = databaseUrl;
 }
 
@@ -38,8 +43,9 @@ ImageList::~ImageList() {
 /*!
  * Adds Item \QJsonObject \a obj to the ImageList.
  */
-void ImageList::addItems(QJsonObject obj) {
-//    QList<QJsonObject> list;
+
+void ImageList::addItems(QJsonObject obj)
+{
     qInfo() << obj;
     foreach(const QString& key, obj.keys()) {
         if (key.compare("project_images") != 0) {
@@ -55,9 +61,10 @@ void ImageList::addItems(QJsonObject obj) {
                 QJsonObject currentObj = valueArray[imageNumber].toObject();
                 QTableWidget* table = ui->tableWidget;
                 table->insertRow(table->rowCount());
-                int column = 0;
-                foreach(const QString& objkey, currentObj.keys()) {
-                    qInfo() << "Key = " << objkey << ", Value = " << currentObj.value(objkey);
+                int column =0;
+                foreach(const QString& objkey, currentObj.keys()) //Everything except the thumbnail
+                {
+
                     QJsonValue currentValue = currentObj.value(objkey);
                     if (objkey.compare("id") == 0 || objkey.compare("name") == 0 ||
                        objkey.compare("path") == 0) {
@@ -69,6 +76,21 @@ void ImageList::addItems(QJsonObject obj) {
                         column++;
                     }
                 }
+                //implement thumbnail here.
+                QString databaseGetProjectURL = this->databaseURL+"/image/" + QString::number(imageNumber+1) + "/thumbnail";
+                QUrl databaseLink = QUrl(databaseGetProjectURL);
+
+                QUrlQuery query;
+
+                query.addQueryItem("size_w", "150");
+                query.addQueryItem("size_h", "50");
+
+                databaseLink.setQuery(query.query());
+                QNetworkRequest req = QNetworkRequest(databaseLink);
+                qInfo() << req.url();
+                QString loginToken = "Bearer "+this->accessToken;
+                req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+                doRequest(req);
             }
         } else {
            qInfo() << "value is not an QJsonArray";
@@ -76,6 +98,60 @@ void ImageList::addItems(QJsonObject obj) {
         }
     }
 }
+
+void ImageList::getThumbnailReplyFinished()
+{
+    qInfo() << "got a thumbnailreply";
+
+    QByteArray strReply = rep->readAll();
+    qInfo() << rep->error();
+    qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QJsonObject currentObject = jsonReply.object();
+    if(jsonError.error != QJsonParseError::NoError){
+        qInfo() << "Error: " << jsonError.errorString();
+        return;
+    }
+
+    foreach(const QString& objkey, currentObject.keys()) //Everything except the thumbnail
+    {
+        QJsonValue currentValue = currentObject.value(objkey);
+        //qInfo() << "Key = " << objkey << ", Value = " << currentObject.value(objkey);
+        if(objkey.compare("base64_image")==0)
+        {
+            if(currentValue.isString())
+            {
+                QByteArray byteArray = QByteArray::fromBase64(currentValue.toString().toUtf8());
+                QPixmap thumbnailPixmap;
+                thumbnailPixmap.loadFromData(byteArray, currentObject.value("format").toString().toUtf8());
+                QTableWidgetItem *thumbnail = new QTableWidgetItem;
+                thumbnail->setData(Qt::DecorationRole, thumbnailPixmap);
+                QTableWidget* table = ui->tableWidget;
+                table->setItem(table->rowCount()-1, table->columnCount()-1, thumbnail);
+
+            }
+        }
+    }
+}
+
+
+
+void ImageList::doRequest(QNetworkRequest req)
+{
+    rep = manager->get(req);
+
+    connect(rep, &QNetworkReply::finished,
+            this, &ImageList::getThumbnailReplyFinished);
+    /* wait for reply because backend can't handle multiple requests at same time I think */
+    QEventLoop loop;
+    connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+}
+
+
+
 
 
 /*!

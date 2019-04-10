@@ -72,6 +72,7 @@ class InstaDam : public QMainWindow {
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
     void setCurrentProject(Project*);
+    void setCurrentProjectId(int id);
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     bool loadLabelJson(QJsonObject json, fileTypes fileType);

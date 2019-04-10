@@ -88,7 +88,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 void ProjectList::openProject(QListWidgetItem *project_name) {
     qInfo() << "inside open a new project" << project_name->text();
     QString id = QString(project_name->text().split('-')[0]);
-    qInfo() << id;
+    selectedProject = id.toInt();
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     qInfo() << databaseGetProjectURL;
@@ -112,38 +112,16 @@ void ProjectList::getLabelsReplyFinished() {
 
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
-    }  else {
-            qInfo() << jsonReply;
-              InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
-              instadamWindow->show();
-              hide();
-//              Project* newPr = new Project();
-
-              QJsonObject jsonLabels = jsonReply.object();
-              instadamWindow->loadLabelJson(jsonLabels, PROJECT);
-
-//              foreach(const QString& k, labels.keys()) {
-//                  if(k=="labels"){
-//                       QJsonValue labels_values = labels.value(k);
-//                       QJsonArray labels_values_list = labels_values.toArray();
-//                       for(int i=0;i<labels_values_list.count();i++){
-//                           QJsonValue labelValue = labels_values_list.at(i);
-//                               if(labelValue.isObject()){
-//                                   QJsonObject label = labelValue.toObject();
-//                                   Label* lb = new Label(label, label.value("id").toInt(), true);
-
-//                                   QSharedPointer<Label> LB = QSharedPointer<Label>(lb);
-//                                   qInfo() << lb->getText();
-//                                   qInfo() << lb->getColor();
-//                                   newPr->addLabel(LB);
-//                               }
-//                        }
-//                  }
-//              }
-
-//              w->setCurrentProject(newPr);
-//              w->setLabels();
-      }
+    }
+    else {
+        qInfo() << jsonReply;
+        InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+        instadamWindow->show();
+        hide();
+        QJsonObject jsonLabels = jsonReply.object();
+        instadamWindow->loadLabelJson(jsonLabels, PROJECT);
+        instadamWindow->setCurrentProjectId(selectedProject);
+    }
 }
 
 void ProjectList::on_pushButton_clicked()

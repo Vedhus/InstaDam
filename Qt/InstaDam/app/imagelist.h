@@ -23,12 +23,13 @@ class ImageList : public QWidget {
 
  private:
     Ui::ImageList *ui;
-    QString access_token;
     QString databaseURL;
+    QString accessToken;
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-
+    void getThumbnailReplyFinished();
     void fileReplyFinished();
+    void doRequest(QNetworkRequest);
 
  private slots:
     void on_loadButton_clicked();

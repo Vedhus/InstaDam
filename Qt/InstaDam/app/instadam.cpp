@@ -453,12 +453,11 @@ void InstaDam::fileDownloaded(QString path) {
     this->path = file.dir();
     this->oldImagesList = this->imagesList;
     this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-    if (imagesList.empty()) {
+    if (imagesList.empty()){
         assertError("That doesn't seem to be a valid image file.");
         revert();
     } else {
         int counter = 0;
-
         foreach(QString tempFilename, imagesList) {
            QFileInfo tempInfo = QFileInfo(tempFilename);
                if (file.completeBaseName() == tempInfo.completeBaseName()) {
@@ -467,7 +466,6 @@ void InstaDam::fileDownloaded(QString path) {
               counter++;
             }
         fileId = counter;
-
         openFile_and_labels();
         QTextStream(stdout) << currentProject->numLabels() << "\n";
     }
@@ -532,29 +530,33 @@ void InstaDam::on_actionOpen_File_triggered() {
                     }
                     counter++;
                 }
+
                 fileId = counter;
-
                 openFile_and_labels();
-                QTextStream(stdout) << currentProject->numLabels() << "\n";
-            }
-        } else {
-            assertError("That doesn't seem to be a valid image file.");
+                QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         }
-    } else {
-        QString databaseImagesURL = this->databaseURL+"/projects/1/images";
-        QUrl dabaseLink = QUrl(databaseImagesURL);
+    }
+    else {
+       assertError("That doesn't seem to be a valid image file.");
+    }
+   }
+   else
+   {
+        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+       QUrl dabaseLink = QUrl(databaseImagesURL);
 
-        qInfo() << databaseImagesURL;
+       qInfo() << databaseImagesURL;
 
-        QNetworkRequest req = QNetworkRequest(dabaseLink);
-        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
-        // debugRequest(req);
-        rep = manager->get(req);
+       QNetworkRequest req = QNetworkRequest(dabaseLink);
+       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
 
-        connect(rep, &QNetworkReply::finished,
-                this, &InstaDam::imagesReplyFinished);
 
-        qInfo() << "waiting for the reply...";
+       rep = manager->get(req);
+
+       connect(rep, &QNetworkReply::finished,
+               this, &InstaDam::imagesReplyFinished);
+
+       qInfo() << "waiting for the reply...";
     }
 #endif
 }
@@ -1604,6 +1606,10 @@ void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }
 
+void InstaDam::setCurrentProjectId(int id)
+{
+    this->currentProject->setId(id);
+}
 /*!
  Gets the list of label names from QVector \a labels.
  */
