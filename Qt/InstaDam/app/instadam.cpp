@@ -485,7 +485,7 @@ void InstaDam::imagesReplyFinished() {
             qInfo() << "Error: " << jsonError.errorString();
       } else {
           QJsonObject obj = jsonReply.object();
-          ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
+          il = new ImageList(currentProject, nullptr, this->databaseURL, this->accessToken);
           il->show();
           il->addItems(obj);
           qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
@@ -543,7 +543,7 @@ void InstaDam::on_actionOpen_File_triggered() {
    }
    else
    {
-        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+       QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
        QUrl dabaseLink = QUrl(databaseImagesURL);
 
        qInfo() << databaseImagesURL;
@@ -685,19 +685,29 @@ void InstaDam::openFile_and_labels() {
 #else
     // Open labels
     generateLabelFileName();
-    if (QFileInfo(this->annotationPath).isFile()) {
-        QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
-        QTextStream(stdout) << "\n" << this->file.baseName() << endl;
-        if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
+
+    if (runningLocally == true)
+    {
+        if (QFileInfo(this->annotationPath).isFile()) {
+            QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
+            QTextStream(stdout) << "\n" << this->file.baseName() << endl;
+            if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
+                revert();
+                return;
+            }
+            QTextStream(stdout) << "Loaded labels" << endl;;
+        } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
+            assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
             revert();
             return;
         }
-        QTextStream(stdout) << "Loaded labels" << endl;;
-    } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
-        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-        revert();
-        return;
     }
+    else {
+        connect(il, SIGNAL(allAnnotationsLoaded(QJsonObject, fileTypes)), this, SLOT(loadLabelJson(QJsonObject, fileTypes)));
+        il->openAnnotation();
+
+    }
+
     QTextStream(stdout) << "Loading photoX" << endl;;
 
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
@@ -796,7 +806,7 @@ void InstaDam::populateSceneFromProjectLabels()
 
 /*!
  InstaDam::loadLabelFile loads the Qstring \a filename of fileTypes
- \a fileType where \fileType is either a PROJECT or ANNOTATION
+ \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 #ifdef WASM_BUILD
@@ -816,8 +826,8 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 }
 
 /*!
- InstaDam::loadLabelFile loads the json object \a json of fileTypes
- \a fileType where \fileType is either a PROJECT or ANNOTATION
+ InstaDam::loadLabelJson loads the json object \a json of fileTypes
+ \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
     currentProject = newProject->newPr;

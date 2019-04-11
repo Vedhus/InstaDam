@@ -67,6 +67,13 @@ void Label::setId(int j) {
     labelId = j;
 }
 
+/*!
+  Convenience funtion for getting the id of this Label.
+  */
+int Label::getId() {
+    return labelId;
+}
+
 
 /*!
   Convenience funtion for getting the test of this Label as a QString

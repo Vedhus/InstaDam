@@ -23,7 +23,7 @@
 
 #include <iostream>
 #include <string>
-
+#include "imagelist.h"
 #include "newproject.h"
 #include "picpushbutton.h"
 #include "ui_blankFrame.h"
@@ -75,7 +75,8 @@ class InstaDam : public QMainWindow {
     void setCurrentProjectId(int id);
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
-    bool loadLabelJson(QJsonObject json, fileTypes fileType);
+    ImageList* il;
+
  private slots:
     void on_addSelectionButton_clicked();
     void on_saveAndBack_clicked();
@@ -121,6 +122,8 @@ class InstaDam : public QMainWindow {
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
+    bool loadLabelJson(QJsonObject json, fileTypes fileType);
+
 
 
  private:
@@ -186,8 +189,9 @@ public slots:
     void imagesReplyFinished();
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
-    bool loadLabelFile(QString filename, fileTypes fileType);
+
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
+    bool loadLabelFile(QString filename, fileTypes fileType);
     void revert();
 };
 
