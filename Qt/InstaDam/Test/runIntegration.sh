@@ -1,21 +1,26 @@
 #!/bin/sh
 
 # ${1} is the directory containing the .gcno files (%{buildDir} in Qt Creator)
-make distclean
-qmake5 IntegrationTest.pro
+#make distclean
+rm -rf integration_test_build
+mkdir integration_test_build
+cp resources/* integration_test_build/.
+cd integration_test_build
+
+qmake5 ../IntegrationTest.pro
 make -j12
 LCOV=lcov
 GENHTML=genhtml
 #BROWSER="/usr/bin/opera"
 
 SRC_DIR="."
-HTML_RESULTS="integration_html"
+HTML_RESULTS="../integration_html"
 
 mkdir -p ${HTML_RESULTS}
 
 "${LCOV}" -c -i -d "${SRC_DIR}" -o "${SRC_DIR}/app_base.info"
 
-./integration/integration
+./IntegrationTest
 # generate our initial info
 "${LCOV}" -d "${SRC_DIR}" -c -o "run.info"
 
@@ -32,3 +37,4 @@ mkdir -p ${HTML_RESULTS}
 # open in browser and bring to front
 #"${BROWSER}" "${HTML_RESULTS}/index.html"
 #open "${BROWSER}"
+cd ..
