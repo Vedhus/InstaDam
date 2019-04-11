@@ -320,7 +320,7 @@ void InstaDam::on_actionOpen_triggered() {
     QString myfileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
 #else
-    QString myfileName = prjInName;;
+    QString myfileName = prjInName;
 #endif
     if (myfileName.isEmpty()) {
             return;  // remove that part and add an alert

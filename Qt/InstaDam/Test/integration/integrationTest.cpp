@@ -4,15 +4,34 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 void IntegrationTest::init() {
+    std::cout << std::endl <<  "INIT ---------------------------------" << std::endl;
     idm = new InstaDam();
     idm->runningLocally = true;
+}
+
+void IntegrationTest::clear() {
+    std::cout << "CLEAR ++++++++++++" << std::endl;
+    struct stat info;
+    if (stat( "annotations", &info) == 0) {
+        std::cout << "       DONE " << std::endl;
+        char oldname[] = "annotations";
+        std::string newname = "annot_" + std::to_string(count);
+        count++;
+        rename( oldname , newname.c_str() );
+    }
+}
+
+void IntegrationTest::setup() {
+    clear();
     idm->addLabelHash("Label1", Qt::red);
     idm->addLabelHash("Label2", Qt::blue);
     idm->addLabelHash("Label3", Qt::green);
     idm->on_actionNew_triggered();
     QCOMPARE(idm->currentProject->labels.size(), 3);
-    idm->on_actionOpen_File_triggered();
 }
 
 void IntegrationTest::initTestCase() {
@@ -29,6 +48,7 @@ void IntegrationTest::initTestCase() {
 
 void IntegrationTest::cleanup() {
     delete idm;
+    std::cout << "========================================================" << std::endl;
 }
 
 void IntegrationTest::makeMouseDownEvent(QPointF point, Qt::MouseButton button,
@@ -106,20 +126,12 @@ SelectItem* IntegrationTest::getItem(int type, ushort num) {
     return nullptr;
 }
 
-void IntegrationTest::testWriteAndReadLocal() {
-    char currentPath[FILENAME_MAX];
-    getcwd( currentPath, FILENAME_MAX );
-    std::string sPath(currentPath);
-    std::string fn = "/testImg1.jpg";
-    idm->setImgInName((sPath + fn).c_str());
-    idm->on_actionOpen_File_triggered();
-
+void IntegrationTest::drawObjects() {
     // draw a rectangle
     clickLabel("Label2");
     clickRectangleSelect();
     draw(rect1, rect2);
     QCOMPARE(getItem(SelectItem::Rectangle)->myRect, QRectF(rect1, rect2));
-
 
     // draw an ellipse
     clickLabel("Label1");
@@ -127,7 +139,122 @@ void IntegrationTest::testWriteAndReadLocal() {
     draw(ellipse1, ellipse2);
     QCOMPARE(getItem(SelectItem::Ellipse)->myRect, QRectF(ellipse1, ellipse2));
 
-    // resize the ellipse
+    // draw another ellipse
+    draw(ellipse3, ellipse4);
+    QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4, ellipse3));
+
+    // polygon
+    clickLabel("Label3");
+    clickPolygonSelect();
+    draw(poly1, poly1);
+    draw(poly2, poly2);
+    draw(poly3, poly3);
+    draw(poly4, poly4);
+    draw(poly5, poly5);
+    clickFinishPolygon();
+    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 5);
+
+    // FreeDraw
+    clickFreeDrawSelect();
+    clickDrawButton();
+    clickRoundBrush();
+    setBrushSize(20);
+    freeDraw(freePoints);
+    QCOMPARE(getItem(SelectItem::Freedraw)->myPen.width(), 20);
+    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
+
+    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+
+    // FreeErase
+    clickEraseButton();
+    clickSquareBrush();
+    freeDraw(erasePoints);
+    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+    QVERIFY(orig != erased);
+
+}
+
+void IntegrationTest::testWriteAndReadLocal() {
+    setup();
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+
+    drawObjects();
+
+    int numLab = idm->currentProject->labels.size();
+
+    // save project
+    std::string projName = "/myTestProject.idpro";
+    idm->setPrjOutName((sPath + projName).c_str());
+    idm->on_actionSave_triggered();
+
+    delete idm;
+    // load project
+    init();
+
+    idm->setPrjInName((sPath + projName).c_str());
+    idm->on_actionOpen_triggered();
+
+    QCOMPARE(idm->currentProject->labels.size(), numLab);
+}
+
+void IntegrationTest::testWriteAndReadAnnotation() {
+    setup();
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+
+    drawObjects();
+    QRectF rectRect = QRectF(rect1, rect2);
+    QRectF ell1Rect = QRectF(ellipse1, ellipse2);
+    QRectF ell2Rect = QRectF(ellipse4, ellipse3);
+    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+
+    int numLab = idm->currentProject->labels.size();
+
+    // save annotations
+    idm->on_actionSave_Annotation_triggered();
+    delete idm;
+
+    // load project
+    init();
+
+    QCOMPARE(idm->currentProject->labels.size(), 0);
+
+    // load annotations
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+    QCOMPARE(idm->currentProject->labels.size(), numLab);
+    QCOMPARE(getItem(SelectItem::Rectangle)->myRect, rectRect);
+    QVERIFY(getItem(SelectItem::Ellipse)->myRect == ell1Rect ||
+            getItem(SelectItem::Ellipse, 2)->myRect == ell1Rect);
+    QVERIFY(getItem(SelectItem::Ellipse, 2)->myRect == ell2Rect ||
+            getItem(SelectItem::Ellipse)->myRect == ell2Rect);
+    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 5);
+    QCOMPARE(dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage(), orig);
+
+}
+void IntegrationTest::testAnnotateModify() {
+    setup();
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+
+    drawObjects();
+    // resize ellipse1
+    clickEllipseSelect();
+    //draw(ellipseCorner, ellipseCorner);
+    draw((ellipse1 + ellipse2)/2., (ellipse1 + ellipse2)/2.);
     draw(ellipseCorner, ellipseResize);
     QCOMPARE(getItem(SelectItem::Ellipse)->myRect, QRectF(ellipse1, ellipse2 + eShift));
 
@@ -139,11 +266,7 @@ void IntegrationTest::testWriteAndReadLocal() {
     idm->undoGroup->redo();
     QCOMPARE(getItem(SelectItem::Ellipse)->myRect, QRectF(ellipse1, ellipse2 + eShift));
 
-    // draw another ellipse
-    draw(ellipse3, ellipse4);
-    QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4, ellipse3));
-
-    // move the ellipse
+    // move ellipse2
     draw(inEllipse, ellipseMove);
     QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
 
@@ -160,44 +283,45 @@ void IntegrationTest::testWriteAndReadLocal() {
     idm->undoGroup->redo();
     QCOMPARE(getItem(SelectItem::Rectangle)->rotation(), angle);
 
+    // move polygon
+    draw(inPoly, movePoly);
+    clickFinishPolygon();
+    QVector<QPointF> points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points[0], poly1 + moveShift);
+
     // FreeDraw
     clickFreeDrawSelect();
     clickDrawButton();
     clickRoundBrush();
-    setBrushSize(20);
+    setBrushSize(25);
     freeDraw(freePoints);
-    QCOMPARE(getItem(SelectItem::Freedraw)->myPen.width(), 20);
-    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
+    QCOMPARE(getItem(SelectItem::Freedraw, 2)->myPen.width(), 25);
+    QCOMPARE(getItem(SelectItem::Freedraw, 2)->isVisible(), true);
 
     // undo
     idm->undoGroup->undo();
-    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), false);
+    QCOMPARE(getItem(SelectItem::Freedraw, 2)->isVisible(), false);
 
     // redo
     idm->undoGroup->redo();
-    QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
+    QCOMPARE(getItem(SelectItem::Freedraw, 2)->isVisible(), true);
 
-    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage();
 
     // FreeErase
     clickEraseButton();
     clickSquareBrush();
     freeDraw(erasePoints);
-    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
+    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage();
     QVERIFY(orig != erased);
 
     // undo
     idm->undoGroup->undo();
-    QCOMPARE(orig, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage());
+    QCOMPARE(orig, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage());
 
     // redo
     idm->undoGroup->redo();
-    QCOMPARE(erased, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage());
-
-}
-
-/*void IntegrationTest::testAnnotateMove() {
-
+    QCOMPARE(erased, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage());
 }
 
 void IntegrationTest::testOpenProjectAndAnnotate() {
@@ -214,7 +338,7 @@ void IntegrationTest::testExport() {
 
 void IntegrationTest::testAsserts() {
 
-}*/
+}
 
 QTEST_MAIN(IntegrationTest)
 #include "moc_integrationTest.cpp"

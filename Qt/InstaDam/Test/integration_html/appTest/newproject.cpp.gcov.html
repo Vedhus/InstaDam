@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -99,24 +99,24 @@
 <span class="lineNum">      21 </span>                :            : /*!
 <a name="22"><span class="lineNum">      22 </span>                :            :   Creates a new instance with parent QWidget \a parent, if any</a>
 <span class="lineNum">      23 </span>                :            :   */
-<span class="lineNum">      24 </span>                :<span class="lineCov">          2 : newproject::newproject(QWidget *parent) :</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">         12 : newproject::newproject(QWidget *parent) :</span>
 <span class="lineNum">      25 </span>                :            :     QDialog(parent),
-<span class="lineNum">      26 </span>                :<span class="lineCov">         10 :     ui(new Ui::newproject) {</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">         60 :     ui(new Ui::newproject) {</span>
 <span class="lineNum">      27 </span>                :            : #ifndef TEST
 <span class="lineNum">      28 </span>                :            :     ui-&gt;setupUi(this);
 <span class="lineNum">      29 </span>                :            :     this-&gt;newPr = new Project();
 <span class="lineNum">      30 </span>                :            : #else
-<span class="lineNum">      31 </span>                :<span class="lineCov">          2 :     this-&gt;newPr = new Project();</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         12 :     this-&gt;newPr = new Project();</span>
 <span class="lineNum">      32 </span>                :            : 
 <span class="lineNum">      33 </span>                :            : #endif
-<span class="lineNum">      34 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">         12 : }</span>
 <span class="lineNum">      35 </span>                :            : 
 <span class="lineNum">      36 </span>                :            : /*!
 <a name="37"><span class="lineNum">      37 </span>                :            :   Destructor</a>
 <span class="lineNum">      38 </span>                :            :   */
-<span class="lineNum">      39 </span>                :<span class="lineCov">          6 : newproject::~newproject() {</span>
-<span class="lineNum">      40 </span>                :<span class="lineCov">          2 :     delete ui;</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         36 : newproject::~newproject() {</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">         12 :     delete ui;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         24 : }</span>
 <span class="lineNum">      42 </span>                :            : #ifdef WASM_BUILD
 <span class="lineNum">      43 </span>                :            : void newproject::nameAcceptClicked() {
 <span class="lineNum">      44 </span>                :            :     tempName = labelDialog-&gt;labelName-&gt;text();
@@ -131,7 +131,7 @@
 <span class="lineNum">      53 </span>                :            : /*!
 <span class="lineNum">      54 </span>                :            :   Processes a button click.
 <span class="lineNum">      55 </span>                :            :   */
-<span class="lineNum">      56 </span>                :<span class="lineCov">          3 : void newproject::on_pushButton_clicked() {</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">          9 : void newproject::on_pushButton_clicked() {</span>
 <span class="lineNum">      57 </span>                :            : #ifndef TEST
 <span class="lineNum">      58 </span>                :            :     QDialog *dialog = new QDialog(this);
 <span class="lineNum">      59 </span>                :            :     labelDialog = new Ui::labelDialog;
@@ -156,20 +156,20 @@
 <span class="lineNum">      78 </span>                :            :     QColor color = mycolor;
 <span class="lineNum">      79 </span>                :            :     {
 <span class="lineNum">      80 </span>                :            : #endif  //TEST
-<span class="lineNum">      81 </span>                :<span class="lineCov">          3 :         if (color.isValid()) {</span>
-<span class="lineNum">      82 </span>                :<span class="lineCov">          3 :             QSharedPointer&lt;Label&gt; lb = QSharedPointer&lt;Label&gt;::create();</span>
-<span class="lineNum">      83 </span>                :<span class="lineCov">          3 :             lb-&gt;setText(tempName);</span>
-<span class="lineNum">      84 </span>                :<span class="lineCov">          3 :             lb-&gt;setColor(color);</span>
-<span class="lineNum">      85 </span>                :<span class="lineCov">          6 :             this-&gt;newPr-&gt;addLabel(lb);</span>
+<span class="lineNum">      81 </span>                :<span class="lineCov">          9 :         if (color.isValid()) {</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">          9 :             QSharedPointer&lt;Label&gt; lb = QSharedPointer&lt;Label&gt;::create();</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">          9 :             lb-&gt;setText(tempName);</span>
+<span class="lineNum">      84 </span>                :<span class="lineCov">          9 :             lb-&gt;setColor(color);</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">         18 :             this-&gt;newPr-&gt;addLabel(lb);</span>
 <span class="lineNum">      86 </span>                :            : 
-<span class="lineNum">      87 </span>                :<span class="lineCov">         15 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getColor().name() &lt;&lt; endl;</span>
-<span class="lineNum">      88 </span>                :<span class="lineCov">         15 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getText() &lt;&lt; endl;</span>
-<span class="lineNum">      89 </span>                :<span class="lineCov">          9 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;numLabels() &lt;&lt; endl;</span>
+<span class="lineNum">      87 </span>                :<span class="lineCov">         45 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getColor().name() &lt;&lt; endl;</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">         45 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getText() &lt;&lt; endl;</span>
+<span class="lineNum">      89 </span>                :<span class="lineCov">         27 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;numLabels() &lt;&lt; endl;</span>
 <span class="lineNum">      90 </span>                :            :         }
 <span class="lineNum">      91 </span>                :            : #ifndef WASM_BUILD
 <span class="lineNum">      92 </span>                :            :     }
 <span class="lineNum">      93 </span>                :            : #endif
-<span class="lineNum">      94 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">          9 : }</span>
 <span class="lineNum">      95 </span>                :            : 
 <span class="lineNum">      96 </span>                :            : /*!
 <a name="97"><span class="lineNum">      97 </span>                :            :   Processes the &quot;OK&quot; button being clicked.</a>

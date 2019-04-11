@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -102,41 +102,41 @@
 <span class="lineNum">      24 </span>                :            :   Constructs a PhotoScene instance of type \a type, with parent \a parent, if
 <a name="25"><span class="lineNum">      25 </span>                :            :   any.</a>
 <span class="lineNum">      26 </span>                :            :   */
-<span class="lineNum">      27 </span>                :<span class="lineCov">          2 : PhotoScene::PhotoScene(viewerTypes type, QObject *parent)</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">          2 :     : QGraphicsScene(parent), currentItems(), labelmap() {</span>
-<span class="lineNum">      29 </span>                :<span class="lineCov">          2 :     myViewerType = type;</span>
-<span class="lineNum">      30 </span>                :<span class="lineCov">          2 :     movingItem = nullptr;</span>
-<span class="lineNum">      31 </span>                :<span class="lineCov">          2 :     mousePressed = false;</span>
-<span class="lineNum">      32 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">         18 : PhotoScene::PhotoScene(viewerTypes type, QObject *parent)</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">         18 :     : QGraphicsScene(parent), currentItems(), labelmap() {</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">         18 :     myViewerType = type;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">         18 :     movingItem = nullptr;</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         18 :     mousePressed = false;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">         18 : }</span>
 <span class="lineNum">      33 </span>                :            : 
 <span class="lineNum">      34 </span>                :            : // NEED TO MAKE SURE DRAWING DOES NOT GO BEYOND BOUNDARY
 <span class="lineNum">      35 </span>                :            : /*!
 <a name="36"><span class="lineNum">      36 </span>                :            :   Sets all SelectItems in the PhotoScene to inactive.</a>
 <span class="lineNum">      37 </span>                :            :   */
-<span class="lineNum">      38 </span>                :<span class="lineCov">         24 : void PhotoScene::inactiveAll() const {</span>
-<span class="lineNum">      39 </span>                :<span class="lineCov">        119 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">         82 : void PhotoScene::inactiveAll() const {</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">        484 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
 <span class="lineNum">      40 </span>                :            :          end = currentItems.end(); iterator != end; ++iterator) {
-<span class="lineNum">      41 </span>                :<span class="lineCov">         47 :         (*iterator)-&gt;setInactive();</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">        238 :         (*iterator)-&gt;setInactive();</span>
 <span class="lineNum">      42 </span>                :            :     }
-<span class="lineNum">      43 </span>                :<span class="lineCov">         24 : }</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">         82 : }</span>
 <span class="lineNum">      44 </span>                :            : 
 <span class="lineNum">      45 </span>                :            : /*!
 <span class="lineNum">      46 </span>                :            :   \overload addItem()
 <a name="47"><span class="lineNum">      47 </span>                :            :   Adds \a item to the scene.</a>
 <span class="lineNum">      48 </span>                :            :   */
-<span class="lineNum">      49 </span>                :<span class="lineCov">         10 : void PhotoScene::addItem(QGraphicsItem* item) {</span>
-<span class="lineNum">      50 </span>                :<span class="lineCov">         10 :     QGraphicsScene::addItem(item);</span>
-<span class="lineNum">      51 </span>                :<span class="lineCov">         10 : }</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">         70 : void PhotoScene::addItem(QGraphicsItem* item) {</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">         70 :     QGraphicsScene::addItem(item);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">         70 : }</span>
 <span class="lineNum">      52 </span>                :            : 
 <span class="lineNum">      53 </span>                :            : /*!
 <span class="lineNum">      54 </span>                :            :   \overload addItem()
 <a name="55"><span class="lineNum">      55 </span>                :            :   Adds \a item to the scene.</a>
 <span class="lineNum">      56 </span>                :            :   */
-<span class="lineNum">      57 </span>                :<span class="lineCov">          8 : void PhotoScene::addItem(SelectItem* item) {</span>
-<span class="lineNum">      58 </span>                :<span class="lineCov">          8 :     currentItems.push_front(item);</span>
-<span class="lineNum">      59 </span>                :<span class="lineCov">          8 :     QGraphicsScene::addItem(item);</span>
-<span class="lineNum">      60 </span>                :<span class="lineCov">          8 :     labelItems.append(item);</span>
-<span class="lineNum">      61 </span>                :<span class="lineCov">          8 : }</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">         42 : void PhotoScene::addItem(SelectItem* item) {</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         42 :     currentItems.push_front(item);</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">         42 :     QGraphicsScene::addItem(item);</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">         42 :     labelItems.append(item);</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">         42 : }</span>
 <span class="lineNum">      62 </span>                :            : 
 <span class="lineNum">      63 </span>                :            : /*!
 <span class="lineNum">      64 </span>                :            :   \overload removeItem()
@@ -151,14 +151,14 @@
 <span class="lineNum">      73 </span>                :            :   \overload clearItems()
 <span class="lineNum">      74 </span>                :            :   Clears every item in the scene.
 <span class="lineNum">      75 </span>                :            :   */
-<span class="lineNum">      76 </span>                :<span class="lineCov">          2 : void PhotoScene::clearItems() {</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">          4 :     for (int i = 0; i &lt; labelItems.length(); i++) {</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         14 : void PhotoScene::clearItems() {</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         28 :     for (int i = 0; i &lt; labelItems.length(); i++) {</span>
 <span class="lineNum">      78 </span>                :<span class="lineNoCov">          0 :         this-&gt;removeItem(labelItems[i]);</span>
 <span class="lineNum">      79 </span>                :            :     }
-<span class="lineNum">      80 </span>                :<span class="lineCov">          2 :     labelItems.clear();</span>
+<span class="lineNum">      80 </span>                :<span class="lineCov">         14 :     labelItems.clear();</span>
 <span class="lineNum">      81 </span>                :            :     currentItems.clear();
 <span class="lineNum">      82 </span>                :            :     labelmap.clear();
-<span class="lineNum">      83 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         14 : }</span>
 <span class="lineNum">      84 </span>                :            : 
 <span class="lineNum">      85 </span>                :            : 
 <span class="lineNum">      86 </span>                :            : /*!
@@ -182,23 +182,23 @@
 <span class="lineNum">     104 </span>                :            : 
 <a name="105"><span class="lineNum">     105 </span>                :            :   \sa QGraphicsScene::mousePressEvent()</a>
 <span class="lineNum">     106 </span>                :            :   */
-<span class="lineNum">     107 </span>                :<span class="lineCov">          8 : void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {</span>
-<span class="lineNum">     108 </span>                :<span class="lineCov">          8 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
-<span class="lineNum">     109 </span>                :<span class="lineCov">          8 :         mousePressed = true;</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">         37 : void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {</span>
+<span class="lineNum">     108 </span>                :<span class="lineCov">         37 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">         37 :         mousePressed = true;</span>
 <span class="lineNum">     110 </span>                :            :         QPointF mousePos(event-&gt;scenePos().x(),
-<span class="lineNum">     111 </span>                :<span class="lineCov">          8 :                          event-&gt;scenePos().y());</span>
-<span class="lineNum">     112 </span>                :<span class="lineCov">          8 :         SelectItem *item = itemAt(mousePos);</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">         37 :                          event-&gt;scenePos().y());</span>
+<span class="lineNum">     112 </span>                :<span class="lineCov">         37 :         SelectItem *item = itemAt(mousePos);</span>
 <span class="lineNum">     113 </span>                :            : 
-<span class="lineNum">     114 </span>                :<span class="lineCov">          8 :         oldPos = mousePos;</span>
-<span class="lineNum">     115 </span>                :<span class="lineCov">          8 :         newPos = mousePos;</span>
-<span class="lineNum">     116 </span>                :<span class="lineCov">          8 :         if (item &amp;&amp; item-&gt;type() != 7) {</span>
-<span class="lineNum">     117 </span>                :<span class="lineCov">          3 :             emit pointClicked(myViewerType, item, mousePos, event-&gt;button());</span>
+<span class="lineNum">     114 </span>                :<span class="lineCov">         37 :         oldPos = mousePos;</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">         37 :         newPos = mousePos;</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">         37 :         if (item &amp;&amp; item-&gt;type() != 7) {</span>
+<span class="lineNum">     117 </span>                :<span class="lineCov">          5 :             emit pointClicked(myViewerType, item, mousePos, event-&gt;button());</span>
 <span class="lineNum">     118 </span>                :            :         } else {
-<span class="lineNum">     119 </span>                :<span class="lineCov">          5 :             emit pointClicked(myViewerType, nullptr, mousePos, event-&gt;button());</span>
+<span class="lineNum">     119 </span>                :<span class="lineCov">         32 :             emit pointClicked(myViewerType, nullptr, mousePos, event-&gt;button());</span>
 <span class="lineNum">     120 </span>                :            :         }
 <span class="lineNum">     121 </span>                :            :     }
-<span class="lineNum">     122 </span>                :<span class="lineCov">          8 :     QGraphicsScene::mousePressEvent(event);</span>
-<span class="lineNum">     123 </span>                :<span class="lineCov">          8 : }</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">         37 :     QGraphicsScene::mousePressEvent(event);</span>
+<span class="lineNum">     123 </span>                :<span class="lineCov">         37 : }</span>
 <span class="lineNum">     124 </span>                :            : 
 <span class="lineNum">     125 </span>                :            : /*!
 <span class="lineNum">     126 </span>                :            :   \overload mouseMoveEvent()
@@ -209,15 +209,15 @@
 <span class="lineNum">     131 </span>                :            : 
 <a name="132"><span class="lineNum">     132 </span>                :            :   \sa QGraphicsScene::mouseMoveEvent()</a>
 <span class="lineNum">     133 </span>                :            :   */
-<span class="lineNum">     134 </span>                :<span class="lineCov">         13 : void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {</span>
-<span class="lineNum">     135 </span>                :<span class="lineCov">         13 :     if (mousePressed) {</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">         57 : void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">         57 :     if (mousePressed) {</span>
 <span class="lineNum">     136 </span>                :            :         QPointF mousePos(event-&gt;scenePos().x(),
-<span class="lineNum">     137 </span>                :<span class="lineCov">         13 :                      event-&gt;scenePos().y());</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">         13 :         emit mouseMoved(newPos, mousePos);</span>
-<span class="lineNum">     139 </span>                :<span class="lineCov">         13 :         newPos = mousePos;</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">         57 :                      event-&gt;scenePos().y());</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">         57 :         emit mouseMoved(newPos, mousePos);</span>
+<span class="lineNum">     139 </span>                :<span class="lineCov">         57 :         newPos = mousePos;</span>
 <span class="lineNum">     140 </span>                :            :     }
-<span class="lineNum">     141 </span>                :<span class="lineCov">         13 :     QGraphicsScene::mouseMoveEvent(event);</span>
-<span class="lineNum">     142 </span>                :<span class="lineCov">         13 : }</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">         57 :     QGraphicsScene::mouseMoveEvent(event);</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">         57 : }</span>
 <span class="lineNum">     143 </span>                :            : 
 <span class="lineNum">     144 </span>                :            : /*!
 <span class="lineNum">     145 </span>                :            :   \overload mouseReleaseEvent()
@@ -228,23 +228,23 @@
 <span class="lineNum">     150 </span>                :            : 
 <a name="151"><span class="lineNum">     151 </span>                :            :   \sa QGraphicsScene::mouseReleaseEvent()</a>
 <span class="lineNum">     152 </span>                :            :   */
-<span class="lineNum">     153 </span>                :<span class="lineCov">          8 : void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {</span>
-<span class="lineNum">     154 </span>                :<span class="lineCov">          8 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
-<span class="lineNum">     155 </span>                :<span class="lineCov">          8 :         mousePressed = false;</span>
-<span class="lineNum">     156 </span>                :<span class="lineCov">          8 :         emit mouseReleased(myViewerType, oldPos, newPos, event-&gt;button());</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">         37 : void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">         37 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">         37 :         mousePressed = false;</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">         37 :         emit mouseReleased(myViewerType, oldPos, newPos, event-&gt;button());</span>
 <span class="lineNum">     157 </span>                :            :     }
-<span class="lineNum">     158 </span>                :<span class="lineCov">          8 :     QGraphicsScene::mouseReleaseEvent(event);</span>
-<span class="lineNum">     159 </span>                :<span class="lineCov">          8 : }</span>
+<span class="lineNum">     158 </span>                :<span class="lineCov">         37 :     QGraphicsScene::mouseReleaseEvent(event);</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">         37 : }</span>
 <span class="lineNum">     160 </span>                :            : 
 <span class="lineNum">     161 </span>                :            : /*!
 <span class="lineNum">     162 </span>                :            :   Returns a pointer to the top SelectItem at \a point in scene coordinates.
 <a name="163"><span class="lineNum">     163 </span>                :            :   If there is no SelectItem under that position then \c nullptr is returned.</a>
 <span class="lineNum">     164 </span>                :            :   */
-<span class="lineNum">     165 </span>                :<span class="lineCov">          8 : SelectItem* PhotoScene::itemAt(QPointF point) const {</span>
-<span class="lineNum">     166 </span>                :<span class="lineCov">         36 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">         37 : SelectItem* PhotoScene::itemAt(QPointF point) const {</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">        228 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
 <span class="lineNum">     167 </span>                :            :          end = currentItems.end(); iterator != end; ++iterator) {
-<span class="lineNum">     168 </span>                :<span class="lineCov">         15 :         if ((*iterator)-&gt;isVisible() &amp;&amp; (*iterator)-&gt;isInside(point)) {</span>
-<span class="lineNum">     169 </span>                :<span class="lineCov">          3 :             return (*iterator);</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">        122 :         if ((*iterator)-&gt;isVisible() &amp;&amp; (*iterator)-&gt;isInside(point)) {</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">          5 :             return (*iterator);</span>
 <span class="lineNum">     170 </span>                :            :         }
 <span class="lineNum">     171 </span>                :            :     }
 <span class="lineNum">     172 </span>                :            :     return nullptr;

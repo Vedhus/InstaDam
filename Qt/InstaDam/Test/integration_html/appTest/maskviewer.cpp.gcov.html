@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -89,40 +89,40 @@
 <span class="lineNum">      11 </span>                :            : /*!
 <a name="12"><span class="lineNum">      12 </span>                :            :   Creates an instance with parent QWidget \a parent, if any.</a>
 <span class="lineNum">      13 </span>                :            :   */
-<span class="lineNum">      14 </span>                :<span class="lineCov">          1 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
-<span class="lineNum">      15 </span>                :<span class="lineCov">          1 :     zoom = 0;</span>
-<span class="lineNum">      16 </span>                :<span class="lineCov">          1 :     hasPhoto = false;</span>
-<span class="lineNum">      17 </span>                :<span class="lineCov">          1 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
-<span class="lineNum">      18 </span>                :<span class="lineCov">          1 :     scene-&gt;myViewerType = viewerType;</span>
-<span class="lineNum">      19 </span>                :<span class="lineCov">          1 :     selectedMask = EnumConstants::CANNY;</span>
-<span class="lineNum">      20 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">      14 </span>                :<span class="lineCov">          9 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">          9 :     zoom = 0;</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">          9 :     hasPhoto = false;</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">          9 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">          9 :     scene-&gt;myViewerType = viewerType;</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">          9 :     selectedMask = EnumConstants::CANNY;</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">          9 : }</span>
 <span class="lineNum">      21 </span>                :            : 
 <span class="lineNum">      22 </span>                :            : /*!
 <a name="23"><span class="lineNum">      23 </span>                :            :   Links this object to \a viewer.</a>
 <span class="lineNum">      24 </span>                :            :   */
-<span class="lineNum">      25 </span>                :<span class="lineCov">          1 : void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {</span>
-<span class="lineNum">      26 </span>                :<span class="lineCov">          1 :     hasPhoto = true;</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">          1 :     photoViewer = viewer;</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">          1 :     photo-&gt;setPixmap(photoViewer-&gt;filterIm-&gt;pixmap());</span>
-<span class="lineNum">      29 </span>                :<span class="lineCov">          1 :     imMask = viewer-&gt;imMask;</span>
-<span class="lineNum">      30 </span>                :<span class="lineCov">          1 :     cvImage = viewer-&gt;cvImage;</span>
-<span class="lineNum">      31 </span>                :<span class="lineCov">          1 :     cvThumb = viewer-&gt;cvThumb;</span>
-<span class="lineNum">      32 </span>                :<span class="lineCov">          1 :     setImMask(selectedMask);</span>
-<span class="lineNum">      33 </span>                :<span class="lineCov">          1 :     update();</span>
-<span class="lineNum">      34 </span>                :<span class="lineCov">          1 :     fitInView();</span>
-<span class="lineNum">      35 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">          4 : void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">          4 :     hasPhoto = true;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">          4 :     photoViewer = viewer;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">          4 :     photo-&gt;setPixmap(photoViewer-&gt;filterIm-&gt;pixmap());</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">          4 :     imMask = viewer-&gt;imMask;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">          4 :     cvImage = viewer-&gt;cvImage;</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">          4 :     cvThumb = viewer-&gt;cvThumb;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">          4 :     setImMask(selectedMask);</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">          4 :     update();</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">          4 :     fitInView();</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">      36 </span>                :            : 
 <span class="lineNum">      37 </span>                :            : /*!
 <a name="38"><span class="lineNum">      38 </span>                :            :   Sets the image mask to \a filterName.</a>
 <span class="lineNum">      39 </span>                :            :   */
-<span class="lineNum">      40 </span>                :<span class="lineCov">          2 : void MaskViewer::setImMask(EnumConstants::maskTypes filterName) {</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">          2 :     selectedMask = filterName;</span>
-<span class="lineNum">      42 </span>                :<span class="lineCov">          2 :     if (hasPhoto == true) {</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">          2 :         pixmapFilt = filterControl-&gt;qImg.copy();</span>
-<span class="lineNum">      44 </span>                :<span class="lineCov">          2 :         imMask = filterControl-&gt;qAlpha.copy();</span>
-<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">          1 :         photo-&gt;setPixmap(pixmapFilt);</span></a>
+<span class="lineNum">      40 </span>                :<span class="lineCov">          8 : void MaskViewer::setImMask(EnumConstants::maskTypes filterName) {</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">          8 :     selectedMask = filterName;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">          8 :     if (hasPhoto == true) {</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">          8 :         pixmapFilt = filterControl-&gt;qImg.copy();</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">          8 :         imMask = filterControl-&gt;qAlpha.copy();</span>
+<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">          4 :         photo-&gt;setPixmap(pixmapFilt);</span></a>
 <span class="lineNum">      46 </span>                :            :     }
-<span class="lineNum">      47 </span>                :<span class="lineCov">          5 : }</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">         11 : }</span>
 </pre>
       </td>
     </tr>

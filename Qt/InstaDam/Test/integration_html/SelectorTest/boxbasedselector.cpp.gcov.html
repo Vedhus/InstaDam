@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">41</td>
+            <td class="headerCovTableEntry">62</td>
             <td class="headerCovTableEntry">72</td>
-            <td class="headerCovTableEntryLo">56.9 %</td>
+            <td class="headerCovTableEntryMed">86.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">12</td>
             <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntryLo">60.0 %</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -110,27 +110,27 @@
 <span class="lineNum">      32 </span>                :            :   is the Label which owns this object and \a item is the parent QGraphicsItem,
 <a name="33"><span class="lineNum">      33 </span>                :            :   if any.</a>
 <span class="lineNum">      34 </span>                :            :   */
-<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 : BoxBasedSelector::BoxBasedSelector(const QJsonObject &amp;json,</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          3 : BoxBasedSelector::BoxBasedSelector(const QJsonObject &amp;json,</span>
 <span class="lineNum">      36 </span>                :            :                                    QSharedPointer&lt;Label&gt; label,
 <span class="lineNum">      37 </span>                :            :                                    QGraphicsItem *item) :
-<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :     SelectItem(label, item) {</span>
-<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 :     read(json);</span>
-<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          6 :     SelectItem(label, item) {</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">          3 :     read(json);</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">      41 </span>                :            : 
 <span class="lineNum">      42 </span>                :            : /*!
 <span class="lineNum">      43 </span>                :            :   Constructs a BoxBasedSelector object by setting all vertices to be a \a point,
 <span class="lineNum">      44 </span>                :            :   \a label is the Label which owns this object and \a item is the parent
 <span class="lineNum">      45 </span>                :            :   QGraphicsItem, if any.
 <span class="lineNum">      46 </span>                :            :   */
-<span class="lineNum">      47 </span>                :<span class="lineCov">          6 : BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">         21 : BoxBasedSelector::BoxBasedSelector(QPointF point, QSharedPointer&lt;Label&gt; label,</span>
 <span class="lineNum">      48 </span>                :            :                                    QGraphicsItem *item) :
-<span class="lineNum">      49 </span>                :<span class="lineCov">         12 :     SelectItem(label, item) {</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">         42 :     SelectItem(label, item) {</span>
 <span class="lineNum">      50 </span>                :            :     myRect.setTopLeft(point);
 <span class="lineNum">      51 </span>                :            :     myRect.setBottomRight(point);
-<span class="lineNum">      52 </span>                :<span class="lineCov">          6 :     calcCorners(false);</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">          6 :     activePoint = point;</span>
-<span class="lineNum">      54 </span>                :<span class="lineCov">          6 :     active = true;</span>
-<span class="lineNum">      55 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">         21 :     calcCorners(false);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">         21 :     activePoint = point;</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">         21 :     active = true;</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">         21 : }</span>
 <span class="lineNum">      56 </span>                :            : 
 <span class="lineNum">      57 </span>                :            : /*!
 <span class="lineNum">      58 </span>                :            :   Constructs a BoxBasedSelector object by setting all vertices to be a \a point,
@@ -151,32 +151,32 @@
 <span class="lineNum">      73 </span>                :            : /*!
 <a name="74"><span class="lineNum">      74 </span>                :            :   Destructor</a>
 <span class="lineNum">      75 </span>                :            :   */
-<span class="lineNum">      76 </span>                :<span class="lineCov">          6 : BoxBasedSelector::~BoxBasedSelector() {</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         24 : BoxBasedSelector::~BoxBasedSelector() {</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         24 : }</span>
 <span class="lineNum">      78 </span>                :            : 
 <span class="lineNum">      79 </span>                :            : /*-------------------------- Overrides -------------------------*/
 <span class="lineNum">      80 </span>                :            : /*!
 <span class="lineNum">      81 </span>                :            :   \reimp
 <span class="lineNum">      82 </span>                :            :   */
-<span class="lineNum">      83 </span>                :<span class="lineCov">          3 : void BoxBasedSelector::clickPoint(const QPointF &amp;point) {</span>
-<span class="lineNum">      84 </span>                :<span class="lineCov">          3 :     active = true;</span>
-<span class="lineNum">      85 </span>                :<span class="lineCov">          6 :     if (isInsideRect(tl, point)) {</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::clickPoint(const QPointF &amp;point) {</span>
+<span class="lineNum">      84 </span>                :<span class="lineCov">          4 :     active = true;</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">          8 :     if (isInsideRect(tl, point)) {</span>
 <span class="lineNum">      86 </span>                :            :         setActiveVertex(TOP, LEFT);
 <span class="lineNum">      87 </span>                :<span class="lineCov">          1 :         activePoint = myRect.topLeft();</span>
-<span class="lineNum">      88 </span>                :<span class="lineCov">          2 :     } else if (isInsideRect(tr, point)) {</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(tr, point)) {</span>
 <span class="lineNum">      89 </span>                :            :         setActiveVertex(TOP, RIGHT);
 <span class="lineNum">      90 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.topRight();</span>
-<span class="lineNum">      91 </span>                :<span class="lineCov">          2 :     } else if (isInsideRect(bl, point)) {</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(bl, point)) {</span>
 <span class="lineNum">      92 </span>                :            :         setActiveVertex(BOTTOM, LEFT);
 <span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.bottomLeft();</span>
-<span class="lineNum">      94 </span>                :<span class="lineCov">          2 :     } else if (isInsideRect(br, point)) {</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(br, point)) {</span>
 <span class="lineNum">      95 </span>                :            :         setActiveVertex(BOTTOM, RIGHT);
 <span class="lineNum">      96 </span>                :<span class="lineCov">          1 :         activePoint = myRect.bottomRight();</span>
 <span class="lineNum">      97 </span>                :            :     } else {
 <span class="lineNum">      98 </span>                :            :         setActiveVertex(0, 0);
 <span class="lineNum">      99 </span>                :            :     }
-<span class="lineNum">     100 </span>                :<span class="lineCov">          6 :     setMirrorVertex(getActiveVertex());</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">          8 :     setMirrorVertex(getActiveVertex());</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     102 </span>                :            : 
 <span class="lineNum">     103 </span>                :            : /*!
 <a name="104"><span class="lineNum">     104 </span>                :            :   \reimp</a>
@@ -218,27 +218,27 @@
 <span class="lineNum">     140 </span>                :            : /*!
 <span class="lineNum">     141 </span>                :            :   \reimp
 <span class="lineNum">     142 </span>                :            :   */
-<span class="lineNum">     143 </span>                :<span class="lineNoCov">          0 : void BoxBasedSelector::read(const QJsonObject &amp;json) {</span>
-<span class="lineNum">     144 </span>                :<span class="lineNoCov">          0 :     QPointF tlc = QPointF(json[&quot;left&quot;].toDouble(), json[&quot;top&quot;].toDouble());</span>
-<span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :     QPointF brc = QPointF(json[&quot;right&quot;].toDouble(), json[&quot;bottom&quot;].toDouble());</span>
-<span class="lineNum">     146 </span>                :<span class="lineNoCov">          0 :     myRect = QRectF(tlc, brc);</span>
-<span class="lineNum">     147 </span>                :<span class="lineNoCov">          0 :     myRotation = json[&quot;rotation&quot;].toDouble();</span>
-<span class="lineNum">     148 </span>                :<span class="lineNoCov">          0 :     myID = json[&quot;objectID&quot;].toInt();</span>
-<span class="lineNum">     149 </span>                :<span class="lineNoCov">          0 :     setTransformOriginPoint(myRect.center());</span>
-<span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :     setRotation(myRotation);</span>
-<span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">          3 : void BoxBasedSelector::read(const QJsonObject &amp;json) {</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">          3 :     QPointF tlc = QPointF(json[&quot;left&quot;].toDouble(), json[&quot;top&quot;].toDouble());</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          3 :     QPointF brc = QPointF(json[&quot;right&quot;].toDouble(), json[&quot;bottom&quot;].toDouble());</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          3 :     myRect = QRectF(tlc, brc);</span>
+<span class="lineNum">     147 </span>                :<span class="lineCov">          3 :     myRotation = json[&quot;rotation&quot;].toDouble();</span>
+<span class="lineNum">     148 </span>                :<span class="lineCov">          3 :     myID = json[&quot;objectID&quot;].toInt();</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">          3 :     setTransformOriginPoint(myRect.center());</span>
+<span class="lineNum">     150 </span>                :<span class="lineCov">          3 :     setRotation(myRotation);</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     152 </span>                :            : 
 <span class="lineNum">     153 </span>                :            : /*!
 <span class="lineNum">     154 </span>                :            :   \reimp
 <span class="lineNum">     155 </span>                :            :   */
-<span class="lineNum">     156 </span>                :<span class="lineNoCov">          0 : void BoxBasedSelector::write(QJsonObject &amp;json) const {</span>
-<span class="lineNum">     157 </span>                :<span class="lineNoCov">          0 :     json[&quot;objectID&quot;] = myID;</span>
-<span class="lineNum">     158 </span>                :<span class="lineNoCov">          0 :     json[&quot;rotation&quot;] = myRotation;</span>
-<span class="lineNum">     159 </span>                :<span class="lineNoCov">          0 :     json[&quot;left&quot;] = myRect.left();</span>
-<span class="lineNum">     160 </span>                :<span class="lineNoCov">          0 :     json[&quot;right&quot;] = myRect.right();</span>
-<span class="lineNum">     161 </span>                :<span class="lineNoCov">          0 :     json[&quot;top&quot;] = myRect.top();</span>
-<span class="lineNum">     162 </span>                :<span class="lineNoCov">          0 :     json[&quot;bottom&quot;] = myRect.bottom();</span>
-<span class="lineNum">     163 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          3 : void BoxBasedSelector::write(QJsonObject &amp;json) const {</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">          3 :     json[&quot;objectID&quot;] = myID;</span>
+<span class="lineNum">     158 </span>                :<span class="lineCov">          3 :     json[&quot;rotation&quot;] = myRotation;</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">          9 :     json[&quot;left&quot;] = myRect.left();</span>
+<span class="lineNum">     160 </span>                :<span class="lineCov">          3 :     json[&quot;right&quot;] = myRect.right();</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">          3 :     json[&quot;top&quot;] = myRect.top();</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">          3 :     json[&quot;bottom&quot;] = myRect.bottom();</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     164 </span>                :            : 
 <span class="lineNum">     165 </span>                :            : /*-------------------------- Protected ------------------------*/
 <span class="lineNum">     166 </span>                :            : /*!
@@ -247,18 +247,18 @@
 <span class="lineNum">     169 </span>                :            :   to click and drag to resize the item. If the mirror needs to be updated as
 <span class="lineNum">     170 </span>                :            :   well the \a mir should be \c true.
 <span class="lineNum">     171 </span>                :            :   */
-<span class="lineNum">     172 </span>                :<span class="lineCov">         28 : void BoxBasedSelector::calcCorners(bool mir) {</span>
-<span class="lineNum">     173 </span>                :<span class="lineCov">         28 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">         28 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">         75 : void BoxBasedSelector::calcCorners(bool mir) {</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">         75 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset);</span>
 <span class="lineNum">     175 </span>                :            :     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() +
-<span class="lineNum">     176 </span>                :<span class="lineCov">         28 :                 SelectItem::xoffset);</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">         75 :                 SelectItem::xoffset);</span>
 <span class="lineNum">     177 </span>                :            :     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() +
-<span class="lineNum">     178 </span>                :<span class="lineCov">         28 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset);</span>
 <span class="lineNum">     179 </span>                :            :     br = QRectF(myRect.bottomRight() - SelectItem::xoffset -
-<span class="lineNum">     180 </span>                :<span class="lineCov">         28 :                 SelectItem::yoffset, myRect.bottomRight());</span>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">         28 :     if (mir)</span></a>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         22 :         setMirrorCorners(tl, bl, tr, br);</span>
-<span class="lineNum">     183 </span>                :<span class="lineCov">         31 : }</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset, myRect.bottomRight());</span>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">         75 :     if (mir)</span></a>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         54 :         setMirrorCorners(tl, bl, tr, br);</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">         78 : }</span>
 <span class="lineNum">     184 </span>                :            : 
 <span class="lineNum">     185 </span>                :            : /*!
 <span class="lineNum">     186 </span>                :            :   \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;

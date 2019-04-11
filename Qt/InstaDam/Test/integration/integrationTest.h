@@ -13,14 +13,16 @@ private slots:
     void cleanup();
     void init();
     void testWriteAndReadLocal();
-    //void testAnnotateMove();
-    //void testOpenProjectAndAnnotate();
-    //void testSaveAndNext();
-    //void testExport();
-    //void testAsserts();
+    void testWriteAndReadAnnotation();
+    void testAnnotateModify();
+    void testOpenProjectAndAnnotate();
+    void testSaveAndNext();
+    void testExport();
+    void testAsserts();
 
 private:
     InstaDam *idm;
+    int count = 0;
     QPointF rect1 = QPointF(20., 20.);
     QPointF rect2 = QPointF(30., 30.);
     QPointF rectRotate1 = QPointF(25., 25.);
@@ -42,7 +44,7 @@ private:
     QPointF poly2 = QPointF(320., 15.);
     QPointF poly3 = QPointF(400., 190.);
     QPointF poly4 = QPointF(295., 156.);
-    QPointF poly5 = QPointF(298., 158.);
+    QPointF poly5 = QPointF(280., 158.);
     QPointF inPoly = QPointF(330., 100.);
     QPointF movePoly = QPointF(325., 200.);
     QPointF moveShift = movePoly - inPoly;
@@ -106,6 +108,9 @@ private:
     }
 
     SelectItem* getItem(int type, ushort num = 1);
+    void setup();
+    void drawObjects();
+    void clear();
 };
 
 #endif // INTEGRATIONTEST_H

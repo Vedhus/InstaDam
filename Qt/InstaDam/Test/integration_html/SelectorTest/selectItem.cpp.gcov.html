@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -117,23 +117,23 @@
 <span class="lineNum">      39 </span>                :            :    as the Label that owns this instance, and \a item as the parent
 <a name="40"><span class="lineNum">      40 </span>                :            :    QGraphicsItem.</a>
 <span class="lineNum">      41 </span>                :            : */
-<span class="lineNum">      42 </span>                :<span class="lineCov">          9 : SelectItem::SelectItem(qreal vertSize, QSharedPointer&lt;Label&gt; label,</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">          9 :                        QGraphicsItem *item) : QGraphicsItem(item) {</span>
-<span class="lineNum">      44 </span>                :<span class="lineCov">          9 :     SelectItem::setVertexSize(vertSize);</span>
-<span class="lineNum">      45 </span>                :<span class="lineCov">          9 :     myID = SelectItem::ID;</span>
-<span class="lineNum">      46 </span>                :<span class="lineCov">          9 :     SelectItem::ID++;</span>
-<span class="lineNum">      47 </span>                :<span class="lineCov">         18 :     setLabel(label, true);</span>
-<span class="lineNum">      48 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">         47 : SelectItem::SelectItem(qreal vertSize, QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">         47 :                        QGraphicsItem *item) : QGraphicsItem(item) {</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">         47 :     SelectItem::setVertexSize(vertSize);</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">         47 :     myID = SelectItem::ID;</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">         47 :     SelectItem::ID++;</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">         94 :     setLabel(label, true);</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">         47 : }</span>
 <span class="lineNum">      49 </span>                :            : 
 <span class="lineNum">      50 </span>                :            : /*!
 <span class="lineNum">      51 </span>                :            :    Constructs a SelectItem, using \a label as the Label that owns this instance,
 <span class="lineNum">      52 </span>                :            :    and \a item as the parent QGraphicsItem.The vertex box size defaults to 10
 <a name="53"><span class="lineNum">      53 </span>                :            :    pixels.</a>
 <span class="lineNum">      54 </span>                :            : */
-<span class="lineNum">      55 </span>                :<span class="lineCov">          9 : SelectItem::SelectItem(QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">         46 : SelectItem::SelectItem(QSharedPointer&lt;Label&gt; label,</span>
 <span class="lineNum">      56 </span>                :            :                        QGraphicsItem *item) :
-<span class="lineNum">      57 </span>                :<span class="lineCov">         18 :     SelectItem(10., label, item) {</span>
-<span class="lineNum">      58 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">         92 :     SelectItem(10., label, item) {</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         46 : }</span>
 <span class="lineNum">      59 </span>                :            : 
 <span class="lineNum">      60 </span>                :            : /*!
 <a name="61"><span class="lineNum">      61 </span>                :            :    Returns the QGraphicItem which is the parent to this item.</a>
@@ -146,13 +146,13 @@
 <span class="lineNum">      68 </span>                :            :   Determines what color is the &quot;opposite&quot; of the current pen color. This is used
 <a name="69"><span class="lineNum">      69 </span>                :            :   to find a color for highlighting vertices.</a>
 <span class="lineNum">      70 </span>                :            :   */
-<span class="lineNum">      71 </span>                :<span class="lineCov">          4 : void SelectItem::invertColorForPen() {</span>
-<span class="lineNum">      72 </span>                :<span class="lineCov">          4 :     QColor color = myPen.color();</span>
-<span class="lineNum">      73 </span>                :<span class="lineCov">          8 :     color.setRgbF(color.redF() &gt; 0.5 ? 0 : 1, color.greenF() &gt; 0.5 ? 0 : 1,</span>
-<span class="lineNum">      74 </span>                :<span class="lineCov">         12 :                   color.blueF() &gt; 0.5 ? 0 : 1);</span>
-<span class="lineNum">      75 </span>                :<span class="lineCov">          8 :     highlightPen = QPen(color);</span>
-<span class="lineNum">      76 </span>                :<span class="lineCov">          4 :     highlightPen.setWidth(5);</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">         22 : void SelectItem::invertColorForPen() {</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">         22 :     QColor color = myPen.color();</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">         44 :     color.setRgbF(color.redF() &gt; 0.5 ? 0 : 1, color.greenF() &gt; 0.5 ? 0 : 1,</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">         66 :                   color.blueF() &gt; 0.5 ? 0 : 1);</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">         44 :     highlightPen = QPen(color);</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         22 :     highlightPen.setWidth(5);</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         22 : }</span>
 <span class="lineNum">      78 </span>                :            : 
 <span class="lineNum">      79 </span>                :            : /*!
 <a name="80"><span class="lineNum">      80 </span>                :            :   Returns the QGraphicsScene to which this item belongs.</a>
@@ -166,24 +166,24 @@
 <span class="lineNum">      88 </span>                :            :   \a label. \a init is used to indicate whether this is an initialization of the
 <a name="89"><span class="lineNum">      89 </span>                :            :   base class or of a derived class.</a>
 <span class="lineNum">      90 </span>                :            :   */
-<span class="lineNum">      91 </span>                :<span class="lineCov">         17 : void SelectItem::setLabel(QSharedPointer&lt;Label&gt; label, bool init) {</span>
-<span class="lineNum">      92 </span>                :<span class="lineCov">         17 :     myLabel = label;</span>
-<span class="lineNum">      93 </span>                :<span class="lineCov">         17 :     if (label != nullptr) {</span>
-<span class="lineNum">      94 </span>                :<span class="lineCov">         24 :         myPen = QPen(label-&gt;getColor());</span>
-<span class="lineNum">      95 </span>                :<span class="lineCov">         12 :         myPen.setWidth(2);</span>
-<span class="lineNum">      96 </span>                :<span class="lineCov">         12 :         if (!init)</span>
-<span class="lineNum">      97 </span>                :<span class="lineCov">          8 :             updatePen(myPen);</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">         89 : void SelectItem::setLabel(QSharedPointer&lt;Label&gt; label, bool init) {</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">         89 :     myLabel = label;</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">         89 :     if (label != nullptr) {</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">        116 :         myPen = QPen(label-&gt;getColor());</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">         58 :         myPen.setWidth(2);</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">         58 :         if (!init)</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">         42 :             updatePen(myPen);</span>
 <span class="lineNum">      98 </span>                :            :     }
-<span class="lineNum">      99 </span>                :<span class="lineCov">         17 : }</span>
+<span class="lineNum">      99 </span>                :<span class="lineCov">         89 : }</span>
 <span class="lineNum">     100 </span>                :            : 
 <span class="lineNum">     101 </span>                :            : /*!
 <a name="102"><span class="lineNum">     102 </span>                :            :   Determines the corners of the vertex boxes for plotting by using \a size.</a>
 <span class="lineNum">     103 </span>                :            :   */
-<span class="lineNum">     104 </span>                :<span class="lineCov">          9 : void SelectItem::setVertexSize(qreal size) {</span>
-<span class="lineNum">     105 </span>                :<span class="lineCov">          9 :     SelectItem::vertexSize = size;</span>
-<span class="lineNum">     106 </span>                :<span class="lineCov">          9 :     SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);</span>
-<span class="lineNum">     107 </span>                :<span class="lineCov">          9 :     SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);</span>
-<span class="lineNum">     108 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">         47 : void SelectItem::setVertexSize(qreal size) {</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">         47 :     SelectItem::vertexSize = size;</span>
+<span class="lineNum">     106 </span>                :<span class="lineCov">         47 :     SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">         47 :     SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);</span>
+<span class="lineNum">     108 </span>                :<span class="lineCov">         47 : }</span>
 <span class="lineNum">     109 </span>                :            : 
 <span class="lineNum">     110 </span>                :            : /*!
 <span class="lineNum">     111 </span>                :            :   Determines the bounding corners of a rectangle that is being resized. This is
@@ -192,34 +192,34 @@
 <span class="lineNum">     114 </span>                :            :   determine the position of the moving vertex as well as the new top left and
 <a name="115"><span class="lineNum">     115 </span>                :            :   bottom right corners of the rectangle.</a>
 <span class="lineNum">     116 </span>                :            : */
-<span class="lineNum">     117 </span>                :<span class="lineCov">         12 : void SelectItem::sortCorners(QRectF &amp;rect, QPointF &amp;newPoint) {</span>
-<span class="lineNum">     118 </span>                :<span class="lineCov">          6 :     if (activeVertex &amp; TOP) {</span>
+<span class="lineNum">     117 </span>                :<span class="lineCov">         24 : void SelectItem::sortCorners(QRectF &amp;rect, QPointF &amp;newPoint) {</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">         12 :     if (activeVertex &amp; TOP) {</span>
 <span class="lineNum">     119 </span>                :<span class="lineNoCov">          0 :         if (activeVertex &amp; LEFT) {</span>
 <span class="lineNum">     120 </span>                :            :             rect.setTopLeft(newPoint);
 <span class="lineNum">     121 </span>                :            :         } else {
 <span class="lineNum">     122 </span>                :            :             rect.setTopRight(newPoint);
 <span class="lineNum">     123 </span>                :            :         }
-<span class="lineNum">     124 </span>                :<span class="lineCov">          6 :     } else if (activeVertex &amp; BOTTOM) {</span>
-<span class="lineNum">     125 </span>                :<span class="lineCov">          6 :         if (activeVertex &amp; RIGHT) {</span>
+<span class="lineNum">     124 </span>                :<span class="lineCov">         12 :     } else if (activeVertex &amp; BOTTOM) {</span>
+<span class="lineNum">     125 </span>                :<span class="lineCov">         12 :         if (activeVertex &amp; RIGHT) {</span>
 <span class="lineNum">     126 </span>                :            :             rect.setBottomRight(newPoint);
 <span class="lineNum">     127 </span>                :            :         } else {
 <span class="lineNum">     128 </span>                :            :             rect.setBottomLeft(newPoint);
 <span class="lineNum">     129 </span>                :            :         }
 <span class="lineNum">     130 </span>                :            :     }
-<span class="lineNum">     131 </span>                :<span class="lineCov">          6 :     activePoint = newPoint;</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">         12 :     activePoint = newPoint;</span>
 <span class="lineNum">     132 </span>                :            :     QPointF tlc = rect.topLeft();
 <span class="lineNum">     133 </span>                :            :     QPointF brc = rect.bottomRight();
-<span class="lineNum">     134 </span>                :<span class="lineCov">          6 :     if (tlc.y() &gt; brc.y()) {</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">         12 :     if (tlc.y() &gt; brc.y()) {</span>
 <span class="lineNum">     135 </span>                :            :         rect.setTop(brc.y());
 <span class="lineNum">     136 </span>                :            :         rect.setBottom(tlc.y());
 <span class="lineNum">     137 </span>                :            :         flipH();
 <span class="lineNum">     138 </span>                :            :     }
-<span class="lineNum">     139 </span>                :<span class="lineCov">          6 :     if (tlc.x() &gt; brc.x()) {</span>
+<span class="lineNum">     139 </span>                :<span class="lineCov">         12 :     if (tlc.x() &gt; brc.x()) {</span>
 <span class="lineNum">     140 </span>                :            :         rect.setLeft(brc.x());
 <span class="lineNum">     141 </span>                :            :         rect.setRight(tlc.x());
 <span class="lineNum">     142 </span>                :            :         flipV();
 <span class="lineNum">     143 </span>                :            :     }
-<span class="lineNum">     144 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">         12 : }</span>
 <span class="lineNum">     145 </span>                :            : 
 <span class="lineNum">     146 </span>                :            : /*!
 <span class="lineNum">     147 </span>                :            :   \overload QGraphicsItem::type() const
@@ -228,8 +228,8 @@
 <span class="lineNum">     150 </span>                :            : 
 <a name="151"><span class="lineNum">     151 </span>                :            :   \sa QGraphicsItem::type()</a>
 <span class="lineNum">     152 </span>                :            :   */
-<span class="lineNum">     153 </span>                :<span class="lineCov">         76 : int SelectItem::type() const {</span>
-<span class="lineNum">     154 </span>                :<span class="lineCov">         76 :     return mytype;</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">        278 : int SelectItem::type() const {</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">        278 :     return mytype;</span>
 <span class="lineNum">     155 </span>                :            : }
 <span class="lineNum">     156 </span>                :            : 
 <span class="lineNum">     157 </span>                :            : /*---------------- Protected members ---------------------------*/
@@ -240,16 +240,16 @@
 <span class="lineNum">     162 </span>                :            :   \a shift) would place one or more of the corners outside of the canvas the
 <a name="163"><span class="lineNum">     163 </span>                :            :   movement is halted at the last pixel before the vertex would disappear.</a>
 <span class="lineNum">     164 </span>                :            :   */
-<span class="lineNum">     165 </span>                :<span class="lineCov">          1 : void SelectItem::checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect) {</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">          2 : void SelectItem::checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect) {</span>
 <span class="lineNum">     166 </span>                :            :     QPointF tlc = rect.topLeft() + shift;
 <span class="lineNum">     167 </span>                :            :     QPointF brc = rect.bottomRight() + shift;
 <span class="lineNum">     168 </span>                :            : 
-<span class="lineNum">     169 </span>                :<span class="lineCov">          1 :     if (tlc.x() &lt; 0 || tlc.y() &lt; 0) {</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">          2 :     if (tlc.x() &lt; 0 || tlc.y() &lt; 0) {</span>
 <span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :         tlc.setY(std::max(tlc.y(), 0.));</span>
 <span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 :         tlc.setX(std::max(tlc.x(), 0.));</span>
 <span class="lineNum">     172 </span>                :            :         rect.moveTopLeft(tlc);
-<span class="lineNum">     173 </span>                :<span class="lineCov">          2 :     } else if (brc.x() &gt;= SelectItem::myBounds.width() ||</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">          1 :                brc.y() &gt;= SelectItem::myBounds.height()) {</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">          4 :     } else if (brc.x() &gt;= SelectItem::myBounds.width() ||</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          2 :                brc.y() &gt;= SelectItem::myBounds.height()) {</span>
 <span class="lineNum">     175 </span>                :            :         brc.setY(std::min(static_cast&lt;int&gt;(brc.y()),
 <span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :                           SelectItem::myBounds.height() - 1));</span>
 <span class="lineNum">     177 </span>                :            :         brc.setX(std::min(static_cast&lt;int&gt;(brc.x()),
@@ -258,18 +258,18 @@
 <span class="lineNum">     180 </span>                :            :     } else {
 <span class="lineNum">     181 </span>                :            :         rect.moveTopLeft(tlc);
 <span class="lineNum">     182 </span>                :            :     }
-<span class="lineNum">     183 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     184 </span>                :            : 
 <span class="lineNum">     185 </span>                :            : /*!
 <a name="186"><span class="lineNum">     186 </span>                :            :   Determines whether \a point is inside of \a rect. Returns true if it is.</a>
 <span class="lineNum">     187 </span>                :            :   */
-<span class="lineNum">     188 </span>                :<span class="lineCov">         41 : bool SelectItem::isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const {</span>
-<span class="lineNum">     189 </span>                :<span class="lineCov">         36 :     if (point.y() &gt;= rect.top() &amp;&amp; point.y() &lt;= rect.bottom()) {</span>
-<span class="lineNum">     190 </span>                :<span class="lineCov">          5 :         if (point.x() &lt;= rect.right() &amp;&amp; point.x() &gt;= rect.left()) {</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">        224 : bool SelectItem::isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const {</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">        201 :     if (point.y() &gt;= rect.top() &amp;&amp; point.y() &lt;= rect.bottom()) {</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">         23 :         if (point.x() &lt;= rect.right() &amp;&amp; point.x() &gt;= rect.left()) {</span>
 <span class="lineNum">     191 </span>                :            :             return true;
 <span class="lineNum">     192 </span>                :            :         }
 <a name="193"><span class="lineNum">     193 </span>                :            :     }</a>
-<span class="lineNum">     194 </span>                :<span class="lineCov">         18 :     return false;</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">        125 :     return false;</span>
 <span class="lineNum">     195 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     196 </span>                :            : 
 <span class="lineNum">     197 </span>                :            : /*!

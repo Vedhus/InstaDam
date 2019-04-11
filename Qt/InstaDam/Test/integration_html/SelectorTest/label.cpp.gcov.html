@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntry">132</td>
             <td class="headerCovTableEntry">191</td>
-            <td class="headerCovTableEntryLo">14.1 %</td>
+            <td class="headerCovTableEntryLo">69.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 10:19:20</td>
+            <td class="headerValue">2019-04-11 13:49:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">18</td>
             <td class="headerCovTableEntry">23</td>
-            <td class="headerCovTableEntryLo">47.8 %</td>
+            <td class="headerCovTableEntryMed">78.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -99,8 +99,8 @@
 <span class="lineNum">      21 </span>                :            : /*!
 <span class="lineNum">      22 </span>                :            :   Default constructor
 <span class="lineNum">      23 </span>                :            :   */
-<span class="lineNum">      24 </span>                :<span class="lineCov">          6 : Label::Label() {</span>
-<span class="lineNum">      25 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">         18 : Label::Label() {</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">          9 : }</span>
 <span class="lineNum">      26 </span>                :            : 
 <span class="lineNum">      27 </span>                :            : /*!
 <span class="lineNum">      28 </span>                :            :   Constructs a Label object based on data read in from \a json. The Label color
@@ -109,14 +109,14 @@
 <span class="lineNum">      31 </span>                :            :   denotes whether to read the file from a server (\c true) or local file
 <span class="lineNum">      32 </span>                :            :   (\c false).
 <span class="lineNum">      33 </span>                :            :   */
-<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 : Label::Label(const QJsonObject &amp;json, int j, bool server){</span>
-<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 :         if(server)</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">         12 : Label::Label(const QJsonObject &amp;json, int j, bool server){</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          6 :         if(server)</span>
 <span class="lineNum">      36 </span>                :<span class="lineNoCov">          0 :             readServer(json);</span>
 <span class="lineNum">      37 </span>                :            :         else {
-<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :              read(json);</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          6 :              read(json);</span>
 <span class="lineNum">      39 </span>                :            :         }
-<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 :         labelId = j;</span>
-<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">          6 :         labelId = j;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">      42 </span>                :            : 
 <span class="lineNum">      43 </span>                :            : /*!
 <a name="44"><span class="lineNum">      44 </span>                :            :   Destructor</a>
@@ -127,47 +127,47 @@
 <span class="lineNum">      49 </span>                :            : /*!
 <a name="50"><span class="lineNum">      50 </span>                :            :   Convenience function which returns the QColor of this Label.</a>
 <span class="lineNum">      51 </span>                :            :   */
-<span class="lineNum">      52 </span>                :<span class="lineCov">         18 : QColor Label::getColor() const {</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">         18 :     return color;</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">         82 : QColor Label::getColor() const {</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">         82 :     return color;</span>
 <span class="lineNum">      54 </span>                :            : }
 <span class="lineNum">      55 </span>                :            : 
 <span class="lineNum">      56 </span>                :            : /*!
 <a name="57"><span class="lineNum">      57 </span>                :            :   Convenience function for setting the color of this Label to \a col.</a>
 <span class="lineNum">      58 </span>                :            :   */
-<span class="lineNum">      59 </span>                :<span class="lineCov">          3 : void Label::setColor(QColor col) {</span>
-<span class="lineNum">      60 </span>                :<span class="lineCov">          3 :     color = col;</span>
-<span class="lineNum">      61 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">         15 : void Label::setColor(QColor col) {</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">         15 :     color = col;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">         15 : }</span>
 <span class="lineNum">      62 </span>                :            : 
 <span class="lineNum">      63 </span>                :            : /*!
 <a name="64"><span class="lineNum">      64 </span>                :            :   Convenience funtion for setting the id of this Label as \a j.</a>
 <span class="lineNum">      65 </span>                :            :   */
-<span class="lineNum">      66 </span>                :<span class="lineNoCov">          0 : void Label::setId(int j) {</span>
-<span class="lineNum">      67 </span>                :<span class="lineNoCov">          0 :     labelId = j;</span>
-<span class="lineNum">      68 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">          6 : void Label::setId(int j) {</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">          6 :     labelId = j;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">      69 </span>                :            : 
 <span class="lineNum">      70 </span>                :            : 
 <span class="lineNum">      71 </span>                :            : /*!
 <a name="72"><span class="lineNum">      72 </span>                :            :   Convenience funtion for getting the test of this Label as a QString</a>
 <span class="lineNum">      73 </span>                :            :   */
-<span class="lineNum">      74 </span>                :<span class="lineCov">          6 : QString Label::getText() const {</span>
-<span class="lineNum">      75 </span>                :<span class="lineCov">          6 :     return text;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">         27 : QString Label::getText() const {</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">         27 :     return text;</span>
 <span class="lineNum">      76 </span>                :            : }
 <span class="lineNum">      77 </span>                :            : 
 <span class="lineNum">      78 </span>                :            : /*!
 <a name="79"><span class="lineNum">      79 </span>                :            :   Convenience funtion for setting the text of this laael to \a tx</a>
 <span class="lineNum">      80 </span>                :            :   */
-<span class="lineNum">      81 </span>                :<span class="lineCov">          3 : void Label::setText(const QString tx) {</span>
-<span class="lineNum">      82 </span>                :<span class="lineCov">          3 :     text = tx;</span>
-<span class="lineNum">      83 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      81 </span>                :<span class="lineCov">         15 : void Label::setText(const QString tx) {</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">         15 :     text = tx;</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         15 : }</span>
 <span class="lineNum">      84 </span>                :            : 
 <span class="lineNum">      85 </span>                :            : /*!
 <span class="lineNum">      86 </span>                :            :   \overload addItem()
 <span class="lineNum">      87 </span>                :            : 
 <a name="88"><span class="lineNum">      88 </span>                :            :   This convenience function adds a RectangleSelect object to the Label</a>
 <span class="lineNum">      89 </span>                :            :   */
-<span class="lineNum">      90 </span>                :<span class="lineCov">          1 : void Label::addItem(RectangleSelect *item) {</span>
-<span class="lineNum">      91 </span>                :<span class="lineCov">          1 :     rectangleObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">      92 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">          4 : void Label::addItem(RectangleSelect *item) {</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">          4 :     rectangleObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">      93 </span>                :            : 
 <span class="lineNum">      94 </span>                :            : /*!
 <span class="lineNum">      95 </span>                :            :   \overload addItem()
@@ -175,9 +175,9 @@
 <span class="lineNum">      97 </span>                :            :   This convenience function adds an EllipseSelect object to the Label
 <a name="98"><span class="lineNum">      98 </span>                :            : </a>
 <span class="lineNum">      99 </span>                :            :   */
-<span class="lineNum">     100 </span>                :<span class="lineCov">          2 : void Label::addItem(EllipseSelect *item) {</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">          2 :     ellipseObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">     102 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">          8 : void Label::addItem(EllipseSelect *item) {</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">          8 :     ellipseObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">          8 : }</span>
 <span class="lineNum">     103 </span>                :            : 
 <span class="lineNum">     104 </span>                :            : /*!
 <span class="lineNum">     105 </span>                :            :   \overload addItem()
@@ -185,9 +185,9 @@
 <span class="lineNum">     107 </span>                :            :   This convenience function adds a PolygonSelect object to the Label
 <a name="108"><span class="lineNum">     108 </span>                :            : </a>
 <span class="lineNum">     109 </span>                :            :   */
-<span class="lineNum">     110 </span>                :<span class="lineNoCov">          0 : void Label::addItem(PolygonSelect *item) {</span>
-<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :     polygonObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     110 </span>                :<span class="lineCov">          4 : void Label::addItem(PolygonSelect *item) {</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">          4 :     polygonObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">     112 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     113 </span>                :            : 
 <span class="lineNum">     114 </span>                :            : /*!
 <span class="lineNum">     115 </span>                :            :   \overload addItem()
@@ -195,9 +195,9 @@
 <span class="lineNum">     117 </span>                :            :   This convenience function adds a FreeDrawSelect object to the Label
 <a name="118"><span class="lineNum">     118 </span>                :            : </a>
 <span class="lineNum">     119 </span>                :            :   */
-<span class="lineNum">     120 </span>                :<span class="lineCov">          1 : void Label::addItem(FreeDrawSelect *item) {</span>
-<span class="lineNum">     121 </span>                :<span class="lineCov">          1 :     freeDrawObjects.insert(item-&gt;myID, item);</span>
-<span class="lineNum">     122 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">          5 : void Label::addItem(FreeDrawSelect *item) {</span>
+<span class="lineNum">     121 </span>                :<span class="lineCov">          5 :     freeDrawObjects.insert(item-&gt;myID, item);</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">          5 : }</span>
 <span class="lineNum">     123 </span>                :            : 
 <span class="lineNum">     124 </span>                :            : 
 <span class="lineNum">     125 </span>                :            : /*!
@@ -215,12 +215,12 @@
 <span class="lineNum">     137 </span>                :            : /*!
 <a name="138"><span class="lineNum">     138 </span>                :            :   Clears the label data in memory.</a>
 <span class="lineNum">     139 </span>                :            :   */
-<span class="lineNum">     140 </span>                :<span class="lineNoCov">          0 : void Label::clear() {</span>
-<span class="lineNum">     141 </span>                :<span class="lineNoCov">          0 :     rectangleObjects.clear();</span>
-<span class="lineNum">     142 </span>                :<span class="lineNoCov">          0 :     ellipseObjects.clear();</span>
-<span class="lineNum">     143 </span>                :<span class="lineNoCov">          0 :     polygonObjects.clear();</span>
-<span class="lineNum">     144 </span>                :<span class="lineNoCov">          0 :     freeDrawObjects.clear();</span>
-<span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">          6 : void Label::clear() {</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">          6 :     rectangleObjects.clear();</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">          6 :     ellipseObjects.clear();</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">          6 :     polygonObjects.clear();</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">          6 :     freeDrawObjects.clear();</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     146 </span>                :            : 
 <span class="lineNum">     147 </span>                :            : /*!
 <span class="lineNum">     148 </span>                :            :   Set the opacity of the related SelectItems to \a val as an integer percentage.
@@ -249,52 +249,52 @@
 <span class="lineNum">     171 </span>                :            :   to this Label.
 <a name="172"><span class="lineNum">     172 </span>                :            : */</a>
 <span class="lineNum">     173 </span>                :            : 
-<span class="lineNum">     174 </span>                :<span class="lineNoCov">          0 : void Label::read(const QJsonObject &amp;json) {</span>
-<span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :     clear();</span>
-<span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :     setText(json[&quot;text&quot;].toString());</span>
-<span class="lineNum">     177 </span>                :<span class="lineNoCov">          0 :     setColor(QColor(json[&quot;color&quot;].toString()));</span>
-<span class="lineNum">     178 </span>                :<span class="lineNoCov">          0 :     if (json.contains(&quot;label_id&quot;)) {</span>
-<span class="lineNum">     179 </span>                :<span class="lineNoCov">          0 :         setId(json[&quot;label_id&quot;].toInt());</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          6 : void Label::read(const QJsonObject &amp;json) {</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">          6 :     clear();</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">          6 :     setText(json[&quot;text&quot;].toString());</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         12 :     setColor(QColor(json[&quot;color&quot;].toString()));</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">          6 :     if (json.contains(&quot;label_id&quot;)) {</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">          6 :         setId(json[&quot;label_id&quot;].toInt());</span>
 <span class="lineNum">     180 </span>                :            :     }
 <span class="lineNum">     181 </span>                :            : 
-<span class="lineNum">     182 </span>                :<span class="lineNoCov">          0 :     if (json.contains(&quot;rectangles&quot;)) {</span>
-<span class="lineNum">     183 </span>                :<span class="lineNoCov">          0 :         QJsonArray rectArray = json[&quot;rectangles&quot;].toArray();</span>
-<span class="lineNum">     184 </span>                :<span class="lineNoCov">          0 :         for (QJsonArray::iterator it = rectArray.begin(); it != rectArray.end();</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">          6 :     if (json.contains(&quot;rectangles&quot;)) {</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">          1 :         QJsonArray rectArray = json[&quot;rectangles&quot;].toArray();</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">          2 :         for (QJsonArray::iterator it = rectArray.begin(); it != rectArray.end();</span>
 <span class="lineNum">     185 </span>                :            :              ++it) {
 <span class="lineNum">     186 </span>                :            :             RectangleSelect *rect = new RectangleSelect(it-&gt;toObject(),
-<span class="lineNum">     187 </span>                :<span class="lineNoCov">          0 :                                                         sharedFromThis());</span>
-<span class="lineNum">     188 </span>                :<span class="lineNoCov">          0 :             SelectItem::ID = max(SelectItem::ID, rect-&gt;myID);</span>
-<span class="lineNum">     189 </span>                :<span class="lineNoCov">          0 :             addItem(rect);</span>
-<span class="lineNum">     190 </span>                :<span class="lineNoCov">          0 :         }</span>
+<span class="lineNum">     187 </span>                :<span class="lineCov">          3 :                                                         sharedFromThis());</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">          2 :             SelectItem::ID = max(SelectItem::ID, rect-&gt;myID);</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">          1 :             addItem(rect);</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">          1 :         }</span>
 <span class="lineNum">     191 </span>                :            :     }
-<span class="lineNum">     192 </span>                :<span class="lineNoCov">          0 :     if (json.contains(&quot;ellipses&quot;)) {</span>
-<span class="lineNum">     193 </span>                :<span class="lineNoCov">          0 :         QJsonArray ellipseArray = json[&quot;ellipses&quot;].toArray();</span>
-<span class="lineNum">     194 </span>                :<span class="lineNoCov">          0 :         for (QJsonArray::iterator it = ellipseArray.begin();</span>
-<span class="lineNum">     195 </span>                :<span class="lineNoCov">          0 :              it != ellipseArray.end(); ++it) {</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">          6 :     if (json.contains(&quot;ellipses&quot;)) {</span>
+<span class="lineNum">     193 </span>                :<span class="lineCov">          1 :         QJsonArray ellipseArray = json[&quot;ellipses&quot;].toArray();</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">          3 :         for (QJsonArray::iterator it = ellipseArray.begin();</span>
+<span class="lineNum">     195 </span>                :<span class="lineCov">          3 :              it != ellipseArray.end(); ++it) {</span>
 <span class="lineNum">     196 </span>                :            :             EllipseSelect *ellipse = new EllipseSelect(it-&gt;toObject(),
-<span class="lineNum">     197 </span>                :<span class="lineNoCov">          0 :                                                        sharedFromThis());</span>
-<span class="lineNum">     198 </span>                :<span class="lineNoCov">          0 :             SelectItem::ID = max(SelectItem::ID, ellipse-&gt;myID);</span>
-<span class="lineNum">     199 </span>                :<span class="lineNoCov">          0 :             addItem(ellipse);</span>
-<span class="lineNum">     200 </span>                :<span class="lineNoCov">          0 :         }</span>
+<span class="lineNum">     197 </span>                :<span class="lineCov">          6 :                                                        sharedFromThis());</span>
+<span class="lineNum">     198 </span>                :<span class="lineCov">          4 :             SelectItem::ID = max(SelectItem::ID, ellipse-&gt;myID);</span>
+<span class="lineNum">     199 </span>                :<span class="lineCov">          2 :             addItem(ellipse);</span>
+<span class="lineNum">     200 </span>                :<span class="lineCov">          1 :         }</span>
 <span class="lineNum">     201 </span>                :            :     }
-<span class="lineNum">     202 </span>                :<span class="lineNoCov">          0 :     if (json.contains(&quot;polygons&quot;)) {</span>
-<span class="lineNum">     203 </span>                :<span class="lineNoCov">          0 :         QJsonArray polyArray = json[&quot;polygons&quot;].toArray();</span>
-<span class="lineNum">     204 </span>                :<span class="lineNoCov">          0 :         for (QJsonArray::iterator it = polyArray.begin(); it != polyArray.end();</span>
+<span class="lineNum">     202 </span>                :<span class="lineCov">          6 :     if (json.contains(&quot;polygons&quot;)) {</span>
+<span class="lineNum">     203 </span>                :<span class="lineCov">          1 :         QJsonArray polyArray = json[&quot;polygons&quot;].toArray();</span>
+<span class="lineNum">     204 </span>                :<span class="lineCov">          2 :         for (QJsonArray::iterator it = polyArray.begin(); it != polyArray.end();</span>
 <span class="lineNum">     205 </span>                :            :              ++it) {
 <span class="lineNum">     206 </span>                :            :             PolygonSelect *poly = new PolygonSelect(it-&gt;toObject(),
-<span class="lineNum">     207 </span>                :<span class="lineNoCov">          0 :                                                     sharedFromThis());</span>
-<span class="lineNum">     208 </span>                :<span class="lineNoCov">          0 :             SelectItem::ID = max(SelectItem::ID, poly-&gt;myID);</span>
-<span class="lineNum">     209 </span>                :<span class="lineNoCov">          0 :             addItem(poly);</span>
-<span class="lineNum">     210 </span>                :<span class="lineNoCov">          0 :         }</span>
+<span class="lineNum">     207 </span>                :<span class="lineCov">          3 :                                                     sharedFromThis());</span>
+<span class="lineNum">     208 </span>                :<span class="lineCov">          2 :             SelectItem::ID = max(SelectItem::ID, poly-&gt;myID);</span>
+<span class="lineNum">     209 </span>                :<span class="lineCov">          1 :             addItem(poly);</span>
+<span class="lineNum">     210 </span>                :<span class="lineCov">          1 :         }</span>
 <span class="lineNum">     211 </span>                :            :     }
-<span class="lineNum">     212 </span>                :<span class="lineNoCov">          0 :     if (json.contains(&quot;freedraw&quot;)) {</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">          6 :     if (json.contains(&quot;freedraw&quot;)) {</span>
 <span class="lineNum">     213 </span>                :            :         FreeDrawSelect *fd = new FreeDrawSelect(json[&quot;freedraw&quot;].toObject(),
-<span class="lineNum">     214 </span>                :<span class="lineNoCov">          0 :                 sharedFromThis());</span>
-<span class="lineNum">     215 </span>                :<span class="lineNoCov">          0 :         SelectItem::ID = max(SelectItem::ID, fd-&gt;myID);</span>
-<span class="lineNum">     216 </span>                :<span class="lineNoCov">          0 :         addItem(fd);</span>
+<span class="lineNum">     214 </span>                :<span class="lineCov">          3 :                 sharedFromThis());</span>
+<span class="lineNum">     215 </span>                :<span class="lineCov">          2 :         SelectItem::ID = max(SelectItem::ID, fd-&gt;myID);</span>
+<span class="lineNum">     216 </span>                :<span class="lineCov">          1 :         addItem(fd);</span>
 <span class="lineNum">     217 </span>                :            :     }
-<span class="lineNum">     218 </span>                :<span class="lineNoCov">          0 :     SelectItem::ID += 1;</span>
-<span class="lineNum">     219 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     218 </span>                :<span class="lineCov">          6 :     SelectItem::ID += 1;</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     220 </span>                :            : 
 <span class="lineNum">     221 </span>                :            : /*!
 <a name="222"><span class="lineNum">     222 </span>                :            :   Read a QJsonObject \a json into this object.</a>
@@ -361,71 +361,71 @@
 <span class="lineNum">     283 </span>                :            : /*!
 <a name="284"><span class="lineNum">     284 </span>                :            :   Writes the contents of the Label class to QJsonObject \a json.</a>
 <span class="lineNum">     285 </span>                :            :   */
-<span class="lineNum">     286 </span>                :<span class="lineNoCov">          0 : void Label::write(QJsonObject &amp;json) const {</span>
-<span class="lineNum">     287 </span>                :<span class="lineNoCov">          0 :     json[&quot;text&quot;] = text;</span>
-<span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :     json[&quot;color&quot;] = color.name();</span>
-<span class="lineNum">     289 </span>                :<span class="lineNoCov">          0 :     json[&quot;label_id&quot;] = labelId;</span>
-<span class="lineNum">     290 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     286 </span>                :<span class="lineCov">          6 : void Label::write(QJsonObject &amp;json) const {</span>
+<span class="lineNum">     287 </span>                :<span class="lineCov">          6 :     json[&quot;text&quot;] = text;</span>
+<span class="lineNum">     288 </span>                :<span class="lineCov">          6 :     json[&quot;color&quot;] = color.name();</span>
+<span class="lineNum">     289 </span>                :<span class="lineCov">          6 :     json[&quot;label_id&quot;] = labelId;</span>
+<span class="lineNum">     290 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     291 </span>                :            : 
 <span class="lineNum">     292 </span>                :            : /*!
 <span class="lineNum">     293 </span>                :            :   Writes the contents of the Label data to QJsonObject \a json.
 <span class="lineNum">     294 </span>                :            :   Any SelectItems this Label holds are written.
 <span class="lineNum">     295 </span>                :            :   */
-<span class="lineNum">     296 </span>                :<span class="lineNoCov">          0 : void Label::writeIdantn(QJsonObject &amp;json) const {</span>
-<span class="lineNum">     297 </span>                :<span class="lineNoCov">          0 :     write(json);</span>
-<span class="lineNum">     298 </span>                :<span class="lineNoCov">          0 :     if (!rectangleObjects.isEmpty()) {</span>
-<span class="lineNum">     299 </span>                :<span class="lineNoCov">          0 :         QJsonArray rectangles;</span>
-<span class="lineNum">     300 </span>                :<span class="lineNoCov">          0 :         QHashIterator&lt;int, RectangleSelect*&gt; rit(rectangleObjects);</span>
-<span class="lineNum">     301 </span>                :<span class="lineNoCov">          0 :         while(rit.hasNext()) {</span>
+<span class="lineNum">     296 </span>                :<span class="lineCov">          3 : void Label::writeIdantn(QJsonObject &amp;json) const {</span>
+<span class="lineNum">     297 </span>                :<span class="lineCov">          3 :     write(json);</span>
+<span class="lineNum">     298 </span>                :<span class="lineCov">          3 :     if (!rectangleObjects.isEmpty()) {</span>
+<span class="lineNum">     299 </span>                :<span class="lineCov">          1 :         QJsonArray rectangles;</span>
+<span class="lineNum">     300 </span>                :<span class="lineCov">          1 :         QHashIterator&lt;int, RectangleSelect*&gt; rit(rectangleObjects);</span>
+<span class="lineNum">     301 </span>                :<span class="lineCov">          2 :         while(rit.hasNext()) {</span>
 <span class="lineNum">     302 </span>                :            :             rit.next();
-<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 :             if (!rit.value()-&gt;isVisible())</span>
+<span class="lineNum">     303 </span>                :<span class="lineCov">          2 :             if (!rit.value()-&gt;isVisible())</span>
 <span class="lineNum">     304 </span>                :<span class="lineNoCov">          0 :                 continue;</span>
-<span class="lineNum">     305 </span>                :<span class="lineNoCov">          0 :             QJsonObject rect;</span>
-<span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :             rit.value()-&gt;write(rect);</span>
-<span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :             rectangles.append(rect);</span>
-<span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :         }</span>
-<span class="lineNum">     309 </span>                :<span class="lineNoCov">          0 :         json[&quot;rectangles&quot;] = rectangles;</span>
+<span class="lineNum">     305 </span>                :<span class="lineCov">          1 :             QJsonObject rect;</span>
+<span class="lineNum">     306 </span>                :<span class="lineCov">          1 :             rit.value()-&gt;write(rect);</span>
+<span class="lineNum">     307 </span>                :<span class="lineCov">          1 :             rectangles.append(rect);</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">          1 :         }</span>
+<span class="lineNum">     309 </span>                :<span class="lineCov">          2 :         json[&quot;rectangles&quot;] = rectangles;</span>
 <span class="lineNum">     310 </span>                :            :     }
-<span class="lineNum">     311 </span>                :<span class="lineNoCov">          0 :     if (!ellipseObjects.isEmpty()) {</span>
-<span class="lineNum">     312 </span>                :<span class="lineNoCov">          0 :         QJsonArray ellipses;</span>
-<span class="lineNum">     313 </span>                :<span class="lineNoCov">          0 :         QHashIterator&lt;int, EllipseSelect*&gt; eit(ellipseObjects);</span>
-<span class="lineNum">     314 </span>                :<span class="lineNoCov">          0 :         while(eit.hasNext()) {</span>
+<span class="lineNum">     311 </span>                :<span class="lineCov">          3 :     if (!ellipseObjects.isEmpty()) {</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">          1 :         QJsonArray ellipses;</span>
+<span class="lineNum">     313 </span>                :<span class="lineCov">          1 :         QHashIterator&lt;int, EllipseSelect*&gt; eit(ellipseObjects);</span>
+<span class="lineNum">     314 </span>                :<span class="lineCov">          3 :         while(eit.hasNext()) {</span>
 <span class="lineNum">     315 </span>                :            :             eit.next();
-<span class="lineNum">     316 </span>                :<span class="lineNoCov">          0 :             if (!eit.value()-&gt;isVisible())</span>
+<span class="lineNum">     316 </span>                :<span class="lineCov">          4 :             if (!eit.value()-&gt;isVisible())</span>
 <span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 :                 continue;</span>
-<span class="lineNum">     318 </span>                :<span class="lineNoCov">          0 :             QJsonObject ellipse;</span>
-<span class="lineNum">     319 </span>                :<span class="lineNoCov">          0 :             eit.value()-&gt;write(ellipse);</span>
-<span class="lineNum">     320 </span>                :<span class="lineNoCov">          0 :             ellipses.append(ellipse);</span>
-<span class="lineNum">     321 </span>                :<span class="lineNoCov">          0 :         }</span>
-<span class="lineNum">     322 </span>                :<span class="lineNoCov">          0 :         json[&quot;ellipses&quot;] = ellipses;</span>
+<span class="lineNum">     318 </span>                :<span class="lineCov">          2 :             QJsonObject ellipse;</span>
+<span class="lineNum">     319 </span>                :<span class="lineCov">          2 :             eit.value()-&gt;write(ellipse);</span>
+<span class="lineNum">     320 </span>                :<span class="lineCov">          2 :             ellipses.append(ellipse);</span>
+<span class="lineNum">     321 </span>                :<span class="lineCov">          2 :         }</span>
+<span class="lineNum">     322 </span>                :<span class="lineCov">          2 :         json[&quot;ellipses&quot;] = ellipses;</span>
 <span class="lineNum">     323 </span>                :            :     }
-<span class="lineNum">     324 </span>                :<span class="lineNoCov">          0 :     if (!polygonObjects.isEmpty()) {</span>
-<span class="lineNum">     325 </span>                :<span class="lineNoCov">          0 :         QJsonArray polygons;</span>
-<span class="lineNum">     326 </span>                :<span class="lineNoCov">          0 :         QHashIterator&lt;int, PolygonSelect*&gt; pit(polygonObjects);</span>
-<span class="lineNum">     327 </span>                :<span class="lineNoCov">          0 :         while(pit.hasNext()) {</span>
+<span class="lineNum">     324 </span>                :<span class="lineCov">          3 :     if (!polygonObjects.isEmpty()) {</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">          1 :         QJsonArray polygons;</span>
+<span class="lineNum">     326 </span>                :<span class="lineCov">          1 :         QHashIterator&lt;int, PolygonSelect*&gt; pit(polygonObjects);</span>
+<span class="lineNum">     327 </span>                :<span class="lineCov">          2 :         while(pit.hasNext()) {</span>
 <span class="lineNum">     328 </span>                :            :             pit.next();
-<span class="lineNum">     329 </span>                :<span class="lineNoCov">          0 :             if (!pit.value()-&gt;isVisible())</span>
+<span class="lineNum">     329 </span>                :<span class="lineCov">          2 :             if (!pit.value()-&gt;isVisible())</span>
 <span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 :                 continue;</span>
-<span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :             QJsonObject poly;</span>
-<span class="lineNum">     332 </span>                :<span class="lineNoCov">          0 :             pit.value()-&gt;write(poly);</span>
-<span class="lineNum">     333 </span>                :<span class="lineNoCov">          0 :             polygons.append(poly);</span>
-<span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 :         }</span>
-<span class="lineNum">     335 </span>                :<span class="lineNoCov">          0 :         json[&quot;polygons&quot;] = polygons;</span>
+<span class="lineNum">     331 </span>                :<span class="lineCov">          1 :             QJsonObject poly;</span>
+<span class="lineNum">     332 </span>                :<span class="lineCov">          1 :             pit.value()-&gt;write(poly);</span>
+<span class="lineNum">     333 </span>                :<span class="lineCov">          1 :             polygons.append(poly);</span>
+<span class="lineNum">     334 </span>                :<span class="lineCov">          1 :         }</span>
+<span class="lineNum">     335 </span>                :<span class="lineCov">          2 :         json[&quot;polygons&quot;] = polygons;</span>
 <span class="lineNum">     336 </span>                :            :     }
-<span class="lineNum">     337 </span>                :<span class="lineNoCov">          0 :     if (!freeDrawObjects.isEmpty()) {</span>
+<span class="lineNum">     337 </span>                :<span class="lineCov">          3 :     if (!freeDrawObjects.isEmpty()) {</span>
 <span class="lineNum">     338 </span>                :            :         QList&lt;FreeDrawSelect*&gt; items;
-<span class="lineNum">     339 </span>                :<span class="lineNoCov">          0 :         QVector&lt;FreeDrawSelect*&gt; it = freeDrawObjects.values().toVector();</span>
-<span class="lineNum">     340 </span>                :<span class="lineNoCov">          0 :         for (int i = 0; i &lt; it.size(); i++) {</span>
-<span class="lineNum">     341 </span>                :<span class="lineNoCov">          0 :             if (it[i]-&gt;isVisible())</span>
+<span class="lineNum">     339 </span>                :<span class="lineCov">          2 :         QVector&lt;FreeDrawSelect*&gt; it = freeDrawObjects.values().toVector();</span>
+<span class="lineNum">     340 </span>                :<span class="lineCov">          4 :         for (int i = 0; i &lt; it.size(); i++) {</span>
+<span class="lineNum">     341 </span>                :<span class="lineCov">          2 :             if (it[i]-&gt;isVisible())</span>
 <span class="lineNum">     342 </span>                :            :                 items.push_back(it[i]);
 <span class="lineNum">     343 </span>                :            :         }
 <span class="lineNum">     344 </span>                :            : 
-<span class="lineNum">     345 </span>                :<span class="lineNoCov">          0 :         FreeDrawSelect *item = new FreeDrawSelect(items);</span>
-<span class="lineNum">     346 </span>                :<span class="lineNoCov">          0 :         QJsonObject fdo;</span>
-<span class="lineNum">     347 </span>                :<span class="lineNoCov">          0 :         item-&gt;write(fdo);</span>
-<span class="lineNum">     348 </span>                :<span class="lineNoCov">          0 :         json[&quot;freedraw&quot;] = fdo;</span>
+<span class="lineNum">     345 </span>                :<span class="lineCov">          1 :         FreeDrawSelect *item = new FreeDrawSelect(items);</span>
+<span class="lineNum">     346 </span>                :<span class="lineCov">          2 :         QJsonObject fdo;</span>
+<span class="lineNum">     347 </span>                :<span class="lineCov">          1 :         item-&gt;write(fdo);</span>
+<span class="lineNum">     348 </span>                :<span class="lineCov">          2 :         json[&quot;freedraw&quot;] = fdo;</span>
 <span class="lineNum">     349 </span>                :            :     }
-<span class="lineNum">     350 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     350 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     351 </span>                :            : 
 <span class="lineNum">     352 </span>                :            : /*!
 <span class="lineNum">     353 </span>                :            :   Sets the state of the associated SelectItems to be hidden or shown depending
@@ -436,44 +436,44 @@
 <span class="lineNum">     358 </span>                :            :   \li Qt::Checked Shown
 <span class="lineNum">     359 </span>                :            :   \endlist
 <span class="lineNum">     360 </span>                :            :   */
-<span class="lineNum">     361 </span>                :<span class="lineCov">          3 : void Label::setMaskState(int state) {</span>
+<span class="lineNum">     361 </span>                :<span class="lineCov">         12 : void Label::setMaskState(int state) {</span>
 <span class="lineNum">     362 </span>                :            :     QHash&lt;int, RectangleSelect*&gt;::iterator rectItem;
 <span class="lineNum">     363 </span>                :            :     QHash&lt;int, PolygonSelect*&gt;::iterator polygonItem;
 <span class="lineNum">     364 </span>                :            :     QHash&lt;int, FreeDrawSelect*&gt;::iterator freeDrawItem;
 <span class="lineNum">     365 </span>                :            :     QHash&lt;int, EllipseSelect*&gt;::iterator ellipseItem;
-<span class="lineNum">     366 </span>                :<span class="lineCov">          6 :     for (rectItem = rectangleObjects.begin();</span>
+<span class="lineNum">     366 </span>                :<span class="lineCov">         25 :     for (rectItem = rectangleObjects.begin();</span>
 <span class="lineNum">     367 </span>                :            :          rectItem != rectangleObjects.end(); ++rectItem) {
-<span class="lineNum">     368 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
-<span class="lineNum">     369 </span>                :<span class="lineNoCov">          0 :             rectItem.value()-&gt;hideMask();</span>
+<span class="lineNum">     368 </span>                :<span class="lineCov">          1 :         if (state == Qt::Unchecked) {</span>
+<span class="lineNum">     369 </span>                :<span class="lineCov">          1 :             rectItem.value()-&gt;hideMask();</span>
 <span class="lineNum">     370 </span>                :            :         } else {
 <span class="lineNum">     371 </span>                :<span class="lineNoCov">          0 :             rectItem.value()-&gt;showMask();</span>
 <span class="lineNum">     372 </span>                :            :         }
 <span class="lineNum">     373 </span>                :            :     }
-<span class="lineNum">     374 </span>                :<span class="lineCov">          6 :     for (ellipseItem = ellipseObjects.begin();</span>
+<span class="lineNum">     374 </span>                :<span class="lineCov">         26 :     for (ellipseItem = ellipseObjects.begin();</span>
 <span class="lineNum">     375 </span>                :            :          ellipseItem != ellipseObjects.end(); ++ellipseItem) {
-<span class="lineNum">     376 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
-<span class="lineNum">     377 </span>                :<span class="lineNoCov">          0 :             ellipseItem.value()-&gt;hideMask();</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">          2 :         if (state == Qt::Unchecked) {</span>
+<span class="lineNum">     377 </span>                :<span class="lineCov">          2 :             ellipseItem.value()-&gt;hideMask();</span>
 <span class="lineNum">     378 </span>                :            :         } else {
 <span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :             ellipseItem.value()-&gt;showMask();</span>
 <span class="lineNum">     380 </span>                :            :         }
 <span class="lineNum">     381 </span>                :            :     }
-<span class="lineNum">     382 </span>                :<span class="lineCov">          6 :     for (polygonItem = polygonObjects.begin();</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">         25 :     for (polygonItem = polygonObjects.begin();</span>
 <span class="lineNum">     383 </span>                :            :          polygonItem != polygonObjects.end(); ++polygonItem) {
-<span class="lineNum">     384 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
-<span class="lineNum">     385 </span>                :<span class="lineNoCov">          0 :             polygonItem.value()-&gt;hideMask();</span>
+<span class="lineNum">     384 </span>                :<span class="lineCov">          1 :         if (state == Qt::Unchecked) {</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">          1 :             polygonItem.value()-&gt;hideMask();</span>
 <span class="lineNum">     386 </span>                :            :         } else {
 <span class="lineNum">     387 </span>                :<span class="lineNoCov">          0 :             polygonItem.value()-&gt;showMask();</span>
 <span class="lineNum">     388 </span>                :            :         }
 <span class="lineNum">     389 </span>                :            :     }
-<span class="lineNum">     390 </span>                :<span class="lineCov">          6 :     for (freeDrawItem = freeDrawObjects.begin();</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">         25 :     for (freeDrawItem = freeDrawObjects.begin();</span>
 <span class="lineNum">     391 </span>                :            :          freeDrawItem != freeDrawObjects.end(); ++freeDrawItem) {
-<span class="lineNum">     392 </span>                :<span class="lineNoCov">          0 :         if (state == Qt::Unchecked) {</span>
-<span class="lineNum">     393 </span>                :<span class="lineNoCov">          0 :             freeDrawItem.value()-&gt;hideMask();</span>
+<span class="lineNum">     392 </span>                :<span class="lineCov">          1 :         if (state == Qt::Unchecked) {</span>
+<span class="lineNum">     393 </span>                :<span class="lineCov">          1 :             freeDrawItem.value()-&gt;hideMask();</span>
 <span class="lineNum">     394 </span>                :            :         } else {
 <span class="lineNum">     395 </span>                :<span class="lineNoCov">          0 :             freeDrawItem.value()-&gt;showMask();</span>
 <a name="396"><span class="lineNum">     396 </span>                :            :         }</a>
 <span class="lineNum">     397 </span>                :            :     }
-<span class="lineNum">     398 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     398 </span>                :<span class="lineCov">         15 : }</span>
 <span class="lineNum">     399 </span>                :            : /*!
 <span class="lineNum">     400 </span>                :            :   \fn Label::addItem(FreeDrawErase *item)
 <span class="lineNum">     401 </span>                :            : 
