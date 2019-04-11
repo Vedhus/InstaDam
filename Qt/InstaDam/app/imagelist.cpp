@@ -250,10 +250,10 @@ void ImageList::annotationReplyFinished(QNetworkReply *currentReply)
 void ImageList::checkIfAllAnnotationsReceived()
 {
     json["labels"] = jsonLabelArray;
-    if (numAnnotationsReceived ==currentProject->numLabels())
-    {
+//    if (numAnnotationsReceived ==currentProject->numLabels())
+//    {
         emit allAnnotationsLoaded(json, ANNOTATION);
-    }
+//    }
 }
 
 
