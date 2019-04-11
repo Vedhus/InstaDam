@@ -1157,7 +1157,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
     if (!panning && !ctrlPanning){
 
-        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false) {
+        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false){ //(!item)
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 scene->inactiveAll();
@@ -1280,7 +1280,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
-        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true) {
+        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true && item) {
+            qInfo()<<"shift clicked!";
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
                     return;
