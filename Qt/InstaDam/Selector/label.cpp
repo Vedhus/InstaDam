@@ -155,23 +155,7 @@ void Label::clear() {
   Set the opacity of the related SelectItems to \a val as an integer percentage.
   */
 void Label::setOpacity(int val) {
-    float normalizedValue = val/100.0;
-    QHash<int, RectangleSelect*>::iterator rectItems;
-    QHash<int, PolygonSelect*>::iterator polygonItems;
-    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
-    QHash<int, EllipseSelect*>::iterator ellipseItems;
 
-    for (rectItems = rectangleObjects.begin(); rectItems != rectangleObjects.end(); ++rectItems)
-        rectItems.value()->setOpacity(normalizedValue);
-
-    for (polygonItems = polygonObjects.begin(); polygonItems != polygonObjects.end(); ++polygonItems)
-        polygonItems.value()->setOpacity(normalizedValue);
-
-    for (ellipseItems = ellipseObjects.begin(); ellipseItems != ellipseObjects.end(); ++ellipseItems)
-        ellipseItems.value()->setOpacity(normalizedValue);
-
-    for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
-        freeDrawItems.value()->setOpacity(normalizedValue);
 
 }
 
