@@ -29,7 +29,13 @@ void TestSelect::testLabelReadWrite() {
     generateData();
     QJsonObject json;
     myLabel->writeIdantn(json);
-    //add opacity test
+    Label *lab = new Label(json, 1);
+    QCOMPARE(myLabel->rectangleObjects.size(), lab->rectangleObjects.size());
+    delete ritem;
+    delete eitem;
+    delete pitem;
+    delete fitem;
+    delete lab;
 }
 
 void TestSelect::testLabelText() {
