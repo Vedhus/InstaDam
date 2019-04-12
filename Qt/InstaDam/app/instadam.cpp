@@ -150,9 +150,10 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
             SLOT(setInsert()));
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
-
+#ifndef TEST
     StartingWidget *sw = new StartingWidget;
     sw->show();
+#endif
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
@@ -242,9 +243,17 @@ void InstaDam::setLabels() {
 void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
+#ifndef TEST
     newProject->setModal(true);
     connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
     newProject->exec();
+#else
+    QHashIterator<QString, QColor> it(labelHash);
+    while (it.hasNext()) {
+        it.next();
+        newProject->setLabel(it.key(), it.value());
+    }
+#endif
     setNewProject();
 }
 
@@ -307,9 +316,13 @@ void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
       openIdproConnector->onActivate();
 #else
+#ifndef TEST
     // Reading and Loading
     QString myfileName = QFileDialog::getOpenFileName(this,
         tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+#else
+    QString myfileName = prjInName;
+#endif
     if (myfileName.isEmpty()) {
             return;  // remove that part and add an alert
     } else {
@@ -418,28 +431,32 @@ void InstaDam::on_actionSave_Annotation_triggered() {
   */
 void InstaDam::on_actionSave_triggered() {
     // Saving the file
-    #ifdef WASM_BUILD
-        QByteArray outFile;
-    #else
-        QString outFileName = QFileDialog::getSaveFileName(this,
-               tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-        if (QFileInfo(outFileName).suffix() != QString("idpro"))
-            outFileName = outFileName +QString(".idpro");
+#ifdef WASM_BUILD
+    QByteArray outFile;
+#else  // WASM_BUILD
+#ifndef TEST
+    QString outFileName = QFileDialog::getSaveFileName(this,
+       tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+#else  // TEST
+    QString outFileName = prjOutName;
+#endif  // TEST
+    if (QFileInfo(outFileName).suffix() != QString("idpro"))
+        outFileName = outFileName +QString(".idpro");
 
-        QFile outFile(outFileName);
-        outFile.open(QIODevice::WriteOnly);
-    #endif
-        QJsonObject json;
-        write(json, PROJECT);
-        QJsonDocument saveDoc(json);
-    #ifdef WASM_BUILD
-        QString strJson(saveDoc.toJson(QJsonDocument::Compact));
-        outFile.append(strJson);
-        QHtml5File::save(outFile, "myproject.idpro");
+    QFile outFile(outFileName);
+    outFile.open(QIODevice::WriteOnly);
+#endif  // WASM_BUILD
+    QJsonObject json;
+    write(json, PROJECT);
+    QJsonDocument saveDoc(json);
+#ifdef WASM_BUILD
+    QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+    outFile.append(strJson);
+    QHtml5File::save(outFile, "myproject.idpro");
 
-    #else
-        outFile.write(saveDoc.toJson());
-    #endif
+#else  // WASM_BUILD
+    outFile.write(saveDoc.toJson());
+#endif  // WASM_BUILD
 }
 
 /*!
@@ -505,8 +522,13 @@ void InstaDam::on_actionOpen_File_triggered() {
         }
         openImageConnector->onActivate();
 #else
+
+#ifndef TEST
         QString filename_temp = QFileDialog::getOpenFileName(this,
             tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+#else
+        QString filename_temp = imgInName;
+#endif
         QString ext = QFileInfo(filename_temp).suffix();
         if (!ext.compare("png", Qt::CaseInsensitive) ||
             !ext.compare("jpg", Qt::CaseInsensitive) ||
@@ -649,9 +671,14 @@ void InstaDam::exportImages(bool asBuffers) {
  Displays the std::string \a errorMessage as a QMessageBox.
   */
 void InstaDam::assertError(std::string errorMessage) {
+#ifndef TEST
     QMessageBox *messageBox = new QMessageBox;
     messageBox->critical(nullptr, "Error", QString::fromStdString(errorMessage));
     messageBox->setFixedSize(500, 200);
+#else
+    assertThrown = true;
+    QTextStream(stdout) << "ERROR " << QString(errorMessage.c_str()) << endl;
+#endif
 }
 
 /*!
@@ -1053,6 +1080,7 @@ void InstaDam::on_filterOptions_clicked()
  * Function to insert point between two points in the polygon.
  */
 void InstaDam::setInsert() {
+    currentItem->resetState();
     insertVertex = true;
     vertex1 = -1;
     vertex2 = -1;
@@ -1339,6 +1367,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
+
             currentItem->moveItem(fromPos, toPos);
         } else {
             currentItem->rotate(fromPos, toPos);
@@ -1415,7 +1444,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         }
         currentItem->resetState();
     } else if (currentItem && currentItem->type() == SelectItem::Polygon &&
-               !currentItem->wasPointAdded()) {
+               currentItem->wasPointAdded()) {
         QUndoCommand *addVertexCommand =
                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                          currentItem : currentItem->getMirror(),

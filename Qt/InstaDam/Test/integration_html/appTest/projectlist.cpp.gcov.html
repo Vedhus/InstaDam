@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - appTest/projectlist.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">appTest</a> - projectlist.cpp<span style="font-size: 80%;"> (source / <a href="projectlist.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">67</td>
+            <td class="headerCovTableEntryLo">1.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">22.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;projectlist.h&quot;</a>
+<span class="lineNum">       2 </span>                :            : 
+<span class="lineNum">       3 </span>                :            : #include &quot;ui_projectlist.h&quot;
+<span class="lineNum">       4 </span>                :            : #include &quot;ui_newproject.h&quot;
+<span class="lineNum">       5 </span>                :            : 
+<span class="lineNum">       6 </span>                :            : #include &lt;QJsonObject&gt;
+<span class="lineNum">       7 </span>                :            : #include &lt;QJsonDocument&gt;
+<span class="lineNum">       8 </span>                :            : #include &lt;QJsonArray&gt;
+<span class="lineNum">       9 </span>                :            : #include &lt;QDebug&gt;
+<span class="lineNum">      10 </span>                :            : #include &lt;QtNetwork/QNetworkAccessManager&gt;
+<span class="lineNum">      11 </span>                :            : #include &lt;QtNetwork/QNetworkReply&gt;
+<span class="lineNum">      12 </span>                :            : #include &lt;QUrl&gt;
+<span class="lineNum">      13 </span>                :            : #include &lt;QNetworkRequest&gt;
+<span class="lineNum">      14 </span>                :            : #include &lt;QNetworkReply&gt;
+<span class="lineNum">      15 </span>                :            : 
+<span class="lineNum">      16 </span>                :            : #include &quot;instadam.h&quot;
+<span class="lineNum">      17 </span>                :            : #include &quot;newproject.h&quot;
+<span class="lineNum">      18 </span>                :            : #include &quot;serverprojectname.h&quot;
+<span class="lineNum">      19 </span>                :            : #include &quot;imagelist.h&quot;
+<span class="lineNum">      20 </span>                :            : /*!
+<span class="lineNum">      21 </span>                :            :   \class ProjectList
+<span class="lineNum">      22 </span>                :            :   \ingroup app
+<span class="lineNum">      23 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      24 </span>                :            :   \inherits QWidget
+<span class="lineNum">      25 </span>                :            :   \brief A list of projects.
+<span class="lineNum">      26 </span>                :            :   */
+<span class="lineNum">      27 </span>                :            : 
+<span class="lineNum">      28 </span>                :            : /*!
+<span class="lineNum">      29 </span>                :            :   Creates a ProjectList with parent QWidget \a parent, if any.
+<span class="lineNum">      30 </span>                :            :   */
+<span class="lineNum">      31 </span>                :<span class="lineNoCov">          0 : ProjectList::ProjectList(QWidget *parent) :</span>
+<span class="lineNum">      32 </span>                :<span class="lineNoCov">          0 :     QWidget(parent), ui(new Ui::ProjectList) {</span>
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 :     ui-&gt;setupUi(this);</span>
+<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      35 </span>                :            : 
+<span class="lineNum">      36 </span>                :            : /*!
+<a name="37"><span class="lineNum">      37 </span>                :            :   Destructor.</a>
+<span class="lineNum">      38 </span>                :            :   */
+<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 : ProjectList::~ProjectList() {</span>
+<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 :     delete ui;</span>
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      42 </span>                :            : 
+<span class="lineNum">      43 </span>                :            : /*!
+<span class="lineNum">      44 </span>                :            :   Adds Projects to this object based on the input \a obj, \a databaseURL,
+<span class="lineNum">      45 </span>                :            :   and \a accessToken.
+<span class="lineNum">      46 </span>                :            :   */
+<span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 : void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString accessToken) {</span>
+<span class="lineNum">      48 </span>                :<span class="lineNoCov">          0 :     this-&gt;databaseURL = databaseURL;</span>
+<span class="lineNum">      49 </span>                :<span class="lineNoCov">          0 :     this-&gt;accessToken = accessToken;</span>
+<span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 :     QJsonArray projects_list = obj.array();</span>
+<span class="lineNum">      51 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; obj;</span>
+<span class="lineNum">      52 </span>                :<span class="lineNoCov">          0 :     for(int i =0; i&lt;projects_list.count();i++){</span>
+<span class="lineNum">      53 </span>                :<span class="lineNoCov">          0 :         QJsonValue project = projects_list.at(i);</span>
+<span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 :             if(project.isObject()){</span>
+<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :                 QJsonObject subObj = project.toObject();</span>
+<span class="lineNum">      56 </span>                :            :                 QStringList proj_details;
+<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 :                 foreach(const QString&amp; k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json</span>
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 :                     QJsonValue val = subObj.value(k);</span>
+<span class="lineNum">      59 </span>                :<span class="lineNoCov">          0 :                     if(k == &quot;id&quot;){</span>
+<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :                         proj_details &lt;&lt; QString::number(val.toInt());</span>
+<span class="lineNum">      61 </span>                :            :                         }
+<span class="lineNum">      62 </span>                :<span class="lineNoCov">          0 :                     if(k == &quot;name&quot;){</span>
+<span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :                         proj_details &lt;&lt; val.toString();</span>
+<span class="lineNum">      64 </span>                :            :                         }
+<span class="lineNum">      65 </span>                :<span class="lineNoCov">          0 :                     if(k==&quot;is_admin&quot;){</span>
+<span class="lineNum">      66 </span>                :<span class="lineNoCov">          0 :                         if(val==true){</span>
+<span class="lineNum">      67 </span>                :<span class="lineNoCov">          0 :                             proj_details &lt;&lt; &quot;Admin&quot;;</span>
+<span class="lineNum">      68 </span>                :            :                             }
+<span class="lineNum">      69 </span>                :            :                         else{
+<span class="lineNum">      70 </span>                :<span class="lineNoCov">          0 :                             proj_details &lt;&lt; &quot;Annotator&quot;;</span>
+<span class="lineNum">      71 </span>                :            :                             }
+<span class="lineNum">      72 </span>                :            :                         }
+<span class="lineNum">      73 </span>                :            : 
+<span class="lineNum">      74 </span>                :<span class="lineNoCov">          0 :                     }</span>
+<span class="lineNum">      75 </span>                :<span class="lineNoCov">          0 :                ui-&gt;projectsTable-&gt;addItem(proj_details.join(&quot; - &quot;));</span>
+<span class="lineNum">      76 </span>                :<span class="lineNoCov">          0 :                connect(ui-&gt;projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));</span>
+<span class="lineNum">      77 </span>                :            :             }
+<span class="lineNum">      78 </span>                :            :             else{
+<span class="lineNum">      79 </span>                :<span class="lineNoCov">          0 :                 qInfo() &lt;&lt; &quot;The returned object does not satisfy the requirements&quot;;</span>
+<span class="lineNum">      80 </span>                :<span class="lineNoCov">          0 :                 qInfo() &lt;&lt; project;</span>
+<span class="lineNum">      81 </span>                :            :             }
+<span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">      83 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      84 </span>                :            : 
+<span class="lineNum">      85 </span>                :            : /*!
+<span class="lineNum">      86 </span>                :            :   Opens the Project based on \a project_name.
+<span class="lineNum">      87 </span>                :            :   */
+<span class="lineNum">      88 </span>                :<span class="lineNoCov">          0 : void ProjectList::openProject(QListWidgetItem *project_name) {</span>
+<span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;inside open a new project&quot; &lt;&lt; project_name-&gt;text();</span>
+<span class="lineNum">      90 </span>                :<span class="lineNoCov">          0 :     QString id = QString(project_name-&gt;text().split('-')[0]);</span>
+<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; id;</span>
+<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 :     QString databaseGetProjectURL = this-&gt;databaseURL+&quot;/project/&quot;+id+&quot;/labels&quot;;</span>
+<span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :     QUrl dabaseLink = QUrl(databaseGetProjectURL);</span>
+<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; databaseGetProjectURL;</span>
+<span class="lineNum">      95 </span>                :<span class="lineNoCov">          0 :     QNetworkRequest req = QNetworkRequest(dabaseLink);</span>
+<span class="lineNum">      96 </span>                :<span class="lineNoCov">          0 :     QString loginToken = &quot;Bearer &quot;+this-&gt;accessToken;</span>
+<span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 :     req.setRawHeader(QByteArray(&quot;Authorization&quot;), loginToken.QString::toUtf8());</span>
+<span class="lineNum">      98 </span>                :<span class="lineNoCov">          0 :     rep = manager-&gt;get(req);</span>
+<span class="lineNum">      99 </span>                :            : 
+<span class="lineNum">     100 </span>                :            :     connect(rep, &amp;QNetworkReply::finished,
+<span class="lineNum">     101 </span>                :<span class="lineNoCov">          0 :             this, &amp;ProjectList::getLabelsReplyFinished);</span>
+<span class="lineNum">     102 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     103 </span>                :            : 
+<span class="lineNum">     104 </span>                :            : /*!
+<span class="lineNum">     105 </span>                :            :   Something.
+<span class="lineNum">     106 </span>                :            :   */
+<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 : void ProjectList::getLabelsReplyFinished() {</span>
+<span class="lineNum">     108 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;reply received:&quot;;</span>
+<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :     QByteArray strReply = rep-&gt;readAll();</span>
+<span class="lineNum">     110 </span>                :            :     QJsonParseError jsonError;
+<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &amp;jsonError); // parse and capture the error flag</span>
+<span class="lineNum">     112 </span>                :            : 
+<span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :     if (jsonError.error != QJsonParseError::NoError) {</span>
+<span class="lineNum">     114 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;Error: &quot; &lt;&lt; jsonError.errorString();</span>
+<span class="lineNum">     115 </span>                :            :     }  else {
+<span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 :             qInfo() &lt;&lt; jsonReply;</span>
+<span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 :               InstaDam *instadamWindow = new InstaDam(nullptr, this-&gt;databaseURL, this-&gt;accessToken);</span>
+<span class="lineNum">     118 </span>                :<span class="lineNoCov">          0 :               instadamWindow-&gt;show();</span>
+<span class="lineNum">     119 </span>                :<span class="lineNoCov">          0 :               hide();</span>
+<span class="lineNum">     120 </span>                :            : //              Project* newPr = new Project();
+<span class="lineNum">     121 </span>                :            : 
+<span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 :               QJsonObject jsonLabels = jsonReply.object();</span>
+<span class="lineNum">     123 </span>                :<span class="lineNoCov">          0 :               instadamWindow-&gt;loadLabelJson(jsonLabels, PROJECT);</span>
+<span class="lineNum">     124 </span>                :            : 
+<span class="lineNum">     125 </span>                :            : //              foreach(const QString&amp; k, labels.keys()) {
+<span class="lineNum">     126 </span>                :            : //                  if(k==&quot;labels&quot;){
+<span class="lineNum">     127 </span>                :            : //                       QJsonValue labels_values = labels.value(k);
+<span class="lineNum">     128 </span>                :            : //                       QJsonArray labels_values_list = labels_values.toArray();
+<span class="lineNum">     129 </span>                :            : //                       for(int i=0;i&lt;labels_values_list.count();i++){
+<span class="lineNum">     130 </span>                :            : //                           QJsonValue labelValue = labels_values_list.at(i);
+<span class="lineNum">     131 </span>                :            : //                               if(labelValue.isObject()){
+<span class="lineNum">     132 </span>                :            : //                                   QJsonObject label = labelValue.toObject();
+<span class="lineNum">     133 </span>                :            : //                                   Label* lb = new Label(label, label.value(&quot;id&quot;).toInt(), true);
+<span class="lineNum">     134 </span>                :            : 
+<span class="lineNum">     135 </span>                :            : //                                   QSharedPointer&lt;Label&gt; LB = QSharedPointer&lt;Label&gt;(lb);
+<span class="lineNum">     136 </span>                :            : //                                   qInfo() &lt;&lt; lb-&gt;getText();
+<span class="lineNum">     137 </span>                :            : //                                   qInfo() &lt;&lt; lb-&gt;getColor();
+<span class="lineNum">     138 </span>                :            : //                                   newPr-&gt;addLabel(LB);
+<span class="lineNum">     139 </span>                :            : //                               }
+<span class="lineNum">     140 </span>                :            : //                        }
+<span class="lineNum">     141 </span>                :            : //                  }
+<span class="lineNum">     142 </span>                :            : //              }
+<span class="lineNum">     143 </span>                :            : 
+<span class="lineNum">     144 </span>                :            : //              w-&gt;setCurrentProject(newPr);
+<span class="lineNum">     145 </span>                :            : //              w-&gt;setLabels();
+<span class="lineNum">     146 </span>                :<span class="lineNoCov">          0 :       }</span>
+<a name="147"><span class="lineNum">     147 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :<span class="lineNoCov">          0 : void ProjectList::on_pushButton_clicked()</span>
+<span class="lineNum">     150 </span>                :            : {
+<span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 :     serverProjectName *spn = new serverProjectName();</span>
+<span class="lineNum">     152 </span>                :<span class="lineNoCov">          0 :     spn-&gt;databaseURL = this-&gt;databaseURL;</span>
+<span class="lineNum">     153 </span>                :<span class="lineNoCov">          0 :     spn-&gt;accessToken = this-&gt;accessToken;</span>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineNoCov">          0 :     spn-&gt;show();</span></a>
+<span class="lineNum">     155 </span>                :<span class="lineNoCov">          0 :     hide();</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     157 </span>                :            : 
+<span class="lineNum">     158 </span>                :            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

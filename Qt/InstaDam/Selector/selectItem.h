@@ -19,6 +19,8 @@
 #include <QPainter>
 #include <QJsonObject>
 
+#include <iostream>
+
 #define UNUSED(x) (void)(x)
 class Label;
 class FreeDrawSelect;
@@ -152,9 +154,11 @@ class SelectItem : public QGraphicsItem {
         setMirrorActive();
         active = true;
     }
+    void setMoved(bool val) {moved = val;}
     bool wasMoved() const {return moved;}
     bool wasPointAdded() const {return pointAdded;}
     bool wasResized() const {return resized;}
+    void setRotated(bool val) {rotated = val;}
     bool wasRotated() const {return rotated;}
     void setFromMaskScene(bool value) {fromMaskScene = value;}
     void setOnMaskScene(bool value) {onMaskScene = value;}
@@ -178,7 +182,9 @@ class SelectItem : public QGraphicsItem {
             mirrorShow();
         }
     }
-
+#ifdef TEST
+    friend class IntegrationTest;
+#endif
  protected:
     SelectType selectType;
 

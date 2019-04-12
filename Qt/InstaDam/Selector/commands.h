@@ -76,6 +76,7 @@ class AddVertexCommand : public QUndoCommand {
  private:
     SelectItem *myItem;
     QPointF myPoint;
+    int vertex;
     bool init = false;
 };
 

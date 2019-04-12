@@ -118,7 +118,9 @@ class InstaDam : public QMainWindow {
     void processShowHide(int state);
 
     void on_filterOptions_clicked();
-
+#ifdef TEST
+    friend class IntegrationTest;
+#endif
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
@@ -138,6 +140,22 @@ public slots:
     MyConnector *openIdproConnector;
     QByteArray imageFileContent;
     QByteArray idproFileContent;
+#endif
+
+#ifdef TEST
+    bool assertThrown = false;
+    QHash<QString, QColor> labelHash;
+    void addLabelHash(QString text, QColor color){
+        labelHash.insert(text, color);
+    }
+
+    QString prjInName = "";
+    QString prjOutName = "";
+    QString imgInName = "";
+
+    void setPrjInName(QString name) {prjInName = name;}
+    void setPrjOutName(QString name) {prjOutName = name;}
+    void setImgInName(QString name) {imgInName = name;}
 #endif
     QSharedPointer<Label> currentLabel;
     QVector<LabelButton*> labelButtons;

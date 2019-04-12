@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - appTest/labelButton.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">appTest</a> - labelButton.cpp<span style="font-size: 80%;"> (source / <a href="labelButton.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryLo">68.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryLo">71.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;labelButton.h&quot;</a>
+<span class="lineNum">       2 </span>                :            : 
+<span class="lineNum">       3 </span>                :            : /*!
+<span class="lineNum">       4 </span>                :            :   \class LabelButton
+<span class="lineNum">       5 </span>                :            :   \ingroup app
+<span class="lineNum">       6 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">       7 </span>                :            :   \inherits QPushButton
+<span class="lineNum">       8 </span>                :            :   \brief A button for seleting the Label for annotation.
+<span class="lineNum">       9 </span>                :            : 
+<span class="lineNum">      10 </span>                :            :   */
+<span class="lineNum">      11 </span>                :            : 
+<span class="lineNum">      12 </span>                :            : /*!
+<a name="13"><span class="lineNum">      13 </span>                :            :   Creates an instance, associated with \a label.</a>
+<span class="lineNum">      14 </span>                :            :   */
+<span class="lineNum">      15 </span>                :<span class="lineCov">         29 : LabelButton::LabelButton(QSharedPointer&lt;Label&gt; label) : QPushButton() {</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">         29 :     myLabel = label;</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">         29 :     setCheckable(true);</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">         29 :     connect(this, &amp;QPushButton::clicked, this, &amp;LabelButton::wasClicked);</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">         29 :     slider = new QSlider;</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">         29 :     slider-&gt;setOrientation(Qt::Horizontal);</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">         29 :     slider-&gt;setMaximum(100);</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">         29 :     slider-&gt;setMinimum(0);</span>
+<span class="lineNum">      23 </span>                :            :     connect(slider, SIGNAL(valueChanged(int)), this,
+<span class="lineNum">      24 </span>                :<span class="lineCov">         29 :             SLOT(reemitValueChanged(int)));</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">         29 : }</span>
+<span class="lineNum">      26 </span>                :            : 
+<span class="lineNum">      27 </span>                :            : /*!
+<a name="28"><span class="lineNum">      28 </span>                :            :   Signals the button was clicked.</a>
+<span class="lineNum">      29 </span>                :            :   */
+<span class="lineNum">      30 </span>                :<span class="lineCov">         21 : void LabelButton::wasClicked() {</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         42 :     emit cclicked(myLabel);</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">         21 : }</span>
+<span class="lineNum">      33 </span>                :            : 
+<span class="lineNum">      34 </span>                :            : /*!
+<a name="35"><span class="lineNum">      35 </span>                :            :   Signals the value changed to \a value.</a>
+<span class="lineNum">      36 </span>                :            :   */
+<span class="lineNum">      37 </span>                :<span class="lineCov">         29 : void LabelButton::reemitValueChanged(int value) {</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">         58 :     emit opacity(myLabel, value);</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         29 : }</span>
+<span class="lineNum">      40 </span>                :            : 
+<span class="lineNum">      41 </span>                :            : 
+<span class="lineNum">      42 </span>                :            : /*!
+<span class="lineNum">      43 </span>                :            :   \class LabelButtonFilter
+<span class="lineNum">      44 </span>                :            :   \ingroup app
+<span class="lineNum">      45 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      46 </span>                :            :   \inherits QPushButton
+<span class="lineNum">      47 </span>                :            :   \brief Button for filters.
+<span class="lineNum">      48 </span>                :            : 
+<span class="lineNum">      49 </span>                :            :   */
+<span class="lineNum">      50 </span>                :            : 
+<span class="lineNum">      51 </span>                :            : /*!
+<a name="52"><span class="lineNum">      52 </span>                :            :   Creates an instance based on \a label.</a>
+<span class="lineNum">      53 </span>                :            :   */
+<span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 : LabelButtonFilter::LabelButtonFilter(QSharedPointer&lt;Label&gt; label)</span>
+<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :     : QPushButton() {</span>
+<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :     myLabel = label;</span>
+<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 :     setCheckable(true);</span>
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 :     connect(this, &amp;QPushButton::clicked, this, &amp;LabelButtonFilter::wasClicked);</span>
+<span class="lineNum">      59 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      60 </span>                :            : 
+<span class="lineNum">      61 </span>                :            : /*!
+<a name="62"><span class="lineNum">      62 </span>                :            :   Signals the button was clicked.</a>
+<span class="lineNum">      63 </span>                :            :   */
+<a name="64"><span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 : void LabelButtonFilter::wasClicked() {</span></a>
+<span class="lineNum">      65 </span>                :<span class="lineNoCov">          0 :     emit cclicked(myLabel);</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

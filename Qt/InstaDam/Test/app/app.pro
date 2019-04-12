@@ -18,7 +18,7 @@ HEADERS = testSelect.h \
 
 target.path = ../.
 INSTALLS += target
-LIBS += -L$${PWD}/.. -lselector -linstadam
+LIBS += -L$${PWD}/.. -lselector -linstadam -lquazip
 QMAKE_CXXFLAGS += --coverage
 QMAKE_LFLAGS += --coverage
 

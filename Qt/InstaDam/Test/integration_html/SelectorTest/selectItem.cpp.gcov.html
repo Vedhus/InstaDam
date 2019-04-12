@@ -1,0 +1,719 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/selectItem.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - selectItem.cpp<span style="font-size: 80%;"> (source / <a href="selectItem.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">53</td>
+            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntryMed">88.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryHi">92.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #include &lt;QtWidgets&gt;</a>
+<span class="lineNum">       2 </span>                :            : #include &lt;QPointF&gt;
+<span class="lineNum">       3 </span>                :            : #include &lt;algorithm&gt;
+<span class="lineNum">       4 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">       5 </span>                :            : 
+<span class="lineNum">       6 </span>                :            : #include &quot;selectItem.h&quot;
+<span class="lineNum">       7 </span>                :            : #include &quot;label.h&quot;
+<span class="lineNum">       8 </span>                :            : /*!
+<span class="lineNum">       9 </span>                :            :   \class SelectItem
+<span class="lineNum">      10 </span>                :            :   \ingroup Selector
+<span class="lineNum">      11 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      12 </span>                :            :   \inherits QGraphicsItem
+<span class="lineNum">      13 </span>                :            :   \brief The SelectItem class provides a base class for all annotating items.
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            :   Provides a foundation for all annotation type objects. Common funtions that
+<span class="lineNum">      16 </span>                :            :   do not depend on the type of object are implemented in this class, but every
+<span class="lineNum">      17 </span>                :            :   subclass of this class must implement all virtual functions.
+<span class="lineNum">      18 </span>                :            : 
+<span class="lineNum">      19 </span>                :            :   Current subclasses are:
+<span class="lineNum">      20 </span>                :            : 
+<span class="lineNum">      21 </span>                :            :   \list
+<span class="lineNum">      22 </span>                :            :   \li RectangleSelect provides selection fo rectanular areas
+<span class="lineNum">      23 </span>                :            :   \li EllipseSelect provides selection of elliptical regions
+<span class="lineNum">      24 </span>                :            :   \li PolygonSelect provides selection of irregularly shaped regions
+<span class="lineNum">      25 </span>                :            :   \li FreeDrawSelect provides selection of regions by brush stroke
+<span class="lineNum">      26 </span>                :            :   \li FreeDrawErase is used to erase sections of FreeDrawSelect regions
+<span class="lineNum">      27 </span>                :            :   \endlist
+<span class="lineNum">      28 </span>                :            : 
+<span class="lineNum">      29 </span>                :            :   SelectItem subclasses must have a Label and a PhotoScene owning them.
+<span class="lineNum">      30 </span>                :            : */
+<span class="lineNum">      31 </span>                :            : qreal SelectItem::vertexSize = 10.;
+<span class="lineNum">      32 </span>                :<span class="lineCov">          1 : QPointF SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);</span>
+<span class="lineNum">      33 </span>                :            : QPointF SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);
+<span class="lineNum">      34 </span>                :            : int SelectItem::ID = 0;
+<span class="lineNum">      35 </span>                :            : QSize SelectItem::myBounds = QSize(0, 0);
+<span class="lineNum">      36 </span>                :            : 
+<span class="lineNum">      37 </span>                :            : /*!
+<span class="lineNum">      38 </span>                :            :    Constructs a SelectItem, using \a vertSize as the vertex box size, \a label
+<span class="lineNum">      39 </span>                :            :    as the Label that owns this instance, and \a item as the parent
+<a name="40"><span class="lineNum">      40 </span>                :            :    QGraphicsItem.</a>
+<span class="lineNum">      41 </span>                :            : */
+<span class="lineNum">      42 </span>                :<span class="lineCov">         84 : SelectItem::SelectItem(qreal vertSize, QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">         84 :                        QGraphicsItem *item) : QGraphicsItem(item) {</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">         84 :     SelectItem::setVertexSize(vertSize);</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">         84 :     myID = SelectItem::ID;</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">         84 :     SelectItem::ID++;</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">        168 :     setLabel(label, true);</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">         84 : }</span>
+<span class="lineNum">      49 </span>                :            : 
+<span class="lineNum">      50 </span>                :            : /*!
+<span class="lineNum">      51 </span>                :            :    Constructs a SelectItem, using \a label as the Label that owns this instance,
+<span class="lineNum">      52 </span>                :            :    and \a item as the parent QGraphicsItem.The vertex box size defaults to 10
+<a name="53"><span class="lineNum">      53 </span>                :            :    pixels.</a>
+<span class="lineNum">      54 </span>                :            : */
+<span class="lineNum">      55 </span>                :<span class="lineCov">         82 : SelectItem::SelectItem(QSharedPointer&lt;Label&gt; label,</span>
+<span class="lineNum">      56 </span>                :            :                        QGraphicsItem *item) :
+<span class="lineNum">      57 </span>                :<span class="lineCov">        164 :     SelectItem(10., label, item) {</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         82 : }</span>
+<span class="lineNum">      59 </span>                :            : 
+<span class="lineNum">      60 </span>                :            : /*!
+<a name="61"><span class="lineNum">      61 </span>                :            :    Returns the QGraphicItem which is the parent to this item.</a>
+<span class="lineNum">      62 </span>                :            : */
+<span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 : QGraphicsItem* SelectItem::getParentItem() const {</span>
+<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 :     return parentItem();</span>
+<span class="lineNum">      65 </span>                :            : }
+<span class="lineNum">      66 </span>                :            : 
+<span class="lineNum">      67 </span>                :            : /*!
+<span class="lineNum">      68 </span>                :            :   Determines what color is the &quot;opposite&quot; of the current pen color. This is used
+<a name="69"><span class="lineNum">      69 </span>                :            :   to find a color for highlighting vertices.</a>
+<span class="lineNum">      70 </span>                :            :   */
+<span class="lineNum">      71 </span>                :<span class="lineCov">         36 : void SelectItem::invertColorForPen() {</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">         36 :     QColor color = myPen.color();</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">         72 :     color.setRgbF(color.redF() &gt; 0.5 ? 0 : 1, color.greenF() &gt; 0.5 ? 0 : 1,</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">        108 :                   color.blueF() &gt; 0.5 ? 0 : 1);</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">         72 :     highlightPen = QPen(color);</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         36 :     highlightPen.setWidth(5);</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         36 : }</span>
+<span class="lineNum">      78 </span>                :            : 
+<span class="lineNum">      79 </span>                :            : /*!
+<a name="80"><span class="lineNum">      80 </span>                :            :   Returns the QGraphicsScene to which this item belongs.</a>
+<span class="lineNum">      81 </span>                :            :   */
+<span class="lineNum">      82 </span>                :<span class="lineCov">         24 : QGraphicsScene* SelectItem::scene() const {</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         24 :     return QGraphicsItem::scene();</span>
+<span class="lineNum">      84 </span>                :            : }
+<span class="lineNum">      85 </span>                :            : 
+<span class="lineNum">      86 </span>                :            : /*!
+<span class="lineNum">      87 </span>                :            :   Sets the internal variables to associate this object with the given Label
+<span class="lineNum">      88 </span>                :            :   \a label. \a init is used to indicate whether this is an initialization of the
+<a name="89"><span class="lineNum">      89 </span>                :            :   base class or of a derived class.</a>
+<span class="lineNum">      90 </span>                :            :   */
+<span class="lineNum">      91 </span>                :<span class="lineCov">        160 : void SelectItem::setLabel(QSharedPointer&lt;Label&gt; label, bool init) {</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">        160 :     myLabel = label;</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">        160 :     if (label != nullptr) {</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">        208 :         myPen = QPen(label-&gt;getColor());</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">        104 :         myPen.setWidth(2);</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">        104 :         if (!init)</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">         76 :             updatePen(myPen);</span>
+<span class="lineNum">      98 </span>                :            :     }
+<span class="lineNum">      99 </span>                :<span class="lineCov">        160 : }</span>
+<span class="lineNum">     100 </span>                :            : 
+<span class="lineNum">     101 </span>                :            : /*!
+<a name="102"><span class="lineNum">     102 </span>                :            :   Determines the corners of the vertex boxes for plotting by using \a size.</a>
+<span class="lineNum">     103 </span>                :            :   */
+<span class="lineNum">     104 </span>                :<span class="lineCov">         84 : void SelectItem::setVertexSize(qreal size) {</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">         84 :     SelectItem::vertexSize = size;</span>
+<span class="lineNum">     106 </span>                :<span class="lineCov">         84 :     SelectItem::xoffset = QPointF(SelectItem::vertexSize, 0.);</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">         84 :     SelectItem::yoffset = QPointF(0., SelectItem::vertexSize);</span>
+<span class="lineNum">     108 </span>                :<span class="lineCov">         84 : }</span>
+<span class="lineNum">     109 </span>                :            : 
+<span class="lineNum">     110 </span>                :            : /*!
+<span class="lineNum">     111 </span>                :            :   Determines the bounding corners of a rectangle that is being resized. This is
+<span class="lineNum">     112 </span>                :            :   done by using the activeVertex member variable (indicating the currently
+<span class="lineNum">     113 </span>                :            :   selected vertex) along with the given QRect \a rect and QPointF \a newPoint to
+<span class="lineNum">     114 </span>                :            :   determine the position of the moving vertex as well as the new top left and
+<a name="115"><span class="lineNum">     115 </span>                :            :   bottom right corners of the rectangle.</a>
+<span class="lineNum">     116 </span>                :            : */
+<span class="lineNum">     117 </span>                :<span class="lineCov">         40 : void SelectItem::sortCorners(QRectF &amp;rect, QPointF &amp;newPoint) {</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">         20 :     if (activeVertex &amp; TOP) {</span>
+<span class="lineNum">     119 </span>                :<span class="lineNoCov">          0 :         if (activeVertex &amp; LEFT) {</span>
+<span class="lineNum">     120 </span>                :            :             rect.setTopLeft(newPoint);
+<span class="lineNum">     121 </span>                :            :         } else {
+<span class="lineNum">     122 </span>                :            :             rect.setTopRight(newPoint);
+<span class="lineNum">     123 </span>                :            :         }
+<span class="lineNum">     124 </span>                :<span class="lineCov">         20 :     } else if (activeVertex &amp; BOTTOM) {</span>
+<span class="lineNum">     125 </span>                :<span class="lineCov">         20 :         if (activeVertex &amp; RIGHT) {</span>
+<span class="lineNum">     126 </span>                :            :             rect.setBottomRight(newPoint);
+<span class="lineNum">     127 </span>                :            :         } else {
+<span class="lineNum">     128 </span>                :            :             rect.setBottomLeft(newPoint);
+<span class="lineNum">     129 </span>                :            :         }
+<span class="lineNum">     130 </span>                :            :     }
+<span class="lineNum">     131 </span>                :<span class="lineCov">         20 :     activePoint = newPoint;</span>
+<span class="lineNum">     132 </span>                :            :     QPointF tlc = rect.topLeft();
+<span class="lineNum">     133 </span>                :            :     QPointF brc = rect.bottomRight();
+<span class="lineNum">     134 </span>                :<span class="lineCov">         20 :     if (tlc.y() &gt; brc.y()) {</span>
+<span class="lineNum">     135 </span>                :            :         rect.setTop(brc.y());
+<span class="lineNum">     136 </span>                :            :         rect.setBottom(tlc.y());
+<span class="lineNum">     137 </span>                :            :         flipH();
+<span class="lineNum">     138 </span>                :            :     }
+<span class="lineNum">     139 </span>                :<span class="lineCov">         20 :     if (tlc.x() &gt; brc.x()) {</span>
+<span class="lineNum">     140 </span>                :            :         rect.setLeft(brc.x());
+<span class="lineNum">     141 </span>                :            :         rect.setRight(tlc.x());
+<span class="lineNum">     142 </span>                :            :         flipV();
+<span class="lineNum">     143 </span>                :            :     }
+<span class="lineNum">     144 </span>                :<span class="lineCov">         20 : }</span>
+<span class="lineNum">     145 </span>                :            : 
+<span class="lineNum">     146 </span>                :            : /*!
+<span class="lineNum">     147 </span>                :            :   \overload QGraphicsItem::type() const
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :            :   This function returns the type of this item.
+<span class="lineNum">     150 </span>                :            : 
+<a name="151"><span class="lineNum">     151 </span>                :            :   \sa QGraphicsItem::type()</a>
+<span class="lineNum">     152 </span>                :            :   */
+<span class="lineNum">     153 </span>                :<span class="lineCov">        438 : int SelectItem::type() const {</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">        438 :     return mytype;</span>
+<span class="lineNum">     155 </span>                :            : }
+<span class="lineNum">     156 </span>                :            : 
+<span class="lineNum">     157 </span>                :            : /*---------------- Protected members ---------------------------*/
+<span class="lineNum">     158 </span>                :            : /*!
+<span class="lineNum">     159 </span>                :            :   Checks the boundaries of the object being moved so that it is constrained to
+<span class="lineNum">     160 </span>                :            :   the canvas. \a rect is the bounding rectangle of the object and \a shift is
+<span class="lineNum">     161 </span>                :            :   the distance the rectangle is being moved. If the movement (\a rect +
+<span class="lineNum">     162 </span>                :            :   \a shift) would place one or more of the corners outside of the canvas the
+<a name="163"><span class="lineNum">     163 </span>                :            :   movement is halted at the last pixel before the vertex would disappear.</a>
+<span class="lineNum">     164 </span>                :            :   */
+<span class="lineNum">     165 </span>                :<span class="lineCov">          4 : void SelectItem::checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect) {</span>
+<span class="lineNum">     166 </span>                :            :     QPointF tlc = rect.topLeft() + shift;
+<span class="lineNum">     167 </span>                :            :     QPointF brc = rect.bottomRight() + shift;
+<span class="lineNum">     168 </span>                :            : 
+<span class="lineNum">     169 </span>                :<span class="lineCov">          4 :     if (tlc.x() &lt; 0 || tlc.y() &lt; 0) {</span>
+<span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :         tlc.setY(std::max(tlc.y(), 0.));</span>
+<span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 :         tlc.setX(std::max(tlc.x(), 0.));</span>
+<span class="lineNum">     172 </span>                :            :         rect.moveTopLeft(tlc);
+<span class="lineNum">     173 </span>                :<span class="lineCov">          8 :     } else if (brc.x() &gt;= SelectItem::myBounds.width() ||</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          4 :                brc.y() &gt;= SelectItem::myBounds.height()) {</span>
+<span class="lineNum">     175 </span>                :            :         brc.setY(std::min(static_cast&lt;int&gt;(brc.y()),
+<span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :                           SelectItem::myBounds.height() - 1));</span>
+<span class="lineNum">     177 </span>                :            :         brc.setX(std::min(static_cast&lt;int&gt;(brc.x()),
+<span class="lineNum">     178 </span>                :<span class="lineNoCov">          0 :                           SelectItem::myBounds.width() - 1));</span>
+<span class="lineNum">     179 </span>                :            :         rect.moveBottomRight(brc);
+<span class="lineNum">     180 </span>                :            :     } else {
+<span class="lineNum">     181 </span>                :            :         rect.moveTopLeft(tlc);
+<span class="lineNum">     182 </span>                :            :     }
+<span class="lineNum">     183 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     184 </span>                :            : 
+<span class="lineNum">     185 </span>                :            : /*!
+<a name="186"><span class="lineNum">     186 </span>                :            :   Determines whether \a point is inside of \a rect. Returns true if it is.</a>
+<span class="lineNum">     187 </span>                :            :   */
+<span class="lineNum">     188 </span>                :<span class="lineCov">        299 : bool SelectItem::isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const {</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">        266 :     if (point.y() &gt;= rect.top() &amp;&amp; point.y() &lt;= rect.bottom()) {</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">         33 :         if (point.x() &lt;= rect.right() &amp;&amp; point.x() &gt;= rect.left()) {</span>
+<span class="lineNum">     191 </span>                :            :             return true;
+<span class="lineNum">     192 </span>                :            :         }
+<a name="193"><span class="lineNum">     193 </span>                :            :     }</a>
+<span class="lineNum">     194 </span>                :<span class="lineCov">        155 :     return false;</span>
+<span class="lineNum">     195 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     196 </span>                :            : 
+<span class="lineNum">     197 </span>                :            : /*!
+<span class="lineNum">     198 </span>                :            :     \fn virtual void SelectItem::addPoint(QPointF &amp;point, const int vertex = UNSELECTED) = 0
+<span class="lineNum">     199 </span>                :            : 
+<span class="lineNum">     200 </span>                :            :     This pure virtual function adds a point to object being drawn. It is
+<span class="lineNum">     201 </span>                :            :     up to the reimplimentation of this function to determine how to handle
+<span class="lineNum">     202 </span>                :            :     the input \a point  and \a vertex, as not all SelectItem subclasses have
+<span class="lineNum">     203 </span>                :            :     vertices.
+<span class="lineNum">     204 </span>                :            : 
+<span class="lineNum">     205 </span>                :            :     \sa removeVertex(), insertVertex()
+<span class="lineNum">     206 </span>                :            : */
+<span class="lineNum">     207 </span>                :            : /*!
+<span class="lineNum">     208 </span>                :            :     \fn virtual void SelectItem::clickPoint(const QPointF &amp;point) = 0
+<span class="lineNum">     209 </span>                :            : 
+<span class="lineNum">     210 </span>                :            :     This pure virtual function is used to signal an object that the mouse
+<span class="lineNum">     211 </span>                :            :     has been clicked within its boundaries. It is up to the individual
+<span class="lineNum">     212 </span>                :            :     reimplementations to determine what to do with the information. \a point
+<span class="lineNum">     213 </span>                :            :     indicated the coordinates (on the canvas) where the click took place.
+<span class="lineNum">     214 </span>                :            : */
+<span class="lineNum">     215 </span>                :            : /*!
+<span class="lineNum">     216 </span>                :            :     \fn virtual void SelectItem::insertVertex(const int vertex, const QPointF &amp;point) = 0
+<span class="lineNum">     217 </span>                :            : 
+<span class="lineNum">     218 </span>                :            :     This pure virtual function inserts a new vertex, given as \a point, at
+<span class="lineNum">     219 </span>                :            :     position \a vertex in the internal list of vertices. It is up to the
+<span class="lineNum">     220 </span>                :            :     reimplementation of this function to determine if and how this is done.
+<span class="lineNum">     221 </span>                :            : 
+<span class="lineNum">     222 </span>                :            :     \sa addPoint(), removeVertex()
+<span class="lineNum">     223 </span>                :            : */
+<span class="lineNum">     224 </span>                :            : /*!
+<span class="lineNum">     225 </span>                :            :     \fn virtual void SelectItem::moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) = 0
+<span class="lineNum">     226 </span>                :            : 
+<span class="lineNum">     227 </span>                :            :     This pure virtual function moves the SelectItem on the canvas. \a oldPos
+<span class="lineNum">     228 </span>                :            :     indicates the position of the mouse at the begining of the move and
+<span class="lineNum">     229 </span>                :            :     \a newPos indicates the mouse position at the end of the move. It is up to
+<span class="lineNum">     230 </span>                :            :     the individual reimplementations to determine how this movement is
+<span class="lineNum">     231 </span>                :            :     interpreted and implemented.
+<span class="lineNum">     232 </span>                :            : 
+<span class="lineNum">     233 </span>                :            :     \sa rotate(), resizeItem()
+<span class="lineNum">     234 </span>                :            : */
+<span class="lineNum">     235 </span>                :            : /*!
+<span class="lineNum">     236 </span>                :            :     \fn virtual void SelectItem::removeVertex(const int vertex = UNSELECTED) = 0
+<span class="lineNum">     237 </span>                :            : 
+<span class="lineNum">     238 </span>                :            :     This pure virtual function removes vertex \a vertex from the internal
+<span class="lineNum">     239 </span>                :            :     list of vertices. It is up to the individual reimplementations to determine
+<span class="lineNum">     240 </span>                :            :     if and how this is done.
+<span class="lineNum">     241 </span>                :            : 
+<span class="lineNum">     242 </span>                :            :     \sa addPoint(), insertVertex()
+<span class="lineNum">     243 </span>                :            : */
+<span class="lineNum">     244 </span>                :            : /*!
+<span class="lineNum">     245 </span>                :            :     \fn virtual void SelectItem::resetActiveVertex() = 0
+<span class="lineNum">     246 </span>                :            : 
+<span class="lineNum">     247 </span>                :            :     This pure virtual function is used to reset the active vertex to the default
+<span class="lineNum">     248 </span>                :            :     value of SelectItem::UNSELECTED.
+<span class="lineNum">     249 </span>                :            : */
+<span class="lineNum">     250 </span>                :            : /*!
+<span class="lineNum">     251 </span>                :            :     \fn virtual void SelectItem::resizeItem(const int vertex, QPointF &amp;shift) = 0
+<span class="lineNum">     252 </span>                :            : 
+<span class="lineNum">     253 </span>                :            :     This pure virtual function is used to resize the item. \a vertex indicates
+<span class="lineNum">     254 </span>                :            :     which vertex is moving and \a shift indicates the relative shift in position
+<span class="lineNum">     255 </span>                :            :     the object should take. It is up to the individual reimplementations to
+<span class="lineNum">     256 </span>                :            :     determine how to do this for each derived class.
+<span class="lineNum">     257 </span>                :            : 
+<span class="lineNum">     258 </span>                :            :     \sa moveItem(), rotate()
+<span class="lineNum">     259 </span>                :            : */
+<span class="lineNum">     260 </span>                :            : /*!
+<span class="lineNum">     261 </span>                :            :     \fn virtual void SelectItem::rotate(const QPointF &amp;from, const QPointF &amp;to) = 0
+<span class="lineNum">     262 </span>                :            : 
+<span class="lineNum">     263 </span>                :            :     This pure virtual funcion is used to rotate a SelectItem. \a from indicates
+<span class="lineNum">     264 </span>                :            :     the starting position of the rotation and \a to indicates the end of the
+<span class="lineNum">     265 </span>                :            :     rotation in scene coordinates. It is up to the individual reimplementations
+<span class="lineNum">     266 </span>                :            :     to calculate the center of rotation and angle of rotation the SelectItem is
+<span class="lineNum">     267 </span>                :            :     undergoing.
+<span class="lineNum">     268 </span>                :            : 
+<span class="lineNum">     269 </span>                :            :     \sa moveItem(), resizeItem()
+<span class="lineNum">     270 </span>                :            : */
+<span class="lineNum">     271 </span>                :            : /*!
+<span class="lineNum">     272 </span>                :            :     \fn virtual void SelectItem::updatePen(QPen pen) = 0
+<span class="lineNum">     273 </span>                :            : 
+<span class="lineNum">     274 </span>                :            :     This pure virtual function is used to update the QGraphicsItem's pen with
+<span class="lineNum">     275 </span>                :            :     \a pen.
+<span class="lineNum">     276 </span>                :            : */
+<span class="lineNum">     277 </span>                :            : /*!
+<span class="lineNum">     278 </span>                :            :     \fn virtual void SelectItem::read(const QJsonObject &amp;json) = 0
+<span class="lineNum">     279 </span>                :            : 
+<span class="lineNum">     280 </span>                :            :     This pure virtual function determines how QJsonObject \a json is converted
+<span class="lineNum">     281 </span>                :            :     into the appropriate SelectItem subclass. It is up to the individual
+<span class="lineNum">     282 </span>                :            :     reimplementations to determine what each QJsonObject attribute translates
+<span class="lineNum">     283 </span>                :            :     to. Any changes to this function must be mirrored in the write() function or
+<span class="lineNum">     284 </span>                :            :     data corruption can occur.
+<span class="lineNum">     285 </span>                :            : 
+<span class="lineNum">     286 </span>                :            :     \sa write()
+<span class="lineNum">     287 </span>                :            : */
+<span class="lineNum">     288 </span>                :            : /*!
+<span class="lineNum">     289 </span>                :            :     \fn virtual void SelectItem::write(QJsonObject &amp;json) const = 0
+<span class="lineNum">     290 </span>                :            : 
+<span class="lineNum">     291 </span>                :            :     This pure virtual function determines the SelectItem is converted into a
+<span class="lineNum">     292 </span>                :            :     QJsonObject representation \a json. It is up to the individual
+<span class="lineNum">     293 </span>                :            :     reimplementations to determine what attributes of the derived classes need
+<span class="lineNum">     294 </span>                :            :     to be saved in order to completely reconstruct the state of the current
+<span class="lineNum">     295 </span>                :            :     SelectItem. Any changes to this function must be mirrored in the read()
+<span class="lineNum">     296 </span>                :            :     function or data corruption can occur.
+<span class="lineNum">     297 </span>                :            : 
+<span class="lineNum">     298 </span>                :            :     \sa read()
+<span class="lineNum">     299 </span>                :            : */
+<span class="lineNum">     300 </span>                :            : /*!
+<span class="lineNum">     301 </span>                :            :     \fn virtual QString SelectItem::baseInstructions() const = 0
+<span class="lineNum">     302 </span>                :            : 
+<span class="lineNum">     303 </span>                :            :     Returns a QString representing the instructions on how to draw this
+<span class="lineNum">     304 </span>                :            :     SelectItem type on the scene. It is up to the individual reimplementations
+<span class="lineNum">     305 </span>                :            :     to construct the string.
+<span class="lineNum">     306 </span>                :            : */
+<span class="lineNum">     307 </span>                :            : /*!
+<span class="lineNum">     308 </span>                :            :     \fn virtual bool SelectItem::isInside(const QPointF &amp;point) const = 0
+<span class="lineNum">     309 </span>                :            : 
+<span class="lineNum">     310 </span>                :            :     Returns a bool indicating whether \a point is inside the boundaries of the
+<span class="lineNum">     311 </span>                :            :     SelectItem. \c true indicates the QPointF is within the bounds, \c false
+<span class="lineNum">     312 </span>                :            :     otherwise. It is up to the individual reimplementations to determine how
+<span class="lineNum">     313 </span>                :            :     this is done.
+<span class="lineNum">     314 </span>                :            : */
+<span class="lineNum">     315 </span>                :            : /*!
+<span class="lineNum">     316 </span>                :            :     \fn virtual int SelectItem::numberOfVertices() const = 0
+<span class="lineNum">     317 </span>                :            : 
+<span class="lineNum">     318 </span>                :            :     Returns an int indicating the number of vertices in the SelectItem. It is
+<span class="lineNum">     319 </span>                :            :     up to the individual reimplementations to do the calculation.
+<span class="lineNum">     320 </span>                :            : */
+<span class="lineNum">     321 </span>                :            : /*!
+<span class="lineNum">     322 </span>                :            :     \fn virtual SelectItem* SelectItem::getMirror() const = 0
+<span class="lineNum">     323 </span>                :            : 
+<span class="lineNum">     324 </span>                :            :     Returns a SelectItem* to the mirror of this SelectItem. If this SelectItem
+<span class="lineNum">     325 </span>                :            :     is a member of the photoScene then it will return the corresponding
+<span class="lineNum">     326 </span>                :            :     member from the maskScene.
+<span class="lineNum">     327 </span>                :            : */
+<span class="lineNum">     328 </span>                :            : /*!
+<span class="lineNum">     329 </span>                :            :     \fn virtual void SelectItem::mirrorHide() const = 0
+<span class="lineNum">     330 </span>                :            : 
+<span class="lineNum">     331 </span>                :            :     Pure virtual function to hide the mirror item on its scene.
+<span class="lineNum">     332 </span>                :            : 
+<span class="lineNum">     333 </span>                :            :     \sa QGraphicsItem::hide()
+<span class="lineNum">     334 </span>                :            : */
+<span class="lineNum">     335 </span>                :            : /*!
+<span class="lineNum">     336 </span>                :            :     \fn virtual void SelectItem::mirrorShow() const = 0
+<span class="lineNum">     337 </span>                :            : 
+<span class="lineNum">     338 </span>                :            :     Pure virtual function to show the mirror item on its scene.
+<span class="lineNum">     339 </span>                :            : 
+<span class="lineNum">     340 </span>                :            :     \sa QGraphicsItem::show()
+<span class="lineNum">     341 </span>                :            : */
+<span class="lineNum">     342 </span>                :            : /*!
+<span class="lineNum">     343 </span>                :            :     \fn virtual void SelectItem::rotateMirror() const = 0
+<span class="lineNum">     344 </span>                :            : 
+<span class="lineNum">     345 </span>                :            :     Pure virtual function to indicate rotation to the mirror SelectItem.
+<span class="lineNum">     346 </span>                :            : */
+<span class="lineNum">     347 </span>                :            : /*!
+<span class="lineNum">     348 </span>                :            :     \fn virtual void SelectItem::setMirror(SelectItem *item) = 0
+<span class="lineNum">     349 </span>                :            : 
+<span class="lineNum">     350 </span>                :            :     Pure virtual function which sets the mirror for this object, as given by
+<span class="lineNum">     351 </span>                :            :     \a item. See the \l{mirroritems.html}{mirror documentation} for a
+<span class="lineNum">     352 </span>                :            :     description of mirrors.
+<span class="lineNum">     353 </span>                :            : */
+<span class="lineNum">     354 </span>                :            : /*!
+<span class="lineNum">     355 </span>                :            :     \fn virtual void SelectItem::setMirrorActive() const = 0
+<span class="lineNum">     356 </span>                :            : 
+<span class="lineNum">     357 </span>                :            :     Pure virtual function which sets the mirror SelectItem to be active.
+<span class="lineNum">     358 </span>                :            : */
+<span class="lineNum">     359 </span>                :            : /*!
+<span class="lineNum">     360 </span>                :            :     \fn virtual void SelectItem::setMirrorAdded() const = 0
+<span class="lineNum">     361 </span>                :            : 
+<span class="lineNum">     362 </span>                :            :     Pure virtual function which adds the mirror SelectItem to its corresponding
+<span class="lineNum">     363 </span>                :            :     scene.
+<span class="lineNum">     364 </span>                :            : */
+<span class="lineNum">     365 </span>                :            : /*!
+<span class="lineNum">     366 </span>                :            :     \fn virtual void SelectItem::setMirrorMoved() const = 0
+<span class="lineNum">     367 </span>                :            : 
+<span class="lineNum">     368 </span>                :            :     Pure virtual function which sets the \c moved attribute of the SelectItem's
+<span class="lineNum">     369 </span>                :            :     mirror.
+<span class="lineNum">     370 </span>                :            : */
+<span class="lineNum">     371 </span>                :            : /*!
+<span class="lineNum">     372 </span>                :            :     \fn virtual void SelectItem::setMirrorResized() const = 0
+<span class="lineNum">     373 </span>                :            : 
+<span class="lineNum">     374 </span>                :            :     Pure virtual function which sets the resized attribute of the SelectItem's
+<span class="lineNum">     375 </span>                :            :     mirror.
+<span class="lineNum">     376 </span>                :            : */
+<span class="lineNum">     377 </span>                :            : /*!
+<span class="lineNum">     378 </span>                :            :     \fn virtual void SelectItem::setMirrorVertex(int vertex) const = 0
+<span class="lineNum">     379 </span>                :            : 
+<span class="lineNum">     380 </span>                :            :     Pure virtual function which sets the active vertex of the SelectItem's
+<span class="lineNum">     381 </span>                :            :     mirror to \a vertex.
+<span class="lineNum">     382 </span>                :            : */
+<span class="lineNum">     383 </span>                :            : /*!
+<span class="lineNum">     384 </span>                :            :     \fn virtual void SelectItem::updateMirrorScene() const = 0
+<span class="lineNum">     385 </span>                :            : 
+<span class="lineNum">     386 </span>                :            :     Pure virtual function which requests an update of the QGraphicsScene which
+<span class="lineNum">     387 </span>                :            :     owns the mirror.
+<span class="lineNum">     388 </span>                :            : */
+<span class="lineNum">     389 </span>                :            : /*!
+<span class="lineNum">     390 </span>                :            :     \fn QSharedPointer&lt;Label&gt; SelectItem::getLabel() const
+<span class="lineNum">     391 </span>                :            : 
+<span class="lineNum">     392 </span>                :            :     Returns a Label*, pointing to the Label that owns the SelectItem.
+<span class="lineNum">     393 </span>                :            : 
+<span class="lineNum">     394 </span>                :            :     \sa setLabel()
+<span class="lineNum">     395 </span>                :            : */
+<span class="lineNum">     396 </span>                :            : /*!
+<span class="lineNum">     397 </span>                :            :     \fn void SelectItem::flipH()
+<span class="lineNum">     398 </span>                :            : 
+<span class="lineNum">     399 </span>                :            :     Convenience function which flips the horizontal component of the
+<span class="lineNum">     400 </span>                :            :     activeVertex (e.g. if the horizontal component of the activeVertex is
+<span class="lineNum">     401 </span>                :            :     SelectItem::TOP it becomes SelectItem::BOTTOM and vice versa).
+<span class="lineNum">     402 </span>                :            : 
+<span class="lineNum">     403 </span>                :            :     \sa setActiveVertex(), flipV()
+<span class="lineNum">     404 </span>                :            : */
+<span class="lineNum">     405 </span>                :            : /*!
+<span class="lineNum">     406 </span>                :            :     \fn void SelectItem::flipV()
+<span class="lineNum">     407 </span>                :            : 
+<span class="lineNum">     408 </span>                :            :     Convenience function which flips the vertical component of the activeVertex
+<span class="lineNum">     409 </span>                :            :     (e.g. if the vertical component of the activeVertex is SelectItem::LEFT it
+<span class="lineNum">     410 </span>                :            :     becomes SelectItem::RIGHT and vice versa).
+<span class="lineNum">     411 </span>                :            : 
+<span class="lineNum">     412 </span>                :            :     \sa setActiveVertex(), flipH()
+<span class="lineNum">     413 </span>                :            : */
+<span class="lineNum">     414 </span>                :            : /*!
+<span class="lineNum">     415 </span>                :            :     \fn QPointF SelectItem::getActivePoint() const
+<span class="lineNum">     416 </span>                :            : 
+<span class="lineNum">     417 </span>                :            :     Returns a QPointF which contains the QGraphicsScene coordinates of the
+<span class="lineNum">     418 </span>                :            :     currently active vertex.
+<span class="lineNum">     419 </span>                :            : */
+<span class="lineNum">     420 </span>                :            : /*!
+<span class="lineNum">     421 </span>                :            :     \fn int SelectItem::getActiveVertex() const
+<span class="lineNum">     422 </span>                :            : 
+<span class="lineNum">     423 </span>                :            :     Returns an \c int indicating the currently active vertex. Returns
+<span class="lineNum">     424 </span>                :            :     SelectItem::UNSELECTED if there is no currently active vertex.
+<span class="lineNum">     425 </span>                :            : 
+<span class="lineNum">     426 </span>                :            :     \sa setActiveVertex(), getActivePoint()
+<span class="lineNum">     427 </span>                :            : */
+<span class="lineNum">     428 </span>                :            : /*!
+<span class="lineNum">     429 </span>                :            :     \fn bool SelectItem::isItemActive() const
+<span class="lineNum">     430 </span>                :            : 
+<span class="lineNum">     431 </span>                :            :     Returns a bool indicating whether the SelectItem is active (\c true) or not
+<span class="lineNum">     432 </span>                :            :     (\c false).
+<span class="lineNum">     433 </span>                :            : 
+<span class="lineNum">     434 </span>                :            :     \sa setItemActive(), setInactive(), resetState()
+<span class="lineNum">     435 </span>                :            : */
+<span class="lineNum">     436 </span>                :            : /*!
+<span class="lineNum">     437 </span>                :            :     \fn bool SelectItem::isItemAdded() const
+<span class="lineNum">     438 </span>                :            : 
+<span class="lineNum">     439 </span>                :            :     Returns a bool indicating whether the SelectItem has been added (\c true) to
+<span class="lineNum">     440 </span>                :            :     a QGraphicsScene or not (\c false).
+<span class="lineNum">     441 </span>                :            : 
+<span class="lineNum">     442 </span>                :            :     \sa itemWasAdded()
+<span class="lineNum">     443 </span>                :            : */
+<span class="lineNum">     444 </span>                :            : /*!
+<span class="lineNum">     445 </span>                :            :     \fn void SelectItem::itemWasAdded()
+<span class="lineNum">     446 </span>                :            : 
+<span class="lineNum">     447 </span>                :            :     Sets the hasBeenAdded attribute to be true for the SelectItem and its mirror.
+<span class="lineNum">     448 </span>                :            : 
+<span class="lineNum">     449 </span>                :            :     \sa isItemAdded()
+<span class="lineNum">     450 </span>                :            : */
+<span class="lineNum">     451 </span>                :            : /*!
+<span class="lineNum">     452 </span>                :            :     \fn void SelectItem::resetState()
+<span class="lineNum">     453 </span>                :            : 
+<span class="lineNum">     454 </span>                :            :     Resets the state of the SelectItem, specifically sets the moved, resized,
+<span class="lineNum">     455 </span>                :            :     pointAdded, and rotated attributes to \c false (along with the mirror
+<span class="lineNum">     456 </span>                :            :     counterparts), and sets the activeVertex to SelectItem::UNSELECTED.
+<span class="lineNum">     457 </span>                :            : 
+<span class="lineNum">     458 </span>                :            :     \sa wasMoved(), wasPointAdded(), wasResized(), wasRotated(), setActiveVertex(), getActiveVertex(), setInactive(), setItemActive()
+<span class="lineNum">     459 </span>                :            : */
+<span class="lineNum">     460 </span>                :            : /*!
+<span class="lineNum">     461 </span>                :            :     \fn void SelectItem::setActiveVertex(int h, int v = 0)
+<span class="lineNum">     462 </span>                :            : 
+<span class="lineNum">     463 </span>                :            :     Sets the activeVertex (the one currently being manipulated) to the given
+<span class="lineNum">     464 </span>                :            :     value. For rectangular based objects (RectangleSelect and EllipseSelect)
+<span class="lineNum">     465 </span>                :            :     \a h and \a v can be used to set the horizontal and vertical components
+<span class="lineNum">     466 </span>                :            :     seperately or they can be logically combined beforehand:
+<span class="lineNum">     467 </span>                :            : 
+<span class="lineNum">     468 </span>                :            :     \code
+<span class="lineNum">     469 </span>                :            :     setActiveVertex(SelectItem::TOP, SelectItem::Bottom);
+<span class="lineNum">     470 </span>                :            : 
+<span class="lineNum">     471 </span>                :            :     setActiveVertex(SelectItem::TOP | SelectItem::Bottom);
+<span class="lineNum">     472 </span>                :            :     \endcode
+<span class="lineNum">     473 </span>                :            : 
+<span class="lineNum">     474 </span>                :            :     For other subclasses of SelectItem, just the vertex index is needed:
+<span class="lineNum">     475 </span>                :            : 
+<span class="lineNum">     476 </span>                :            :     \code
+<span class="lineNum">     477 </span>                :            :     setActiveVertex(5);
+<span class="lineNum">     478 </span>                :            :     \endcode
+<span class="lineNum">     479 </span>                :            : 
+<span class="lineNum">     480 </span>                :            :     \code
+<span class="lineNum">     481 </span>                :            :     setActiveVertex(SelectItem::UNSELECTED);
+<span class="lineNum">     482 </span>                :            :     \endcode
+<span class="lineNum">     483 </span>                :            :     indicates that there is no currently active vertex.
+<span class="lineNum">     484 </span>                :            : 
+<span class="lineNum">     485 </span>                :            :     \sa getActiveVertex(), resetState()
+<span class="lineNum">     486 </span>                :            : */
+<span class="lineNum">     487 </span>                :            : /*!
+<span class="lineNum">     488 </span>                :            :     \fn void SelectItem::setInactive()
+<span class="lineNum">     489 </span>                :            : 
+<span class="lineNum">     490 </span>                :            :     Sets the SelectItem to be inactive (i.e. not the one currently being
+<span class="lineNum">     491 </span>                :            :     manipulated in the scene).
+<span class="lineNum">     492 </span>                :            : 
+<span class="lineNum">     493 </span>                :            :     \sa resetState(), setItemActive()
+<span class="lineNum">     494 </span>                :            : */
+<span class="lineNum">     495 </span>                :            : /*!
+<span class="lineNum">     496 </span>                :            :     \fn void SelectItem::setItemActive()
+<span class="lineNum">     497 </span>                :            : 
+<span class="lineNum">     498 </span>                :            :     Sets the SelectItem to be active (i.e. the one currently being manipulated
+<span class="lineNum">     499 </span>                :            :     in the scene).
+<span class="lineNum">     500 </span>                :            : 
+<span class="lineNum">     501 </span>                :            :     /sa resetState(), setInactive()
+<span class="lineNum">     502 </span>                :            : */
+<span class="lineNum">     503 </span>                :            : /*!
+<span class="lineNum">     504 </span>                :            :     \fn bool SelectItem::wasMoved() const
+<span class="lineNum">     505 </span>                :            : 
+<span class="lineNum">     506 </span>                :            :     Returns a bool indicating whether the SelectItem was moved (\c true) or not
+<span class="lineNum">     507 </span>                :            :     (\c false).
+<span class="lineNum">     508 </span>                :            : 
+<span class="lineNum">     509 </span>                :            :     \sa resetState(), wasPointAdded(), wasResized(), wasRotated()
+<span class="lineNum">     510 </span>                :            : */
+<span class="lineNum">     511 </span>                :            : /*!
+<span class="lineNum">     512 </span>                :            :     \fn bool SelectItem::wasPointAdded() const
+<span class="lineNum">     513 </span>                :            : 
+<span class="lineNum">     514 </span>                :            :     Returns a bool indicating whether a point was added (\c true) or not
+<span class="lineNum">     515 </span>                :            :     (\c false) to the SelectItem.
+<span class="lineNum">     516 </span>                :            : 
+<span class="lineNum">     517 </span>                :            :     \sa resetState(), wasMoved(), wasResized(), wasRotated()
+<span class="lineNum">     518 </span>                :            : */
+<span class="lineNum">     519 </span>                :            : /*!
+<span class="lineNum">     520 </span>                :            :     \fn bool SelectItem::wasResized() const
+<span class="lineNum">     521 </span>                :            : 
+<span class="lineNum">     522 </span>                :            :     Returns a bool indicating whether the SelectItem was resized (\c true) or
+<span class="lineNum">     523 </span>                :            :     not (\c false).
+<span class="lineNum">     524 </span>                :            : 
+<span class="lineNum">     525 </span>                :            :     \sa resetState(), wasMoved(), wasPointAdded(), wasRotated()
+<span class="lineNum">     526 </span>                :            : */
+<span class="lineNum">     527 </span>                :            : 
+<span class="lineNum">     528 </span>                :            : 
+<span class="lineNum">     529 </span>                :            : /*!
+<span class="lineNum">     530 </span>                :            :     \fn bool SelectItem::wasRotated() const
+<span class="lineNum">     531 </span>                :            : 
+<span class="lineNum">     532 </span>                :            :     Returns a bool indicating whether the SelectItem was rotates (\c true) or
+<span class="lineNum">     533 </span>                :            :     not (\c false).
+<span class="lineNum">     534 </span>                :            : 
+<span class="lineNum">     535 </span>                :            :     \sa resetState(), wasMoved(), wasPointAdded(), wasResized()
+<span class="lineNum">     536 </span>                :            : */
+<span class="lineNum">     537 </span>                :            : 
+<span class="lineNum">     538 </span>                :            : /*!
+<span class="lineNum">     539 </span>                :            :   \fn void SelectItem::toPixmap(QPainter* painter)
+<span class="lineNum">     540 </span>                :            : 
+<span class="lineNum">     541 </span>                :            :   Rasterizes the SelectItem and draws it on the given \a painter.
+<span class="lineNum">     542 </span>                :            :   */
+<span class="lineNum">     543 </span>                :            : 
+<span class="lineNum">     544 </span>                :            : /*!
+<span class="lineNum">     545 </span>                :            :   \fn bool SelectItem::getFromMaskScene() const
+<span class="lineNum">     546 </span>                :            : 
+<span class="lineNum">     547 </span>                :            :   Returns whether this item was generated by the mask scene
+<span class="lineNum">     548 </span>                :            : 
+<span class="lineNum">     549 </span>                :            :   \sa setFromMaskScene()
+<span class="lineNum">     550 </span>                :            :   */
+<span class="lineNum">     551 </span>                :            : 
+<span class="lineNum">     552 </span>                :            : /*!
+<span class="lineNum">     553 </span>                :            :   \fn void SelectItem::setFromMaskScene(bool value)
+<span class="lineNum">     554 </span>                :            : 
+<span class="lineNum">     555 </span>                :            :   Sets the \c fromMaskScene variable to \a value, indicating whether (\c true)
+<span class="lineNum">     556 </span>                :            :   or not (\c false) the item was generated from the mask scene.
+<span class="lineNum">     557 </span>                :            : 
+<span class="lineNum">     558 </span>                :            :   \sa getOnMaskScene()
+<span class="lineNum">     559 </span>                :            :   */
+<span class="lineNum">     560 </span>                :            : 
+<span class="lineNum">     561 </span>                :            : /*!
+<span class="lineNum">     562 </span>                :            :   \fn bool SelectItem::getOnMaskScene() const
+<span class="lineNum">     563 </span>                :            : 
+<span class="lineNum">     564 </span>                :            :   Returns the value of \c onMaskScene.
+<span class="lineNum">     565 </span>                :            : 
+<span class="lineNum">     566 </span>                :            :   \sa setFromMaskScene()
+<span class="lineNum">     567 </span>                :            :   */
+<span class="lineNum">     568 </span>                :            : 
+<span class="lineNum">     569 </span>                :            : /*!
+<span class="lineNum">     570 </span>                :            :   \fn void SelectItem::setOnMaskScene(bool value)
+<span class="lineNum">     571 </span>                :            : 
+<span class="lineNum">     572 </span>                :            :   Sets the \c onMaskScene to \a value, indicating whether (\c true) or not
+<span class="lineNum">     573 </span>                :            :   (\c false) the item is on the mask scene.
+<span class="lineNum">     574 </span>                :            : 
+<span class="lineNum">     575 </span>                :            :   \sa getFromMaskScene()
+<span class="lineNum">     576 </span>                :            :   */
+<span class="lineNum">     577 </span>                :            : 
+<span class="lineNum">     578 </span>                :            : /*!
+<span class="lineNum">     579 </span>                :            :   \fn void SelectItem::hideMask()
+<span class="lineNum">     580 </span>                :            : 
+<span class="lineNum">     581 </span>                :            :   Hides any items on the mask scene that were generated on the photo scene.
+<span class="lineNum">     582 </span>                :            : 
+<span class="lineNum">     583 </span>                :            :   \sa showMask()
+<span class="lineNum">     584 </span>                :            :   */
+<span class="lineNum">     585 </span>                :            : 
+<span class="lineNum">     586 </span>                :            : /*!
+<span class="lineNum">     587 </span>                :            :   \fn void SelectItem::showMask()
+<span class="lineNum">     588 </span>                :            : 
+<span class="lineNum">     589 </span>                :            :   Shows any items on the mask scene that were generated on the photo scene.
+<span class="lineNum">     590 </span>                :            : 
+<span class="lineNum">     591 </span>                :            :   \sa hideMask()
+<span class="lineNum">     592 </span>                :            :   */
+<span class="lineNum">     593 </span>                :            : /*!
+<span class="lineNum">     594 </span>                :            :   \enum SelectItem::SelectType
+<span class="lineNum">     595 </span>                :            : 
+<span class="lineNum">     596 </span>                :            :   This enum is used to define the type of the SelectItem:
+<span class="lineNum">     597 </span>                :            : 
+<span class="lineNum">     598 </span>                :            :   \value Rectangle
+<span class="lineNum">     599 </span>                :            :        A RectangleSelect object
+<span class="lineNum">     600 </span>                :            :   \value Ellipse
+<span class="lineNum">     601 </span>                :            :        An EllipseSelect object
+<span class="lineNum">     602 </span>                :            :   \value Polygon
+<span class="lineNum">     603 </span>                :            :        A PolygonSelect object
+<span class="lineNum">     604 </span>                :            :   \value Freedraw
+<span class="lineNum">     605 </span>                :            :        A FreeDraeSelect object
+<span class="lineNum">     606 </span>                :            :   \value Freeerase
+<span class="lineNum">     607 </span>                :            :        A FreeEraseSelect object
+<span class="lineNum">     608 </span>                :            : */
+<span class="lineNum">     609 </span>                :            : /*!
+<span class="lineNum">     610 </span>                :            :   \enum SelectItem::Vertex
+<span class="lineNum">     611 </span>                :            : 
+<span class="lineNum">     612 </span>                :            :   This enum is used to set the active corner of select regions. A vertical and a
+<span class="lineNum">     613 </span>                :            :   horizontal selection are combined to indicate the specific corner
+<span class="lineNum">     614 </span>                :            : 
+<span class="lineNum">     615 </span>                :            :   \code
+<span class="lineNum">     616 </span>                :            :   SelectItem::TOP | SelectItem::LEFT
+<span class="lineNum">     617 </span>                :            :   \endcode
+<span class="lineNum">     618 </span>                :            : 
+<span class="lineNum">     619 </span>                :            :   indicates the top-left corner.
+<span class="lineNum">     620 </span>                :            : 
+<span class="lineNum">     621 </span>                :            :   \value NONE Indicates no side of the object
+<span class="lineNum">     622 </span>                :            :   \value TOP Indicates the top of the object
+<span class="lineNum">     623 </span>                :            :   \value BOTTOM Indicates the bottom of the object
+<span class="lineNum">     624 </span>                :            :   \value LEFT Indicates the left of the object
+<span class="lineNum">     625 </span>                :            :   \value RIGHT Indicates the right of the object
+<span class="lineNum">     626 </span>                :            :   \value UNSELECTED Indicates that no vertex has been selected
+<span class="lineNum">     627 </span>                :            :   */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

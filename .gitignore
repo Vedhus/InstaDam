@@ -111,3 +111,7 @@ Qt/InstaDam/Test/appTest/appTest
 Qt/InstaDam/Test/libquazip\.prl
 
 Qt/InstaDam/Test/app/app
+
+Qt/InstaDam/Test/integration/integration
+
+Qt/InstaDam/Test/integration_test_build/

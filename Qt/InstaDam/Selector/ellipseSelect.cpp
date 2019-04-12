@@ -147,7 +147,8 @@ bool EllipseSelect::isInside(const QPointF &point) const {
   */
 void EllipseSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     if (activeVertex != 0) {
-        addPoint(newPos);
+        QPointF newPoint = getActivePoint() + (newPos - oldPos);
+        addPoint(newPoint);
         resized = true;
         setMirrorResized();
     } else {

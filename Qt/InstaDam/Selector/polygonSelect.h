@@ -72,6 +72,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
 
 #ifdef TEST
     friend class TestSelect;
+    friend class IntegrationTest;
 #endif
  protected:
     QVector<QPointF> myPoints;

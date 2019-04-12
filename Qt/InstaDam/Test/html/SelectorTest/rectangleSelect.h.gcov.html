@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/rectangleSelect.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - rectangleSelect.h<span style="font-size: 80%;"> (source / <a href="rectangleSelect.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-08 16:12:03</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #ifndef RECTANGLE_SELECT_H</a>
+<span class="lineNum">       2 </span>                :            : #define RECTANGLE_SELECT_H
+<span class="lineNum">       3 </span>                :            : 
+<span class="lineNum">       4 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">       5 </span>                :            : 
+<span class="lineNum">       6 </span>                :            : #include &quot;boxbasedselector.h&quot;
+<span class="lineNum">       7 </span>                :            : 
+<span class="lineNum">       8 </span>                :            : #ifdef TEST
+<span class="lineNum">       9 </span>                :            : class TestSelect;
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #endif
+<span class="lineNum">      12 </span>                :<span class="lineCov">         89 : const QString rectBaseString = QString(&quot;Click to define a corner, then drag the mouse (while holding the button down) to define the rectangle. Use the right mouse button to rotate.&quot;);</span>
+<span class="lineNum">      13 </span>                :            : class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem {
+<span class="lineNum">      14 </span>                :            :  public:
+<span class="lineNum">      15 </span>                :            :     const QString baseInstruction = rectBaseString;
+<span class="lineNum">      16 </span>                :            :     RectangleSelect();
+<span class="lineNum">      17 </span>                :            :     RectangleSelect(const QJsonObject &amp;json,
+<span class="lineNum">      18 </span>                :            :                     QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      19 </span>                :            :                     QGraphicsItem *item = nullptr);
+<span class="lineNum">      20 </span>                :            :     RectangleSelect(QPointF point, QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      21 </span>                :            :                     QGraphicsItem *item = nullptr);
+<span class="lineNum">      22 </span>                :            :     RectangleSelect(QPointF point, qreal vertSize,
+<span class="lineNum">      23 </span>                :            :                     QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      24 </span>                :            :                     QGraphicsItem *item = nullptr);
+<span class="lineNum">      25 </span>                :            :     ~RectangleSelect() override;
+<span class="lineNum">      26 </span>                :            : 
+<a name="27"><span class="lineNum">      27 </span>                :            :     /*-------------- Implemented funtions from SelectItem ---------*/</a>
+<span class="lineNum">      28 </span>                :            :     void addPoint(QPointF &amp;point, const int vertex = UNSELECTED) override;
+<span class="lineNum">      29 </span>                :<span class="lineCov">          7 :     QString baseInstructions() const override {</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">          7 :         return RectangleSelect::baseInstruction;</span>
+<span class="lineNum">      31 </span>                :            :     }
+<span class="lineNum">      32 </span>                :            :     QRectF boundingRect() const override;
+<span class="lineNum">      33 </span>                :            :     bool isInside(const QPointF &amp;point) const override;
+<span class="lineNum">      34 </span>                :            :     void moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) override;
+<span class="lineNum">      35 </span>                :            :     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+<span class="lineNum">      36 </span>                :            :                QWidget *widget = nullptr) override;
+<span class="lineNum">      37 </span>                :            :     void updatePen(QPen pen) override;
+<span class="lineNum">      38 </span>                :            :     void setRectUnchecked(QRectF rect) override;
+<span class="lineNum">      39 </span>                :            :     void toPixmap(QPainter *painter) override;
+<span class="lineNum">      40 </span>                :            :     void setOpacity(qreal);
+<a name="41"><span class="lineNum">      41 </span>                :            : </a>
+<span class="lineNum">      42 </span>                :            :     // Mirror
+<span class="lineNum">      43 </span>                :<span class="lineCov">         70 :     RectangleSelect* getMirror() const override {return mirror;}</span>
+<span class="lineNum">      44 </span>                :            :     void mirrorHide() const override;
+<span class="lineNum">      45 </span>                :            :     void mirrorShow() const override;
+<span class="lineNum">      46 </span>                :            :     void rotateMirror() const override;
+<a name="47"><span class="lineNum">      47 </span>                :            :     void setMirror(SelectItem* item) override;</a>
+<span class="lineNum">      48 </span>                :            :     void setMirrorActive() const override;
+<span class="lineNum">      49 </span>                :<span class="lineCov">          7 :     void setMirrorAdded() const override {mirror-&gt;hasBeenAdded = true;}</span>
+<span class="lineNum">      50 </span>                :            :     void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc,
+<span class="lineNum">      51 </span>                :            :                           QRectF brc) const override;
+<span class="lineNum">      52 </span>                :            :     void setMirrorMoved() const override;
+<span class="lineNum">      53 </span>                :            :     void setMirrorResized() const override;
+<span class="lineNum">      54 </span>                :            :     void setMirrorVertex(int vertex) const override;
+<span class="lineNum">      55 </span>                :            :     void updateMirrorScene() const override;
+<span class="lineNum">      56 </span>                :            :     /*------------- End implemented functions*/
+<a name="57"><span class="lineNum">      57 </span>                :            : </a>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         56 :     bool isVisible() {return SelectItem::isVisible();}</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">         28 :     int type() const override {return SelectItem::type();}</span>
+<span class="lineNum">      60 </span>                :            : 
+<span class="lineNum">      61 </span>                :            :     QGraphicsScene* scene();
+<span class="lineNum">      62 </span>                :            : #ifdef TEST
+<span class="lineNum">      63 </span>                :            :     friend TestSelect;
+<span class="lineNum">      64 </span>                :            : #endif
+<span class="lineNum">      65 </span>                :            : 
+<span class="lineNum">      66 </span>                :            :  private:
+<span class="lineNum">      67 </span>                :            :     RectangleSelect *mirror = nullptr;
+<span class="lineNum">      68 </span>                :            : };
+<span class="lineNum">      69 </span>                :            : 
+<span class="lineNum">      70 </span>                :            : #endif  // RECTANGLE_SELECT_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
