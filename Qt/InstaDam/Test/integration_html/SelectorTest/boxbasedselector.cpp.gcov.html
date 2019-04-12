@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -188,9 +188,9 @@
 <span class="lineNum">     110 </span>                :            : /*!
 <a name="111"><span class="lineNum">     111 </span>                :            :   \reimp</a>
 <span class="lineNum">     112 </span>                :            :   */
-<span class="lineNum">     113 </span>                :<span class="lineCov">          2 : void BoxBasedSelector::resetActiveVertex() {</span>
+<span class="lineNum">     113 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::resetActiveVertex() {</span>
 <span class="lineNum">     114 </span>                :            :     setActiveVertex(0);
-<span class="lineNum">     115 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     116 </span>                :            : 
 <span class="lineNum">     117 </span>                :            : /*!
 <a name="118"><span class="lineNum">     118 </span>                :            :   \reimp</a>
@@ -247,18 +247,18 @@
 <span class="lineNum">     169 </span>                :            :   to click and drag to resize the item. If the mirror needs to be updated as
 <span class="lineNum">     170 </span>                :            :   well the \a mir should be \c true.
 <span class="lineNum">     171 </span>                :            :   */
-<span class="lineNum">     172 </span>                :<span class="lineCov">         75 : void BoxBasedSelector::calcCorners(bool mir) {</span>
-<span class="lineNum">     173 </span>                :<span class="lineCov">         75 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">         79 : void BoxBasedSelector::calcCorners(bool mir) {</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">         79 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">         79 :                 SelectItem::yoffset);</span>
 <span class="lineNum">     175 </span>                :            :     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() +
-<span class="lineNum">     176 </span>                :<span class="lineCov">         75 :                 SelectItem::xoffset);</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">         79 :                 SelectItem::xoffset);</span>
 <span class="lineNum">     177 </span>                :            :     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() +
-<span class="lineNum">     178 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         79 :                 SelectItem::yoffset);</span>
 <span class="lineNum">     179 </span>                :            :     br = QRectF(myRect.bottomRight() - SelectItem::xoffset -
-<span class="lineNum">     180 </span>                :<span class="lineCov">         75 :                 SelectItem::yoffset, myRect.bottomRight());</span>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">         75 :     if (mir)</span></a>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         54 :         setMirrorCorners(tl, bl, tr, br);</span>
-<span class="lineNum">     183 </span>                :<span class="lineCov">         78 : }</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         79 :                 SelectItem::yoffset, myRect.bottomRight());</span>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">         79 :     if (mir)</span></a>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         58 :         setMirrorCorners(tl, bl, tr, br);</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">         82 : }</span>
 <span class="lineNum">     184 </span>                :            : 
 <span class="lineNum">     185 </span>                :            : /*!
 <span class="lineNum">     186 </span>                :            :   \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;

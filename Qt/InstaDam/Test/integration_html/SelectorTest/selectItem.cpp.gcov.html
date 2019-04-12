@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -157,8 +157,8 @@
 <span class="lineNum">      79 </span>                :            : /*!
 <a name="80"><span class="lineNum">      80 </span>                :            :   Returns the QGraphicsScene to which this item belongs.</a>
 <span class="lineNum">      81 </span>                :            :   */
-<span class="lineNum">      82 </span>                :<span class="lineCov">         10 : QGraphicsScene* SelectItem::scene() const {</span>
-<span class="lineNum">      83 </span>                :<span class="lineCov">         10 :     return QGraphicsItem::scene();</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">         24 : QGraphicsScene* SelectItem::scene() const {</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         24 :     return QGraphicsItem::scene();</span>
 <span class="lineNum">      84 </span>                :            : }
 <span class="lineNum">      85 </span>                :            : 
 <span class="lineNum">      86 </span>                :            : /*!
@@ -228,8 +228,8 @@
 <span class="lineNum">     150 </span>                :            : 
 <a name="151"><span class="lineNum">     151 </span>                :            :   \sa QGraphicsItem::type()</a>
 <span class="lineNum">     152 </span>                :            :   */
-<span class="lineNum">     153 </span>                :<span class="lineCov">        278 : int SelectItem::type() const {</span>
-<span class="lineNum">     154 </span>                :<span class="lineCov">        278 :     return mytype;</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">        320 : int SelectItem::type() const {</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">        320 :     return mytype;</span>
 <span class="lineNum">     155 </span>                :            : }
 <span class="lineNum">     156 </span>                :            : 
 <span class="lineNum">     157 </span>                :            : /*---------------- Protected members ---------------------------*/
@@ -240,16 +240,16 @@
 <span class="lineNum">     162 </span>                :            :   \a shift) would place one or more of the corners outside of the canvas the
 <a name="163"><span class="lineNum">     163 </span>                :            :   movement is halted at the last pixel before the vertex would disappear.</a>
 <span class="lineNum">     164 </span>                :            :   */
-<span class="lineNum">     165 </span>                :<span class="lineCov">          2 : void SelectItem::checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect) {</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">          4 : void SelectItem::checkBoundaries(const QPointF &amp;shift, QRectF &amp;rect) {</span>
 <span class="lineNum">     166 </span>                :            :     QPointF tlc = rect.topLeft() + shift;
 <span class="lineNum">     167 </span>                :            :     QPointF brc = rect.bottomRight() + shift;
 <span class="lineNum">     168 </span>                :            : 
-<span class="lineNum">     169 </span>                :<span class="lineCov">          2 :     if (tlc.x() &lt; 0 || tlc.y() &lt; 0) {</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">          4 :     if (tlc.x() &lt; 0 || tlc.y() &lt; 0) {</span>
 <span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :         tlc.setY(std::max(tlc.y(), 0.));</span>
 <span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 :         tlc.setX(std::max(tlc.x(), 0.));</span>
 <span class="lineNum">     172 </span>                :            :         rect.moveTopLeft(tlc);
-<span class="lineNum">     173 </span>                :<span class="lineCov">          4 :     } else if (brc.x() &gt;= SelectItem::myBounds.width() ||</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">          2 :                brc.y() &gt;= SelectItem::myBounds.height()) {</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">          8 :     } else if (brc.x() &gt;= SelectItem::myBounds.width() ||</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          4 :                brc.y() &gt;= SelectItem::myBounds.height()) {</span>
 <span class="lineNum">     175 </span>                :            :         brc.setY(std::min(static_cast&lt;int&gt;(brc.y()),
 <span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :                           SelectItem::myBounds.height() - 1));</span>
 <span class="lineNum">     177 </span>                :            :         brc.setX(std::min(static_cast&lt;int&gt;(brc.x()),
@@ -258,18 +258,18 @@
 <span class="lineNum">     180 </span>                :            :     } else {
 <span class="lineNum">     181 </span>                :            :         rect.moveTopLeft(tlc);
 <span class="lineNum">     182 </span>                :            :     }
-<span class="lineNum">     183 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">          4 : }</span>
 <span class="lineNum">     184 </span>                :            : 
 <span class="lineNum">     185 </span>                :            : /*!
 <a name="186"><span class="lineNum">     186 </span>                :            :   Determines whether \a point is inside of \a rect. Returns true if it is.</a>
 <span class="lineNum">     187 </span>                :            :   */
-<span class="lineNum">     188 </span>                :<span class="lineCov">        224 : bool SelectItem::isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const {</span>
-<span class="lineNum">     189 </span>                :<span class="lineCov">        201 :     if (point.y() &gt;= rect.top() &amp;&amp; point.y() &lt;= rect.bottom()) {</span>
-<span class="lineNum">     190 </span>                :<span class="lineCov">         23 :         if (point.x() &lt;= rect.right() &amp;&amp; point.x() &gt;= rect.left()) {</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">        239 : bool SelectItem::isInsideRect(const QRectF &amp;rect, const QPointF &amp;point) const {</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">        210 :     if (point.y() &gt;= rect.top() &amp;&amp; point.y() &lt;= rect.bottom()) {</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">         29 :         if (point.x() &lt;= rect.right() &amp;&amp; point.x() &gt;= rect.left()) {</span>
 <span class="lineNum">     191 </span>                :            :             return true;
 <span class="lineNum">     192 </span>                :            :         }
 <a name="193"><span class="lineNum">     193 </span>                :            :     }</a>
-<span class="lineNum">     194 </span>                :<span class="lineCov">        125 :     return false;</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">        119 :     return false;</span>
 <span class="lineNum">     195 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     196 </span>                :            : 
 <span class="lineNum">     197 </span>                :            : /*!

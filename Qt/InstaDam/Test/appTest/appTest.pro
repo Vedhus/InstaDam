@@ -48,7 +48,7 @@ SOURCES = \
     serverprojectname.cpp \
     enumconstants.cpp
 
-LIBS += -lQt5Widgets -L$${PWD}/.. -L$${OUT_PWD}/.. -lselector -lquazip
+LIBS += -lQt5Widgets -L$${PWD}/.. -L$${OUT_PWD}/.. -L$${PWD} -lselector -lquazip
 LIBS += -lopencv_imgcodecs
 LIBS += -lopencv_imgproc -lopencv_features2d -lopencv_calib3d -lopencv_highgui -lopencv_core
 

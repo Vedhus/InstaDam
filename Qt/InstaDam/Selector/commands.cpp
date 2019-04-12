@@ -141,6 +141,7 @@ MoveCommand::MoveCommand(SelectItem *item, const QPointF oldPos,
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
+    myItem->setMoved(false);
 }
 
 /*!
@@ -150,6 +151,7 @@ void MoveCommand::undo() {
     myItem->resetActiveVertex();
     myItem->moveItem(mynewPos, myoldPos);
     myItem->scene()->update();
+    myItem->setMoved(false);
     myItem->updateMirrorScene();
 }
 
@@ -161,6 +163,7 @@ void MoveCommand::redo() {
         myItem->resetActiveVertex();
         myItem->moveItem(myoldPos, mynewPos);
         myItem->scene()->update();
+        myItem->setMoved(false);
         myItem->updateMirrorScene();
     } else {
         init = true;
@@ -194,15 +197,9 @@ MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
                              const int vertex, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myItem = item;
-    //QTextStream(stdout) << "OO " << oldPos.x() << "," << oldPos.y() << endl;
-    //QTextStream(stdout) << "NN " << newPos.x() << "," << newPos.y() << endl;
-
     QPointF shift = newPos - oldPos;
     mynewPos = item->getActivePoint();
-    //QTextStream(stdout) << "N " << item->getActivePoint().x() << "," << item->getActivePoint().y() << endl;
     myoldPos = mynewPos - shift;
-    //QTextStream(stdout) << "S " << shift.x() << "," << shift.y() << endl;
-    //QTextStream(stdout) << "O " << myoldPos.x() << "," << myoldPos.y() << endl;
     myVertex = vertex;
 }
 
@@ -253,6 +250,7 @@ AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,
     : QUndoCommand(parent) {
     myItem = item;
     myPoint = point;
+    vertex = item->getActiveVertex();
     init = false;
 }
 
@@ -260,6 +258,7 @@ AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,
    \reimp
  */
 void AddVertexCommand::undo() {
+    myItem->setActiveVertex(vertex);
     myItem->removeVertex();
     myItem->scene()->update();
     myItem->updateMirrorScene();
@@ -271,9 +270,10 @@ void AddVertexCommand::undo() {
 void AddVertexCommand::redo() {
     if (init) {
         myItem->setActiveVertex(SelectItem::UNSELECTED);
-        myItem->addPoint(myPoint);
+        myItem->insertVertex(vertex - 1, myPoint);
         myItem->scene()->update();
         myItem->updateMirrorScene();
+        myItem->resetState();
     } else {
         init = true;
     }
@@ -411,6 +411,7 @@ RotateCommand::RotateCommand(SelectItem *item, const QPointF oldPos,
     myItem = item;
     myoldPos = oldPos;
     mynewPos = newPos;
+    myItem->setRotated(false);
 }
 
 /*!
@@ -419,6 +420,7 @@ RotateCommand::RotateCommand(SelectItem *item, const QPointF oldPos,
 void RotateCommand::undo() {
     myItem->resetActiveVertex();
     myItem->rotate(mynewPos, myoldPos);
+    myItem->setRotated(false);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
@@ -430,6 +432,7 @@ void RotateCommand::redo() {
     if (init) {
         myItem->resetActiveVertex();
         myItem->rotate(myoldPos, mynewPos);
+        myItem->setRotated(false);
         myItem->scene()->update();
         myItem->updateMirrorScene();
     } else {

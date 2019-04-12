@@ -1067,6 +1067,7 @@ void InstaDam::on_filterOptions_clicked()
  * Function to insert point between two points in the polygon.
  */
 void InstaDam::setInsert() {
+    currentItem->resetState();
     insertVertex = true;
     vertex1 = -1;
     vertex2 = -1;
@@ -1339,6 +1340,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
+
             currentItem->moveItem(fromPos, toPos);
         } else {
             currentItem->rotate(fromPos, toPos);
@@ -1409,7 +1411,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         }
         currentItem->resetState();
     } else if (currentItem && currentItem->type() == SelectItem::Polygon &&
-               !currentItem->wasPointAdded()) {
+               currentItem->wasPointAdded()) {
         QUndoCommand *addVertexCommand =
                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                          currentItem : currentItem->getMirror(),

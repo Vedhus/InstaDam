@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">568</td>
-            <td class="headerCovTableEntry">898</td>
-            <td class="headerCovTableEntryLo">63.3 %</td>
+            <td class="headerCovTableEntry">590</td>
+            <td class="headerCovTableEntry">899</td>
+            <td class="headerCovTableEntryLo">65.6 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">38</td>
+            <td class="headerCovTableEntry">39</td>
             <td class="headerCovTableEntry">58</td>
-            <td class="headerCovTableEntryLo">65.5 %</td>
+            <td class="headerCovTableEntryLo">67.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -126,108 +126,108 @@
 <span class="lineNum">      48 </span>                :            :   in the main window.
 <span class="lineNum">      49 </span>                :            :   */
 <span class="lineNum">      50 </span>                :            : 
-<span class="lineNum">      51 </span>                :<span class="lineCov">          9 : InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">         90 :     QMainWindow(parent), ui(new Ui::InstaDam) {</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">          9 :     ui-&gt;setupUi(this);</span>
-<span class="lineNum">      54 </span>                :<span class="lineCov">          9 :     filterControl = new filterControls();</span>
-<span class="lineNum">      55 </span>                :<span class="lineCov">         18 :     maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">          7 : InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">         70 :     QMainWindow(parent), ui(new Ui::InstaDam) {</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">          7 :     ui-&gt;setupUi(this);</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">          7 :     filterControl = new filterControls();</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">         14 :     maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,</span>
 <span class="lineNum">      56 </span>                :            :                      EnumConstants::THRESHOLD, EnumConstants::LABELMASK};
-<span class="lineNum">      57 </span>                :<span class="lineCov">         18 :     maskButtonList = {ui-&gt;blur_label, ui-&gt;canny_label, ui-&gt;threshold_label,</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">         14 :     maskButtonList = {ui-&gt;blur_label, ui-&gt;canny_label, ui-&gt;threshold_label,</span>
 <span class="lineNum">      58 </span>                :            :                       ui-&gt;labelmask_label};
-<span class="lineNum">      59 </span>                :<span class="lineCov">          9 :     connectFilters();</span>
-<span class="lineNum">      60 </span>                :<span class="lineCov">          9 :     qInfo(&quot;Connected Filters&quot;);</span>
-<span class="lineNum">      61 </span>                :<span class="lineCov">          9 :     ui-&gt;IdmPhotoViewer-&gt;setFilterControls(filterControl);</span>
-<span class="lineNum">      62 </span>                :<span class="lineCov">          9 :     ui-&gt;IdmMaskViewer-&gt;setFilterControls(filterControl);</span>
-<span class="lineNum">      63 </span>                :<span class="lineCov">          9 :     newProject = new newproject(this);</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">          7 :     connectFilters();</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">          7 :     qInfo(&quot;Connected Filters&quot;);</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">          7 :     ui-&gt;IdmPhotoViewer-&gt;setFilterControls(filterControl);</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">          7 :     ui-&gt;IdmMaskViewer-&gt;setFilterControls(filterControl);</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">          7 :     newProject = new newproject(this);</span>
 <span class="lineNum">      64 </span>                :            : 
 <span class="lineNum">      65 </span>                :            : #ifdef WASM_BUILD
 <span class="lineNum">      66 </span>                :            :     ui-&gt;actionExport-&gt;setVisible(false);
 <span class="lineNum">      67 </span>                :            : #endif
-<span class="lineNum">      68 </span>                :<span class="lineCov">          9 :     mainUndoStack = new QUndoStack(this);</span>
-<span class="lineNum">      69 </span>                :<span class="lineCov">          9 :     tempUndoStack = new QUndoStack(this);</span>
-<span class="lineNum">      70 </span>                :<span class="lineCov">          9 :     undoGroup = new QUndoGroup(this);</span>
-<span class="lineNum">      71 </span>                :<span class="lineCov">          9 :     undoGroup-&gt;addStack(mainUndoStack);</span>
-<span class="lineNum">      72 </span>                :<span class="lineCov">          9 :     undoGroup-&gt;addStack(tempUndoStack);</span>
-<span class="lineNum">      73 </span>                :<span class="lineCov">          9 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
-<span class="lineNum">      74 </span>                :<span class="lineCov">          9 :     currentSelectType = SelectItem::Ellipse;</span>
-<span class="lineNum">      75 </span>                :<span class="lineCov">          9 :     scene = ui-&gt;IdmPhotoViewer-&gt;scene;</span>
-<span class="lineNum">      76 </span>                :<span class="lineCov">          9 :     maskScene = ui-&gt;IdmMaskViewer-&gt;scene;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">          7 :     mainUndoStack = new QUndoStack(this);</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">          7 :     tempUndoStack = new QUndoStack(this);</span>
+<span class="lineNum">      70 </span>                :<span class="lineCov">          7 :     undoGroup = new QUndoGroup(this);</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">          7 :     undoGroup-&gt;addStack(mainUndoStack);</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">          7 :     undoGroup-&gt;addStack(tempUndoStack);</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">          7 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">          7 :     currentSelectType = SelectItem::Ellipse;</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">          7 :     scene = ui-&gt;IdmPhotoViewer-&gt;scene;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">          7 :     maskScene = ui-&gt;IdmMaskViewer-&gt;scene;</span>
 <span class="lineNum">      77 </span>                :            : 
-<span class="lineNum">      78 </span>                :<span class="lineCov">          9 :     this-&gt;databaseURL = databaseURL;</span>
-<span class="lineNum">      79 </span>                :<span class="lineCov">          9 :     this-&gt;accessToken = token;</span>
-<span class="lineNum">      80 </span>                :<span class="lineCov">          9 :     currentItem = nullptr;</span>
+<span class="lineNum">      78 </span>                :<span class="lineCov">          7 :     this-&gt;databaseURL = databaseURL;</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">          7 :     this-&gt;accessToken = token;</span>
+<span class="lineNum">      80 </span>                :<span class="lineCov">          7 :     currentItem = nullptr;</span>
 <span class="lineNum">      81 </span>                :            :     currentLabel = nullptr;
-<span class="lineNum">      82 </span>                :<span class="lineCov">          9 :     currentProject = new Project();</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">          7 :     currentProject = new Project();</span>
 <span class="lineNum">      83 </span>                :            :     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
 <span class="lineNum">      84 </span>                :            :                                        QPointF, const Qt::MouseButton)), this,
 <span class="lineNum">      85 </span>                :            :             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-<span class="lineNum">      86 </span>                :<span class="lineCov">          9 :                                      QPointF, const Qt::MouseButton)));</span>
+<span class="lineNum">      86 </span>                :<span class="lineCov">          7 :                                      QPointF, const Qt::MouseButton)));</span>
 <span class="lineNum">      87 </span>                :            :     connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-<span class="lineNum">      88 </span>                :<span class="lineCov">          9 :             SLOT(processMouseMoved(QPointF, QPointF)));</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">          7 :             SLOT(processMouseMoved(QPointF, QPointF)));</span>
 <span class="lineNum">      89 </span>                :            :     connect(scene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
 <span class="lineNum">      90 </span>                :            :                                         QPointF, const Qt::MouseButton)), this,
 <span class="lineNum">      91 </span>                :            :             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-<span class="lineNum">      92 </span>                :<span class="lineCov">          9 :                                       const Qt::MouseButton)));</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">          7 :                                       const Qt::MouseButton)));</span>
 <span class="lineNum">      93 </span>                :            :     connect(scene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
-<span class="lineNum">      94 </span>                :<span class="lineCov">          9 :             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">          7 :             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));</span>
 <span class="lineNum">      95 </span>                :            :     connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
 <span class="lineNum">      96 </span>                :            :                                            QPointF, const Qt::MouseButton)), this,
 <span class="lineNum">      97 </span>                :            :             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-<span class="lineNum">      98 </span>                :<span class="lineCov">          9 :                                      QPointF, const Qt::MouseButton)));</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">          7 :                                      QPointF, const Qt::MouseButton)));</span>
 <span class="lineNum">      99 </span>                :            :     connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-<span class="lineNum">     100 </span>                :<span class="lineCov">          9 :             SLOT(processMouseMoved(QPointF, QPointF)));</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">          7 :             SLOT(processMouseMoved(QPointF, QPointF)));</span>
 <span class="lineNum">     101 </span>                :            :     connect(maskScene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
 <span class="lineNum">     102 </span>                :            :                                             QPointF, const Qt::MouseButton)), this,
 <span class="lineNum">     103 </span>                :            :             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-<span class="lineNum">     104 </span>                :<span class="lineCov">          9 :                                       const Qt::MouseButton)));</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">          7 :                                       const Qt::MouseButton)));</span>
 <span class="lineNum">     105 </span>                :            :     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
-<span class="lineNum">     106 </span>                :<span class="lineCov">          9 :             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));</span>
+<span class="lineNum">     106 </span>                :<span class="lineCov">          7 :             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));</span>
 <span class="lineNum">     107 </span>                :            : 
 <span class="lineNum">     108 </span>                :            :     connect(ui-&gt;showMaskSelections, SIGNAL(stateChanged(int)), this,
-<span class="lineNum">     109 </span>                :<span class="lineCov">          9 :             SLOT(processShowHide(int)));</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">          7 :             SLOT(processShowHide(int)));</span>
 <span class="lineNum">     110 </span>                :            :     connect(ui-&gt;addSelectionButton, SIGNAL(clicked()), this,
-<span class="lineNum">     111 </span>                :<span class="lineCov">          9 :             SLOT(addCurrentSelection()));</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">          7 :             SLOT(addCurrentSelection()));</span>
 <span class="lineNum">     112 </span>                :            :     connect(ui-&gt;cancelSelectionButton, SIGNAL(clicked()), this,
-<span class="lineNum">     113 </span>                :<span class="lineCov">          9 :             SLOT(cancelCurrentSelection()));</span>
-<span class="lineNum">     114 </span>                :<span class="lineCov">          9 :     undoAction = undoGroup-&gt;createUndoAction(this, tr(&quot;&amp;Undo&quot;));</span>
-<span class="lineNum">     115 </span>                :<span class="lineCov">          9 :     undoAction-&gt;setShortcuts(QKeySequence::Undo);</span>
-<span class="lineNum">     116 </span>                :<span class="lineCov">          9 :     redoAction = undoGroup-&gt;createRedoAction(this, tr(&quot;&amp;Redo&quot;));</span>
-<span class="lineNum">     117 </span>                :<span class="lineCov">          9 :     redoAction-&gt;setShortcuts(QKeySequence::Redo);</span>
-<span class="lineNum">     118 </span>                :<span class="lineCov">          9 :     ui-&gt;menuEdit-&gt;addAction(undoAction);</span>
-<span class="lineNum">     119 </span>                :<span class="lineCov">          9 :     ui-&gt;menuEdit-&gt;addAction(redoAction);</span>
-<span class="lineNum">     120 </span>                :<span class="lineCov">          9 :     blankForm = new Ui::blankForm;</span>
-<span class="lineNum">     121 </span>                :<span class="lineCov">          9 :     freeSelectForm = new Ui::freeSelectForm;</span>
-<span class="lineNum">     122 </span>                :<span class="lineCov">          9 :     polygonSelectForm = new Ui::polygonSelectForm;</span>
-<span class="lineNum">     123 </span>                :<span class="lineCov">          9 :     controlLayout = new QGridLayout(ui-&gt;selectControlFrame);</span>
-<span class="lineNum">     124 </span>                :<span class="lineCov">          9 :     blankWidget = new QWidget(ui-&gt;selectControlFrame);</span>
-<span class="lineNum">     125 </span>                :<span class="lineCov">          9 :     blankForm-&gt;setupUi(blankWidget);</span>
-<span class="lineNum">     126 </span>                :<span class="lineCov">          9 :     freeSelectWidget = new QWidget(ui-&gt;selectControlFrame);</span>
-<span class="lineNum">     127 </span>                :<span class="lineCov">          9 :     freeSelectForm-&gt;setupUi(freeSelectWidget);</span>
+<span class="lineNum">     113 </span>                :<span class="lineCov">          7 :             SLOT(cancelCurrentSelection()));</span>
+<span class="lineNum">     114 </span>                :<span class="lineCov">          7 :     undoAction = undoGroup-&gt;createUndoAction(this, tr(&quot;&amp;Undo&quot;));</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">          7 :     undoAction-&gt;setShortcuts(QKeySequence::Undo);</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">          7 :     redoAction = undoGroup-&gt;createRedoAction(this, tr(&quot;&amp;Redo&quot;));</span>
+<span class="lineNum">     117 </span>                :<span class="lineCov">          7 :     redoAction-&gt;setShortcuts(QKeySequence::Redo);</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">          7 :     ui-&gt;menuEdit-&gt;addAction(undoAction);</span>
+<span class="lineNum">     119 </span>                :<span class="lineCov">          7 :     ui-&gt;menuEdit-&gt;addAction(redoAction);</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">          7 :     blankForm = new Ui::blankForm;</span>
+<span class="lineNum">     121 </span>                :<span class="lineCov">          7 :     freeSelectForm = new Ui::freeSelectForm;</span>
+<span class="lineNum">     122 </span>                :<span class="lineCov">          7 :     polygonSelectForm = new Ui::polygonSelectForm;</span>
+<span class="lineNum">     123 </span>                :<span class="lineCov">          7 :     controlLayout = new QGridLayout(ui-&gt;selectControlFrame);</span>
+<span class="lineNum">     124 </span>                :<span class="lineCov">          7 :     blankWidget = new QWidget(ui-&gt;selectControlFrame);</span>
+<span class="lineNum">     125 </span>                :<span class="lineCov">          7 :     blankForm-&gt;setupUi(blankWidget);</span>
+<span class="lineNum">     126 </span>                :<span class="lineCov">          7 :     freeSelectWidget = new QWidget(ui-&gt;selectControlFrame);</span>
+<span class="lineNum">     127 </span>                :<span class="lineCov">          7 :     freeSelectForm-&gt;setupUi(freeSelectWidget);</span>
 <span class="lineNum">     128 </span>                :            :     connect(freeSelectForm-&gt;roundBrushButton, SIGNAL(clicked()), this,
-<span class="lineNum">     129 </span>                :<span class="lineCov">          9 :             SLOT(roundBrushButtonClicked()));</span>
+<span class="lineNum">     129 </span>                :<span class="lineCov">          7 :             SLOT(roundBrushButtonClicked()));</span>
 <span class="lineNum">     130 </span>                :            :     connect(freeSelectForm-&gt;squareBrushButton, SIGNAL(clicked()), this,
-<span class="lineNum">     131 </span>                :<span class="lineCov">          9 :             SLOT(squareBrushButtonClicked()));</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">          7 :             SLOT(squareBrushButtonClicked()));</span>
 <span class="lineNum">     132 </span>                :            :     connect(freeSelectForm-&gt;drawButton, SIGNAL(clicked()), this,
-<span class="lineNum">     133 </span>                :<span class="lineCov">          9 :             SLOT(toggleDrawing()));</span>
-<span class="lineNum">     134 </span>                :<span class="lineCov">          9 :     connect(ui-&gt;panButton, SIGNAL(clicked()), this, SLOT(panButton_clicked()));</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          7 :             SLOT(toggleDrawing()));</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">          7 :     connect(ui-&gt;panButton, SIGNAL(clicked()), this, SLOT(panButton_clicked()));</span>
 <span class="lineNum">     135 </span>                :            :     connect(freeSelectForm-&gt;eraseButton, SIGNAL(clicked()), this,
-<span class="lineNum">     136 </span>                :<span class="lineCov">          9 :             SLOT(toggleErasing()));</span>
+<span class="lineNum">     136 </span>                :<span class="lineCov">          7 :             SLOT(toggleErasing()));</span>
 <span class="lineNum">     137 </span>                :            :     connect(freeSelectForm-&gt;brushSizeSlider, SIGNAL(valueChanged(int)),
-<span class="lineNum">     138 </span>                :<span class="lineCov">          9 :             freeSelectForm-&gt;brushSizeSpinner, SLOT(setValue(int)));</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">          7 :             freeSelectForm-&gt;brushSizeSpinner, SLOT(setValue(int)));</span>
 <span class="lineNum">     139 </span>                :            :     connect(freeSelectForm-&gt;brushSizeSpinner, SIGNAL(valueChanged(int)),
-<span class="lineNum">     140 </span>                :<span class="lineCov">          9 :             freeSelectForm-&gt;brushSizeSlider, SLOT(setValue(int)));</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">          7 :             freeSelectForm-&gt;brushSizeSlider, SLOT(setValue(int)));</span>
 <span class="lineNum">     141 </span>                :            :     connect(freeSelectForm-&gt;brushSizeSlider, SIGNAL(valueChanged(int)), this,
-<span class="lineNum">     142 </span>                :<span class="lineCov">          9 :             SLOT(setCurrentBrushSize(int)));</span>
-<span class="lineNum">     143 </span>                :<span class="lineCov">          9 :     freeSelectForm-&gt;brushSizeSlider-&gt;setValue(currentBrushSize);</span>
-<span class="lineNum">     144 </span>                :<span class="lineCov">          9 :     freeSelectWidget-&gt;hide();</span>
-<span class="lineNum">     145 </span>                :<span class="lineCov">          9 :     polygonSelectWidget = new QWidget(ui-&gt;selectControlFrame);</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">          9 :     polygonSelectForm-&gt;setupUi(polygonSelectWidget);</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">          7 :             SLOT(setCurrentBrushSize(int)));</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">          7 :     freeSelectForm-&gt;brushSizeSlider-&gt;setValue(currentBrushSize);</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">          7 :     freeSelectWidget-&gt;hide();</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          7 :     polygonSelectWidget = new QWidget(ui-&gt;selectControlFrame);</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          7 :     polygonSelectForm-&gt;setupUi(polygonSelectWidget);</span>
 <span class="lineNum">     147 </span>                :            :     connect(polygonSelectForm-&gt;finishPolygonButton, SIGNAL(clicked()), this,
-<span class="lineNum">     148 </span>                :<span class="lineCov">          9 :             SLOT(finishPolygonButtonClicked()));</span>
+<span class="lineNum">     148 </span>                :<span class="lineCov">          7 :             SLOT(finishPolygonButtonClicked()));</span>
 <span class="lineNum">     149 </span>                :            :     connect(polygonSelectForm-&gt;insertPointButton, SIGNAL(clicked()), this,
-<span class="lineNum">     150 </span>                :<span class="lineCov">          9 :             SLOT(setInsert()));</span>
-<span class="lineNum">     151 </span>                :<span class="lineCov">          9 :     polygonSelectWidget-&gt;hide();</span>
-<span class="lineNum">     152 </span>                :<span class="lineCov">          9 :     controlLayout-&gt;addWidget(blankWidget);</span>
+<span class="lineNum">     150 </span>                :<span class="lineCov">          7 :             SLOT(setInsert()));</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">          7 :     polygonSelectWidget-&gt;hide();</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">          7 :     controlLayout-&gt;addWidget(blankWidget);</span>
 <span class="lineNum">     153 </span>                :            : #ifndef TEST
 <span class="lineNum">     154 </span>                :            :     StartingWidget *sw = new StartingWidget;
 <span class="lineNum">     155 </span>                :            :     sw-&gt;show();
@@ -252,7 +252,7 @@
 <span class="lineNum">     174 </span>                :            :         });
 <span class="lineNum">     175 </span>                :            : 
 <span class="lineNum">     176 </span>                :            : #endif
-<span class="lineNum">     177 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">     178 </span>                :            : 
 <span class="lineNum">     179 </span>                :            : #ifdef WASM_BUILD
 <span class="lineNum">     180 </span>                :            : void InstaDam::addImageConnector(QString text, std::function&lt;void ()&gt; onActivate) {
@@ -270,9 +270,9 @@
 <span class="lineNum">     192 </span>                :            : /*!
 <a name="193"><span class="lineNum">     193 </span>                :            :   Destructor</a>
 <span class="lineNum">     194 </span>                :            :   */
-<span class="lineNum">     195 </span>                :<span class="lineCov">         45 : InstaDam::~InstaDam() {</span>
-<span class="lineNum">     196 </span>                :<span class="lineCov">          9 :     delete ui;</span>
-<span class="lineNum">     197 </span>                :<span class="lineCov">         18 : }</span>
+<span class="lineNum">     195 </span>                :<span class="lineCov">         35 : InstaDam::~InstaDam() {</span>
+<span class="lineNum">     196 </span>                :<span class="lineCov">          7 :     delete ui;</span>
+<span class="lineNum">     197 </span>                :<span class="lineCov">         14 : }</span>
 <span class="lineNum">     198 </span>                :            : 
 <span class="lineNum">     199 </span>                :            : /*!
 <a name="200"><span class="lineNum">     200 </span>                :            :   Sets the current project to the newly created project.</a>
@@ -437,28 +437,28 @@
 <span class="lineNum">     359 </span>                :            : /*!
 <span class="lineNum">     360 </span>                :            :  Connects the filter buttons to the corresponding maskType.
 <span class="lineNum">     361 </span>                :            :   */
-<span class="lineNum">     362 </span>                :<span class="lineCov">          9 : void InstaDam::connectFilters() {</span>
-<span class="lineNum">     363 </span>                :<span class="lineCov">         90 :     for (int i = 0; i &lt; maskButtonList.size(); ++i) {</span>
-<span class="lineNum">     364 </span>                :<span class="lineCov">        324 :         for (int j = 0; j &lt; maskButtonList.size(); ++j) {</span>
-<span class="lineNum">     365 </span>                :<span class="lineCov">        144 :             if (i == j) {</span>
-<span class="lineNum">     366 </span>                :<span class="lineCov">        108 :                 maskButtonList[i]-&gt;setMaskType(maskTypeList[i]);</span>
+<span class="lineNum">     362 </span>                :<span class="lineCov">          7 : void InstaDam::connectFilters() {</span>
+<span class="lineNum">     363 </span>                :<span class="lineCov">         70 :     for (int i = 0; i &lt; maskButtonList.size(); ++i) {</span>
+<span class="lineNum">     364 </span>                :<span class="lineCov">        252 :         for (int j = 0; j &lt; maskButtonList.size(); ++j) {</span>
+<span class="lineNum">     365 </span>                :<span class="lineCov">        112 :             if (i == j) {</span>
+<span class="lineNum">     366 </span>                :<span class="lineCov">         84 :                 maskButtonList[i]-&gt;setMaskType(maskTypeList[i]);</span>
 <span class="lineNum">     367 </span>                :            :                 connect(maskButtonList[i], SIGNAL(checked(EnumConstants::maskTypes)),
-<span class="lineNum">     368 </span>                :<span class="lineCov">         72 :                         ui-&gt;IdmPhotoViewer, SLOT(setImMask(EnumConstants::maskTypes)));</span>
+<span class="lineNum">     368 </span>                :<span class="lineCov">         56 :                         ui-&gt;IdmPhotoViewer, SLOT(setImMask(EnumConstants::maskTypes)));</span>
 <span class="lineNum">     369 </span>                :            :             } else {
 <span class="lineNum">     370 </span>                :            :                 connect(maskButtonList[i], SIGNAL(checked(EnumConstants::maskTypes)),
-<span class="lineNum">     371 </span>                :<span class="lineCov">        324 :                         maskButtonList[j], SLOT(otherBoxChecked(EnumConstants::maskTypes)));</span>
+<span class="lineNum">     371 </span>                :<span class="lineCov">        252 :                         maskButtonList[j], SLOT(otherBoxChecked(EnumConstants::maskTypes)));</span>
 <span class="lineNum">     372 </span>                :            :             }
 <span class="lineNum">     373 </span>                :            :         }
 <span class="lineNum">     374 </span>                :            :     }
 <span class="lineNum">     375 </span>                :            :     connect(ui-&gt;IdmPhotoViewer, SIGNAL(changedMask(EnumConstants::maskTypes)),
-<span class="lineNum">     376 </span>                :<span class="lineCov">          9 :             ui-&gt;IdmMaskViewer, SLOT(setImMask(EnumConstants::maskTypes)));</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">          7 :             ui-&gt;IdmMaskViewer, SLOT(setImMask(EnumConstants::maskTypes)));</span>
 <span class="lineNum">     377 </span>                :            :     connect(ui-&gt;IdmPhotoViewer, SIGNAL(zoomed(int, float, QPointF)),
-<span class="lineNum">     378 </span>                :<span class="lineCov">          9 :             ui-&gt;IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));</span>
+<span class="lineNum">     378 </span>                :<span class="lineCov">          7 :             ui-&gt;IdmMaskViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));</span>
 <span class="lineNum">     379 </span>                :            :     connect(ui-&gt;IdmMaskViewer, SIGNAL(zoomed(int, float, QPointF)),
-<span class="lineNum">     380 </span>                :<span class="lineCov">          9 :             ui-&gt;IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));</span>
+<span class="lineNum">     380 </span>                :<span class="lineCov">          7 :             ui-&gt;IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));</span>
 <span class="lineNum">     381 </span>                :            :     connect(ui-&gt;IdmPhotoViewer, SIGNAL(loadedPhoto()), this,
-<span class="lineNum">     382 </span>                :<span class="lineCov">          9 :             SLOT(resetPixmapButtons()));</span>
-<span class="lineNum">     383 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">          7 :             SLOT(resetPixmapButtons()));</span>
+<span class="lineNum">     383 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">     384 </span>                :            : 
 <span class="lineNum">     385 </span>                :            : /*!
 <span class="lineNum">     386 </span>                :            :  Resets the pixmaps of the filter buttons.
@@ -473,9 +473,9 @@
 <span class="lineNum">     395 </span>                :            : /*!
 <a name="396"><span class="lineNum">     396 </span>                :            :  Sets the current freedrawselect brush size to \a size.</a>
 <span class="lineNum">     397 </span>                :            :   */
-<span class="lineNum">     398 </span>                :<span class="lineCov">         13 : void InstaDam::setCurrentBrushSize(int size) {</span>
-<span class="lineNum">     399 </span>                :<span class="lineCov">         13 :     currentBrushSize = size;</span>
-<span class="lineNum">     400 </span>                :<span class="lineCov">         13 : }</span>
+<span class="lineNum">     398 </span>                :<span class="lineCov">         11 : void InstaDam::setCurrentBrushSize(int size) {</span>
+<span class="lineNum">     399 </span>                :<span class="lineCov">         11 :     currentBrushSize = size;</span>
+<span class="lineNum">     400 </span>                :<span class="lineCov">         11 : }</span>
 <span class="lineNum">     401 </span>                :            : 
 <span class="lineNum">     402 </span>                :            : /*!
 <a name="403"><span class="lineNum">     403 </span>                :            :  Saves the current annotation to disk or the server.</a>
@@ -1144,585 +1144,587 @@
 <span class="lineNum">    1066 </span>                :            : /*!
 <a name="1067"><span class="lineNum">    1067 </span>                :            :  * Function to insert point between two points in the polygon.</a>
 <span class="lineNum">    1068 </span>                :            :  */
-<span class="lineNum">    1069 </span>                :<span class="lineNoCov">          0 : void InstaDam::setInsert() {</span>
-<span class="lineNum">    1070 </span>                :<span class="lineNoCov">          0 :     insertVertex = true;</span>
-<span class="lineNum">    1071 </span>                :<span class="lineNoCov">          0 :     vertex1 = -1;</span>
-<span class="lineNum">    1072 </span>                :<span class="lineNoCov">          0 :     vertex2 = -1;</span>
-<span class="lineNum">    1073 </span>                :<span class="lineNoCov">          0 :     polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(&quot;Click the vertices between which you want to insert a point.&quot;);</span>
-<span class="lineNum">    1074 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1075 </span>                :            : 
-<span class="lineNum">    1076 </span>                :            : /*!
-<a name="1077"><span class="lineNum">    1077 </span>                :            :  * Slot called when the export annotations option is chosen.</a>
-<span class="lineNum">    1078 </span>                :            :  */
-<span class="lineNum">    1079 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_actionExport_triggered() {</span>
-<span class="lineNum">    1080 </span>                :<span class="lineNoCov">          0 :     exportImages();</span>
-<span class="lineNum">    1081 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1082 </span>                :            : 
-<span class="lineNum">    1083 </span>                :            : /*!
-<a name="1084"><span class="lineNum">    1084 </span>                :            :  * Slot called when the export zip option is chosen.</a>
-<span class="lineNum">    1085 </span>                :            :  */
-<span class="lineNum">    1086 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_actionExport_zip_triggered() {</span>
-<span class="lineNum">    1087 </span>                :<span class="lineNoCov">          0 :     exportImages(true);</span>
-<span class="lineNum">    1088 </span>                :            : #ifdef WASM_BUILD
-<span class="lineNum">    1089 </span>                :            :     QByteArray *outbytes;
-<span class="lineNum">    1090 </span>                :            : 
-<span class="lineNum">    1091 </span>                :            :     QBuffer *outbuffer = new QBuffer(outbytes);
-<span class="lineNum">    1092 </span>                :            :     QuaZip zip(outbuffer);
-<span class="lineNum">    1093 </span>                :            : #else
-<span class="lineNum">    1094 </span>                :<span class="lineNoCov">          0 :     QuaZip zip(this-&gt;filename + &quot;_idpro.zip&quot;);</span>
-<span class="lineNum">    1095 </span>                :            : #endif
-<span class="lineNum">    1096 </span>                :<span class="lineNoCov">          0 :     if (!zip.open(QuaZip::mdCreate)) {</span>
-<span class="lineNum">    1097 </span>                :<span class="lineNoCov">          0 :         return;</span>
-<span class="lineNum">    1098 </span>                :            :     }
-<span class="lineNum">    1099 </span>                :            : 
-<span class="lineNum">    1100 </span>                :<span class="lineNoCov">          0 :     QuaZipFile outFile(&amp;zip);</span>
-<span class="lineNum">    1101 </span>                :<span class="lineNoCov">          0 :     QHashIterator&lt;QString, QBuffer*&gt; it(exportFiles);</span>
-<span class="lineNum">    1102 </span>                :<span class="lineNoCov">          0 :     while (it.hasNext()) {</span>
-<span class="lineNum">    1103 </span>                :            :         it.next();
-<span class="lineNum">    1104 </span>                :            :         QString filename = it.key();
-<span class="lineNum">    1105 </span>                :<span class="lineNoCov">          0 :         QBuffer *buffer = it.value();</span>
-<span class="lineNum">    1106 </span>                :            : 
-<span class="lineNum">    1107 </span>                :<span class="lineNoCov">          0 :         if (!(*buffer).open(QIODevice::ReadOnly)) {</span>
-<span class="lineNum">    1108 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Could not access buffer file.&quot;);</span>
-<span class="lineNum">    1109 </span>                :<span class="lineNoCov">          0 :             return;</span>
-<span class="lineNum">    1110 </span>                :            :         }
-<span class="lineNum">    1111 </span>                :            : 
-<span class="lineNum">    1112 </span>                :<span class="lineNoCov">          0 :         if (!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(filename, filename))) {</span>
-<span class="lineNum">    1113 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Error opening zip file.&quot;);</span>
-<span class="lineNum">    1114 </span>                :<span class="lineNoCov">          0 :             return;</span>
-<span class="lineNum">    1115 </span>                :            :         }
-<span class="lineNum">    1116 </span>                :<span class="lineNoCov">          0 :         for (qint64 pos = 0, len = (*buffer).size(); pos &lt; len; ) {</span>
-<span class="lineNum">    1117 </span>                :            :             char buf[4096];
-<span class="lineNum">    1118 </span>                :<span class="lineNoCov">          0 :             qint64 readSize = qMin(static_cast&lt;qint64&gt;(4096), len - pos);</span>
-<span class="lineNum">    1119 </span>                :            :             qint64 l;
-<span class="lineNum">    1120 </span>                :<span class="lineNoCov">          0 :             if ((l = (*buffer).read(buf, readSize)) != readSize) {</span>
-<span class="lineNum">    1121 </span>                :<span class="lineNoCov">          0 :                 qInfo(&quot;Read failure&quot;);</span>
-<span class="lineNum">    1122 </span>                :            :             }
-<span class="lineNum">    1123 </span>                :            :             qDebug(&quot;Reading %ld bytes from %s at %ld returned %ld&quot;,
-<span class="lineNum">    1124 </span>                :            :                    static_cast&lt;long&gt;(readSize),
-<span class="lineNum">    1125 </span>                :            :                    filename.toUtf8().constData(),
-<span class="lineNum">    1126 </span>                :            :                    static_cast&lt;long&gt;(pos),
-<span class="lineNum">    1127 </span>                :<span class="lineNoCov">          0 :                    static_cast&lt;long&gt;(l));</span>
-<span class="lineNum">    1128 </span>                :<span class="lineNoCov">          0 :             outFile.write(buf, readSize);</span>
-<span class="lineNum">    1129 </span>                :<span class="lineNoCov">          0 :             pos += readSize;</span>
-<span class="lineNum">    1130 </span>                :            :         }
-<span class="lineNum">    1131 </span>                :<span class="lineNoCov">          0 :         if (outFile.getZipError() != UNZ_OK) {</span>
-<span class="lineNum">    1132 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Zip file error&quot;);</span>
-<span class="lineNum">    1133 </span>                :<span class="lineNoCov">          0 :             return;</span>
-<span class="lineNum">    1134 </span>                :            :         }
-<span class="lineNum">    1135 </span>                :<span class="lineNoCov">          0 :         outFile.close();</span>
-<span class="lineNum">    1136 </span>                :            : 
-<span class="lineNum">    1137 </span>                :<span class="lineNoCov">          0 :         if (outFile.getZipError() != UNZ_OK) {</span>
-<span class="lineNum">    1138 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Error closeing zip file.&quot;);</span>
-<span class="lineNum">    1139 </span>                :<span class="lineNoCov">          0 :             return;</span>
-<span class="lineNum">    1140 </span>                :            :         }
-<span class="lineNum">    1141 </span>                :            : 
-<span class="lineNum">    1142 </span>                :<span class="lineNoCov">          0 :         (*buffer).close();</span>
-<span class="lineNum">    1143 </span>                :<span class="lineNoCov">          0 :     }</span>
-<span class="lineNum">    1144 </span>                :            : 
-<span class="lineNum">    1145 </span>                :<span class="lineNoCov">          0 :     zip.close();</span>
-<span class="lineNum">    1146 </span>                :            : 
-<span class="lineNum">    1147 </span>                :<span class="lineNoCov">          0 :     if (zip.getZipError() != 0) {</span>
-<span class="lineNum">    1148 </span>                :<span class="lineNoCov">          0 :         qInfo(&quot;Error.&quot;);</span>
-<span class="lineNum">    1149 </span>                :<span class="lineNoCov">          0 :         return;</span>
-<span class="lineNum">    1150 </span>                :<span class="lineNoCov">          0 :     }</span>
-<span class="lineNum">    1151 </span>                :            : #ifdef WASM_BUILD
-<span class="lineNum">    1152 </span>                :            :     QHtml5File::save(outbuffer-&gt;data(), &quot;myproject_idpro.zip&quot;);
-<span class="lineNum">    1153 </span>                :            : #endif
-<span class="lineNum">    1154 </span>                :            : }
-<span class="lineNum">    1155 </span>                :            : 
-<span class="lineNum">    1156 </span>                :            : /*!
-<span class="lineNum">    1157 </span>                :            :   Processes a point being clicked in the scene \a type, any SelectItem at \a pos
-<a name="1158"><span class="lineNum">    1158 </span>                :            :   is given by \a item, andthe button clicked is given as \a button.</a>
-<span class="lineNum">    1159 </span>                :            :  */
-<span class="lineNum">    1160 </span>                :<span class="lineCov">         37 : void InstaDam::processPointClicked(PhotoScene::viewerTypes type,</span>
-<span class="lineNum">    1161 </span>                :            :                                    SelectItem *item, QPointF pos,
-<span class="lineNum">    1162 </span>                :            :                                    const Qt::MouseButton button) {
-<span class="lineNum">    1163 </span>                :<span class="lineCov">         37 :     currentButton = button;</span>
-<span class="lineNum">    1164 </span>                :<span class="lineCov">         37 :     if (!item) {</span>
-<span class="lineNum">    1165 </span>                :<span class="lineCov">         32 :         if (!canDrawOnPhoto &amp;&amp; (!currentItem || currentItem-&gt;type() !=</span>
-<span class="lineNum">    1166 </span>                :            :                                 SelectItem::Polygon)) {
-<span class="lineNum">    1167 </span>                :<span class="lineNoCov">          0 :             scene-&gt;inactiveAll();</span>
-<span class="lineNum">    1168 </span>                :<span class="lineNoCov">          0 :             maskScene-&gt;inactiveAll();</span>
-<span class="lineNum">    1169 </span>                :<span class="lineNoCov">          0 :             scene-&gt;update();</span>
-<span class="lineNum">    1170 </span>                :<span class="lineNoCov">          0 :             maskScene-&gt;update();</span>
-<span class="lineNum">    1171 </span>                :<span class="lineNoCov">          0 :             return;</span>
-<span class="lineNum">    1172 </span>                :            :         }
-<span class="lineNum">    1173 </span>                :<span class="lineCov">         32 :         if (type == PhotoScene::MASK_VIEWER_TYPE &amp;&amp; currentSelectType !=</span>
-<span class="lineNum">    1174 </span>                :            :             SelectItem::Freedraw) {
-<span class="lineNum">    1175 </span>                :<span class="lineNoCov">          0 :             canDrawOnPhoto = false;</span>
-<span class="lineNum">    1176 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;setActiveStack(tempUndoStack);</span>
-<span class="lineNum">    1177 </span>                :<span class="lineNoCov">          0 :             ui-&gt;addSelectionButton-&gt;setEnabled(true);</span>
-<span class="lineNum">    1178 </span>                :<span class="lineNoCov">          0 :             ui-&gt;cancelSelectionButton-&gt;setEnabled(true);</span>
-<span class="lineNum">    1179 </span>                :            :         }
-<span class="lineNum">    1180 </span>                :            : 
-<span class="lineNum">    1181 </span>                :<span class="lineCov">         32 :         if (!currentLabel || button == Qt::RightButton) {</span>
-<span class="lineNum">    1182 </span>                :            :             return;
-<span class="lineNum">    1183 </span>                :            :         }
-<span class="lineNum">    1184 </span>                :            : 
-<span class="lineNum">    1185 </span>                :<span class="lineCov">         32 :         if (currentItem &amp;&amp; currentItem-&gt;type() == SelectItem::Polygon) {</span>
-<span class="lineNum">    1186 </span>                :<span class="lineCov">         12 :             if (insertVertex &amp;&amp; vertex1 &gt;= 0 &amp;&amp; vertex2 &gt;= 0) {</span>
-<span class="lineNum">    1187 </span>                :<span class="lineNoCov">          0 :                 if (abs(vertex2 - vertex1) == 1) {</span>
-<span class="lineNum">    1188 </span>                :<span class="lineNoCov">          0 :                     currentItem-&gt;insertVertex(std::min(vertex1, vertex2), pos);</span>
-<span class="lineNum">    1189 </span>                :            :                 } else {
-<span class="lineNum">    1190 </span>                :<span class="lineNoCov">          0 :                     currentItem-&gt;insertVertex(std::max(vertex1, vertex2), pos);</span>
-<span class="lineNum">    1191 </span>                :            :                 }
-<span class="lineNum">    1192 </span>                :<span class="lineNoCov">          0 :                 vertex1 = -1;</span>
-<span class="lineNum">    1193 </span>                :<span class="lineNoCov">          0 :                 vertex2 = -1;</span>
-<span class="lineNum">    1194 </span>                :<span class="lineNoCov">          0 :                 insertVertex = false;</span>
-<span class="lineNum">    1195 </span>                :<span class="lineNoCov">          0 :                 polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(currentItem-&gt;baseInstructions());</span>
-<span class="lineNum">    1196 </span>                :            :             } else {
-<span class="lineNum">    1197 </span>                :<span class="lineCov">         12 :                 currentItem-&gt;addPoint(pos);</span>
-<span class="lineNum">    1198 </span>                :            :             }
-<span class="lineNum">    1199 </span>                :<span class="lineCov">         12 :             scene-&gt;update();</span>
-<span class="lineNum">    1200 </span>                :<span class="lineCov">         12 :             maskScene-&gt;update();</span>
-<span class="lineNum">    1201 </span>                :<span class="lineCov">         12 :             return;</span>
-<span class="lineNum">    1202 </span>                :            :         }
-<span class="lineNum">    1203 </span>                :<span class="lineCov">         20 :         scene-&gt;inactiveAll();</span>
-<span class="lineNum">    1204 </span>                :<span class="lineCov">         20 :         maskScene-&gt;inactiveAll();</span>
-<span class="lineNum">    1205 </span>                :<span class="lineCov">         20 :         switch (currentSelectType) {</span>
-<span class="lineNum">    1206 </span>                :            :             case SelectItem::Rectangle:
-<span class="lineNum">    1207 </span>                :            :             {
-<span class="lineNum">    1208 </span>                :<span class="lineCov">          9 :                 RectangleSelect *temp = new RectangleSelect(pos, currentLabel);</span>
-<span class="lineNum">    1209 </span>                :<span class="lineCov">          9 :                 RectangleSelect *mirror = new RectangleSelect(pos);</span>
-<span class="lineNum">    1210 </span>                :<span class="lineCov">          3 :                 tempItem = temp;</span>
-<span class="lineNum">    1211 </span>                :<span class="lineCov">          3 :                 mirrorItem = mirror;</span>
-<span class="lineNum">    1212 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
-<span class="lineNum">    1213 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
-<span class="lineNum">    1214 </span>                :<span class="lineCov">          3 :                 tempItem-&gt;setMirror(mirrorItem);</span>
-<span class="lineNum">    1215 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;setMirror(tempItem);</span>
-<span class="lineNum">    1216 </span>                :            :             }
-<span class="lineNum">    1217 </span>                :<span class="lineCov">          3 :                 break;</span>
-<span class="lineNum">    1218 </span>                :            :             case SelectItem::Ellipse:
-<span class="lineNum">    1219 </span>                :            :             {
-<span class="lineNum">    1220 </span>                :<span class="lineCov">         18 :                 EllipseSelect *temp = new EllipseSelect(pos, currentLabel);</span>
-<span class="lineNum">    1221 </span>                :<span class="lineCov">         18 :                 EllipseSelect *mirror = new EllipseSelect(pos);</span>
-<span class="lineNum">    1222 </span>                :<span class="lineCov">          6 :                 tempItem = temp;</span>
-<span class="lineNum">    1223 </span>                :<span class="lineCov">          6 :                 mirrorItem = mirror;</span>
-<span class="lineNum">    1224 </span>                :<span class="lineCov">         12 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
-<span class="lineNum">    1225 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
-<span class="lineNum">    1226 </span>                :<span class="lineCov">          6 :                 tempItem-&gt;setMirror(mirrorItem);</span>
-<span class="lineNum">    1227 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setMirror(tempItem);</span>
-<span class="lineNum">    1228 </span>                :            :             }
-<span class="lineNum">    1229 </span>                :<span class="lineCov">          6 :                 break;</span>
-<span class="lineNum">    1230 </span>                :            :             case SelectItem::Freeerase:
-<span class="lineNum">    1231 </span>                :            :             case SelectItem::Freedraw:
-<span class="lineNum">    1232 </span>                :            :             {
-<span class="lineNum">    1233 </span>                :<span class="lineCov">          8 :                 if (drawing) {</span>
-<span class="lineNum">    1234 </span>                :            :                     FreeDrawSelect *temp = new FreeDrawSelect(pos,
-<span class="lineNum">    1235 </span>                :            :                                                               currentBrushSize,
-<span class="lineNum">    1236 </span>                :            :                                                               brushMode,
-<span class="lineNum">    1237 </span>                :<span class="lineCov">         12 :                                                               currentLabel);</span>
-<span class="lineNum">    1238 </span>                :            :                     FreeDrawSelect *mirror = new FreeDrawSelect(pos,
-<span class="lineNum">    1239 </span>                :<span class="lineCov">         12 :                                                                 temp-&gt;myPen);</span>
-<span class="lineNum">    1240 </span>                :<span class="lineCov">          4 :                     tempItem = temp;</span>
-<span class="lineNum">    1241 </span>                :<span class="lineCov">          4 :                     mirrorItem = mirror;</span>
-<span class="lineNum">    1242 </span>                :<span class="lineCov">          8 :                     mirrorItem-&gt;setLabel(currentLabel);</span>
-<span class="lineNum">    1243 </span>                :<span class="lineCov">          4 :                     mirrorItem-&gt;updatePen(temp-&gt;myPen);</span>
-<span class="lineNum">    1244 </span>                :<span class="lineCov">          4 :                     tempItem-&gt;setMirror(mirrorItem);</span>
-<span class="lineNum">    1245 </span>                :<span class="lineCov">          4 :                     mirrorItem-&gt;setMirror(tempItem);</span>
-<span class="lineNum">    1246 </span>                :            :                 } else {
-<span class="lineNum">    1247 </span>                :            :                     myErase = new FreeDrawErase(pos, currentBrushSize,
-<span class="lineNum">    1248 </span>                :<span class="lineCov">         12 :                                                 brushMode, currentLabel);</span>
-<span class="lineNum">    1249 </span>                :<span class="lineCov">          4 :                     currentItem = myErase;</span>
-<span class="lineNum">    1250 </span>                :            :                 }
-<span class="lineNum">    1251 </span>                :            :             }
-<span class="lineNum">    1252 </span>                :            :                 break;
-<span class="lineNum">    1253 </span>                :            :             case SelectItem::Polygon:
-<span class="lineNum">    1254 </span>                :            :             {
-<span class="lineNum">    1255 </span>                :<span class="lineCov">          9 :                 PolygonSelect *temp = new PolygonSelect(pos, currentLabel);</span>
-<span class="lineNum">    1256 </span>                :<span class="lineCov">          9 :                 PolygonSelect *mirror = new PolygonSelect(pos);</span>
-<span class="lineNum">    1257 </span>                :<span class="lineCov">          3 :                 tempItem = temp;</span>
-<span class="lineNum">    1258 </span>                :<span class="lineCov">          3 :                 mirrorItem = mirror;</span>
-<span class="lineNum">    1259 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
-<span class="lineNum">    1260 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
-<span class="lineNum">    1261 </span>                :<span class="lineCov">          3 :                 tempItem-&gt;setMirror(mirrorItem);</span>
-<span class="lineNum">    1262 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;setMirror(tempItem);</span>
-<span class="lineNum">    1263 </span>                :<span class="lineCov">          3 :                 polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(true);</span>
-<span class="lineNum">    1264 </span>                :            :             }
-<span class="lineNum">    1265 </span>                :<span class="lineCov">          3 :                 break;</span>
-<span class="lineNum">    1266 </span>                :            :         }
-<span class="lineNum">    1267 </span>                :<span class="lineCov">         20 :         if ((currentSelectType != SelectItem::Freedraw &amp;&amp; currentSelectType !=</span>
-<span class="lineNum">    1268 </span>                :<span class="lineCov">          8 :              SelectItem::Freeerase) || drawing) {</span>
-<span class="lineNum">    1269 </span>                :<span class="lineCov">         32 :             mirrorItem-&gt;setLabel(currentLabel);</span>
-<span class="lineNum">    1270 </span>                :<span class="lineCov">         16 :             mirrorItem-&gt;updatePen(tempItem-&gt;myPen);</span>
-<span class="lineNum">    1271 </span>                :<span class="lineCov">         16 :             scene-&gt;addItem(tempItem);</span>
-<span class="lineNum">    1272 </span>                :<span class="lineCov">         16 :             maskScene-&gt;addItem(mirrorItem);</span>
-<span class="lineNum">    1273 </span>                :<span class="lineCov">         16 :             switch (type) {</span>
-<span class="lineNum">    1274 </span>                :            :                 case PhotoScene::PHOTO_VIEWER_TYPE:
-<span class="lineNum">    1275 </span>                :<span class="lineCov">         16 :                     currentItem = tempItem;</span>
-<span class="lineNum">    1276 </span>                :<span class="lineCov">         16 :                     break;</span>
-<span class="lineNum">    1277 </span>                :            :                 case PhotoScene::MASK_VIEWER_TYPE:
-<span class="lineNum">    1278 </span>                :<span class="lineNoCov">          0 :                     currentItem = mirrorItem;</span>
-<span class="lineNum">    1279 </span>                :<span class="lineNoCov">          0 :                     break;</span>
-<span class="lineNum">    1280 </span>                :            :             }
-<span class="lineNum">    1281 </span>                :<span class="lineCov">         16 :             if (!canDrawOnPhoto)</span>
-<span class="lineNum">    1282 </span>                :<span class="lineNoCov">          0 :                 maskItem = currentItem;</span>
-<span class="lineNum">    1283 </span>                :            :         }
-<span class="lineNum">    1284 </span>                :<span class="lineCov">         20 :         scene-&gt;update();</span>
-<span class="lineNum">    1285 </span>                :<span class="lineCov">         20 :         maskScene-&gt;update();</span>
-<span class="lineNum">    1286 </span>                :            :     } else {
-<span class="lineNum">    1287 </span>                :<span class="lineCov">          5 :         if (item-&gt;type() != currentSelectType) {</span>
-<span class="lineNum">    1288 </span>                :<span class="lineCov">          2 :             if (!canDrawOnPhoto)</span>
-<span class="lineNum">    1289 </span>                :            :                 return;
-<span class="lineNum">    1290 </span>                :<span class="lineCov">          2 :             switch (item-&gt;type()) {</span>
-<span class="lineNum">    1291 </span>                :            :                 case SelectItem::Freedraw:
-<span class="lineNum">    1292 </span>                :<span class="lineNoCov">          0 :                     on_freeSelectButton_clicked();</span>
-<span class="lineNum">    1293 </span>                :<span class="lineNoCov">          0 :                     break;</span>
-<span class="lineNum">    1294 </span>                :            :                 case SelectItem::Polygon:
-<span class="lineNum">    1295 </span>                :<span class="lineCov">          1 :                     on_polygonSelectButton_clicked();</span>
-<span class="lineNum">    1296 </span>                :<span class="lineCov">          1 :                     polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(true);</span>
-<span class="lineNum">    1297 </span>                :<span class="lineCov">          1 :                     break;</span>
-<span class="lineNum">    1298 </span>                :            :                 case SelectItem::Rectangle:
-<span class="lineNum">    1299 </span>                :<span class="lineCov">          1 :                     on_rectangleSelectButton_clicked();</span>
-<span class="lineNum">    1300 </span>                :<span class="lineCov">          1 :                     break;</span>
-<span class="lineNum">    1301 </span>                :            :                 case SelectItem::Ellipse:
-<span class="lineNum">    1302 </span>                :<span class="lineNoCov">          0 :                     on_ellipseSelectButton_clicked();</span>
-<span class="lineNum">    1303 </span>                :<span class="lineNoCov">          0 :                     break;</span>
-<span class="lineNum">    1304 </span>                :            :             }
-<span class="lineNum">    1305 </span>                :            :         }
-<span class="lineNum">    1306 </span>                :<span class="lineCov">          5 :         currentItem = item;</span>
-<span class="lineNum">    1307 </span>                :<span class="lineCov">          5 :         if (!canDrawOnPhoto)</span>
-<span class="lineNum">    1308 </span>                :<span class="lineNoCov">          0 :             maskItem = currentItem;</span>
-<span class="lineNum">    1309 </span>                :<span class="lineCov">          5 :         currentLabel = currentItem-&gt;getLabel();</span>
-<span class="lineNum">    1310 </span>                :<span class="lineCov">          5 :         scene-&gt;inactiveAll();</span>
-<span class="lineNum">    1311 </span>                :<span class="lineCov">          5 :         maskScene-&gt;inactiveAll();</span>
-<span class="lineNum">    1312 </span>                :<span class="lineCov">          5 :         currentItem-&gt;clickPoint(pos);</span>
-<span class="lineNum">    1313 </span>                :<span class="lineCov">          5 :         currentItem-&gt;setItemActive();</span>
-<span class="lineNum">    1314 </span>                :<span class="lineCov">          5 :         if (currentItem-&gt;type() == SelectItem::Polygon &amp;&amp; insertVertex) {</span>
-<span class="lineNum">    1315 </span>                :<span class="lineNoCov">          0 :             int vert = currentItem-&gt;getActiveVertex();</span>
-<span class="lineNum">    1316 </span>                :<span class="lineNoCov">          0 :             if (vert != SelectItem::UNSELECTED) {</span>
-<span class="lineNum">    1317 </span>                :<span class="lineNoCov">          0 :                 if (vertex1 &lt;0) {</span>
-<span class="lineNum">    1318 </span>                :<span class="lineNoCov">          0 :                     vertex1 = vert;</span>
-<span class="lineNum">    1319 </span>                :<span class="lineNoCov">          0 :                     polygonSelectForm-&gt;polygonMessageBox-&gt;appendPlainText(&quot;First vertex selected.&quot;);</span>
-<span class="lineNum">    1320 </span>                :<span class="lineNoCov">          0 :                 } else if (vertex2 &lt; 0) {</span>
-<span class="lineNum">    1321 </span>                :<span class="lineNoCov">          0 :                     if (abs(vert - vertex1) != 1 &amp;&amp; abs(vert - vertex1) !=</span>
-<span class="lineNum">    1322 </span>                :<span class="lineNoCov">          0 :                         (currentItem-&gt;numberOfVertices() - 1)) {</span>
-<span class="lineNum">    1323 </span>                :<span class="lineNoCov">          0 :                         polygonSelectForm-&gt;polygonMessageBox-&gt;appendPlainText(&quot;Invalid second vertex, it must be adjacent to the first vertex.&quot;);</span>
-<span class="lineNum">    1324 </span>                :            :                     } else {
-<span class="lineNum">    1325 </span>                :<span class="lineNoCov">          0 :                         vertex2 = vert;</span>
-<span class="lineNum">    1326 </span>                :<span class="lineNoCov">          0 :                         polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(&quot;Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)&quot;);</span>
-<span class="lineNum">    1327 </span>                :            :                     }
-<span class="lineNum">    1328 </span>                :            :                 }
-<span class="lineNum">    1329 </span>                :            :             }
-<span class="lineNum">    1330 </span>                :            :         }
-<span class="lineNum">    1331 </span>                :<span class="lineCov">          5 :         scene-&gt;update();</span>
-<span class="lineNum">    1332 </span>                :<span class="lineCov">          5 :         maskScene-&gt;update();</span>
-<span class="lineNum">    1333 </span>                :            :     }
-<span class="lineNum">    1334 </span>                :            : }
-<span class="lineNum">    1335 </span>                :            : 
-<span class="lineNum">    1336 </span>                :            : /*!
-<a name="1337"><span class="lineNum">    1337 </span>                :            :   Processes a mouse movement from \a fromPos to \a toPos.</a>
-<span class="lineNum">    1338 </span>                :            :  */
-<span class="lineNum">    1339 </span>                :<span class="lineCov">         57 : void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {</span>
-<span class="lineNum">    1340 </span>                :<span class="lineCov">         57 :     if (currentItem) {</span>
-<span class="lineNum">    1341 </span>                :<span class="lineCov">         57 :         if (currentButton == Qt::LeftButton) {</span>
-<span class="lineNum">    1342 </span>                :<span class="lineCov">         56 :             currentItem-&gt;moveItem(fromPos, toPos);</span>
-<span class="lineNum">    1343 </span>                :            :         } else {
-<span class="lineNum">    1344 </span>                :<span class="lineCov">          1 :             currentItem-&gt;rotate(fromPos, toPos);</span>
-<span class="lineNum">    1345 </span>                :            :         }
-<span class="lineNum">    1346 </span>                :<span class="lineCov">         57 :         scene-&gt;update();</span>
-<span class="lineNum">    1347 </span>                :<span class="lineCov">         57 :         maskScene-&gt;update();</span>
-<span class="lineNum">    1348 </span>                :            :     }
-<span class="lineNum">    1349 </span>                :<span class="lineCov">         57 : }</span>
-<span class="lineNum">    1350 </span>                :            : 
-<span class="lineNum">    1351 </span>                :            : /*!
-<span class="lineNum">    1352 </span>                :            :   Processes a mouse button being released from scene \a type, mouse movement
-<a name="1353"><span class="lineNum">    1353 </span>                :            :   from \a oldPos to \a newPos, and the button released \a button.</a>
-<span class="lineNum">    1354 </span>                :            :  */
-<span class="lineNum">    1355 </span>                :<span class="lineCov">         37 : void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,</span>
-<span class="lineNum">    1356 </span>                :            :                                     QPointF oldPos, QPointF newPos,
-<span class="lineNum">    1357 </span>                :            :                                     const Qt::MouseButton button) {
-<span class="lineNum">    1358 </span>                :            :     UNUSED(button);
-<span class="lineNum">    1359 </span>                :<span class="lineCov">        101 :     if (currentItem &amp;&amp; !currentItem-&gt;isItemAdded()) {</span>
-<span class="lineNum">    1360 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() == SelectItem::Freedraw &amp;&amp; type ==</span>
-<span class="lineNum">    1361 </span>                :            :             PhotoScene::MASK_VIEWER_TYPE) {
-<span class="lineNum">    1362 </span>                :<span class="lineNoCov">          0 :             FreeDrawSelect fds(maskSelection(currentItem), currentItem-&gt;myPen);</span>
-<span class="lineNum">    1363 </span>                :<span class="lineNoCov">          0 :             FreeDrawSelect *temp = dynamic_cast&lt;FreeDrawSelect*&gt;(currentItem);</span>
-<span class="lineNum">    1364 </span>                :<span class="lineNoCov">          0 :             temp-&gt;setPointsUnchecked(fds.getPixmap());</span>
-<span class="lineNum">    1365 </span>                :            :         }
-<span class="lineNum">    1366 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() == SelectItem::Freeerase) {</span>
-<span class="lineNum">    1367 </span>                :            :             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
-<span class="lineNum">    1368 </span>                :<span class="lineCov">          4 :                                                                 maskScene);</span>
-<span class="lineNum">    1369 </span>                :<span class="lineCov">          4 :             undoGroup-&gt;activeStack()-&gt;push(eraseCommand);</span>
-<span class="lineNum">    1370 </span>                :            :         } else {
-<span class="lineNum">    1371 </span>                :            :             QUndoCommand *addCommand =
-<span class="lineNum">    1372 </span>                :            :                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1373 </span>                :<span class="lineNoCov">          0 :                                        currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1374 </span>                :<span class="lineCov">         16 :                                    scene);</span>
-<span class="lineNum">    1375 </span>                :<span class="lineCov">         16 :             undoGroup-&gt;activeStack()-&gt;push(addCommand);</span>
-<span class="lineNum">    1376 </span>                :<span class="lineCov">         16 :             if (type == PhotoScene::MASK_VIEWER_TYPE)</span>
-<span class="lineNum">    1377 </span>                :<span class="lineNoCov">          0 :                 currentItem-&gt;setFromMaskScene(true);</span>
-<span class="lineNum">    1378 </span>                :<span class="lineCov">         16 :             if (ui-&gt;showMaskSelections-&gt;checkState() == Qt::Unchecked)</span>
-<span class="lineNum">    1379 </span>                :<span class="lineCov">         16 :                 currentItem-&gt;hideMask();</span>
-<span class="lineNum">    1380 </span>                :            :         }
-<span class="lineNum">    1381 </span>                :<span class="lineCov">         20 :         currentItem-&gt;resetState();</span>
-<span class="lineNum">    1382 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() != SelectItem::Polygon) {</span>
-<span class="lineNum">    1383 </span>                :<span class="lineCov">         17 :             currentItem = nullptr;</span>
-<span class="lineNum">    1384 </span>                :            :         } else {
-<span class="lineNum">    1385 </span>                :<span class="lineCov">          3 :             currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
-<span class="lineNum">    1386 </span>                :            :         }
-<span class="lineNum">    1387 </span>                :<span class="lineCov">         65 :     } else if (currentItem &amp;&amp; (currentItem-&gt;wasMoved() ||</span>
-<span class="lineNum">    1388 </span>                :<span class="lineCov">         13 :                                currentItem-&gt;wasResized() ||</span>
-<span class="lineNum">    1389 </span>                :            :                                currentItem-&gt;wasRotated())) {
-<span class="lineNum">    1390 </span>                :<span class="lineCov">          5 :         if (currentItem-&gt;wasMoved()) {</span>
-<span class="lineNum">    1391 </span>                :            :             QUndoCommand *moveCommand =
-<span class="lineNum">    1392 </span>                :            :                     new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1393 </span>                :<span class="lineNoCov">          0 :                                         currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1394 </span>                :<span class="lineCov">          3 :                                     oldPos, newPos);</span>
-<span class="lineNum">    1395 </span>                :<span class="lineCov">          3 :             undoGroup-&gt;activeStack()-&gt;push(moveCommand);</span>
-<span class="lineNum">    1396 </span>                :<span class="lineCov">          2 :         } else if (currentItem-&gt;wasResized()) {</span>
-<span class="lineNum">    1397 </span>                :            :             QUndoCommand *resizeCommand =
-<span class="lineNum">    1398 </span>                :            :                     new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1399 </span>                :<span class="lineNoCov">          0 :                                               currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1400 </span>                :            :                                           oldPos, newPos,
-<span class="lineNum">    1401 </span>                :<span class="lineCov">          2 :                                           currentItem-&gt;getActiveVertex());</span>
-<span class="lineNum">    1402 </span>                :<span class="lineCov">          1 :             undoGroup-&gt;activeStack()-&gt;push(resizeCommand);</span>
-<span class="lineNum">    1403 </span>                :            :         } else {
-<span class="lineNum">    1404 </span>                :            :             QUndoCommand *rotateCommand =
-<span class="lineNum">    1405 </span>                :            :                     new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1406 </span>                :<span class="lineNoCov">          0 :                                           currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1407 </span>                :<span class="lineCov">          1 :                                       oldPos, newPos);</span>
-<span class="lineNum">    1408 </span>                :<span class="lineCov">          1 :             undoGroup-&gt;activeStack()-&gt;push(rotateCommand);</span>
-<span class="lineNum">    1409 </span>                :            :         }
-<span class="lineNum">    1410 </span>                :<span class="lineCov">          5 :         currentItem-&gt;resetState();</span>
-<span class="lineNum">    1411 </span>                :<span class="lineCov">         24 :     } else if (currentItem &amp;&amp; currentItem-&gt;type() == SelectItem::Polygon &amp;&amp;</span>
-<span class="lineNum">    1412 </span>                :<span class="lineCov">         12 :                !currentItem-&gt;wasPointAdded()) {</span>
-<span class="lineNum">    1413 </span>                :            :         QUndoCommand *addVertexCommand =
-<span class="lineNum">    1414 </span>                :            :                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1415 </span>                :<span class="lineNoCov">          0 :                                          currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1416 </span>                :<span class="lineCov">         12 :                                      newPos);</span>
-<span class="lineNum">    1417 </span>                :<span class="lineCov">         12 :         undoGroup-&gt;activeStack()-&gt;push(addVertexCommand);</span>
-<span class="lineNum">    1418 </span>                :<span class="lineCov">         12 :         currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
-<span class="lineNum">    1419 </span>                :<span class="lineCov">         12 :         currentItem-&gt;resetState();</span>
-<span class="lineNum">    1420 </span>                :            :     }
-<span class="lineNum">    1421 </span>                :<span class="lineCov">         37 :     currentButton = Qt::NoButton;</span>
-<span class="lineNum">    1422 </span>                :<span class="lineCov">         37 :     scene-&gt;update();</span>
-<span class="lineNum">    1423 </span>                :<span class="lineCov">         37 :     maskScene-&gt;update();</span>
-<span class="lineNum">    1424 </span>                :<span class="lineCov">         37 : }</span>
-<span class="lineNum">    1425 </span>                :            : 
-<span class="lineNum">    1426 </span>                :            : 
-<span class="lineNum">    1427 </span>                :            : /*!
-<a name="1428"><span class="lineNum">    1428 </span>                :            :  Closes the current polygon.</a>
-<span class="lineNum">    1429 </span>                :            :  */
-<span class="lineNum">    1430 </span>                :<span class="lineCov">          4 : void InstaDam::finishPolygonButtonClicked() {</span>
-<span class="lineNum">    1431 </span>                :<span class="lineCov">          4 :     if (currentItem) {</span>
-<span class="lineNum">    1432 </span>                :            :         currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);
-<span class="lineNum">    1433 </span>                :            :         currentItem-&gt;setInactive();
-<span class="lineNum">    1434 </span>                :<span class="lineCov">          4 :         polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(false);</span>
-<span class="lineNum">    1435 </span>                :            :     }
-<span class="lineNum">    1436 </span>                :<span class="lineCov">          4 :     currentItem = nullptr;</span>
-<span class="lineNum">    1437 </span>                :<span class="lineCov">          4 :     scene-&gt;update();</span>
-<span class="lineNum">    1438 </span>                :<span class="lineCov">          4 :     maskScene-&gt;update();</span>
-<span class="lineNum">    1439 </span>                :<span class="lineCov">          4 : }</span>
-<span class="lineNum">    1440 </span>                :            : 
-<span class="lineNum">    1441 </span>                :            : /*!
-<span class="lineNum">    1442 </span>                :            :  Defines keyboard modifier actions (delet and X) \a key for a viewerTypes of
-<a name="1443"><span class="lineNum">    1443 </span>                :            :  \a type.</a>
-<span class="lineNum">    1444 </span>                :            :  */
-<span class="lineNum">    1445 </span>                :<span class="lineNoCov">          0 : void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {</span>
-<span class="lineNum">    1446 </span>                :<span class="lineNoCov">          0 :     if (!currentItem) {</span>
-<span class="lineNum">    1447 </span>                :<span class="lineNoCov">          0 :         return;</span>
-<span class="lineNum">    1448 </span>                :<span class="lineNoCov">          0 :     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {</span>
-<span class="lineNum">    1449 </span>                :<span class="lineNoCov">          0 :         if (currentItem-&gt;type() == SelectItem::Polygon &amp;&amp;</span>
-<span class="lineNum">    1450 </span>                :<span class="lineNoCov">          0 :             currentItem-&gt;getActiveVertex() != SelectItem::UNSELECTED) {</span>
-<span class="lineNum">    1451 </span>                :            :             QUndoCommand *deleteVertexCommand =
-<span class="lineNum">    1452 </span>                :            :                     new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1453 </span>                :<span class="lineNoCov">          0 :                                                 currentItem : currentItem-&gt;getMirror());</span>
-<span class="lineNum">    1454 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;activeStack()-&gt;push(deleteVertexCommand);</span>
-<span class="lineNum">    1455 </span>                :            :         } else {
-<span class="lineNum">    1456 </span>                :            :             QUndoCommand *deleteCommand =
-<span class="lineNum">    1457 </span>                :            :                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-<span class="lineNum">    1458 </span>                :<span class="lineNoCov">          0 :                                           currentItem : currentItem-&gt;getMirror(),</span>
-<span class="lineNum">    1459 </span>                :<span class="lineNoCov">          0 :                                       scene);</span>
-<span class="lineNum">    1460 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;activeStack()-&gt;push(deleteCommand);</span>
-<span class="lineNum">    1461 </span>                :            :         }
-<span class="lineNum">    1462 </span>                :<span class="lineNoCov">          0 :     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {</span>
-<span class="lineNum">    1463 </span>                :<span class="lineNoCov">          0 :         currentItem = nullptr;</span>
-<span class="lineNum">    1464 </span>                :            :     }
-<span class="lineNum">    1465 </span>                :            : }
-<span class="lineNum">    1466 </span>                :            : 
-<span class="lineNum">    1467 </span>                :            : /*!
-<span class="lineNum">    1468 </span>                :            :   Reads a QJsonObject \a json of fileTypes \a type.
-<span class="lineNum">    1469 </span>                :            :  */
-<span class="lineNum">    1470 </span>                :<span class="lineCov">          2 : bool InstaDam::read(const QJsonObject &amp;json, fileTypes type) {</span>
-<span class="lineNum">    1471 </span>                :<span class="lineCov">          4 :     if (json.contains(&quot;labels&quot;) &amp;&amp; json[&quot;labels&quot;].isArray()) {</span>
-<span class="lineNum">    1472 </span>                :<span class="lineCov">          2 :         QJsonArray labelArray = json[&quot;labels&quot;].toArray();</span>
-<span class="lineNum">    1473 </span>                :<span class="lineCov">          2 :         tempLabels.clear();</span>
-<span class="lineNum">    1474 </span>                :<span class="lineCov">          2 :         tempLabels.reserve(labelArray.size());</span>
-<span class="lineNum">    1475 </span>                :<span class="lineCov">          8 :         for (int i = 0; i &lt; labelArray.size(); i++) {</span>
-<span class="lineNum">    1476 </span>                :            :             QSharedPointer&lt;Label&gt; label =
-<span class="lineNum">    1477 </span>                :<span class="lineCov">          6 :                     QSharedPointer&lt;Label&gt;::create(labelArray[i].toObject(), i);</span>
-<span class="lineNum">    1478 </span>                :            :             tempLabels.push_back(label);
-<span class="lineNum">    1479 </span>                :            :         }
-<span class="lineNum">    1480 </span>                :<span class="lineCov">          2 :         if (type == PROJECT) {</span>
-<span class="lineNum">    1481 </span>                :<span class="lineCov">          1 :             currentProject = newProject-&gt;newPr;</span>
-<span class="lineNum">    1482 </span>                :<span class="lineCov">          1 :             setLabels();</span>
-<span class="lineNum">    1483 </span>                :<span class="lineCov">          1 :             scene-&gt;clearItems();</span>
-<span class="lineNum">    1484 </span>                :<span class="lineCov">          1 :             maskScene-&gt;clearItems();</span>
-<span class="lineNum">    1485 </span>                :<span class="lineCov">          2 :             currentProject-&gt;setLabels(tempLabels);</span>
-<span class="lineNum">    1486 </span>                :<span class="lineCov">          2 :             QTextStream(stdout) &lt;&lt; currentProject-&gt;numLabels() &lt;&lt; &quot;\n&quot;;</span>
-<span class="lineNum">    1487 </span>                :            :         } else {
-<span class="lineNum">    1488 </span>                :<span class="lineCov">          2 :             QStringList current = getLabelNames(currentProject-&gt;getLabels());</span>
-<span class="lineNum">    1489 </span>                :<span class="lineCov">          1 :             QStringList newList = getLabelNames(tempLabels);</span>
-<span class="lineNum">    1490 </span>                :            :             current.sort(Qt::CaseInsensitive);
-<span class="lineNum">    1491 </span>                :            :             newList.sort(Qt::CaseInsensitive);
-<span class="lineNum">    1492 </span>                :<span class="lineCov">          1 :             if (current.size() != 0 &amp;&amp; current != newList) {</span>
-<span class="lineNum">    1493 </span>                :<span class="lineNoCov">          0 :                 QDialog *dialog = new QDialog(this);</span>
-<span class="lineNum">    1494 </span>                :<span class="lineNoCov">          0 :                 Ui::projectDialog *projectDialog = new Ui::projectDialog;</span>
-<span class="lineNum">    1495 </span>                :<span class="lineNoCov">          0 :                 projectDialog-&gt;setupUi(dialog);</span>
-<span class="lineNum">    1496 </span>                :            :                 projectDialog-&gt;differences-&gt;setRowCount(std::max(current.size(),
-<span class="lineNum">    1497 </span>                :<span class="lineNoCov">          0 :                                                                  newList.size()));</span>
-<span class="lineNum">    1498 </span>                :<span class="lineNoCov">          0 :                 for (int i = 0; i &lt; current.size(); i++) {</span>
-<span class="lineNum">    1499 </span>                :<span class="lineNoCov">          0 :                     QTableWidgetItem *newItem = new QTableWidgetItem(current.at(i));</span>
-<span class="lineNum">    1500 </span>                :<span class="lineNoCov">          0 :                     projectDialog-&gt;differences-&gt;setItem(i, 0, newItem);</span>
-<span class="lineNum">    1501 </span>                :            :                 }
-<span class="lineNum">    1502 </span>                :<span class="lineNoCov">          0 :                 for (int i = 0; i&lt; newList.size(); i++) {</span>
-<span class="lineNum">    1503 </span>                :<span class="lineNoCov">          0 :                     QTableWidgetItem *newItem = new QTableWidgetItem(newList.at(i));</span>
-<span class="lineNum">    1504 </span>                :<span class="lineNoCov">          0 :                     projectDialog-&gt;differences-&gt;setItem(i, 1, newItem);</span>
-<span class="lineNum">    1505 </span>                :            :                 }
-<span class="lineNum">    1506 </span>                :            : 
-<span class="lineNum">    1507 </span>                :            :                 connect(projectDialog-&gt;keepButton, SIGNAL(clicked()), dialog,
-<span class="lineNum">    1508 </span>                :<span class="lineNoCov">          0 :                         SLOT(accept()));</span>
-<span class="lineNum">    1509 </span>                :            :                 connect(projectDialog-&gt;cancelButton, SIGNAL(clicked()), dialog,
-<span class="lineNum">    1510 </span>                :<span class="lineNoCov">          0 :                         SLOT(reject()));</span>
-<span class="lineNum">    1511 </span>                :            :                 connect(projectDialog-&gt;loadNewButton, &amp;QPushButton::clicked, dialog,
-<span class="lineNum">    1512 </span>                :<span class="lineNoCov">          0 :                         [=]() {dialog-&gt;done(2);});</span>
-<span class="lineNum">    1513 </span>                :<span class="lineNoCov">          0 :                 dialog-&gt;exec();</span>
-<span class="lineNum">    1514 </span>                :<span class="lineNoCov">          0 :                 if (dialog-&gt;result() == QDialog::Rejected) {</span>
-<span class="lineNum">    1515 </span>                :            :                     return false;
-<span class="lineNum">    1516 </span>                :<span class="lineNoCov">          0 :                 } else if (dialog-&gt;result() == 2) {</span>
-<span class="lineNum">    1517 </span>                :<span class="lineNoCov">          0 :                     currentProject-&gt;setLabels(tempLabels);</span>
-<span class="lineNum">    1518 </span>                :            :                 }
-<span class="lineNum">    1519 </span>                :            :             } else {
-<span class="lineNum">    1520 </span>                :<span class="lineCov">          2 :                 currentProject-&gt;setLabels(tempLabels);</span>
-<span class="lineNum">    1521 </span>                :            :             }
-<span class="lineNum">    1522 </span>                :<span class="lineCov">          2 :             QTextStream(stdout) &lt;&lt; currentProject-&gt;numLabels();</span>
-<span class="lineNum">    1523 </span>                :<span class="lineCov">          2 :         }</span>
-<span class="lineNum">    1524 </span>                :            :     }
-<span class="lineNum">    1525 </span>                :            :     return true;
-<span class="lineNum">    1526 </span>                :            : }
-<span class="lineNum">    1527 </span>                :            : 
-<span class="lineNum">    1528 </span>                :            : /*!
-<a name="1529"><span class="lineNum">    1529 </span>                :            :   Writes a QJsonObject \a json of fileTypes \a type.</a>
-<span class="lineNum">    1530 </span>                :            :  */
-<span class="lineNum">    1531 </span>                :<span class="lineCov">          2 : void InstaDam::write(QJsonObject &amp;json, fileTypes type) {</span>
-<span class="lineNum">    1532 </span>                :<span class="lineCov">          2 :     QJsonArray labs;</span>
-<span class="lineNum">    1533 </span>                :<span class="lineCov">          6 :     for (int i = 0; i &lt; currentProject-&gt;numLabels(); i++) {</span>
-<span class="lineNum">    1534 </span>                :<span class="lineCov">          6 :         QJsonObject lab;</span>
-<span class="lineNum">    1535 </span>                :<span class="lineCov">          6 :         if (type== PROJECT) {</span>
-<span class="lineNum">    1536 </span>                :<span class="lineCov">          9 :             currentProject-&gt;getLabel(i)-&gt;write(lab);</span>
-<span class="lineNum">    1537 </span>                :<span class="lineCov">          3 :         } else if (type == ANNOTATION) {</span>
-<span class="lineNum">    1538 </span>                :<span class="lineCov">          9 :             currentProject-&gt;getLabel(i)-&gt;writeIdantn(lab);</span>
-<span class="lineNum">    1539 </span>                :            :         }
-<span class="lineNum">    1540 </span>                :<span class="lineCov">          6 :         labs.append(lab);</span>
-<span class="lineNum">    1541 </span>                :<span class="lineCov">          6 :     }</span>
-<span class="lineNum">    1542 </span>                :<span class="lineCov">          2 :     json[&quot;labels&quot;] = labs;</span>
-<span class="lineNum">    1543 </span>                :<span class="lineCov">          2 : }</span>
-<span class="lineNum">    1544 </span>                :            : 
-<span class="lineNum">    1545 </span>                :            : /*!
-<a name="1546"><span class="lineNum">    1546 </span>                :            :  Rasterizes the selection from the mask viewer.</a>
-<span class="lineNum">    1547 </span>                :            :  */
-<span class="lineNum">    1548 </span>                :<span class="lineNoCov">          0 : void InstaDam::addCurrentSelection() {</span>
-<span class="lineNum">    1549 </span>                :<span class="lineNoCov">          0 :     tempUndoStack-&gt;clear();</span>
-<span class="lineNum">    1550 </span>                :<span class="lineNoCov">          0 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
-<span class="lineNum">    1551 </span>                :            :     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem),
-<span class="lineNum">    1552 </span>                :<span class="lineNoCov">          0 :                                              currentLabel);</span>
-<span class="lineNum">    1553 </span>                :<span class="lineNoCov">          0 :     scene-&gt;addItem(fds);</span>
-<span class="lineNum">    1554 </span>                :<span class="lineNoCov">          0 :     QUndoCommand *addCommand = new AddCommand(fds, scene);</span>
-<span class="lineNum">    1555 </span>                :<span class="lineNoCov">          0 :     mainUndoStack-&gt;push(addCommand);</span>
-<span class="lineNum">    1556 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem-&gt;getMirror());</span>
-<span class="lineNum">    1557 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem-&gt;getMirror());</span>
-<span class="lineNum">    1558 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem);</span>
-<span class="lineNum">    1559 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem);</span>
-<span class="lineNum">    1560 </span>                :<span class="lineNoCov">          0 :     maskItem = nullptr;</span>
-<span class="lineNum">    1561 </span>                :<span class="lineNoCov">          0 :     ui-&gt;addSelectionButton-&gt;setDisabled(true);</span>
-<span class="lineNum">    1562 </span>                :<span class="lineNoCov">          0 :     ui-&gt;cancelSelectionButton-&gt;setDisabled(true);</span>
-<span class="lineNum">    1563 </span>                :<span class="lineNoCov">          0 :     canDrawOnPhoto = true;</span>
-<span class="lineNum">    1564 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1565 </span>                :            : 
-<span class="lineNum">    1566 </span>                :            : /*!
-<a name="1567"><span class="lineNum">    1567 </span>                :            :  Cancels the current selection.</a>
-<span class="lineNum">    1568 </span>                :            :  */
-<span class="lineNum">    1569 </span>                :<span class="lineCov">         25 : void InstaDam::cancelCurrentSelection() {</span>
-<span class="lineNum">    1570 </span>                :<span class="lineCov">         25 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
-<span class="lineNum">    1571 </span>                :<span class="lineCov">         25 :     canDrawOnPhoto = true;</span>
-<span class="lineNum">    1572 </span>                :<span class="lineCov">         50 :     if (!ui-&gt;addSelectionButton-&gt;isEnabled()) {</span>
-<span class="lineNum">    1573 </span>                :<span class="lineCov">         25 :         return;</span>
-<span class="lineNum">    1574 </span>                :            :     }
-<span class="lineNum">    1575 </span>                :<span class="lineNoCov">          0 :     tempUndoStack-&gt;clear();</span>
-<span class="lineNum">    1576 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem-&gt;getMirror());</span>
-<span class="lineNum">    1577 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem-&gt;getMirror());</span>
-<span class="lineNum">    1578 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem);</span>
-<span class="lineNum">    1579 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem);</span>
-<span class="lineNum">    1580 </span>                :<span class="lineNoCov">          0 :     maskItem = nullptr;</span>
-<span class="lineNum">    1581 </span>                :<span class="lineNoCov">          0 :     ui-&gt;addSelectionButton-&gt;setDisabled(true);</span>
-<span class="lineNum">    1582 </span>                :<span class="lineNoCov">          0 :     ui-&gt;cancelSelectionButton-&gt;setDisabled(true);</span>
-<span class="lineNum">    1583 </span>                :            : }
-<span class="lineNum">    1584 </span>                :            : 
-<span class="lineNum">    1585 </span>                :            : /*!
-<a name="1586"><span class="lineNum">    1586 </span>                :            :  * Conducts the pixmap operation of masking on the SelectItem*\a item.</a>
-<span class="lineNum">    1587 </span>                :            :  */
-<span class="lineNum">    1588 </span>                :<span class="lineNoCov">          0 : QPixmap InstaDam::maskSelection(SelectItem *item) {</span>
-<span class="lineNum">    1589 </span>                :<span class="lineNoCov">          0 :     QPixmap map(SelectItem::myBounds);</span>
-<span class="lineNum">    1590 </span>                :<span class="lineNoCov">          0 :     map.fill(Qt::transparent);</span>
-<span class="lineNum">    1591 </span>                :<span class="lineNoCov">          0 :     QPainter *paint = new QPainter(&amp;map);</span>
-<span class="lineNum">    1592 </span>                :<span class="lineNoCov">          0 :     QBrush brush(currentLabel-&gt;getColor());</span>
-<span class="lineNum">    1593 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setPen(currentLabel-&gt;getColor());</span>
-<span class="lineNum">    1594 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setBrush(brush);</span>
-<span class="lineNum">    1595 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setCompositionMode(QPainter::CompositionMode_SourceOver);</span>
-<span class="lineNum">    1596 </span>                :<span class="lineNoCov">          0 :     item-&gt;toPixmap(paint);</span>
-<span class="lineNum">    1597 </span>                :<span class="lineNoCov">          0 :     paint-&gt;end();</span>
-<span class="lineNum">    1598 </span>                :<span class="lineNoCov">          0 :     map = joinPixmaps(ui-&gt;IdmMaskViewer-&gt;photo-&gt;pixmap(), map,</span>
-<span class="lineNum">    1599 </span>                :            :                       QPainter::CompositionMode_DestinationIn);
-<span class="lineNum">    1600 </span>                :<span class="lineNoCov">          0 :     return map;</span>
-<a name="1601"><span class="lineNum">    1601 </span>                :            : }</a>
-<span class="lineNum">    1602 </span>                :            : 
-<span class="lineNum">    1603 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_addSelectionButton_clicked() {</span>
-<span class="lineNum">    1604 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1605 </span>                :            : 
-<span class="lineNum">    1606 </span>                :            : 
-<span class="lineNum">    1607 </span>                :            : /*!
-<a name="1608"><span class="lineNum">    1608 </span>                :            :   Sets the current project to \a pr.</a>
-<span class="lineNum">    1609 </span>                :            :   */
-<span class="lineNum">    1610 </span>                :<span class="lineNoCov">          0 : void InstaDam::setCurrentProject(Project* pr) {</span>
-<span class="lineNum">    1611 </span>                :<span class="lineNoCov">          0 :     this-&gt;currentProject = pr;</span>
-<span class="lineNum">    1612 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1613 </span>                :            : 
-<span class="lineNum">    1614 </span>                :            : /*!
-<span class="lineNum">    1615 </span>                :            :  Gets the list of label names from QVector \a labels.
-<span class="lineNum">    1616 </span>                :            :  */
-<span class="lineNum">    1617 </span>                :<span class="lineCov">          2 : QStringList InstaDam::getLabelNames(QVector&lt;QSharedPointer&lt;Label&gt; &gt; labels) {</span>
-<span class="lineNum">    1618 </span>                :            :     QStringList labelList;
-<span class="lineNum">    1619 </span>                :            :     QVectorIterator&lt;QSharedPointer&lt;Label&gt; &gt; it(labels);
-<span class="lineNum">    1620 </span>                :<span class="lineCov">          5 :     while (it.hasNext()) {</span>
-<span class="lineNum">    1621 </span>                :<span class="lineCov">          3 :         labelList.append(it.next()-&gt;getText());</span>
-<span class="lineNum">    1622 </span>                :            :     }
-<span class="lineNum">    1623 </span>                :<span class="lineCov">          2 :     return labelList;</span>
-<span class="lineNum">    1624 </span>                :            : }
-<span class="lineNum">    1625 </span>                :            : 
-<span class="lineNum">    1626 </span>                :            : /*!
-<a name="1627"><span class="lineNum">    1627 </span>                :            :  Reverts to the current label list during an annotation opening conflict.</a>
-<span class="lineNum">    1628 </span>                :            :  */
-<span class="lineNum">    1629 </span>                :<span class="lineNoCov">          0 : void InstaDam::revert() {</span>
-<span class="lineNum">    1630 </span>                :<span class="lineNoCov">          0 :     this-&gt;filename = this-&gt;oldFilename;</span>
-<span class="lineNum">    1631 </span>                :<span class="lineNoCov">          0 :     this-&gt;file = this-&gt;oldFile;</span>
-<span class="lineNum">    1632 </span>                :<span class="lineNoCov">          0 :     this-&gt;path = this-&gt;oldPath;</span>
-<span class="lineNum">    1633 </span>                :            :     this-&gt;imagesList = this-&gt;oldImagesList;
-<span class="lineNum">    1634 </span>                :<span class="lineNoCov">          0 :     this-&gt;annotationPath = this-&gt;oldAnnotationPath;</span>
-<span class="lineNum">    1635 </span>                :<span class="lineNoCov">          0 :     this-&gt;labelPaths = this-&gt;oldLabelPaths;</span>
-<span class="lineNum">    1636 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">    1637 </span>                :            : 
-<span class="lineNum">    1638 </span>                :            : /*!
-<a name="1639"><span class="lineNum">    1639 </span>                :            :  Toggles hiding the labels on the mask viewer.</a>
-<span class="lineNum">    1640 </span>                :            :  */
-<span class="lineNum">    1641 </span>                :<span class="lineNoCov">          0 : void InstaDam::processShowHide(int state) {</span>
-<span class="lineNum">    1642 </span>                :<span class="lineNoCov">          0 :     for (int i = 0; i &lt; currentProject-&gt;numLabels(); i++) {</span>
-<a name="1643"><span class="lineNum">    1643 </span>                :<span class="lineNoCov">          0 :          currentProject-&gt;getLabel(i)-&gt;setMaskState(state);</span></a>
-<span class="lineNum">    1644 </span>                :            :     }
-<span class="lineNum">    1645 </span>                :<span class="lineCov">          3 : }</span>
-<span class="lineNum">    1646 </span>                :            : 
-<span class="lineNum">    1647 </span>                :            : 
+<span class="lineNum">    1069 </span>                :<span class="lineCov">          1 : void InstaDam::setInsert() {</span>
+<span class="lineNum">    1070 </span>                :<span class="lineCov">          1 :     currentItem-&gt;resetState();</span>
+<span class="lineNum">    1071 </span>                :<span class="lineCov">          1 :     insertVertex = true;</span>
+<span class="lineNum">    1072 </span>                :<span class="lineCov">          1 :     vertex1 = -1;</span>
+<span class="lineNum">    1073 </span>                :<span class="lineCov">          1 :     vertex2 = -1;</span>
+<span class="lineNum">    1074 </span>                :<span class="lineCov">          1 :     polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(&quot;Click the vertices between which you want to insert a point.&quot;);</span>
+<span class="lineNum">    1075 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">    1076 </span>                :            : 
+<span class="lineNum">    1077 </span>                :            : /*!
+<a name="1078"><span class="lineNum">    1078 </span>                :            :  * Slot called when the export annotations option is chosen.</a>
+<span class="lineNum">    1079 </span>                :            :  */
+<span class="lineNum">    1080 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_actionExport_triggered() {</span>
+<span class="lineNum">    1081 </span>                :<span class="lineNoCov">          0 :     exportImages();</span>
+<span class="lineNum">    1082 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1083 </span>                :            : 
+<span class="lineNum">    1084 </span>                :            : /*!
+<a name="1085"><span class="lineNum">    1085 </span>                :            :  * Slot called when the export zip option is chosen.</a>
+<span class="lineNum">    1086 </span>                :            :  */
+<span class="lineNum">    1087 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_actionExport_zip_triggered() {</span>
+<span class="lineNum">    1088 </span>                :<span class="lineNoCov">          0 :     exportImages(true);</span>
+<span class="lineNum">    1089 </span>                :            : #ifdef WASM_BUILD
+<span class="lineNum">    1090 </span>                :            :     QByteArray *outbytes;
+<span class="lineNum">    1091 </span>                :            : 
+<span class="lineNum">    1092 </span>                :            :     QBuffer *outbuffer = new QBuffer(outbytes);
+<span class="lineNum">    1093 </span>                :            :     QuaZip zip(outbuffer);
+<span class="lineNum">    1094 </span>                :            : #else
+<span class="lineNum">    1095 </span>                :<span class="lineNoCov">          0 :     QuaZip zip(this-&gt;filename + &quot;_idpro.zip&quot;);</span>
+<span class="lineNum">    1096 </span>                :            : #endif
+<span class="lineNum">    1097 </span>                :<span class="lineNoCov">          0 :     if (!zip.open(QuaZip::mdCreate)) {</span>
+<span class="lineNum">    1098 </span>                :<span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">    1099 </span>                :            :     }
+<span class="lineNum">    1100 </span>                :            : 
+<span class="lineNum">    1101 </span>                :<span class="lineNoCov">          0 :     QuaZipFile outFile(&amp;zip);</span>
+<span class="lineNum">    1102 </span>                :<span class="lineNoCov">          0 :     QHashIterator&lt;QString, QBuffer*&gt; it(exportFiles);</span>
+<span class="lineNum">    1103 </span>                :<span class="lineNoCov">          0 :     while (it.hasNext()) {</span>
+<span class="lineNum">    1104 </span>                :            :         it.next();
+<span class="lineNum">    1105 </span>                :            :         QString filename = it.key();
+<span class="lineNum">    1106 </span>                :<span class="lineNoCov">          0 :         QBuffer *buffer = it.value();</span>
+<span class="lineNum">    1107 </span>                :            : 
+<span class="lineNum">    1108 </span>                :<span class="lineNoCov">          0 :         if (!(*buffer).open(QIODevice::ReadOnly)) {</span>
+<span class="lineNum">    1109 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Could not access buffer file.&quot;);</span>
+<span class="lineNum">    1110 </span>                :<span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">    1111 </span>                :            :         }
+<span class="lineNum">    1112 </span>                :            : 
+<span class="lineNum">    1113 </span>                :<span class="lineNoCov">          0 :         if (!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(filename, filename))) {</span>
+<span class="lineNum">    1114 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Error opening zip file.&quot;);</span>
+<span class="lineNum">    1115 </span>                :<span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">    1116 </span>                :            :         }
+<span class="lineNum">    1117 </span>                :<span class="lineNoCov">          0 :         for (qint64 pos = 0, len = (*buffer).size(); pos &lt; len; ) {</span>
+<span class="lineNum">    1118 </span>                :            :             char buf[4096];
+<span class="lineNum">    1119 </span>                :<span class="lineNoCov">          0 :             qint64 readSize = qMin(static_cast&lt;qint64&gt;(4096), len - pos);</span>
+<span class="lineNum">    1120 </span>                :            :             qint64 l;
+<span class="lineNum">    1121 </span>                :<span class="lineNoCov">          0 :             if ((l = (*buffer).read(buf, readSize)) != readSize) {</span>
+<span class="lineNum">    1122 </span>                :<span class="lineNoCov">          0 :                 qInfo(&quot;Read failure&quot;);</span>
+<span class="lineNum">    1123 </span>                :            :             }
+<span class="lineNum">    1124 </span>                :            :             qDebug(&quot;Reading %ld bytes from %s at %ld returned %ld&quot;,
+<span class="lineNum">    1125 </span>                :            :                    static_cast&lt;long&gt;(readSize),
+<span class="lineNum">    1126 </span>                :            :                    filename.toUtf8().constData(),
+<span class="lineNum">    1127 </span>                :            :                    static_cast&lt;long&gt;(pos),
+<span class="lineNum">    1128 </span>                :<span class="lineNoCov">          0 :                    static_cast&lt;long&gt;(l));</span>
+<span class="lineNum">    1129 </span>                :<span class="lineNoCov">          0 :             outFile.write(buf, readSize);</span>
+<span class="lineNum">    1130 </span>                :<span class="lineNoCov">          0 :             pos += readSize;</span>
+<span class="lineNum">    1131 </span>                :            :         }
+<span class="lineNum">    1132 </span>                :<span class="lineNoCov">          0 :         if (outFile.getZipError() != UNZ_OK) {</span>
+<span class="lineNum">    1133 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Zip file error&quot;);</span>
+<span class="lineNum">    1134 </span>                :<span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">    1135 </span>                :            :         }
+<span class="lineNum">    1136 </span>                :<span class="lineNoCov">          0 :         outFile.close();</span>
+<span class="lineNum">    1137 </span>                :            : 
+<span class="lineNum">    1138 </span>                :<span class="lineNoCov">          0 :         if (outFile.getZipError() != UNZ_OK) {</span>
+<span class="lineNum">    1139 </span>                :<span class="lineNoCov">          0 :             qInfo(&quot;Error closeing zip file.&quot;);</span>
+<span class="lineNum">    1140 </span>                :<span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">    1141 </span>                :            :         }
+<span class="lineNum">    1142 </span>                :            : 
+<span class="lineNum">    1143 </span>                :<span class="lineNoCov">          0 :         (*buffer).close();</span>
+<span class="lineNum">    1144 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">    1145 </span>                :            : 
+<span class="lineNum">    1146 </span>                :<span class="lineNoCov">          0 :     zip.close();</span>
+<span class="lineNum">    1147 </span>                :            : 
+<span class="lineNum">    1148 </span>                :<span class="lineNoCov">          0 :     if (zip.getZipError() != 0) {</span>
+<span class="lineNum">    1149 </span>                :<span class="lineNoCov">          0 :         qInfo(&quot;Error.&quot;);</span>
+<span class="lineNum">    1150 </span>                :<span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">    1151 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">    1152 </span>                :            : #ifdef WASM_BUILD
+<span class="lineNum">    1153 </span>                :            :     QHtml5File::save(outbuffer-&gt;data(), &quot;myproject_idpro.zip&quot;);
+<span class="lineNum">    1154 </span>                :            : #endif
+<span class="lineNum">    1155 </span>                :            : }
+<span class="lineNum">    1156 </span>                :            : 
+<span class="lineNum">    1157 </span>                :            : /*!
+<span class="lineNum">    1158 </span>                :            :   Processes a point being clicked in the scene \a type, any SelectItem at \a pos
+<a name="1159"><span class="lineNum">    1159 </span>                :            :   is given by \a item, andthe button clicked is given as \a button.</a>
+<span class="lineNum">    1160 </span>                :            :  */
+<span class="lineNum">    1161 </span>                :<span class="lineCov">         39 : void InstaDam::processPointClicked(PhotoScene::viewerTypes type,</span>
+<span class="lineNum">    1162 </span>                :            :                                    SelectItem *item, QPointF pos,
+<span class="lineNum">    1163 </span>                :            :                                    const Qt::MouseButton button) {
+<span class="lineNum">    1164 </span>                :<span class="lineCov">         39 :     currentButton = button;</span>
+<span class="lineNum">    1165 </span>                :<span class="lineCov">         39 :     if (!item) {</span>
+<span class="lineNum">    1166 </span>                :<span class="lineCov">         32 :         if (!canDrawOnPhoto &amp;&amp; (!currentItem || currentItem-&gt;type() !=</span>
+<span class="lineNum">    1167 </span>                :            :                                 SelectItem::Polygon)) {
+<span class="lineNum">    1168 </span>                :<span class="lineNoCov">          0 :             scene-&gt;inactiveAll();</span>
+<span class="lineNum">    1169 </span>                :<span class="lineNoCov">          0 :             maskScene-&gt;inactiveAll();</span>
+<span class="lineNum">    1170 </span>                :<span class="lineNoCov">          0 :             scene-&gt;update();</span>
+<span class="lineNum">    1171 </span>                :<span class="lineNoCov">          0 :             maskScene-&gt;update();</span>
+<span class="lineNum">    1172 </span>                :<span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">    1173 </span>                :            :         }
+<span class="lineNum">    1174 </span>                :<span class="lineCov">         30 :         if (type == PhotoScene::MASK_VIEWER_TYPE &amp;&amp; currentSelectType !=</span>
+<span class="lineNum">    1175 </span>                :            :             SelectItem::Freedraw) {
+<span class="lineNum">    1176 </span>                :<span class="lineNoCov">          0 :             canDrawOnPhoto = false;</span>
+<span class="lineNum">    1177 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;setActiveStack(tempUndoStack);</span>
+<span class="lineNum">    1178 </span>                :<span class="lineNoCov">          0 :             ui-&gt;addSelectionButton-&gt;setEnabled(true);</span>
+<span class="lineNum">    1179 </span>                :<span class="lineNoCov">          0 :             ui-&gt;cancelSelectionButton-&gt;setEnabled(true);</span>
+<span class="lineNum">    1180 </span>                :            :         }
+<span class="lineNum">    1181 </span>                :            : 
+<span class="lineNum">    1182 </span>                :<span class="lineCov">         30 :         if (!currentLabel || button == Qt::RightButton) {</span>
+<span class="lineNum">    1183 </span>                :            :             return;
+<span class="lineNum">    1184 </span>                :            :         }
+<span class="lineNum">    1185 </span>                :            : 
+<span class="lineNum">    1186 </span>                :<span class="lineCov">         30 :         if (currentItem &amp;&amp; currentItem-&gt;type() == SelectItem::Polygon) {</span>
+<span class="lineNum">    1187 </span>                :<span class="lineCov">         10 :             if (insertVertex &amp;&amp; vertex1 &gt;= 0 &amp;&amp; vertex2 &gt;= 0) {</span>
+<span class="lineNum">    1188 </span>                :<span class="lineCov">          1 :                 if (abs(vertex2 - vertex1) == 1) {</span>
+<span class="lineNum">    1189 </span>                :<span class="lineCov">          2 :                     currentItem-&gt;insertVertex(std::min(vertex1, vertex2), pos);</span>
+<span class="lineNum">    1190 </span>                :            :                 } else {
+<span class="lineNum">    1191 </span>                :<span class="lineNoCov">          0 :                     currentItem-&gt;insertVertex(std::max(vertex1, vertex2), pos);</span>
+<span class="lineNum">    1192 </span>                :            :                 }
+<span class="lineNum">    1193 </span>                :<span class="lineCov">          1 :                 vertex1 = -1;</span>
+<span class="lineNum">    1194 </span>                :<span class="lineCov">          1 :                 vertex2 = -1;</span>
+<span class="lineNum">    1195 </span>                :<span class="lineCov">          1 :                 insertVertex = false;</span>
+<span class="lineNum">    1196 </span>                :<span class="lineCov">          1 :                 polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(currentItem-&gt;baseInstructions());</span>
+<span class="lineNum">    1197 </span>                :            :             } else {
+<span class="lineNum">    1198 </span>                :<span class="lineCov">          9 :                 currentItem-&gt;addPoint(pos);</span>
+<span class="lineNum">    1199 </span>                :            :             }
+<span class="lineNum">    1200 </span>                :<span class="lineCov">         10 :             scene-&gt;update();</span>
+<span class="lineNum">    1201 </span>                :<span class="lineCov">         10 :             maskScene-&gt;update();</span>
+<span class="lineNum">    1202 </span>                :<span class="lineCov">         10 :             return;</span>
+<span class="lineNum">    1203 </span>                :            :         }
+<span class="lineNum">    1204 </span>                :<span class="lineCov">         20 :         scene-&gt;inactiveAll();</span>
+<span class="lineNum">    1205 </span>                :<span class="lineCov">         20 :         maskScene-&gt;inactiveAll();</span>
+<span class="lineNum">    1206 </span>                :<span class="lineCov">         20 :         switch (currentSelectType) {</span>
+<span class="lineNum">    1207 </span>                :            :             case SelectItem::Rectangle:
+<span class="lineNum">    1208 </span>                :            :             {
+<span class="lineNum">    1209 </span>                :<span class="lineCov">          9 :                 RectangleSelect *temp = new RectangleSelect(pos, currentLabel);</span>
+<span class="lineNum">    1210 </span>                :<span class="lineCov">          9 :                 RectangleSelect *mirror = new RectangleSelect(pos);</span>
+<span class="lineNum">    1211 </span>                :<span class="lineCov">          3 :                 tempItem = temp;</span>
+<span class="lineNum">    1212 </span>                :<span class="lineCov">          3 :                 mirrorItem = mirror;</span>
+<span class="lineNum">    1213 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
+<span class="lineNum">    1214 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
+<span class="lineNum">    1215 </span>                :<span class="lineCov">          3 :                 tempItem-&gt;setMirror(mirrorItem);</span>
+<span class="lineNum">    1216 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;setMirror(tempItem);</span>
+<span class="lineNum">    1217 </span>                :            :             }
+<span class="lineNum">    1218 </span>                :<span class="lineCov">          3 :                 break;</span>
+<span class="lineNum">    1219 </span>                :            :             case SelectItem::Ellipse:
+<span class="lineNum">    1220 </span>                :            :             {
+<span class="lineNum">    1221 </span>                :<span class="lineCov">         18 :                 EllipseSelect *temp = new EllipseSelect(pos, currentLabel);</span>
+<span class="lineNum">    1222 </span>                :<span class="lineCov">         18 :                 EllipseSelect *mirror = new EllipseSelect(pos);</span>
+<span class="lineNum">    1223 </span>                :<span class="lineCov">          6 :                 tempItem = temp;</span>
+<span class="lineNum">    1224 </span>                :<span class="lineCov">          6 :                 mirrorItem = mirror;</span>
+<span class="lineNum">    1225 </span>                :<span class="lineCov">         12 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
+<span class="lineNum">    1226 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
+<span class="lineNum">    1227 </span>                :<span class="lineCov">          6 :                 tempItem-&gt;setMirror(mirrorItem);</span>
+<span class="lineNum">    1228 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setMirror(tempItem);</span>
+<span class="lineNum">    1229 </span>                :            :             }
+<span class="lineNum">    1230 </span>                :<span class="lineCov">          6 :                 break;</span>
+<span class="lineNum">    1231 </span>                :            :             case SelectItem::Freeerase:
+<span class="lineNum">    1232 </span>                :            :             case SelectItem::Freedraw:
+<span class="lineNum">    1233 </span>                :            :             {
+<span class="lineNum">    1234 </span>                :<span class="lineCov">          8 :                 if (drawing) {</span>
+<span class="lineNum">    1235 </span>                :            :                     FreeDrawSelect *temp = new FreeDrawSelect(pos,
+<span class="lineNum">    1236 </span>                :            :                                                               currentBrushSize,
+<span class="lineNum">    1237 </span>                :            :                                                               brushMode,
+<span class="lineNum">    1238 </span>                :<span class="lineCov">         12 :                                                               currentLabel);</span>
+<span class="lineNum">    1239 </span>                :            :                     FreeDrawSelect *mirror = new FreeDrawSelect(pos,
+<span class="lineNum">    1240 </span>                :<span class="lineCov">         12 :                                                                 temp-&gt;myPen);</span>
+<span class="lineNum">    1241 </span>                :<span class="lineCov">          4 :                     tempItem = temp;</span>
+<span class="lineNum">    1242 </span>                :<span class="lineCov">          4 :                     mirrorItem = mirror;</span>
+<span class="lineNum">    1243 </span>                :<span class="lineCov">          8 :                     mirrorItem-&gt;setLabel(currentLabel);</span>
+<span class="lineNum">    1244 </span>                :<span class="lineCov">          4 :                     mirrorItem-&gt;updatePen(temp-&gt;myPen);</span>
+<span class="lineNum">    1245 </span>                :<span class="lineCov">          4 :                     tempItem-&gt;setMirror(mirrorItem);</span>
+<span class="lineNum">    1246 </span>                :<span class="lineCov">          4 :                     mirrorItem-&gt;setMirror(tempItem);</span>
+<span class="lineNum">    1247 </span>                :            :                 } else {
+<span class="lineNum">    1248 </span>                :            :                     myErase = new FreeDrawErase(pos, currentBrushSize,
+<span class="lineNum">    1249 </span>                :<span class="lineCov">         12 :                                                 brushMode, currentLabel);</span>
+<span class="lineNum">    1250 </span>                :<span class="lineCov">          4 :                     currentItem = myErase;</span>
+<span class="lineNum">    1251 </span>                :            :                 }
+<span class="lineNum">    1252 </span>                :            :             }
+<span class="lineNum">    1253 </span>                :            :                 break;
+<span class="lineNum">    1254 </span>                :            :             case SelectItem::Polygon:
+<span class="lineNum">    1255 </span>                :            :             {
+<span class="lineNum">    1256 </span>                :<span class="lineCov">          9 :                 PolygonSelect *temp = new PolygonSelect(pos, currentLabel);</span>
+<span class="lineNum">    1257 </span>                :<span class="lineCov">          9 :                 PolygonSelect *mirror = new PolygonSelect(pos);</span>
+<span class="lineNum">    1258 </span>                :<span class="lineCov">          3 :                 tempItem = temp;</span>
+<span class="lineNum">    1259 </span>                :<span class="lineCov">          3 :                 mirrorItem = mirror;</span>
+<span class="lineNum">    1260 </span>                :<span class="lineCov">          6 :                 mirrorItem-&gt;setLabel(currentLabel);</span>
+<span class="lineNum">    1261 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;updatePen(mirrorItem-&gt;myPen);</span>
+<span class="lineNum">    1262 </span>                :<span class="lineCov">          3 :                 tempItem-&gt;setMirror(mirrorItem);</span>
+<span class="lineNum">    1263 </span>                :<span class="lineCov">          3 :                 mirrorItem-&gt;setMirror(tempItem);</span>
+<span class="lineNum">    1264 </span>                :<span class="lineCov">          3 :                 polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(true);</span>
+<span class="lineNum">    1265 </span>                :            :             }
+<span class="lineNum">    1266 </span>                :<span class="lineCov">          3 :                 break;</span>
+<span class="lineNum">    1267 </span>                :            :         }
+<span class="lineNum">    1268 </span>                :<span class="lineCov">         20 :         if ((currentSelectType != SelectItem::Freedraw &amp;&amp; currentSelectType !=</span>
+<span class="lineNum">    1269 </span>                :<span class="lineCov">          8 :              SelectItem::Freeerase) || drawing) {</span>
+<span class="lineNum">    1270 </span>                :<span class="lineCov">         32 :             mirrorItem-&gt;setLabel(currentLabel);</span>
+<span class="lineNum">    1271 </span>                :<span class="lineCov">         16 :             mirrorItem-&gt;updatePen(tempItem-&gt;myPen);</span>
+<span class="lineNum">    1272 </span>                :<span class="lineCov">         16 :             scene-&gt;addItem(tempItem);</span>
+<span class="lineNum">    1273 </span>                :<span class="lineCov">         16 :             maskScene-&gt;addItem(mirrorItem);</span>
+<span class="lineNum">    1274 </span>                :<span class="lineCov">         16 :             switch (type) {</span>
+<span class="lineNum">    1275 </span>                :            :                 case PhotoScene::PHOTO_VIEWER_TYPE:
+<span class="lineNum">    1276 </span>                :<span class="lineCov">         16 :                     currentItem = tempItem;</span>
+<span class="lineNum">    1277 </span>                :<span class="lineCov">         16 :                     break;</span>
+<span class="lineNum">    1278 </span>                :            :                 case PhotoScene::MASK_VIEWER_TYPE:
+<span class="lineNum">    1279 </span>                :<span class="lineNoCov">          0 :                     currentItem = mirrorItem;</span>
+<span class="lineNum">    1280 </span>                :<span class="lineNoCov">          0 :                     break;</span>
+<span class="lineNum">    1281 </span>                :            :             }
+<span class="lineNum">    1282 </span>                :<span class="lineCov">         16 :             if (!canDrawOnPhoto)</span>
+<span class="lineNum">    1283 </span>                :<span class="lineNoCov">          0 :                 maskItem = currentItem;</span>
+<span class="lineNum">    1284 </span>                :            :         }
+<span class="lineNum">    1285 </span>                :<span class="lineCov">         20 :         scene-&gt;update();</span>
+<span class="lineNum">    1286 </span>                :<span class="lineCov">         20 :         maskScene-&gt;update();</span>
+<span class="lineNum">    1287 </span>                :            :     } else {
+<span class="lineNum">    1288 </span>                :<span class="lineCov">          9 :         if (item-&gt;type() != currentSelectType) {</span>
+<span class="lineNum">    1289 </span>                :<span class="lineCov">          2 :             if (!canDrawOnPhoto)</span>
+<span class="lineNum">    1290 </span>                :            :                 return;
+<span class="lineNum">    1291 </span>                :<span class="lineCov">          2 :             switch (item-&gt;type()) {</span>
+<span class="lineNum">    1292 </span>                :            :                 case SelectItem::Freedraw:
+<span class="lineNum">    1293 </span>                :<span class="lineNoCov">          0 :                     on_freeSelectButton_clicked();</span>
+<span class="lineNum">    1294 </span>                :<span class="lineNoCov">          0 :                     break;</span>
+<span class="lineNum">    1295 </span>                :            :                 case SelectItem::Polygon:
+<span class="lineNum">    1296 </span>                :<span class="lineCov">          1 :                     on_polygonSelectButton_clicked();</span>
+<span class="lineNum">    1297 </span>                :<span class="lineCov">          1 :                     polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(true);</span>
+<span class="lineNum">    1298 </span>                :<span class="lineCov">          1 :                     break;</span>
+<span class="lineNum">    1299 </span>                :            :                 case SelectItem::Rectangle:
+<span class="lineNum">    1300 </span>                :<span class="lineCov">          1 :                     on_rectangleSelectButton_clicked();</span>
+<span class="lineNum">    1301 </span>                :<span class="lineCov">          1 :                     break;</span>
+<span class="lineNum">    1302 </span>                :            :                 case SelectItem::Ellipse:
+<span class="lineNum">    1303 </span>                :<span class="lineNoCov">          0 :                     on_ellipseSelectButton_clicked();</span>
+<span class="lineNum">    1304 </span>                :<span class="lineNoCov">          0 :                     break;</span>
+<span class="lineNum">    1305 </span>                :            :             }
+<span class="lineNum">    1306 </span>                :            :         }
+<span class="lineNum">    1307 </span>                :<span class="lineCov">          9 :         currentItem = item;</span>
+<span class="lineNum">    1308 </span>                :<span class="lineCov">          9 :         if (!canDrawOnPhoto)</span>
+<span class="lineNum">    1309 </span>                :<span class="lineNoCov">          0 :             maskItem = currentItem;</span>
+<span class="lineNum">    1310 </span>                :<span class="lineCov">          9 :         currentLabel = currentItem-&gt;getLabel();</span>
+<span class="lineNum">    1311 </span>                :<span class="lineCov">          9 :         scene-&gt;inactiveAll();</span>
+<span class="lineNum">    1312 </span>                :<span class="lineCov">          9 :         maskScene-&gt;inactiveAll();</span>
+<span class="lineNum">    1313 </span>                :<span class="lineCov">          9 :         currentItem-&gt;clickPoint(pos);</span>
+<span class="lineNum">    1314 </span>                :<span class="lineCov">          9 :         currentItem-&gt;setItemActive();</span>
+<span class="lineNum">    1315 </span>                :<span class="lineCov">          9 :         if (currentItem-&gt;type() == SelectItem::Polygon &amp;&amp; insertVertex) {</span>
+<span class="lineNum">    1316 </span>                :<span class="lineCov">          2 :             int vert = currentItem-&gt;getActiveVertex();</span>
+<span class="lineNum">    1317 </span>                :<span class="lineCov">          2 :             if (vert != SelectItem::UNSELECTED) {</span>
+<span class="lineNum">    1318 </span>                :<span class="lineCov">          2 :                 if (vertex1 &lt;0) {</span>
+<span class="lineNum">    1319 </span>                :<span class="lineCov">          1 :                     vertex1 = vert;</span>
+<span class="lineNum">    1320 </span>                :<span class="lineCov">          1 :                     polygonSelectForm-&gt;polygonMessageBox-&gt;appendPlainText(&quot;First vertex selected.&quot;);</span>
+<span class="lineNum">    1321 </span>                :<span class="lineCov">          1 :                 } else if (vertex2 &lt; 0) {</span>
+<span class="lineNum">    1322 </span>                :<span class="lineCov">          1 :                     if (abs(vert - vertex1) != 1 &amp;&amp; abs(vert - vertex1) !=</span>
+<span class="lineNum">    1323 </span>                :<span class="lineNoCov">          0 :                         (currentItem-&gt;numberOfVertices() - 1)) {</span>
+<span class="lineNum">    1324 </span>                :<span class="lineNoCov">          0 :                         polygonSelectForm-&gt;polygonMessageBox-&gt;appendPlainText(&quot;Invalid second vertex, it must be adjacent to the first vertex.&quot;);</span>
+<span class="lineNum">    1325 </span>                :            :                     } else {
+<span class="lineNum">    1326 </span>                :<span class="lineCov">          1 :                         vertex2 = vert;</span>
+<span class="lineNum">    1327 </span>                :<span class="lineCov">          1 :                         polygonSelectForm-&gt;polygonMessageBox-&gt;setPlainText(&quot;Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)&quot;);</span>
+<span class="lineNum">    1328 </span>                :            :                     }
+<span class="lineNum">    1329 </span>                :            :                 }
+<span class="lineNum">    1330 </span>                :            :             }
+<span class="lineNum">    1331 </span>                :            :         }
+<span class="lineNum">    1332 </span>                :<span class="lineCov">          9 :         scene-&gt;update();</span>
+<span class="lineNum">    1333 </span>                :<span class="lineCov">          9 :         maskScene-&gt;update();</span>
+<span class="lineNum">    1334 </span>                :            :     }
+<span class="lineNum">    1335 </span>                :            : }
+<span class="lineNum">    1336 </span>                :            : 
+<span class="lineNum">    1337 </span>                :            : /*!
+<a name="1338"><span class="lineNum">    1338 </span>                :            :   Processes a mouse movement from \a fromPos to \a toPos.</a>
+<span class="lineNum">    1339 </span>                :            :  */
+<span class="lineNum">    1340 </span>                :<span class="lineCov">         43 : void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {</span>
+<span class="lineNum">    1341 </span>                :<span class="lineCov">         43 :     if (currentItem) {</span>
+<span class="lineNum">    1342 </span>                :<span class="lineCov">         43 :         if (currentButton == Qt::LeftButton) {</span>
+<span class="lineNum">    1343 </span>                :            : 
+<span class="lineNum">    1344 </span>                :<span class="lineCov">         42 :             currentItem-&gt;moveItem(fromPos, toPos);</span>
+<span class="lineNum">    1345 </span>                :            :         } else {
+<span class="lineNum">    1346 </span>                :<span class="lineCov">          1 :             currentItem-&gt;rotate(fromPos, toPos);</span>
+<span class="lineNum">    1347 </span>                :            :         }
+<span class="lineNum">    1348 </span>                :<span class="lineCov">         43 :         scene-&gt;update();</span>
+<span class="lineNum">    1349 </span>                :<span class="lineCov">         43 :         maskScene-&gt;update();</span>
+<span class="lineNum">    1350 </span>                :            :     }
+<span class="lineNum">    1351 </span>                :<span class="lineCov">         43 : }</span>
+<span class="lineNum">    1352 </span>                :            : 
+<span class="lineNum">    1353 </span>                :            : /*!
+<span class="lineNum">    1354 </span>                :            :   Processes a mouse button being released from scene \a type, mouse movement
+<a name="1355"><span class="lineNum">    1355 </span>                :            :   from \a oldPos to \a newPos, and the button released \a button.</a>
+<span class="lineNum">    1356 </span>                :            :  */
+<span class="lineNum">    1357 </span>                :<span class="lineCov">         39 : void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,</span>
+<span class="lineNum">    1358 </span>                :            :                                     QPointF oldPos, QPointF newPos,
+<span class="lineNum">    1359 </span>                :            :                                     const Qt::MouseButton button) {
+<span class="lineNum">    1360 </span>                :            :     UNUSED(button);
+<span class="lineNum">    1361 </span>                :<span class="lineCov">        112 :     if (currentItem &amp;&amp; !currentItem-&gt;isItemAdded()) {</span>
+<span class="lineNum">    1362 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() == SelectItem::Freedraw &amp;&amp; type ==</span>
+<span class="lineNum">    1363 </span>                :            :             PhotoScene::MASK_VIEWER_TYPE) {
+<span class="lineNum">    1364 </span>                :<span class="lineNoCov">          0 :             FreeDrawSelect fds(maskSelection(currentItem), currentItem-&gt;myPen);</span>
+<span class="lineNum">    1365 </span>                :<span class="lineNoCov">          0 :             FreeDrawSelect *temp = dynamic_cast&lt;FreeDrawSelect*&gt;(currentItem);</span>
+<span class="lineNum">    1366 </span>                :<span class="lineNoCov">          0 :             temp-&gt;setPointsUnchecked(fds.getPixmap());</span>
+<span class="lineNum">    1367 </span>                :            :         }
+<span class="lineNum">    1368 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() == SelectItem::Freeerase) {</span>
+<span class="lineNum">    1369 </span>                :            :             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
+<span class="lineNum">    1370 </span>                :<span class="lineCov">          4 :                                                                 maskScene);</span>
+<span class="lineNum">    1371 </span>                :<span class="lineCov">          4 :             undoGroup-&gt;activeStack()-&gt;push(eraseCommand);</span>
+<span class="lineNum">    1372 </span>                :            :         } else {
+<span class="lineNum">    1373 </span>                :            :             QUndoCommand *addCommand =
+<span class="lineNum">    1374 </span>                :            :                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1375 </span>                :<span class="lineNoCov">          0 :                                        currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1376 </span>                :<span class="lineCov">         16 :                                    scene);</span>
+<span class="lineNum">    1377 </span>                :<span class="lineCov">         16 :             undoGroup-&gt;activeStack()-&gt;push(addCommand);</span>
+<span class="lineNum">    1378 </span>                :<span class="lineCov">         16 :             if (type == PhotoScene::MASK_VIEWER_TYPE)</span>
+<span class="lineNum">    1379 </span>                :<span class="lineNoCov">          0 :                 currentItem-&gt;setFromMaskScene(true);</span>
+<span class="lineNum">    1380 </span>                :<span class="lineCov">         16 :             if (ui-&gt;showMaskSelections-&gt;checkState() == Qt::Unchecked)</span>
+<span class="lineNum">    1381 </span>                :<span class="lineCov">         16 :                 currentItem-&gt;hideMask();</span>
+<span class="lineNum">    1382 </span>                :            :         }
+<span class="lineNum">    1383 </span>                :<span class="lineCov">         20 :         currentItem-&gt;resetState();</span>
+<span class="lineNum">    1384 </span>                :<span class="lineCov">         20 :         if (currentItem-&gt;type() != SelectItem::Polygon) {</span>
+<span class="lineNum">    1385 </span>                :<span class="lineCov">         17 :             currentItem = nullptr;</span>
+<span class="lineNum">    1386 </span>                :            :         } else {
+<span class="lineNum">    1387 </span>                :<span class="lineCov">          3 :             currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
+<span class="lineNum">    1388 </span>                :            :         }
+<span class="lineNum">    1389 </span>                :<span class="lineCov">         73 :     } else if (currentItem &amp;&amp; (currentItem-&gt;wasMoved() ||</span>
+<span class="lineNum">    1390 </span>                :<span class="lineCov">         14 :                                currentItem-&gt;wasResized() ||</span>
+<span class="lineNum">    1391 </span>                :            :                                currentItem-&gt;wasRotated())) {
+<span class="lineNum">    1392 </span>                :<span class="lineCov">          6 :         if (currentItem-&gt;wasMoved()) {</span>
+<span class="lineNum">    1393 </span>                :            :             QUndoCommand *moveCommand =
+<span class="lineNum">    1394 </span>                :            :                     new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1395 </span>                :<span class="lineNoCov">          0 :                                         currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1396 </span>                :<span class="lineCov">          3 :                                     oldPos, newPos);</span>
+<span class="lineNum">    1397 </span>                :<span class="lineCov">          3 :             undoGroup-&gt;activeStack()-&gt;push(moveCommand);</span>
+<span class="lineNum">    1398 </span>                :<span class="lineCov">          3 :         } else if (currentItem-&gt;wasResized()) {</span>
+<span class="lineNum">    1399 </span>                :            :             QUndoCommand *resizeCommand =
+<span class="lineNum">    1400 </span>                :            :                     new MoveVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1401 </span>                :<span class="lineNoCov">          0 :                                               currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1402 </span>                :            :                                           oldPos, newPos,
+<span class="lineNum">    1403 </span>                :<span class="lineCov">          4 :                                           currentItem-&gt;getActiveVertex());</span>
+<span class="lineNum">    1404 </span>                :<span class="lineCov">          2 :             undoGroup-&gt;activeStack()-&gt;push(resizeCommand);</span>
+<span class="lineNum">    1405 </span>                :            :         } else {
+<span class="lineNum">    1406 </span>                :            :             QUndoCommand *rotateCommand =
+<span class="lineNum">    1407 </span>                :            :                     new RotateCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1408 </span>                :<span class="lineNoCov">          0 :                                           currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1409 </span>                :<span class="lineCov">          1 :                                       oldPos, newPos);</span>
+<span class="lineNum">    1410 </span>                :<span class="lineCov">          1 :             undoGroup-&gt;activeStack()-&gt;push(rotateCommand);</span>
+<span class="lineNum">    1411 </span>                :            :         }
+<span class="lineNum">    1412 </span>                :<span class="lineCov">          6 :         currentItem-&gt;resetState();</span>
+<span class="lineNum">    1413 </span>                :<span class="lineCov">         26 :     } else if (currentItem &amp;&amp; currentItem-&gt;type() == SelectItem::Polygon &amp;&amp;</span>
+<span class="lineNum">    1414 </span>                :<span class="lineCov">         13 :                currentItem-&gt;wasPointAdded()) {</span>
+<span class="lineNum">    1415 </span>                :            :         QUndoCommand *addVertexCommand =
+<span class="lineNum">    1416 </span>                :            :                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1417 </span>                :<span class="lineNoCov">          0 :                                          currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1418 </span>                :<span class="lineCov">         10 :                                      newPos);</span>
+<span class="lineNum">    1419 </span>                :<span class="lineCov">         10 :         undoGroup-&gt;activeStack()-&gt;push(addVertexCommand);</span>
+<span class="lineNum">    1420 </span>                :<span class="lineCov">         10 :         currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
+<span class="lineNum">    1421 </span>                :<span class="lineCov">         10 :         currentItem-&gt;resetState();</span>
+<span class="lineNum">    1422 </span>                :            :     }
+<span class="lineNum">    1423 </span>                :<span class="lineCov">         39 :     currentButton = Qt::NoButton;</span>
+<span class="lineNum">    1424 </span>                :<span class="lineCov">         39 :     scene-&gt;update();</span>
+<span class="lineNum">    1425 </span>                :<span class="lineCov">         39 :     maskScene-&gt;update();</span>
+<span class="lineNum">    1426 </span>                :<span class="lineCov">         39 : }</span>
+<span class="lineNum">    1427 </span>                :            : 
+<span class="lineNum">    1428 </span>                :            : 
+<span class="lineNum">    1429 </span>                :            : /*!
+<a name="1430"><span class="lineNum">    1430 </span>                :            :  Closes the current polygon.</a>
+<span class="lineNum">    1431 </span>                :            :  */
+<span class="lineNum">    1432 </span>                :<span class="lineCov">          3 : void InstaDam::finishPolygonButtonClicked() {</span>
+<span class="lineNum">    1433 </span>                :<span class="lineCov">          3 :     if (currentItem) {</span>
+<span class="lineNum">    1434 </span>                :            :         currentItem-&gt;setActiveVertex(SelectItem::UNSELECTED);
+<span class="lineNum">    1435 </span>                :            :         currentItem-&gt;setInactive();
+<span class="lineNum">    1436 </span>                :<span class="lineCov">          3 :         polygonSelectForm-&gt;finishPolygonButton-&gt;setEnabled(false);</span>
+<span class="lineNum">    1437 </span>                :            :     }
+<span class="lineNum">    1438 </span>                :<span class="lineCov">          3 :     currentItem = nullptr;</span>
+<span class="lineNum">    1439 </span>                :<span class="lineCov">          3 :     scene-&gt;update();</span>
+<span class="lineNum">    1440 </span>                :<span class="lineCov">          3 :     maskScene-&gt;update();</span>
+<span class="lineNum">    1441 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">    1442 </span>                :            : 
+<span class="lineNum">    1443 </span>                :            : /*!
+<span class="lineNum">    1444 </span>                :            :  Defines keyboard modifier actions (delet and X) \a key for a viewerTypes of
+<a name="1445"><span class="lineNum">    1445 </span>                :            :  \a type.</a>
+<span class="lineNum">    1446 </span>                :            :  */
+<span class="lineNum">    1447 </span>                :<span class="lineNoCov">          0 : void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {</span>
+<span class="lineNum">    1448 </span>                :<span class="lineNoCov">          0 :     if (!currentItem) {</span>
+<span class="lineNum">    1449 </span>                :<span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">    1450 </span>                :<span class="lineNoCov">          0 :     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {</span>
+<span class="lineNum">    1451 </span>                :<span class="lineNoCov">          0 :         if (currentItem-&gt;type() == SelectItem::Polygon &amp;&amp;</span>
+<span class="lineNum">    1452 </span>                :<span class="lineNoCov">          0 :             currentItem-&gt;getActiveVertex() != SelectItem::UNSELECTED) {</span>
+<span class="lineNum">    1453 </span>                :            :             QUndoCommand *deleteVertexCommand =
+<span class="lineNum">    1454 </span>                :            :                     new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1455 </span>                :<span class="lineNoCov">          0 :                                                 currentItem : currentItem-&gt;getMirror());</span>
+<span class="lineNum">    1456 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;activeStack()-&gt;push(deleteVertexCommand);</span>
+<span class="lineNum">    1457 </span>                :            :         } else {
+<span class="lineNum">    1458 </span>                :            :             QUndoCommand *deleteCommand =
+<span class="lineNum">    1459 </span>                :            :                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
+<span class="lineNum">    1460 </span>                :<span class="lineNoCov">          0 :                                           currentItem : currentItem-&gt;getMirror(),</span>
+<span class="lineNum">    1461 </span>                :<span class="lineNoCov">          0 :                                       scene);</span>
+<span class="lineNum">    1462 </span>                :<span class="lineNoCov">          0 :             undoGroup-&gt;activeStack()-&gt;push(deleteCommand);</span>
+<span class="lineNum">    1463 </span>                :            :         }
+<span class="lineNum">    1464 </span>                :<span class="lineNoCov">          0 :     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {</span>
+<span class="lineNum">    1465 </span>                :<span class="lineNoCov">          0 :         currentItem = nullptr;</span>
+<span class="lineNum">    1466 </span>                :            :     }
+<span class="lineNum">    1467 </span>                :            : }
+<span class="lineNum">    1468 </span>                :            : 
+<span class="lineNum">    1469 </span>                :            : /*!
+<span class="lineNum">    1470 </span>                :            :   Reads a QJsonObject \a json of fileTypes \a type.
+<span class="lineNum">    1471 </span>                :            :  */
+<span class="lineNum">    1472 </span>                :<span class="lineCov">          2 : bool InstaDam::read(const QJsonObject &amp;json, fileTypes type) {</span>
+<span class="lineNum">    1473 </span>                :<span class="lineCov">          4 :     if (json.contains(&quot;labels&quot;) &amp;&amp; json[&quot;labels&quot;].isArray()) {</span>
+<span class="lineNum">    1474 </span>                :<span class="lineCov">          2 :         QJsonArray labelArray = json[&quot;labels&quot;].toArray();</span>
+<span class="lineNum">    1475 </span>                :<span class="lineCov">          2 :         tempLabels.clear();</span>
+<span class="lineNum">    1476 </span>                :<span class="lineCov">          2 :         tempLabels.reserve(labelArray.size());</span>
+<span class="lineNum">    1477 </span>                :<span class="lineCov">          8 :         for (int i = 0; i &lt; labelArray.size(); i++) {</span>
+<span class="lineNum">    1478 </span>                :            :             QSharedPointer&lt;Label&gt; label =
+<span class="lineNum">    1479 </span>                :<span class="lineCov">          6 :                     QSharedPointer&lt;Label&gt;::create(labelArray[i].toObject(), i);</span>
+<span class="lineNum">    1480 </span>                :            :             tempLabels.push_back(label);
+<span class="lineNum">    1481 </span>                :            :         }
+<span class="lineNum">    1482 </span>                :<span class="lineCov">          2 :         if (type == PROJECT) {</span>
+<span class="lineNum">    1483 </span>                :<span class="lineCov">          1 :             currentProject = newProject-&gt;newPr;</span>
+<span class="lineNum">    1484 </span>                :<span class="lineCov">          1 :             setLabels();</span>
+<span class="lineNum">    1485 </span>                :<span class="lineCov">          1 :             scene-&gt;clearItems();</span>
+<span class="lineNum">    1486 </span>                :<span class="lineCov">          1 :             maskScene-&gt;clearItems();</span>
+<span class="lineNum">    1487 </span>                :<span class="lineCov">          2 :             currentProject-&gt;setLabels(tempLabels);</span>
+<span class="lineNum">    1488 </span>                :<span class="lineCov">          2 :             QTextStream(stdout) &lt;&lt; currentProject-&gt;numLabels() &lt;&lt; &quot;\n&quot;;</span>
+<span class="lineNum">    1489 </span>                :            :         } else {
+<span class="lineNum">    1490 </span>                :<span class="lineCov">          2 :             QStringList current = getLabelNames(currentProject-&gt;getLabels());</span>
+<span class="lineNum">    1491 </span>                :<span class="lineCov">          1 :             QStringList newList = getLabelNames(tempLabels);</span>
+<span class="lineNum">    1492 </span>                :            :             current.sort(Qt::CaseInsensitive);
+<span class="lineNum">    1493 </span>                :            :             newList.sort(Qt::CaseInsensitive);
+<span class="lineNum">    1494 </span>                :<span class="lineCov">          1 :             if (current.size() != 0 &amp;&amp; current != newList) {</span>
+<span class="lineNum">    1495 </span>                :<span class="lineNoCov">          0 :                 QDialog *dialog = new QDialog(this);</span>
+<span class="lineNum">    1496 </span>                :<span class="lineNoCov">          0 :                 Ui::projectDialog *projectDialog = new Ui::projectDialog;</span>
+<span class="lineNum">    1497 </span>                :<span class="lineNoCov">          0 :                 projectDialog-&gt;setupUi(dialog);</span>
+<span class="lineNum">    1498 </span>                :            :                 projectDialog-&gt;differences-&gt;setRowCount(std::max(current.size(),
+<span class="lineNum">    1499 </span>                :<span class="lineNoCov">          0 :                                                                  newList.size()));</span>
+<span class="lineNum">    1500 </span>                :<span class="lineNoCov">          0 :                 for (int i = 0; i &lt; current.size(); i++) {</span>
+<span class="lineNum">    1501 </span>                :<span class="lineNoCov">          0 :                     QTableWidgetItem *newItem = new QTableWidgetItem(current.at(i));</span>
+<span class="lineNum">    1502 </span>                :<span class="lineNoCov">          0 :                     projectDialog-&gt;differences-&gt;setItem(i, 0, newItem);</span>
+<span class="lineNum">    1503 </span>                :            :                 }
+<span class="lineNum">    1504 </span>                :<span class="lineNoCov">          0 :                 for (int i = 0; i&lt; newList.size(); i++) {</span>
+<span class="lineNum">    1505 </span>                :<span class="lineNoCov">          0 :                     QTableWidgetItem *newItem = new QTableWidgetItem(newList.at(i));</span>
+<span class="lineNum">    1506 </span>                :<span class="lineNoCov">          0 :                     projectDialog-&gt;differences-&gt;setItem(i, 1, newItem);</span>
+<span class="lineNum">    1507 </span>                :            :                 }
+<span class="lineNum">    1508 </span>                :            : 
+<span class="lineNum">    1509 </span>                :            :                 connect(projectDialog-&gt;keepButton, SIGNAL(clicked()), dialog,
+<span class="lineNum">    1510 </span>                :<span class="lineNoCov">          0 :                         SLOT(accept()));</span>
+<span class="lineNum">    1511 </span>                :            :                 connect(projectDialog-&gt;cancelButton, SIGNAL(clicked()), dialog,
+<span class="lineNum">    1512 </span>                :<span class="lineNoCov">          0 :                         SLOT(reject()));</span>
+<span class="lineNum">    1513 </span>                :            :                 connect(projectDialog-&gt;loadNewButton, &amp;QPushButton::clicked, dialog,
+<span class="lineNum">    1514 </span>                :<span class="lineNoCov">          0 :                         [=]() {dialog-&gt;done(2);});</span>
+<span class="lineNum">    1515 </span>                :<span class="lineNoCov">          0 :                 dialog-&gt;exec();</span>
+<span class="lineNum">    1516 </span>                :<span class="lineNoCov">          0 :                 if (dialog-&gt;result() == QDialog::Rejected) {</span>
+<span class="lineNum">    1517 </span>                :            :                     return false;
+<span class="lineNum">    1518 </span>                :<span class="lineNoCov">          0 :                 } else if (dialog-&gt;result() == 2) {</span>
+<span class="lineNum">    1519 </span>                :<span class="lineNoCov">          0 :                     currentProject-&gt;setLabels(tempLabels);</span>
+<span class="lineNum">    1520 </span>                :            :                 }
+<span class="lineNum">    1521 </span>                :            :             } else {
+<span class="lineNum">    1522 </span>                :<span class="lineCov">          2 :                 currentProject-&gt;setLabels(tempLabels);</span>
+<span class="lineNum">    1523 </span>                :            :             }
+<span class="lineNum">    1524 </span>                :<span class="lineCov">          2 :             QTextStream(stdout) &lt;&lt; currentProject-&gt;numLabels();</span>
+<span class="lineNum">    1525 </span>                :<span class="lineCov">          2 :         }</span>
+<span class="lineNum">    1526 </span>                :            :     }
+<span class="lineNum">    1527 </span>                :            :     return true;
+<span class="lineNum">    1528 </span>                :            : }
+<span class="lineNum">    1529 </span>                :            : 
+<span class="lineNum">    1530 </span>                :            : /*!
+<a name="1531"><span class="lineNum">    1531 </span>                :            :   Writes a QJsonObject \a json of fileTypes \a type.</a>
+<span class="lineNum">    1532 </span>                :            :  */
+<span class="lineNum">    1533 </span>                :<span class="lineCov">          2 : void InstaDam::write(QJsonObject &amp;json, fileTypes type) {</span>
+<span class="lineNum">    1534 </span>                :<span class="lineCov">          2 :     QJsonArray labs;</span>
+<span class="lineNum">    1535 </span>                :<span class="lineCov">          6 :     for (int i = 0; i &lt; currentProject-&gt;numLabels(); i++) {</span>
+<span class="lineNum">    1536 </span>                :<span class="lineCov">          6 :         QJsonObject lab;</span>
+<span class="lineNum">    1537 </span>                :<span class="lineCov">          6 :         if (type== PROJECT) {</span>
+<span class="lineNum">    1538 </span>                :<span class="lineCov">          9 :             currentProject-&gt;getLabel(i)-&gt;write(lab);</span>
+<span class="lineNum">    1539 </span>                :<span class="lineCov">          3 :         } else if (type == ANNOTATION) {</span>
+<span class="lineNum">    1540 </span>                :<span class="lineCov">          9 :             currentProject-&gt;getLabel(i)-&gt;writeIdantn(lab);</span>
+<span class="lineNum">    1541 </span>                :            :         }
+<span class="lineNum">    1542 </span>                :<span class="lineCov">          6 :         labs.append(lab);</span>
+<span class="lineNum">    1543 </span>                :<span class="lineCov">          6 :     }</span>
+<span class="lineNum">    1544 </span>                :<span class="lineCov">          2 :     json[&quot;labels&quot;] = labs;</span>
+<span class="lineNum">    1545 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">    1546 </span>                :            : 
+<span class="lineNum">    1547 </span>                :            : /*!
+<a name="1548"><span class="lineNum">    1548 </span>                :            :  Rasterizes the selection from the mask viewer.</a>
+<span class="lineNum">    1549 </span>                :            :  */
+<span class="lineNum">    1550 </span>                :<span class="lineNoCov">          0 : void InstaDam::addCurrentSelection() {</span>
+<span class="lineNum">    1551 </span>                :<span class="lineNoCov">          0 :     tempUndoStack-&gt;clear();</span>
+<span class="lineNum">    1552 </span>                :<span class="lineNoCov">          0 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
+<span class="lineNum">    1553 </span>                :            :     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem),
+<span class="lineNum">    1554 </span>                :<span class="lineNoCov">          0 :                                              currentLabel);</span>
+<span class="lineNum">    1555 </span>                :<span class="lineNoCov">          0 :     scene-&gt;addItem(fds);</span>
+<span class="lineNum">    1556 </span>                :<span class="lineNoCov">          0 :     QUndoCommand *addCommand = new AddCommand(fds, scene);</span>
+<span class="lineNum">    1557 </span>                :<span class="lineNoCov">          0 :     mainUndoStack-&gt;push(addCommand);</span>
+<span class="lineNum">    1558 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem-&gt;getMirror());</span>
+<span class="lineNum">    1559 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem-&gt;getMirror());</span>
+<span class="lineNum">    1560 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem);</span>
+<span class="lineNum">    1561 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem);</span>
+<span class="lineNum">    1562 </span>                :<span class="lineNoCov">          0 :     maskItem = nullptr;</span>
+<span class="lineNum">    1563 </span>                :<span class="lineNoCov">          0 :     ui-&gt;addSelectionButton-&gt;setDisabled(true);</span>
+<span class="lineNum">    1564 </span>                :<span class="lineNoCov">          0 :     ui-&gt;cancelSelectionButton-&gt;setDisabled(true);</span>
+<span class="lineNum">    1565 </span>                :<span class="lineNoCov">          0 :     canDrawOnPhoto = true;</span>
+<span class="lineNum">    1566 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1567 </span>                :            : 
+<span class="lineNum">    1568 </span>                :            : /*!
+<a name="1569"><span class="lineNum">    1569 </span>                :            :  Cancels the current selection.</a>
+<span class="lineNum">    1570 </span>                :            :  */
+<span class="lineNum">    1571 </span>                :<span class="lineCov">         25 : void InstaDam::cancelCurrentSelection() {</span>
+<span class="lineNum">    1572 </span>                :<span class="lineCov">         25 :     undoGroup-&gt;setActiveStack(mainUndoStack);</span>
+<span class="lineNum">    1573 </span>                :<span class="lineCov">         25 :     canDrawOnPhoto = true;</span>
+<span class="lineNum">    1574 </span>                :<span class="lineCov">         50 :     if (!ui-&gt;addSelectionButton-&gt;isEnabled()) {</span>
+<span class="lineNum">    1575 </span>                :<span class="lineCov">         25 :         return;</span>
+<span class="lineNum">    1576 </span>                :            :     }
+<span class="lineNum">    1577 </span>                :<span class="lineNoCov">          0 :     tempUndoStack-&gt;clear();</span>
+<span class="lineNum">    1578 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem-&gt;getMirror());</span>
+<span class="lineNum">    1579 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem-&gt;getMirror());</span>
+<span class="lineNum">    1580 </span>                :<span class="lineNoCov">          0 :     scene-&gt;removeItem(maskItem);</span>
+<span class="lineNum">    1581 </span>                :<span class="lineNoCov">          0 :     maskScene-&gt;removeItem(maskItem);</span>
+<span class="lineNum">    1582 </span>                :<span class="lineNoCov">          0 :     maskItem = nullptr;</span>
+<span class="lineNum">    1583 </span>                :<span class="lineNoCov">          0 :     ui-&gt;addSelectionButton-&gt;setDisabled(true);</span>
+<span class="lineNum">    1584 </span>                :<span class="lineNoCov">          0 :     ui-&gt;cancelSelectionButton-&gt;setDisabled(true);</span>
+<span class="lineNum">    1585 </span>                :            : }
+<span class="lineNum">    1586 </span>                :            : 
+<span class="lineNum">    1587 </span>                :            : /*!
+<a name="1588"><span class="lineNum">    1588 </span>                :            :  * Conducts the pixmap operation of masking on the SelectItem*\a item.</a>
+<span class="lineNum">    1589 </span>                :            :  */
+<span class="lineNum">    1590 </span>                :<span class="lineNoCov">          0 : QPixmap InstaDam::maskSelection(SelectItem *item) {</span>
+<span class="lineNum">    1591 </span>                :<span class="lineNoCov">          0 :     QPixmap map(SelectItem::myBounds);</span>
+<span class="lineNum">    1592 </span>                :<span class="lineNoCov">          0 :     map.fill(Qt::transparent);</span>
+<span class="lineNum">    1593 </span>                :<span class="lineNoCov">          0 :     QPainter *paint = new QPainter(&amp;map);</span>
+<span class="lineNum">    1594 </span>                :<span class="lineNoCov">          0 :     QBrush brush(currentLabel-&gt;getColor());</span>
+<span class="lineNum">    1595 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setPen(currentLabel-&gt;getColor());</span>
+<span class="lineNum">    1596 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setBrush(brush);</span>
+<span class="lineNum">    1597 </span>                :<span class="lineNoCov">          0 :     paint-&gt;setCompositionMode(QPainter::CompositionMode_SourceOver);</span>
+<span class="lineNum">    1598 </span>                :<span class="lineNoCov">          0 :     item-&gt;toPixmap(paint);</span>
+<span class="lineNum">    1599 </span>                :<span class="lineNoCov">          0 :     paint-&gt;end();</span>
+<span class="lineNum">    1600 </span>                :<span class="lineNoCov">          0 :     map = joinPixmaps(ui-&gt;IdmMaskViewer-&gt;photo-&gt;pixmap(), map,</span>
+<span class="lineNum">    1601 </span>                :            :                       QPainter::CompositionMode_DestinationIn);
+<span class="lineNum">    1602 </span>                :<span class="lineNoCov">          0 :     return map;</span>
+<a name="1603"><span class="lineNum">    1603 </span>                :            : }</a>
+<span class="lineNum">    1604 </span>                :            : 
+<span class="lineNum">    1605 </span>                :<span class="lineNoCov">          0 : void InstaDam::on_addSelectionButton_clicked() {</span>
+<span class="lineNum">    1606 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1607 </span>                :            : 
+<span class="lineNum">    1608 </span>                :            : 
+<span class="lineNum">    1609 </span>                :            : /*!
+<a name="1610"><span class="lineNum">    1610 </span>                :            :   Sets the current project to \a pr.</a>
+<span class="lineNum">    1611 </span>                :            :   */
+<span class="lineNum">    1612 </span>                :<span class="lineNoCov">          0 : void InstaDam::setCurrentProject(Project* pr) {</span>
+<span class="lineNum">    1613 </span>                :<span class="lineNoCov">          0 :     this-&gt;currentProject = pr;</span>
+<span class="lineNum">    1614 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1615 </span>                :            : 
+<span class="lineNum">    1616 </span>                :            : /*!
+<span class="lineNum">    1617 </span>                :            :  Gets the list of label names from QVector \a labels.
+<span class="lineNum">    1618 </span>                :            :  */
+<span class="lineNum">    1619 </span>                :<span class="lineCov">          2 : QStringList InstaDam::getLabelNames(QVector&lt;QSharedPointer&lt;Label&gt; &gt; labels) {</span>
+<span class="lineNum">    1620 </span>                :            :     QStringList labelList;
+<span class="lineNum">    1621 </span>                :            :     QVectorIterator&lt;QSharedPointer&lt;Label&gt; &gt; it(labels);
+<span class="lineNum">    1622 </span>                :<span class="lineCov">          5 :     while (it.hasNext()) {</span>
+<span class="lineNum">    1623 </span>                :<span class="lineCov">          3 :         labelList.append(it.next()-&gt;getText());</span>
+<span class="lineNum">    1624 </span>                :            :     }
+<span class="lineNum">    1625 </span>                :<span class="lineCov">          2 :     return labelList;</span>
+<span class="lineNum">    1626 </span>                :            : }
+<span class="lineNum">    1627 </span>                :            : 
+<span class="lineNum">    1628 </span>                :            : /*!
+<a name="1629"><span class="lineNum">    1629 </span>                :            :  Reverts to the current label list during an annotation opening conflict.</a>
+<span class="lineNum">    1630 </span>                :            :  */
+<span class="lineNum">    1631 </span>                :<span class="lineNoCov">          0 : void InstaDam::revert() {</span>
+<span class="lineNum">    1632 </span>                :<span class="lineNoCov">          0 :     this-&gt;filename = this-&gt;oldFilename;</span>
+<span class="lineNum">    1633 </span>                :<span class="lineNoCov">          0 :     this-&gt;file = this-&gt;oldFile;</span>
+<span class="lineNum">    1634 </span>                :<span class="lineNoCov">          0 :     this-&gt;path = this-&gt;oldPath;</span>
+<span class="lineNum">    1635 </span>                :            :     this-&gt;imagesList = this-&gt;oldImagesList;
+<span class="lineNum">    1636 </span>                :<span class="lineNoCov">          0 :     this-&gt;annotationPath = this-&gt;oldAnnotationPath;</span>
+<span class="lineNum">    1637 </span>                :<span class="lineNoCov">          0 :     this-&gt;labelPaths = this-&gt;oldLabelPaths;</span>
+<span class="lineNum">    1638 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1639 </span>                :            : 
+<span class="lineNum">    1640 </span>                :            : /*!
+<a name="1641"><span class="lineNum">    1641 </span>                :            :  Toggles hiding the labels on the mask viewer.</a>
+<span class="lineNum">    1642 </span>                :            :  */
+<span class="lineNum">    1643 </span>                :<span class="lineNoCov">          0 : void InstaDam::processShowHide(int state) {</span>
+<span class="lineNum">    1644 </span>                :<span class="lineNoCov">          0 :     for (int i = 0; i &lt; currentProject-&gt;numLabels(); i++) {</span>
+<a name="1645"><span class="lineNum">    1645 </span>                :<span class="lineNoCov">          0 :          currentProject-&gt;getLabel(i)-&gt;setMaskState(state);</span></a>
+<span class="lineNum">    1646 </span>                :            :     }
+<span class="lineNum">    1647 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">    1648 </span>                :            : 
+<span class="lineNum">    1649 </span>                :            : 
 </pre>
       </td>
     </tr>

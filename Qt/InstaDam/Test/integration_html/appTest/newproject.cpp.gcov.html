@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -99,24 +99,24 @@
 <span class="lineNum">      21 </span>                :            : /*!
 <a name="22"><span class="lineNum">      22 </span>                :            :   Creates a new instance with parent QWidget \a parent, if any</a>
 <span class="lineNum">      23 </span>                :            :   */
-<span class="lineNum">      24 </span>                :<span class="lineCov">         12 : newproject::newproject(QWidget *parent) :</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">         10 : newproject::newproject(QWidget *parent) :</span>
 <span class="lineNum">      25 </span>                :            :     QDialog(parent),
-<span class="lineNum">      26 </span>                :<span class="lineCov">         60 :     ui(new Ui::newproject) {</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">         50 :     ui(new Ui::newproject) {</span>
 <span class="lineNum">      27 </span>                :            : #ifndef TEST
 <span class="lineNum">      28 </span>                :            :     ui-&gt;setupUi(this);
 <span class="lineNum">      29 </span>                :            :     this-&gt;newPr = new Project();
 <span class="lineNum">      30 </span>                :            : #else
-<span class="lineNum">      31 </span>                :<span class="lineCov">         12 :     this-&gt;newPr = new Project();</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         10 :     this-&gt;newPr = new Project();</span>
 <span class="lineNum">      32 </span>                :            : 
 <span class="lineNum">      33 </span>                :            : #endif
-<span class="lineNum">      34 </span>                :<span class="lineCov">         12 : }</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">         10 : }</span>
 <span class="lineNum">      35 </span>                :            : 
 <span class="lineNum">      36 </span>                :            : /*!
 <a name="37"><span class="lineNum">      37 </span>                :            :   Destructor</a>
 <span class="lineNum">      38 </span>                :            :   */
-<span class="lineNum">      39 </span>                :<span class="lineCov">         36 : newproject::~newproject() {</span>
-<span class="lineNum">      40 </span>                :<span class="lineCov">         12 :     delete ui;</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">         24 : }</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         30 : newproject::~newproject() {</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">         10 :     delete ui;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         20 : }</span>
 <span class="lineNum">      42 </span>                :            : #ifdef WASM_BUILD
 <span class="lineNum">      43 </span>                :            : void newproject::nameAcceptClicked() {
 <span class="lineNum">      44 </span>                :            :     tempName = labelDialog-&gt;labelName-&gt;text();

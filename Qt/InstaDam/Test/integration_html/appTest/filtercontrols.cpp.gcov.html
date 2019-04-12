@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -219,9 +219,9 @@
 <span class="lineNum">     141 </span>                :            : /*!
 <span class="lineNum">     142 </span>                :            :   Creates an instance
 <span class="lineNum">     143 </span>                :            :   */
-<span class="lineNum">     144 </span>                :<span class="lineCov">         27 : filterControls::filterControls():QObject() {</span>
-<span class="lineNum">     145 </span>                :<span class="lineCov">          9 :     defineProperties();</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">         21 : filterControls::filterControls():QObject() {</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          7 :     defineProperties();</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">     147 </span>                :            : 
 <span class="lineNum">     148 </span>                :            : 
 <span class="lineNum">     149 </span>                :            : /*!
@@ -247,80 +247,80 @@
 <span class="lineNum">     169 </span>                :            : /*!
 <span class="lineNum">     170 </span>                :            :  Defines the properties of the different masks.
 <span class="lineNum">     171 </span>                :            :  */
-<span class="lineNum">     172 </span>                :<span class="lineCov">          9 : void filterControls::defineProperties() {</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">          7 : void filterControls::defineProperties() {</span>
 <span class="lineNum">     173 </span>                :            :     std::vector&lt;filterProperty*&gt; cannyProperties;
 <span class="lineNum">     174 </span>                :            : 
 <span class="lineNum">     175 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
 <span class="lineNum">     176 </span>                :            :                                                  ANY, EnumConstants::THRESH,
-<span class="lineNum">     177 </span>                :<span class="lineCov">         27 :                                                  false));</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         21 :                                                  false));</span>
 <span class="lineNum">     178 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0, 60,
 <span class="lineNum">     179 </span>                :            :                                                  255, ANY, EnumConstants::THRESH,
-<span class="lineNum">     180 </span>                :<span class="lineCov">         27 :                                                  false));</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         21 :                                                  false));</span>
 <span class="lineNum">     181 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Low&quot;, SLIDER, 3, 5, 801, ODD,
-<span class="lineNum">     182 </span>                :<span class="lineCov">         27 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         21 :                                                  EnumConstants::FILTER, false));</span>
 <span class="lineNum">     183 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;High&quot;, SLIDER, 3, 5, 801, ODD,
-<span class="lineNum">     184 </span>                :<span class="lineCov">         27 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">         21 :                                                  EnumConstants::FILTER, false));</span>
 <span class="lineNum">     185 </span>                :            :     cannyProperties.push_back(new filterProperty(&quot;Kernal&quot;, SLIDER, 3, 5, 7, ODD,
-<span class="lineNum">     186 </span>                :<span class="lineCov">         27 :                                                  EnumConstants::FILTER, false));</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">         21 :                                                  EnumConstants::FILTER, false));</span>
 <span class="lineNum">     187 </span>                :            : 
 <span class="lineNum">     188 </span>                :            :     std::vector&lt;filterProperty*&gt; blurProperties;
 <span class="lineNum">     189 </span>                :            : 
 <span class="lineNum">     190 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
 <span class="lineNum">     191 </span>                :            :                                                 ODD, EnumConstants::THRESH,
-<span class="lineNum">     192 </span>                :<span class="lineCov">         27 :                                                 false));</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">         21 :                                                 false));</span>
 <span class="lineNum">     193 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
 <span class="lineNum">     194 </span>                :            :                                                 60, 255, ANY,
-<span class="lineNum">     195 </span>                :<span class="lineCov">         27 :                                                 EnumConstants::THRESH, false));</span>
+<span class="lineNum">     195 </span>                :<span class="lineCov">         21 :                                                 EnumConstants::THRESH, false));</span>
 <span class="lineNum">     196 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Kernel X&quot;, SLIDER, 3, 15, 51,
 <span class="lineNum">     197 </span>                :            :                                                 ODD, EnumConstants::FILTER,
-<span class="lineNum">     198 </span>                :<span class="lineCov">         27 :                                                 false));</span>
+<span class="lineNum">     198 </span>                :<span class="lineCov">         21 :                                                 false));</span>
 <span class="lineNum">     199 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Kernel Y&quot;, SLIDER, 3, 15, 51,
 <span class="lineNum">     200 </span>                :            :                                                 ODD, EnumConstants::FILTER,
-<span class="lineNum">     201 </span>                :<span class="lineCov">         27 :                                                 false));</span>
+<span class="lineNum">     201 </span>                :<span class="lineCov">         21 :                                                 false));</span>
 <span class="lineNum">     202 </span>                :            :     blurProperties.push_back(new filterProperty(&quot;Sigma&quot;, SLIDER, 3, 5, 55,
 <span class="lineNum">     203 </span>                :            :                                                 ODD, EnumConstants::FILTER,
-<span class="lineNum">     204 </span>                :<span class="lineCov">         27 :                                                 false));</span>
+<span class="lineNum">     204 </span>                :<span class="lineCov">         21 :                                                 false));</span>
 <span class="lineNum">     205 </span>                :            : 
 <span class="lineNum">     206 </span>                :            :     std::vector&lt;filterProperty*&gt; thresholdProperties;
 <span class="lineNum">     207 </span>                :            :     thresholdProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2,
 <span class="lineNum">     208 </span>                :            :                                                      1, ANY,
 <span class="lineNum">     209 </span>                :            :                                                      EnumConstants::THRESH,
-<span class="lineNum">     210 </span>                :<span class="lineCov">         27 :                                                      false));</span>
+<span class="lineNum">     210 </span>                :<span class="lineCov">         21 :                                                      false));</span>
 <span class="lineNum">     211 </span>                :            :     thresholdProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
 <span class="lineNum">     212 </span>                :            :                                                      60, 255, ANY,
 <span class="lineNum">     213 </span>                :            :                                                      EnumConstants::THRESH,
-<span class="lineNum">     214 </span>                :<span class="lineCov">         27 :                                                      false));</span>
+<span class="lineNum">     214 </span>                :<span class="lineCov">         21 :                                                      false));</span>
 <span class="lineNum">     215 </span>                :            : 
 <span class="lineNum">     216 </span>                :            :     std::vector&lt;filterProperty*&gt; labelmaskProperties;
 <span class="lineNum">     217 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Invert&quot;, CHECKBOX, 0, 2, 1,
 <span class="lineNum">     218 </span>                :            :                                                      ANY, EnumConstants:: THRESH,
-<span class="lineNum">     219 </span>                :<span class="lineCov">         27 :                                                      false));</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">         21 :                                                      false));</span>
 <span class="lineNum">     220 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Threshold min&quot;, SLIDER, 0,
 <span class="lineNum">     221 </span>                :            :                                                      60, 255, ANY,
 <span class="lineNum">     222 </span>                :            :                                                      EnumConstants::THRESH,
-<span class="lineNum">     223 </span>                :<span class="lineCov">         27 :                                                      false));</span>
+<span class="lineNum">     223 </span>                :<span class="lineCov">         21 :                                                      false));</span>
 <span class="lineNum">     224 </span>                :            :     labelmaskProperties.push_back(new filterProperty(&quot;Label List&quot;, LABELLIST, 0,
 <span class="lineNum">     225 </span>                :            :                                                      2, 1, ANY,
 <span class="lineNum">     226 </span>                :            :                                                      EnumConstants::FILTER,
-<span class="lineNum">     227 </span>                :<span class="lineCov">         27 :                                                      false));</span>
+<span class="lineNum">     227 </span>                :<span class="lineCov">         21 :                                                      false));</span>
 <span class="lineNum">     228 </span>                :            : 
 <span class="lineNum">     229 </span>                :            :     filterPropertiesMeta *cannyPropertiesMeta =
-<span class="lineNum">     230 </span>                :<span class="lineCov">         18 :             new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);</span>
+<span class="lineNum">     230 </span>                :<span class="lineCov">         14 :             new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);</span>
 <span class="lineNum">     231 </span>                :            :     filterPropertiesMeta *blurPropertiesMeta =
-<span class="lineNum">     232 </span>                :<span class="lineCov">         18 :             new filterPropertiesMeta(blurProperties, 5, EnumConstants::BLUR);</span>
+<span class="lineNum">     232 </span>                :<span class="lineCov">         14 :             new filterPropertiesMeta(blurProperties, 5, EnumConstants::BLUR);</span>
 <span class="lineNum">     233 </span>                :            :     filterPropertiesMeta *thresholdPropertiesMeta =
 <span class="lineNum">     234 </span>                :            :             new filterPropertiesMeta(thresholdProperties, 2,
-<span class="lineNum">     235 </span>                :<span class="lineCov">         18 :                                      EnumConstants::THRESHOLD);</span>
+<span class="lineNum">     235 </span>                :<span class="lineCov">         14 :                                      EnumConstants::THRESHOLD);</span>
 <span class="lineNum">     236 </span>                :            :     filterPropertiesMeta *labelmaskPropertiesMeta =
 <span class="lineNum">     237 </span>                :            :             new filterPropertiesMeta(labelmaskProperties, 3,
-<span class="lineNum">     238 </span>                :<span class="lineCov">         18 :                                      EnumConstants::LABELMASK);</span>
+<span class="lineNum">     238 </span>                :<span class="lineCov">         14 :                                      EnumConstants::LABELMASK);</span>
 <span class="lineNum">     239 </span>                :            : 
 <span class="lineNum">     240 </span>                :            :     // Order follows order of enum defined in instadam.h
-<span class="lineNum">     241 </span>                :<span class="lineCov">          9 :     properties.push_back(cannyPropertiesMeta);</span>
-<span class="lineNum">     242 </span>                :<span class="lineCov">          9 :     properties.push_back(thresholdPropertiesMeta);</span>
-<span class="lineNum">     243 </span>                :<span class="lineCov">          9 :     properties.push_back(blurPropertiesMeta);</span>
-<span class="lineNum">     244 </span>                :<span class="lineCov">          9 :     properties.push_back(labelmaskPropertiesMeta);</span>
-<span class="lineNum">     245 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">     241 </span>                :<span class="lineCov">          7 :     properties.push_back(cannyPropertiesMeta);</span>
+<span class="lineNum">     242 </span>                :<span class="lineCov">          7 :     properties.push_back(thresholdPropertiesMeta);</span>
+<span class="lineNum">     243 </span>                :<span class="lineCov">          7 :     properties.push_back(blurPropertiesMeta);</span>
+<span class="lineNum">     244 </span>                :<span class="lineCov">          7 :     properties.push_back(labelmaskPropertiesMeta);</span>
+<span class="lineNum">     245 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">     246 </span>                :            : 
 <span class="lineNum">     247 </span>                :            : 
 <span class="lineNum">     248 </span>                :            : /*!

@@ -15,10 +15,9 @@ private slots:
     void testWriteAndReadLocal();
     void testWriteAndReadAnnotation();
     void testAnnotateModify();
-    void testOpenProjectAndAnnotate();
+
     void testSaveAndNext();
     void testExport();
-    void testAsserts();
 
 private:
     InstaDam *idm;
@@ -43,7 +42,7 @@ private:
     QPointF poly1 = QPointF(300., 10.);
     QPointF poly2 = QPointF(320., 15.);
     QPointF poly3 = QPointF(400., 190.);
-    QPointF poly4 = QPointF(295., 156.);
+    QPointF poly4 = QPointF(195., 156.);
     QPointF poly5 = QPointF(280., 158.);
     QPointF inPoly = QPointF(330., 100.);
     QPointF movePoly = QPointF(325., 200.);
@@ -94,15 +93,25 @@ private:
     void draw(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
         makeMouseDownEvent(from, button, type);
-        makeMouseMoveEvent(from, to, button, type);
+        move(from, to, button, type);
         makeMouseReleaseEvent(from, to, button, type);
     }
 
+    void click(QPointF point, Qt::MouseButton button = Qt::LeftButton,
+               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
+        makeMouseDownEvent(point, button, type);
+        makeMouseReleaseEvent(point, point, button, type);
+    }
+
+    void move(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+              PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
+        makeMouseMoveEvent(from, to, button, type);
+    }
     void freeDraw(QVector<QPointF> points, Qt::MouseButton button = Qt::LeftButton,
               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
         makeMouseDownEvent(points[0], button, type);
         for (int i = 0; i < points.size() - 1; i++) {
-            makeMouseMoveEvent(points[i], points[i + 1], button, type);
+            move(points[i], points[i + 1], button, type);
         }
         makeMouseReleaseEvent(points[0], points[points.size() - 1], button, type);
     }

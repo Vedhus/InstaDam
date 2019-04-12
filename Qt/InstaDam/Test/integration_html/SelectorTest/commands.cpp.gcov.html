@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">105</td>
-            <td class="headerCovTableEntry">158</td>
-            <td class="headerCovTableEntryLo">66.5 %</td>
+            <td class="headerCovTableEntry">131</td>
+            <td class="headerCovTableEntry">165</td>
+            <td class="headerCovTableEntryMed">79.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">22</td>
             <td class="headerCovTableEntry">28</td>
-            <td class="headerCovTableEntryLo">71.4 %</td>
+            <td class="headerCovTableEntryMed">78.6 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -219,143 +219,143 @@
 <span class="lineNum">     141 </span>                :<span class="lineCov">          3 :     myItem = item;</span>
 <span class="lineNum">     142 </span>                :<span class="lineCov">          3 :     myoldPos = oldPos;</span>
 <span class="lineNum">     143 </span>                :<span class="lineCov">          3 :     mynewPos = newPos;</span>
-<span class="lineNum">     144 </span>                :<span class="lineCov">          3 : }</span>
-<span class="lineNum">     145 </span>                :            : 
-<span class="lineNum">     146 </span>                :            : /*!
-<a name="147"><span class="lineNum">     147 </span>                :            :    \reimp</a>
-<span class="lineNum">     148 </span>                :            :  */
-<span class="lineNum">     149 </span>                :<span class="lineNoCov">          0 : void MoveCommand::undo() {</span>
-<span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;resetActiveVertex();</span>
-<span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;moveItem(mynewPos, myoldPos);</span>
-<span class="lineNum">     152 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     153 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     154 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     155 </span>                :            : 
-<span class="lineNum">     156 </span>                :            : /*!
-<a name="157"><span class="lineNum">     157 </span>                :            :    \reimp</a>
-<span class="lineNum">     158 </span>                :            :  */
-<span class="lineNum">     159 </span>                :<span class="lineCov">          3 : void MoveCommand::redo() {</span>
-<span class="lineNum">     160 </span>                :<span class="lineCov">          3 :     if (init) {</span>
-<span class="lineNum">     161 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;resetActiveVertex();</span>
-<span class="lineNum">     162 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;moveItem(myoldPos, mynewPos);</span>
-<span class="lineNum">     163 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     164 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     165 </span>                :            :     } else {
-<span class="lineNum">     166 </span>                :<span class="lineCov">          3 :         init = true;</span>
-<span class="lineNum">     167 </span>                :            :     }
-<span class="lineNum">     168 </span>                :<span class="lineCov">          3 : }</span>
-<span class="lineNum">     169 </span>                :            : 
-<span class="lineNum">     170 </span>                :            : 
-<span class="lineNum">     171 </span>                :            : /*!
-<span class="lineNum">     172 </span>                :            :   \class MoveVertexCommand
-<span class="lineNum">     173 </span>                :            :   \ingroup Selector
-<span class="lineNum">     174 </span>                :            :   \inmodule InstaDam
-<span class="lineNum">     175 </span>                :            :   \inherits QUndoCommand
-<span class="lineNum">     176 </span>                :            :   \brief The MoveVertexCommand class provides undo and redo actions
-<span class="lineNum">     177 </span>                :            :    for moving a vertex of a SelectItem on a PhotoScene.
-<span class="lineNum">     178 </span>                :            : 
-<span class="lineNum">     179 </span>                :            :    MoveVertexCommand is used to hold a reference to a SelectItem, the starting
-<span class="lineNum">     180 </span>                :            :    and ending positions, and which vertex is moving. Using the undo() and redo()
-<span class="lineNum">     181 </span>                :            :    commands the vertex can be moved from and to its original position
-<span class="lineNum">     182 </span>                :            :    in the scene repeatedly.
-<span class="lineNum">     183 </span>                :            : 
-<span class="lineNum">     184 </span>                :            :    \sa AddCommand, MoveCommand, DeleteCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
-<span class="lineNum">     185 </span>                :            :  */
-<span class="lineNum">     186 </span>                :            : /*!
-<span class="lineNum">     187 </span>                :            :   Constructs a MoveVeretxCommand using the provided \a item and \a vertex
-<span class="lineNum">     188 </span>                :            :   so that it's movement from \a oldPos to \a newPos on the scene can be undone
-<span class="lineNum">     189 </span>                :            :   and/or redone. \a parent refers to parent QUndoCommand, if any.
-<a name="190"><span class="lineNum">     190 </span>                :            : </a>
-<span class="lineNum">     191 </span>                :            :  */
-<span class="lineNum">     192 </span>                :<span class="lineCov">          1 : MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,</span>
-<span class="lineNum">     193 </span>                :            :                                      const QPointF newPos,
-<span class="lineNum">     194 </span>                :            :                              const int vertex, QUndoCommand *parent)
-<span class="lineNum">     195 </span>                :<span class="lineCov">          1 :     : QUndoCommand(parent) {</span>
-<span class="lineNum">     196 </span>                :<span class="lineCov">          1 :     myItem = item;</span>
-<span class="lineNum">     197 </span>                :            :     //QTextStream(stdout) &lt;&lt; &quot;OO &quot; &lt;&lt; oldPos.x() &lt;&lt; &quot;,&quot; &lt;&lt; oldPos.y() &lt;&lt; endl;
-<span class="lineNum">     198 </span>                :            :     //QTextStream(stdout) &lt;&lt; &quot;NN &quot; &lt;&lt; newPos.x() &lt;&lt; &quot;,&quot; &lt;&lt; newPos.y() &lt;&lt; endl;
-<span class="lineNum">     199 </span>                :            : 
+<span class="lineNum">     144 </span>                :            :     myItem-&gt;setMoved(false);
+<span class="lineNum">     145 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     146 </span>                :            : 
+<span class="lineNum">     147 </span>                :            : /*!
+<a name="148"><span class="lineNum">     148 </span>                :            :    \reimp</a>
+<span class="lineNum">     149 </span>                :            :  */
+<span class="lineNum">     150 </span>                :<span class="lineCov">          2 : void MoveCommand::undo() {</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">          2 :     myItem-&gt;resetActiveVertex();</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">          2 :     myItem-&gt;moveItem(mynewPos, myoldPos);</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">          2 :     myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">          2 :     myItem-&gt;setMoved(false);</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          2 :     myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     157 </span>                :            : 
+<span class="lineNum">     158 </span>                :            : /*!
+<a name="159"><span class="lineNum">     159 </span>                :            :    \reimp</a>
+<span class="lineNum">     160 </span>                :            :  */
+<span class="lineNum">     161 </span>                :<span class="lineCov">          4 : void MoveCommand::redo() {</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">          4 :     if (init) {</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">          1 :         myItem-&gt;resetActiveVertex();</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">          1 :         myItem-&gt;moveItem(myoldPos, mynewPos);</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">          1 :         myItem-&gt;setMoved(false);</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     168 </span>                :            :     } else {
+<span class="lineNum">     169 </span>                :<span class="lineCov">          3 :         init = true;</span>
+<span class="lineNum">     170 </span>                :            :     }
+<span class="lineNum">     171 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     172 </span>                :            : 
+<span class="lineNum">     173 </span>                :            : 
+<span class="lineNum">     174 </span>                :            : /*!
+<span class="lineNum">     175 </span>                :            :   \class MoveVertexCommand
+<span class="lineNum">     176 </span>                :            :   \ingroup Selector
+<span class="lineNum">     177 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">     178 </span>                :            :   \inherits QUndoCommand
+<span class="lineNum">     179 </span>                :            :   \brief The MoveVertexCommand class provides undo and redo actions
+<span class="lineNum">     180 </span>                :            :    for moving a vertex of a SelectItem on a PhotoScene.
+<span class="lineNum">     181 </span>                :            : 
+<span class="lineNum">     182 </span>                :            :    MoveVertexCommand is used to hold a reference to a SelectItem, the starting
+<span class="lineNum">     183 </span>                :            :    and ending positions, and which vertex is moving. Using the undo() and redo()
+<span class="lineNum">     184 </span>                :            :    commands the vertex can be moved from and to its original position
+<span class="lineNum">     185 </span>                :            :    in the scene repeatedly.
+<span class="lineNum">     186 </span>                :            : 
+<span class="lineNum">     187 </span>                :            :    \sa AddCommand, MoveCommand, DeleteCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+<span class="lineNum">     188 </span>                :            :  */
+<span class="lineNum">     189 </span>                :            : /*!
+<span class="lineNum">     190 </span>                :            :   Constructs a MoveVeretxCommand using the provided \a item and \a vertex
+<span class="lineNum">     191 </span>                :            :   so that it's movement from \a oldPos to \a newPos on the scene can be undone
+<span class="lineNum">     192 </span>                :            :   and/or redone. \a parent refers to parent QUndoCommand, if any.
+<a name="193"><span class="lineNum">     193 </span>                :            : </a>
+<span class="lineNum">     194 </span>                :            :  */
+<span class="lineNum">     195 </span>                :<span class="lineCov">          2 : MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,</span>
+<span class="lineNum">     196 </span>                :            :                                      const QPointF newPos,
+<span class="lineNum">     197 </span>                :            :                              const int vertex, QUndoCommand *parent)
+<span class="lineNum">     198 </span>                :<span class="lineCov">          2 :     : QUndoCommand(parent) {</span>
+<span class="lineNum">     199 </span>                :<span class="lineCov">          2 :     myItem = item;</span>
 <span class="lineNum">     200 </span>                :            :     QPointF shift = newPos - oldPos;
-<span class="lineNum">     201 </span>                :<span class="lineCov">          1 :     mynewPos = item-&gt;getActivePoint();</span>
-<span class="lineNum">     202 </span>                :            :     //QTextStream(stdout) &lt;&lt; &quot;N &quot; &lt;&lt; item-&gt;getActivePoint().x() &lt;&lt; &quot;,&quot; &lt;&lt; item-&gt;getActivePoint().y() &lt;&lt; endl;
-<span class="lineNum">     203 </span>                :<span class="lineCov">          1 :     myoldPos = mynewPos - shift;</span>
-<span class="lineNum">     204 </span>                :            :     //QTextStream(stdout) &lt;&lt; &quot;S &quot; &lt;&lt; shift.x() &lt;&lt; &quot;,&quot; &lt;&lt; shift.y() &lt;&lt; endl;
-<span class="lineNum">     205 </span>                :            :     //QTextStream(stdout) &lt;&lt; &quot;O &quot; &lt;&lt; myoldPos.x() &lt;&lt; &quot;,&quot; &lt;&lt; myoldPos.y() &lt;&lt; endl;
-<span class="lineNum">     206 </span>                :<span class="lineCov">          1 :     myVertex = vertex;</span>
-<span class="lineNum">     207 </span>                :<span class="lineCov">          1 : }</span>
-<span class="lineNum">     208 </span>                :            : 
-<span class="lineNum">     209 </span>                :            : /*!
-<a name="210"><span class="lineNum">     210 </span>                :            :    \reimp</a>
-<span class="lineNum">     211 </span>                :            :  */
-<span class="lineNum">     212 </span>                :<span class="lineCov">          1 : void MoveVertexCommand::undo() {</span>
-<span class="lineNum">     213 </span>                :<span class="lineCov">          1 :     myItem-&gt;resizeItem(myVertex, myoldPos);</span>
-<span class="lineNum">     214 </span>                :<span class="lineCov">          1 :     myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     215 </span>                :<span class="lineCov">          1 :     myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     216 </span>                :<span class="lineCov">          1 : }</span>
-<span class="lineNum">     217 </span>                :            : 
-<span class="lineNum">     218 </span>                :            : /*!
-<a name="219"><span class="lineNum">     219 </span>                :            :   \reimp</a>
-<span class="lineNum">     220 </span>                :            : */
-<span class="lineNum">     221 </span>                :<span class="lineCov">          2 : void MoveVertexCommand::redo() {</span>
-<span class="lineNum">     222 </span>                :<span class="lineCov">          2 :     if (init) {</span>
-<span class="lineNum">     223 </span>                :<span class="lineCov">          1 :         myItem-&gt;resizeItem(myVertex, mynewPos);</span>
-<span class="lineNum">     224 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     225 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     226 </span>                :            :     } else {
-<span class="lineNum">     227 </span>                :<span class="lineCov">          1 :         init = true;</span>
-<span class="lineNum">     228 </span>                :            :     }
-<span class="lineNum">     229 </span>                :<span class="lineCov">          2 : }</span>
-<span class="lineNum">     230 </span>                :            : 
-<span class="lineNum">     231 </span>                :            : 
-<span class="lineNum">     232 </span>                :            : /*!
-<span class="lineNum">     233 </span>                :            :   \class AddVertexCommand
-<span class="lineNum">     234 </span>                :            :   \ingroup Selector
-<span class="lineNum">     235 </span>                :            :   \inmodule InstaDam
-<span class="lineNum">     236 </span>                :            :   \inherits QUndoCommand
-<span class="lineNum">     237 </span>                :            :   \brief The AddVertexCommand class provides undo and redo actions
-<span class="lineNum">     238 </span>                :            :    for adding a vertex to a SelectItem on a PhotoScene.
-<span class="lineNum">     239 </span>                :            : 
-<span class="lineNum">     240 </span>                :            :    AddVertexCommand is used to hold a reference to a SelectItem and the position
-<span class="lineNum">     241 </span>                :            :    of the new vertex \a point. Using the undo() and redo()
-<span class="lineNum">     242 </span>                :            :    commands the vertex can removed from and to the SelectItem repeatedly.
-<span class="lineNum">     243 </span>                :            : 
-<span class="lineNum">     244 </span>                :            :    \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
-<span class="lineNum">     245 </span>                :            :  */
-<span class="lineNum">     246 </span>                :            : /*!
-<span class="lineNum">     247 </span>                :            :   Constructs an AddVeretxCommand using the provided \a item and \a point so that
-<span class="lineNum">     248 </span>                :            :   the vertex can be added/removed from \a item repeatedly. \a parent refers
-<a name="249"><span class="lineNum">     249 </span>                :            :   to parent QUndoCommand, if any.</a>
-<span class="lineNum">     250 </span>                :            :  */
-<span class="lineNum">     251 </span>                :<span class="lineCov">         12 : AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,</span>
-<span class="lineNum">     252 </span>                :            :                                    QUndoCommand *parent)
-<span class="lineNum">     253 </span>                :<span class="lineCov">         12 :     : QUndoCommand(parent) {</span>
-<span class="lineNum">     254 </span>                :<span class="lineCov">         12 :     myItem = item;</span>
-<span class="lineNum">     255 </span>                :<span class="lineCov">         12 :     myPoint = point;</span>
-<span class="lineNum">     256 </span>                :            :     init = false;
-<span class="lineNum">     257 </span>                :<span class="lineCov">         12 : }</span>
-<span class="lineNum">     258 </span>                :            : 
-<span class="lineNum">     259 </span>                :            : /*!
-<a name="260"><span class="lineNum">     260 </span>                :            :    \reimp</a>
-<span class="lineNum">     261 </span>                :            :  */
-<span class="lineNum">     262 </span>                :<span class="lineNoCov">          0 : void AddVertexCommand::undo() {</span>
-<span class="lineNum">     263 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;removeVertex();</span>
-<span class="lineNum">     264 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     265 </span>                :<span class="lineNoCov">          0 :     myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     266 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     267 </span>                :            : 
-<span class="lineNum">     268 </span>                :            : /*!
-<a name="269"><span class="lineNum">     269 </span>                :            :    \reimp</a>
-<span class="lineNum">     270 </span>                :            :  */
-<span class="lineNum">     271 </span>                :<span class="lineCov">         12 : void AddVertexCommand::redo() {</span>
-<span class="lineNum">     272 </span>                :<span class="lineCov">         12 :     if (init) {</span>
-<span class="lineNum">     273 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
-<span class="lineNum">     274 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;addPoint(myPoint);</span>
-<span class="lineNum">     275 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :         myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     201 </span>                :<span class="lineCov">          2 :     mynewPos = item-&gt;getActivePoint();</span>
+<span class="lineNum">     202 </span>                :<span class="lineCov">          2 :     myoldPos = mynewPos - shift;</span>
+<span class="lineNum">     203 </span>                :<span class="lineCov">          2 :     myVertex = vertex;</span>
+<span class="lineNum">     204 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     205 </span>                :            : 
+<span class="lineNum">     206 </span>                :            : /*!
+<a name="207"><span class="lineNum">     207 </span>                :            :    \reimp</a>
+<span class="lineNum">     208 </span>                :            :  */
+<span class="lineNum">     209 </span>                :<span class="lineCov">          2 : void MoveVertexCommand::undo() {</span>
+<span class="lineNum">     210 </span>                :<span class="lineCov">          2 :     myItem-&gt;resizeItem(myVertex, myoldPos);</span>
+<span class="lineNum">     211 </span>                :<span class="lineCov">          2 :     myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">          2 :     myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     213 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     214 </span>                :            : 
+<span class="lineNum">     215 </span>                :            : /*!
+<a name="216"><span class="lineNum">     216 </span>                :            :   \reimp</a>
+<span class="lineNum">     217 </span>                :            : */
+<span class="lineNum">     218 </span>                :<span class="lineCov">          4 : void MoveVertexCommand::redo() {</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">          4 :     if (init) {</span>
+<span class="lineNum">     220 </span>                :<span class="lineCov">          2 :         myItem-&gt;resizeItem(myVertex, mynewPos);</span>
+<span class="lineNum">     221 </span>                :<span class="lineCov">          2 :         myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     222 </span>                :<span class="lineCov">          2 :         myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     223 </span>                :            :     } else {
+<span class="lineNum">     224 </span>                :<span class="lineCov">          2 :         init = true;</span>
+<span class="lineNum">     225 </span>                :            :     }
+<span class="lineNum">     226 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     227 </span>                :            : 
+<span class="lineNum">     228 </span>                :            : 
+<span class="lineNum">     229 </span>                :            : /*!
+<span class="lineNum">     230 </span>                :            :   \class AddVertexCommand
+<span class="lineNum">     231 </span>                :            :   \ingroup Selector
+<span class="lineNum">     232 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">     233 </span>                :            :   \inherits QUndoCommand
+<span class="lineNum">     234 </span>                :            :   \brief The AddVertexCommand class provides undo and redo actions
+<span class="lineNum">     235 </span>                :            :    for adding a vertex to a SelectItem on a PhotoScene.
+<span class="lineNum">     236 </span>                :            : 
+<span class="lineNum">     237 </span>                :            :    AddVertexCommand is used to hold a reference to a SelectItem and the position
+<span class="lineNum">     238 </span>                :            :    of the new vertex \a point. Using the undo() and redo()
+<span class="lineNum">     239 </span>                :            :    commands the vertex can removed from and to the SelectItem repeatedly.
+<span class="lineNum">     240 </span>                :            : 
+<span class="lineNum">     241 </span>                :            :    \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+<span class="lineNum">     242 </span>                :            :  */
+<span class="lineNum">     243 </span>                :            : /*!
+<span class="lineNum">     244 </span>                :            :   Constructs an AddVeretxCommand using the provided \a item and \a point so that
+<span class="lineNum">     245 </span>                :            :   the vertex can be added/removed from \a item repeatedly. \a parent refers
+<a name="246"><span class="lineNum">     246 </span>                :            :   to parent QUndoCommand, if any.</a>
+<span class="lineNum">     247 </span>                :            :  */
+<span class="lineNum">     248 </span>                :<span class="lineCov">         20 : AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,</span>
+<span class="lineNum">     249 </span>                :            :                                    QUndoCommand *parent)
+<span class="lineNum">     250 </span>                :<span class="lineCov">         10 :     : QUndoCommand(parent) {</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">         10 :     myItem = item;</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">         10 :     myPoint = point;</span>
+<span class="lineNum">     253 </span>                :<span class="lineCov">         10 :     vertex = item-&gt;getActiveVertex();</span>
+<span class="lineNum">     254 </span>                :            :     init = false;
+<span class="lineNum">     255 </span>                :<span class="lineCov">         10 : }</span>
+<span class="lineNum">     256 </span>                :            : 
+<span class="lineNum">     257 </span>                :            : /*!
+<a name="258"><span class="lineNum">     258 </span>                :            :    \reimp</a>
+<span class="lineNum">     259 </span>                :            :  */
+<span class="lineNum">     260 </span>                :<span class="lineCov">          1 : void AddVertexCommand::undo() {</span>
+<span class="lineNum">     261 </span>                :<span class="lineCov">          1 :     myItem-&gt;setActiveVertex(vertex);</span>
+<span class="lineNum">     262 </span>                :<span class="lineCov">          1 :     myItem-&gt;removeVertex();</span>
+<span class="lineNum">     263 </span>                :<span class="lineCov">          1 :     myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     264 </span>                :<span class="lineCov">          1 :     myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     265 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     266 </span>                :            : 
+<span class="lineNum">     267 </span>                :            : /*!
+<a name="268"><span class="lineNum">     268 </span>                :            :    \reimp</a>
+<span class="lineNum">     269 </span>                :            :  */
+<span class="lineNum">     270 </span>                :<span class="lineCov">         11 : void AddVertexCommand::redo() {</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">         11 :     if (init) {</span>
+<span class="lineNum">     272 </span>                :<span class="lineCov">          1 :         myItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
+<span class="lineNum">     273 </span>                :<span class="lineCov">          1 :         myItem-&gt;insertVertex(vertex - 1, myPoint);</span>
+<span class="lineNum">     274 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     275 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     276 </span>                :<span class="lineCov">          1 :         myItem-&gt;resetState();</span>
 <span class="lineNum">     277 </span>                :            :     } else {
-<span class="lineNum">     278 </span>                :<span class="lineCov">         12 :         init = true;</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">         10 :         init = true;</span>
 <span class="lineNum">     279 </span>                :            :     }
-<span class="lineNum">     280 </span>                :<span class="lineCov">         12 : }</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">         11 : }</span>
 <span class="lineNum">     281 </span>                :            : 
 <span class="lineNum">     282 </span>                :            : /*!
 <span class="lineNum">     283 </span>                :            :   \class DeleteVertexCommand
@@ -489,31 +489,34 @@
 <span class="lineNum">     411 </span>                :<span class="lineCov">          1 :     myItem = item;</span>
 <span class="lineNum">     412 </span>                :<span class="lineCov">          1 :     myoldPos = oldPos;</span>
 <span class="lineNum">     413 </span>                :<span class="lineCov">          1 :     mynewPos = newPos;</span>
-<span class="lineNum">     414 </span>                :<span class="lineCov">          1 : }</span>
-<span class="lineNum">     415 </span>                :            : 
-<span class="lineNum">     416 </span>                :            : /*!
-<a name="417"><span class="lineNum">     417 </span>                :            :    \reimp</a>
-<span class="lineNum">     418 </span>                :            :  */
-<span class="lineNum">     419 </span>                :<span class="lineCov">          1 : void RotateCommand::undo() {</span>
-<span class="lineNum">     420 </span>                :<span class="lineCov">          1 :     myItem-&gt;resetActiveVertex();</span>
-<span class="lineNum">     421 </span>                :<span class="lineCov">          1 :     myItem-&gt;rotate(mynewPos, myoldPos);</span>
-<span class="lineNum">     422 </span>                :<span class="lineCov">          1 :     myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     423 </span>                :<span class="lineCov">          1 :     myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     424 </span>                :<span class="lineCov">          1 : }</span>
-<span class="lineNum">     425 </span>                :            : 
-<span class="lineNum">     426 </span>                :            : /*!
-<a name="427"><span class="lineNum">     427 </span>                :            :    \reimp</a>
-<span class="lineNum">     428 </span>                :            :  */
-<span class="lineNum">     429 </span>                :<span class="lineCov">          2 : void RotateCommand::redo() {</span>
-<span class="lineNum">     430 </span>                :<span class="lineCov">          2 :     if (init) {</span>
-<span class="lineNum">     431 </span>                :<span class="lineCov">          1 :         myItem-&gt;resetActiveVertex();</span>
-<span class="lineNum">     432 </span>                :<span class="lineCov">          1 :         myItem-&gt;rotate(myoldPos, mynewPos);</span>
-<span class="lineNum">     433 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
-<span class="lineNum">     434 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
-<span class="lineNum">     435 </span>                :            :     } else {
-<a name="436"><span class="lineNum">     436 </span>                :<span class="lineCov">          1 :         init = true;</span></a>
-<span class="lineNum">     437 </span>                :            :     }
-<span class="lineNum">     438 </span>                :<span class="lineCov">          5 : }</span>
+<span class="lineNum">     414 </span>                :            :     myItem-&gt;setRotated(false);
+<span class="lineNum">     415 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     416 </span>                :            : 
+<span class="lineNum">     417 </span>                :            : /*!
+<a name="418"><span class="lineNum">     418 </span>                :            :    \reimp</a>
+<span class="lineNum">     419 </span>                :            :  */
+<span class="lineNum">     420 </span>                :<span class="lineCov">          1 : void RotateCommand::undo() {</span>
+<span class="lineNum">     421 </span>                :<span class="lineCov">          1 :     myItem-&gt;resetActiveVertex();</span>
+<span class="lineNum">     422 </span>                :<span class="lineCov">          1 :     myItem-&gt;rotate(mynewPos, myoldPos);</span>
+<span class="lineNum">     423 </span>                :<span class="lineCov">          1 :     myItem-&gt;setRotated(false);</span>
+<span class="lineNum">     424 </span>                :<span class="lineCov">          1 :     myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     425 </span>                :<span class="lineCov">          1 :     myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     426 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     427 </span>                :            : 
+<span class="lineNum">     428 </span>                :            : /*!
+<a name="429"><span class="lineNum">     429 </span>                :            :    \reimp</a>
+<span class="lineNum">     430 </span>                :            :  */
+<span class="lineNum">     431 </span>                :<span class="lineCov">          2 : void RotateCommand::redo() {</span>
+<span class="lineNum">     432 </span>                :<span class="lineCov">          2 :     if (init) {</span>
+<span class="lineNum">     433 </span>                :<span class="lineCov">          1 :         myItem-&gt;resetActiveVertex();</span>
+<span class="lineNum">     434 </span>                :<span class="lineCov">          1 :         myItem-&gt;rotate(myoldPos, mynewPos);</span>
+<span class="lineNum">     435 </span>                :<span class="lineCov">          1 :         myItem-&gt;setRotated(false);</span>
+<span class="lineNum">     436 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
+<span class="lineNum">     437 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
+<span class="lineNum">     438 </span>                :            :     } else {
+<a name="439"><span class="lineNum">     439 </span>                :<span class="lineCov">          1 :         init = true;</span></a>
+<span class="lineNum">     440 </span>                :            :     }
+<span class="lineNum">     441 </span>                :<span class="lineCov">          5 : }</span>
 </pre>
       </td>
     </tr>

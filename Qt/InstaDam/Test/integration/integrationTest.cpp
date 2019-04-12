@@ -146,13 +146,12 @@ void IntegrationTest::drawObjects() {
     // polygon
     clickLabel("Label3");
     clickPolygonSelect();
-    draw(poly1, poly1);
-    draw(poly2, poly2);
-    draw(poly3, poly3);
-    draw(poly4, poly4);
-    draw(poly5, poly5);
+    click(poly1);
+    click(poly2);
+    click(poly3);
+    click(poly5);
     clickFinishPolygon();
-    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 5);
+    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 4);
 
     // FreeDraw
     clickFreeDrawSelect();
@@ -237,7 +236,7 @@ void IntegrationTest::testWriteAndReadAnnotation() {
             getItem(SelectItem::Ellipse, 2)->myRect == ell1Rect);
     QVERIFY(getItem(SelectItem::Ellipse, 2)->myRect == ell2Rect ||
             getItem(SelectItem::Ellipse)->myRect == ell2Rect);
-    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 5);
+    QCOMPARE(getItem(SelectItem::Polygon)->numberOfVertices(), 4);
     QCOMPARE(dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage(), orig);
 
 }
@@ -270,6 +269,14 @@ void IntegrationTest::testAnnotateModify() {
     draw(inEllipse, ellipseMove);
     QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
 
+    // undo move
+    idm->undoGroup->undo();
+    QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4, ellipse3));
+
+    // redo move
+    idm->undoGroup->redo();
+    QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
+
     // rotate the rectangle
     draw(rectRotate1, rectRotate2, Qt::RightButton);
     qreal angle = getItem(SelectItem::Rectangle)->rotation();
@@ -285,9 +292,69 @@ void IntegrationTest::testAnnotateModify() {
 
     // move polygon
     draw(inPoly, movePoly);
-    clickFinishPolygon();
+    //clickFinishPolygon();
     QVector<QPointF> points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
     QCOMPARE(points[0], poly1 + moveShift);
+
+    // undo move
+    idm->undoGroup->undo();
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[1], poly2);
+    QCOMPARE(points[2], poly3);
+    QCOMPARE(points[3], poly5);
+
+    move(free1, free2, Qt::NoButton);
+    // add vertex
+    click(inPoly);
+    clickInsertPoint();
+    click(poly3);
+    click(poly5);
+    click(poly4);
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 5);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[1], poly2);
+    QCOMPARE(points[2], poly3);
+    QCOMPARE(points[3], poly4);
+    QCOMPARE(points[4], poly5);
+
+    // undo add
+    idm->undoGroup->undo();
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 4);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[1], poly2);
+    QCOMPARE(points[2], poly3);
+    QCOMPARE(points[3], poly5);
+
+    // redo add
+    idm->undoGroup->redo();
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 5);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[3], poly4);
+
+    // move vertex
+    draw(polyVertex, moveVertex);
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 5);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[2], poly3 + vertexShift);
+
+    // undo move
+    idm->undoGroup->undo();
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 5);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[2], poly3);
+
+    // redo move
+    idm->undoGroup->redo();
+    points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
+    QCOMPARE(points.size(), 5);
+    QCOMPARE(points[0], poly1);
+    QCOMPARE(points[2], poly3 + vertexShift);
 
     // FreeDraw
     clickFreeDrawSelect();
@@ -306,26 +373,26 @@ void IntegrationTest::testAnnotateModify() {
     idm->undoGroup->redo();
     QCOMPARE(getItem(SelectItem::Freedraw, 2)->isVisible(), true);
 
-    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage();
+    QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw,
+                                                        2))->getPixmap().toImage();
 
     // FreeErase
     clickEraseButton();
     clickSquareBrush();
     freeDraw(erasePoints);
-    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage();
+    QImage erased = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw,
+                                                          2))->getPixmap().toImage();
     QVERIFY(orig != erased);
 
     // undo
     idm->undoGroup->undo();
-    QCOMPARE(orig, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage());
+    QCOMPARE(orig, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw,
+                                                         2))->getPixmap().toImage());
 
     // redo
     idm->undoGroup->redo();
-    QCOMPARE(erased, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw, 2))->getPixmap().toImage());
-}
-
-void IntegrationTest::testOpenProjectAndAnnotate() {
-
+    QCOMPARE(erased, dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw,
+                                                           2))->getPixmap().toImage());
 }
 
 void IntegrationTest::testSaveAndNext() {
@@ -333,10 +400,6 @@ void IntegrationTest::testSaveAndNext() {
 }
 
 void IntegrationTest::testExport() {
-
-}
-
-void IntegrationTest::testAsserts() {
 
 }
 

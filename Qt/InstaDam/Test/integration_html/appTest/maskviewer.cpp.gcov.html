@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-11 13:49:43</td>
+            <td class="headerValue">2019-04-12 11:19:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -89,13 +89,13 @@
 <span class="lineNum">      11 </span>                :            : /*!
 <a name="12"><span class="lineNum">      12 </span>                :            :   Creates an instance with parent QWidget \a parent, if any.</a>
 <span class="lineNum">      13 </span>                :            :   */
-<span class="lineNum">      14 </span>                :<span class="lineCov">          9 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
-<span class="lineNum">      15 </span>                :<span class="lineCov">          9 :     zoom = 0;</span>
-<span class="lineNum">      16 </span>                :<span class="lineCov">          9 :     hasPhoto = false;</span>
-<span class="lineNum">      17 </span>                :<span class="lineCov">          9 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
-<span class="lineNum">      18 </span>                :<span class="lineCov">          9 :     scene-&gt;myViewerType = viewerType;</span>
-<span class="lineNum">      19 </span>                :<span class="lineCov">          9 :     selectedMask = EnumConstants::CANNY;</span>
-<span class="lineNum">      20 </span>                :<span class="lineCov">          9 : }</span>
+<span class="lineNum">      14 </span>                :<span class="lineCov">          7 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">          7 :     zoom = 0;</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">          7 :     hasPhoto = false;</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">          7 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">          7 :     scene-&gt;myViewerType = viewerType;</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">          7 :     selectedMask = EnumConstants::CANNY;</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">      21 </span>                :            : 
 <span class="lineNum">      22 </span>                :            : /*!
 <a name="23"><span class="lineNum">      23 </span>                :            :   Links this object to \a viewer.</a>
