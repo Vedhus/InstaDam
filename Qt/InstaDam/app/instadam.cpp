@@ -454,7 +454,7 @@ void InstaDam::fileDownloaded(QString path) {
     this->path = file.dir();
     this->oldImagesList = this->imagesList;
     this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-    if (imagesList.empty()){
+    if (imagesList.empty()) {
         assertError("That doesn't seem to be a valid image file.");
         revert();
     } else {
@@ -829,7 +829,7 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
  InstaDam::loadLabelJson loads the json object \a json of fileTypes
  \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
-bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
+bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType) {
     currentProject = newProject->newPr;
     currentProject->resetLabels();
     clearLayout(ui->labelClassLayout);
@@ -1155,9 +1155,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
         ui->IdmPhotoViewer->setPanMode(ctrlPanning);
         ui->IdmMaskViewer->setPanMode(ctrlPanning);
     }
-    if (!panning && !ctrlPanning){
-
-        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false){ //(!item)
+    if (!panning && !ctrlPanning) {
+        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false) { //(!item)
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 scene->inactiveAll();
@@ -1355,13 +1354,13 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button) {
-    //UNUSED(button);
+    UNUSED(button);
     ctrlPanning = false;
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
     ui->IdmMaskViewer->setPanMode(panning);
 
-//    else if (!panning){
+//    else if (!panning) {
     if (currentItem && !currentItem->isItemAdded()) {
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
@@ -1475,8 +1474,8 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
   Reads a QJsonObject \a json of fileTypes \a type.
  */
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
-    if (json.contains("labels") && json["labels"].isArray()) {
-        QJsonArray labelArray = json["labels"].toArray();
+    if (json.contains(InstaDamJson::LABELS) && json[InstaDamJson::LABELS].isArray()) {
+        QJsonArray labelArray = json[InstaDamJson::LABELS].toArray();
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
@@ -1546,7 +1545,7 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
         }
         labs.append(lab);
     }
-    json["labels"] = labs;
+    json[InstaDamJson::LABELS] = labs;
 }
 
 /*!

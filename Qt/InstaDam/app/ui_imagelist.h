@@ -68,9 +68,9 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QApplication::translate("ImageList", "Path", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("ImageList", "Date_created", nullptr));
+        ___qtablewidgetitem3->setText(QApplication::translate("ImageList", "Last Modified", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QApplication::translate("ImageList", "Date_Modified", nullptr));
+        ___qtablewidgetitem4->setText(QApplication::translate("ImageList", "Thumbnail", nullptr));
         cancelButton->setText(QApplication::translate("ImageList", "Cancel", nullptr));
         loadButton->setText(QApplication::translate("ImageList", "Load", nullptr));
     } // retranslateUi

@@ -11,7 +11,8 @@ HEADERS = \
     $$PWD/freeDrawSelect.h \
     boxbasedselector.h \
     label.h \
-    freeDrawErase.h
+    freeDrawErase.h \
+    jsonConstants.h
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \

@@ -19,6 +19,8 @@
 #include <QPainter>
 #include <QJsonObject>
 
+#include "jsonConstants.h"
+
 #define UNUSED(x) (void)(x)
 class Label;
 class FreeDrawSelect;
@@ -27,6 +29,7 @@ const int TOP = 0x1;
 const int BOTTOM = 0x2;
 const int LEFT = 0x4;
 const int RIGHT = 0x8;
+const qreal DEFAULT_SIZE = 10.;
 QT_BEGIN_NAMESPACE
 class QGraphicsItem;
 class QGraphicsScene;
@@ -61,7 +64,7 @@ class SelectItem : public QGraphicsItem {
     int myID;
     QPen highlightPen, myPen;
 
-    SelectItem(qreal vertSize = 10.,
+    SelectItem(qreal vertSize = DEFAULT_SIZE,
                QSharedPointer<Label> label = nullptr,
                QGraphicsItem *item = nullptr);
     SelectItem(QSharedPointer<Label> label = nullptr,

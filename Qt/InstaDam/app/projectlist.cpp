@@ -49,36 +49,33 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
     qInfo() << obj;
-    for(int i =0; i<projects_list.count();i++){
+    for (int i =0; i<projects_list.count();i++) {
         QJsonValue project = projects_list.at(i);
-            if(project.isObject()){
-                QJsonObject subObj = project.toObject();
-                QStringList proj_details;
-                foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
-                    QJsonValue val = subObj.value(k);
-                    if(k == "id"){
-                        proj_details << QString::number(val.toInt());
-                        }
-                    if(k == "name"){
-                        proj_details << val.toString();
-                        }
-                    if(k=="is_admin"){
-                        if(val==true){
-                            proj_details << "Admin";
-                            }
-                        else{
-                            proj_details << "Annotator";
-                            }
-                        }
-
+        if (project.isObject()) {
+            QJsonObject subObj = project.toObject();
+            QStringList proj_details;
+            foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
+                QJsonValue val = subObj.value(k);
+                if (k == InstaDamJson::ID) {
+                    proj_details << QString::number(val.toInt());
+                }
+                if (k == InstaDamJson::NAME) {
+                    proj_details << val.toString();
+                }
+                if (k == InstaDamJson::IS_ADMIN) {
+                    if (val == true) {
+                        proj_details << "Admin";
+                    } else {
+                        proj_details << "Annotator";
                     }
-               ui->projectsTable->addItem(proj_details.join(" - "));
-               connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+                }
             }
-            else{
-                qInfo() << "The returned object does not satisfy the requirements";
-                qInfo() << project;
-            }
+            ui->projectsTable->addItem(proj_details.join(" - "));
+            connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+        } else {
+            qInfo() << "The returned object does not satisfy the requirements";
+            qInfo() << project;
+        }
     }
 }
 

@@ -59,8 +59,8 @@ void Login::on_pushButton_clicked() {
 
     QJsonObject js
     {
-        {"username", user},
-        {"password", pass}
+        {InstaDamJson::USERNAME, user},
+        {InstaDamJson::PASSWORD, pass}
     };
 
     QJsonDocument doc(js);
@@ -89,8 +89,8 @@ void Login::replyFinished() {
         qInfo() << "Error: " << jsonError.errorString();
     } else {
         QJsonObject obj = jsonReply.object();
-        if (obj.contains("access_token")) {
-            this->accessToken = obj.value("access_token").toString().toUtf8();
+        if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
+            this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString().toUtf8();
             //qInfo() << this->accessToken;
             Login::dumpToken();
             Login::listProjects();

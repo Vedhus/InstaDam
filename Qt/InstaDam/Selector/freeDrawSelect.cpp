@@ -102,7 +102,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
                                Qt::PenCapStyle brushMode,
                                QSharedPointer<Label> label,
                                QGraphicsItem *item)
-    : QGraphicsPixmapItem(item), SelectItem(label, item){
+    : QGraphicsPixmapItem(item), SelectItem(label, item) {
     init(label);
     myPen.setWidth(brushSize);
     myPen.setCapStyle(brushMode);
@@ -206,8 +206,8 @@ void FreeDrawSelect::setPointsUnchecked(QPixmap map) {
   \reimp
   */
 void FreeDrawSelect::read(const QJsonObject &json) {
-    myID = json["objectID"].toInt();
-    auto const encoded = json["pixmap"].toString().toLatin1();
+    myID = json[InstaDamJson::OBJECTID].toInt();
+    auto const encoded = json[InstaDamJson::PIXMAP].toString().toLatin1();
     myPixmap.loadFromData(QByteArray::fromBase64(encoded), "PNG");
 }
 
@@ -237,12 +237,12 @@ void FreeDrawSelect::updatePen(QPen pen) {
   \reimp
   */
 void FreeDrawSelect::write(QJsonObject &json) const {
-    json["objectID"] = myID;
+    json[InstaDamJson::OBJECTID] = myID;
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
     myPixmap.save(&buffer, "PNG");
     auto const encoded = buffer.data().toBase64();
-    json["pixmap"] = QLatin1String(encoded);
+    json[InstaDamJson::PIXMAP] = QLatin1String(encoded);
 }
 
 /*--------------------------------- Mirror ----------------------------*/

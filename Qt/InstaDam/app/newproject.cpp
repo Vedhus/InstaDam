@@ -105,7 +105,7 @@ Project* newproject::on_buttonBox_accepted()
 
 }
 
-void newproject::saveToServer(){
+void newproject::saveToServer() {
 // create new project
 qInfo() << "saving project to server";
 
@@ -114,7 +114,7 @@ qInfo() << "saving project to server";
 
     QJsonObject js
     {
-        {"project_name", this->newPr->getName()}
+        {InstaDamJson::PROJECT_NAME, this->newPr->getName()}
     };
 
     QJsonDocument doc(js);
@@ -145,7 +145,7 @@ void newproject::replyFinished()
     else
     {
         QJsonObject reply = jsonReply.object();
-        this->backendId = reply.value("project_id").toInt();
+        this->backendId = reply.value(InstaDamJson::PROJECT_ID).toInt();
 
         // save labels
         qInfo() << "saving labels to server";
@@ -158,8 +158,8 @@ void newproject::replyFinished()
         {
             QJsonObject jsLabel
             {
-                {"label_name", newPr->getLabel(i)->getText()},
-                {"label_color", newPr->getLabel(i)->getColor().name()}
+                {InstaDamJson::LABEL_NAME, newPr->getLabel(i)->getText()},
+                {InstaDamJson::LABEL_COLOR, newPr->getLabel(i)->getColor().name()}
             };
 
             QJsonDocument docLabel(jsLabel);
