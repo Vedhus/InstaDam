@@ -4,7 +4,7 @@
 #make distclean
 rm -rf integration_test_build
 mkdir integration_test_build
-cp resources/* integration_test_build/.
+cp -r resources/* integration_test_build/.
 cd integration_test_build
 
 qmake5 ../IntegrationTest.pro

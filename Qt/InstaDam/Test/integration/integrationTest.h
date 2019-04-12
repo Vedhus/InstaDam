@@ -15,9 +15,10 @@ private slots:
     void testWriteAndReadLocal();
     void testWriteAndReadAnnotation();
     void testAnnotateModify();
-
+    void testClickButtons();
     void testSaveAndNext();
     void testExport();
+    void testExportZip();
 
 private:
     InstaDam *idm;
@@ -52,16 +53,16 @@ private:
     QPointF vertexShift = moveVertex - polyVertex;
 
     QPointF free1 = QPointF(10., 10.);
-    QPointF free2 = QPointF(10., 10.);
-    QPointF free3 = QPointF(10., 10.);
-    QPointF free4 = QPointF(10., 10.);
-    QPointF free5 = QPointF(10., 10.);
-    QPointF free6 = QPointF(10., 10.);
+    QPointF free2 = QPointF(20., 10.);
+    QPointF free3 = QPointF(30., 35.);
+    QPointF free4 = QPointF(42., 50.);
+    QPointF free5 = QPointF(44., 60.);
+    QPointF free6 = QPointF(52., 33.);
     QVector<QPointF> freePoints;
 
-    QPointF erase1 = QPointF(10., 10.);
-    QPointF erase2 = QPointF(10., 10.);
-    QPointF erase3 = QPointF(10., 10.);
+    QPointF erase1 = QPointF(15., 5.);
+    QPointF erase2 = QPointF(15., 30.);
+    QPointF erase3 = QPointF(100., 30.);
     QVector<QPointF> erasePoints;
 
     void makeMouseDownEvent(QPointF point, Qt::MouseButton button = Qt::LeftButton,
@@ -90,6 +91,8 @@ private:
     void clickMaskSelections() {idm->ui->showMaskSelections->click();}
     void clickAddSelection() {idm->ui->addSelectionButton->click();}
     void clickCancelSelection() {idm->ui->cancelSelectionButton->click();}
+    void clickSaveAndNext() {idm->ui->saveAndNext->click();}
+    void clickSaveAndBack() {idm->ui->saveAndBack->click();}
     void draw(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
         makeMouseDownEvent(from, button, type);

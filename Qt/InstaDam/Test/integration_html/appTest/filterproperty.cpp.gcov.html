@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:19:13</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -92,18 +92,18 @@
 <span class="lineNum">      14 </span>                :            :   Creates an instance nased on \a propertyName, \a bt, \a propMin, \a propVal,
 <a name="15"><span class="lineNum">      15 </span>                :            :   \a propMax, \a eo, \a thof, and \a sb.</a>
 <span class="lineNum">      16 </span>                :            :   */
-<span class="lineNum">      17 </span>                :<span class="lineCov">        105 : filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMin,</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">        135 : filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMin,</span>
 <span class="lineNum">      18 </span>                :            :                                int propVal, int propMax, evenOdds eo,
 <span class="lineNum">      19 </span>                :<span class="lineNoCov">          0 :                                EnumConstants::threshold_or_filter thof, bool sb) {</span>
-<span class="lineNum">      20 </span>                :<span class="lineCov">        105 :     this-&gt;name = QString::fromStdString(propertyName);</span>
-<span class="lineNum">      21 </span>                :<span class="lineCov">        105 :     this-&gt;btnType = bt;</span>
-<span class="lineNum">      22 </span>                :<span class="lineCov">        105 :     this-&gt;val = propVal;</span>
-<span class="lineNum">      23 </span>                :<span class="lineCov">        105 :     this-&gt;max = propMax;</span>
-<span class="lineNum">      24 </span>                :<span class="lineCov">        105 :     this-&gt;min = propMin;</span>
-<span class="lineNum">      25 </span>                :<span class="lineCov">        105 :     this-&gt;evenOdd = eo;</span>
-<span class="lineNum">      26 </span>                :<span class="lineCov">        105 :     this-&gt;threshold_filter = thof;</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">        105 :     this-&gt;signalBool = sb;</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">        105 : }</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">        135 :     this-&gt;name = QString::fromStdString(propertyName);</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">        135 :     this-&gt;btnType = bt;</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">        135 :     this-&gt;val = propVal;</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">        135 :     this-&gt;max = propMax;</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">        135 :     this-&gt;min = propMin;</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">        135 :     this-&gt;evenOdd = eo;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">        135 :     this-&gt;threshold_filter = thof;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">        135 :     this-&gt;signalBool = sb;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">        135 : }</span>
 <span class="lineNum">      29 </span>                :            : 
 <span class="lineNum">      30 </span>                :            : /*!
 <a name="31"><span class="lineNum">      31 </span>                :            :   Assigns the slider value to the nearest odd or even numbber close to \a sliderVal</a>
@@ -128,12 +128,12 @@
 <span class="lineNum">      50 </span>                :            : /*!
 <span class="lineNum">      51 </span>                :            :   Creates an instance based on \a fp, \a nc, and \a mt.
 <span class="lineNum">      52 </span>                :            :   */
-<span class="lineNum">      53 </span>                :<span class="lineCov">         28 : filterPropertiesMeta::filterPropertiesMeta(std::vector&lt;filterProperty*&gt; fp, int nc,</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">         36 : filterPropertiesMeta::filterPropertiesMeta(std::vector&lt;filterProperty*&gt; fp, int nc,</span>
 <span class="lineNum">      54 </span>                :            :                                            EnumConstants::maskTypes mt) {
-<span class="lineNum">      55 </span>                :<span class="lineCov">         28 :     numControls = nc;</span>
-<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         28 :     maskType = mt;</span></a>
-<span class="lineNum">      57 </span>                :<span class="lineCov">         28 :     propertylist = fp;</span>
-<span class="lineNum">      58 </span>                :<span class="lineCov">         31 : }</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">         36 :     numControls = nc;</span>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         36 :     maskType = mt;</span></a>
+<span class="lineNum">      57 </span>                :<span class="lineCov">         36 :     propertylist = fp;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         39 : }</span>
 </pre>
       </td>
     </tr>

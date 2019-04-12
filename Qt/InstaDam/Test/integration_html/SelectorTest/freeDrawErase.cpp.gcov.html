@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:19:13</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -106,25 +106,25 @@
 <span class="lineNum">      28 </span>                :            :   \li Qt::RoundCap
 <span class="lineNum">      29 </span>                :            :   \endlist
 <span class="lineNum">      30 </span>                :            :   */
-<span class="lineNum">      31 </span>                :<span class="lineCov">          4 : FreeDrawErase::FreeDrawErase(QPointF point, int brushSize,</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">          6 : FreeDrawErase::FreeDrawErase(QPointF point, int brushSize,</span>
 <span class="lineNum">      32 </span>                :            :                              Qt::PenCapStyle brushMode,
 <span class="lineNum">      33 </span>                :            :                              QSharedPointer&lt;Label&gt; label, QGraphicsItem *item)
-<span class="lineNum">      34 </span>                :<span class="lineCov">          8 :     : FreeDrawSelect(point, brushSize, brushMode, nullptr, item) {</span>
-<span class="lineNum">      35 </span>                :<span class="lineCov">          4 :     myLabel = label;</span>
-<span class="lineNum">      36 </span>                :<span class="lineCov">          8 :     undoMap = QSharedPointer&lt;EraseMap&gt;::create();</span>
-<span class="lineNum">      37 </span>                :<span class="lineCov">          4 :     QHashIterator&lt;int, FreeDrawSelect*&gt; it(myLabel-&gt;freeDrawObjects);</span>
-<span class="lineNum">      38 </span>                :<span class="lineCov">          4 :     myPen.setColor(Qt::transparent);</span>
-<span class="lineNum">      39 </span>                :<span class="lineCov">         13 :     while (it.hasNext()) {</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">         12 :     : FreeDrawSelect(point, brushSize, brushMode, nullptr, item) {</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          6 :     myLabel = label;</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">         12 :     undoMap = QSharedPointer&lt;EraseMap&gt;::create();</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">          6 :     QHashIterator&lt;int, FreeDrawSelect*&gt; it(myLabel-&gt;freeDrawObjects);</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          6 :     myPen.setColor(Qt::transparent);</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         19 :     while (it.hasNext()) {</span>
 <span class="lineNum">      40 </span>                :            :         it.next();
 <span class="lineNum">      41 </span>                :            :         QSharedPointer&lt;QPixmap&gt; delHash =
-<span class="lineNum">      42 </span>                :<span class="lineCov">          5 :                 QSharedPointer&lt;QPixmap&gt;::create(SelectItem::myBounds);</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">         10 :         delHash-&gt;fill(Qt::transparent);</span>
-<span class="lineNum">      44 </span>                :<span class="lineCov">         15 :         it.value()-&gt;deletePoints(point, point, myPen, delHash);</span>
-<span class="lineNum">      45 </span>                :<span class="lineCov">         10 :         undoMap-&gt;insert(it.value(), delHash);</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">          7 :                 QSharedPointer&lt;QPixmap&gt;::create(SelectItem::myBounds);</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">         14 :         delHash-&gt;fill(Qt::transparent);</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">         21 :         it.value()-&gt;deletePoints(point, point, myPen, delHash);</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">         14 :         undoMap-&gt;insert(it.value(), delHash);</span>
 <span class="lineNum">      46 </span>                :            :     }
-<span class="lineNum">      47 </span>                :<span class="lineCov">          4 :     deleteList = QVector&lt;int&gt;();</span>
-<span class="lineNum">      48 </span>                :<span class="lineCov">          4 :     mytype = SelectItem::Freeerase;</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">          6 :     deleteList = QVector&lt;int&gt;();</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">          6 :     mytype = SelectItem::Freeerase;</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">      50 </span>                :            : 
 <span class="lineNum">      51 </span>                :            : /*!
 <a name="52"><span class="lineNum">      52 </span>                :            :   Destructor</a>
@@ -136,17 +136,17 @@
 <span class="lineNum">      58 </span>                :            : /*!
 <span class="lineNum">      59 </span>                :            :   \reimp
 <span class="lineNum">      60 </span>                :            :   */
-<span class="lineNum">      61 </span>                :<span class="lineCov">          8 : void FreeDrawErase::moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) {</span>
-<span class="lineNum">      62 </span>                :<span class="lineCov">          8 :     EraseMapIterator it((*undoMap));</span>
-<span class="lineNum">      63 </span>                :<span class="lineCov">         18 :     while (it.hasNext()) {</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">         12 : void FreeDrawErase::moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) {</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">         12 :     EraseMapIterator it((*undoMap));</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">         26 :     while (it.hasNext()) {</span>
 <span class="lineNum">      64 </span>                :            :         it.next();
-<span class="lineNum">      65 </span>                :<span class="lineCov">         30 :         it.key()-&gt;deletePoints(oldPos, newPos, myPen, it.value());</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">         42 :         it.key()-&gt;deletePoints(oldPos, newPos, myPen, it.value());</span>
 <span class="lineNum">      66 </span>                :            :     }
-<span class="lineNum">      67 </span>                :<span class="lineCov">          8 :     lastPoint = newPos.toPoint();</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">         12 :     lastPoint = newPos.toPoint();</span>
 <span class="lineNum">      68 </span>                :            : #ifndef TEST
 <a name="69"><span class="lineNum">      69 </span>                :            :     deleteList.clear();</a>
 <span class="lineNum">      70 </span>                :            : #endif
-<span class="lineNum">      71 </span>                :<span class="lineCov">         11 : }</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">         15 : }</span>
 <span class="lineNum">      72 </span>                :            : /*------------------------- End Overrides ----------------------*/
 <span class="lineNum">      73 </span>                :            : 
 <span class="lineNum">      74 </span>                :            : 

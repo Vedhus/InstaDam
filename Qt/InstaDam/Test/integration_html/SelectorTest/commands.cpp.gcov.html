@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:19:13</td>
+            <td class="headerValue">2019-04-12 11:58:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">22</td>
@@ -104,19 +104,19 @@
 <span class="lineNum">      26 </span>                :            :   and/or redone. \a parent refers to parent QUndoCommand, if any.
 <a name="27"><span class="lineNum">      27 </span>                :            : </a>
 <span class="lineNum">      28 </span>                :            :  */
-<span class="lineNum">      29 </span>                :<span class="lineCov">         16 : AddCommand::AddCommand(SelectItem *item,</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">         28 : AddCommand::AddCommand(SelectItem *item,</span>
 <span class="lineNum">      30 </span>                :            :                        PhotoScene *scene, QUndoCommand *parent)
-<span class="lineNum">      31 </span>                :<span class="lineCov">         16 :     : QUndoCommand(parent) {</span>
-<span class="lineNum">      32 </span>                :<span class="lineCov">         16 :     myScene = scene;</span>
-<span class="lineNum">      33 </span>                :<span class="lineCov">         16 :     myItem = item;</span>
-<span class="lineNum">      34 </span>                :<span class="lineCov">         16 : }</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         28 :     : QUndoCommand(parent) {</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">         28 :     myScene = scene;</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">         28 :     myItem = item;</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">         28 : }</span>
 <span class="lineNum">      35 </span>                :            : 
 <span class="lineNum">      36 </span>                :            : 
 <span class="lineNum">      37 </span>                :            : /*!
 <a name="38"><span class="lineNum">      38 </span>                :            :   Destructor</a>
 <span class="lineNum">      39 </span>                :            :   */
-<span class="lineNum">      40 </span>                :<span class="lineCov">         32 : AddCommand::~AddCommand() {</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">         32 : }</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">         56 : AddCommand::~AddCommand() {</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         56 : }</span>
 <span class="lineNum">      42 </span>                :            : 
 <span class="lineNum">      43 </span>                :            : /*!
 <a name="44"><span class="lineNum">      44 </span>                :            :    \reimp</a>
@@ -131,19 +131,19 @@
 <span class="lineNum">      53 </span>                :            : /*!
 <a name="54"><span class="lineNum">      54 </span>                :            :    \reimp</a>
 <span class="lineNum">      55 </span>                :            :  */
-<span class="lineNum">      56 </span>                :<span class="lineCov">         17 : void AddCommand::redo() {</span>
-<span class="lineNum">      57 </span>                :<span class="lineCov">         17 :     if (init) {</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">         29 : void AddCommand::redo() {</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">         29 :     if (init) {</span>
 <span class="lineNum">      58 </span>                :<span class="lineCov">          1 :         myItem-&gt;show();</span>
 <span class="lineNum">      59 </span>                :<span class="lineCov">          1 :         myItem-&gt;mirrorShow();</span>
 <span class="lineNum">      60 </span>                :<span class="lineCov">          1 :         myScene-&gt;clearSelection();</span>
 <span class="lineNum">      61 </span>                :<span class="lineCov">          1 :         myScene-&gt;update();</span>
 <span class="lineNum">      62 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
 <span class="lineNum">      63 </span>                :            :     } else {
-<span class="lineNum">      64 </span>                :<span class="lineCov">         16 :         if (myItem-&gt;getMirror() != nullptr)</span>
-<span class="lineNum">      65 </span>                :<span class="lineCov">         16 :             myItem-&gt;itemWasAdded();</span>
-<span class="lineNum">      66 </span>                :<span class="lineCov">         16 :         init = true;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">         28 :         if (myItem-&gt;getMirror() != nullptr)</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">         28 :             myItem-&gt;itemWasAdded();</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">         28 :         init = true;</span>
 <span class="lineNum">      67 </span>                :            :     }
-<span class="lineNum">      68 </span>                :<span class="lineCov">         17 : }</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">         29 : }</span>
 <span class="lineNum">      69 </span>                :            : 
 <span class="lineNum">      70 </span>                :            : /*!
 <span class="lineNum">      71 </span>                :            :   \class DeleteCommand
@@ -323,14 +323,14 @@
 <span class="lineNum">     245 </span>                :            :   the vertex can be added/removed from \a item repeatedly. \a parent refers
 <a name="246"><span class="lineNum">     246 </span>                :            :   to parent QUndoCommand, if any.</a>
 <span class="lineNum">     247 </span>                :            :  */
-<span class="lineNum">     248 </span>                :<span class="lineCov">         20 : AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,</span>
+<span class="lineNum">     248 </span>                :<span class="lineCov">         32 : AddVertexCommand::AddVertexCommand(SelectItem *item, const QPointF point,</span>
 <span class="lineNum">     249 </span>                :            :                                    QUndoCommand *parent)
-<span class="lineNum">     250 </span>                :<span class="lineCov">         10 :     : QUndoCommand(parent) {</span>
-<span class="lineNum">     251 </span>                :<span class="lineCov">         10 :     myItem = item;</span>
-<span class="lineNum">     252 </span>                :<span class="lineCov">         10 :     myPoint = point;</span>
-<span class="lineNum">     253 </span>                :<span class="lineCov">         10 :     vertex = item-&gt;getActiveVertex();</span>
+<span class="lineNum">     250 </span>                :<span class="lineCov">         16 :     : QUndoCommand(parent) {</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">         16 :     myItem = item;</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">         16 :     myPoint = point;</span>
+<span class="lineNum">     253 </span>                :<span class="lineCov">         16 :     vertex = item-&gt;getActiveVertex();</span>
 <span class="lineNum">     254 </span>                :            :     init = false;
-<span class="lineNum">     255 </span>                :<span class="lineCov">         10 : }</span>
+<span class="lineNum">     255 </span>                :<span class="lineCov">         16 : }</span>
 <span class="lineNum">     256 </span>                :            : 
 <span class="lineNum">     257 </span>                :            : /*!
 <a name="258"><span class="lineNum">     258 </span>                :            :    \reimp</a>
@@ -345,17 +345,17 @@
 <span class="lineNum">     267 </span>                :            : /*!
 <a name="268"><span class="lineNum">     268 </span>                :            :    \reimp</a>
 <span class="lineNum">     269 </span>                :            :  */
-<span class="lineNum">     270 </span>                :<span class="lineCov">         11 : void AddVertexCommand::redo() {</span>
-<span class="lineNum">     271 </span>                :<span class="lineCov">         11 :     if (init) {</span>
+<span class="lineNum">     270 </span>                :<span class="lineCov">         17 : void AddVertexCommand::redo() {</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">         17 :     if (init) {</span>
 <span class="lineNum">     272 </span>                :<span class="lineCov">          1 :         myItem-&gt;setActiveVertex(SelectItem::UNSELECTED);</span>
 <span class="lineNum">     273 </span>                :<span class="lineCov">          1 :         myItem-&gt;insertVertex(vertex - 1, myPoint);</span>
 <span class="lineNum">     274 </span>                :<span class="lineCov">          1 :         myItem-&gt;scene()-&gt;update();</span>
 <span class="lineNum">     275 </span>                :<span class="lineCov">          1 :         myItem-&gt;updateMirrorScene();</span>
 <span class="lineNum">     276 </span>                :<span class="lineCov">          1 :         myItem-&gt;resetState();</span>
 <span class="lineNum">     277 </span>                :            :     } else {
-<span class="lineNum">     278 </span>                :<span class="lineCov">         10 :         init = true;</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">         16 :         init = true;</span>
 <span class="lineNum">     279 </span>                :            :     }
-<span class="lineNum">     280 </span>                :<span class="lineCov">         11 : }</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">         17 : }</span>
 <span class="lineNum">     281 </span>                :            : 
 <span class="lineNum">     282 </span>                :            : /*!
 <span class="lineNum">     283 </span>                :            :   \class DeleteVertexCommand
@@ -423,15 +423,15 @@
 <span class="lineNum">     345 </span>                :            :   points from this \a item can be undone/redone. \a parent refers to parent
 <a name="346"><span class="lineNum">     346 </span>                :            :   QUndoCommand, if any.</a>
 <span class="lineNum">     347 </span>                :            :  */
-<span class="lineNum">     348 </span>                :<span class="lineCov">          4 : ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene,</span>
+<span class="lineNum">     348 </span>                :<span class="lineCov">          6 : ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene,</span>
 <span class="lineNum">     349 </span>                :            :                                        PhotoScene *maskScene,
 <span class="lineNum">     350 </span>                :            :                                        QUndoCommand *parent)
-<span class="lineNum">     351 </span>                :<span class="lineCov">          4 :     : QUndoCommand(parent) {</span>
-<span class="lineNum">     352 </span>                :<span class="lineCov">          4 :     myItem = item;</span>
-<span class="lineNum">     353 </span>                :<span class="lineCov">          4 :     myScene = scene;</span>
-<span class="lineNum">     354 </span>                :<span class="lineCov">          4 :     myMask = maskScene;</span>
-<span class="lineNum">     355 </span>                :<span class="lineCov">          4 :     myPen.setColor(Qt::transparent);</span>
-<span class="lineNum">     356 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     351 </span>                :<span class="lineCov">          6 :     : QUndoCommand(parent) {</span>
+<span class="lineNum">     352 </span>                :<span class="lineCov">          6 :     myItem = item;</span>
+<span class="lineNum">     353 </span>                :<span class="lineCov">          6 :     myScene = scene;</span>
+<span class="lineNum">     354 </span>                :<span class="lineCov">          6 :     myMask = maskScene;</span>
+<span class="lineNum">     355 </span>                :<span class="lineCov">          6 :     myPen.setColor(Qt::transparent);</span>
+<span class="lineNum">     356 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">     357 </span>                :            : 
 <span class="lineNum">     358 </span>                :            : /*!
 <a name="359"><span class="lineNum">     359 </span>                :            :    \reimp</a>
@@ -448,19 +448,19 @@
 <span class="lineNum">     370 </span>                :            : /*!
 <a name="371"><span class="lineNum">     371 </span>                :            :    \reimp</a>
 <span class="lineNum">     372 </span>                :            :  */
-<span class="lineNum">     373 </span>                :<span class="lineCov">          5 : void ErasePointsCommand::redo() {</span>
-<span class="lineNum">     374 </span>                :<span class="lineCov">          5 :     if (init) {</span>
+<span class="lineNum">     373 </span>                :<span class="lineCov">          7 : void ErasePointsCommand::redo() {</span>
+<span class="lineNum">     374 </span>                :<span class="lineCov">          7 :     if (init) {</span>
 <span class="lineNum">     375 </span>                :<span class="lineCov">          3 :         EraseMapIterator it((*myItem-&gt;getMap()));</span>
 <span class="lineNum">     376 </span>                :<span class="lineCov">          4 :         while (it.hasNext()) {</span>
 <span class="lineNum">     377 </span>                :            :             it.next();
 <span class="lineNum">     378 </span>                :<span class="lineCov">          6 :             it.key()-&gt;deletePoints(myPen, it.value());</span>
 <span class="lineNum">     379 </span>                :            :         }
 <span class="lineNum">     380 </span>                :            :     } else {
-<span class="lineNum">     381 </span>                :<span class="lineCov">          4 :         init = true;</span>
+<span class="lineNum">     381 </span>                :<span class="lineCov">          6 :         init = true;</span>
 <span class="lineNum">     382 </span>                :            :     }
-<span class="lineNum">     383 </span>                :<span class="lineCov">          5 :     myScene-&gt;update();</span>
-<span class="lineNum">     384 </span>                :<span class="lineCov">          5 :     myMask-&gt;update();</span>
-<span class="lineNum">     385 </span>                :<span class="lineCov">          5 : }</span>
+<span class="lineNum">     383 </span>                :<span class="lineCov">          7 :     myScene-&gt;update();</span>
+<span class="lineNum">     384 </span>                :<span class="lineCov">          7 :     myMask-&gt;update();</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">          7 : }</span>
 <span class="lineNum">     386 </span>                :            : 
 <span class="lineNum">     387 </span>                :            : /*!
 <span class="lineNum">     388 </span>                :            :   \class RotateCommand

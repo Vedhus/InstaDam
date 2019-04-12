@@ -8,16 +8,13 @@
 #include <sys/stat.h>
 
 void IntegrationTest::init() {
-    std::cout << std::endl <<  "INIT ---------------------------------" << std::endl;
     idm = new InstaDam();
     idm->runningLocally = true;
 }
 
 void IntegrationTest::clear() {
-    std::cout << "CLEAR ++++++++++++" << std::endl;
     struct stat info;
     if (stat( "annotations", &info) == 0) {
-        std::cout << "       DONE " << std::endl;
         char oldname[] = "annotations";
         std::string newname = "annot_" + std::to_string(count);
         count++;
@@ -48,7 +45,6 @@ void IntegrationTest::initTestCase() {
 
 void IntegrationTest::cleanup() {
     delete idm;
-    std::cout << "========================================================" << std::endl;
 }
 
 void IntegrationTest::makeMouseDownEvent(QPointF point, Qt::MouseButton button,
@@ -395,12 +391,89 @@ void IntegrationTest::testAnnotateModify() {
                                                            2))->getPixmap().toImage());
 }
 
-void IntegrationTest::testSaveAndNext() {
+void IntegrationTest::testClickButtons() {
+    clickEllipseSelect();
+    clickRectangleSelect();
+    clickEllipseSelect();
+    clickFreeDrawSelect();
+    clickEllipseSelect();
+    clickFreeDrawSelect();
+    clickEllipseSelect();
+    clickPolygonSelect();
+    clickEllipseSelect();
+    clickPolygonSelect();
+    clickRectangleSelect();
+    clickPolygonSelect();
+    clickFreeDrawSelect();
+    clickPolygonSelect();
+    clickFreeDrawSelect();
+    clickRectangleSelect();
+    clickFreeDrawSelect();
+}
 
+void IntegrationTest::testSaveAndNext() {
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/projectTest/horsehead.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+
+    QCOMPARE(idm->currentProject->numLabels(), 4);
+
+    clickLabel("Test2");
+    clickRectangleSelect();
+    draw(rect1, rect2);
+    QCOMPARE(idm->currentLabel->rectangleObjects.size(), 2);
+    idm->currentLabel->setOpacity(15);
+    QCOMPARE(getItem(SelectItem::Rectangle)->opacity(), .15);
+    QCOMPARE(getItem(SelectItem::Rectangle, 2)->opacity(), .15);
+
+    clickSaveAndNext();
+    QCOMPARE(idm->currentProject->numLabels(), 4);
+    for (int i = 0; i < idm->currentProject->numLabels(); i++) {
+        clickLabel(idm->currentProject->getLabel(i)->getText());
+        QCOMPARE(idm->currentLabel->rectangleObjects.size(), 0);
+        QCOMPARE(idm->currentLabel->ellipseObjects.size(), 0);
+        QCOMPARE(idm->currentLabel->polygonObjects.size(), 0);
+        QCOMPARE(idm->currentLabel->freeDrawObjects.size(), 0);
+    }
+
+    clickEllipseSelect();
+    draw(ellipse1, ellipse2);
+    QCOMPARE(idm->currentLabel->ellipseObjects.size(), 1);
+
+    clickSaveAndBack();
+    QCOMPARE(idm->currentProject->numLabels(), 4);
+    clickLabel("Test2");
+    QCOMPARE(idm->currentLabel->rectangleObjects.size(), 2);
+    QCOMPARE(idm->currentLabel->rectangleObjects.size(), 2);
 }
 
 void IntegrationTest::testExport() {
+    setup();
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
 
+    drawObjects();
+    idm->exportImages(false);
+}
+
+void IntegrationTest::testExportZip() {
+    setup();
+    char currentPath[FILENAME_MAX];
+    getcwd( currentPath, FILENAME_MAX );
+    std::string sPath(currentPath);
+    std::string fn = "/testImg1.jpg";
+    idm->setImgInName((sPath + fn).c_str());
+    idm->on_actionOpen_File_triggered();
+
+    drawObjects();
+    idm->on_actionExport_zip_triggered();
 }
 
 QTEST_MAIN(IntegrationTest)
