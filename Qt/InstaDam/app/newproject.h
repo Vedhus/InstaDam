@@ -50,11 +50,6 @@ class newproject : public QDialog {
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
-//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-//    QNetworkReply *rep;
-//    int backendId;
-//    void replyFinished();
-//    void labelReplyFinished();
 
 #ifdef WASM_BUILD
     ColorDialog *colorDialog;

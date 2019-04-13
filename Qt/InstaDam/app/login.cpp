@@ -27,6 +27,9 @@
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
+    this->firstUserNameModification = true;
+    this->firstPasswrdModification = true;
+    this->firstURLModification = true;
 }
 
 /*!
@@ -135,15 +138,24 @@ void Login::on_pushButton_4_clicked() {
 
 void Login::on_username_selectionChanged()
 {
-    ui->username->clear();
+//    if(this->firstUserNameModification){
+//        ui->username->clear();
+//        this->firstUserNameModification=false;
+//    }
 }
 
 void Login::on_password_textChanged()
 {
-    ui->password->clear();
+//    if(this->firstPasswrdModification){
+//        ui->password->clear();
+//        this->firstPasswrdModification=false;
+//    }
 }
 
 void Login::on_url_textChanged()
 {
-    ui->url->clear();
+//    if(this->firstURLModification){
+//        ui->url->clear();
+//        this->firstURLModification=false;
+//    }
 }

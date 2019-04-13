@@ -42,6 +42,9 @@ private:
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QByteArray accessToken;
     QString databaseURL;
+    bool firstUserNameModification;
+    bool firstPasswrdModification;
+    bool firstURLModification;
 };
 
 #endif // LOGIN_H

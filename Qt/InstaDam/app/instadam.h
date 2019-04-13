@@ -76,6 +76,7 @@ class InstaDam : public QMainWindow {
     void clearLayout(QLayout * layout);
     void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
+    void setButtonsConfiguration();
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     ImageList* il;
@@ -204,6 +205,7 @@ public slots:
     SelectItem *mirrorItem;
     SelectItem *maskItem;
 
+    serverProjectName *sProjectName;
     QString accessToken;
     QString databaseURL;
     QNetworkReply *rep;
@@ -223,7 +225,6 @@ public slots:
     void revert();
     void listProjects();
     void projectsReplyFinished();
-    serverProjectName *sProjectName;
 };
 
 #endif  // INSTADAM_H

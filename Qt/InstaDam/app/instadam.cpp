@@ -22,7 +22,6 @@
 #include "Selector/commands.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
-#include "startingwidget.h"
 #include "imagelist.h"
 #include "ui_addusertoproject.h"
 #include "addusertoproject.h"
@@ -158,11 +157,6 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
-#ifndef TEST
-    StartingWidget *sw = new StartingWidget;
-    sw->show();
-#endif
-
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
             QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName) {
@@ -207,6 +201,13 @@ InstaDam::~InstaDam() {
 /*!
   Sets the current project to the newly created project.
   */
+
+void InstaDam::setButtonsConfiguration(){
+    qInfo() << this->runningLocally;
+    if(this->runningLocally){
+        this->ui->menuUser->setEnabled(false);
+    }
+}
 void InstaDam::setNewProject() {
     currentProject = newProject->newPr;
     setLabels();

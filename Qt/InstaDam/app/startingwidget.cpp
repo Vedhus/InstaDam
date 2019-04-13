@@ -35,8 +35,9 @@ void StartingWidget::runLocalVersion() {
     qInfo() << "running locally";
     InstaDam *w = new InstaDam;
     w->runningLocally = true;
+    w->setButtonsConfiguration();
     w->show();
-    on_pushButton_3_clicked();
+    close();
 }
 
 /*!
@@ -46,7 +47,7 @@ void StartingWidget::runServerVersion() {
     qInfo() << "running on a server";
     Login *log = new Login;
     log->show();
-    on_pushButton_3_clicked();
+    close();
 }
 
 /*!
@@ -61,11 +62,4 @@ void StartingWidget::on_pushButton_clicked() {
   */
 void StartingWidget::on_pushButton_2_clicked() {
     runServerVersion();
-}
-
-/*!
-  Responds to the widget closing.
-  */
-void StartingWidget::on_pushButton_3_clicked() {
-    close();
 }
