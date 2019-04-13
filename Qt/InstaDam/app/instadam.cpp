@@ -206,6 +206,7 @@ void InstaDam::setButtonsConfiguration(){
     qInfo() << this->runningLocally;
     if(this->runningLocally){
         this->ui->menuUser->setEnabled(false);
+        this->ui->actionDelete_2->setEnabled(false);
     }
 }
 void InstaDam::setNewProject() {
@@ -349,6 +350,7 @@ void InstaDam::on_actionOpen_triggered() {
         }
     }
     else{
+        this->projecListUseCase = "OPEN";
         InstaDam::listProjects();
     }
 #endif
@@ -1727,6 +1729,12 @@ void InstaDam::on_actionUpdate_Privilege_triggered()
 
 
 void InstaDam::listProjects() {
+    if(this->projecListUseCase=="DELETE"){
+        QMessageBox msgBox;
+        msgBox.setText("Please note that deleting a project is irreversible");
+        msgBox.exec();
+    }
+
     QString databaseProjectsURL = this->databaseURL+"/projects";
     QUrl dabaseLink = QUrl(databaseProjectsURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
@@ -1750,6 +1758,7 @@ void InstaDam::projectsReplyFinished() {
         QJsonObject obj = jsonReply.object();
         ProjectList *pl = new ProjectList;
         pl->instadam = this;
+        pl->useCase = this->projecListUseCase;
         pl->show();
         pl->addItems(jsonReply, this->databaseURL, this->accessToken);
     }
@@ -1839,3 +1848,9 @@ void InstaDam::labelReplyFinished()
     }
 }
 
+
+void InstaDam::on_actionDelete_2_triggered()
+{
+    this->projecListUseCase = "DELETE";
+    InstaDam::listProjects();
+}

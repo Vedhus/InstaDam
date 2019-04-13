@@ -53,6 +53,7 @@ public:
     QAction *openAnnotations;
     QAction *actionSearch;
     QAction *actionUpdate_Privilege;
+    QAction *actionDelete_2;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -170,6 +171,8 @@ public:
         actionSearch->setObjectName(QStringLiteral("actionSearch"));
         actionUpdate_Privilege = new QAction(InstaDam);
         actionUpdate_Privilege->setObjectName(QStringLiteral("actionUpdate_Privilege"));
+        actionDelete_2 = new QAction(InstaDam);
+        actionDelete_2->setObjectName(QStringLiteral("actionDelete_2"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -587,6 +590,7 @@ public:
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
+        menuProject->addAction(actionDelete_2);
         menuUser->addAction(actionSearch);
         menuUser->addAction(actionUpdate_Privilege);
 
@@ -626,6 +630,7 @@ public:
         openAnnotations->setText(QApplication::translate("InstaDam", "Open", nullptr));
         actionSearch->setText(QApplication::translate("InstaDam", "Search", nullptr));
         actionUpdate_Privilege->setText(QApplication::translate("InstaDam", "Update Privilege", nullptr));
+        actionDelete_2->setText(QApplication::translate("InstaDam", "Delete", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));

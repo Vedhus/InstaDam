@@ -19,10 +19,12 @@ public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
      InstaDam *instadam;
+     QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
 public slots:
     void openProject(QListWidgetItem *);
+    void deleteProject(QListWidgetItem *);
 
 private:
     Ui::ProjectList *ui;
@@ -32,6 +34,7 @@ private:
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkReply *rep;
     void getLabelsReplyFinished();
+    void deleteReplyFinished();
 };
 
 #endif // PROJECTLIST_H

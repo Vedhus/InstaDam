@@ -846,6 +846,7 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionDelete_2"/>
    </widget>
    <widget class="QMenu" name="menuUser">
     <property name="title">
@@ -946,6 +947,11 @@
   <action name="actionUpdate_Privilege">
    <property name="text">
     <string>Update Privilege</string>
+   </property>
+  </action>
+  <action name="actionDelete_2">
+   <property name="text">
+    <string>Delete</string>
    </property>
   </action>
  </widget>

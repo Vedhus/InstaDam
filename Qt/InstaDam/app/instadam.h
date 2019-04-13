@@ -132,12 +132,12 @@ class InstaDam : public QMainWindow {
 #ifdef TEST
     friend class IntegrationTest;
 #endif
+    void on_actionDelete_2_triggered();
+
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
-
-
 
  private:
 #ifdef WASM_BUILD
@@ -208,6 +208,7 @@ public slots:
     serverProjectName *sProjectName;
     QString accessToken;
     QString databaseURL;
+    QString projecListUseCase;
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     Qt::PenCapStyle brushMode = Qt::RoundCap;

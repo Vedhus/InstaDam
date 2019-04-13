@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QUrlQuery>
 #include <QjsonArray>
+#include <QMessageBox>
 
 
 AddUserToProject::AddUserToProject(QWidget *parent) :
@@ -156,8 +157,10 @@ void AddUserToProject::privilegeReplyFinished(){
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
     } else {
-//    if (jsonError.error == QJsonParseError::NoError) {
         QJsonObject obj = jsonReply.object();
         qInfo() << obj;
+        QMessageBox msgBox;
+        msgBox.setText("User privileges were updated successfully");
+        msgBox.exec();
     }
 }

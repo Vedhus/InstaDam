@@ -5268,7 +5268,6 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		C:/Qt/5.11.3/mingw53_32/include/QtCore/QDateTime \
 		../../InstaDam/quazip/quazipfile.h \
 		../../InstaDam/quazip/quazipnewinfo.h \
-		../../InstaDam/app/startingwidget.h \
 		ui_addusertoproject.h \
 		C:/Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidget \
 		C:/Qt/5.11.3/mingw53_32/include/QtWidgets/qlistwidget.h \

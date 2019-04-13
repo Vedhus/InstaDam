@@ -73,7 +73,12 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 
                     }
                ui->projectsTable->addItem(proj_details.join(" - "));
-               connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+               if(this->useCase=="OPEN"){
+                    connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+                }
+               else if (this->useCase=="DELETE") {
+                   connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
+                }
             }
             else{
                 qInfo() << "The returned object does not satisfy the requirements";
@@ -86,14 +91,11 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
   Opens the Project based on \a project_name.
   */
 void ProjectList::openProject(QListWidgetItem *project_name) {
-    qInfo() << "inside open a new project" << project_name->text();
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
-    qInfo() << id;
     selectedProject = id.toInt();
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
-    qInfo() << databaseGetProjectURL;
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
@@ -119,6 +121,35 @@ void ProjectList::getLabelsReplyFinished() {
               this->instadam->loadLabelJson(jsonLabels, PROJECT);
               this->instadam->setCurrentProjectId(selectedProject);
               this->hide();
+      }
+}
+
+void ProjectList::deleteProject(QListWidgetItem *project_name) {
+    QString id = QString(project_name->text().split('-')[0]);
+    id.replace(" ", "");
+    selectedProject = id.toInt();
+    QString databaseGetProjectURL = this->databaseURL+"/project/"+id;
+    QUrl dabaseLink = QUrl(databaseGetProjectURL);
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    rep = manager->deleteResource(req);
+    connect(rep, &QNetworkReply::finished,
+            this, &ProjectList::deleteReplyFinished);
+}
+
+void ProjectList::deleteReplyFinished() {
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    }  else {
+            this->hide();
+            QMessageBox msgBox;
+            msgBox.setText("The project has been successfully deleted");
+            msgBox.exec();
       }
 }
 
