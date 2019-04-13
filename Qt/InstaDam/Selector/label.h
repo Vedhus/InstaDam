@@ -23,12 +23,11 @@ class Label: public QEnableSharedFromThis<Label>{
     Label(const QJsonObject &json, int, bool=false);
 
     ~Label();
-    void setId(int j);
-
+    void setId(int);
     QColor getColor() const;
-
     void setColor(QColor col);
     QString getText() const;
+    int getId();
 
     void setText(const QString tx);
 
@@ -46,7 +45,6 @@ class Label: public QEnableSharedFromThis<Label>{
     void clear();
     void read(const QJsonObject &json);
     void readServer(const QJsonObject &json);
-    //void readIdantn(const QJsonObject &json);
     void write(QJsonObject &json) const;
     void writeIdantn(QJsonObject &json) const;
     QPixmap exportLabel(const QSize &rect) const;

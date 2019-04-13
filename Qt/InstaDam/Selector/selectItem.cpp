@@ -128,6 +128,7 @@ void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint) {
             rect.setBottomLeft(newPoint);
         }
     }
+    activePoint = newPoint;
     QPointF tlc = rect.topLeft();
     QPointF brc = rect.bottomRight();
     if (tlc.y() > brc.y()) {

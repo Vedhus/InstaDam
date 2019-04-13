@@ -22,8 +22,13 @@
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newproject) {
+#ifndef TEST
     ui->setupUi(this);
     this->newPr = new Project();
+#else
+    this->newPr = new Project();
+
+#endif
 }
 
 /*!
@@ -47,12 +52,13 @@ void newproject::nameAcceptClicked() {
   Processes a button click.
   */
 void newproject::on_pushButton_clicked() {
+#ifndef TEST
     QDialog *dialog = new QDialog(this);
     labelDialog = new Ui::labelDialog;
     labelDialog->setupUi(dialog);
 #ifdef WASM_BUILD
     connect(dialog, SIGNAL(accepted()), this, SLOT(nameAcceptClicked()));
-#endif
+#endif  // WASM_BUILD
     dialog->exec();
 #ifndef WASM_BUILD
     if (dialog->result() == Accepted) {
@@ -60,12 +66,16 @@ void newproject::on_pushButton_clicked() {
         QColor color = QColorDialog::getColor(Qt::black, this,
                                               "Pick label color",
                                               QColorDialog::DontUseNativeDialog);
-#else
+#else  // WASM_BUILD
 }
 
 void newproject::colorPicked(const QColor &oldcolor) {
     QColor color = colorDialog->selectedColor();
-#endif
+#endif  // WASM_BUILD
+#else  // TEST
+    QColor color = mycolor;
+    {
+#endif  //TEST
         if (color.isValid()) {
             QSharedPointer<Label> lb = QSharedPointer<Label>::create();
             lb->setText(tempName);

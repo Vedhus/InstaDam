@@ -2,7 +2,6 @@
 #include <QGraphicsScene>
 #include <QJsonArray>
 #include <algorithm>
-#include <iostream>
 
 #include "polygonSelect.h"
 #include "label.h"
@@ -97,7 +96,9 @@ void PolygonSelect::addPoint(QPointF &point, const int vertex) {
         myPoints.insert(vertex, point);
         myVertices.insert(vertex, makeVertex(point));
         setActiveVertex(vertex);
+        activePoint = point;
         refresh();
+        pointAdded = true;
         setMirrorVertex(vertex);
     } else if (getActiveVertex() != UNSELECTED) {
         movePoint(point);
@@ -111,6 +112,7 @@ void PolygonSelect::addPoint(QPointF &point, const int vertex) {
         myPoints.push_back(point);
         polygon << polygon[0];
         polygon[activeVertex] = point;
+        pointAdded = true;
 
         myVertices.push_back(makeVertex(point));
     }
@@ -135,6 +137,7 @@ void PolygonSelect::clickPoint(const QPointF &point) {
     active = true;
     selected = true;
     activeVertex = UNSELECTED;
+    activePoint = QPointF(0.,0.);
 
     for (int i = 0; i < myVertices.size(); i++) {
         if (isInsideRect(myVertices[i], point)) {
@@ -142,7 +145,6 @@ void PolygonSelect::clickPoint(const QPointF &point) {
             setMirrorVertex(i);
             activePoint = myPoints[i];
             setMirrorActivePoint(myPoints[i]);
-            pointAdded = true;
             break;
         }
     }
@@ -155,7 +157,9 @@ void PolygonSelect::insertVertex(const int vertex, const QPointF &point) {
     myPoints.insert(vertex + 1, point);
     myVertices.insert(vertex + 1, makeVertex(point));
     refresh();
+    pointAdded = true;
     setActiveVertex(vertex + 1);
+    activePoint = point;
     setMirrorPolygon(vertex + 1);
 }
 
@@ -211,10 +215,11 @@ void PolygonSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         setPolygon(polygon);
         setMirrorPolygon(UNSELECTED);
     } else {
-        resized = pointAdded;
+        resized = true;
         setMirrorResized();
-        checkPoint(newPos);
-        movePoint(newPos);
+        QPointF shift = myPoints[activeVertex] + (newPos - oldPos);
+        checkPoint(shift);
+        movePoint(shift);
     }
 }
 
@@ -268,7 +273,9 @@ void PolygonSelect::read(const QJsonObject &json) {
   \reimp
   */
 void PolygonSelect::removeVertex(int vertex) {
-    if (vertex == UNSELECTED) {
+    if (activeVertex != UNSELECTED) {
+        vertex = activeVertex;
+    } else if (vertex == UNSELECTED) {
         vertex = myPoints.size() - 1;
         if (vertex < 0) {
             vertex = 0;
@@ -278,6 +285,7 @@ void PolygonSelect::removeVertex(int vertex) {
     myVertices.removeAt(vertex);
     refresh();
     setActiveVertex(UNSELECTED);
+    activePoint = QPointF(0., 0.);
     setMirrorPolygon(UNSELECTED);
 }
 
@@ -286,6 +294,7 @@ void PolygonSelect::removeVertex(int vertex) {
   */
 void PolygonSelect::resetActiveVertex() {
     setActiveVertex(UNSELECTED);
+    activePoint = QPointF(0., 0.);
 }
 
 /*!
@@ -388,8 +397,10 @@ void PolygonSelect::setMirrorResized() const {
   \reimp
   */
 void PolygonSelect::setMirrorVertex(int vertex) const {
-    if (mirror != nullptr)
+    if (mirror != nullptr) {
         mirror->setActiveVertex(vertex);
+        mirror->activePoint = activePoint;
+    }
 }
 
 /*!
@@ -467,6 +478,7 @@ void PolygonSelect::setMirrorPolygon(int actVert) {
     if (mirror != nullptr) {
         mirror->setPolygon(polygon);
         mirror->setActiveVertex(actVert);
+        mirror->activePoint = activePoint;
         mirror->myPoints = myPoints;
         mirror->myVertices = myVertices;
         mirror->QGraphicsPolygonItem::prepareGeometryChange();

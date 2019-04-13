@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # ${1} is the directory containing the .gcno files (%{buildDir} in Qt Creator)
-
+make distclean
+qmake5 InstaDamTest.pro
+make -j12
 LCOV=lcov
 GENHTML=genhtml
 #BROWSER="/usr/bin/opera"

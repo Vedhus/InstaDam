@@ -28,6 +28,7 @@ private:
     Ui::ProjectList *ui;
     QString databaseURL;
     QString accessToken;
+    int selectedProject = -1;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkReply *rep;
     void getLabelsReplyFinished();

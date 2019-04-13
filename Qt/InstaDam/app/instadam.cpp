@@ -158,6 +158,10 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
+#ifndef TEST
+    StartingWidget *sw = new StartingWidget;
+    sw->show();
+#endif
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
@@ -238,6 +242,7 @@ void InstaDam::setLabels() {
 
         labelButtons.push_back(button);
     }
+    setCurrentLabel(currentProject->getLabel(0));
 }
 
 /*!
@@ -246,9 +251,17 @@ void InstaDam::setLabels() {
 void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
+#ifndef TEST
     newProject->setModal(true);
     connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
     newProject->exec();
+#else
+    QHashIterator<QString, QColor> it(labelHash);
+    while (it.hasNext()) {
+        it.next();
+        newProject->setLabel(it.key(), it.value());
+    }
+#endif
     setNewProject();
 }
 
@@ -263,8 +276,8 @@ void InstaDam::setCurrentLabel(LabelButton *button) {
  Sets the \a currentLabel to the Label \a label
   */
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
-    if (currentLabel == label)
-        return;
+//    if (currentLabel == label)
+//        return;
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
             labelButtons[i]->setChecked(false);
@@ -313,8 +326,13 @@ void InstaDam::on_actionOpen_triggered() {
 #else
     if(this->runningLocally){
         // Reading and Loading
-        QString myfileName = QFileDialog::getOpenFileName(this,
-            tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+        #ifndef TEST
+            QString myfileName = QFileDialog::getOpenFileName(this,
+                tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+        #else
+            QString myfileName = prjInName;
+
+        #endif
         if (myfileName.isEmpty()) {
                 return;  // remove that part and add an alert
         } else {
@@ -426,31 +444,35 @@ void InstaDam::on_actionSave_Annotation_triggered() {
  Saves the current project to disk or the server.
   */
 void InstaDam::on_actionSave_triggered() {
-    if(this->runningLocally){
-        // Saving the file
-        #ifdef WASM_BUILD
-            QByteArray outFile;
-        #else
-            QString outFileName = QFileDialog::getSaveFileName(this,
-                   tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-            if (QFileInfo(outFileName).suffix() != QString("idpro"))
-                outFileName = outFileName +QString(".idpro");
+if(this->runningLocally){
+    // Saving the file
+    #ifdef WASM_BUILD
+        QByteArray outFile;
+    #else  // WASM_BUILD
+    #ifndef TEST
+        QString outFileName = QFileDialog::getSaveFileName(this,
+           tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+    #else  // TEST
+        QString outFileName = prjOutName;
+    #endif  // TEST
+        if (QFileInfo(outFileName).suffix() != QString("idpro"))
+            outFileName = outFileName +QString(".idpro");
 
-            QFile outFile(outFileName);
-            outFile.open(QIODevice::WriteOnly);
-        #endif
-            QJsonObject json;
-            write(json, PROJECT);
-            QJsonDocument saveDoc(json);
-        #ifdef WASM_BUILD
-            QString strJson(saveDoc.toJson(QJsonDocument::Compact));
-            outFile.append(strJson);
-            QHtml5File::save(outFile, "myproject.idpro");
+        QFile outFile(outFileName);
+        outFile.open(QIODevice::WriteOnly);
+    #endif  // WASM_BUILD
+        QJsonObject json;
+        write(json, PROJECT);
+        QJsonDocument saveDoc(json);
+    #ifdef WASM_BUILD
+        QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+        outFile.append(strJson);
+        QHtml5File::save(outFile, "myproject.idpro");
 
-        #else
-            outFile.write(saveDoc.toJson());
-        #endif
-        }
+    #else  // WASM_BUILD
+        outFile.write(saveDoc.toJson());
+    #endif  // WASM_BUILD
+    }
     else{
         this->sProjectName = new serverProjectName();
         this->sProjectName->show();
@@ -470,12 +492,11 @@ void InstaDam::fileDownloaded(QString path) {
     this->path = file.dir();
     this->oldImagesList = this->imagesList;
     this->imagesList = this->path.entryList(QStringList() << "*.jpg" << "*.JPG" << "*.png" << "*.PNG" << "*.JPEG", QDir::Files);
-    if (imagesList.empty()) {
+    if (imagesList.empty()){
         assertError("That doesn't seem to be a valid image file.");
         revert();
     } else {
         int counter = 0;
-
         foreach(QString tempFilename, imagesList) {
            QFileInfo tempInfo = QFileInfo(tempFilename);
                if (file.completeBaseName() == tempInfo.completeBaseName()) {
@@ -484,7 +505,6 @@ void InstaDam::fileDownloaded(QString path) {
               counter++;
             }
         fileId = counter;
-
         openFile_and_labels();
         QTextStream(stdout) << currentProject->numLabels() << "\n";
     }
@@ -503,7 +523,7 @@ void InstaDam::imagesReplyFinished() {
             qInfo() << "Error: " << jsonError.errorString();
       } else {
           QJsonObject obj = jsonReply.object();
-          ImageList* il = new ImageList(nullptr, this->databaseURL, this->accessToken);
+          il = new ImageList(currentProject, nullptr, this->databaseURL, this->accessToken);
           il->show();
           il->addItems(obj);
           qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
@@ -523,8 +543,13 @@ void InstaDam::on_actionOpen_File_triggered() {
         }
         openImageConnector->onActivate();
 #else
+
+#ifndef TEST
         QString filename_temp = QFileDialog::getOpenFileName(this,
             tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+#else
+        QString filename_temp = imgInName;
+#endif
         QString ext = QFileInfo(filename_temp).suffix();
         if (!ext.compare("png", Qt::CaseInsensitive) ||
             !ext.compare("jpg", Qt::CaseInsensitive) ||
@@ -549,29 +574,33 @@ void InstaDam::on_actionOpen_File_triggered() {
                     }
                     counter++;
                 }
+
                 fileId = counter;
-
                 openFile_and_labels();
-                QTextStream(stdout) << currentProject->numLabels() << "\n";
-            }
-        } else {
-            assertError("That doesn't seem to be a valid image file.");
+                QTextStream(stdout)<<currentProject->numLabels()<<"\n";
         }
-    } else {
-        QString databaseImagesURL = this->databaseURL+"/projects/1/images";
-        QUrl dabaseLink = QUrl(databaseImagesURL);
+    }
+    else {
+       assertError("That doesn't seem to be a valid image file.");
+    }
+   }
+   else
+   {
+       QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+       QUrl dabaseLink = QUrl(databaseImagesURL);
 
-        qInfo() << databaseImagesURL;
+       qInfo() << databaseImagesURL;
 
-        QNetworkRequest req = QNetworkRequest(dabaseLink);
-        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
-        // debugRequest(req);
-        rep = manager->get(req);
+       QNetworkRequest req = QNetworkRequest(dabaseLink);
+       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
 
-        connect(rep, &QNetworkReply::finished,
-                this, &InstaDam::imagesReplyFinished);
 
-        qInfo() << "waiting for the reply...";
+       rep = manager->get(req);
+
+       connect(rep, &QNetworkReply::finished,
+               this, &InstaDam::imagesReplyFinished);
+
+       qInfo() << "waiting for the reply...";
     }
 #endif
 }
@@ -663,9 +692,14 @@ void InstaDam::exportImages(bool asBuffers) {
  Displays the std::string \a errorMessage as a QMessageBox.
   */
 void InstaDam::assertError(std::string errorMessage) {
+#ifndef TEST
     QMessageBox *messageBox = new QMessageBox;
     messageBox->critical(nullptr, "Error", QString::fromStdString(errorMessage));
     messageBox->setFixedSize(500, 200);
+#else
+    assertThrown = true;
+    QTextStream(stdout) << "ERROR " << QString(errorMessage.c_str()) << endl;
+#endif
 }
 
 /*!
@@ -699,19 +733,29 @@ void InstaDam::openFile_and_labels() {
 #else
     // Open labels
     generateLabelFileName();
-    if (QFileInfo(this->annotationPath).isFile()) {
-        QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
-        QTextStream(stdout) << "\n" << this->file.baseName() << endl;
-        if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
+
+    if (runningLocally == true)
+    {
+        if (QFileInfo(this->annotationPath).isFile()) {
+            QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
+            QTextStream(stdout) << "\n" << this->file.baseName() << endl;
+            if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
+                revert();
+                return;
+            }
+            QTextStream(stdout) << "Loaded labels" << endl;;
+        } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
+            assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
             revert();
             return;
         }
-        QTextStream(stdout) << "Loaded labels" << endl;;
-    } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
-        assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-        revert();
-        return;
     }
+    else {
+        connect(il, SIGNAL(allAnnotationsLoaded(QJsonObject, fileTypes)), this, SLOT(loadLabelJson(QJsonObject, fileTypes)));
+        il->openAnnotation();
+
+    }
+
     QTextStream(stdout) << "Loading photoX" << endl;;
 
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
@@ -810,7 +854,7 @@ void InstaDam::populateSceneFromProjectLabels()
 
 /*!
  InstaDam::loadLabelFile loads the Qstring \a filename of fileTypes
- \a fileType where \fileType is either a PROJECT or ANNOTATION
+ \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 #ifdef WASM_BUILD
@@ -830,8 +874,8 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 }
 
 /*!
- InstaDam::loadLabelFile loads the json object \a json of fileTypes
- \a fileType where \fileType is either a PROJECT or ANNOTATION
+ InstaDam::loadLabelJson loads the json object \a json of fileTypes
+ \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
     currentProject = newProject->newPr;
@@ -1057,6 +1101,7 @@ void InstaDam::on_filterOptions_clicked()
  * Function to insert point between two points in the polygon.
  */
 void InstaDam::setInsert() {
+    currentItem->resetState();
     insertVertex = true;
     vertex1 = -1;
     vertex2 = -1;
@@ -1151,175 +1196,188 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
                                    const Qt::MouseButton button) {
     currentButton = button;
-    if (!item) {
-        if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
-                                SelectItem::Polygon)) {
+
+    if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
+    {
+        ctrlPanning = true;
+        ui->panButton->setChecked(ctrlPanning);
+        ui->IdmPhotoViewer->setPanMode(ctrlPanning);
+        ui->IdmMaskViewer->setPanMode(ctrlPanning);
+    }
+    if (!panning && !ctrlPanning){
+
+        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false){ //(!item)
+            if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
+                                    SelectItem::Polygon)) {
+                scene->inactiveAll();
+                maskScene->inactiveAll();
+                scene->update();
+                maskScene->update();
+                return;
+            }
+            if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
+                SelectItem::Freedraw) {
+                canDrawOnPhoto = false;
+                undoGroup->setActiveStack(tempUndoStack);
+                ui->addSelectionButton->setEnabled(true);
+                ui->cancelSelectionButton->setEnabled(true);
+            }
+
+            if (!currentLabel || button == Qt::RightButton) {
+                return;
+            }
+
+            if (currentItem && currentItem->type() == SelectItem::Polygon) {
+                if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
+                    if (abs(vertex2 - vertex1) == 1) {
+                        currentItem->insertVertex(std::min(vertex1, vertex2), pos);
+                    } else {
+                        currentItem->insertVertex(std::max(vertex1, vertex2), pos);
+                    }
+                    vertex1 = -1;
+                    vertex2 = -1;
+                    insertVertex = false;
+                    polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
+                } else {
+                    currentItem->addPoint(pos);
+                }
+                scene->update();
+                maskScene->update();
+                return;
+            }
             scene->inactiveAll();
             maskScene->inactiveAll();
-            scene->update();
-            maskScene->update();
-            return;
-        }
-        if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
-            SelectItem::Freedraw) {
-            canDrawOnPhoto = false;
-            undoGroup->setActiveStack(tempUndoStack);
-            ui->addSelectionButton->setEnabled(true);
-            ui->cancelSelectionButton->setEnabled(true);
-        }
-
-        if (!currentLabel || button == Qt::RightButton) {
-            return;
-        }
-
-        if (currentItem && currentItem->type() == SelectItem::Polygon) {
-            if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
-                if (abs(vertex2 - vertex1) == 1) {
-                    currentItem->insertVertex(std::min(vertex1, vertex2), pos);
-                } else {
-                    currentItem->insertVertex(std::max(vertex1, vertex2), pos);
-                }
-                vertex1 = -1;
-                vertex2 = -1;
-                insertVertex = false;
-                polygonSelectForm->polygonMessageBox->setPlainText(currentItem->baseInstructions());
-            } else {
-                currentItem->addPoint(pos);
-            }
-            scene->update();
-            maskScene->update();
-            return;
-        }
-        scene->inactiveAll();
-        maskScene->inactiveAll();
-        switch (currentSelectType) {
-            case SelectItem::Rectangle:
-            {
-                RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
-                RectangleSelect *mirror = new RectangleSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-            }
-                break;
-            case SelectItem::Ellipse:
-            {
-                EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
-                EllipseSelect *mirror = new EllipseSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-            }
-                break;
-            case SelectItem::Freeerase:
-            case SelectItem::Freedraw:
-            {
-                if (drawing) {
-                    FreeDrawSelect *temp = new FreeDrawSelect(pos,
-                                                              currentBrushSize,
-                                                              brushMode,
-                                                              currentLabel);
-                    FreeDrawSelect *mirror = new FreeDrawSelect(pos,
-                                                                temp->myPen);
+            switch (currentSelectType) {
+                case SelectItem::Rectangle:
+                {
+                    RectangleSelect *temp = new RectangleSelect(pos, currentLabel);
+                    RectangleSelect *mirror = new RectangleSelect(pos);
                     tempItem = temp;
                     mirrorItem = mirror;
                     mirrorItem->setLabel(currentLabel);
-                    mirrorItem->updatePen(temp->myPen);
+                    mirrorItem->updatePen(mirrorItem->myPen);
                     tempItem->setMirror(mirrorItem);
                     mirrorItem->setMirror(tempItem);
-                } else {
-                    myErase = new FreeDrawErase(pos, currentBrushSize,
-                                                brushMode, currentLabel);
-                    currentItem = myErase;
                 }
-            }
-                break;
-            case SelectItem::Polygon:
-            {
-                PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
-                PolygonSelect *mirror = new PolygonSelect(pos);
-                tempItem = temp;
-                mirrorItem = mirror;
-                mirrorItem->setLabel(currentLabel);
-                mirrorItem->updatePen(mirrorItem->myPen);
-                tempItem->setMirror(mirrorItem);
-                mirrorItem->setMirror(tempItem);
-                polygonSelectForm->finishPolygonButton->setEnabled(true);
-            }
-                break;
-        }
-        if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
-             SelectItem::Freeerase) || drawing) {
-            mirrorItem->setLabel(currentLabel);
-            mirrorItem->updatePen(tempItem->myPen);
-            scene->addItem(tempItem);
-            maskScene->addItem(mirrorItem);
-            switch (type) {
-                case PhotoScene::PHOTO_VIEWER_TYPE:
-                    currentItem = tempItem;
-                    break;
-                case PhotoScene::MASK_VIEWER_TYPE:
-                    currentItem = mirrorItem;
-                    break;
-            }
-            if (!canDrawOnPhoto)
-                maskItem = currentItem;
-        }
-        scene->update();
-        maskScene->update();
-    } else {
-        if (item->type() != currentSelectType) {
-            if (!canDrawOnPhoto)
-                return;
-            switch (item->type()) {
-                case SelectItem::Freedraw:
-                    on_freeSelectButton_clicked();
-                    break;
-                case SelectItem::Polygon:
-                    on_polygonSelectButton_clicked();
-                    polygonSelectForm->finishPolygonButton->setEnabled(true);
-                    break;
-                case SelectItem::Rectangle:
-                    on_rectangleSelectButton_clicked();
                     break;
                 case SelectItem::Ellipse:
-                    on_ellipseSelectButton_clicked();
+                {
+                     qInfo("Ellipse button was clicked0");
+                    EllipseSelect *temp = new EllipseSelect(pos, currentLabel);
+                    EllipseSelect *mirror = new EllipseSelect(pos);
+                    tempItem = temp;
+                    mirrorItem = mirror;
+                    mirrorItem->setLabel(currentLabel);
+                    mirrorItem->updatePen(mirrorItem->myPen);
+                    tempItem->setMirror(mirrorItem);
+                    mirrorItem->setMirror(tempItem);
+                }
+                    break;
+                case SelectItem::Freeerase:
+                case SelectItem::Freedraw:
+                {
+                    if (drawing) {
+                        FreeDrawSelect *temp = new FreeDrawSelect(pos,
+                                                                  currentBrushSize,
+                                                                  brushMode,
+                                                                  currentLabel);
+                        FreeDrawSelect *mirror = new FreeDrawSelect(pos,
+                                                                    temp->myPen);
+                        tempItem = temp;
+                        mirrorItem = mirror;
+                        mirrorItem->setLabel(currentLabel);
+                        mirrorItem->updatePen(temp->myPen);
+                        tempItem->setMirror(mirrorItem);
+                        mirrorItem->setMirror(tempItem);
+                    } else {
+                        myErase = new FreeDrawErase(pos, currentBrushSize,
+                                                    brushMode, currentLabel);
+                        currentItem = myErase;
+                    }
+                }
+                    break;
+                case SelectItem::Polygon:
+                {
+                    PolygonSelect *temp = new PolygonSelect(pos, currentLabel);
+                    PolygonSelect *mirror = new PolygonSelect(pos);
+                    tempItem = temp;
+                    mirrorItem = mirror;
+                    mirrorItem->setLabel(currentLabel);
+                    mirrorItem->updatePen(mirrorItem->myPen);
+                    tempItem->setMirror(mirrorItem);
+                    mirrorItem->setMirror(tempItem);
+                    polygonSelectForm->finishPolygonButton->setEnabled(true);
+                }
                     break;
             }
-        }
-        currentItem = item;
-        if (!canDrawOnPhoto)
-            maskItem = currentItem;
-        currentLabel = currentItem->getLabel();
-        scene->inactiveAll();
-        maskScene->inactiveAll();
-        currentItem->clickPoint(pos);
-        currentItem->setItemActive();
-        if (currentItem->type() == SelectItem::Polygon && insertVertex) {
-            int vert = currentItem->getActiveVertex();
-            if (vert != SelectItem::UNSELECTED) {
-                if (vertex1 <0) {
-                    vertex1 = vert;
-                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
-                } else if (vertex2 < 0) {
-                    if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
-                        (currentItem->numberOfVertices() - 1)) {
-                        polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
-                    } else {
-                        vertex2 = vert;
-                        polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+            if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
+                 SelectItem::Freeerase) || drawing) {
+                mirrorItem->setLabel(currentLabel);
+                mirrorItem->updatePen(tempItem->myPen);
+                scene->addItem(tempItem);
+                maskScene->addItem(mirrorItem);
+                switch (type) {
+                    case PhotoScene::PHOTO_VIEWER_TYPE:
+                        currentItem = tempItem;
+                        break;
+                    case PhotoScene::MASK_VIEWER_TYPE:
+                        currentItem = mirrorItem;
+                        break;
+                }
+                if (!canDrawOnPhoto)
+                    maskItem = currentItem;
+            }
+            scene->update();
+            maskScene->update();
+        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true && item) {
+            qInfo()<<"shift clicked!";
+            if (item->type() != currentSelectType) {
+                if (!canDrawOnPhoto)
+                    return;
+                switch (item->type()) {
+                    case SelectItem::Freedraw:
+                        on_freeSelectButton_clicked();
+                        break;
+                    case SelectItem::Polygon:
+                        on_polygonSelectButton_clicked();
+                        polygonSelectForm->finishPolygonButton->setEnabled(true);
+                        break;
+                    case SelectItem::Rectangle:
+                        on_rectangleSelectButton_clicked();
+                        break;
+                    case SelectItem::Ellipse:
+                        on_ellipseSelectButton_clicked();
+                        break;
+                }
+            }
+            currentItem = item;
+            if (!canDrawOnPhoto)
+                maskItem = currentItem;
+            setCurrentLabel(currentItem->getLabel());
+            scene->inactiveAll();
+            maskScene->inactiveAll();
+            currentItem->clickPoint(pos);
+            currentItem->setItemActive();
+            if (currentItem->type() == SelectItem::Polygon && insertVertex) {
+                int vert = currentItem->getActiveVertex();
+                if (vert != SelectItem::UNSELECTED) {
+                    if (vertex1 <0) {
+                        vertex1 = vert;
+                        polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                    } else if (vertex2 < 0) {
+                        if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
+                            (currentItem->numberOfVertices() - 1)) {
+                            polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                        } else {
+                            vertex2 = vert;
+                            polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                        }
                     }
                 }
             }
+            scene->update();
+            maskScene->update();
         }
-        scene->update();
-        maskScene->update();
     }
 }
 
@@ -1327,8 +1385,10 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
   Processes a mouse movement from \a fromPos to \a toPos.
  */
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
+
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
+
             currentItem->moveItem(fromPos, toPos);
         } else {
             currentItem->rotate(fromPos, toPos);
@@ -1345,7 +1405,13 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button) {
-    UNUSED(button);
+    //UNUSED(button);
+    ctrlPanning = false;
+    ui->panButton->setChecked(panning);
+    ui->IdmPhotoViewer->setPanMode(panning);
+    ui->IdmMaskViewer->setPanMode(panning);
+
+//    else if (!panning){
     if (currentItem && !currentItem->isItemAdded()) {
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
@@ -1399,7 +1465,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         }
         currentItem->resetState();
     } else if (currentItem && currentItem->type() == SelectItem::Polygon &&
-               !currentItem->wasPointAdded()) {
+               currentItem->wasPointAdded()) {
         QUndoCommand *addVertexCommand =
                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                          currentItem : currentItem->getMirror(),
@@ -1411,6 +1477,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     currentButton = Qt::NoButton;
     scene->update();
     maskScene->update();
+//    }
 }
 
 
@@ -1601,6 +1668,10 @@ void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }
 
+void InstaDam::setCurrentProjectId(int id)
+{
+    this->currentProject->setId(id);
+}
 /*!
  Gets the list of label names from QVector \a labels.
  */

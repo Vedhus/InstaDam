@@ -26,6 +26,17 @@ class newproject : public QDialog {
 //    void saveToServer();
     QString databaseURL;
     QString accessToken;
+#ifdef TEST
+    friend class IntegrationTest;
+    friend class InstaDam;
+    QColor mycolor;
+    void setLabel(QString name, QColor color){
+        tempName = name;
+        mycolor = color;
+        on_pushButton_clicked();
+    }
+
+#endif
 
  private slots:
     void on_pushButton_clicked();
@@ -35,7 +46,6 @@ class newproject : public QDialog {
     void nameAcceptClicked();
     void colorPicked(const QColor &color);
 #endif
-
  private:
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
@@ -43,7 +53,6 @@ class newproject : public QDialog {
 //    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
 //    QNetworkReply *rep;
 //    int backendId;
-
 //    void replyFinished();
 //    void labelReplyFinished();
 

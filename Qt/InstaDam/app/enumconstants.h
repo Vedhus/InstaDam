@@ -9,4 +9,6 @@ class EnumConstants{
     enum threshold_or_filter{THRESH, FILTER};
 
 };
+
+
 #endif  // ENUMCONSTANTS_H

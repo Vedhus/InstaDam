@@ -23,7 +23,7 @@
 
 #include <iostream>
 #include <string>
-
+#include "imagelist.h"
 #include "newproject.h"
 #include "picpushbutton.h"
 #include "ui_blankFrame.h"
@@ -75,9 +75,11 @@ class InstaDam : public QMainWindow {
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
     void setCurrentProject(Project*);
+    void setCurrentProjectId(int id);
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
-    bool loadLabelJson(QJsonObject json, fileTypes fileType);
+    ImageList* il;
+
  private slots:
     void on_addSelectionButton_clicked();
     void on_saveAndBack_clicked();
@@ -121,16 +123,19 @@ class InstaDam : public QMainWindow {
     void on_filterOptions_clicked();
 
     void on_actionSearch_triggered();
-
     void on_actionUpdate_Privilege_triggered();
     void saveToServer();
     void replyFinished();
     void labelReplyFinished();
 
-
+#ifdef TEST
+    friend class IntegrationTest;
+#endif
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
+    bool loadLabelJson(QJsonObject json, fileTypes fileType);
+
 
 
  private:
@@ -145,6 +150,22 @@ public slots:
     MyConnector *openIdproConnector;
     QByteArray imageFileContent;
     QByteArray idproFileContent;
+#endif
+
+#ifdef TEST
+    bool assertThrown = false;
+    QHash<QString, QColor> labelHash;
+    void addLabelHash(QString text, QColor color){
+        labelHash.insert(text, color);
+    }
+
+    QString prjInName = "";
+    QString prjOutName = "";
+    QString imgInName = "";
+
+    void setPrjInName(QString name) {prjInName = name;}
+    void setPrjOutName(QString name) {prjOutName = name;}
+    void setImgInName(QString name) {imgInName = name;}
 #endif
     QSharedPointer<Label> currentLabel;
     QVector<LabelButton*> labelButtons;
@@ -171,6 +192,7 @@ public slots:
     Ui::polygonSelectForm *polygonSelectForm;
     bool drawing = true;
     bool panning = false;
+    bool ctrlPanning = false;
     bool canDrawOnPhoto = true;
     int lastType = -1;
     bool insertVertex = false;
@@ -195,8 +217,9 @@ public slots:
     void imagesReplyFinished();
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
-    bool loadLabelFile(QString filename, fileTypes fileType);
+
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
+    bool loadLabelFile(QString filename, fileTypes fileType);
     void revert();
     void listProjects();
     void projectsReplyFinished();

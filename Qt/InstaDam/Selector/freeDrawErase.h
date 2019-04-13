@@ -32,7 +32,7 @@ class FreeDrawErase : public FreeDrawSelect {
         UNUSED(widget);
     }
     void toPixmap(QPainter *painter) override {UNUSED(painter);}
-
+    void setOpacity(qreal val) {UNUSED(val);}
     /*------------- End implemented functions*/
 
 

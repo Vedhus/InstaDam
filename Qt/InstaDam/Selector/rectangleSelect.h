@@ -9,7 +9,7 @@
 class TestSelect;
 
 #endif
-const QString rectBaseString = QString("Click to define a corner, then drag the mouse (while holding the button down) to define the rectangle. Use the right mouse button to rotate.");
+const QString rectBaseString = QString("Click to define a corner, then drag the mouse (while holding the button down) to define the rectangle. Hold the sift button down to modify. Use the right mouse button to rotate.");
 class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem {
  public:
     const QString baseInstruction = rectBaseString;

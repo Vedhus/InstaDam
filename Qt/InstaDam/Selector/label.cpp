@@ -67,6 +67,13 @@ void Label::setId(int j) {
     labelId = j;
 }
 
+/*!
+  Convenience funtion for getting the id of this Label.
+  */
+int Label::getId() {
+    return labelId;
+}
+
 
 /*!
   Convenience funtion for getting the test of this Label as a QString
@@ -148,22 +155,10 @@ void Label::clear() {
   Set the opacity of the related SelectItems to \a val as an integer percentage.
   */
 void Label::setOpacity(int val) {
-    double normalizedValue = val/100.0;
-    qInfo("Opacity\n%f", normalizedValue);
-    QHash<int, RectangleSelect*>::iterator rectItems;
-    QHash<int, PolygonSelect*>::iterator polygonItems;
-    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
-    QHash<int, EllipseSelect*>::iterator ellipseItems;
 
-    for (rectItems = rectangleObjects.begin();
-         rectItems != rectangleObjects.end(); ++rectItems)
-        rectItems.value()->setOpacity(normalizedValue);
-    qInfo("Opacity Rectangle\n");
-    for (polygonItems = polygonObjects.begin();
-         polygonItems != polygonObjects.end(); ++polygonItems)
-        polygonItems.value()->setOpacity(normalizedValue);
-    qInfo("Opacity Polygon\n");
+
 }
+
 
 /*!
   Reads a QJsonObject \a json and sets the Label annotation's to the data it

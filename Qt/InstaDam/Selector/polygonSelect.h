@@ -5,7 +5,7 @@
 #include <cmath>
 #include "selectItem.h"
 
-const QString polygonBaseInstruction = QString("Click points to construct a polygon. Individual points can be moved and deleted. Click 'Finish Polygon' when done.");
+const QString polygonBaseInstruction = QString("Click points to construct a polygon. Hold the sift button down to modify. Individual points can be moved and deleted using backspace. Click 'Finish Polygon' when done.");
 class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
  public:
     const QString baseInstruction = polygonBaseInstruction;
@@ -41,6 +41,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;
     void toPixmap(QPainter *painter) override;
+    void setOpacity(qreal);
 
     // Mirror
     PolygonSelect* getMirror() const override {return mirror;}
@@ -68,9 +69,10 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
     QPolygonF getPolygon() const {return polygon;}
 
     QGraphicsScene* scene() const;
-    void setOpacity(qreal);
+
 #ifdef TEST
     friend class TestSelect;
+    friend class IntegrationTest;
 #endif
  protected:
     QVector<QPointF> myPoints;

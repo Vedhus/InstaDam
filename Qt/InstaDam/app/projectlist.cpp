@@ -90,6 +90,7 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
     qInfo() << id;
+    selectedProject = id.toInt();
     QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     qInfo() << databaseGetProjectURL;
@@ -116,6 +117,7 @@ void ProjectList::getLabelsReplyFinished() {
             qInfo() << jsonReply;
               QJsonObject jsonLabels = jsonReply.object();
               this->instadam->loadLabelJson(jsonLabels, PROJECT);
+              this->instadam->setCurrentProjectId(selectedProject);
               this->hide();
       }
 }

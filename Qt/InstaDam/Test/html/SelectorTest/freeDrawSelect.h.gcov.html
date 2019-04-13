@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage-filtered.info - SelectorTest/freeDrawSelect.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">SelectorTest</a> - freeDrawSelect.h<span style="font-size: 80%;"> (source / <a href="freeDrawSelect.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage-filtered.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">18</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-08 16:12:03</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryLo">23.1 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+            | Branches:
+            <span class="coverLegendCov">+</span> taken
+            <span class="coverLegendNoCov">-</span> not taken
+            <span class="coverLegendNoCov">#</span> not executed
+</td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : #ifndef FREEDRAWSELECT_H</a>
+<span class="lineNum">       2 </span>                :            : #define FREEDRAWSELECT_H
+<span class="lineNum">       3 </span>                :            : 
+<span class="lineNum">       4 </span>                :            : #include &lt;QHash&gt;
+<span class="lineNum">       5 </span>                :            : #include &lt;QPixmap&gt;
+<span class="lineNum">       6 </span>                :            : #include &quot;selectItem.h&quot;
+<span class="lineNum">       7 </span>                :            : #ifdef TEST
+<span class="lineNum">       8 </span>                :            : class TestSelect;
+<span class="lineNum">       9 </span>                :            : 
+<span class="lineNum">      10 </span>                :            : #endif
+<span class="lineNum">      11 </span>                :            : 
+<span class="lineNum">      12 </span>                :            : class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
+<span class="lineNum">      13 </span>                :            :  public:
+<span class="lineNum">      14 </span>                :            :     static QString baseInstruction;
+<span class="lineNum">      15 </span>                :            :     FreeDrawSelect();
+<span class="lineNum">      16 </span>                :            :     FreeDrawSelect(const QPixmap map, QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      17 </span>                :            :                    QGraphicsItem *item = nullptr);
+<span class="lineNum">      18 </span>                :            :     FreeDrawSelect(const QPixmap map, QPen pen);
+<span class="lineNum">      19 </span>                :            :     FreeDrawSelect(const QJsonObject &amp;json,
+<span class="lineNum">      20 </span>                :            :                    QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      21 </span>                :            :                    QGraphicsItem *item = nullptr);
+<span class="lineNum">      22 </span>                :            :     explicit FreeDrawSelect(const QList&lt;FreeDrawSelect*&gt; &amp;items);
+<span class="lineNum">      23 </span>                :            :     FreeDrawSelect(QPointF point, QPen pen,
+<span class="lineNum">      24 </span>                :            :                    QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      25 </span>                :            :                    QGraphicsItem *item = nullptr);
+<span class="lineNum">      26 </span>                :            :     FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode,
+<span class="lineNum">      27 </span>                :            :                    QSharedPointer&lt;Label&gt; label = nullptr,
+<span class="lineNum">      28 </span>                :            :                    QGraphicsItem *item = nullptr);
+<span class="lineNum">      29 </span>                :            :     ~FreeDrawSelect() override;
+<span class="lineNum">      30 </span>                :            : 
+<a name="31"><span class="lineNum">      31 </span>                :            :     /*-------------- Implemented fvuntions from SelectItem ---------*/</a>
+<span class="lineNum">      32 </span>                :            :     void addPoint(QPointF &amp;point, const int vertex = UNSELECTED) override;
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 :     QString baseInstructions() const override {</span>
+<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 :         return FreeDrawSelect::baseInstruction;</span>
+<span class="lineNum">      35 </span>                :            :     }
+<a name="36"><span class="lineNum">      36 </span>                :            :     QRectF boundingRect() const override;</a>
+<span class="lineNum">      37 </span>                :            :     void clickPoint(const QPointF &amp;point) override;
+<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :     void insertVertex(const int vertex, const QPointF &amp;point) override {</span>
+<span class="lineNum">      39 </span>                :            :         UNUSED(vertex);
+<span class="lineNum">      40 </span>                :            :         UNUSED(point);
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 :     }</span>
+<a name="42"><span class="lineNum">      42 </span>                :            :     bool isInside(const QPointF &amp;point) const override;</a>
+<span class="lineNum">      43 </span>                :            :     void moveItem(const QPointF &amp;oldPos, QPointF &amp;newPos) override;
+<span class="lineNum">      44 </span>                :<span class="lineNoCov">          0 :     int numberOfVertices() const override {return 0;}</span>
+<a name="45"><span class="lineNum">      45 </span>                :            :     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,</a>
+<a name="46"><span class="lineNum">      46 </span>                :            :                QWidget *widget = nullptr) override;</a>
+<span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :     void removeVertex(int vertex = UNSELECTED) override {UNUSED(vertex);}</span>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineNoCov">          0 :     void resetActiveVertex() override {}</span></a>
+<span class="lineNum">      49 </span>                :            :     void resizeItem(const int vertex, QPointF &amp;shift) override;
+<span class="lineNum">      50 </span>                :<span class="lineCov">          3 :     void rotate(const QPointF &amp;from, const QPointF &amp;to) override {</span>
+<span class="lineNum">      51 </span>                :            :         UNUSED(from);
+<span class="lineNum">      52 </span>                :            :         UNUSED(to);
+<span class="lineNum">      53 </span>                :<span class="lineCov">          3 :     }</span>
+<span class="lineNum">      54 </span>                :            :     void updatePen(QPen pen) override;
+<span class="lineNum">      55 </span>                :            :     void read(const QJsonObject &amp;json) override;
+<span class="lineNum">      56 </span>                :            :     void write(QJsonObject &amp;json) const override;
+<span class="lineNum">      57 </span>                :            :     void toPixmap(QPainter *painter) override;
+<a name="58"><span class="lineNum">      58 </span>                :            : </a>
+<span class="lineNum">      59 </span>                :            :     // Mirror
+<span class="lineNum">      60 </span>                :<span class="lineCov">         30 :     FreeDrawSelect* getMirror() const override {return mirror;}</span>
+<a name="61"><span class="lineNum">      61 </span>                :            :     void mirrorHide() const override;</a>
+<span class="lineNum">      62 </span>                :            :     void mirrorShow() const override;
+<a name="63"><span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :     void rotateMirror() const override {}</span></a>
+<a name="64"><span class="lineNum">      64 </span>                :            :     void setMirror(SelectItem *item) override;</a>
+<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">          3 :     void setMirrorActive() const override {}</span></a>
+<a name="66"><span class="lineNum">      66 </span>                :<span class="lineNoCov">          0 :     void setMirrorAdded() const override {mirror-&gt;hasBeenAdded = true;}</span></a>
+<a name="67"><span class="lineNum">      67 </span>                :<span class="lineNoCov">          0 :     void setMirrorMoved() const override {}</span></a>
+<span class="lineNum">      68 </span>                :<span class="lineNoCov">          0 :     void setMirrorResized() const override {}</span>
+<span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 :     void setMirrorVertex(int vertex) const override {UNUSED(vertex);}</span>
+<span class="lineNum">      70 </span>                :            :     void updateMirrorScene() const override;
+<span class="lineNum">      71 </span>                :            : 
+<span class="lineNum">      72 </span>                :            :     void setMirrorMap();
+<span class="lineNum">      73 </span>                :            :     /*------------- End implemented functions*/
+<span class="lineNum">      74 </span>                :            : 
+<span class="lineNum">      75 </span>                :            :     void addPoints(QSharedPointer&lt;QPixmap&gt; points);
+<span class="lineNum">      76 </span>                :            :     void deletePoints(QPen &amp;pen, QSharedPointer&lt;QPixmap&gt; map);
+<span class="lineNum">      77 </span>                :            :     void deletePoints(const QPointF &amp;start, const QPointF &amp;end, QPen pen,
+<span class="lineNum">      78 </span>                :            :                       QSharedPointer&lt;QPixmap&gt; outmap);
+<span class="lineNum">      79 </span>                :            :     void setPointsUnchecked(QPixmap map);
+<span class="lineNum">      80 </span>                :            : 
+<span class="lineNum">      81 </span>                :            :     QGraphicsScene* scene() const;
+<span class="lineNum">      82 </span>                :<span class="lineCov">         12 :     bool isVisible() const {return SelectItem::isVisible();}</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">         13 :     QPixmap getPixmap() const {return myPixmap;}</span>
+<span class="lineNum">      84 </span>                :            : 
+<span class="lineNum">      85 </span>                :            :  protected:
+<span class="lineNum">      86 </span>                :            :     QPixmap myPixmap;
+<span class="lineNum">      87 </span>                :            :     QPoint lastPoint;
+<span class="lineNum">      88 </span>                :            : 
+<span class="lineNum">      89 </span>                :            :  private:
+<span class="lineNum">      90 </span>                :            : #ifdef TEST
+<span class="lineNum">      91 </span>                :            :     friend TestSelect;
+<span class="lineNum">      92 </span>                :            : #endif
+<span class="lineNum">      93 </span>                :            :     FreeDrawSelect *mirror = nullptr;
+<span class="lineNum">      94 </span>                :            :     QPainter myPainter;
+<span class="lineNum">      95 </span>                :            :     void loadFromPixmap(const QPixmap map);
+<span class="lineNum">      96 </span>                :            :     void setup();
+<span class="lineNum">      97 </span>                :            :     void init(QSharedPointer&lt;Label&gt; label = nullptr);
+<span class="lineNum">      98 </span>                :            : };
+<span class="lineNum">      99 </span>                :            : #endif  // POLYGONSELECT_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -42,12 +42,12 @@
    </column>
    <column>
     <property name="text">
-     <string>Date_created</string>
+     <string>Last Modified</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Date_Modified</string>
+     <string>Thumbnail</string>
     </property>
    </column>
   </widget>
