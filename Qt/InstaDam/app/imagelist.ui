@@ -47,6 +47,11 @@
    </column>
    <column>
     <property name="text">
+     <string>Annotated</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>Thumbnail</string>
     </property>
    </column>

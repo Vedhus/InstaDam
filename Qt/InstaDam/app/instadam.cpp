@@ -486,6 +486,7 @@ void InstaDam::fileDownloaded(QString path) {
         fileId = counter;
         openFile_and_labels();
         QTextStream(stdout) << currentProject->numLabels() << "\n";
+
     }
 }
 
@@ -729,10 +730,10 @@ void InstaDam::openFile_and_labels() {
             return;
         }
     }
-    else {
-        connect(il, SIGNAL(allAnnotationsLoaded(QJsonObject, fileTypes)), this, SLOT(loadLabelJson(QJsonObject, fileTypes)));
+    else
+    {
+        connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
-
     }
 
     QTextStream(stdout) << "Loading photoX" << endl;;
@@ -860,7 +861,7 @@ bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
     currentProject = newProject->newPr;
     currentProject->resetLabels();
     clearLayout(ui->labelClassLayout);
-
+    qInfo() << "inside loadLabelJson()";
     if (read(json, fileType)) {
         setLabels();
         scene->clearItems();
@@ -1521,6 +1522,7 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
             currentProject->setLabels(tempLabels);
             QTextStream(stdout) << currentProject->numLabels() << "\n";
         } else {
+            qInfo() << "reading annotation file";
             QStringList current = getLabelNames(currentProject->getLabels());
             QStringList newList = getLabelNames(tempLabels);
             current.sort(Qt::CaseInsensitive);

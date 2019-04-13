@@ -327,8 +327,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>69</width>
-                        <height>637</height>
+                        <width>85</width>
+                        <height>593</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -698,8 +698,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1332</width>
-                    <height>70</height>
+                    <width>1328</width>
+                    <height>86</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -812,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1362</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="defaultUp">

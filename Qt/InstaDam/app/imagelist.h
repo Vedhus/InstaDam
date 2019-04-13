@@ -35,16 +35,14 @@ class ImageList : public QWidget {
     void openAnnotation();
 
 
-
  signals:
     void fileDownloaded(QString path);
-    void gotANewAnnotation();
     void allAnnotationsLoaded(QJsonObject,fileTypes);
 
 
 
  private:
-    int numAnnotationsReceived;
+    int numAnnotationsReceived=0;
     Ui::ImageList *ui;
     QString databaseURL;
     QString accessToken;
@@ -53,14 +51,12 @@ class ImageList : public QWidget {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     void getThumbnailReplyFinished();
     void fileReplyFinished();
+    void annotationReplyFinished();
     void doRequest(QNetworkRequest);
 
  private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();
- public slots:
-    void checkIfAllAnnotationsReceived();
-    void annotationReplyFinished(QNetworkReply* );
 };
 
 #endif  // imagelist_H
