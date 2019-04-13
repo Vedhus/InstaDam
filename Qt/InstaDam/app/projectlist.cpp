@@ -97,7 +97,6 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
-
     connect(rep, &QNetworkReply::finished,
             this, &ProjectList::getLabelsReplyFinished);
 }
@@ -111,29 +110,14 @@ void ProjectList::getLabelsReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
     }  else {
             qInfo() << jsonReply;
-              InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
-              instadamWindow->show();
-              hide();
               QJsonObject jsonLabels = jsonReply.object();
-              instadamWindow->loadLabelJson(jsonLabels, PROJECT);
-
+              this->instadam->loadLabelJson(jsonLabels, PROJECT);
+              this->hide();
       }
-}
-/*!
-  Creates a new poroject and saves it to the backend
-  */
-void ProjectList::on_pushButton_clicked()
-{
-    serverProjectName *spn = new serverProjectName();
-    spn->databaseURL = this->databaseURL;
-    spn->accessToken = this->accessToken;
-    spn->show();
-    hide();
 }
 
 

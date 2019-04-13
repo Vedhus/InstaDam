@@ -45,7 +45,6 @@ void AddUserToProject::on_pushButton_clicked()
     connect(rep, &QNetworkReply::finished,
             this, &AddUserToProject::replyFinished);
 
-    qInfo() << "waiting for the reply...";
 }
 
 void AddUserToProject::on_pushButton_2_clicked()
@@ -55,7 +54,6 @@ void AddUserToProject::on_pushButton_2_clicked()
 
 void AddUserToProject::replyFinished()
 {
-    qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
@@ -73,7 +71,6 @@ void AddUserToProject::replyFinished()
 void AddUserToProject::listUsers(QJsonObject obj)
 {
     ui->userList->clear();
-    qInfo() << "in listUsers";
     QJsonArray users_list = obj.value("users").toArray();
     for(int i =0; i<users_list.count();i++){
         QJsonObject user = users_list.at(i).toObject();
@@ -107,40 +104,36 @@ void AddUserToProject::updateUser()
 {
     QListWidgetItem *item = ui->userList->selectedItems()[0];
     this->userDetails = item->text();
-    qInfo() << this->userDetails;
-//    UserPrivilege *userPrivilege = new UserPrivilege;
-
     userPrivilege->show();
     connect(userPrivilege, SIGNAL(on_pushButton_clicked()), this, SLOT(addAsAdmin()));
     connect(userPrivilege, SIGNAL(on_pushButton_2_clicked()), this, SLOT(addAsAnnotator()));
 }
 
 void AddUserToProject::addAsAnnotator(){
-    this->privilege = "ANNOTATOR";
+    this->privilege = "r";
     this->add();
     userPrivilege->hide();
 }
 
 void AddUserToProject::addAsAdmin(){
-    this->privilege = "ADMIN";
+    this->privilege = "rw";
     this->add();
     userPrivilege->hide();
 }
 
 void AddUserToProject::add(){
-    qInfo() << this->privilege;
-//    if(this->userInProject){
-//        qInfo() << "user in project";
         QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
         QString privilege = this->privilege.toLower();
 
-        QString databaseLoginURL = this->databaseURL+"/user/privilege/";
+        QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
+//        QString databaseLoginURL = this->databaseURL+"/user/privilege/";
         QUrl dabaseLink = QUrl(databaseLoginURL);
+//        qInfo() << databaseLoginURL;
 
         QJsonObject js
         {
-            {"username", userName},
-            {"privilege", privilege}
+            {"access_type", privilege},
+            {"username", userName}
         };
 
         QJsonDocument doc(js);
@@ -154,22 +147,16 @@ void AddUserToProject::add(){
         connect(rep, &QNetworkReply::finished,
                 this, &AddUserToProject::privilegeReplyFinished);
 
-        qInfo() << "waiting for the reply...";
-//   }
-//    else{
-//        qInfo() << "user not in project";
-//    }
 }
 
 void AddUserToProject::privilegeReplyFinished(){
-    qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
     } else {
+//    if (jsonError.error == QJsonParseError::NoError) {
         QJsonObject obj = jsonReply.object();
         qInfo() << obj;
     }

@@ -6,7 +6,8 @@
 #include <QtNetwork/QNetworkReply>
 #include <QJsonObject>
 #include <QJsonDocument>
-
+#include "instadam.h"
+#include "ui_instadam.h"
 #include "login.h"
 #include "ui_register.h"
 
@@ -97,30 +98,11 @@ void Register::replyFinished() {
         if (obj.contains("access_token")) {
             this->accessToken = obj.value("access_token").toString();
             qInfo() << this->accessToken;
-            Register::dumpToken();
+            this->dumpToken();
+            this->lunchMainInstadam();
         } else {
             qInfo() << obj;
         }
-    }
-}
-
-/*!
-  Something.
-  */
-void Register::projectsReplyFinished() {
-    qInfo() << "reply received:";
-    QByteArray strReply = rep->readAll();
-//    qInfo() << strReply;
-
-    QJsonParseError jsonError;
-
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
-    if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
-    } else {
-        QJsonObject obj = jsonReply.object();
-        qInfo()<< "implement a function to read the returned object";
     }
 }
 
@@ -133,4 +115,13 @@ void Register::dumpToken() {
         QTextStream stream(&file);
         stream << this->accessToken << endl;
     }
+}
+
+/*!
+  Dumps the token to a stream.
+  */
+void Register::lunchMainInstadam(){
+    InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+    instadamWindow->show();
+    hide();
 }

@@ -13,26 +13,13 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>25</x>
-     <y>320</y>
-     <width>550</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Create New Project (for Admins)</string>
-   </property>
-  </widget>
   <widget class="QListWidget" name="projectsTable">
    <property name="geometry">
     <rect>
      <x>25</x>
      <y>25</y>
      <width>550</width>
-     <height>281</height>
+     <height>301</height>
     </rect>
    </property>
   </widget>

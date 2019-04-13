@@ -23,7 +23,7 @@ class newproject : public QDialog {
 
     Project *newPr;
     bool runningLocally = true;
-    void saveToServer();
+//    void saveToServer();
     QString databaseURL;
     QString accessToken;
 
@@ -40,12 +40,12 @@ class newproject : public QDialog {
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;
     QString tempName;
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QNetworkReply *rep;
-    int backendId;
+//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+//    QNetworkReply *rep;
+//    int backendId;
 
-    void replyFinished();
-    void labelReplyFinished();
+//    void replyFinished();
+//    void labelReplyFinished();
 
 #ifdef WASM_BUILD
     ColorDialog *colorDialog;

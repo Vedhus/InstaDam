@@ -26,6 +26,10 @@
 #include "imagelist.h"
 #include "ui_addusertoproject.h"
 #include "addusertoproject.h"
+#include "ui_projectlist.h"
+#include "projectlist.h"
+#include "serverprojectname.h"
+#include "ui_serverprojectname.h"
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
@@ -52,6 +56,7 @@
 
 InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent), ui(new Ui::InstaDam) {
+    hide();
     ui->setupUi(this);
     filterControl = new filterControls();
     maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,
@@ -153,8 +158,6 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
-    StartingWidget *sw = new StartingWidget;
-    sw->show();
 
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
@@ -308,21 +311,26 @@ void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
       openIdproConnector->onActivate();
 #else
-    // Reading and Loading
-    QString myfileName = QFileDialog::getOpenFileName(this,
-        tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-    if (myfileName.isEmpty()) {
-            return;  // remove that part and add an alert
-    } else {
+    if(this->runningLocally){
+        // Reading and Loading
+        QString myfileName = QFileDialog::getOpenFileName(this,
+            tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+        if (myfileName.isEmpty()) {
+                return;  // remove that part and add an alert
+        } else {
 
-        loadLabelFile(myfileName, PROJECT);
-        mainUndoStack->clear();
-        tempUndoStack->clear();
-        undoGroup->setActiveStack(mainUndoStack);
-        scene->clearItems();
-        maskScene->clearItems();
-        scene->update();
-        maskScene->update();
+            loadLabelFile(myfileName, PROJECT);
+            mainUndoStack->clear();
+            tempUndoStack->clear();
+            undoGroup->setActiveStack(mainUndoStack);
+            scene->clearItems();
+            maskScene->clearItems();
+            scene->update();
+            maskScene->update();
+        }
+    }
+    else{
+        InstaDam::listProjects();
     }
 #endif
 }
@@ -418,29 +426,36 @@ void InstaDam::on_actionSave_Annotation_triggered() {
  Saves the current project to disk or the server.
   */
 void InstaDam::on_actionSave_triggered() {
-    // Saving the file
-    #ifdef WASM_BUILD
-        QByteArray outFile;
-    #else
-        QString outFileName = QFileDialog::getSaveFileName(this,
-               tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
-        if (QFileInfo(outFileName).suffix() != QString("idpro"))
-            outFileName = outFileName +QString(".idpro");
+    if(this->runningLocally){
+        // Saving the file
+        #ifdef WASM_BUILD
+            QByteArray outFile;
+        #else
+            QString outFileName = QFileDialog::getSaveFileName(this,
+                   tr("Save Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
+            if (QFileInfo(outFileName).suffix() != QString("idpro"))
+                outFileName = outFileName +QString(".idpro");
 
-        QFile outFile(outFileName);
-        outFile.open(QIODevice::WriteOnly);
-    #endif
-        QJsonObject json;
-        write(json, PROJECT);
-        QJsonDocument saveDoc(json);
-    #ifdef WASM_BUILD
-        QString strJson(saveDoc.toJson(QJsonDocument::Compact));
-        outFile.append(strJson);
-        QHtml5File::save(outFile, "myproject.idpro");
+            QFile outFile(outFileName);
+            outFile.open(QIODevice::WriteOnly);
+        #endif
+            QJsonObject json;
+            write(json, PROJECT);
+            QJsonDocument saveDoc(json);
+        #ifdef WASM_BUILD
+            QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+            outFile.append(strJson);
+            QHtml5File::save(outFile, "myproject.idpro");
 
-    #else
-        outFile.write(saveDoc.toJson());
-    #endif
+        #else
+            outFile.write(saveDoc.toJson());
+        #endif
+        }
+    else{
+        this->sProjectName = new serverProjectName();
+        this->sProjectName->show();
+        connect(this->sProjectName, SIGNAL(on_pushButton_clicked()), this, SLOT(saveToServer()));
+    }
 }
 
 /*!
@@ -1624,6 +1639,7 @@ void InstaDam::on_actionSearch_triggered()
 {
     if(this->runningLocally==false){
         AddUserToProject *addUserToProjectInterface = new AddUserToProject;
+        addUserToProjectInterface->projectId = this->currentProject->getId();
         addUserToProjectInterface->accessToken = this->accessToken;
         addUserToProjectInterface->databaseURL = this->databaseURL;
         addUserToProjectInterface->show();
@@ -1636,3 +1652,118 @@ void InstaDam::on_actionUpdate_Privilege_triggered()
         on_actionSearch_triggered();
     }
 }
+
+
+void InstaDam::listProjects() {
+    QString databaseProjectsURL = this->databaseURL+"/projects";
+    QUrl dabaseLink = QUrl(databaseProjectsURL);
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    QString loginToken = "Bearer "+this->accessToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+
+    rep = manager->get(req);
+
+    connect(rep, &QNetworkReply::finished,
+            this, &InstaDam::projectsReplyFinished);
+}
+
+void InstaDam::projectsReplyFinished() {
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        ProjectList *pl = new ProjectList;
+        pl->instadam = this;
+        pl->show();
+        pl->addItems(jsonReply, this->databaseURL, this->accessToken);
+    }
+}
+
+void InstaDam::saveToServer(){
+    qInfo() << "saving project to server";
+    QUrl dabaseLink = QUrl(this->databaseURL+"/project");
+    QString fileName = this->sProjectName->ui->projectName->toPlainText();
+    this->sProjectName->hide();
+    QJsonObject js
+    {
+        {"project_name", fileName}
+    };
+    QJsonDocument doc(js);
+    QByteArray bytes = doc.toJson();
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    QString loginToken = "Bearer "+this->accessToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    rep = manager->post(req, bytes);
+    connect(rep, &QNetworkReply::finished,
+            this, &InstaDam::replyFinished);
+
+}
+
+void InstaDam::replyFinished()
+{
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if(jsonError.error != QJsonParseError::NoError)
+    {
+        qInfo() << "Error: " << jsonError.errorString();
+    }
+
+    else
+    {
+        QJsonObject reply = jsonReply.object();
+        this->currentProject->setId(reply.value("project_id").toInt());
+
+        // save labels
+        qInfo() << "saving labels to server";
+
+        QUrl lablesDatabaseLink = QUrl(this->databaseURL+"/project/"+QString::number(this->currentProject->getId())+"/labels");
+        QString loginToken = "Bearer "+this->accessToken;
+
+        for(int i=0; i<this->currentProject->numLabels();i++)
+
+        {
+            QJsonObject jsLabel
+            {
+                {"label_text", this->currentProject->getLabel(i)->getText()},
+                {"label_color", this->currentProject->getLabel(i)->getColor().name()}
+            };
+
+            QJsonDocument docLabel(jsLabel);
+            QByteArray bytesLabel = docLabel.toJson();
+            QNetworkRequest reqLabel = QNetworkRequest(lablesDatabaseLink);
+
+            reqLabel.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+            reqLabel.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+            rep = manager->post(reqLabel, bytesLabel);
+
+            connect(rep, &QNetworkReply::finished,
+                    this, &InstaDam::labelReplyFinished);
+        }
+    }
+}
+
+void InstaDam::labelReplyFinished()
+{
+    qInfo() << "reply received:";
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if(jsonError.error != QJsonParseError::NoError)
+    {
+        qInfo() << "Error: " << jsonError.errorString();
+    }
+    else
+    {
+        qInfo() << jsonReply;
+    }
+}
+

@@ -36,9 +36,8 @@ private slots:
 private:
     Ui::Login *ui;
     void replyFinished();
-    void projectsReplyFinished();
     void dumpToken();
-    void listProjects();
+    void lunchMainInstadam();
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QByteArray accessToken;

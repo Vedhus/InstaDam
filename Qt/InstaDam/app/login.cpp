@@ -80,77 +80,30 @@ void Login::on_pushButton_clicked() {
   Something
   */
 void Login::replyFinished() {
-    qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains("access_token")) {
             this->accessToken = obj.value("access_token").toString().toUtf8();
-            //qInfo() << this->accessToken;
             Login::dumpToken();
-            Login::listProjects();
-        } else {
-            qInfo() << obj;
+            Login::lunchMainInstadam();
         }
-    }
-}
-
-/*!
-  Something
-  */
-void Login::projectsReplyFinished() {
-    qInfo() << "reply received:";
-    QByteArray strReply = rep->readAll();
-    QJsonParseError jsonError;
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
-    if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
-    } else {
-        QJsonObject obj = jsonReply.object();
-        //qInfo()<< "implement a function to read the returned object";
-        qInfo() << obj;
-        ProjectList *pl = new ProjectList;
-        pl->show();
-        pl->addItems(jsonReply, this->databaseURL, this->accessToken);
-        hide();
-    }
-}
-
-void debugRequest(QNetworkRequest request) {
-    qDebug() << request.url().toString();
-    const QList<QByteArray>& rawHeaderList(request.rawHeaderList());
-    foreach (QByteArray rawHeader, rawHeaderList) {
-        qDebug() << request.rawHeader(rawHeader);
     }
 }
 
 /*!
   Lists the projects.
   */
-void Login::listProjects() {
-    QString databaseProjectsURL = this->databaseURL+"/projects";
-    QUrl dabaseLink = QUrl(databaseProjectsURL);
 
-    qInfo() << databaseProjectsURL;
-    QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken;
-    qInfo() << loginToken;
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-
-    rep = manager->get(req);
-
-    connect(rep, &QNetworkReply::finished,
-            this, &Login::projectsReplyFinished);
-
-    qInfo() << "waiting for the reply...";
+void Login::lunchMainInstadam(){
+    InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
+    instadamWindow->show();
+    hide();
 }
-
 
 /*!
   Something
@@ -174,7 +127,7 @@ void Login::on_pushButton_2_clicked() {
   Processes W button click.
   */
 void Login::on_pushButton_4_clicked() {
-    qInfo() << "going back to the main widget";
+//    qInfo() << "going back to the main widget";
     StartingWidget *wid = new StartingWidget;
     wid->show();
     hide();

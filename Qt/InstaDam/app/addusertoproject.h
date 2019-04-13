@@ -22,6 +22,7 @@ public:
     QString accessToken;
     QString databaseURL;
     QString userDetails;
+    int projectId;
     UserPrivilege *userPrivilege = new UserPrivilege;
 
 private slots:

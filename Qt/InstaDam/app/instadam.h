@@ -39,6 +39,9 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 
+#include "serverprojectname.h"
+#include "ui_serverprojectname.h"
+
 class filterControls;
 class PicPushButton;
 
@@ -120,6 +123,10 @@ class InstaDam : public QMainWindow {
     void on_actionSearch_triggered();
 
     void on_actionUpdate_Privilege_triggered();
+    void saveToServer();
+    void replyFinished();
+    void labelReplyFinished();
+
 
 public slots:
     void resetPixmapButtons();
@@ -191,6 +198,9 @@ public slots:
     bool loadLabelFile(QString filename, fileTypes fileType);
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
     void revert();
+    void listProjects();
+    void projectsReplyFinished();
+    serverProjectName *sProjectName;
 };
 
 #endif  // INSTADAM_H

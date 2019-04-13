@@ -1,6 +1,7 @@
 #ifndef PROJECTLIST_H
 #define PROJECTLIST_H
 
+#include "instadam.h"
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
 #include <QListWidgetItem>
@@ -17,13 +18,11 @@ class ProjectList : public QWidget
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
-    //void addItems(QJsonObject);
+     InstaDam *instadam;
 
     void addItems(QJsonDocument, QString, QString);
 public slots:
     void openProject(QListWidgetItem *);
-private slots:
-    void on_pushButton_clicked();
 
 private:
     Ui::ProjectList *ui;
@@ -32,8 +31,6 @@ private:
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkReply *rep;
     void getLabelsReplyFinished();
-
-
 };
 
 #endif // PROJECTLIST_H

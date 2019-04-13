@@ -21,8 +21,6 @@ signals:
     bool on_pushButton_clicked();
     bool on_pushButton_2_clicked();
 
-//private slots:
-
 private:
     Ui::UserPrivilege *ui;
 };
