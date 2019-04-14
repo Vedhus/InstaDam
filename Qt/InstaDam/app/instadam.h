@@ -205,6 +205,7 @@ public slots:
 
     QPixmap maskSelection(SelectItem *item);
     void imagesReplyFinished();
+    void saveAnnotationReplyFinished();
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
 

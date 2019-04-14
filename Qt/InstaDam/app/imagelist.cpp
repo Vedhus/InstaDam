@@ -174,7 +174,8 @@ void ImageList::fileReplyFinished() {
 
     file.write(rep->readAll());
     file.close();
-
+    qInfo() << selectedRow.at(0)->text().toInt();
+    currentProject->setImageId(selectedRow.at(0)->text().toInt());
     emit fileDownloaded(path);
 }
 
@@ -196,7 +197,6 @@ void ImageList::on_loadButton_clicked() {
 
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::fileReplyFinished);
-
 
     close();
 }

@@ -78,3 +78,13 @@ QString Project::getName()
     return this->name;
 }
 
+
+void Project::setImageId(int id)
+{
+    image_id = id;
+}
+
+int Project::getImageId()
+{
+    return image_id;
+}

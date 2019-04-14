@@ -122,14 +122,6 @@ void Login::projectsReplyFinished() {
     }
 }
 
-void debugRequest(QNetworkRequest request) {
-    qDebug() << request.url().toString();
-    const QList<QByteArray>& rawHeaderList(request.rawHeaderList());
-    foreach (QByteArray rawHeader, rawHeaderList) {
-        qDebug() << request.rawHeader(rawHeader);
-    }
-}
-
 /*!
   Lists the projects.
   */
