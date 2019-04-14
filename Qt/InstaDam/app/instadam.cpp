@@ -417,30 +417,82 @@ void InstaDam::setCurrentBrushSize(int size) {
     currentBrushSize = size;
 }
 
+void InstaDam::saveAnnotationReplyFinished()
+{
+    if (rep->error()) {
+        qInfo() << rep->error();
+        qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        return;
+    }
+
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
+
+      if (jsonError.error != QJsonParseError::NoError) {
+            qInfo() << "Error: " << jsonError.errorString();
+      } else {
+          QJsonObject obj = jsonReply.object();
+          qInfo() << obj;
+      }
+}
+
 /*!
  Saves the current annotation to disk or the server.
   */
+
 void InstaDam::on_actionSave_Annotation_triggered() {
     // Saving the file
-    #ifdef WASM_BUILD
-        QByteArray outFile;
-    #else
-        QString outFileName = this->annotationPath;
+    if(runningLocally)
+    {
+        #ifdef WASM_BUILD
+            QByteArray outFile;
+        #else
+            QString outFileName = this->annotationPath;
 
-        QFile outFile(outFileName);
-        outFile.open(QIODevice::WriteOnly);
-    #endif
+            QFile outFile(outFileName);
+            outFile.open(QIODevice::WriteOnly);
+        #endif
+            QJsonObject json;
+            write(json, ANNOTATION);
+            QJsonDocument saveDoc(json);
+        #ifdef WASM_BUILD
+            QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+            outFile.append(strJson);
+            QHtml5File::save(outFile, "myproject.idantn");
+
+        #else
+            outFile.write(saveDoc.toJson(QJsonDocument::Compact));
+        #endif
+    }
+    else
+    {
         QJsonObject json;
         write(json, ANNOTATION);
-        QJsonDocument saveDoc(json);
-    #ifdef WASM_BUILD
-        QString strJson(saveDoc.toJson(QJsonDocument::Compact));
-        outFile.append(strJson);
-        QHtml5File::save(outFile, "myproject.idantn");
+        QString annotationsURL = this->databaseURL+"/annotation";
 
-    #else
-        outFile.write(saveDoc.toJson(QJsonDocument::Compact));
-    #endif
+        QUrl dabaseLink = QUrl(annotationsURL);
+
+        QJsonObject js
+        {
+            {"project_id", this->currentProject->getId()},
+            {"image_id", this->currentProject->getImageId()},
+            {"labels", json["labels"]}
+        };
+
+        qInfo() << js;
+
+        QJsonDocument doc(js);
+        QByteArray bytes = doc.toJson();
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+
+        rep = manager->post(req, bytes);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &InstaDam::saveAnnotationReplyFinished);
+    }
 }
 
 /*!
@@ -510,6 +562,7 @@ void InstaDam::fileDownloaded(QString path) {
         fileId = counter;
         openFile_and_labels();
         QTextStream(stdout) << currentProject->numLabels() << "\n";
+
     }
 }
 
@@ -517,7 +570,6 @@ void InstaDam::fileDownloaded(QString path) {
  Waits for the reply for image reception.
   */
 void InstaDam::imagesReplyFinished() {
-    qInfo() << "Reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
@@ -753,10 +805,10 @@ void InstaDam::openFile_and_labels() {
             return;
         }
     }
-    else {
-        connect(il, SIGNAL(allAnnotationsLoaded(QJsonObject, fileTypes)), this, SLOT(loadLabelJson(QJsonObject, fileTypes)));
+    else
+    {
+        connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
-
     }
 
     QTextStream(stdout) << "Loading photoX" << endl;;
@@ -884,7 +936,7 @@ bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType){
     currentProject = newProject->newPr;
     currentProject->resetLabels();
     clearLayout(ui->labelClassLayout);
-
+    qInfo() << "inside loadLabelJson()";
     if (read(json, fileType)) {
         setLabels();
         scene->clearItems();
@@ -1545,6 +1597,7 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
             currentProject->setLabels(tempLabels);
             QTextStream(stdout) << currentProject->numLabels() << "\n";
         } else {
+            qInfo() << "reading annotation file";
             QStringList current = getLabelNames(currentProject->getLabels());
             QStringList newList = getLabelNames(tempLabels);
             current.sort(Qt::CaseInsensitive);
