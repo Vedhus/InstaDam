@@ -1384,7 +1384,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button) {
-    //UNUSED(button);
+    UNUSED(button);
     ctrlPanning = false;
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
@@ -1394,15 +1394,14 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     if (currentItem && !currentItem->isItemAdded()) {
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
-            FreeDrawSelect fds(maskSelection(currentItem), currentItem->myPen);
-            FreeDrawSelect *temp = dynamic_cast<FreeDrawSelect*>(currentItem);
-            temp->setPointsUnchecked(fds.getPixmap());
-        }
-        if (currentItem->type() == SelectItem::Freeerase) {
+            addCurrentSelection(true);
+
+        } else if (currentItem->type() == SelectItem::Freeerase) {
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
                                                                 maskScene);
             undoGroup->activeStack()->push(eraseCommand);
         } else {
+            QTextStream(stdout) << "ELSE" << endl;
             QUndoCommand *addCommand =
                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                        currentItem : currentItem->getMirror(),
@@ -1422,6 +1421,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     } else if (currentItem && (currentItem->wasMoved() ||
                                currentItem->wasResized() ||
                                currentItem->wasRotated())) {
+
         if (currentItem->wasMoved()) {
             QUndoCommand *moveCommand =
                     new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
@@ -1581,18 +1581,20 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
 /*!
  Rasterizes the selection from the mask viewer.
  */
-void InstaDam::addCurrentSelection() {
+void InstaDam::addCurrentSelection(bool useCurrent) {
+    SelectItem *item;
+    item = useCurrent ? currentItem : maskItem;
     tempUndoStack->clear();
     undoGroup->setActiveStack(mainUndoStack);
-    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem),
+    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
                                              currentLabel);
     scene->addItem(fds);
     QUndoCommand *addCommand = new AddCommand(fds, scene);
     mainUndoStack->push(addCommand);
-    scene->removeItem(maskItem->getMirror());
-    maskScene->removeItem(maskItem->getMirror());
-    scene->removeItem(maskItem);
-    maskScene->removeItem(maskItem);
+    scene->removeItem(item->getMirror());
+    maskScene->removeItem(item->getMirror());
+    scene->removeItem(item);
+    maskScene->removeItem(item);
     maskItem = nullptr;
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);

@@ -101,7 +101,7 @@ class InstaDam : public QMainWindow {
     void setOpacity(QSharedPointer<Label>, int val);
     void setCurrentBrushSize(int);
     void setNewProject();
-    void addCurrentSelection();
+    void addCurrentSelection(bool useCurrent = false);
     void cancelCurrentSelection();
     void finishPolygonButtonClicked();
     void panButton_clicked();
