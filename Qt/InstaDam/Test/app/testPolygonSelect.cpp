@@ -33,7 +33,7 @@ void TestSelect::testPMove() {
     QCOMPARE(pitem->myPoints[1], p2 + pshift);
     pitem->setActiveVertex(0);
     pitem->moveItem(pnew, pnew);
-    QCOMPARE(pitem->myPoints[0], pnew);
+    QCOMPARE(pitem->myPoints[0], p1 + pshift);
     QCOMPARE(pitem->myPoints[1], p2 + pshift);
     pitem->addPoint(p1, 0);
     QCOMPARE(pitem->myPoints[0], p1);

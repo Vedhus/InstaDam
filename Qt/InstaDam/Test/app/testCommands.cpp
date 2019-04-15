@@ -103,6 +103,7 @@ void TestSelect::testCommandMoveVertex() {
     ritem->addPoint(p3);
     QRectF initRect = ritem->myRect;
     ritem->setActiveVertex(SelectItem::TOP | SelectItem::LEFT);
+    ritem->activePoint = ritem->myRect.topLeft();
     ritem->moveItem(p1, p2);
     QRectF finalRect = ritem->myRect;
     QUndoCommand *command = new MoveVertexCommand(ritem, p1, p2, SelectItem::TOP | SelectItem::LEFT);
