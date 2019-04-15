@@ -1,6 +1,7 @@
 #include "imagelist.h"
 #include "enumconstants.h"
-
+#include <QFileDialog>
+#include <QHttpPart>
 
 
 
@@ -199,6 +200,75 @@ void ImageList::on_loadButton_clicked() {
             this, &ImageList::fileReplyFinished);
 
     close();
+}
+
+
+void ImageList::uploadFileReplyFinished()
+{
+    qInfo() << "upload reply";
+    if (rep->error()) { //http error 400 means the annotation does not exist
+        qInfo() << rep->error();
+        qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    }
+
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    }
+    else {
+        qInfo() << jsonReply;
+    }
+}
+
+/*!
+ * Slot Called when the upload button is clicked
+ */
+void ImageList::on_uploadButton_clicked()
+{
+    qInfo() << "upload button clicked";
+    QString filepath = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
+    QFile *file = new QFile(filepath);
+    QString filename = QFileInfo(filepath).fileName();
+
+    qInfo() << filename;
+    QString databaseUploadURL = this->databaseURL+"/image/upload/" + QString::number(currentProject->getId());
+    QUrl databaseLink = QUrl(databaseUploadURL);
+    qInfo() << databaseLink;
+
+    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    QHttpPart imagePart;
+    imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/*"));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\""));
+    file->open(QIODevice::ReadOnly);
+    imagePart.setBodyDevice(file);
+    file->setParent(multiPart);
+
+
+    multiPart->append(imagePart);
+
+
+    QNetworkRequest req = QNetworkRequest(databaseLink);
+    QString loginToken = "Bearer "+this->accessToken;
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader,"multipart/form-data");
+
+    qDebug() << req.url().toString();
+    const QList<QByteArray>& rawHeaderList(req.rawHeaderList());
+    foreach (QByteArray rawHeader, rawHeaderList) {
+        qDebug() << req.rawHeader(rawHeader);
+    }
+
+
+    rep = manager->post(req, multiPart);
+    multiPart->setParent(rep);
+
+    connect(rep, &QNetworkReply::finished,
+            this, &ImageList::uploadFileReplyFinished);
+
 }
 
 

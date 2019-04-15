@@ -82,6 +82,19 @@
     <string>Load</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="uploadButton">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>360</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Upload</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

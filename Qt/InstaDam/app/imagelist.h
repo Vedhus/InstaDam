@@ -51,12 +51,14 @@ class ImageList : public QWidget {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     void getThumbnailReplyFinished();
     void fileReplyFinished();
+    void uploadFileReplyFinished();
     void annotationReplyFinished();
     void doRequest(QNetworkRequest);
 
  private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();
+    void on_uploadButton_clicked();
 };
 
 #endif  // imagelist_H
