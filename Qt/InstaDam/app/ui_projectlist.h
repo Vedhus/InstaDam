@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QListWidget>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -20,20 +19,16 @@ QT_BEGIN_NAMESPACE
 class Ui_ProjectList
 {
 public:
-    QPushButton *pushButton;
     QListWidget *projectsTable;
 
     void setupUi(QWidget *ProjectList)
     {
         if (ProjectList->objectName().isEmpty())
             ProjectList->setObjectName(QString::fromUtf8("ProjectList"));
-        ProjectList->resize(600, 350);
-        pushButton = new QPushButton(ProjectList);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(25, 320, 550, 21));
+        ProjectList->resize(600, 370);
         projectsTable = new QListWidget(ProjectList);
         projectsTable->setObjectName(QString::fromUtf8("projectsTable"));
-        projectsTable->setGeometry(QRect(25, 25, 550, 281));
+        projectsTable->setGeometry(QRect(25, 25, 550, 301));
 
         retranslateUi(ProjectList);
 
@@ -43,7 +38,6 @@ public:
     void retranslateUi(QWidget *ProjectList)
     {
         ProjectList->setWindowTitle(QApplication::translate("ProjectList", "Form", nullptr));
-        pushButton->setText(QApplication::translate("ProjectList", "Create New Project (for Admins)", nullptr));
     } // retranslateUi
 
 };
