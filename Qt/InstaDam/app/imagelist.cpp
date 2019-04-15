@@ -51,9 +51,10 @@ void ImageList::addItems(QJsonObject obj)
         if (value.isArray()) {
             QJsonArray valueArray = value.toArray();
             qInfo() << valueArray;
+            QTableWidget* table = ui->tableWidget;
+            table->setRowCount(0);
             for (int imageNumber = 0; imageNumber < valueArray.size(); imageNumber++) {
                 QJsonObject currentObj = valueArray[imageNumber].toObject();
-                QTableWidget* table = ui->tableWidget;
                 table->insertRow(table->rowCount());
                 int column =0;
                 foreach(const QString& objkey, currentObj.keys()) //Everything except the thumbnail
@@ -202,6 +203,19 @@ void ImageList::on_loadButton_clicked() {
     close();
 }
 
+void ImageList::imagesReplyFinished() {
+    QByteArray strReply = rep->readAll();
+    QJsonParseError jsonError;
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
+
+      if (jsonError.error != QJsonParseError::NoError) {
+            qInfo() << "Error: " << jsonError.errorString();
+      } else {
+          QJsonObject obj = jsonReply.object();
+          addItems(obj);
+      }
+}
+
 
 void ImageList::uploadFileReplyFinished()
 {
@@ -220,6 +234,20 @@ void ImageList::uploadFileReplyFinished()
     }
     else {
         qInfo() << jsonReply;
+
+        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+        QUrl dabaseLink = QUrl(databaseImagesURL);
+
+        qInfo() << databaseImagesURL;
+
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+
+
+        rep = manager->get(req);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &ImageList::imagesReplyFinished);
     }
 }
 

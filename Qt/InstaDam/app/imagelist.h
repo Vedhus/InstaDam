@@ -51,6 +51,7 @@ class ImageList : public QWidget {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     void getThumbnailReplyFinished();
     void fileReplyFinished();
+    void imagesReplyFinished();
     void uploadFileReplyFinished();
     void annotationReplyFinished();
     void doRequest(QNetworkRequest);
