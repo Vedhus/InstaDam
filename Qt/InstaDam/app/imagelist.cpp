@@ -242,7 +242,7 @@ void ImageList::on_uploadButton_clicked()
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/*"));
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\""));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\"" + filename+  "\""));
     file->open(QIODevice::ReadOnly);
     imagePart.setBodyDevice(file);
     file->setParent(multiPart);
@@ -254,7 +254,6 @@ void ImageList::on_uploadButton_clicked()
     QNetworkRequest req = QNetworkRequest(databaseLink);
     QString loginToken = "Bearer "+this->accessToken;
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-    req.setHeader(QNetworkRequest::ContentTypeHeader,"multipart/form-data");
 
     qDebug() << req.url().toString();
     const QList<QByteArray>& rawHeaderList(req.rawHeaderList());
