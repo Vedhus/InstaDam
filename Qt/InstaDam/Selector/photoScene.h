@@ -48,10 +48,13 @@ class PhotoScene : public QGraphicsScene {
 #endif
  signals:
     void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
-                      const QPointF point, const Qt::MouseButton button);
-    void mouseMoved(const QPointF fromPos, const QPointF toPos);
+                      const QPointF point, const Qt::MouseButton button,
+                      const Qt::KeyboardModifiers modifiers);
+    void mouseMoved(const QPointF fromPos, const QPointF toPos,
+                    const Qt::KeyboardModifiers modifiers);
     void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
-                       const QPointF newPos, const Qt::MouseButton button);
+                       const QPointF newPos, const Qt::MouseButton button,
+                       const Qt::KeyboardModifiers modifiers);
     void keyPressed(PhotoScene::viewerTypes type, const int key);
 
  protected:

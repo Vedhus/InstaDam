@@ -113,11 +113,14 @@ class InstaDam : public QMainWindow {
     void squareBrushButtonClicked();
     void populateSceneFromProjectLabels();
 
-    void processMouseMoved(QPointF fromPos, QPointF toPos);
+    void processMouseMoved(QPointF fromPos, QPointF toPos,
+                           const Qt::KeyboardModifiers modifiers);
     void processPointClicked(PhotoScene::viewerTypes type, SelectItem *item,
-                             QPointF pos, const Qt::MouseButton button);
+                             QPointF pos, const Qt::MouseButton button,
+                             const Qt::KeyboardModifiers modifiers);
     void processMouseReleased(PhotoScene::viewerTypes type, QPointF oldPos,
-                              QPointF newPos, const Qt::MouseButton button);
+                              QPointF newPos, const Qt::MouseButton button,
+                              const Qt::KeyboardModifiers modifiers);
     void processKeyPressed(PhotoScene::viewerTypes type, const int key);
     void processShowHide(int state);
 

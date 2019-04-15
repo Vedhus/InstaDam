@@ -114,9 +114,11 @@ void PhotoScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         oldPos = mousePos;
         newPos = mousePos;
         if (item && item->type() != 7) {
-            emit pointClicked(myViewerType, item, mousePos, event->button());
+            emit pointClicked(myViewerType, item, mousePos, event->button(),
+                              event->modifiers());
         } else {
-            emit pointClicked(myViewerType, nullptr, mousePos, event->button());
+            emit pointClicked(myViewerType, nullptr, mousePos, event->button(),
+                              event->modifiers());
         }
     }
     QGraphicsScene::mousePressEvent(event);
@@ -135,7 +137,7 @@ void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (mousePressed) {
         QPointF mousePos(event->scenePos().x(),
                      event->scenePos().y());
-        emit mouseMoved(newPos, mousePos);
+        emit mouseMoved(newPos, mousePos, event->modifiers());
         newPos = mousePos;
     }
     QGraphicsScene::mouseMoveEvent(event);
@@ -153,7 +155,8 @@ void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
         mousePressed = false;
-        emit mouseReleased(myViewerType, oldPos, newPos, event->button());
+        emit mouseReleased(myViewerType, oldPos, newPos, event->button(),
+                           event->modifiers());
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

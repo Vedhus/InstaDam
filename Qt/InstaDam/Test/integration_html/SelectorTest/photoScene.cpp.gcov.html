@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td class="headerValue">2019-04-15 13:04:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -192,150 +192,153 @@
 <span class="lineNum">     114 </span>                :<span class="lineCov">         59 :         oldPos = mousePos;</span>
 <span class="lineNum">     115 </span>                :<span class="lineCov">         59 :         newPos = mousePos;</span>
 <span class="lineNum">     116 </span>                :<span class="lineCov">         59 :         if (item &amp;&amp; item-&gt;type() != 7) {</span>
-<span class="lineNum">     117 </span>                :<span class="lineCov">          9 :             emit pointClicked(myViewerType, item, mousePos, event-&gt;button());</span>
-<span class="lineNum">     118 </span>                :            :         } else {
-<span class="lineNum">     119 </span>                :<span class="lineCov">         50 :             emit pointClicked(myViewerType, nullptr, mousePos, event-&gt;button());</span>
-<span class="lineNum">     120 </span>                :            :         }
-<span class="lineNum">     121 </span>                :            :     }
-<span class="lineNum">     122 </span>                :<span class="lineCov">         59 :     QGraphicsScene::mousePressEvent(event);</span>
-<span class="lineNum">     123 </span>                :<span class="lineCov">         59 : }</span>
-<span class="lineNum">     124 </span>                :            : 
-<span class="lineNum">     125 </span>                :            : /*!
-<span class="lineNum">     126 </span>                :            :   \overload mouseMoveEvent()
-<span class="lineNum">     127 </span>                :            : 
-<span class="lineNum">     128 </span>                :            :   Executed when the mouse moves in the PhotoScene. \a event contains the new
-<span class="lineNum">     129 </span>                :            :   position of the mouse. If a mouse button is depressed a mouseMoved() signal is
-<span class="lineNum">     130 </span>                :            :   emitted.
-<span class="lineNum">     131 </span>                :            : 
-<a name="132"><span class="lineNum">     132 </span>                :            :   \sa QGraphicsScene::mouseMoveEvent()</a>
-<span class="lineNum">     133 </span>                :            :   */
-<span class="lineNum">     134 </span>                :<span class="lineCov">         66 : void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {</span>
-<span class="lineNum">     135 </span>                :<span class="lineCov">         66 :     if (mousePressed) {</span>
-<span class="lineNum">     136 </span>                :            :         QPointF mousePos(event-&gt;scenePos().x(),
-<span class="lineNum">     137 </span>                :<span class="lineCov">         65 :                      event-&gt;scenePos().y());</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">         65 :         emit mouseMoved(newPos, mousePos);</span>
-<span class="lineNum">     139 </span>                :<span class="lineCov">         65 :         newPos = mousePos;</span>
-<span class="lineNum">     140 </span>                :            :     }
-<span class="lineNum">     141 </span>                :<span class="lineCov">         66 :     QGraphicsScene::mouseMoveEvent(event);</span>
-<span class="lineNum">     142 </span>                :<span class="lineCov">         66 : }</span>
-<span class="lineNum">     143 </span>                :            : 
-<span class="lineNum">     144 </span>                :            : /*!
-<span class="lineNum">     145 </span>                :            :   \overload mouseReleaseEvent()
-<span class="lineNum">     146 </span>                :            : 
-<span class="lineNum">     147 </span>                :            :   Executed when a mouse button is released. \a event contains which
-<span class="lineNum">     148 </span>                :            :   button was released. A mouseReleased() signal is emitted with the PhotoScene
-<span class="lineNum">     149 </span>                :            :   type, any mouse movement information, and which button was released.
-<span class="lineNum">     150 </span>                :            : 
-<a name="151"><span class="lineNum">     151 </span>                :            :   \sa QGraphicsScene::mouseReleaseEvent()</a>
-<span class="lineNum">     152 </span>                :            :   */
-<span class="lineNum">     153 </span>                :<span class="lineCov">         59 : void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {</span>
-<span class="lineNum">     154 </span>                :<span class="lineCov">         59 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
-<span class="lineNum">     155 </span>                :<span class="lineCov">         59 :         mousePressed = false;</span>
-<span class="lineNum">     156 </span>                :<span class="lineCov">         59 :         emit mouseReleased(myViewerType, oldPos, newPos, event-&gt;button());</span>
-<span class="lineNum">     157 </span>                :            :     }
-<span class="lineNum">     158 </span>                :<span class="lineCov">         59 :     QGraphicsScene::mouseReleaseEvent(event);</span>
-<span class="lineNum">     159 </span>                :<span class="lineCov">         59 : }</span>
-<span class="lineNum">     160 </span>                :            : 
-<span class="lineNum">     161 </span>                :            : /*!
-<span class="lineNum">     162 </span>                :            :   Returns a pointer to the top SelectItem at \a point in scene coordinates.
-<a name="163"><span class="lineNum">     163 </span>                :            :   If there is no SelectItem under that position then \c nullptr is returned.</a>
-<span class="lineNum">     164 </span>                :            :   */
-<span class="lineNum">     165 </span>                :<span class="lineCov">         59 : SelectItem* PhotoScene::itemAt(QPointF point) const {</span>
-<span class="lineNum">     166 </span>                :<span class="lineCov">        347 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
-<span class="lineNum">     167 </span>                :            :          end = currentItems.end(); iterator != end; ++iterator) {
-<span class="lineNum">     168 </span>                :<span class="lineCov">        179 :         if ((*iterator)-&gt;isVisible() &amp;&amp; (*iterator)-&gt;isInside(point)) {</span>
-<span class="lineNum">     169 </span>                :<span class="lineCov">          9 :             return (*iterator);</span>
-<span class="lineNum">     170 </span>                :            :         }
-<span class="lineNum">     171 </span>                :            :     }
-<span class="lineNum">     172 </span>                :            :     return nullptr;
-<span class="lineNum">     173 </span>                :            : }
-<span class="lineNum">     174 </span>                :            : 
-<span class="lineNum">     175 </span>                :            : /*!
-<span class="lineNum">     176 </span>                :            :   \overload itemAt()
-<span class="lineNum">     177 </span>                :            :   Returns a pointer to the top SelectItem at \a point in scene coordinates and with
-<span class="lineNum">     178 </span>                :            :   Label \a label. If there is no SelectItem from that Label under that position
-<a name="179"><span class="lineNum">     179 </span>                :            :   then \c nullptr is returned.</a>
-<span class="lineNum">     180 </span>                :            :   */
-<span class="lineNum">     181 </span>                :<span class="lineNoCov">          0 : SelectItem* PhotoScene::itemAt(QPointF point, std::string label) {</span>
-<span class="lineNum">     182 </span>                :<span class="lineNoCov">          0 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator =</span>
-<span class="lineNum">     183 </span>                :<span class="lineNoCov">          0 :          labelmap[label].begin(),</span>
-<span class="lineNum">     184 </span>                :<span class="lineNoCov">          0 :          end = labelmap[label].end(); iterator != end; ++iterator) {</span>
-<span class="lineNum">     185 </span>                :<span class="lineNoCov">          0 :         if ((*iterator)-&gt;isInside(point))</span>
-<span class="lineNum">     186 </span>                :<span class="lineNoCov">          0 :             return (*iterator);</span>
-<span class="lineNum">     187 </span>                :            :     }
-<span class="lineNum">     188 </span>                :            :     return nullptr;
-<span class="lineNum">     189 </span>                :            : }
-<span class="lineNum">     190 </span>                :            : 
-<span class="lineNum">     191 </span>                :            : /*!
-<span class="lineNum">     192 </span>                :            :   Adds \a label to the PhotoScene
-<span class="lineNum">     193 </span>                :            :   */
-<span class="lineNum">     194 </span>                :<span class="lineNoCov">          0 : void PhotoScene::addLabel(std::string label) {</span>
-<span class="lineNum">     195 </span>                :            :     std::map&lt;std::string, std::list&lt;SelectItem*&gt; &gt;::iterator it =
-<span class="lineNum">     196 </span>                :            :             labelmap.find(label);
-<span class="lineNum">     197 </span>                :<span class="lineNoCov">          0 :     if (it == labelmap.end()) {</span>
-<span class="lineNum">     198 </span>                :            :         std::list&lt;SelectItem*&gt; newlist;
-<span class="lineNum">     199 </span>                :<span class="lineNoCov">          0 :         labelmap[label] = newlist;</span>
-<span class="lineNum">     200 </span>                :            :     }
-<span class="lineNum">     201 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     202 </span>                :            : 
-<span class="lineNum">     203 </span>                :            : /*!
-<a name="204"><span class="lineNum">     204 </span>                :            :   Sets the currently active Label to be \a label.</a>
-<span class="lineNum">     205 </span>                :            :   */
-<span class="lineNum">     206 </span>                :<span class="lineNoCov">          0 : void PhotoScene::setCurrentLabel(const std::string &amp;label) {</span>
-<span class="lineNum">     207 </span>                :<span class="lineNoCov">          0 :     currentLabel = label;</span>
-<span class="lineNum">     208 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     209 </span>                :            : 
-<span class="lineNum">     210 </span>                :            : /*!
-<a name="211"><span class="lineNum">     211 </span>                :            :   Adds \a item to the Label given by \a label.</a>
-<span class="lineNum">     212 </span>                :            :   */
-<span class="lineNum">     213 </span>                :<span class="lineNoCov">          0 : void PhotoScene::addLabelItem(SelectItem* item, std::string label) {</span>
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineNoCov">          0 :     currentItems.push_front(item);</span></a>
-<span class="lineNum">     215 </span>                :<span class="lineNoCov">          0 :     labelmap[label].push_front(item);</span>
-<span class="lineNum">     216 </span>                :<span class="lineCov">          3 : }</span>
-<span class="lineNum">     217 </span>                :            : 
-<span class="lineNum">     218 </span>                :            : /*!
-<span class="lineNum">     219 </span>                :            :   \fn void PhotoScene::pointClicked(const PhotoScene::viewerTypes type, SelectItem* item, const QPointF point, const Qt::MouseButton button)
+<span class="lineNum">     117 </span>                :            :             emit pointClicked(myViewerType, item, mousePos, event-&gt;button(),
+<span class="lineNum">     118 </span>                :<span class="lineCov">          9 :                               event-&gt;modifiers());</span>
+<span class="lineNum">     119 </span>                :            :         } else {
+<span class="lineNum">     120 </span>                :            :             emit pointClicked(myViewerType, nullptr, mousePos, event-&gt;button(),
+<span class="lineNum">     121 </span>                :<span class="lineCov">         50 :                               event-&gt;modifiers());</span>
+<span class="lineNum">     122 </span>                :            :         }
+<span class="lineNum">     123 </span>                :            :     }
+<span class="lineNum">     124 </span>                :<span class="lineCov">         59 :     QGraphicsScene::mousePressEvent(event);</span>
+<span class="lineNum">     125 </span>                :<span class="lineCov">         59 : }</span>
+<span class="lineNum">     126 </span>                :            : 
+<span class="lineNum">     127 </span>                :            : /*!
+<span class="lineNum">     128 </span>                :            :   \overload mouseMoveEvent()
+<span class="lineNum">     129 </span>                :            : 
+<span class="lineNum">     130 </span>                :            :   Executed when the mouse moves in the PhotoScene. \a event contains the new
+<span class="lineNum">     131 </span>                :            :   position of the mouse. If a mouse button is depressed a mouseMoved() signal is
+<span class="lineNum">     132 </span>                :            :   emitted.
+<span class="lineNum">     133 </span>                :            : 
+<a name="134"><span class="lineNum">     134 </span>                :            :   \sa QGraphicsScene::mouseMoveEvent()</a>
+<span class="lineNum">     135 </span>                :            :   */
+<span class="lineNum">     136 </span>                :<span class="lineCov">         66 : void PhotoScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">         66 :     if (mousePressed) {</span>
+<span class="lineNum">     138 </span>                :            :         QPointF mousePos(event-&gt;scenePos().x(),
+<span class="lineNum">     139 </span>                :<span class="lineCov">         65 :                      event-&gt;scenePos().y());</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">         65 :         emit mouseMoved(newPos, mousePos, event-&gt;modifiers());</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">         65 :         newPos = mousePos;</span>
+<span class="lineNum">     142 </span>                :            :     }
+<span class="lineNum">     143 </span>                :<span class="lineCov">         66 :     QGraphicsScene::mouseMoveEvent(event);</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">         66 : }</span>
+<span class="lineNum">     145 </span>                :            : 
+<span class="lineNum">     146 </span>                :            : /*!
+<span class="lineNum">     147 </span>                :            :   \overload mouseReleaseEvent()
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :            :   Executed when a mouse button is released. \a event contains which
+<span class="lineNum">     150 </span>                :            :   button was released. A mouseReleased() signal is emitted with the PhotoScene
+<span class="lineNum">     151 </span>                :            :   type, any mouse movement information, and which button was released.
+<span class="lineNum">     152 </span>                :            : 
+<a name="153"><span class="lineNum">     153 </span>                :            :   \sa QGraphicsScene::mouseReleaseEvent()</a>
+<span class="lineNum">     154 </span>                :            :   */
+<span class="lineNum">     155 </span>                :<span class="lineCov">         59 : void PhotoScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">         59 :     if (event-&gt;button() == Qt::LeftButton || event-&gt;button() == Qt::RightButton) {</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">         59 :         mousePressed = false;</span>
+<span class="lineNum">     158 </span>                :            :         emit mouseReleased(myViewerType, oldPos, newPos, event-&gt;button(),
+<span class="lineNum">     159 </span>                :<span class="lineCov">         59 :                            event-&gt;modifiers());</span>
+<span class="lineNum">     160 </span>                :            :     }
+<span class="lineNum">     161 </span>                :<span class="lineCov">         59 :     QGraphicsScene::mouseReleaseEvent(event);</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">         59 : }</span>
+<span class="lineNum">     163 </span>                :            : 
+<span class="lineNum">     164 </span>                :            : /*!
+<span class="lineNum">     165 </span>                :            :   Returns a pointer to the top SelectItem at \a point in scene coordinates.
+<a name="166"><span class="lineNum">     166 </span>                :            :   If there is no SelectItem under that position then \c nullptr is returned.</a>
+<span class="lineNum">     167 </span>                :            :   */
+<span class="lineNum">     168 </span>                :<span class="lineCov">         59 : SelectItem* PhotoScene::itemAt(QPointF point) const {</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">        347 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator = currentItems.begin(),</span>
+<span class="lineNum">     170 </span>                :            :          end = currentItems.end(); iterator != end; ++iterator) {
+<span class="lineNum">     171 </span>                :<span class="lineCov">        179 :         if ((*iterator)-&gt;isVisible() &amp;&amp; (*iterator)-&gt;isInside(point)) {</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">          9 :             return (*iterator);</span>
+<span class="lineNum">     173 </span>                :            :         }
+<span class="lineNum">     174 </span>                :            :     }
+<span class="lineNum">     175 </span>                :            :     return nullptr;
+<span class="lineNum">     176 </span>                :            : }
+<span class="lineNum">     177 </span>                :            : 
+<span class="lineNum">     178 </span>                :            : /*!
+<span class="lineNum">     179 </span>                :            :   \overload itemAt()
+<span class="lineNum">     180 </span>                :            :   Returns a pointer to the top SelectItem at \a point in scene coordinates and with
+<span class="lineNum">     181 </span>                :            :   Label \a label. If there is no SelectItem from that Label under that position
+<a name="182"><span class="lineNum">     182 </span>                :            :   then \c nullptr is returned.</a>
+<span class="lineNum">     183 </span>                :            :   */
+<span class="lineNum">     184 </span>                :<span class="lineNoCov">          0 : SelectItem* PhotoScene::itemAt(QPointF point, std::string label) {</span>
+<span class="lineNum">     185 </span>                :<span class="lineNoCov">          0 :     for (std::list&lt;SelectItem*&gt;::const_iterator iterator =</span>
+<span class="lineNum">     186 </span>                :<span class="lineNoCov">          0 :          labelmap[label].begin(),</span>
+<span class="lineNum">     187 </span>                :<span class="lineNoCov">          0 :          end = labelmap[label].end(); iterator != end; ++iterator) {</span>
+<span class="lineNum">     188 </span>                :<span class="lineNoCov">          0 :         if ((*iterator)-&gt;isInside(point))</span>
+<span class="lineNum">     189 </span>                :<span class="lineNoCov">          0 :             return (*iterator);</span>
+<span class="lineNum">     190 </span>                :            :     }
+<span class="lineNum">     191 </span>                :            :     return nullptr;
+<span class="lineNum">     192 </span>                :            : }
+<span class="lineNum">     193 </span>                :            : 
+<span class="lineNum">     194 </span>                :            : /*!
+<span class="lineNum">     195 </span>                :            :   Adds \a label to the PhotoScene
+<span class="lineNum">     196 </span>                :            :   */
+<span class="lineNum">     197 </span>                :<span class="lineNoCov">          0 : void PhotoScene::addLabel(std::string label) {</span>
+<span class="lineNum">     198 </span>                :            :     std::map&lt;std::string, std::list&lt;SelectItem*&gt; &gt;::iterator it =
+<span class="lineNum">     199 </span>                :            :             labelmap.find(label);
+<span class="lineNum">     200 </span>                :<span class="lineNoCov">          0 :     if (it == labelmap.end()) {</span>
+<span class="lineNum">     201 </span>                :            :         std::list&lt;SelectItem*&gt; newlist;
+<span class="lineNum">     202 </span>                :<span class="lineNoCov">          0 :         labelmap[label] = newlist;</span>
+<span class="lineNum">     203 </span>                :            :     }
+<span class="lineNum">     204 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     205 </span>                :            : 
+<span class="lineNum">     206 </span>                :            : /*!
+<a name="207"><span class="lineNum">     207 </span>                :            :   Sets the currently active Label to be \a label.</a>
+<span class="lineNum">     208 </span>                :            :   */
+<span class="lineNum">     209 </span>                :<span class="lineNoCov">          0 : void PhotoScene::setCurrentLabel(const std::string &amp;label) {</span>
+<span class="lineNum">     210 </span>                :<span class="lineNoCov">          0 :     currentLabel = label;</span>
+<span class="lineNum">     211 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     212 </span>                :            : 
+<span class="lineNum">     213 </span>                :            : /*!
+<a name="214"><span class="lineNum">     214 </span>                :            :   Adds \a item to the Label given by \a label.</a>
+<span class="lineNum">     215 </span>                :            :   */
+<span class="lineNum">     216 </span>                :<span class="lineNoCov">          0 : void PhotoScene::addLabelItem(SelectItem* item, std::string label) {</span>
+<a name="217"><span class="lineNum">     217 </span>                :<span class="lineNoCov">          0 :     currentItems.push_front(item);</span></a>
+<span class="lineNum">     218 </span>                :<span class="lineNoCov">          0 :     labelmap[label].push_front(item);</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">          3 : }</span>
 <span class="lineNum">     220 </span>                :            : 
-<span class="lineNum">     221 </span>                :            :   Triggered when a mouse button is depressed in the PhotoScene. The signal
-<span class="lineNum">     222 </span>                :            :   contains which type of viewer this is as \a type, any SelectItem that exists
-<span class="lineNum">     223 </span>                :            :   under the mouse as \a item, the position of the mouse as \a point, and which
-<span class="lineNum">     224 </span>                :            :   mouse button was depressed as \a button.
-<span class="lineNum">     225 </span>                :            :   */
-<span class="lineNum">     226 </span>                :            : 
-<span class="lineNum">     227 </span>                :            : /*!
-<span class="lineNum">     228 </span>                :            :   \fn void PhotoScene::mouseMoved(const QPointF fromPos, const QPointF toPos)
+<span class="lineNum">     221 </span>                :            : /*!
+<span class="lineNum">     222 </span>                :            :   \fn void PhotoScene::pointClicked(const PhotoScene::viewerTypes type, SelectItem* item, const QPointF point, const Qt::MouseButton button)
+<span class="lineNum">     223 </span>                :            : 
+<span class="lineNum">     224 </span>                :            :   Triggered when a mouse button is depressed in the PhotoScene. The signal
+<span class="lineNum">     225 </span>                :            :   contains which type of viewer this is as \a type, any SelectItem that exists
+<span class="lineNum">     226 </span>                :            :   under the mouse as \a item, the position of the mouse as \a point, and which
+<span class="lineNum">     227 </span>                :            :   mouse button was depressed as \a button.
+<span class="lineNum">     228 </span>                :            :   */
 <span class="lineNum">     229 </span>                :            : 
-<span class="lineNum">     230 </span>                :            :   Triggered when the mouse moves in the PhotoScene and a mouse button is
-<span class="lineNum">     231 </span>                :            :   depressed. The signal contains the starting (\a fromPos) and ending (\a toPos)
-<span class="lineNum">     232 </span>                :            :   positions of the mouse.
-<span class="lineNum">     233 </span>                :            :   */
-<span class="lineNum">     234 </span>                :            : 
-<span class="lineNum">     235 </span>                :            : /*!
-<span class="lineNum">     236 </span>                :            :   \fn void PhotoScene::mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos, const QPointF newPos, const Qt::MouseButton button)
+<span class="lineNum">     230 </span>                :            : /*!
+<span class="lineNum">     231 </span>                :            :   \fn void PhotoScene::mouseMoved(const QPointF fromPos, const QPointF toPos)
+<span class="lineNum">     232 </span>                :            : 
+<span class="lineNum">     233 </span>                :            :   Triggered when the mouse moves in the PhotoScene and a mouse button is
+<span class="lineNum">     234 </span>                :            :   depressed. The signal contains the starting (\a fromPos) and ending (\a toPos)
+<span class="lineNum">     235 </span>                :            :   positions of the mouse.
+<span class="lineNum">     236 </span>                :            :   */
 <span class="lineNum">     237 </span>                :            : 
-<span class="lineNum">     238 </span>                :            :   Triggered when a mouse button is released. The signal contains which type of
-<span class="lineNum">     239 </span>                :            :   viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos)
-<span class="lineNum">     240 </span>                :            :   positions of the mouse (during the time the button was depressed), and which
-<span class="lineNum">     241 </span>                :            :   mouse button was released as \a button.
-<span class="lineNum">     242 </span>                :            :   */
-<span class="lineNum">     243 </span>                :            : 
-<span class="lineNum">     244 </span>                :            : /*!
-<span class="lineNum">     245 </span>                :            :   \fn void PhotoScene::keyPressed(PhotoScene::viewerTypes type, const int key)
+<span class="lineNum">     238 </span>                :            : /*!
+<span class="lineNum">     239 </span>                :            :   \fn void PhotoScene::mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos, const QPointF newPos, const Qt::MouseButton button)
+<span class="lineNum">     240 </span>                :            : 
+<span class="lineNum">     241 </span>                :            :   Triggered when a mouse button is released. The signal contains which type of
+<span class="lineNum">     242 </span>                :            :   viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos)
+<span class="lineNum">     243 </span>                :            :   positions of the mouse (during the time the button was depressed), and which
+<span class="lineNum">     244 </span>                :            :   mouse button was released as \a button.
+<span class="lineNum">     245 </span>                :            :   */
 <span class="lineNum">     246 </span>                :            : 
-<span class="lineNum">     247 </span>                :            :   Triggered when a key is pressed in the PhotoScene. The signal contains which
-<span class="lineNum">     248 </span>                :            :   type of viewer this is as \a type and what key was pressed as \a key.
-<span class="lineNum">     249 </span>                :            :   */
-<span class="lineNum">     250 </span>                :            : 
-<span class="lineNum">     251 </span>                :            : /*!
-<span class="lineNum">     252 </span>                :            :   \enum PhotoScene::viewerTypes
+<span class="lineNum">     247 </span>                :            : /*!
+<span class="lineNum">     248 </span>                :            :   \fn void PhotoScene::keyPressed(PhotoScene::viewerTypes type, const int key)
+<span class="lineNum">     249 </span>                :            : 
+<span class="lineNum">     250 </span>                :            :   Triggered when a key is pressed in the PhotoScene. The signal contains which
+<span class="lineNum">     251 </span>                :            :   type of viewer this is as \a type and what key was pressed as \a key.
+<span class="lineNum">     252 </span>                :            :   */
 <span class="lineNum">     253 </span>                :            : 
-<span class="lineNum">     254 </span>                :            :   This enum is used to indicate which panel this PhotoScene belongs to.
-<span class="lineNum">     255 </span>                :            : 
-<span class="lineNum">     256 </span>                :            :   \value PHOTO_VIEWER_TYPE
-<span class="lineNum">     257 </span>                :            :       The scene containing the opened image.
-<span class="lineNum">     258 </span>                :            :   \value MASK_VIEWER_TYPE
-<span class="lineNum">     259 </span>                :            :       The scene containing the masked image.
-<span class="lineNum">     260 </span>                :            :   */
+<span class="lineNum">     254 </span>                :            : /*!
+<span class="lineNum">     255 </span>                :            :   \enum PhotoScene::viewerTypes
+<span class="lineNum">     256 </span>                :            : 
+<span class="lineNum">     257 </span>                :            :   This enum is used to indicate which panel this PhotoScene belongs to.
+<span class="lineNum">     258 </span>                :            : 
+<span class="lineNum">     259 </span>                :            :   \value PHOTO_VIEWER_TYPE
+<span class="lineNum">     260 </span>                :            :       The scene containing the opened image.
+<span class="lineNum">     261 </span>                :            :   \value MASK_VIEWER_TYPE
+<span class="lineNum">     262 </span>                :            :       The scene containing the masked image.
+<span class="lineNum">     263 </span>                :            :   */
 </pre>
       </td>
     </tr>

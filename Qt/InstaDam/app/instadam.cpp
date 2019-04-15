@@ -87,27 +87,39 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     currentLabel = nullptr;
     currentProject = new Project();
     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                       QPointF, const Qt::MouseButton)), this,
+                                       QPointF, const Qt::MouseButton,
+                                       const Qt::KeyboardModifiers)), this,
             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                     QPointF, const Qt::MouseButton)));
-    connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-            SLOT(processMouseMoved(QPointF, QPointF)));
+                                     QPointF, const Qt::MouseButton,
+                                     const Qt::KeyboardModifiers)));
+    connect(scene, SIGNAL(mouseMoved(QPointF, QPointF,
+                                     const Qt::KeyboardModifiers)), this,
+            SLOT(processMouseMoved(QPointF, QPointF,
+                                   const Qt::KeyboardModifiers)));
     connect(scene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
-                                        QPointF, const Qt::MouseButton)), this,
+                                        QPointF, const Qt::MouseButton,
+                                        const Qt::KeyboardModifiers)), this,
             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-                                      const Qt::MouseButton)));
+                                      const Qt::MouseButton,
+                                      const Qt::KeyboardModifiers)));
     connect(scene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
     connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                           QPointF, const Qt::MouseButton)), this,
+                                           QPointF, const Qt::MouseButton,
+                                           const Qt::KeyboardModifiers)), this,
             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                     QPointF, const Qt::MouseButton)));
-    connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-            SLOT(processMouseMoved(QPointF, QPointF)));
+                                     QPointF, const Qt::MouseButton,
+                                     const Qt::KeyboardModifiers)));
+    connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF,
+                                         const Qt::KeyboardModifiers)), this,
+            SLOT(processMouseMoved(QPointF, QPointF,
+                                   const Qt::KeyboardModifiers)));
     connect(maskScene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
-                                            QPointF, const Qt::MouseButton)), this,
+                                            QPointF, const Qt::MouseButton,
+                                            const Qt::KeyboardModifiers)), this,
             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-                                      const Qt::MouseButton)));
+                                      const Qt::MouseButton,
+                                      const Qt::KeyboardModifiers)));
     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
 
@@ -1249,7 +1261,8 @@ void InstaDam::on_actionExport_zip_triggered() {
  */
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
-                                   const Qt::MouseButton button) {
+                                   const Qt::MouseButton button,
+                                   const Qt::KeyboardModifiers modifiers) {
     currentButton = button;
 
     if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
@@ -1261,7 +1274,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
     if (!panning && !ctrlPanning){
 
-        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false){ //(!item)
+        if (!(modifiers & Qt::ShiftModifier)){ //(!item)
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 scene->inactiveAll();
@@ -1384,7 +1397,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
-        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true && item) {
+        } else if((modifiers & Qt::ShiftModifier) && item) {
             qInfo()<<"shift clicked!";
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
@@ -1439,7 +1452,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 /*!
   Processes a mouse movement from \a fromPos to \a toPos.
  */
-void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
+void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
+                                 const Qt::KeyboardModifiers modifiers) {
 
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
@@ -1459,7 +1473,8 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
  */
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
-                                    const Qt::MouseButton button) {
+                                    const Qt::MouseButton button,
+                                    const Qt::KeyboardModifiers modifiers) {
     UNUSED(button);
     ctrlPanning = false;
     ui->panButton->setChecked(panning);
@@ -1477,7 +1492,6 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                                                 maskScene);
             undoGroup->activeStack()->push(eraseCommand);
         } else {
-            QTextStream(stdout) << "ELSE" << endl;
             QUndoCommand *addCommand =
                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                        currentItem : currentItem->getMirror(),

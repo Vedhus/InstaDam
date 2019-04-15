@@ -31,8 +31,8 @@ public:
             ImageList->setObjectName(QString::fromUtf8("ImageList"));
         ImageList->resize(867, 401);
         tableWidget = new QTableWidget(ImageList);
-        if (tableWidget->columnCount() < 5)
-            tableWidget->setColumnCount(5);
+        if (tableWidget->columnCount() < 6)
+            tableWidget->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -43,6 +43,8 @@ public:
         tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        tableWidget->setHorizontalHeaderItem(5, __qtablewidgetitem5);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
         tableWidget->setGeometry(QRect(20, 10, 751, 341));
         tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -68,9 +70,11 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QApplication::translate("ImageList", "Path", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("ImageList", "Date_created", nullptr));
+        ___qtablewidgetitem3->setText(QApplication::translate("ImageList", "Last Modified", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = tableWidget->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QApplication::translate("ImageList", "Date_Modified", nullptr));
+        ___qtablewidgetitem4->setText(QApplication::translate("ImageList", "Annotated", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = tableWidget->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QApplication::translate("ImageList", "Thumbnail", nullptr));
         cancelButton->setText(QApplication::translate("ImageList", "Cancel", nullptr));
         loadButton->setText(QApplication::translate("ImageList", "Load", nullptr));
     } // retranslateUi

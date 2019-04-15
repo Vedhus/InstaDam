@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">218</td>
-            <td class="headerCovTableEntry">253</td>
-            <td class="headerCovTableEntryMed">86.2 %</td>
+            <td class="headerCovTableEntry">252</td>
+            <td class="headerCovTableEntryMed">86.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td class="headerValue">2019-04-15 13:04:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">35</td>
@@ -156,7 +156,7 @@
 <a name="78"><span class="lineNum">      78 </span>                :            :  * Sets the opacity of the label to \a val</a>
 <span class="lineNum">      79 </span>                :            : */
 <span class="lineNum">      80 </span>                :<span class="lineNoCov">          0 : void PolygonSelect::setOpacity(qreal val) {</span>
-<span class="lineNum">      81 </span>                :<span class="lineNoCov">          0 :     SelectItem::setOpacity(val);</span>
+<span class="lineNum">      81 </span>                :            :     SelectItem::setOpacity(val);
 <span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 : }</span>
 <span class="lineNum">      83 </span>                :            : 
 <span class="lineNum">      84 </span>                :            : /*!
@@ -351,7 +351,7 @@
 <span class="lineNum">     273 </span>                :            :   \reimp
 <span class="lineNum">     274 </span>                :            :   */
 <span class="lineNum">     275 </span>                :<span class="lineCov">          1 : void PolygonSelect::removeVertex(int vertex) {</span>
-<span class="lineNum">     276 </span>                :<span class="lineCov">          1 :     if (activeVertex != UNSELECTED) {</span>
+<span class="lineNum">     276 </span>                :<span class="lineCov">          1 :     if (activeVertex != UNSELECTED &amp;&amp; vertex == UNSELECTED) {</span>
 <span class="lineNum">     277 </span>                :            :         vertex = activeVertex;
 <span class="lineNum">     278 </span>                :<span class="lineNoCov">          0 :     } else if (vertex == UNSELECTED) {</span>
 <span class="lineNum">     279 </span>                :<span class="lineNoCov">          0 :         vertex = myPoints.size() - 1;</span>
