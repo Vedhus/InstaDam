@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntry">29</td>
-            <td class="headerCovTableEntryLo">3.4 %</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntryLo">3.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td class="headerValue">2019-04-15 13:04:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntryLo">20.0 %</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">22.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -113,40 +113,34 @@
 <span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;running locally&quot;;</span>
 <span class="lineNum">      36 </span>                :<span class="lineNoCov">          0 :     InstaDam *w = new InstaDam;</span>
 <span class="lineNum">      37 </span>                :<span class="lineNoCov">          0 :     w-&gt;runningLocally = true;</span>
-<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :     w-&gt;show();</span>
-<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 :     on_pushButton_3_clicked();</span>
-<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      41 </span>                :            : 
-<span class="lineNum">      42 </span>                :            : /*!
-<a name="43"><span class="lineNum">      43 </span>                :            :   Sets the mode to run of a server.</a>
-<span class="lineNum">      44 </span>                :            :   */
-<span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 : void StartingWidget::runServerVersion() {</span>
-<span class="lineNum">      46 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;running on a server&quot;;</span>
-<span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :     Login *log = new Login;</span>
-<span class="lineNum">      48 </span>                :<span class="lineNoCov">          0 :     log-&gt;show();</span>
-<span class="lineNum">      49 </span>                :<span class="lineNoCov">          0 :     on_pushButton_3_clicked();</span>
-<span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      51 </span>                :            : 
-<span class="lineNum">      52 </span>                :            : /*!
-<a name="53"><span class="lineNum">      53 </span>                :            :   Responds to the Local Version button being clicked.</a>
-<span class="lineNum">      54 </span>                :            :   */
-<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 : void StartingWidget::on_pushButton_clicked() {</span>
-<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :     runLocalVersion();</span>
-<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      58 </span>                :            : 
-<span class="lineNum">      59 </span>                :            : /*!
-<a name="60"><span class="lineNum">      60 </span>                :            :   Responds to the Run from Server button being clicked.</a>
-<span class="lineNum">      61 </span>                :            :   */
-<span class="lineNum">      62 </span>                :<span class="lineNoCov">          0 : void StartingWidget::on_pushButton_2_clicked() {</span>
-<span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :     runServerVersion();</span>
-<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      65 </span>                :            : 
-<span class="lineNum">      66 </span>                :            : /*!
-<a name="67"><span class="lineNum">      67 </span>                :            :   Responds to the widget closing.</a>
-<span class="lineNum">      68 </span>                :            :   */
-<a name="69"><span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 : void StartingWidget::on_pushButton_3_clicked() {</span></a>
-<span class="lineNum">      70 </span>                :<span class="lineNoCov">          0 :     close();</span>
-<span class="lineNum">      71 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :     w-&gt;setButtonsConfiguration();</span>
+<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 :     w-&gt;show();</span>
+<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 :     close();</span>
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      42 </span>                :            : 
+<span class="lineNum">      43 </span>                :            : /*!
+<a name="44"><span class="lineNum">      44 </span>                :            :   Sets the mode to run of a server.</a>
+<span class="lineNum">      45 </span>                :            :   */
+<span class="lineNum">      46 </span>                :<span class="lineNoCov">          0 : void StartingWidget::runServerVersion() {</span>
+<span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;running on a server&quot;;</span>
+<span class="lineNum">      48 </span>                :<span class="lineNoCov">          0 :     Login *log = new Login;</span>
+<span class="lineNum">      49 </span>                :<span class="lineNoCov">          0 :     log-&gt;show();</span>
+<span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 :     close();</span>
+<span class="lineNum">      51 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      52 </span>                :            : 
+<span class="lineNum">      53 </span>                :            : /*!
+<a name="54"><span class="lineNum">      54 </span>                :            :   Responds to the Local Version button being clicked.</a>
+<span class="lineNum">      55 </span>                :            :   */
+<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 : void StartingWidget::on_pushButton_clicked() {</span>
+<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 :     runLocalVersion();</span>
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      59 </span>                :            : 
+<span class="lineNum">      60 </span>                :            : /*!
+<a name="61"><span class="lineNum">      61 </span>                :            :   Responds to the Run from Server button being clicked.</a>
+<span class="lineNum">      62 </span>                :            :   */
+<a name="63"><span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 : void StartingWidget::on_pushButton_2_clicked() {</span></a>
+<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 :     runServerVersion();</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">          3 : }</span>
 </pre>
       </td>
     </tr>

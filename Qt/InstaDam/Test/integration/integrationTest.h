@@ -65,11 +65,17 @@ private:
     QPointF erase3 = QPointF(100., 30.);
     QVector<QPointF> erasePoints;
 
-    void makeMouseDownEvent(QPointF point, Qt::MouseButton button = Qt::LeftButton,
+    void makeMouseDownEvent(QPointF point,
+                            Qt::KeyboardModifier modifier = Qt::NoModifier,
+                            Qt::MouseButton button = Qt::LeftButton,
                             PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE);
-    void makeMouseMoveEvent(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+    void makeMouseMoveEvent(QPointF from, QPointF to,
+                            Qt::KeyboardModifier modifier = Qt::NoModifier,
+                            Qt::MouseButton button = Qt::LeftButton,
                             PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE);
-    void makeMouseReleaseEvent(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+    void makeMouseReleaseEvent(QPointF from, QPointF to,
+                               Qt::KeyboardModifier modifier = Qt::NoModifier,
+                               Qt::MouseButton button = Qt::LeftButton,
                                PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE);
     void makeKeyPressEvent(Qt::Key key);
 
@@ -93,30 +99,36 @@ private:
     void clickCancelSelection() {idm->ui->cancelSelectionButton->click();}
     void clickSaveAndNext() {idm->ui->saveAndNext->click();}
     void clickSaveAndBack() {idm->ui->saveAndBack->click();}
-    void draw(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+    void draw(QPointF from, QPointF to, Qt::KeyboardModifier modifier = Qt::NoModifier,
+              Qt::MouseButton button = Qt::LeftButton,
               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
-        makeMouseDownEvent(from, button, type);
-        move(from, to, button, type);
-        makeMouseReleaseEvent(from, to, button, type);
+        makeMouseDownEvent(from, modifier, button, type);
+        move(from, to, modifier, button, type);
+        makeMouseReleaseEvent(from, to, modifier, button, type);
     }
 
-    void click(QPointF point, Qt::MouseButton button = Qt::LeftButton,
+    void click(QPointF point, Qt::KeyboardModifier modifier = Qt::NoModifier,
+               Qt::MouseButton button = Qt::LeftButton,
                PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
-        makeMouseDownEvent(point, button, type);
-        makeMouseReleaseEvent(point, point, button, type);
+        makeMouseDownEvent(point, modifier, button, type);
+        makeMouseReleaseEvent(point, point, modifier, button, type);
     }
 
-    void move(QPointF from, QPointF to, Qt::MouseButton button = Qt::LeftButton,
+    void move(QPointF from, QPointF to,
+              Qt::KeyboardModifier modifier = Qt::NoModifier,
+              Qt::MouseButton button = Qt::LeftButton,
               PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
-        makeMouseMoveEvent(from, to, button, type);
+        makeMouseMoveEvent(from, to, modifier, button, type);
     }
-    void freeDraw(QVector<QPointF> points, Qt::MouseButton button = Qt::LeftButton,
-              PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
-        makeMouseDownEvent(points[0], button, type);
+    void freeDraw(QVector<QPointF> points,
+                  Qt::KeyboardModifier modifier = Qt::NoModifier,
+                  Qt::MouseButton button = Qt::LeftButton,
+                  PhotoScene::viewerTypes type = PhotoScene::PHOTO_VIEWER_TYPE) {
+        makeMouseDownEvent(points[0], modifier, button, type);
         for (int i = 0; i < points.size() - 1; i++) {
-            move(points[i], points[i + 1], button, type);
+            move(points[i], points[i + 1], modifier, button, type);
         }
-        makeMouseReleaseEvent(points[0], points[points.size() - 1], button, type);
+        makeMouseReleaseEvent(points[0], points[points.size() - 1], modifier, button, type);
     }
 
     SelectItem* getItem(int type, ushort num = 1);

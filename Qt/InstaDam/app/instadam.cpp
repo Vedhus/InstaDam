@@ -87,27 +87,39 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     currentLabel = nullptr;
     currentProject = new Project();
     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                       QPointF, const Qt::MouseButton)), this,
+                                       QPointF, const Qt::MouseButton,
+                                       const Qt::KeyboardModifiers)), this,
             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                     QPointF, const Qt::MouseButton)));
-    connect(scene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-            SLOT(processMouseMoved(QPointF, QPointF)));
+                                     QPointF, const Qt::MouseButton,
+                                     const Qt::KeyboardModifiers)));
+    connect(scene, SIGNAL(mouseMoved(QPointF, QPointF,
+                                     const Qt::KeyboardModifiers)), this,
+            SLOT(processMouseMoved(QPointF, QPointF,
+                                   const Qt::KeyboardModifiers)));
     connect(scene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
-                                        QPointF, const Qt::MouseButton)), this,
+                                        QPointF, const Qt::MouseButton,
+                                        const Qt::KeyboardModifiers)), this,
             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-                                      const Qt::MouseButton)));
+                                      const Qt::MouseButton,
+                                      const Qt::KeyboardModifiers)));
     connect(scene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
     connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                           QPointF, const Qt::MouseButton)), this,
+                                           QPointF, const Qt::MouseButton,
+                                           const Qt::KeyboardModifiers)), this,
             SLOT(processPointClicked(PhotoScene::viewerTypes, SelectItem*,
-                                     QPointF, const Qt::MouseButton)));
-    connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF)), this,
-            SLOT(processMouseMoved(QPointF, QPointF)));
+                                     QPointF, const Qt::MouseButton,
+                                     const Qt::KeyboardModifiers)));
+    connect(maskScene, SIGNAL(mouseMoved(QPointF, QPointF,
+                                         const Qt::KeyboardModifiers)), this,
+            SLOT(processMouseMoved(QPointF, QPointF,
+                                   const Qt::KeyboardModifiers)));
     connect(maskScene, SIGNAL(mouseReleased(PhotoScene::viewerTypes, QPointF,
-                                            QPointF, const Qt::MouseButton)), this,
+                                            QPointF, const Qt::MouseButton,
+                                            const Qt::KeyboardModifiers)), this,
             SLOT(processMouseReleased(PhotoScene::viewerTypes, QPointF, QPointF,
-                                      const Qt::MouseButton)));
+                                      const Qt::MouseButton,
+                                      const Qt::KeyboardModifiers)));
     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
 
@@ -1249,7 +1261,8 @@ void InstaDam::on_actionExport_zip_triggered() {
  */
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
-                                   const Qt::MouseButton button) {
+                                   const Qt::MouseButton button,
+                                   const Qt::KeyboardModifiers modifiers) {
     currentButton = button;
 
     if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
@@ -1261,7 +1274,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
     if (!panning && !ctrlPanning){
 
-        if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == false){ //(!item)
+        if (!(modifiers & Qt::ShiftModifier)){ //(!item)
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 scene->inactiveAll();
@@ -1384,7 +1397,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
-        } else if(QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) == true && item) {
+        } else if((modifiers & Qt::ShiftModifier) && item) {
             qInfo()<<"shift clicked!";
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
@@ -1439,7 +1452,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 /*!
   Processes a mouse movement from \a fromPos to \a toPos.
  */
-void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
+void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
+                                 const Qt::KeyboardModifiers modifiers) {
 
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
@@ -1459,8 +1473,9 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos) {
  */
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
-                                    const Qt::MouseButton button) {
-    //UNUSED(button);
+                                    const Qt::MouseButton button,
+                                    const Qt::KeyboardModifiers modifiers) {
+    UNUSED(button);
     ctrlPanning = false;
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
@@ -1470,11 +1485,9 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     if (currentItem && !currentItem->isItemAdded()) {
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
-            FreeDrawSelect fds(maskSelection(currentItem), currentItem->myPen);
-            FreeDrawSelect *temp = dynamic_cast<FreeDrawSelect*>(currentItem);
-            temp->setPointsUnchecked(fds.getPixmap());
-        }
-        if (currentItem->type() == SelectItem::Freeerase) {
+            addCurrentSelection(true);
+
+        } else if (currentItem->type() == SelectItem::Freeerase) {
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
                                                                 maskScene);
             undoGroup->activeStack()->push(eraseCommand);
@@ -1498,6 +1511,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     } else if (currentItem && (currentItem->wasMoved() ||
                                currentItem->wasResized() ||
                                currentItem->wasRotated())) {
+
         if (currentItem->wasMoved()) {
             QUndoCommand *moveCommand =
                     new MoveCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
@@ -1658,18 +1672,20 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
 /*!
  Rasterizes the selection from the mask viewer.
  */
-void InstaDam::addCurrentSelection() {
+void InstaDam::addCurrentSelection(bool useCurrent) {
+    SelectItem *item;
+    item = useCurrent ? currentItem : maskItem;
     tempUndoStack->clear();
     undoGroup->setActiveStack(mainUndoStack);
-    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(maskItem),
+    FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
                                              currentLabel);
     scene->addItem(fds);
     QUndoCommand *addCommand = new AddCommand(fds, scene);
     mainUndoStack->push(addCommand);
-    scene->removeItem(maskItem->getMirror());
-    maskScene->removeItem(maskItem->getMirror());
-    scene->removeItem(maskItem);
-    maskScene->removeItem(maskItem);
+    scene->removeItem(item->getMirror());
+    maskScene->removeItem(item->getMirror());
+    scene->removeItem(item);
+    maskScene->removeItem(item);
     maskItem = nullptr;
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);

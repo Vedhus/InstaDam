@@ -42,6 +42,7 @@ FreeDrawSelect::FreeDrawSelect(const QPixmap map, QPen pen)
     : QGraphicsPixmapItem(nullptr), SelectItem(nullptr, nullptr) {
     init();
     myPen = pen;
+    myPen.setWidth(1);
     loadFromPixmap(map);
     setup();
 }
@@ -78,6 +79,7 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items)
     init();
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
+    myPen.setWidth(1);
     myPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
     QListIterator<FreeDrawSelect*> it(items);

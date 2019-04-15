@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">69</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">153</td>
+            <td class="headerCovTableEntryLo">0.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-12 11:58:24</td>
+            <td class="headerValue">2019-04-15 13:04:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">7</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryLo">15.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -77,47 +77,47 @@
 <pre class="sourceHeading">           Branch data     Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : #include &quot;imagelist.h&quot;</a>
-<span class="lineNum">       2 </span>                :            : 
-<span class="lineNum">       3 </span>                :            : #include &lt;QJsonDocument&gt;
-<span class="lineNum">       4 </span>                :            : #include &lt;QJsonObject&gt;
-<span class="lineNum">       5 </span>                :            : #include &lt;QJsonArray&gt;
-<span class="lineNum">       6 </span>                :            : #include &lt;QDebug&gt;
-<span class="lineNum">       7 </span>                :            : #include &lt;QtNetwork/QNetworkAccessManager&gt;
-<span class="lineNum">       8 </span>                :            : #include &lt;QtNetwork/QNetworkReply&gt;
-<span class="lineNum">       9 </span>                :            : #include &lt;QFileInfo&gt;
-<span class="lineNum">      10 </span>                :            : 
-<span class="lineNum">      11 </span>                :            : #include &quot;ui_imagelist.h&quot;
-<span class="lineNum">      12 </span>                :            : 
-<span class="lineNum">      13 </span>                :            : 
-<span class="lineNum">      14 </span>                :            : /*!
-<span class="lineNum">      15 </span>                :            :   \class ImageList
-<span class="lineNum">      16 </span>                :            :   \ingroup app
-<span class="lineNum">      17 </span>                :            :   \inmodule InstaDam
-<span class="lineNum">      18 </span>                :            :   \inherits QSlider
-<span class="lineNum">      19 </span>                :            :   \brief Handles list of images form the server.
-<span class="lineNum">      20 </span>                :            : 
-<a name="21"><span class="lineNum">      21 </span>                :            :  */</a>
-<span class="lineNum">      22 </span>                :            : 
-<span class="lineNum">      23 </span>                :<span class="lineNoCov">          0 : ImageList::ImageList(QWidget *parent, QString databaseUrl, QString token) :</span>
-<span class="lineNum">      24 </span>                :<span class="lineNoCov">          0 :     QWidget(parent), ui(new Ui::ImageList) {</span>
-<span class="lineNum">      25 </span>                :<span class="lineNoCov">          0 :     ui-&gt;setupUi(this);</span>
-<span class="lineNum">      26 </span>                :<span class="lineNoCov">          0 :     access_token = token;</span>
-<span class="lineNum">      27 </span>                :<span class="lineNoCov">          0 :     this-&gt;databaseURL = databaseUrl;</span>
-<span class="lineNum">      28 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      29 </span>                :            : 
-<span class="lineNum">      30 </span>                :            : /*!
-<span class="lineNum">      31 </span>                :            :  * Destructor
-<a name="32"><span class="lineNum">      32 </span>                :            :  */</a>
-<span class="lineNum">      33 </span>                :            : 
-<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 : ImageList::~ImageList() {</span>
-<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 :     delete ui;</span>
-<span class="lineNum">      36 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      37 </span>                :            : 
-<span class="lineNum">      38 </span>                :            : /*!
-<span class="lineNum">      39 </span>                :            :  * Adds Item \QJsonObject \a obj to the ImageList.
-<span class="lineNum">      40 </span>                :            :  */
-<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : void ImageList::addItems(QJsonObject obj) {</span>
-<span class="lineNum">      42 </span>                :            : //    QList&lt;QJsonObject&gt; list;
+<span class="lineNum">       2 </span>                :            : #include &quot;enumconstants.h&quot;
+<span class="lineNum">       3 </span>                :            : 
+<span class="lineNum">       4 </span>                :            : 
+<span class="lineNum">       5 </span>                :            : 
+<span class="lineNum">       6 </span>                :            : 
+<span class="lineNum">       7 </span>                :            : 
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : /*!
+<span class="lineNum">      10 </span>                :            :   \class ImageList
+<span class="lineNum">      11 </span>                :            :   \ingroup app
+<span class="lineNum">      12 </span>                :            :   \inmodule InstaDam
+<span class="lineNum">      13 </span>                :            :   \inherits QSlider
+<span class="lineNum">      14 </span>                :            :   \brief Handles list of images form the server.
+<span class="lineNum">      15 </span>                :            : 
+<span class="lineNum">      16 </span>                :            :  */
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :<span class="lineNoCov">          0 : ImageList::ImageList(Project* project, QWidget *parent, QString databaseUrl, QString token) :</span>
+<span class="lineNum">      19 </span>                :<span class="lineNoCov">          0 :     QWidget(parent), ui(new Ui::ImageList) {</span>
+<span class="lineNum">      20 </span>                :<span class="lineNoCov">          0 :     ui-&gt;setupUi(this);</span>
+<span class="lineNum">      21 </span>                :<span class="lineNoCov">          0 :     accessToken = token;</span>
+<span class="lineNum">      22 </span>                :<span class="lineNoCov">          0 :     this-&gt;databaseURL = databaseUrl;</span>
+<span class="lineNum">      23 </span>                :<span class="lineNoCov">          0 :     this-&gt;currentProject = project;</span>
+<span class="lineNum">      24 </span>                :            : 
+<span class="lineNum">      25 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      26 </span>                :            : 
+<span class="lineNum">      27 </span>                :            : 
+<span class="lineNum">      28 </span>                :            : 
+<span class="lineNum">      29 </span>                :            : /*!
+<span class="lineNum">      30 </span>                :            :  * Destructor
+<a name="31"><span class="lineNum">      31 </span>                :            :  */</a>
+<span class="lineNum">      32 </span>                :            : 
+<span class="lineNum">      33 </span>                :<span class="lineNoCov">          0 : ImageList::~ImageList() {</span>
+<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 :     delete ui;</span>
+<span class="lineNum">      35 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      36 </span>                :            : 
+<span class="lineNum">      37 </span>                :            : /*!
+<span class="lineNum">      38 </span>                :            :  * Adds Item \QJsonObject \a obj to the ImageList.
+<span class="lineNum">      39 </span>                :            :  */
+<span class="lineNum">      40 </span>                :            : 
+<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : void ImageList::addItems(QJsonObject obj)</span>
+<span class="lineNum">      42 </span>                :            : {
 <span class="lineNum">      43 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; obj;</span>
 <span class="lineNum">      44 </span>                :<span class="lineNoCov">          0 :     foreach(const QString&amp; key, obj.keys()) {</span>
 <span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 :         if (key.compare(&quot;project_images&quot;) != 0) {</span>
@@ -129,13 +129,13 @@
 <span class="lineNum">      51 </span>                :<span class="lineNoCov">          0 :             QJsonArray valueArray = value.toArray();</span>
 <span class="lineNum">      52 </span>                :<span class="lineNoCov">          0 :             qInfo() &lt;&lt; valueArray;</span>
 <span class="lineNum">      53 </span>                :<span class="lineNoCov">          0 :             for (int imageNumber = 0; imageNumber &lt; valueArray.size(); imageNumber++) {</span>
-<span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 :                 qInfo() &lt;&lt; &quot;image: &quot; &lt;&lt; imageNumber &lt;&lt; &quot; &quot; &lt;&lt; valueArray[imageNumber];</span>
-<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :                 QJsonObject currentObj = valueArray[imageNumber].toObject();</span>
-<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :                 QTableWidget* table = ui-&gt;tableWidget;</span>
-<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 :                 table-&gt;insertRow(table-&gt;rowCount());</span>
-<span class="lineNum">      58 </span>                :            :                 int column = 0;
-<span class="lineNum">      59 </span>                :<span class="lineNoCov">          0 :                 foreach(const QString&amp; objkey, currentObj.keys()) {</span>
-<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :                     qInfo() &lt;&lt; &quot;Key = &quot; &lt;&lt; objkey &lt;&lt; &quot;, Value = &quot; &lt;&lt; currentObj.value(objkey);</span>
+<span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 :                 QJsonObject currentObj = valueArray[imageNumber].toObject();</span>
+<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :                 QTableWidget* table = ui-&gt;tableWidget;</span>
+<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :                 table-&gt;insertRow(table-&gt;rowCount());</span>
+<span class="lineNum">      57 </span>                :            :                 int column =0;
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 :                 foreach(const QString&amp; objkey, currentObj.keys()) //Everything except the thumbnail</span>
+<span class="lineNum">      59 </span>                :            :                 {
+<span class="lineNum">      60 </span>                :            : 
 <span class="lineNum">      61 </span>                :<span class="lineNoCov">          0 :                     QJsonValue currentValue = currentObj.value(objkey);</span>
 <span class="lineNum">      62 </span>                :<span class="lineNoCov">          0 :                     if (objkey.compare(&quot;id&quot;) == 0 || objkey.compare(&quot;name&quot;) == 0 ||</span>
 <span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :                        objkey.compare(&quot;path&quot;) == 0) {</span>
@@ -146,64 +146,213 @@
 <span class="lineNum">      68 </span>                :            :                         }
 <span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 :                         column++;</span>
 <span class="lineNum">      70 </span>                :            :                     }
-<span class="lineNum">      71 </span>                :<span class="lineNoCov">          0 :                 }</span>
-<span class="lineNum">      72 </span>                :<span class="lineNoCov">          0 :             }</span>
-<span class="lineNum">      73 </span>                :            :         } else {
-<span class="lineNum">      74 </span>                :<span class="lineNoCov">          0 :            qInfo() &lt;&lt; &quot;value is not an QJsonArray&quot;;</span>
-<span class="lineNum">      75 </span>                :<span class="lineNoCov">          0 :            return;</span>
-<span class="lineNum">      76 </span>                :            :         }
-<span class="lineNum">      77 </span>                :<span class="lineNoCov">          0 :     }</span>
-<span class="lineNum">      78 </span>                :            : }
-<span class="lineNum">      79 </span>                :            : 
-<span class="lineNum">      80 </span>                :            : 
-<span class="lineNum">      81 </span>                :            : /*!
-<a name="82"><span class="lineNum">      82 </span>                :            :  * Waits for the file to be received.</a>
-<span class="lineNum">      83 </span>                :            :  */
-<span class="lineNum">      84 </span>                :<span class="lineNoCov">          0 : void ImageList::fileReplyFinished() {</span>
-<span class="lineNum">      85 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;got a file&quot;;</span>
-<span class="lineNum">      86 </span>                :<span class="lineNoCov">          0 :     if (rep-&gt;error()) {</span>
-<span class="lineNum">      87 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;error getting file&quot;;</span>
-<span class="lineNum">      88 </span>                :            :     }
-<span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 :     QUrl url = rep-&gt;url();</span>
-<span class="lineNum">      90 </span>                :<span class="lineNoCov">          0 :     QString path = QFileInfo(url.path()).fileName();</span>
-<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :     QFile file(path);</span>
-<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 :     if (!file.open(QIODevice::WriteOnly)) {</span>
-<span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;could not save to disk&quot;;</span>
-<span class="lineNum">      94 </span>                :            :     }
-<span class="lineNum">      95 </span>                :            : 
-<span class="lineNum">      96 </span>                :<span class="lineNoCov">          0 :     file.write(rep-&gt;readAll());</span>
-<span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 :     file.close();</span>
-<span class="lineNum">      98 </span>                :            : 
-<span class="lineNum">      99 </span>                :<span class="lineNoCov">          0 :     emit fileDownloaded(path);</span>
-<span class="lineNum">     100 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     101 </span>                :            : 
-<span class="lineNum">     102 </span>                :            : 
-<span class="lineNum">     103 </span>                :            : /*!
-<span class="lineNum">     104 </span>                :            :  * Slot called when the load button is clicked.
-<span class="lineNum">     105 </span>                :            :  */
-<span class="lineNum">     106 </span>                :<span class="lineNoCov">          0 : void ImageList::on_loadButton_clicked() {</span>
-<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;load button clicked&quot;;</span>
-<span class="lineNum">     108 </span>                :<span class="lineNoCov">          0 :     QTableWidget* table = ui-&gt;tableWidget;</span>
-<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :     QList&lt;QTableWidgetItem*&gt; list = table-&gt;selectedItems();</span>
-<span class="lineNum">     110 </span>                :<span class="lineNoCov">          0 :     for (int itemIndex = 2; itemIndex &lt; list.size(); itemIndex+=3) {</span>
-<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :         QTableWidgetItem* item = list.at(itemIndex);</span>
-<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; item-&gt;text();</span>
-<span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :         QString filepath = this-&gt;databaseURL + &quot;/&quot; + item-&gt;text();</span>
-<span class="lineNum">     114 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; filepath;</span>
-<span class="lineNum">     115 </span>                :<span class="lineNoCov">          0 :         QNetworkRequest req = QNetworkRequest(filepath);</span>
-<span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 :         rep = manager-&gt;get(req);</span>
-<span class="lineNum">     117 </span>                :            : 
-<span class="lineNum">     118 </span>                :            :         connect(rep, &amp;QNetworkReply::finished,
-<span class="lineNum">     119 </span>                :<span class="lineNoCov">          0 :                 this, &amp;ImageList::fileReplyFinished);</span>
-<span class="lineNum">     120 </span>                :<span class="lineNoCov">          0 :     }</span>
-<span class="lineNum">     121 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     122 </span>                :            : 
-<span class="lineNum">     123 </span>                :            : /*!
-<a name="124"><span class="lineNum">     124 </span>                :            :  * Slot called when the cancel button is clicked.</a>
-<span class="lineNum">     125 </span>                :            :  */
-<span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 : void ImageList::on_cancelButton_clicked() {</span>
-<span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :     close();</span>
-<span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      71 </span>                :<span class="lineNoCov">          0 :                     if(objkey.compare(&quot;is_annotated&quot;) == 0)</span>
+<span class="lineNum">      72 </span>                :            :                     {
+<span class="lineNum">      73 </span>                :            :                         //back_end implementation added this, and we want to display it, but order in json messes up existing implemention, so hard code 4 for column value for now
+<span class="lineNum">      74 </span>                :<span class="lineNoCov">          0 :                         if(currentValue.toBool())</span>
+<span class="lineNum">      75 </span>                :            :                         {
+<span class="lineNum">      76 </span>                :<span class="lineNoCov">          0 :                             table-&gt;setItem(table-&gt;rowCount()-1, 4, new QTableWidgetItem(&quot;Yes&quot;));</span>
+<span class="lineNum">      77 </span>                :            :                         }
+<span class="lineNum">      78 </span>                :            :                         else {
+<span class="lineNum">      79 </span>                :<span class="lineNoCov">          0 :                             table-&gt;setItem(table-&gt;rowCount()-1, 4, new QTableWidgetItem(&quot;No&quot;));</span>
+<span class="lineNum">      80 </span>                :            :                         }
+<span class="lineNum">      81 </span>                :            :                     }
+<span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 :                 }</span>
+<span class="lineNum">      83 </span>                :<span class="lineNoCov">          0 :                 QString databaseGetProjectURL = this-&gt;databaseURL+&quot;/image/&quot; + QString::number(currentObj.value(&quot;id&quot;).toDouble()) + &quot;/thumbnail&quot;;</span>
+<span class="lineNum">      84 </span>                :<span class="lineNoCov">          0 :                 QUrl databaseLink = QUrl(databaseGetProjectURL);</span>
+<span class="lineNum">      85 </span>                :            : 
+<span class="lineNum">      86 </span>                :<span class="lineNoCov">          0 :                 QUrlQuery query;</span>
+<span class="lineNum">      87 </span>                :            : 
+<span class="lineNum">      88 </span>                :<span class="lineNoCov">          0 :                 query.addQueryItem(&quot;size_w&quot;, &quot;150&quot;);</span>
+<span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 :                 query.addQueryItem(&quot;size_h&quot;, &quot;50&quot;);</span>
+<span class="lineNum">      90 </span>                :            : 
+<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :                 databaseLink.setQuery(query.query());</span>
+<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 :                 QNetworkRequest req = QNetworkRequest(databaseLink);</span>
+<span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :                 qInfo() &lt;&lt; req.url();</span>
+<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 :                 QString loginToken = &quot;Bearer &quot;+this-&gt;accessToken;</span>
+<span class="lineNum">      95 </span>                :<span class="lineNoCov">          0 :                 req.setRawHeader(QByteArray(&quot;Authorization&quot;), loginToken.QString::toUtf8());</span>
+<span class="lineNum">      96 </span>                :<span class="lineNoCov">          0 :                 doRequest(req);</span>
+<span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 :             }</span>
+<span class="lineNum">      98 </span>                :            :         } else {
+<span class="lineNum">      99 </span>                :<span class="lineNoCov">          0 :            qInfo() &lt;&lt; &quot;value is not an QJsonArray&quot;;</span>
+<span class="lineNum">     100 </span>                :<span class="lineNoCov">          0 :            return;</span>
+<span class="lineNum">     101 </span>                :            :         }
+<span class="lineNum">     102 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     103 </span>                :            : }
+<span class="lineNum">     104 </span>                :            : 
+<span class="lineNum">     105 </span>                :<span class="lineNoCov">          0 : void ImageList::getThumbnailReplyFinished()</span>
+<span class="lineNum">     106 </span>                :            : {
+<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;got a thumbnailreply&quot;;</span>
+<span class="lineNum">     108 </span>                :            : 
+<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :     QByteArray strReply = rep-&gt;readAll();</span>
+<span class="lineNum">     110 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; rep-&gt;error();</span>
+<span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; rep-&gt;attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();</span>
+<span class="lineNum">     112 </span>                :            :     QJsonParseError jsonError;
+<span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &amp;jsonError); // parse and capture the error flag</span>
+<span class="lineNum">     114 </span>                :<span class="lineNoCov">          0 :     QJsonObject currentObject = jsonReply.object();</span>
+<span class="lineNum">     115 </span>                :<span class="lineNoCov">          0 :     if(jsonError.error != QJsonParseError::NoError){</span>
+<span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;Error: &quot; &lt;&lt; jsonError.errorString();</span>
+<span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     118 </span>                :            :     }
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :<span class="lineNoCov">          0 :     foreach(const QString&amp; objkey, currentObject.keys()) //Everything except the thumbnail</span>
+<span class="lineNum">     121 </span>                :            :     {
+<span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 :         QJsonValue currentValue = currentObject.value(objkey);</span>
+<span class="lineNum">     123 </span>                :            :         //qInfo() &lt;&lt; &quot;Key = &quot; &lt;&lt; objkey &lt;&lt; &quot;, Value = &quot; &lt;&lt; currentObject.value(objkey);
+<span class="lineNum">     124 </span>                :<span class="lineNoCov">          0 :         if(objkey.compare(&quot;base64_image&quot;)==0)</span>
+<span class="lineNum">     125 </span>                :            :         {
+<span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :             if(currentValue.isString())</span>
+<span class="lineNum">     127 </span>                :            :             {
+<span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 :                 QByteArray byteArray = QByteArray::fromBase64(currentValue.toString().toUtf8());</span>
+<span class="lineNum">     129 </span>                :<span class="lineNoCov">          0 :                 QPixmap thumbnailPixmap;</span>
+<span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 :                 thumbnailPixmap.loadFromData(byteArray, currentObject.value(&quot;format&quot;).toString().toUtf8());</span>
+<span class="lineNum">     131 </span>                :<span class="lineNoCov">          0 :                 QTableWidgetItem *thumbnail = new QTableWidgetItem;</span>
+<span class="lineNum">     132 </span>                :<span class="lineNoCov">          0 :                 thumbnail-&gt;setData(Qt::DecorationRole, thumbnailPixmap);</span>
+<span class="lineNum">     133 </span>                :<span class="lineNoCov">          0 :                 QTableWidget* table = ui-&gt;tableWidget;</span>
+<span class="lineNum">     134 </span>                :<span class="lineNoCov">          0 :                 table-&gt;setItem(table-&gt;rowCount()-1, table-&gt;columnCount()-1, thumbnail);</span>
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>                :            :             }
+<span class="lineNum">     137 </span>                :            :         }
+<span class="lineNum">     138 </span>                :<span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     139 </span>                :            : }
+<span class="lineNum">     140 </span>                :            : 
+<a name="141"><span class="lineNum">     141 </span>                :            : </a>
+<span class="lineNum">     142 </span>                :            : 
+<span class="lineNum">     143 </span>                :<span class="lineNoCov">          0 : void ImageList::doRequest(QNetworkRequest req)</span>
+<span class="lineNum">     144 </span>                :            : {
+<span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :     rep = manager-&gt;get(req);</span>
+<span class="lineNum">     146 </span>                :            : 
+<span class="lineNum">     147 </span>                :            :     connect(rep, &amp;QNetworkReply::finished,
+<span class="lineNum">     148 </span>                :<span class="lineNoCov">          0 :             this, &amp;ImageList::getThumbnailReplyFinished);</span>
+<span class="lineNum">     149 </span>                :            :     /* wait for reply because backend can't handle multiple requests at same time I think */
+<span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :     QEventLoop loop;</span>
+<span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 :     connect(rep, SIGNAL(finished()), &amp;loop, SLOT(quit()));</span>
+<span class="lineNum">     152 </span>                :<span class="lineNoCov">          0 :     loop.exec();</span>
+<span class="lineNum">     153 </span>                :            : 
+<span class="lineNum">     154 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     155 </span>                :            : 
+<span class="lineNum">     156 </span>                :            : 
+<span class="lineNum">     157 </span>                :            : 
+<span class="lineNum">     158 </span>                :            : 
+<span class="lineNum">     159 </span>                :            : 
+<span class="lineNum">     160 </span>                :            : /*!
+<span class="lineNum">     161 </span>                :            :  * Waits for the file to be received.
+<span class="lineNum">     162 </span>                :            :  */
+<span class="lineNum">     163 </span>                :<span class="lineNoCov">          0 : void ImageList::fileReplyFinished() {</span>
+<span class="lineNum">     164 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;got a file&quot;;</span>
+<span class="lineNum">     165 </span>                :<span class="lineNoCov">          0 :     if (rep-&gt;error()) {</span>
+<span class="lineNum">     166 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;error getting file&quot;;</span>
+<span class="lineNum">     167 </span>                :            :     }
+<span class="lineNum">     168 </span>                :<span class="lineNoCov">          0 :     QUrl url = rep-&gt;url();</span>
+<span class="lineNum">     169 </span>                :<span class="lineNoCov">          0 :     QString path = QFileInfo(url.path()).fileName();</span>
+<span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :     QFile file(path);</span>
+<span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 :     if (!file.open(QIODevice::WriteOnly)) {</span>
+<span class="lineNum">     172 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;could not save to disk&quot;;</span>
+<span class="lineNum">     173 </span>                :            :     }
+<span class="lineNum">     174 </span>                :            : 
+<span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :     file.write(rep-&gt;readAll());</span>
+<span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :     file.close();</span>
+<span class="lineNum">     177 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; selectedRow.at(0)-&gt;text().toInt();</span>
+<span class="lineNum">     178 </span>                :<span class="lineNoCov">          0 :     currentProject-&gt;setImageId(selectedRow.at(0)-&gt;text().toInt());</span>
+<span class="lineNum">     179 </span>                :<span class="lineNoCov">          0 :     emit fileDownloaded(path);</span>
+<span class="lineNum">     180 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     181 </span>                :            : 
+<span class="lineNum">     182 </span>                :            : 
+<span class="lineNum">     183 </span>                :            : /*!
+<span class="lineNum">     184 </span>                :            :  * Slot called when the load button is clicked.
+<span class="lineNum">     185 </span>                :            :  */
+<span class="lineNum">     186 </span>                :<span class="lineNoCov">          0 : void ImageList::on_loadButton_clicked() {</span>
+<span class="lineNum">     187 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;load button clicked&quot;;</span>
+<span class="lineNum">     188 </span>                :<span class="lineNoCov">          0 :     QTableWidget* table = ui-&gt;tableWidget;</span>
+<span class="lineNum">     189 </span>                :<span class="lineNoCov">          0 :     selectedRow = table-&gt;selectedItems();</span>
+<span class="lineNum">     190 </span>                :<span class="lineNoCov">          0 :     qInfo()&lt;&lt;selectedRow.size();</span>
+<span class="lineNum">     191 </span>                :<span class="lineNoCov">          0 :     QTableWidgetItem* item = selectedRow.at(2); //row has path at index 2</span>
+<span class="lineNum">     192 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; item-&gt;text();</span>
+<span class="lineNum">     193 </span>                :<span class="lineNoCov">          0 :     QString filepath = this-&gt;databaseURL + &quot;/&quot; + item-&gt;text();</span>
+<span class="lineNum">     194 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; filepath;</span>
+<span class="lineNum">     195 </span>                :<span class="lineNoCov">          0 :     QNetworkRequest req = QNetworkRequest(filepath);</span>
+<span class="lineNum">     196 </span>                :<span class="lineNoCov">          0 :     rep = manager-&gt;get(req);</span>
+<span class="lineNum">     197 </span>                :            : 
+<span class="lineNum">     198 </span>                :            :     connect(rep, &amp;QNetworkReply::finished,
+<span class="lineNum">     199 </span>                :<span class="lineNoCov">          0 :             this, &amp;ImageList::fileReplyFinished);</span>
+<span class="lineNum">     200 </span>                :            : 
+<span class="lineNum">     201 </span>                :<span class="lineNoCov">          0 :     close();</span>
+<span class="lineNum">     202 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     203 </span>                :            : 
+<span class="lineNum">     204 </span>                :            : 
+<span class="lineNum">     205 </span>                :<span class="lineNoCov">          0 : void ImageList::openAnnotation()</span>
+<span class="lineNum">     206 </span>                :            : {
+<span class="lineNum">     207 </span>                :<span class="lineNoCov">          0 :     if(selectedRow.at(3)-&gt;text().compare(&quot;Yes&quot;)==0) //the image being loaded has annotations associated with it, load the annotations with it</span>
+<span class="lineNum">     208 </span>                :            :     {
+<span class="lineNum">     209 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;inside openAnnotation&quot;;</span>
+<span class="lineNum">     210 </span>                :            :         //note that selectedRow should be defined before using this function
+<span class="lineNum">     211 </span>                :<span class="lineNoCov">          0 :         if (selectedRow.isEmpty())</span>
+<span class="lineNum">     212 </span>                :<span class="lineNoCov">          0 :             qInfo()&lt;&lt;&quot;Image row was never selected&quot;;</span>
+<span class="lineNum">     213 </span>                :            :         else {
+<span class="lineNum">     214 </span>                :<span class="lineNoCov">          0 :             QString image_id = selectedRow[0]-&gt;text();</span>
+<span class="lineNum">     215 </span>                :<span class="lineNoCov">          0 :             for (int i = 1; i &lt; currentProject-&gt;numLabels(); i++) {</span>
+<span class="lineNum">     216 </span>                :<span class="lineNoCov">          0 :                 QString label_id = QString::number(currentProject-&gt;getLabel(i)-&gt;getId());</span>
+<span class="lineNum">     217 </span>                :<span class="lineNoCov">          0 :                 QString databaseGetAnnotationURL = this-&gt;databaseURL+&quot;/annotation/&quot;+label_id+&quot;/&quot;+image_id+&quot;/&quot;;</span>
+<span class="lineNum">     218 </span>                :<span class="lineNoCov">          0 :                 qInfo()&lt;&lt;databaseGetAnnotationURL;</span>
+<span class="lineNum">     219 </span>                :            : 
+<span class="lineNum">     220 </span>                :            : 
+<span class="lineNum">     221 </span>                :<span class="lineNoCov">          0 :                 QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);</span>
+<span class="lineNum">     222 </span>                :<span class="lineNoCov">          0 :                 QString loginToken = &quot;Bearer &quot;+this-&gt;accessToken;</span>
+<span class="lineNum">     223 </span>                :<span class="lineNoCov">          0 :                 annotationRequest.setRawHeader(QByteArray(&quot;Authorization&quot;), loginToken.QString::toUtf8());</span>
+<span class="lineNum">     224 </span>                :<span class="lineNoCov">          0 :                 annotationReplies[i-1] = manager-&gt;get(annotationRequest);</span>
+<span class="lineNum">     225 </span>                :<span class="lineNoCov">          0 :                 connect(annotationReplies[i-1], &amp;QNetworkReply::finished,</span>
+<span class="lineNum">     226 </span>                :<span class="lineNoCov">          0 :                         this, &amp;ImageList::annotationReplyFinished);</span>
+<span class="lineNum">     227 </span>                :            : 
+<span class="lineNum">     228 </span>                :<span class="lineNoCov">          0 :                 QEventLoop loop;</span>
+<span class="lineNum">     229 </span>                :<span class="lineNoCov">          0 :                 connect(annotationReplies[i-1], SIGNAL(finished()), &amp;loop, SLOT(quit()));</span>
+<span class="lineNum">     230 </span>                :<span class="lineNoCov">          0 :                 loop.exec();</span>
+<span class="lineNum">     231 </span>                :            : 
+<span class="lineNum">     232 </span>                :            : 
+<span class="lineNum">     233 </span>                :<span class="lineNoCov">          0 :             }</span>
+<span class="lineNum">     234 </span>                :            :         }
+<span class="lineNum">     235 </span>                :            :     }
+<a name="236"><span class="lineNum">     236 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">     237 </span>                :            : 
+<span class="lineNum">     238 </span>                :<span class="lineNoCov">          0 : void ImageList::annotationReplyFinished()</span>
+<span class="lineNum">     239 </span>                :            : {
+<span class="lineNum">     240 </span>                :<span class="lineNoCov">          0 :     QNetworkReply* currentReply = annotationReplies[numAnnotationsReceived];</span>
+<span class="lineNum">     241 </span>                :<span class="lineNoCov">          0 :     numAnnotationsReceived+=1;</span>
+<span class="lineNum">     242 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;Got an annotation&quot;;</span>
+<span class="lineNum">     243 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; currentReply-&gt;request().url();</span>
+<span class="lineNum">     244 </span>                :<span class="lineNoCov">          0 :     if (currentReply-&gt;error()) { //http error 400 means the annotation does not exist</span>
+<span class="lineNum">     245 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; currentReply-&gt;error();</span>
+<span class="lineNum">     246 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; currentReply-&gt;attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();</span>
+<span class="lineNum">     247 </span>                :<span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     248 </span>                :            :     }
+<span class="lineNum">     249 </span>                :            : 
+<span class="lineNum">     250 </span>                :<span class="lineNoCov">          0 :     QByteArray strReply = currentReply-&gt;readAll();</span>
+<span class="lineNum">     251 </span>                :            :     QJsonParseError jsonError;
+<span class="lineNum">     252 </span>                :<span class="lineNoCov">          0 :     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &amp;jsonError); // parse and capture the error flag</span>
+<span class="lineNum">     253 </span>                :            : 
+<span class="lineNum">     254 </span>                :<span class="lineNoCov">          0 :     if (jsonError.error != QJsonParseError::NoError) {</span>
+<span class="lineNum">     255 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; &quot;Error: &quot; &lt;&lt; jsonError.errorString();</span>
+<span class="lineNum">     256 </span>                :            :     }
+<span class="lineNum">     257 </span>                :            :     else {
+<span class="lineNum">     258 </span>                :<span class="lineNoCov">          0 :         qInfo() &lt;&lt; jsonReply;</span>
+<span class="lineNum">     259 </span>                :<span class="lineNoCov">          0 :         QJsonObject jsonAnnotation = jsonReply.object();</span>
+<span class="lineNum">     260 </span>                :<span class="lineNoCov">          0 :         jsonLabelArray.append(jsonAnnotation);</span>
+<span class="lineNum">     261 </span>                :            : 
+<span class="lineNum">     262 </span>                :            :     }
+<span class="lineNum">     263 </span>                :<span class="lineNoCov">          0 :     json[&quot;labels&quot;] = jsonLabelArray;</span>
+<span class="lineNum">     264 </span>                :<span class="lineNoCov">          0 :     emit allAnnotationsLoaded(json, ANNOTATION);</span>
+<span class="lineNum">     265 </span>                :            : }
+<span class="lineNum">     266 </span>                :            : 
+<span class="lineNum">     267 </span>                :            : 
+<span class="lineNum">     268 </span>                :            : 
+<span class="lineNum">     269 </span>                :            : 
+<span class="lineNum">     270 </span>                :            : 
+<span class="lineNum">     271 </span>                :            : 
+<span class="lineNum">     272 </span>                :            : /*!
+<a name="273"><span class="lineNum">     273 </span>                :            :  * Slot called when the cancel button is clicked.</a>
+<span class="lineNum">     274 </span>                :            :  */
+<a name="275"><span class="lineNum">     275 </span>                :<span class="lineNoCov">          0 : void ImageList::on_cancelButton_clicked() {</span></a>
+<span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :     close();</span>
+<span class="lineNum">     277 </span>                :<span class="lineCov">          3 : }</span>
 </pre>
       </td>
     </tr>

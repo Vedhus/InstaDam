@@ -273,7 +273,7 @@ void PolygonSelect::read(const QJsonObject &json) {
   \reimp
   */
 void PolygonSelect::removeVertex(int vertex) {
-    if (activeVertex != UNSELECTED) {
+    if (activeVertex != UNSELECTED && vertex == UNSELECTED) {
         vertex = activeVertex;
     } else if (vertex == UNSELECTED) {
         vertex = myPoints.size() - 1;

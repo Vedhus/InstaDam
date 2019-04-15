@@ -47,7 +47,9 @@ void IntegrationTest::cleanup() {
     delete idm;
 }
 
-void IntegrationTest::makeMouseDownEvent(QPointF point, Qt::MouseButton button,
+void IntegrationTest::makeMouseDownEvent(QPointF point,
+                                         Qt::KeyboardModifier modifier,
+                                         Qt::MouseButton button,
                                          PhotoScene::viewerTypes type) {
     QGraphicsSceneMouseEvent event(QEvent::GraphicsSceneMousePress);
     PhotoScene* scene = (type == PhotoScene::PHOTO_VIEWER_TYPE ? idm->scene :
@@ -55,7 +57,7 @@ void IntegrationTest::makeMouseDownEvent(QPointF point, Qt::MouseButton button,
     event.setButton(button);
     event.setButtons(button);
     event.setScenePos(point);
-    event.setModifiers(Qt::NoModifier);
+    event.setModifiers(modifier);
     event.setWidget(dynamic_cast<QWidget*>(scene));
     event.setButtonDownPos(button, point);
     event.setButtonDownScenePos(button, point);
@@ -63,6 +65,7 @@ void IntegrationTest::makeMouseDownEvent(QPointF point, Qt::MouseButton button,
 }
 
 void IntegrationTest::makeMouseMoveEvent(QPointF from, QPointF to,
+                                         Qt::KeyboardModifier modifier,
                                          Qt::MouseButton button,
                                          PhotoScene::viewerTypes type) {
     QGraphicsSceneMouseEvent event(QEvent::GraphicsSceneMouseMove);
@@ -72,7 +75,7 @@ void IntegrationTest::makeMouseMoveEvent(QPointF from, QPointF to,
     event.setButtons(button);
     event.setScenePos(to);
     event.setLastScenePos(from);
-    event.setModifiers(Qt::NoModifier);
+    event.setModifiers(modifier);
     event.setWidget(dynamic_cast<QWidget*>(scene));
     event.setButtonDownPos(button, from);
     event.setButtonDownScenePos(button, from);
@@ -80,6 +83,7 @@ void IntegrationTest::makeMouseMoveEvent(QPointF from, QPointF to,
 }
 
 void IntegrationTest::makeMouseReleaseEvent(QPointF from, QPointF to,
+                                            Qt::KeyboardModifier modifier,
                                             Qt::MouseButton button,
                                             PhotoScene::viewerTypes type) {
     QGraphicsSceneMouseEvent event(QEvent::GraphicsSceneMouseRelease);
@@ -88,7 +92,7 @@ void IntegrationTest::makeMouseReleaseEvent(QPointF from, QPointF to,
     event.setButton(button);
     event.setButtons(button);
     event.setScenePos(to);
-    event.setModifiers(Qt::NoModifier);
+    event.setModifiers(modifier);
     event.setWidget(dynamic_cast<QWidget*>(scene));
     event.setButtonDownPos(button, from);
     event.setButtonDownScenePos(button, from);
@@ -155,7 +159,6 @@ void IntegrationTest::drawObjects() {
     clickRoundBrush();
     setBrushSize(20);
     freeDraw(freePoints);
-    QCOMPARE(getItem(SelectItem::Freedraw)->myPen.width(), 20);
     QCOMPARE(getItem(SelectItem::Freedraw)->isVisible(), true);
 
     QImage orig = dynamic_cast<FreeDrawSelect*>(getItem(SelectItem::Freedraw))->getPixmap().toImage();
@@ -249,8 +252,8 @@ void IntegrationTest::testAnnotateModify() {
     // resize ellipse1
     clickEllipseSelect();
     //draw(ellipseCorner, ellipseCorner);
-    draw((ellipse1 + ellipse2)/2., (ellipse1 + ellipse2)/2.);
-    draw(ellipseCorner, ellipseResize);
+    draw((ellipse1 + ellipse2)/2., (ellipse1 + ellipse2)/2., Qt::ShiftModifier);
+    draw(ellipseCorner, ellipseResize, Qt::ShiftModifier);
     QCOMPARE(getItem(SelectItem::Ellipse)->myRect, QRectF(ellipse1, ellipse2 + eShift));
 
     // undo the resize
@@ -262,7 +265,7 @@ void IntegrationTest::testAnnotateModify() {
     QCOMPARE(getItem(SelectItem::Ellipse)->myRect, QRectF(ellipse1, ellipse2 + eShift));
 
     // move ellipse2
-    draw(inEllipse, ellipseMove);
+    draw(inEllipse, ellipseMove, Qt::ShiftModifier);
     QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
 
     // undo move
@@ -274,7 +277,7 @@ void IntegrationTest::testAnnotateModify() {
     QCOMPARE(getItem(SelectItem::Ellipse, 2)->myRect, QRectF(ellipse4 + ellipseShift, ellipse3 + ellipseShift));
 
     // rotate the rectangle
-    draw(rectRotate1, rectRotate2, Qt::RightButton);
+    draw(rectRotate1, rectRotate2, Qt::ShiftModifier, Qt::RightButton);
     qreal angle = getItem(SelectItem::Rectangle)->rotation();
     QVERIFY(angle != 0.);
 
@@ -287,7 +290,7 @@ void IntegrationTest::testAnnotateModify() {
     QCOMPARE(getItem(SelectItem::Rectangle)->rotation(), angle);
 
     // move polygon
-    draw(inPoly, movePoly);
+    draw(inPoly, movePoly, Qt::ShiftModifier);
     //clickFinishPolygon();
     QVector<QPointF> points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
     QCOMPARE(points[0], poly1 + moveShift);
@@ -300,12 +303,12 @@ void IntegrationTest::testAnnotateModify() {
     QCOMPARE(points[2], poly3);
     QCOMPARE(points[3], poly5);
 
-    move(free1, free2, Qt::NoButton);
+    move(free1, free2, Qt::ShiftModifier, Qt::NoButton);
     // add vertex
-    click(inPoly);
+    click(inPoly, Qt::ShiftModifier);
     clickInsertPoint();
-    click(poly3);
-    click(poly5);
+    click(poly3, Qt::ShiftModifier);
+    click(poly5, Qt::ShiftModifier);
     click(poly4);
     points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
     QCOMPARE(points.size(), 5);
@@ -332,7 +335,7 @@ void IntegrationTest::testAnnotateModify() {
     QCOMPARE(points[3], poly4);
 
     // move vertex
-    draw(polyVertex, moveVertex);
+    draw(polyVertex, moveVertex, Qt::ShiftModifier);
     points = dynamic_cast<PolygonSelect*>(getItem(SelectItem::Polygon))->myPoints;
     QCOMPARE(points.size(), 5);
     QCOMPARE(points[0], poly1);

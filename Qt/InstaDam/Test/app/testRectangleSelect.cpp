@@ -265,7 +265,7 @@ void TestSelect::testSelectInlines(){
     ritem->flipV();
     QCOMPARE(ritem->getActiveVertex(), SelectItem::BOTTOM | SelectItem::RIGHT);
     QCOMPARE(ritem->isItemActive(), true);
-    QCOMPARE(ritem->getActivePoint(), QPointF(0.,0.));
+    QCOMPARE(ritem->getActivePoint(), QPointF(20.,20.));
     delete ritem;
 }
 

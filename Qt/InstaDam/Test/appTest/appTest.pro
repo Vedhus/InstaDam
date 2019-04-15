@@ -25,7 +25,10 @@ HEADERS = \
     projectlist.h \
     imagelist.h \
     serverprojectname.h \
-    enumconstants.h
+    enumconstants.h \
+    addusertoproject.h \
+    userprivilege.h
+
 
 SOURCES = \
         instadam.cpp \
@@ -46,7 +49,10 @@ SOURCES = \
     projectlist.cpp \
     imagelist.cpp \
     serverprojectname.cpp \
-    enumconstants.cpp
+    enumconstants.cpp \
+    addusertoproject.cpp \
+    userprivilege.cpp
+
 
 LIBS += -lQt5Widgets -L$${PWD}/.. -L$${OUT_PWD}/.. -L$${PWD} -lselector -lquazip
 LIBS += -lopencv_imgcodecs
@@ -65,7 +71,9 @@ FORMS += \
     projectlist.ui \
     imagelist.ui \
     projectDialog.ui \
-    serverprojectname.ui
+    serverprojectname.ui \
+    addusertoproject.ui \
+    userprivilege.ui
 
 QMAKE_CXXFLAGS += --coverage
 QMAKE_LFLAGS += --coverage
