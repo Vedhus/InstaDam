@@ -88,3 +88,11 @@ int Project::getImageId()
 {
     return image_id;
 }
+
+void Project::clearAllLabels()
+{
+    for (int i = 0; i < this->getLabels().size(); i++) {
+        this->getLabel(i)->clear();
+    }
+
+}

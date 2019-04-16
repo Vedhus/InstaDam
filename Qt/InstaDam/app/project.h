@@ -44,6 +44,8 @@ class Project{
 
     QString getName();
 
+    void clearAllLabels();
+
 #ifdef TEST
     friend class IntegrationTest;
 #endif

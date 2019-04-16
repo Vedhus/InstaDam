@@ -63,7 +63,7 @@ class InstaDam : public QMainWindow {
     QString filename, oldFilename;
     QString labelFile;
     bool runningLocally = false;
-
+    int labelIdsRecieved = 0;
     QVector<QString> labelPaths, oldLabelPaths;
     QString annotationPath, oldAnnotationPath;
     QStringList imagesList, oldImagesList;
@@ -82,6 +82,8 @@ class InstaDam : public QMainWindow {
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     ImageList* il;
+    void resetGUIclearLabels();
+    void saveAndProgress(int);
 
  private slots:
     void on_addSelectionButton_clicked();
@@ -134,6 +136,7 @@ class InstaDam : public QMainWindow {
     void saveToServer();
     void replyFinished();
     void labelReplyFinished();
+
 
 #ifdef TEST
     friend class IntegrationTest;
@@ -206,7 +209,6 @@ public slots:
     int vertex1 = -1;
     int vertex2 = -1;
     int currentBrushSize = 5;
-    int labelIdsRecieved = 0;
     FreeDrawErase *myErase;
     SelectItem *tempItem;
     SelectItem *mirrorItem;
