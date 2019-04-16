@@ -283,15 +283,21 @@ void InstaDam::on_actionNew_triggered() {
  Sets the \a currentLabel to the \a myLabel of the LabelButton \a button
   */
 void InstaDam::setCurrentLabel(LabelButton *button) {
-    currentLabel = button->myLabel;
+    setCurrentLabel(button->myLabel);
+}
+
+/*!
+ Sets the \a currentLabel to the Label \a label and cancels the current selection
+  */
+void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
+    checkLabel(label);
+    cancelCurrentSelection();
 }
 
 /*!
  Sets the \a currentLabel to the Label \a label
   */
-void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
-//    if (currentLabel == label)
-//        return;
+void InstaDam::checkLabel(QSharedPointer<Label> label) {
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
             labelButtons[i]->setChecked(false);
@@ -300,7 +306,6 @@ void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
         }
     }
     currentLabel = label;
-    cancelCurrentSelection();
 }
 
 /*!
@@ -1273,18 +1278,26 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
         ui->IdmMaskViewer->setPanMode(ctrlPanning);
     }
     if (!panning && !ctrlPanning){
-
+            qInfo()<<"clicked!";
         if (!(modifiers & Qt::ShiftModifier)){ //(!item)
+//            if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
+//                                    SelectItem::Polygon)) {
+
+//            }
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
+                cancelCurrentSelection();
                 scene->inactiveAll();
                 maskScene->inactiveAll();
                 scene->update();
                 maskScene->update();
-                return;
+                //return;
             }
+
             if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
                 SelectItem::Freedraw) {
+
+
                 canDrawOnPhoto = false;
                 undoGroup->setActiveStack(tempUndoStack);
                 ui->addSelectionButton->setEnabled(true);
@@ -1313,6 +1326,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 maskScene->update();
                 return;
             }
+            qInfo()<<"clicked before selection!";
             scene->inactiveAll();
             maskScene->inactiveAll();
             switch (currentSelectType) {
@@ -1421,7 +1435,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             currentItem = item;
             if (!canDrawOnPhoto)
                 maskItem = currentItem;
-            setCurrentLabel(currentItem->getLabel());
+
+            checkLabel(currentItem->getLabel());
             scene->inactiveAll();
             maskScene->inactiveAll();
             currentItem->clickPoint(pos);
@@ -1543,10 +1558,13 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
         currentItem->resetState();
     }
+
+
     currentButton = Qt::NoButton;
     scene->update();
     maskScene->update();
 //    }
+
 }
 
 

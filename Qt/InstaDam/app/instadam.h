@@ -100,6 +100,7 @@ class InstaDam : public QMainWindow {
     void setInsert();
     void toggleDrawing();
     void toggleErasing();
+    void checkLabel(QSharedPointer<Label> label);
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
     void setOpacity(QSharedPointer<Label>, int val);
