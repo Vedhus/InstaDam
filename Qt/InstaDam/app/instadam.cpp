@@ -1279,11 +1279,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
     if (!panning && !ctrlPanning){
             qInfo()<<"clicked!";
-        if (!(modifiers & Qt::ShiftModifier)){ //(!item)
-//            if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
-//                                    SelectItem::Polygon)) {
-
-//            }
+        if (!(modifiers & Qt::ShiftModifier)){
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
                 cancelCurrentSelection();
@@ -1291,7 +1287,6 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 maskScene->inactiveAll();
                 scene->update();
                 maskScene->update();
-                //return;
             }
 
             if (type == PhotoScene::MASK_VIEWER_TYPE && currentSelectType !=
@@ -1416,21 +1411,8 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
                     return;
-                switch (item->type()) {
-                    case SelectItem::Freedraw:
-                        on_freeSelectButton_clicked();
-                        break;
-                    case SelectItem::Polygon:
-                        on_polygonSelectButton_clicked();
-                        polygonSelectForm->finishPolygonButton->setEnabled(true);
-                        break;
-                    case SelectItem::Rectangle:
-                        on_rectangleSelectButton_clicked();
-                        break;
-                    case SelectItem::Ellipse:
-                        on_ellipseSelectButton_clicked();
-                        break;
-                }
+                selectItemButton(item->type());
+
             }
             currentItem = item;
             if (!canDrawOnPhoto)
@@ -1461,6 +1443,31 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             scene->update();
             maskScene->update();
         }
+    }
+}
+
+/*!
+ * Selects the appropriate button based on \a item
+*/
+
+void InstaDam::selectItemButton(int  type){
+    selectItemButton((SelectItem::SelectType)type);
+}
+void InstaDam::selectItemButton(SelectItem::SelectType type){
+    switch (type) {
+        case SelectItem::Freedraw:
+            on_freeSelectButton_clicked();
+            break;
+        case SelectItem::Polygon:
+            on_polygonSelectButton_clicked();
+            polygonSelectForm->finishPolygonButton->setEnabled(true);
+            break;
+        case SelectItem::Rectangle:
+            on_rectangleSelectButton_clicked();
+            break;
+        case SelectItem::Ellipse:
+            on_ellipseSelectButton_clicked();
+            break;
     }
 }
 
@@ -1587,6 +1594,7 @@ void InstaDam::finishPolygonButtonClicked() {
  \a type.
  */
 void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
+
     if (!currentItem) {
         return;
     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
@@ -1596,12 +1604,16 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
                     new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                                 currentItem : currentItem->getMirror());
             undoGroup->activeStack()->push(deleteVertexCommand);
+
+
         } else {
+            qInfo()<<"deleted Polygon!";
             QUndoCommand *deleteCommand =
                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                           currentItem : currentItem->getMirror(),
                                       scene);
             undoGroup->activeStack()->push(deleteCommand);
+            selectItemButton(currentItem->type());
         }
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
@@ -1614,12 +1626,14 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains("labels") && json["labels"].isArray()) {
         QJsonArray labelArray = json["labels"].toArray();
+        qInfo()<<labelArray;
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
             QSharedPointer<Label> label =
                     QSharedPointer<Label>::create(labelArray[i].toObject(), i);
             tempLabels.push_back(label);
+
         }
         if (type == PROJECT) {
             currentProject = newProject->newPr;
