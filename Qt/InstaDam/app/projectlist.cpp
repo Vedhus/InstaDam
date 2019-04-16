@@ -109,7 +109,7 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
   loads the received labels to an Instadam instance
   */
 void ProjectList::getLabelsReplyFinished() {
-    qInfo() << "reply received:";
+    qInfo() << "labels reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag

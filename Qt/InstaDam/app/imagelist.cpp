@@ -309,7 +309,7 @@ void ImageList::openAnnotation()
             qInfo()<<"Image row was never selected";
         else {
             QString image_id = selectedRow[0]->text();
-            for (int i = 1; i < currentProject->numLabels(); i++) {
+            for (int i = 0; i < currentProject->numLabels(); i++) {
                 QString label_id = QString::number(currentProject->getLabel(i)->getId());
                 QString databaseGetAnnotationURL = this->databaseURL+"/annotation/"+label_id+"/"+image_id+"/";
                 qInfo()<<databaseGetAnnotationURL;
@@ -318,12 +318,12 @@ void ImageList::openAnnotation()
                 QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);
                 QString loginToken = "Bearer "+this->accessToken;
                 annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-                annotationReplies[i-1] = manager->get(annotationRequest);
-                connect(annotationReplies[i-1], &QNetworkReply::finished,
+                annotationReplies[i] = manager->get(annotationRequest);
+                connect(annotationReplies[i], &QNetworkReply::finished,
                         this, &ImageList::annotationReplyFinished);
 
                 QEventLoop loop;
-                connect(annotationReplies[i-1], SIGNAL(finished()), &loop, SLOT(quit()));
+                connect(annotationReplies[i], SIGNAL(finished()), &loop, SLOT(quit()));
                 loop.exec();
 
 
@@ -358,7 +358,10 @@ void ImageList::annotationReplyFinished()
 
     }
     json["labels"] = jsonLabelArray;
-    emit allAnnotationsLoaded(json, ANNOTATION);
+    if(numAnnotationsReceived== currentProject->numLabels())
+    {
+        emit allAnnotationsLoaded(json, ANNOTATION);
+    }
 }
 
 

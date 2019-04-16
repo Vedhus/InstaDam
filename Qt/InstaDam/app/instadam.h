@@ -203,6 +203,7 @@ public slots:
     int vertex1 = -1;
     int vertex2 = -1;
     int currentBrushSize = 5;
+    int labelIdsRecieved = 0;
     FreeDrawErase *myErase;
     SelectItem *tempItem;
     SelectItem *mirrorItem;

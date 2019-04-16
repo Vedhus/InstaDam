@@ -436,8 +436,9 @@ void InstaDam::saveAnnotationReplyFinished()
         qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         return;
     }
-
+    qInfo() << rep->url() << "\n";
     QByteArray strReply = rep->readAll();
+    qInfo() << strReply;
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
 
@@ -481,7 +482,7 @@ void InstaDam::on_actionSave_Annotation_triggered() {
     {
         QJsonObject json;
         write(json, ANNOTATION);
-        QString annotationsURL = this->databaseURL+"/annotation";
+        QString annotationsURL = this->databaseURL+"/annotation/";
 
         QUrl dabaseLink = QUrl(annotationsURL);
 
@@ -1599,8 +1600,18 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
+            int labelId;
+            if(runningLocally)
+            {
+                labelId = i;
+            }
+            else
+            {
+                qInfo() << labelArray[i].toObject().value("label_id").toInt();
+                labelId =  labelArray[i].toObject().value("label_id").toInt();;
+            }
             QSharedPointer<Label> label =
-                    QSharedPointer<Label>::create(labelArray[i].toObject(), i);
+                    QSharedPointer<Label>::create(labelArray[i].toObject(), labelId);
             tempLabels.push_back(label);
         }
         if (type == PROJECT) {
@@ -1896,13 +1907,17 @@ void InstaDam::replyFinished()
 
             connect(rep, &QNetworkReply::finished,
                     this, &InstaDam::labelReplyFinished);
+
+            QEventLoop loop;
+            connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+            loop.exec();
         }
+        labelIdsRecieved = 0;
     }
 }
 
 void InstaDam::labelReplyFinished()
 {
-    qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
@@ -1913,7 +1928,12 @@ void InstaDam::labelReplyFinished()
     }
     else
     {
-        qInfo() << jsonReply;
+        QJsonObject reply = jsonReply.object();
+        int label_id = reply.value("label_id").toInt();
+        qInfo() << label_id;
+        this->currentProject->getLabel(labelIdsRecieved)->setId(label_id);
+        labelIdsRecieved++;
+
     }
 }
 
