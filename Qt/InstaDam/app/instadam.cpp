@@ -1738,6 +1738,9 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     mainUndoStack->push(addCommand);
     scene->removeItem(item->getMirror());
     maskScene->removeItem(item->getMirror());
+    currentLabel->removeItem(item->getMirror()->myID);
+    currentLabel->removeItem(item->myID);
+    currentLabel->addItem(fds);
     scene->removeItem(item);
     maskScene->removeItem(item);
     maskItem = nullptr;
