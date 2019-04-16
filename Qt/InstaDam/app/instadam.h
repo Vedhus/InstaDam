@@ -231,6 +231,7 @@ public slots:
     void revert();
     void listProjects();
     void projectsReplyFinished();
+    void fileReplyFinished();
 };
 
 #endif  // INSTADAM_H

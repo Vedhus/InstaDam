@@ -33,6 +33,12 @@ class ImageList : public QWidget {
     QJsonObject json;
     Project* currentProject;
     void openAnnotation();
+    QList<int> getIdList();
+    QList<QString> getPathList();
+    int getSelectedIdIndex();
+    void setSelectedIdIndex(int id);
+    void fileReplyFinished();
+
 
 
  signals:
@@ -42,6 +48,9 @@ class ImageList : public QWidget {
 
 
  private:
+    QList<int> idList;
+    int selectedIdIndex;
+    QList<QString> pathList;
     int numAnnotationsReceived=0;
     Ui::ImageList *ui;
     QString databaseURL;
@@ -50,12 +59,10 @@ class ImageList : public QWidget {
     QHash<int, QNetworkReply*> annotationReplies;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     void getThumbnailReplyFinished();
-    void fileReplyFinished();
     void imagesReplyFinished();
     void uploadFileReplyFinished();
     void annotationReplyFinished();
     void doRequest(QNetworkRequest);
-
  private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();

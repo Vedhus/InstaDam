@@ -35,6 +35,27 @@ ImageList::~ImageList() {
     delete ui;
 }
 
+
+QList<int> ImageList::getIdList()
+{
+    return idList;
+}
+
+QList<QString> ImageList::getPathList()
+{
+    return pathList;
+}
+
+int ImageList::getSelectedIdIndex()
+{
+    return selectedIdIndex;
+}
+
+void ImageList::setSelectedIdIndex(int id)
+{
+    selectedIdIndex = id;
+}
+
 /*!
  * Adds Item \QJsonObject \a obj to the ImageList.
  */
@@ -42,6 +63,8 @@ ImageList::~ImageList() {
 void ImageList::addItems(QJsonObject obj)
 {
     qInfo() << obj;
+    idList.clear();
+    pathList.clear();
     foreach(const QString& key, obj.keys()) {
         if (key.compare("project_images") != 0) {
             qInfo() << "incorrect key";
@@ -64,11 +87,16 @@ void ImageList::addItems(QJsonObject obj)
                     if (objkey.compare("id") == 0 || objkey.compare("name") == 0 ||
                        objkey.compare("path") == 0) {
                         if (currentValue.isDouble()) {
+                            idList.push_back(static_cast<int>(currentValue.toDouble()));
                             table->setItem(table->rowCount()-1, column, new QTableWidgetItem(QString::number(currentValue.toDouble())));
                         } else if (currentValue.isString()) {
                             table->setItem(table->rowCount()-1, column, new QTableWidgetItem(currentValue.toString()));
                         }
                         column++;
+                    }
+                    if(objkey.compare("path")==0)
+                    {
+                        pathList.push_back(currentValue.toString());
                     }
                     if(objkey.compare("is_annotated") == 0)
                     {
@@ -82,6 +110,7 @@ void ImageList::addItems(QJsonObject obj)
                         }
                     }
                 }
+                qInfo() << idList;
                 QString databaseGetProjectURL = this->databaseURL+"/image/" + QString::number(currentObj.value("id").toDouble()) + "/thumbnail";
                 QUrl databaseLink = QUrl(databaseGetProjectURL);
 
@@ -92,7 +121,6 @@ void ImageList::addItems(QJsonObject obj)
 
                 databaseLink.setQuery(query.query());
                 QNetworkRequest req = QNetworkRequest(databaseLink);
-                qInfo() << req.url();
                 QString loginToken = "Bearer "+this->accessToken;
                 req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
                 doRequest(req);
@@ -101,12 +129,12 @@ void ImageList::addItems(QJsonObject obj)
            qInfo() << "value is not an QJsonArray";
            return;
         }
+        qInfo() << pathList;
     }
 }
 
 void ImageList::getThumbnailReplyFinished()
 {
-    qInfo() << "got a thumbnailreply";
 
     QByteArray strReply = rep->readAll();
     qInfo() << rep->error();
@@ -168,6 +196,7 @@ void ImageList::fileReplyFinished() {
         qInfo() << "error getting file";
     }
     QUrl url = rep->url();
+    qInfo() << url;
     QString path = QFileInfo(url.path()).fileName();
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -189,11 +218,9 @@ void ImageList::on_loadButton_clicked() {
     qInfo() << "load button clicked";
     QTableWidget* table = ui->tableWidget;
     selectedRow = table->selectedItems();
-    qInfo()<<selectedRow.size();
+    selectedIdIndex = selectedRow.first()->row(); //save the id index selected, used for save/back, save/next
     QTableWidgetItem* item = selectedRow.at(2); //row has path at index 2
-    qInfo() << item->text();
     QString filepath = this->databaseURL + "/" + item->text();
-    qInfo() << filepath;
     QNetworkRequest req = QNetworkRequest(filepath);
     rep = manager->get(req);
 
@@ -308,43 +335,36 @@ void ImageList::openAnnotation()
         if (selectedRow.isEmpty())
             qInfo()<<"Image row was never selected";
         else {
-            QString image_id = selectedRow[0]->text();
-            for (int i = 0; i < currentProject->numLabels(); i++) {
-                QString label_id = QString::number(currentProject->getLabel(i)->getId());
-                QString databaseGetAnnotationURL = this->databaseURL+"/annotation/"+label_id+"/"+image_id+"/";
-                qInfo()<<databaseGetAnnotationURL;
+            QString image_id = QString::number(idList[selectedIdIndex]);
+
+            QString databaseGetAnnotationURL = this->databaseURL+"/annotation/"+image_id+"/";
+            qInfo()<<databaseGetAnnotationURL;
 
 
-                QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);
-                QString loginToken = "Bearer "+this->accessToken;
-                annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-                annotationReplies[i] = manager->get(annotationRequest);
-                connect(annotationReplies[i], &QNetworkReply::finished,
-                        this, &ImageList::annotationReplyFinished);
+            QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);
+            QString loginToken = "Bearer "+this->accessToken;
+            annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+            rep = manager->get(annotationRequest);
+            connect(rep, &QNetworkReply::finished,
+                    this, &ImageList::annotationReplyFinished);
 
-                QEventLoop loop;
-                connect(annotationReplies[i], SIGNAL(finished()), &loop, SLOT(quit()));
-                loop.exec();
-
-
-            }
+            QEventLoop loop;
+            connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+            loop.exec();
         }
     }
 }
 
 void ImageList::annotationReplyFinished()
 {
-    QNetworkReply* currentReply = annotationReplies[numAnnotationsReceived];
-    numAnnotationsReceived+=1;
     qInfo() << "Got an annotation";
-    qInfo() << currentReply->request().url();
-    if (currentReply->error()) { //http error 400 means the annotation does not exist
-        qInfo() << currentReply->error();
-        qInfo() << currentReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        return;
+    qInfo() << rep->request().url();
+    if (rep->error()) { //http error 400 means the annotation does not exist
+        qInfo() << rep->error();
+        qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     }
 
-    QByteArray strReply = currentReply->readAll();
+    QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
@@ -352,15 +372,16 @@ void ImageList::annotationReplyFinished()
         qInfo() << "Error: " << jsonError.errorString();
     }
     else {
-        qInfo() << jsonReply;
-        QJsonObject jsonAnnotation = jsonReply.object();
-        jsonLabelArray.append(jsonAnnotation);
-
-    }
-    json["labels"] = jsonLabelArray;
-    if(numAnnotationsReceived== currentProject->numLabels())
-    {
+        jsonLabelArray = jsonReply.array();
+        QJsonArray wrapperArray;
+        for(int i =0; i< jsonLabelArray.size();i++)
+        {
+            qInfo() << jsonLabelArray[i].toObject();
+            wrapperArray.append(jsonLabelArray[i].toObject());
+        }
+        json["labels"] = wrapperArray;
         emit allAnnotationsLoaded(json, ANNOTATION);
+
     }
 }
 

@@ -436,9 +436,8 @@ void InstaDam::saveAnnotationReplyFinished()
         qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         return;
     }
-    qInfo() << rep->url() << "\n";
+
     QByteArray strReply = rep->readAll();
-    qInfo() << strReply;
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
 
@@ -505,6 +504,10 @@ void InstaDam::on_actionSave_Annotation_triggered() {
 
         connect(rep, &QNetworkReply::finished,
                 this, &InstaDam::saveAnnotationReplyFinished);
+
+        QEventLoop loop;
+        connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
     }
 }
 
@@ -681,31 +684,85 @@ void InstaDam::loadRawImage() {
 // Generates the file name for the next file in the folder
 
 /*!
+ * Waits for the file to be received.
+ */
+void InstaDam::fileReplyFinished() {
+    qInfo() << "got a file";
+    if (rep->error()) {
+        qInfo() << "error getting file";
+    }
+    QUrl url = rep->url();
+    qInfo() << url;
+    QString path = QFileInfo(url.path()).fileName();
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qInfo() << "could not save to disk";
+    }
+
+    file.write(rep->readAll());
+    file.close();
+    fileDownloaded(path);
+
+    currentProject->setImageId(il->getIdList()[il->getSelectedIdIndex()]);
+}
+
+
+
+/*!
  Saves the current annotation and opens the next image in the same folder that the current image
  is in.
   */
 void InstaDam::on_saveAndNext_clicked() {
-    if (imagesList.empty()) {
-            assertError("No file loaded! Please go to File->Open File and select an image to open");
-    } else {
+    if(runningLocally)
+    {
+        if (imagesList.empty()) {
+                assertError("No file loaded! Please go to File->Open File and select an image to open");
+        } else {
 
-        qInfo("Going to save idantn");
+            qInfo("Going to save idantn");
+            on_actionSave_Annotation_triggered();
+            qInfo("saved idantn");
+            int newId = (fileId+1)%imagesList.size();
+            QTextStream(stdout) << "NewId = " << newId << "\n";
+            scene->clearItems();
+            maskScene->clearItems();
+            for (int i = 0; i < currentProject->getLabels().size(); i++) {
+                currentProject->getLabel(i)->clear();
+            }
+
+            fileId = newId;
+            this->filename = path.absolutePath()+"/"+imagesList[fileId];
+            this->file = QFileInfo(this->filename);
+            openFile_and_labels();
+
+            qInfo("File opened");
+        }
+    }
+    else
+    {
         on_actionSave_Annotation_triggered();
-        qInfo("saved idantn");
-        int newId = (fileId+1)%imagesList.size();
-        QTextStream(stdout) << "NewId = " << newId << "\n";
+        qInfo() << "save and next on server";
+        int idIndex = il->getSelectedIdIndex();
+        QList<int> idList = il->getIdList();
+        if(idIndex == idList.size()-1)
+        {
+            qInfo() << "end of list, do not go to next";
+            return;
+        }
         scene->clearItems();
         maskScene->clearItems();
-        for (int i = 0; i < currentProject->getLabels().size(); i++) {
-            currentProject->getLabel(i)->clear();
-        }
+        QList<QString> pathList = il->getPathList();
+        QString filepath = this->databaseURL + "/" + pathList[idIndex+1];
+        il->setSelectedIdIndex(idIndex+1);
+        QNetworkRequest req = QNetworkRequest(filepath);
+        rep = manager->get(req);
 
-        fileId = newId;
-        this->filename = path.absolutePath()+"/"+imagesList[fileId];
-        this->file = QFileInfo(this->filename);
-        openFile_and_labels();
+        connect(rep, &QNetworkReply::finished,
+                this, &InstaDam::fileReplyFinished);
 
-        qInfo("File opened");
+        QEventLoop loop;
+        connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
     }
 }
 
@@ -714,25 +771,54 @@ void InstaDam::on_saveAndNext_clicked() {
  is in.
   */
 void InstaDam::on_saveAndBack_clicked() {
-    if (imagesList.empty()) {
-            assertError("No file loaded! Please go to File->Open File and select an image to open");
-    } else {
-        qInfo("Going to save idantn");
+    if(runningLocally)
+    {
+        if (imagesList.empty()) {
+                assertError("No file loaded! Please go to File->Open File and select an image to open");
+        } else {
+            qInfo("Going to save idantn");
+            on_actionSave_Annotation_triggered();
+            qInfo("saved idantn");
+            int newId = ((fileId-1)%imagesList.size()+imagesList.size())%imagesList.size();
+            scene->clearItems();
+            maskScene->clearItems();
+            for (int i = 0; i < currentProject->getLabels().size(); i++) {
+                currentProject->getLabel(i)->clear();
+            }
+
+            fileId = newId;
+            this->filename = path.absolutePath()+"/"+imagesList[fileId];
+            this->file = QFileInfo(this->filename);
+            openFile_and_labels();
+
+            qInfo("File opened");
+        }
+    }
+    else
+    {
         on_actionSave_Annotation_triggered();
-        qInfo("saved idantn");
-        int newId = ((fileId-1)%imagesList.size()+imagesList.size())%imagesList.size();
+        int idIndex = il->getSelectedIdIndex();
+        QList<int> idList = il->getIdList();
+        if(idIndex == 0)
+        {
+            qInfo() << "beginning of list, do not go back";
+            return;
+        }
+        //currentProject->setImageId(idList[idIndex-1]);
         scene->clearItems();
         maskScene->clearItems();
-        for (int i = 0; i < currentProject->getLabels().size(); i++) {
-            currentProject->getLabel(i)->clear();
-        }
+        QList<QString> pathList = il->getPathList();
+        QString filepath = this->databaseURL + "/" + pathList[idIndex-1];
+        QNetworkRequest req = QNetworkRequest(filepath);
+        il->setSelectedIdIndex(idIndex-1);
+        rep = manager->get(req);
 
-        fileId = newId;
-        this->filename = path.absolutePath()+"/"+imagesList[fileId];
-        this->file = QFileInfo(this->filename);
-        openFile_and_labels();
+        connect(rep, &QNetworkReply::finished,
+                this, &InstaDam::fileReplyFinished);
 
-        qInfo("File opened");
+        QEventLoop loop;
+        connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
     }
 }
 
@@ -1597,6 +1683,7 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains("labels") && json["labels"].isArray()) {
         QJsonArray labelArray = json["labels"].toArray();
+        qInfo() << labelArray;
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
@@ -1607,12 +1694,12 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
             }
             else
             {
-                qInfo() << labelArray[i].toObject().value("label_id").toInt();
                 labelId =  labelArray[i].toObject().value("label_id").toInt();;
             }
             QSharedPointer<Label> label =
                     QSharedPointer<Label>::create(labelArray[i].toObject(), labelId);
             tempLabels.push_back(label);
+
         }
         if (type == PROJECT) {
             currentProject = newProject->newPr;
@@ -1623,6 +1710,7 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
             QTextStream(stdout) << currentProject->numLabels() << "\n";
         } else {
             qInfo() << "reading annotation file";
+
             QStringList current = getLabelNames(currentProject->getLabels());
             QStringList newList = getLabelNames(tempLabels);
             current.sort(Qt::CaseInsensitive);
