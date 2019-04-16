@@ -805,7 +805,7 @@ void InstaDam::openFile_and_labels() {
 #else
     // Open labels
     generateLabelFileName();
-
+    SelectItem::myBounds = QPixmap(filename).size();
     if (runningLocally == true)
     {
         if (QFileInfo(this->annotationPath).isFile()) {
@@ -1304,6 +1304,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
 
             if (currentItem && currentItem->type() == SelectItem::Polygon) {
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
                 if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
                     if (abs(vertex2 - vertex1) == 1) {
                         currentItem->insertVertex(std::min(vertex1, vertex2), pos);
@@ -1423,19 +1424,23 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             maskScene->inactiveAll();
             currentItem->clickPoint(pos);
             currentItem->setItemActive();
-            if (currentItem->type() == SelectItem::Polygon && insertVertex) {
-                int vert = currentItem->getActiveVertex();
-                if (vert != SelectItem::UNSELECTED) {
-                    if (vertex1 <0) {
-                        vertex1 = vert;
-                        polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
-                    } else if (vertex2 < 0) {
-                        if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
-                            (currentItem->numberOfVertices() - 1)) {
-                            polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
-                        } else {
-                            vertex2 = vert;
-                            polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+            if (currentItem->type() == SelectItem::Polygon) {
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
+
+                if (insertVertex) {
+                    int vert = currentItem->getActiveVertex();
+                    if (vert != SelectItem::UNSELECTED) {
+                        if (vertex1 <0) {
+                            vertex1 = vert;
+                            polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                        } else if (vertex2 < 0) {
+                            if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
+                                (currentItem->numberOfVertices() - 1)) {
+                                polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                            } else {
+                                vertex2 = vert;
+                                polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                            }
                         }
                     }
                 }
@@ -1451,7 +1456,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 */
 
 void InstaDam::selectItemButton(int  type){
-    selectItemButton((SelectItem::SelectType)type);
+    selectItemButton(static_cast<SelectItem::SelectType>(type));
 }
 void InstaDam::selectItemButton(SelectItem::SelectType type){
     switch (type) {
@@ -1517,7 +1522,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
             QUndoCommand *addCommand =
                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                        currentItem : currentItem->getMirror(),
-                                   scene);
+                                   scene, this);
             undoGroup->activeStack()->push(addCommand);
             if (type == PhotoScene::MASK_VIEWER_TYPE)
                 currentItem->setFromMaskScene(true);
@@ -1611,7 +1616,7 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
             QUndoCommand *deleteCommand =
                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                           currentItem : currentItem->getMirror(),
-                                      scene);
+                                      scene, this);
             undoGroup->activeStack()->push(deleteCommand);
             selectItemButton(currentItem->type());
         }
@@ -1712,7 +1717,7 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
                                              currentLabel);
     scene->addItem(fds);
-    QUndoCommand *addCommand = new AddCommand(fds, scene);
+    QUndoCommand *addCommand = new AddCommand(fds, scene, this);
     mainUndoStack->push(addCommand);
     scene->removeItem(item->getMirror());
     maskScene->removeItem(item->getMirror());

@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ../selector
-
+INCLUDEPATH += $${PWD} $${PWD}/..
 HEADERS = \
     $$PWD/polygonSelect.h \
     $$PWD/commands.h \
@@ -27,4 +27,4 @@ SOURCES = \
 
 LIBS += -lQt5Widgets
 
-QT += core gui widgets
+QT += core gui widgets network

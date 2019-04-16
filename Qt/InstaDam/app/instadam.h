@@ -79,6 +79,10 @@ class InstaDam : public QMainWindow {
     void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
     void setButtonsConfiguration();
+    void setCurrentItem(SelectItem *item, bool enable = false) {
+        currentItem = item;
+        polygonSelectForm->finishPolygonButton->setEnabled(enable);
+    }
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     ImageList* il;
