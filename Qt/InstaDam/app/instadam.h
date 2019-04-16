@@ -201,6 +201,7 @@ public slots:
     Ui::blankForm *blankForm;
     Ui::freeSelectForm *freeSelectForm;
     Ui::polygonSelectForm *polygonSelectForm;
+    //PhotoScene::viewerTypes currentViewer;
     bool drawing = true;
     bool panning = false;
     bool ctrlPanning = false;

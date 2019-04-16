@@ -201,7 +201,7 @@ void MoveCommand::redo() {
  */
 MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
                                      const QPointF newPos,
-                             const int vertex, QUndoCommand *parent)
+                                     const int vertex, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myItem = item;
     QPointF shift = newPos - oldPos;
