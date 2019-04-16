@@ -70,6 +70,8 @@ class InstaDam : public QMainWindow {
     QDir path, oldPath;
     void openFile_and_labels();
     void setLabels();
+    void selectItemButton(SelectItem::SelectType);
+    void selectItemButton(int  type);
     void generateLabelFileName();
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
@@ -100,6 +102,7 @@ class InstaDam : public QMainWindow {
     void setInsert();
     void toggleDrawing();
     void toggleErasing();
+    void checkLabel(QSharedPointer<Label> label);
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
     void setOpacity(QSharedPointer<Label>, int val);

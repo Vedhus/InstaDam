@@ -5149,7 +5149,7 @@ release/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidgetItem \
 		../../InstaDam/app/userprivilege.h \
 		../../InstaDam/app/ui_userprivilege.h \
-		../../InstaDam/app/ui_projectlist.h \
+		ui_projectlist.h \
 		../../InstaDam/app/projectlist.h \
 		../../InstaDam/htmlFileHandler/qhtml5file.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/instadam.o ../../InstaDam/app/instadam.cpp
@@ -9343,8 +9343,7 @@ release/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/pro
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qstyle.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qtabbar.h \
 		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		../../InstaDam/app/ui_projectlist.h \
-		../../../../Qt/5.11.3/mingw53_32/include/QtWidgets/QListWidget \
+		ui_projectlist.h \
 		ui_newproject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/projectlist.o ../../InstaDam/app/projectlist.cpp
 
