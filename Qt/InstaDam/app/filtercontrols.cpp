@@ -52,7 +52,7 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                                                     static_cast<int>(i), thof,
                                                     this);
                 connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox,
-                        SLOT(setValue(int)));
+                        SLOT(displayValue(int)));
                 itemSlider->setOrientation(Qt::Horizontal);
                 connect(itemNumbox, SIGNAL(valueChanged(int)), itemSlider,
                         SLOT(setValue(int)));
@@ -69,16 +69,17 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                 itemNumbox->setValue(fc->properties[selectedMask]->propertylist[i]->val);
                 itemSlider->setValue(fc->properties[selectedMask]->propertylist[i]->val);
 
-                connect(itemSlider, SIGNAL(filterValueChanged(maskTypes, int,
+
+                connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
                                                               int,
-                                                              threshold_or_filter)),
-                        fc, SLOT(assignVal(maskTypes, int, int,
-                                           threshold_or_filter)));
-                connect(itemNumbox, SIGNAL(filterValueChanged(maskTypes, int,
+                                                              EnumConstants::threshold_or_filter)),
+                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                           EnumConstants::threshold_or_filter)));
+                connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
                                                               int,
-                                                              threshold_or_filter)),
-                        fc, SLOT(assignVal(maskTypes, int, int,
-                                           threshold_or_filter)));
+                                                              EnumConstants::threshold_or_filter)),
+                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                           EnumConstants::threshold_or_filter)));
 
                 VBlayout->addLayout(HBlayout);
                 break;
@@ -91,10 +92,10 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                                                     this);
                 itemCBox->setCheckState(Qt::CheckState(fc->properties[selectedMask]->propertylist[i]->val));
 
-                connect(itemCBox, SIGNAL(filterValueChanged(maskTypes, int, int,
-                                                            threshold_or_filter)),
-                        fc, SLOT(assignVal(maskTypes, int, int,
-                                           threshold_or_filter)));
+                connect(itemCBox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
+                                                            EnumConstants::threshold_or_filter)),
+                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                           EnumConstants::threshold_or_filter)));
 
                 HBlayout->addWidget(itemCBox);
                 VBlayout->addLayout(HBlayout);
@@ -123,9 +124,9 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                 break;
             }
         }
-        connect(fc, SIGNAL(valAssigned(maskTypes, threshold_or_filter)),
-                photoViewer, SLOT(setImMask(maskTypes,
-                                            threshold_or_filter)));
+        connect(fc, SIGNAL(valAssigned(EnumConstants::maskTypes, EnumConstants::threshold_or_filter)),
+                photoViewer, SLOT(setImMask(EnumConstants::maskTypes,
+                                            EnumConstants::threshold_or_filter)));
     }
     QDialog::show();
 }
@@ -153,6 +154,7 @@ filterControls::filterControls():QObject() {
 void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,
                                int value,
                                EnumConstants::threshold_or_filter thof) {
+    qInfo("Property changed!");
     this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->sliderAssign(value);
     emit valAssigned(maskType, thof);
 }

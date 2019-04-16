@@ -30,7 +30,7 @@ fSlider::fSlider(EnumConstants::maskTypes maskType, int propNums,
   along with other information like the selected mask, property number and the threhold or filter type
  */
 void fSlider::reemitValueChanged(int value) {
-    emit filterValueChanged(selectedMask, propNum, value, thof);
+
 }
 
 /*!
@@ -38,6 +38,7 @@ void fSlider::reemitValueChanged(int value) {
  */
 void fSlider::reemitSliderReleased() {
     emit  fSliderReleased(selectedMask, thof);
+    emit filterValueChanged(selectedMask, propNum, value(), thof);
 }
 
 
@@ -71,6 +72,12 @@ fSpinBox::fSpinBox(EnumConstants::maskTypes maskType, int propNums,
 void fSpinBox::reemitValueChanged(int value) {
     emit filterValueChanged(selectedMask, propNum, value, thof);
     emit fSlotChanged(selectedMask, thof);
+}
+
+void fSpinBox::displayValue(int value) {
+    blockSignals(true);
+    setValue(value);
+    blockSignals(false);
 }
 
 

@@ -45,6 +45,8 @@ class fSpinBox : public QSpinBox {
                             int value, EnumConstants::threshold_or_filter tf);
     void fSlotChanged(EnumConstants::maskTypes selectedMask,
                       EnumConstants::threshold_or_filter tf);
+ public slots:
+     void displayValue(int value);
 
  private slots:
     void reemitValueChanged(int value);
