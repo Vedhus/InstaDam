@@ -1287,7 +1287,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
         ui->IdmMaskViewer->setPanMode(ctrlPanning);
     }
     if (!panning && !ctrlPanning){
-            qInfo()<<"clicked!";
+        qInfo()<<"clicked!";
         if (!(modifiers & Qt::ShiftModifier)){
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
@@ -1460,6 +1460,11 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
+        }
+        else {
+            scene->inactiveAll();
+            maskScene->inactiveAll();
+            currentItem = nullptr;
         }
     }
 }

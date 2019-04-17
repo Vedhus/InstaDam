@@ -6,6 +6,8 @@
 #include "rectangleSelect.h"
 #include "label.h"
 
+#define PI 3.14159265
+
 /*!
   \class RectangleSelect
   \ingroup Selector
@@ -122,33 +124,39 @@ QRectF RectangleSelect::boundingRect() const {
   \reimp
   */
 bool RectangleSelect::isInside(const QPointF &point) const {
-    return QGraphicsRectItem::contains(point);
+    return QGraphicsRectItem::contains(BoxBasedSelector::mapFromScene(point));
 }
-
 
 /*!
   \reimp
   */
 void RectangleSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     // if there is an active vertex then we are resizing
-    if (activeVertex != 0) {
-        QPointF newPoint = getActivePoint() + (newPos - oldPos);
+    if (activeVertex != 0 && activeVertex != UNSELECTED) {
+        QPointF newPoint = BoxBasedSelector::mapToScene(getActivePoint()) + (newPos - oldPos);
         addPoint(newPoint);
         resized = true;
         setMirrorResized();
+        //calcCorners();
+        setRect(myRect);
+        if (mirror != nullptr)
+            mirror->setRectUnchecked(getRect());
     } else {
         // otherwise we are moving the entire object
+        QPointF shift = newPos - oldPos;
+        //QRectF temp = myRect;
+        //checkBoundaries(shift, temp);
+        //qreal x = temp.x() - myRect.x();
+        //qreal y = temp.y() - myRect.y();
+        BoxBasedSelector::setTransform(QTransform::fromTranslate(shift.x(), shift.y()), true);
+        myRect = getRect();
+        calcCorners();
+        if (mirror != nullptr)
+            mirror->BoxBasedSelector::setTransform(QTransform::fromTranslate(shift.x(), shift.y()), true);
         moved = true;
         setMirrorMoved();
-        QPointF shift = newPos - oldPos;
-        checkBoundaries(shift, myRect);
     }
-    calcCorners();
     QGraphicsRectItem::prepareGeometryChange();
-    setRect(myRect);
-    // update the mirror if there is one
-    if (mirror != nullptr)
-        mirror->setRectUnchecked(myRect);
 }
 
 /*!
@@ -160,10 +168,12 @@ void RectangleSelect::paint(QPainter *painter,
     QGraphicsRectItem::paint(painter, option, widget);
     if (active) {
         painter->setBrush(brush());
+        QColor col = painter->pen().color();
         painter->drawRect(tl);
         painter->drawRect(bl);
         painter->drawRect(tr);
         painter->drawRect(br);
+        painter->setPen(col);
     }
 }
 
