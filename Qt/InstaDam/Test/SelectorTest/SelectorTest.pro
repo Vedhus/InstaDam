@@ -1,5 +1,6 @@
 TEMPLATE = lib
 TARGET = ../selector
+INCLUDEPATH += $${PWD} $${PWD}/.. $${PWD}/../appTest
 
 HEADERS = \
     polygonSelect.h \
@@ -11,7 +12,8 @@ HEADERS = \
     freeDrawSelect.h \
     boxbasedselector.h \
     label.h \
-    freeDrawErase.h
+    freeDrawErase.h \
+    app/photoviewer.h
 
 SOURCES = \
     polygonSelect.cpp \
@@ -25,9 +27,26 @@ SOURCES = \
     label.cpp \
     freeDrawErase.cpp
 
+FORMS += \
+        ../appTest/instadam.ui \
+        ../appTest/newproject.ui \
+        blankFrame.ui \
+        polygonSelect.ui \
+        freeSelect.ui \
+        ../appTest/labeldialog.ui \
+        ../appTest/register.ui \
+        ../appTest/startingwidget.ui \
+        ../appTest/login.ui \
+        ../appTest/projectlist.ui \
+        ../appTest/imagelist.ui \
+        ../appTest/projectDialog.ui \
+        ../appTest/serverprojectname.ui \
+    ../appTest/addusertoproject.ui \
+    ../appTest/userprivilege.ui
+
 LIBS += -lQt5Widgets
 
-QT += widgets testlib
+QT += widgets testlib network
 
 QMAKE_CXXFLAGS += --coverage
 QMAKE_LFLAGS += --coverage

@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">28</td>
-            <td class="headerCovTableEntry">34</td>
-            <td class="headerCovTableEntryMed">82.4 %</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntryMed">77.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 10:29:03</td>
+            <td class="headerValue">2019-04-17 15:02:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
-            <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntryMed">86.7 %</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntryMed">81.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -88,8 +88,8 @@
 <span class="lineNum">      10 </span>                :            : /*!
 <a name="11"><span class="lineNum">      11 </span>                :            :   Creates an instance</a>
 <span class="lineNum">      12 </span>                :            :   */
-<span class="lineNum">      13 </span>                :<span class="lineCov">          4 : Project::Project() {</span>
-<span class="lineNum">      14 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">      13 </span>                :<span class="lineCov">         12 : Project::Project() {</span>
+<span class="lineNum">      14 </span>                :<span class="lineCov">          6 : }</span>
 <span class="lineNum">      15 </span>                :            : 
 <span class="lineNum">      16 </span>                :            : /*!
 <a name="17"><span class="lineNum">      17 </span>                :            :   Destructor.</a>
@@ -152,9 +152,9 @@
 <a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">          1 : }</span></a>
 <span class="lineNum">      75 </span>                :            : 
 <span class="lineNum">      76 </span>                :<span class="lineCov">          1 : QString Project::getName()</span>
-<a name="77"><span class="lineNum">      77 </span>                :            : {</a>
+<span class="lineNum">      77 </span>                :            : {
 <span class="lineNum">      78 </span>                :<span class="lineCov">          1 :     return this-&gt;name;</span>
-<span class="lineNum">      79 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      79 </span>                :            : }
 <a name="80"><span class="lineNum">      80 </span>                :            : </a>
 <span class="lineNum">      81 </span>                :            : 
 <span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 : void Project::setImageId(int id)</span>
@@ -165,7 +165,15 @@
 <span class="lineNum">      87 </span>                :<span class="lineNoCov">          0 : int Project::getImageId()</span>
 <span class="lineNum">      88 </span>                :            : {
 <span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 :     return image_id;</span>
-<span class="lineNum">      90 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      90 </span>                :            : }
+<span class="lineNum">      91 </span>                :            : 
+<span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 : void Project::clearAllLabels()</span>
+<span class="lineNum">      93 </span>                :            : {
+<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 :     for (int i = 0; i &lt; this-&gt;getLabels().size(); i++) {</span>
+<span class="lineNum">      95 </span>                :<span class="lineNoCov">          0 :         this-&gt;getLabel(i)-&gt;clear();</span>
+<a name="96"><span class="lineNum">      96 </span>                :            :     }</a>
+<span class="lineNum">      97 </span>                :            : 
+<span class="lineNum">      98 </span>                :<span class="lineCov">          3 : }</span>
 </pre>
       </td>
     </tr>

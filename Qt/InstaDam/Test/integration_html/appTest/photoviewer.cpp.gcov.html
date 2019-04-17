@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 13:04:35</td>
+            <td class="headerValue">2019-04-17 15:40:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -310,49 +310,49 @@
 <span class="lineNum">     232 </span>                :            :   Sets the pan mode to either PAN (\a mode = true) or PAINTBRUSH (\a mode =
 <a name="233"><span class="lineNum">     233 </span>                :            :   false).</a>
 <span class="lineNum">     234 </span>                :            :   */
-<span class="lineNum">     235 </span>                :<span class="lineCov">        118 : void PhotoViewer::setPanMode(bool mode) {</span>
-<span class="lineNum">     236 </span>                :<span class="lineCov">        118 :     if (mode) {</span>
+<span class="lineNum">     235 </span>                :<span class="lineCov">        104 : void PhotoViewer::setPanMode(bool mode) {</span>
+<span class="lineNum">     236 </span>                :<span class="lineCov">        104 :     if (mode) {</span>
 <span class="lineNum">     237 </span>                :<span class="lineNoCov">          0 :         this-&gt;brushType = PAN;</span>
 <span class="lineNum">     238 </span>                :<span class="lineNoCov">          0 :         setDragMode(QGraphicsView::ScrollHandDrag);</span>
 <span class="lineNum">     239 </span>                :            :     } else {
-<span class="lineNum">     240 </span>                :<span class="lineCov">        118 :         this-&gt;brushType = PAINTBRUSH;</span>
-<span class="lineNum">     241 </span>                :<span class="lineCov">        118 :         setDragMode(QGraphicsView::NoDrag);</span>
+<span class="lineNum">     240 </span>                :<span class="lineCov">        104 :         this-&gt;brushType = PAINTBRUSH;</span>
+<span class="lineNum">     241 </span>                :<span class="lineCov">        104 :         setDragMode(QGraphicsView::NoDrag);</span>
 <span class="lineNum">     242 </span>                :            :     }
-<span class="lineNum">     243 </span>                :<span class="lineCov">        118 : }</span>
+<span class="lineNum">     243 </span>                :<span class="lineCov">        104 : }</span>
 <span class="lineNum">     244 </span>                :            : 
 <span class="lineNum">     245 </span>                :            : /*!
 <a name="246"><span class="lineNum">     246 </span>                :            :   Resets the internal brush to \a size and style \a capStyle_input.</a>
 <span class="lineNum">     247 </span>                :            :   */
-<span class="lineNum">     248 </span>                :<span class="lineCov">         42 : void PhotoViewer::resetBrush(int size, Qt::PenCapStyle capStyle_input) {</span>
-<span class="lineNum">     249 </span>                :<span class="lineCov">         42 :     brushSize = size;</span>
+<span class="lineNum">     248 </span>                :<span class="lineCov">         38 : void PhotoViewer::resetBrush(int size, Qt::PenCapStyle capStyle_input) {</span>
+<span class="lineNum">     249 </span>                :<span class="lineCov">         38 :     brushSize = size;</span>
 <span class="lineNum">     250 </span>                :            : 
-<span class="lineNum">     251 </span>                :<span class="lineCov">         42 :     delete brush;</span>
-<span class="lineNum">     252 </span>                :<span class="lineCov">         84 :     pen = QPen();</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">         38 :     delete brush;</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">         76 :     pen = QPen();</span>
 <span class="lineNum">     253 </span>                :            : 
-<span class="lineNum">     254 </span>                :<span class="lineCov">         42 :     pen.setColor(QColor(255, 0, 255, 255));</span>
-<span class="lineNum">     255 </span>                :<span class="lineCov">         42 :     pen.setWidth(size);</span>
+<span class="lineNum">     254 </span>                :<span class="lineCov">         38 :     pen.setColor(QColor(255, 0, 255, 255));</span>
+<span class="lineNum">     255 </span>                :<span class="lineCov">         38 :     pen.setWidth(size);</span>
 <span class="lineNum">     256 </span>                :            : 
-<span class="lineNum">     257 </span>                :<span class="lineCov">         42 :     capStyle = capStyle_input;</span>
-<span class="lineNum">     258 </span>                :<span class="lineCov">         42 :     pen.setCapStyle(capStyle);</span>
-<span class="lineNum">     259 </span>                :<span class="lineCov">         84 :     path = QPainterPath();</span>
-<span class="lineNum">     260 </span>                :<span class="lineCov">         42 :     brush = new QGraphicsPathItem();</span>
-<span class="lineNum">     261 </span>                :<span class="lineCov">         42 :     brush-&gt;setPen(pen);</span>
-<span class="lineNum">     262 </span>                :<span class="lineCov">         42 :     scene-&gt;addItem(brush);</span>
-<span class="lineNum">     263 </span>                :<span class="lineCov">         42 :     paintMode = false;</span>
-<span class="lineNum">     264 </span>                :<span class="lineCov">         42 : }</span>
+<span class="lineNum">     257 </span>                :<span class="lineCov">         38 :     capStyle = capStyle_input;</span>
+<span class="lineNum">     258 </span>                :<span class="lineCov">         38 :     pen.setCapStyle(capStyle);</span>
+<span class="lineNum">     259 </span>                :<span class="lineCov">         76 :     path = QPainterPath();</span>
+<span class="lineNum">     260 </span>                :<span class="lineCov">         38 :     brush = new QGraphicsPathItem();</span>
+<span class="lineNum">     261 </span>                :<span class="lineCov">         38 :     brush-&gt;setPen(pen);</span>
+<span class="lineNum">     262 </span>                :<span class="lineCov">         38 :     scene-&gt;addItem(brush);</span>
+<span class="lineNum">     263 </span>                :<span class="lineCov">         38 :     paintMode = false;</span>
+<span class="lineNum">     264 </span>                :<span class="lineCov">         38 : }</span>
 <span class="lineNum">     265 </span>                :            : 
 <span class="lineNum">     266 </span>                :            : /*!
 <a name="267"><span class="lineNum">     267 </span>                :            :   Sets the brush mode to \a cap.</a>
 <span class="lineNum">     268 </span>                :            :   */
-<span class="lineNum">     269 </span>                :<span class="lineCov">         24 : void PhotoViewer::setBrushMode(Qt::PenCapStyle cap) {</span>
-<span class="lineNum">     270 </span>                :<span class="lineCov">         24 :     if (this-&gt;hasPhoto) {</span>
-<span class="lineNum">     271 </span>                :<span class="lineCov">         24 :         setDragMode(QGraphicsView::NoDrag);</span>
-<span class="lineNum">     272 </span>                :<span class="lineCov">         24 :         this-&gt;capStyle = cap;</span>
-<span class="lineNum">     273 </span>                :<span class="lineCov">         24 :         this-&gt;brushType = PAINTBRUSH;</span>
-<span class="lineNum">     274 </span>                :<span class="lineCov">         24 :         resetBrush(this-&gt;brushSize, this-&gt;capStyle);</span>
-<span class="lineNum">     275 </span>                :<span class="lineCov">         24 :         this-&gt;update();</span>
+<span class="lineNum">     269 </span>                :<span class="lineCov">         20 : void PhotoViewer::setBrushMode(Qt::PenCapStyle cap) {</span>
+<span class="lineNum">     270 </span>                :<span class="lineCov">         20 :     if (this-&gt;hasPhoto) {</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">         20 :         setDragMode(QGraphicsView::NoDrag);</span>
+<span class="lineNum">     272 </span>                :<span class="lineCov">         20 :         this-&gt;capStyle = cap;</span>
+<span class="lineNum">     273 </span>                :<span class="lineCov">         20 :         this-&gt;brushType = PAINTBRUSH;</span>
+<span class="lineNum">     274 </span>                :<span class="lineCov">         20 :         resetBrush(this-&gt;brushSize, this-&gt;capStyle);</span>
+<span class="lineNum">     275 </span>                :<span class="lineCov">         20 :         this-&gt;update();</span>
 <span class="lineNum">     276 </span>                :            :     }
-<span class="lineNum">     277 </span>                :<span class="lineCov">         24 : }</span>
+<span class="lineNum">     277 </span>                :<span class="lineCov">         20 : }</span>
 <span class="lineNum">     278 </span>                :            : 
 <span class="lineNum">     279 </span>                :            : /*!
 <a name="280"><span class="lineNum">     280 </span>                :            :   \reimp</a>

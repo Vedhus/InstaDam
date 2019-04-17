@@ -31,13 +31,13 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">62</td>
-            <td class="headerCovTableEntry">72</td>
-            <td class="headerCovTableEntryMed">86.1 %</td>
+            <td class="headerCovTableEntry">70</td>
+            <td class="headerCovTableEntry">84</td>
+            <td class="headerCovTableEntryMed">83.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 13:04:35</td>
+            <td class="headerValue">2019-04-17 15:40:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -160,163 +160,181 @@
 <span class="lineNum">      82 </span>                :            :   */
 <span class="lineNum">      83 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::clickPoint(const QPointF &amp;point) {</span>
 <span class="lineNum">      84 </span>                :<span class="lineCov">          4 :     active = true;</span>
-<span class="lineNum">      85 </span>                :<span class="lineCov">          8 :     if (isInsideRect(tl, point)) {</span>
-<span class="lineNum">      86 </span>                :            :         setActiveVertex(TOP, LEFT);
-<span class="lineNum">      87 </span>                :<span class="lineCov">          1 :         activePoint = myRect.topLeft();</span>
-<span class="lineNum">      88 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(tr, point)) {</span>
-<span class="lineNum">      89 </span>                :            :         setActiveVertex(TOP, RIGHT);
-<span class="lineNum">      90 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.topRight();</span>
-<span class="lineNum">      91 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(bl, point)) {</span>
-<span class="lineNum">      92 </span>                :            :         setActiveVertex(BOTTOM, LEFT);
-<span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.bottomLeft();</span>
-<span class="lineNum">      94 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(br, point)) {</span>
-<span class="lineNum">      95 </span>                :            :         setActiveVertex(BOTTOM, RIGHT);
-<span class="lineNum">      96 </span>                :<span class="lineCov">          1 :         activePoint = myRect.bottomRight();</span>
-<span class="lineNum">      97 </span>                :            :     } else {
-<span class="lineNum">      98 </span>                :            :         setActiveVertex(0, 0);
-<span class="lineNum">      99 </span>                :            :     }
-<span class="lineNum">     100 </span>                :<span class="lineCov">          8 :     setMirrorVertex(getActiveVertex());</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">          4 : }</span>
-<span class="lineNum">     102 </span>                :            : 
-<span class="lineNum">     103 </span>                :            : /*!
-<a name="104"><span class="lineNum">     104 </span>                :            :   \reimp</a>
-<span class="lineNum">     105 </span>                :            :   */
-<span class="lineNum">     106 </span>                :<span class="lineNoCov">          0 : void BoxBasedSelector::removeVertex(int vertex) {</span>
-<span class="lineNum">     107 </span>                :            :     UNUSED(vertex);
-<span class="lineNum">     108 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">     109 </span>                :            : 
-<span class="lineNum">     110 </span>                :            : /*!
-<a name="111"><span class="lineNum">     111 </span>                :            :   \reimp</a>
-<span class="lineNum">     112 </span>                :            :   */
-<span class="lineNum">     113 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::resetActiveVertex() {</span>
-<span class="lineNum">     114 </span>                :            :     setActiveVertex(0);
-<span class="lineNum">     115 </span>                :<span class="lineCov">          4 : }</span>
-<span class="lineNum">     116 </span>                :            : 
-<span class="lineNum">     117 </span>                :            : /*!
-<a name="118"><span class="lineNum">     118 </span>                :            :   \reimp</a>
-<span class="lineNum">     119 </span>                :            :   */
-<span class="lineNum">     120 </span>                :<span class="lineCov">          2 : void BoxBasedSelector::resizeItem(const int vertex, QPointF &amp;newPos) {</span>
-<span class="lineNum">     121 </span>                :            :     setActiveVertex(vertex);
-<span class="lineNum">     122 </span>                :<span class="lineCov">          2 :     setMirrorVertex(getActiveVertex());</span>
-<span class="lineNum">     123 </span>                :<span class="lineCov">          2 :     addPoint(newPos);</span>
-<span class="lineNum">     124 </span>                :<span class="lineCov">          2 : }</span>
-<span class="lineNum">     125 </span>                :            : 
-<span class="lineNum">     126 </span>                :            : /*!
-<span class="lineNum">     127 </span>                :            :   \reimp
-<span class="lineNum">     128 </span>                :            :   */
-<span class="lineNum">     129 </span>                :<span class="lineCov">          3 : void BoxBasedSelector::rotate(const QPointF &amp;from, const QPointF &amp;to) {</span>
-<span class="lineNum">     130 </span>                :<span class="lineCov">          3 :     setTransformOriginPoint(myRect.center());</span>
-<span class="lineNum">     131 </span>                :            :     QPointF start = from - myRect.center();
-<span class="lineNum">     132 </span>                :            :     QPointF end = to - myRect.center();
-<span class="lineNum">     133 </span>                :<span class="lineCov">          6 :     myRotation += (atan2(end.y(), end.x()) -</span>
-<span class="lineNum">     134 </span>                :<span class="lineCov">          6 :                    atan2(start.y(), start.x())) * 180. / PI;</span>
-<span class="lineNum">     135 </span>                :<span class="lineCov">          3 :     setRotation(myRotation);</span>
-<span class="lineNum">     136 </span>                :<span class="lineCov">          3 :     rotated = true;</span>
-<span class="lineNum">     137 </span>                :<span class="lineCov">          3 :     rotateMirror();</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">      85 </span>                :            : 
+<span class="lineNum">      86 </span>                :<span class="lineCov">          8 :     if (isInsideRect(tl, mapFromScene(point))) {</span>
+<span class="lineNum">      87 </span>                :            :         setActiveVertex(TOP, LEFT);
+<span class="lineNum">      88 </span>                :<span class="lineCov">          1 :         activePoint = myRect.topLeft();</span>
+<span class="lineNum">      89 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(tr, mapFromScene(point))) {</span>
+<span class="lineNum">      90 </span>                :            :         setActiveVertex(TOP, RIGHT);
+<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.topRight();</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(bl, mapFromScene(point))) {</span>
+<span class="lineNum">      93 </span>                :            :         setActiveVertex(BOTTOM, LEFT);
+<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 :         activePoint = myRect.bottomLeft();</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">          3 :     } else if (isInsideRect(br, mapFromScene(point))) {</span>
+<span class="lineNum">      96 </span>                :            :         setActiveVertex(BOTTOM, RIGHT);
+<span class="lineNum">      97 </span>                :<span class="lineCov">          1 :         activePoint = myRect.bottomRight();</span>
+<span class="lineNum">      98 </span>                :            :     } else {
+<span class="lineNum">      99 </span>                :            :         setActiveVertex(0, 0);
+<span class="lineNum">     100 </span>                :            :     }
+<span class="lineNum">     101 </span>                :<span class="lineCov">          8 :     setMirrorVertex(getActiveVertex());</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     103 </span>                :            : 
+<span class="lineNum">     104 </span>                :            : /*!
+<a name="105"><span class="lineNum">     105 </span>                :            :   \reimp</a>
+<span class="lineNum">     106 </span>                :            :   */
+<span class="lineNum">     107 </span>                :<span class="lineNoCov">          0 : void BoxBasedSelector::removeVertex(int vertex) {</span>
+<span class="lineNum">     108 </span>                :            :     UNUSED(vertex);
+<span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     110 </span>                :            : 
+<span class="lineNum">     111 </span>                :            : /*!
+<a name="112"><span class="lineNum">     112 </span>                :            :   \reimp</a>
+<span class="lineNum">     113 </span>                :            :   */
+<span class="lineNum">     114 </span>                :<span class="lineCov">          4 : void BoxBasedSelector::resetActiveVertex() {</span>
+<span class="lineNum">     115 </span>                :            :     setActiveVertex(0);
+<span class="lineNum">     116 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>                :            : /*!
+<span class="lineNum">     119 </span>                :            :   \reimp
+<span class="lineNum">     120 </span>                :            :   */
+<span class="lineNum">     121 </span>                :<span class="lineCov">          2 : void BoxBasedSelector::resizeItem(const int vertex, QPointF &amp;oldP, QPointF &amp;newP) {</span>
+<span class="lineNum">     122 </span>                :            :     setActiveVertex(vertex);
+<span class="lineNum">     123 </span>                :<span class="lineCov">          2 :     setMirrorVertex(getActiveVertex());</span>
+<span class="lineNum">     124 </span>                :            : 
+<span class="lineNum">     125 </span>                :<span class="lineCov">          2 :     if (activeVertex &amp; TOP) {</span>
+<span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :         if (activeVertex &amp; LEFT) {</span>
+<span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :             activePoint = myRect.topLeft();</span>
+<span class="lineNum">     128 </span>                :            :         } else {
+<span class="lineNum">     129 </span>                :<span class="lineNoCov">          0 :             activePoint = myRect.topRight();</span>
+<span class="lineNum">     130 </span>                :            :         }
+<span class="lineNum">     131 </span>                :<span class="lineCov">          2 :     } else if (activeVertex &amp; BOTTOM) {</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">          2 :         if (activeVertex &amp; RIGHT) {</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          2 :             activePoint = myRect.bottomRight();</span>
+<span class="lineNum">     134 </span>                :            :         } else {
+<span class="lineNum">     135 </span>                :<span class="lineNoCov">          0 :             activePoint = myRect.bottomLeft();</span>
+<span class="lineNum">     136 </span>                :            :         }
+<span class="lineNum">     137 </span>                :            :     }
+<span class="lineNum">     138 </span>                :<span class="lineCov">          4 :     QPointF newPoint = mapToScene(getActivePoint()) + (newP - oldP);</span>
 <span class="lineNum">     139 </span>                :            : 
-<span class="lineNum">     140 </span>                :            : /*!
-<span class="lineNum">     141 </span>                :            :   \reimp
-<span class="lineNum">     142 </span>                :            :   */
-<span class="lineNum">     143 </span>                :<span class="lineCov">          6 : void BoxBasedSelector::read(const QJsonObject &amp;json) {</span>
-<span class="lineNum">     144 </span>                :<span class="lineCov">          6 :     QPointF tlc = QPointF(json[&quot;left&quot;].toDouble(), json[&quot;top&quot;].toDouble());</span>
-<span class="lineNum">     145 </span>                :<span class="lineCov">          6 :     QPointF brc = QPointF(json[&quot;right&quot;].toDouble(), json[&quot;bottom&quot;].toDouble());</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">          6 :     myRect = QRectF(tlc, brc);</span>
-<span class="lineNum">     147 </span>                :<span class="lineCov">          6 :     myRotation = json[&quot;rotation&quot;].toDouble();</span>
-<span class="lineNum">     148 </span>                :<span class="lineCov">          6 :     myID = json[&quot;objectID&quot;].toInt();</span>
-<span class="lineNum">     149 </span>                :<span class="lineCov">          6 :     setTransformOriginPoint(myRect.center());</span>
-<span class="lineNum">     150 </span>                :<span class="lineCov">          6 :     setRotation(myRotation);</span>
-<span class="lineNum">     151 </span>                :<span class="lineCov">          6 : }</span>
-<span class="lineNum">     152 </span>                :            : 
-<span class="lineNum">     153 </span>                :            : /*!
-<span class="lineNum">     154 </span>                :            :   \reimp
-<span class="lineNum">     155 </span>                :            :   */
-<span class="lineNum">     156 </span>                :<span class="lineCov">          6 : void BoxBasedSelector::write(QJsonObject &amp;json) const {</span>
-<span class="lineNum">     157 </span>                :<span class="lineCov">          6 :     json[&quot;objectID&quot;] = myID;</span>
-<span class="lineNum">     158 </span>                :<span class="lineCov">          6 :     json[&quot;rotation&quot;] = myRotation;</span>
-<span class="lineNum">     159 </span>                :<span class="lineCov">         18 :     json[&quot;left&quot;] = myRect.left();</span>
-<span class="lineNum">     160 </span>                :<span class="lineCov">          6 :     json[&quot;right&quot;] = myRect.right();</span>
-<span class="lineNum">     161 </span>                :<span class="lineCov">          6 :     json[&quot;top&quot;] = myRect.top();</span>
-<span class="lineNum">     162 </span>                :<span class="lineCov">          6 :     json[&quot;bottom&quot;] = myRect.bottom();</span>
-<span class="lineNum">     163 </span>                :<span class="lineCov">          6 : }</span>
-<span class="lineNum">     164 </span>                :            : 
-<span class="lineNum">     165 </span>                :            : /*-------------------------- Protected ------------------------*/
-<span class="lineNum">     166 </span>                :            : /*!
-<span class="lineNum">     167 </span>                :            :   Calculates the vertex boxes in the corners of the defining rectangle. The
-<span class="lineNum">     168 </span>                :            :   boxes are used to indicate the BoxBasedSelector is active and to act as points
-<span class="lineNum">     169 </span>                :            :   to click and drag to resize the item. If the mirror needs to be updated as
-<span class="lineNum">     170 </span>                :            :   well the \a mir should be \c true.
-<span class="lineNum">     171 </span>                :            :   */
-<span class="lineNum">     172 </span>                :<span class="lineCov">        136 : void BoxBasedSelector::calcCorners(bool mir) {</span>
-<span class="lineNum">     173 </span>                :<span class="lineCov">        136 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">        136 :                 SelectItem::yoffset);</span>
-<span class="lineNum">     175 </span>                :            :     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() +
-<span class="lineNum">     176 </span>                :<span class="lineCov">        136 :                 SelectItem::xoffset);</span>
-<span class="lineNum">     177 </span>                :            :     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() +
-<span class="lineNum">     178 </span>                :<span class="lineCov">        136 :                 SelectItem::yoffset);</span>
-<span class="lineNum">     179 </span>                :            :     br = QRectF(myRect.bottomRight() - SelectItem::xoffset -
-<span class="lineNum">     180 </span>                :<span class="lineCov">        136 :                 SelectItem::yoffset, myRect.bottomRight());</span>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">        136 :     if (mir)</span></a>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         96 :         setMirrorCorners(tl, bl, tr, br);</span>
-<span class="lineNum">     183 </span>                :<span class="lineCov">        139 : }</span>
-<span class="lineNum">     184 </span>                :            : 
-<span class="lineNum">     185 </span>                :            : /*!
-<span class="lineNum">     186 </span>                :            :   \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;
-<span class="lineNum">     187 </span>                :            : 
-<span class="lineNum">     188 </span>                :            :   Pure virtual function to set the corner vertex boxes of the mirror object.
-<span class="lineNum">     189 </span>                :            :   \a tlc is the top-left corner, \a blc is the bottom-left corner, \a trc is the
-<span class="lineNum">     190 </span>                :            :   top-right corner, and \a brc is the bottom right corner.
-<span class="lineNum">     191 </span>                :            :   */
-<span class="lineNum">     192 </span>                :            : 
-<span class="lineNum">     193 </span>                :            : /*!
-<span class="lineNum">     194 </span>                :            :   \fn virtual void BoxBasedSelector::setRectUnchecked(QRectF rect) = 0;
-<span class="lineNum">     195 </span>                :            : 
-<span class="lineNum">     196 </span>                :            :   Pure virtual function to set the internal rectangle of the BoxBasedSelector to
-<span class="lineNum">     197 </span>                :            :   \a rect without checking to see if it completely fits in the QGraphicsScene.
-<span class="lineNum">     198 </span>                :            :   This is used when setting the internal rectangle of the mirror after checking
-<span class="lineNum">     199 </span>                :            :   has been done in this instance.
-<span class="lineNum">     200 </span>                :            :   */
-<span class="lineNum">     201 </span>                :            : 
-<span class="lineNum">     202 </span>                :            : /*!
-<span class="lineNum">     203 </span>                :            :   \fn void BoxBasedSelector::insertVertex(const int vertex, const QPointF &amp;point)
-<span class="lineNum">     204 </span>                :            :   \reimp
+<span class="lineNum">     140 </span>                :<span class="lineCov">          2 :     addPoint(newPoint);</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">          2 : }</span>
+<span class="lineNum">     142 </span>                :            : 
+<span class="lineNum">     143 </span>                :            : /*!
+<span class="lineNum">     144 </span>                :            :   \reimp
+<span class="lineNum">     145 </span>                :            :   */
+<span class="lineNum">     146 </span>                :<span class="lineCov">          3 : void BoxBasedSelector::rotate(const QPointF &amp;from, const QPointF &amp;to) {</span>
+<span class="lineNum">     147 </span>                :<span class="lineCov">          3 :     QPointF center = (br.bottomLeft() + tl.topRight()) / 2.;</span>
+<span class="lineNum">     148 </span>                :<span class="lineCov">          3 :     setTransformOriginPoint(center);</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">          6 :     QPointF start = from - mapToScene(center);</span>
+<span class="lineNum">     150 </span>                :<span class="lineCov">          6 :     QPointF end = to - mapToScene(center);</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">          6 :     myRotation += (atan2(end.y(), end.x()) -</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">          6 :                    atan2(start.y(), start.x())) * 180. / PI;</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">          3 :     setRotation(myRotation);</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">          3 :     rotated = true;</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          3 :     rotateMirror();</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          3 : }</span>
+<span class="lineNum">     157 </span>                :            : 
+<span class="lineNum">     158 </span>                :            : /*!
+<span class="lineNum">     159 </span>                :            :   \reimp
+<span class="lineNum">     160 </span>                :            :   */
+<span class="lineNum">     161 </span>                :<span class="lineCov">          6 : void BoxBasedSelector::read(const QJsonObject &amp;json) {</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">          6 :     QPointF tlc = QPointF(json[&quot;left&quot;].toDouble(), json[&quot;top&quot;].toDouble());</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">          6 :     QPointF brc = QPointF(json[&quot;right&quot;].toDouble(), json[&quot;bottom&quot;].toDouble());</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">          6 :     myRect = QRectF(tlc, brc);</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">          6 :     myRotation = json[&quot;rotation&quot;].toDouble();</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">          6 :     myID = json[&quot;objectID&quot;].toInt();</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">          6 :     setTransformOriginPoint(myRect.center());</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">          6 :     setRotation(myRotation);</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     170 </span>                :            : 
+<span class="lineNum">     171 </span>                :            : /*!
+<span class="lineNum">     172 </span>                :            :   \reimp
+<span class="lineNum">     173 </span>                :            :   */
+<span class="lineNum">     174 </span>                :<span class="lineCov">          6 : void BoxBasedSelector::write(QJsonObject &amp;json) const {</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">          6 :     json[&quot;objectID&quot;] = myID;</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">          6 :     json[&quot;rotation&quot;] = myRotation;</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         18 :     json[&quot;left&quot;] = myRect.left();</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">          6 :     json[&quot;right&quot;] = myRect.right();</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">          6 :     json[&quot;top&quot;] = myRect.top();</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">          6 :     json[&quot;bottom&quot;] = myRect.bottom();</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     182 </span>                :            : 
+<span class="lineNum">     183 </span>                :            : /*-------------------------- Protected ------------------------*/
+<span class="lineNum">     184 </span>                :            : /*!
+<span class="lineNum">     185 </span>                :            :   Calculates the vertex boxes in the corners of the defining rectangle. The
+<span class="lineNum">     186 </span>                :            :   boxes are used to indicate the BoxBasedSelector is active and to act as points
+<span class="lineNum">     187 </span>                :            :   to click and drag to resize the item. If the mirror needs to be updated as
+<span class="lineNum">     188 </span>                :            :   well the \a mir should be \c true.
+<span class="lineNum">     189 </span>                :            :   */
+<span class="lineNum">     190 </span>                :<span class="lineCov">        114 : void BoxBasedSelector::calcCorners(bool mir) {</span>
+<span class="lineNum">     191 </span>                :<span class="lineCov">        114 :     tl = QRectF(myRect.topLeft(), myRect.topLeft() + SelectItem::xoffset +</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">        114 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     193 </span>                :            :     bl = QRectF(myRect.bottomLeft() - SelectItem::yoffset, myRect.bottomLeft() +
+<span class="lineNum">     194 </span>                :<span class="lineCov">        114 :                 SelectItem::xoffset);</span>
+<span class="lineNum">     195 </span>                :            :     tr = QRectF(myRect.topRight() - SelectItem::xoffset, myRect.topRight() +
+<span class="lineNum">     196 </span>                :<span class="lineCov">        114 :                 SelectItem::yoffset);</span>
+<span class="lineNum">     197 </span>                :            :     br = QRectF(myRect.bottomRight() - SelectItem::xoffset -
+<span class="lineNum">     198 </span>                :<span class="lineCov">        114 :                 SelectItem::yoffset, myRect.bottomRight());</span>
+<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">        114 :     if (mir)</span></a>
+<span class="lineNum">     200 </span>                :<span class="lineCov">         74 :         setMirrorCorners(tl, bl, tr, br);</span>
+<span class="lineNum">     201 </span>                :<span class="lineCov">        117 : }</span>
+<span class="lineNum">     202 </span>                :            : 
+<span class="lineNum">     203 </span>                :            : /*!
+<span class="lineNum">     204 </span>                :            :   \fn virtual void BoxBasedSelector::setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc, QRectF brc) const = 0;
 <span class="lineNum">     205 </span>                :            : 
-<span class="lineNum">     206 </span>                :            :   Empty function as this and any derived classes can have two, and only two
-<span class="lineNum">     207 </span>                :            :   vertices.
-<span class="lineNum">     208 </span>                :            :   */
-<span class="lineNum">     209 </span>                :            : 
-<span class="lineNum">     210 </span>                :            : /*!
-<span class="lineNum">     211 </span>                :            :   \fn int BoxBasedSelector::numberOfVertices() const
-<span class="lineNum">     212 </span>                :            : 
-<span class="lineNum">     213 </span>                :            :   \reimp
-<span class="lineNum">     214 </span>                :            : 
-<span class="lineNum">     215 </span>                :            :   Always returns 2, as this and any derived classes can have two, and only two
-<span class="lineNum">     216 </span>                :            :   vertices.
-<span class="lineNum">     217 </span>                :            :   */
-<span class="lineNum">     218 </span>                :            : 
-<span class="lineNum">     219 </span>                :            : /*!
-<span class="lineNum">     220 </span>                :            :   \fn void BoxBasedSelector::setRotationAngle(qreal angle)
-<span class="lineNum">     221 </span>                :            : 
-<span class="lineNum">     222 </span>                :            :   Sets the rotation angle of the BoxBasedSelector to \a angle degrees, measured
-<span class="lineNum">     223 </span>                :            :   from the horizontal going counterclockwise.
-<span class="lineNum">     224 </span>                :            : 
-<span class="lineNum">     225 </span>                :            :   \sa getRotationAngle()
+<span class="lineNum">     206 </span>                :            :   Pure virtual function to set the corner vertex boxes of the mirror object.
+<span class="lineNum">     207 </span>                :            :   \a tlc is the top-left corner, \a blc is the bottom-left corner, \a trc is the
+<span class="lineNum">     208 </span>                :            :   top-right corner, and \a brc is the bottom right corner.
+<span class="lineNum">     209 </span>                :            :   */
+<span class="lineNum">     210 </span>                :            : 
+<span class="lineNum">     211 </span>                :            : /*!
+<span class="lineNum">     212 </span>                :            :   \fn virtual void BoxBasedSelector::setRectUnchecked(QRectF rect) = 0;
+<span class="lineNum">     213 </span>                :            : 
+<span class="lineNum">     214 </span>                :            :   Pure virtual function to set the internal rectangle of the BoxBasedSelector to
+<span class="lineNum">     215 </span>                :            :   \a rect without checking to see if it completely fits in the QGraphicsScene.
+<span class="lineNum">     216 </span>                :            :   This is used when setting the internal rectangle of the mirror after checking
+<span class="lineNum">     217 </span>                :            :   has been done in this instance.
+<span class="lineNum">     218 </span>                :            :   */
+<span class="lineNum">     219 </span>                :            : 
+<span class="lineNum">     220 </span>                :            : /*!
+<span class="lineNum">     221 </span>                :            :   \fn void BoxBasedSelector::insertVertex(const int vertex, const QPointF &amp;point)
+<span class="lineNum">     222 </span>                :            :   \reimp
+<span class="lineNum">     223 </span>                :            : 
+<span class="lineNum">     224 </span>                :            :   Empty function as this and any derived classes can have two, and only two
+<span class="lineNum">     225 </span>                :            :   vertices.
 <span class="lineNum">     226 </span>                :            :   */
 <span class="lineNum">     227 </span>                :            : 
 <span class="lineNum">     228 </span>                :            : /*!
-<span class="lineNum">     229 </span>                :            :   \fn qreal BoxBasedSelector::getRotationAngle() const
+<span class="lineNum">     229 </span>                :            :   \fn int BoxBasedSelector::numberOfVertices() const
 <span class="lineNum">     230 </span>                :            : 
-<span class="lineNum">     231 </span>                :            :   Returns a \c qreal containing the rotation angle of the BoxBasedSelector in
-<span class="lineNum">     232 </span>                :            :   degrees.
-<span class="lineNum">     233 </span>                :            : 
-<span class="lineNum">     234 </span>                :            :   \sa setRotationAngle()
+<span class="lineNum">     231 </span>                :            :   \reimp
+<span class="lineNum">     232 </span>                :            : 
+<span class="lineNum">     233 </span>                :            :   Always returns 2, as this and any derived classes can have two, and only two
+<span class="lineNum">     234 </span>                :            :   vertices.
 <span class="lineNum">     235 </span>                :            :   */
 <span class="lineNum">     236 </span>                :            : 
 <span class="lineNum">     237 </span>                :            : /*!
-<span class="lineNum">     238 </span>                :            :   \fn QRectF BoxBasedSelector::getRect() const
+<span class="lineNum">     238 </span>                :            :   \fn void BoxBasedSelector::setRotationAngle(qreal angle)
 <span class="lineNum">     239 </span>                :            : 
-<span class="lineNum">     240 </span>                :            :   Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
-<span class="lineNum">     241 </span>                :            :   */
+<span class="lineNum">     240 </span>                :            :   Sets the rotation angle of the BoxBasedSelector to \a angle degrees, measured
+<span class="lineNum">     241 </span>                :            :   from the horizontal going counterclockwise.
+<span class="lineNum">     242 </span>                :            : 
+<span class="lineNum">     243 </span>                :            :   \sa getRotationAngle()
+<span class="lineNum">     244 </span>                :            :   */
+<span class="lineNum">     245 </span>                :            : 
+<span class="lineNum">     246 </span>                :            : /*!
+<span class="lineNum">     247 </span>                :            :   \fn qreal BoxBasedSelector::getRotationAngle() const
+<span class="lineNum">     248 </span>                :            : 
+<span class="lineNum">     249 </span>                :            :   Returns a \c qreal containing the rotation angle of the BoxBasedSelector in
+<span class="lineNum">     250 </span>                :            :   degrees.
+<span class="lineNum">     251 </span>                :            : 
+<span class="lineNum">     252 </span>                :            :   \sa setRotationAngle()
+<span class="lineNum">     253 </span>                :            :   */
+<span class="lineNum">     254 </span>                :            : 
+<span class="lineNum">     255 </span>                :            : /*!
+<span class="lineNum">     256 </span>                :            :   \fn QRectF BoxBasedSelector::getRect() const
+<span class="lineNum">     257 </span>                :            : 
+<span class="lineNum">     258 </span>                :            :   Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
+<span class="lineNum">     259 </span>                :            :   */
 </pre>
       </td>
     </tr>

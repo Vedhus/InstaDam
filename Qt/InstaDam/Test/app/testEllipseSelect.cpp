@@ -33,7 +33,7 @@ void TestSelect::testEllipseResizeItem(){
     QRectF myRect = QRectF(point, outsidePoint);
     eitem = new EllipseSelect(point, myLabel);
     eitem->addPoint(brc);
-    eitem->resizeItem(BOTTOM | RIGHT, outsidePoint);
+    eitem->resizeItem(BOTTOM | RIGHT, brc, outsidePoint);
     QCOMPARE(eitem->myRect, myRect);
     delete eitem;
 }
@@ -53,7 +53,9 @@ void TestSelect::testEllipseMoveItem(){
     eitem->moveItem(outsidePoint, shift);
     myRect.setTopLeft(myRect.topLeft() + point);
     myRect.setBottomRight(myRect.bottomRight() + point);
-    QCOMPARE(eitem->myRect, myRect);
+    QTransform tform = eitem->BoxBasedSelector::transform();
+    QCOMPARE(tform.dx(), point.x());
+    QCOMPARE(tform.dy(), point.y());
     //delete eitem;
     delete myScene;
 }

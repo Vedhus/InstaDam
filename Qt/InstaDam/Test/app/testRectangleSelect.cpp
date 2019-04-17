@@ -35,7 +35,7 @@ void TestSelect::testRectResizeItem(){
     QRectF myRect = QRectF(point, outsidePoint);
     ritem = new RectangleSelect(point, myLabel);
     ritem->addPoint(brc);
-    ritem->resizeItem(BOTTOM | RIGHT, outsidePoint);
+    ritem->resizeItem(BOTTOM | RIGHT, brc, outsidePoint);
     QCOMPARE(ritem->myRect, myRect);
     delete ritem;
 }
@@ -55,7 +55,9 @@ void TestSelect::testRectMoveItem(){
     ritem->moveItem(outsidePoint, shift);
     myRect.setTopLeft(myRect.topLeft() + point);
     myRect.setBottomRight(myRect.bottomRight() + point);
-    QCOMPARE(ritem->myRect, myRect);
+    QTransform tform = ritem->BoxBasedSelector::transform();
+    QCOMPARE(tform.dx(), point.x());
+    QCOMPARE(tform.dy(), point.y());
     //delete ritem;
     delete myScene;
 }

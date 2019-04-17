@@ -59,7 +59,7 @@ void TestSelect::testFreeStubs(){
     fitem->rotate(p1, p2);
     QCOMPARE(fitem->activeVertex, SelectItem::UNSELECTED);
     QCOMPARE(fitem->isInside(p1), false);
-    fitem->resizeItem(0, p1);
+    fitem->resizeItem(0, p1, p2);
     delete fitem;
 }
 

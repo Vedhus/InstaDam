@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = ../selector
-INCLUDEPATH += $${PWD} $${PWD}/..
+INCLUDEPATH += $${PWD} $${PWD}/.. $${PWD}/../app
 HEADERS = \
     $$PWD/polygonSelect.h \
     $$PWD/commands.h \
@@ -11,7 +11,9 @@ HEADERS = \
     $$PWD/freeDrawSelect.h \
     boxbasedselector.h \
     label.h \
-    freeDrawErase.h
+    freeDrawErase.h \
+    app/photoviewer.h
+
 
 SOURCES = \
     $$PWD/polygonSelect.cpp \
@@ -24,6 +26,23 @@ SOURCES = \
     boxbasedselector.cpp \
     label.cpp \
     freeDrawErase.cpp
+
+FORMS += \
+        ../app/instadam.ui \
+        ../app/newproject.ui \
+        blankFrame.ui \
+        polygonSelect.ui \
+        freeSelect.ui \
+        ../app/labeldialog.ui \
+        ../app/register.ui \
+        ../app/startingwidget.ui \
+        ../app/login.ui \
+        ../app/projectlist.ui \
+        ../app/imagelist.ui \
+        ../app/projectDialog.ui \
+        ../app/serverprojectname.ui \
+    ../app/addusertoproject.ui \
+    ../app/userprivilege.ui
 
 LIBS += -lQt5Widgets
 

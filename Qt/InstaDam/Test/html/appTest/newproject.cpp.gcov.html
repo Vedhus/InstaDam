@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntry">85</td>
-            <td class="headerCovTableEntryLo">1.2 %</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntryLo">40.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 10:29:03</td>
+            <td class="headerValue">2019-04-17 15:02:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">9</td>
-            <td class="headerCovTableEntryLo">22.2 %</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryLo">71.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -95,28 +95,28 @@
 <span class="lineNum">      17 </span>                :            :   */
 <span class="lineNum">      18 </span>                :            : 
 <span class="lineNum">      19 </span>                :            : /*!
-<span class="lineNum">      20 </span>                :            :   Creates a new instance with parent QWidget \a parent, if any
+<a name="20"><span class="lineNum">      20 </span>                :            :   Creates a new instance with parent QWidget \a parent, if any</a>
 <span class="lineNum">      21 </span>                :            :   */
-<a name="22"><span class="lineNum">      22 </span>                :<span class="lineNoCov">          0 : newproject::newproject(QWidget *parent) :</span></a>
+<span class="lineNum">      22 </span>                :<span class="lineCov">          2 : newproject::newproject(QWidget *parent) :</span>
 <span class="lineNum">      23 </span>                :            :     QDialog(parent),
-<span class="lineNum">      24 </span>                :<span class="lineNoCov">          0 :     ui(new Ui::newproject) {</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">          6 :     ui(new Ui::newproject) {</span>
 <span class="lineNum">      25 </span>                :            : #ifndef TEST
-<span class="lineNum">      26 </span>                :<span class="lineNoCov">          0 :     ui-&gt;setupUi(this);</span>
+<span class="lineNum">      26 </span>                :            :     ui-&gt;setupUi(this);
 <span class="lineNum">      27 </span>                :            :     this-&gt;newPr = new Project();
 <span class="lineNum">      28 </span>                :            : #else
-<span class="lineNum">      29 </span>                :<span class="lineNoCov">          0 :     this-&gt;newPr = new Project();</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">          2 :     this-&gt;newPr = new Project();</span>
 <span class="lineNum">      30 </span>                :            : 
-<span class="lineNum">      31 </span>                :<span class="lineNoCov">          0 : #endif</span>
-<span class="lineNum">      32 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      31 </span>                :            : #endif
+<span class="lineNum">      32 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">      33 </span>                :            : 
-<span class="lineNum">      34 </span>                :<span class="lineNoCov">          0 : /*!</span>
-<span class="lineNum">      35 </span>                :            :   Destructor
+<span class="lineNum">      34 </span>                :            : /*!
+<a name="35"><span class="lineNum">      35 </span>                :            :   Destructor</a>
 <span class="lineNum">      36 </span>                :            :   */
-<a name="37"><span class="lineNum">      37 </span>                :<span class="lineNoCov">          0 : newproject::~newproject() {</span></a>
-<span class="lineNum">      38 </span>                :<span class="lineNoCov">          0 :     delete ui;</span>
-<span class="lineNum">      39 </span>                :<span class="lineNoCov">          0 : }</span>
-<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 : #ifdef WASM_BUILD</span>
-<span class="lineNum">      41 </span>                :<span class="lineNoCov">          0 : void newproject::nameAcceptClicked() {</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">          6 : newproject::~newproject() {</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          2 :     delete ui;</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">          4 : }</span>
+<span class="lineNum">      40 </span>                :            : #ifdef WASM_BUILD
+<span class="lineNum">      41 </span>                :            : void newproject::nameAcceptClicked() {
 <span class="lineNum">      42 </span>                :            :     tempName = labelDialog-&gt;labelName-&gt;text();
 <span class="lineNum">      43 </span>                :            :     colorDialog = new ColorDialog(Qt::black, this);
 <span class="lineNum">      44 </span>                :            :     colorDialog-&gt;setOption(QColorDialog::DontUseNativeDialog);
@@ -131,7 +131,7 @@
 <span class="lineNum">      53 </span>                :            :   */
 <span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 : void newproject::on_pushButton_clicked() {</span>
 <span class="lineNum">      55 </span>                :            : #ifndef TEST
-<span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 :     QDialog *dialog = new QDialog(this);</span>
+<span class="lineNum">      56 </span>                :            :     QDialog *dialog = new QDialog(this);
 <span class="lineNum">      57 </span>                :            :     labelDialog = new Ui::labelDialog;
 <span class="lineNum">      58 </span>                :            :     labelDialog-&gt;setupUi(dialog);
 <span class="lineNum">      59 </span>                :            : #ifdef WASM_BUILD
@@ -159,24 +159,24 @@
 <span class="lineNum">      81 </span>                :<span class="lineNoCov">          0 :             lb-&gt;setText(tempName);</span>
 <span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 :             lb-&gt;setColor(color);</span>
 <span class="lineNum">      83 </span>                :<span class="lineNoCov">          0 :             this-&gt;newPr-&gt;addLabel(lb);</span>
-<span class="lineNum">      84 </span>                :<span class="lineNoCov">          0 : </span>
+<span class="lineNum">      84 </span>                :            : 
 <span class="lineNum">      85 </span>                :<span class="lineNoCov">          0 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getColor().name() &lt;&lt; endl;</span>
 <span class="lineNum">      86 </span>                :<span class="lineNoCov">          0 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;getLabel(this-&gt;newPr-&gt;numLabels()-1)-&gt;getText() &lt;&lt; endl;</span>
 <span class="lineNum">      87 </span>                :<span class="lineNoCov">          0 :             QTextStream(stdout) &lt;&lt; this-&gt;newPr-&gt;numLabels() &lt;&lt; endl;</span>
-<span class="lineNum">      88 </span>                :<span class="lineNoCov">          0 :         }</span>
-<span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 : #ifndef WASM_BUILD</span>
+<span class="lineNum">      88 </span>                :            :         }
+<span class="lineNum">      89 </span>                :            : #ifndef WASM_BUILD
 <span class="lineNum">      90 </span>                :            :     }
 <span class="lineNum">      91 </span>                :            : #endif
 <span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 : }</span>
 <span class="lineNum">      93 </span>                :            : 
-<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 : /*!</span>
-<span class="lineNum">      95 </span>                :            :   Processes the &quot;OK&quot; button being clicked.
+<span class="lineNum">      94 </span>                :            : /*!
+<a name="95"><span class="lineNum">      95 </span>                :            :   Processes the &quot;OK&quot; button being clicked.</a>
 <span class="lineNum">      96 </span>                :            :   */
-<a name="97"><span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 : Project* newproject::on_buttonBox_accepted()</span></a>
-<span class="lineNum">      98 </span>                :            : {
+<span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 : Project* newproject::on_buttonBox_accepted()</span>
+<a name="98"><span class="lineNum">      98 </span>                :            : {</a>
 <span class="lineNum">      99 </span>                :<span class="lineNoCov">          0 :     return this-&gt;newPr;</span>
 <span class="lineNum">     100 </span>                :<span class="lineCov">          3 : }</span>
-<span class="lineNum">     101 </span>                :<span class="lineNoCov">          0 : </span>
+<span class="lineNum">     101 </span>                :            : 
 <span class="lineNum">     102 </span>                :            : 
 </pre>
       </td>
