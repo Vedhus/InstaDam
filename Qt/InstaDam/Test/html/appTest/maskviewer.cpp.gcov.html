@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">8</td>
             <td class="headerCovTableEntry">25</td>
-            <td class="headerCovTableEntryLo">4.0 %</td>
+            <td class="headerCovTableEntryLo">32.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 10:29:03</td>
+            <td class="headerValue">2019-04-17 15:02:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">3</td>
             <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntryLo">40.0 %</td>
+            <td class="headerCovTableEntryLo">60.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -89,13 +89,13 @@
 <span class="lineNum">      11 </span>                :            : /*!
 <a name="12"><span class="lineNum">      12 </span>                :            :   Creates an instance with parent QWidget \a parent, if any.</a>
 <span class="lineNum">      13 </span>                :            :   */
-<span class="lineNum">      14 </span>                :<span class="lineNoCov">          0 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
-<span class="lineNum">      15 </span>                :<span class="lineNoCov">          0 :     zoom = 0;</span>
-<span class="lineNum">      16 </span>                :<span class="lineNoCov">          0 :     hasPhoto = false;</span>
-<span class="lineNum">      17 </span>                :<span class="lineNoCov">          0 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
-<span class="lineNum">      18 </span>                :<span class="lineNoCov">          0 :     scene-&gt;myViewerType = viewerType;</span>
-<span class="lineNum">      19 </span>                :<span class="lineNoCov">          0 :     selectedMask = EnumConstants::CANNY;</span>
-<span class="lineNum">      20 </span>                :<span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      14 </span>                :<span class="lineCov">          2 : MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">          2 :     zoom = 0;</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">          2 :     hasPhoto = false;</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">          2 :     viewerType = PhotoScene::MASK_VIEWER_TYPE;</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">          2 :     scene-&gt;myViewerType = viewerType;</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">          2 :     selectedMask = EnumConstants::CANNY;</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">      21 </span>                :            : 
 <span class="lineNum">      22 </span>                :            : /*!
 <a name="23"><span class="lineNum">      23 </span>                :            :   Links this object to \a viewer.</a>

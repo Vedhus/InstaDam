@@ -44,3 +44,4 @@ QMAKE_CXXFLAGS += --coverage
 QMAKE_LFLAGS += --coverage
 
 DEFINES += TEST
+DEFINES += UNITTEST

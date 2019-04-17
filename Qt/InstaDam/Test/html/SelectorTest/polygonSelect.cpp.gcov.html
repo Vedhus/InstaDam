@@ -31,18 +31,18 @@
             <td class="headerValue">coverage-filtered.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">234</td>
-            <td class="headerCovTableEntry">253</td>
+            <td class="headerCovTableEntry">222</td>
+            <td class="headerCovTableEntry">240</td>
             <td class="headerCovTableEntryHi">92.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 10:29:03</td>
+            <td class="headerValue">2019-04-17 15:02:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntry">35</td>
             <td class="headerCovTableEntry">38</td>
-            <td class="headerCovTableEntryHi">94.7 %</td>
+            <td class="headerCovTableEntryHi">92.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Legend:</td>
@@ -156,7 +156,7 @@
 <a name="78"><span class="lineNum">      78 </span>                :            :  * Sets the opacity of the label to \a val</a>
 <span class="lineNum">      79 </span>                :            : */
 <span class="lineNum">      80 </span>                :<span class="lineCov">          2 : void PolygonSelect::setOpacity(qreal val) {</span>
-<span class="lineNum">      81 </span>                :<span class="lineNoCov">          0 :     SelectItem::setOpacity(val);</span>
+<span class="lineNum">      81 </span>                :            :     SelectItem::setOpacity(val);
 <span class="lineNum">      82 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">      83 </span>                :            : 
 <span class="lineNum">      84 </span>                :            : /*!
@@ -203,9 +203,9 @@
 <span class="lineNum">     125 </span>                :            : /*!
 <a name="126"><span class="lineNum">     126 </span>                :            :   \reimp</a>
 <span class="lineNum">     127 </span>                :            :   */
-<span class="lineNum">     128 </span>                :<span class="lineCov">          4 : QRectF PolygonSelect::boundingRect() const {</span>
-<span class="lineNum">     129 </span>                :<span class="lineCov">          4 :     return QRectF(0., 0., SelectItem::myBounds.width(),</span>
-<span class="lineNum">     130 </span>                :<span class="lineCov">         12 :                   SelectItem::myBounds.height());</span>
+<span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 : QRectF PolygonSelect::boundingRect() const {</span>
+<span class="lineNum">     129 </span>                :<span class="lineNoCov">          0 :     return QRectF(0., 0., SelectItem::myBounds.width(),</span>
+<span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 :                   SelectItem::myBounds.height());</span>
 <span class="lineNum">     131 </span>                :            : }
 <span class="lineNum">     132 </span>                :            : 
 <span class="lineNum">     133 </span>                :            : /*!
@@ -265,24 +265,24 @@
 <span class="lineNum">     187 </span>                :<span class="lineCov">          2 :         moved = true;</span>
 <span class="lineNum">     188 </span>                :<span class="lineCov">          2 :         setMirrorMoved();</span>
 <span class="lineNum">     189 </span>                :            :         QPointF shift = newPos - oldPos;
-<span class="lineNum">     190 </span>                :<span class="lineCov">          4 :         QPointF tlcShift = QGraphicsPolygonItem::boundingRect().topLeft() +</span>
-<span class="lineNum">     191 </span>                :<span class="lineCov">          2 :                            shift;</span>
-<span class="lineNum">     192 </span>                :<span class="lineCov">          4 :         QPointF brcShift = QGraphicsPolygonItem::boundingRect().bottomRight() +</span>
-<span class="lineNum">     193 </span>                :<span class="lineCov">          2 :                            shift;</span>
-<span class="lineNum">     194 </span>                :            :         qreal initialMag = magnitude(shift);
-<span class="lineNum">     195 </span>                :<span class="lineCov">          2 :         checkPoint(tlcShift);</span>
-<span class="lineNum">     196 </span>                :<span class="lineCov">          2 :         checkPoint(brcShift);</span>
-<span class="lineNum">     197 </span>                :<span class="lineCov">          4 :         tlcShift -= boundingRect().topLeft();</span>
-<span class="lineNum">     198 </span>                :<span class="lineCov">          4 :         brcShift -= boundingRect().bottomRight();</span>
-<span class="lineNum">     199 </span>                :            :         qreal tlcM = magnitude(tlcShift);
-<span class="lineNum">     200 </span>                :            :         qreal brcM = magnitude(brcShift);
-<span class="lineNum">     201 </span>                :<span class="lineCov">          2 :         if (initialMag &gt; tlcM || initialMag &gt; brcM) {</span>
-<span class="lineNum">     202 </span>                :<span class="lineNoCov">          0 :             if (tlcM &gt; brcM) {</span>
-<span class="lineNum">     203 </span>                :<span class="lineNoCov">          0 :                 shift = brcShift;</span>
-<span class="lineNum">     204 </span>                :            :             } else {
-<span class="lineNum">     205 </span>                :<span class="lineNoCov">          0 :                 shift = tlcShift;</span>
-<span class="lineNum">     206 </span>                :            :             }
-<span class="lineNum">     207 </span>                :            :         }
+<span class="lineNum">     190 </span>                :            :         //QPointF tlcShift = QGraphicsPolygonItem::boundingRect().topLeft() +
+<span class="lineNum">     191 </span>                :            :         //                   shift;
+<span class="lineNum">     192 </span>                :            :         //QPointF brcShift = QGraphicsPolygonItem::boundingRect().bottomRight() +
+<span class="lineNum">     193 </span>                :            :         //                   shift;
+<span class="lineNum">     194 </span>                :            :         //qreal initialMag = magnitude(shift);
+<span class="lineNum">     195 </span>                :            :         //checkPoint(tlcShift);
+<span class="lineNum">     196 </span>                :            :         //checkPoint(brcShift);
+<span class="lineNum">     197 </span>                :            :         //tlcShift -= boundingRect().topLeft();
+<span class="lineNum">     198 </span>                :            :         //brcShift -= boundingRect().bottomRight();
+<span class="lineNum">     199 </span>                :            :         //qreal tlcM = magnitude(tlcShift);
+<span class="lineNum">     200 </span>                :            :         //qreal brcM = magnitude(brcShift);
+<span class="lineNum">     201 </span>                :            :         //if (initialMag &gt; tlcM || initialMag &gt; brcM) {
+<span class="lineNum">     202 </span>                :            :         //    if (tlcM &gt; brcM) {
+<span class="lineNum">     203 </span>                :            :         //        shift = brcShift;
+<span class="lineNum">     204 </span>                :            :         //    } else {
+<span class="lineNum">     205 </span>                :            :         //        shift = tlcShift;
+<span class="lineNum">     206 </span>                :            :         //    }
+<span class="lineNum">     207 </span>                :            :         //}
 <span class="lineNum">     208 </span>                :<span class="lineCov">          2 :         polygon.clear();</span>
 <span class="lineNum">     209 </span>                :<span class="lineCov">         14 :         for (int i = 0; i &lt; myPoints.size(); i++) {</span>
 <span class="lineNum">     210 </span>                :<span class="lineCov">          6 :             myPoints[i] += shift;</span>
@@ -378,9 +378,9 @@
 <span class="lineNum">     300 </span>                :            : /*!
 <a name="301"><span class="lineNum">     301 </span>                :            :   \reimp</a>
 <span class="lineNum">     302 </span>                :            :   */
-<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 : void PolygonSelect::resizeItem(const int vertex, QPointF &amp;point) {</span>
+<span class="lineNum">     303 </span>                :<span class="lineNoCov">          0 : void PolygonSelect::resizeItem(const int vertex, QPointF &amp;oldP, QPointF &amp;newP) {</span>
 <span class="lineNum">     304 </span>                :            :     setActiveVertex(vertex);
-<span class="lineNum">     305 </span>                :<span class="lineNoCov">          0 :     movePoint(point);</span>
+<span class="lineNum">     305 </span>                :<span class="lineNoCov">          0 :     movePoint(newP);</span>
 <span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 : }</span>
 <span class="lineNum">     307 </span>                :            : 
 <span class="lineNum">     308 </span>                :            : /*!
@@ -495,12 +495,12 @@
 <span class="lineNum">     417 </span>                :            :   PolygonSelect object. If it is outside the scene then \a point is adjusted so
 <a name="418"><span class="lineNum">     418 </span>                :            :   that it is inside.</a>
 <span class="lineNum">     419 </span>                :            :   */
-<span class="lineNum">     420 </span>                :<span class="lineCov">         18 : void PolygonSelect::checkPoint(QPointF &amp;point) {</span>
-<span class="lineNum">     421 </span>                :<span class="lineCov">         12 :     point.setX(std::min(std::max(0., point.x()),</span>
-<span class="lineNum">     422 </span>                :<span class="lineCov">         18 :                         static_cast&lt;qreal&gt;(SelectItem::myBounds.width())));</span>
-<span class="lineNum">     423 </span>                :<span class="lineCov">         12 :     point.setY(std::min(std::max(0., point.y()),</span>
-<span class="lineNum">     424 </span>                :<span class="lineCov">         18 :                         static_cast&lt;qreal&gt;(SelectItem::myBounds.height())));</span>
-<span class="lineNum">     425 </span>                :<span class="lineCov">          6 : }</span>
+<span class="lineNum">     420 </span>                :<span class="lineCov">          6 : void PolygonSelect::checkPoint(QPointF &amp;point) {</span>
+<span class="lineNum">     421 </span>                :<span class="lineCov">          4 :     point.setX(std::min(std::max(0., point.x()),</span>
+<span class="lineNum">     422 </span>                :<span class="lineCov">          6 :                         static_cast&lt;qreal&gt;(SelectItem::myBounds.width())));</span>
+<span class="lineNum">     423 </span>                :<span class="lineCov">          4 :     point.setY(std::min(std::max(0., point.y()),</span>
+<span class="lineNum">     424 </span>                :<span class="lineCov">          6 :                         static_cast&lt;qreal&gt;(SelectItem::myBounds.height())));</span>
+<span class="lineNum">     425 </span>                :<span class="lineCov">          2 : }</span>
 <span class="lineNum">     426 </span>                :            : 
 <span class="lineNum">     427 </span>                :            : /*!
 <span class="lineNum">     428 </span>                :            :   Moves the currently active vertex to \a point in scene coordinates

@@ -24,6 +24,7 @@ public:
     QTableWidget *tableWidget;
     QPushButton *cancelButton;
     QPushButton *loadButton;
+    QPushButton *uploadButton;
 
     void setupUi(QWidget *ImageList)
     {
@@ -54,6 +55,9 @@ public:
         loadButton = new QPushButton(ImageList);
         loadButton->setObjectName(QString::fromUtf8("loadButton"));
         loadButton->setGeometry(QRect(570, 360, 93, 28));
+        uploadButton = new QPushButton(ImageList);
+        uploadButton->setObjectName(QString::fromUtf8("uploadButton"));
+        uploadButton->setGeometry(QRect(460, 360, 93, 28));
 
         retranslateUi(ImageList);
 
@@ -77,6 +81,7 @@ public:
         ___qtablewidgetitem5->setText(QApplication::translate("ImageList", "Thumbnail", nullptr));
         cancelButton->setText(QApplication::translate("ImageList", "Cancel", nullptr));
         loadButton->setText(QApplication::translate("ImageList", "Load", nullptr));
+        uploadButton->setText(QApplication::translate("ImageList", "Upload", nullptr));
     } // retranslateUi
 
 };

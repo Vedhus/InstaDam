@@ -1,4 +1,5 @@
 #include "testSelect.h"
+#include "../appTest/instadam.h"
 
 #include <iostream>
 
@@ -25,7 +26,8 @@ void TestSelect::testCommandAdd() {
     myScene->addItem(ritem);
     maskScene->addItem(mitem);
     ritem->addPoint(p3);
-    QUndoCommand *command = new AddCommand(ritem, myScene);
+    InstaDam *idm = new InstaDam();
+    QUndoCommand *command = new AddCommand(ritem, myScene, idm);
     myUndo->push(command);
     QCOMPARE(myScene->currentItems.size(), 1);
     QCOMPARE(ritem->isVisible(), true);
@@ -34,6 +36,7 @@ void TestSelect::testCommandAdd() {
     myUndo->redo();
     QCOMPARE(mitem->isVisible(), true);
 
+    delete idm;
     delete myUndo;
     delete myScene;
     delete maskScene;
@@ -49,7 +52,8 @@ void TestSelect::testCommandDelete() {
     myScene->addItem(ritem);
     maskScene->addItem(mitem);
     ritem->addPoint(p3);
-    QUndoCommand *command = new DeleteCommand(ritem, myScene);
+    InstaDam *idm = new InstaDam();
+    QUndoCommand *command = new DeleteCommand(ritem, myScene, idm);
     myUndo->push(command);
     QCOMPARE(myScene->currentItems.size(), 1);
     QCOMPARE(ritem->isVisible(), false);
@@ -57,7 +61,7 @@ void TestSelect::testCommandDelete() {
     QCOMPARE(ritem->isVisible(), true);
     myUndo->redo();
     QCOMPARE(mitem->isVisible(), false);
-
+    delete idm;
     delete myUndo;
     delete myScene;
     delete maskScene;
@@ -222,7 +226,7 @@ void TestSelect::testCommandRotate() {
     QCOMPARE(myScene->currentItems.size(), 1);
     QCOMPARE(ritem->myRotation, finalAngle);
     myUndo->undo();
-    QCOMPARE(ritem->myRotation, initAngle);
+    QCOMPARE(ritem->myRotation + 1., initAngle + 1.);
     myUndo->redo();
     QCOMPARE(mitem->myRotation, finalAngle);
 

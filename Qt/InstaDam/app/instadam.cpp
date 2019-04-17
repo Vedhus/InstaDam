@@ -1467,9 +1467,9 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 selectItemButton(item->type());
 
             }
-            if(item->type() != SelectItem::Polygon ||
-               (item->type() == SelectItem::Polygon &&
-                !polygonSelectForm->finishPolygonButton->isEnabled()))
+            //if(item->type() != SelectItem::Polygon ||
+            //   (item->type() == SelectItem::Polygon &&
+            //    !polygonSelectForm->finishPolygonButton->isEnabled()))
                 currentItem = item;
             if (!canDrawOnPhoto)
                 maskItem = currentItem;
@@ -1571,6 +1571,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
 
 //    else if (!panning){
     if (currentItem && !currentItem->isItemAdded()) {
+
         if (currentItem->type() == SelectItem::Freedraw && type ==
             PhotoScene::MASK_VIEWER_TYPE) {
             addCurrentSelection(true);
@@ -1625,6 +1626,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         currentItem->resetState();
     } else if (currentItem && currentItem->type() == SelectItem::Polygon &&
                currentItem->wasPointAdded()) {
+
         QUndoCommand *addVertexCommand =
                 new AddVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                          currentItem : currentItem->getMirror(),

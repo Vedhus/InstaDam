@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-04-15 13:04:35</td>
+            <td class="headerValue">2019-04-17 15:40:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -187,7 +187,7 @@
 <a name="109"><span class="lineNum">     109 </span>                :            :   loads the received labels to an Instadam instance</a>
 <span class="lineNum">     110 </span>                :            :   */
 <span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 : void ProjectList::getLabelsReplyFinished() {</span>
-<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;reply received:&quot;;</span>
+<span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :     qInfo() &lt;&lt; &quot;labels reply received:&quot;;</span>
 <span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :     QByteArray strReply = rep-&gt;readAll();</span>
 <span class="lineNum">     114 </span>                :            :     QJsonParseError jsonError;
 <span class="lineNum">     115 </span>                :<span class="lineNoCov">          0 :     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &amp;jsonError); // parse and capture the error flag</span>
