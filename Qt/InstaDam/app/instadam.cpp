@@ -1633,12 +1633,12 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
         } else {
             qInfo()<<"deleted Polygon!";
+            selectItemButton(currentItem->type());
             QUndoCommand *deleteCommand =
                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                           currentItem : currentItem->getMirror(),
                                       scene, this);
             undoGroup->activeStack()->push(deleteCommand);
-            selectItemButton(currentItem->type());
         }
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
