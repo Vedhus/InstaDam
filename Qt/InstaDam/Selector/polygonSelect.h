@@ -32,7 +32,7 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
                QWidget *widget = nullptr) override;
     void removeVertex(int vertex = UNSELECTED) override;
     void resetActiveVertex() override;
-    void resizeItem(const int vertex, QPointF &shift) override;
+    void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) override;
     void rotate(const QPointF &from, const QPointF &to) override {
         UNUSED(from);
         UNUSED(to);

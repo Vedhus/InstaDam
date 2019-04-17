@@ -6,7 +6,9 @@
 #include <iostream>
 #include <cmath>
 
-#include "./label.h"
+#include "label.h"
+
+#define PI 3.14159265
 
 /*!
   \class EllipseSelect
@@ -130,13 +132,14 @@ QRectF EllipseSelect::boundingRect() const {
   \reimp
   */
 bool EllipseSelect::isInside(const QPointF &point) const {
-    QPointF center = rect().center();
+    QPointF center = BoxBasedSelector::mapToScene((br.bottomLeft() + tl.topRight()) / 2.);
+    QPointF myPoint = BoxBasedSelector::mapFromScene(point);
     if ((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
         (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2))
         <= 1.) {
         return true;
-    } else if (active && (isInsideRect(tl, point) || isInsideRect(tr, point) ||
-                          isInsideRect(bl, point) || isInsideRect(br, point))) {
+    } else if (active && (isInsideRect(tl, myPoint) || isInsideRect(tr, myPoint) ||
+                          isInsideRect(bl, myPoint) || isInsideRect(br, myPoint))) {
         return true;
     }
     return false;
@@ -146,22 +149,29 @@ bool EllipseSelect::isInside(const QPointF &point) const {
   \reimp
   */
 void EllipseSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
+    // if there is an active vertex then we are resizing
     if (activeVertex != 0) {
-        QPointF newPoint = getActivePoint() + (newPos - oldPos);
+        QPointF newPoint = BoxBasedSelector::mapToScene(getActivePoint()) + (newPos - oldPos);
         addPoint(newPoint);
         resized = true;
         setMirrorResized();
+        //calcCorners();
+        setRect(myRect);
+        if (mirror != nullptr)
+            mirror->setRectUnchecked(myRect);
     } else {
+        // otherwise we are moving the entire object
         QPointF shift = newPos - oldPos;
-        checkBoundaries(shift, myRect);
+        //checkBoundaries(shift, myRect);
+        BoxBasedSelector::setTransform(QTransform::fromTranslate(shift.x(), shift.y()), true);
+        calcCorners();
+        myRect = getRect();
+        if (mirror != nullptr)
+            mirror->BoxBasedSelector::setTransform(QTransform::fromTranslate(shift.x(), shift.y()), true);
         moved = true;
         setMirrorMoved();
     }
-    calcCorners();
     QGraphicsEllipseItem::prepareGeometryChange();
-    setRect(myRect);
-    if (mirror != nullptr)
-        mirror->setRectUnchecked(myRect);
 }
 
 /*!

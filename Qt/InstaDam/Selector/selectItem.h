@@ -79,7 +79,7 @@ class SelectItem : public QGraphicsItem {
     virtual void moveItem(const QPointF &oldPos, QPointF &newPos) = 0;
     virtual void removeVertex(const int vertex = UNSELECTED) = 0;
     virtual void resetActiveVertex() = 0;
-    virtual void resizeItem(const int vertex, QPointF &shift) = 0;
+    virtual void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) = 0;
     virtual void rotate(const QPointF &from, const QPointF &to) = 0;
     virtual void updatePen(QPen pen) = 0;
     void setOpacity(qreal val) {QGraphicsItem::setOpacity(val);}

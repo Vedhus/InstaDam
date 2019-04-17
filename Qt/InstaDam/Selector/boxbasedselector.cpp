@@ -82,16 +82,17 @@ BoxBasedSelector::~BoxBasedSelector() {
   */
 void BoxBasedSelector::clickPoint(const QPointF &point) {
     active = true;
-    if (isInsideRect(tl, point)) {
+
+    if (isInsideRect(tl, mapFromScene(point))) {
         setActiveVertex(TOP, LEFT);
         activePoint = myRect.topLeft();
-    } else if (isInsideRect(tr, point)) {
+    } else if (isInsideRect(tr, mapFromScene(point))) {
         setActiveVertex(TOP, RIGHT);
         activePoint = myRect.topRight();
-    } else if (isInsideRect(bl, point)) {
+    } else if (isInsideRect(bl, mapFromScene(point))) {
         setActiveVertex(BOTTOM, LEFT);
         activePoint = myRect.bottomLeft();
-    } else if (isInsideRect(br, point)) {
+    } else if (isInsideRect(br, mapFromScene(point))) {
         setActiveVertex(BOTTOM, RIGHT);
         activePoint = myRect.bottomRight();
     } else {
@@ -117,19 +118,36 @@ void BoxBasedSelector::resetActiveVertex() {
 /*!
   \reimp
   */
-void BoxBasedSelector::resizeItem(const int vertex, QPointF &newPos) {
+void BoxBasedSelector::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     setActiveVertex(vertex);
     setMirrorVertex(getActiveVertex());
-    addPoint(newPos);
+
+    if (activeVertex & TOP) {
+        if (activeVertex & LEFT) {
+            activePoint = myRect.topLeft();
+        } else {
+            activePoint = myRect.topRight();
+        }
+    } else if (activeVertex & BOTTOM) {
+        if (activeVertex & RIGHT) {
+            activePoint = myRect.bottomRight();
+        } else {
+            activePoint = myRect.bottomLeft();
+        }
+    }
+    QPointF newPoint = mapToScene(getActivePoint()) + (newP - oldP);
+
+    addPoint(newPoint);
 }
 
 /*!
   \reimp
   */
 void BoxBasedSelector::rotate(const QPointF &from, const QPointF &to) {
-    setTransformOriginPoint(myRect.center());
-    QPointF start = from - myRect.center();
-    QPointF end = to - myRect.center();
+    QPointF center = (br.bottomLeft() + tl.topRight()) / 2.;
+    setTransformOriginPoint(center);
+    QPointF start = from - mapToScene(center);
+    QPointF end = to - mapToScene(center);
     myRotation += (atan2(end.y(), end.x()) -
                    atan2(start.y(), start.x())) * 180. / PI;
     setRotation(myRotation);

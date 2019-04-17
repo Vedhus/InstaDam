@@ -848,7 +848,7 @@ void InstaDam::openFile_and_labels() {
 #else
     // Open labels
     generateLabelFileName();
-
+    SelectItem::myBounds = QPixmap(filename).size();
     if (runningLocally == true)
     {
         if (QFileInfo(this->annotationPath).isFile()) {
@@ -1021,11 +1021,14 @@ void InstaDam::panButton_clicked() {
  * Slot called when the Rectangle Select button is clicked.
  */
 void InstaDam::on_rectangleSelectButton_clicked() {
+    if (currentSelectType == SelectItem::Rectangle)
+        return;
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
     switch (currentSelectType) {
+        ui->rectangleSelectButton->setChecked(true);
         case SelectItem::Polygon:
             if (ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")) {
                 controlLayout->removeWidget(polygonSelectWidget);
@@ -1049,7 +1052,6 @@ void InstaDam::on_rectangleSelectButton_clicked() {
             ui->ellipseSelectButton->setChecked(false);
             break;
     }
-    ui->rectangleSelectButton->setChecked(true);
     blankForm->blankText->setPlainText(rectBaseString);
     blankWidget->show();
     currentSelectType = SelectItem::Rectangle;
@@ -1061,6 +1063,9 @@ void InstaDam::on_rectangleSelectButton_clicked() {
  * Slot called when the Ellispe Select button is clicked.
  */
 void InstaDam::on_ellipseSelectButton_clicked() {
+    ui->ellipseSelectButton->setChecked(true);
+    if (currentSelectType == SelectItem::Ellipse)
+        return;
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
@@ -1089,7 +1094,6 @@ void InstaDam::on_ellipseSelectButton_clicked() {
         case SelectItem::Ellipse:
             break;
     }
-    ui->ellipseSelectButton->setChecked(true);
     blankForm->blankText->setPlainText(ellipseBaseString);
     blankWidget->show();
     currentSelectType = SelectItem::Ellipse;
@@ -1101,6 +1105,9 @@ void InstaDam::on_ellipseSelectButton_clicked() {
  * Slot called when the Polygon Select button is clicked.
  */
 void InstaDam::on_polygonSelectButton_clicked() {
+    ui->polygonSelectButton->setChecked(true);
+    if (currentSelectType == SelectItem::Polygon)
+        return;
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
@@ -1128,7 +1135,6 @@ void InstaDam::on_polygonSelectButton_clicked() {
         case SelectItem::Polygon:
             break;
     }
-    ui->polygonSelectButton->setChecked(true);
     polygonSelectWidget->show();
     polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
     currentSelectType = SelectItem::Polygon;
@@ -1140,6 +1146,10 @@ void InstaDam::on_polygonSelectButton_clicked() {
  * Slot called when the Free Select button is clicked.
  */
 void InstaDam::on_freeSelectButton_clicked() {
+    ui->freeSelectButton->setChecked(true);
+    if (currentSelectType == SelectItem::Freeerase ||
+        currentSelectType == SelectItem::Freedraw)
+        return;
     scene->inactiveAll();
     cancelCurrentSelection();
     currentItem = nullptr;
@@ -1166,7 +1176,6 @@ void InstaDam::on_freeSelectButton_clicked() {
         case SelectItem::Freedraw:
             break;
     }
-    ui->freeSelectButton->setChecked(true);
     freeSelectWidget->show();
     currentSelectType = SelectItem::Freedraw;
     scene->update();
@@ -1312,7 +1321,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    const Qt::MouseButton button,
                                    const Qt::KeyboardModifiers modifiers) {
     currentButton = button;
-
+    //currentViewer = type;
     if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
     {
         ctrlPanning = true;
@@ -1321,7 +1330,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
         ui->IdmMaskViewer->setPanMode(ctrlPanning);
     }
     if (!panning && !ctrlPanning){
-            qInfo()<<"clicked!";
+        qInfo()<<"clicked!";
         if (!(modifiers & Qt::ShiftModifier)){
             if (!canDrawOnPhoto && (!currentItem || currentItem->type() !=
                                     SelectItem::Polygon)) {
@@ -1347,6 +1356,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
 
             if (currentItem && currentItem->type() == SelectItem::Polygon) {
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
                 if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
                     if (abs(vertex2 - vertex1) == 1) {
                         currentItem->insertVertex(std::min(vertex1, vertex2), pos);
@@ -1449,7 +1459,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
             scene->update();
             maskScene->update();
-        } else if((modifiers & Qt::ShiftModifier) && item) {
+        } else if((modifiers & Qt::ShiftModifier) && item != nullptr) {
             qInfo()<<"shift clicked!";
             if (item->type() != currentSelectType) {
                 if (!canDrawOnPhoto)
@@ -1457,7 +1467,10 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 selectItemButton(item->type());
 
             }
-            currentItem = item;
+            if(item->type() != SelectItem::Polygon ||
+               (item->type() == SelectItem::Polygon &&
+                !polygonSelectForm->finishPolygonButton->isEnabled()))
+                currentItem = item;
             if (!canDrawOnPhoto)
                 maskItem = currentItem;
 
@@ -1466,25 +1479,35 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             maskScene->inactiveAll();
             currentItem->clickPoint(pos);
             currentItem->setItemActive();
-            if (currentItem->type() == SelectItem::Polygon && insertVertex) {
-                int vert = currentItem->getActiveVertex();
-                if (vert != SelectItem::UNSELECTED) {
-                    if (vertex1 <0) {
-                        vertex1 = vert;
-                        polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
-                    } else if (vertex2 < 0) {
-                        if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
-                            (currentItem->numberOfVertices() - 1)) {
-                            polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
-                        } else {
-                            vertex2 = vert;
-                            polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+            if (currentItem->type() == SelectItem::Polygon) {
+
+                polygonSelectForm->finishPolygonButton->setEnabled(true);
+
+                if (insertVertex) {
+                    int vert = currentItem->getActiveVertex();
+                    if (vert != SelectItem::UNSELECTED) {
+                        if (vertex1 < 0) {
+                            vertex1 = vert;
+                            polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                        } else if (vertex2 < 0) {
+                            if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
+                                (currentItem->numberOfVertices() - 1)) {
+                                polygonSelectForm->polygonMessageBox->appendPlainText("Invalid second vertex, it must be adjacent to the first vertex.");
+                            } else {
+                                vertex2 = vert;
+                                polygonSelectForm->polygonMessageBox->setPlainText("Click on the point where you want to insert a new vertex. (must be outside the current polygon, but can be dragged anywhere)");
+                            }
                         }
                     }
                 }
             }
             scene->update();
             maskScene->update();
+        }
+        else {
+            scene->inactiveAll();
+            maskScene->inactiveAll();
+            currentItem = nullptr;
         }
     }
 }
@@ -1494,7 +1517,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
 */
 
 void InstaDam::selectItemButton(int  type){
-    selectItemButton((SelectItem::SelectType)type);
+    selectItemButton(static_cast<SelectItem::SelectType>(type));
 }
 void InstaDam::selectItemButton(SelectItem::SelectType type){
     switch (type) {
@@ -1522,7 +1545,6 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
 
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
-
             currentItem->moveItem(fromPos, toPos);
         } else {
             currentItem->rotate(fromPos, toPos);
@@ -1541,6 +1563,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     const Qt::MouseButton button,
                                     const Qt::KeyboardModifiers modifiers) {
     UNUSED(button);
+    UNUSED(modifiers);
     ctrlPanning = false;
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
@@ -1560,10 +1583,12 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
             QUndoCommand *addCommand =
                     new AddCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                        currentItem : currentItem->getMirror(),
-                                   scene);
+                                   scene, this);
             undoGroup->activeStack()->push(addCommand);
-            if (type == PhotoScene::MASK_VIEWER_TYPE)
+            if (type == PhotoScene::MASK_VIEWER_TYPE) {
                 currentItem->setFromMaskScene(true);
+                currentItem->setOnMaskScene(true);
+            }
             if (ui->showMaskSelections->checkState() == Qt::Unchecked)
                 currentItem->hideMask();
         }
@@ -1626,10 +1651,10 @@ void InstaDam::finishPolygonButtonClicked() {
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
         currentItem->setInactive();
         polygonSelectForm->finishPolygonButton->setEnabled(false);
+        currentItem = nullptr;
+        scene->update();
+        maskScene->update();
     }
-    currentItem = nullptr;
-    scene->update();
-    maskScene->update();
 }
 
 /*!
@@ -1651,12 +1676,12 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
         } else {
             qInfo()<<"deleted Polygon!";
+            selectItemButton(currentItem->type());
             QUndoCommand *deleteCommand =
                     new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                           currentItem : currentItem->getMirror(),
-                                      scene);
+                                      scene, this);
             undoGroup->activeStack()->push(deleteCommand);
-            selectItemButton(currentItem->type());
         }
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
@@ -1759,15 +1784,20 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
 void InstaDam::addCurrentSelection(bool useCurrent) {
     SelectItem *item;
     item = useCurrent ? currentItem : maskItem;
+    if (item->type() == SelectItem::Polygon)
+        polygonSelectForm->finishPolygonButton->setEnabled(false);
     tempUndoStack->clear();
     undoGroup->setActiveStack(mainUndoStack);
     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
                                              currentLabel);
     scene->addItem(fds);
-    QUndoCommand *addCommand = new AddCommand(fds, scene);
+    QUndoCommand *addCommand = new AddCommand(fds, scene, this);
     mainUndoStack->push(addCommand);
     scene->removeItem(item->getMirror());
     maskScene->removeItem(item->getMirror());
+    currentLabel->removeItem(item->getMirror()->myID);
+    currentLabel->removeItem(item->myID);
+    currentLabel->addItem(fds);
     scene->removeItem(item);
     maskScene->removeItem(item);
     maskItem = nullptr;

@@ -79,6 +79,10 @@ class InstaDam : public QMainWindow {
     void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
     void setButtonsConfiguration();
+    void setCurrentItem(SelectItem *item, bool enable = false) {
+        currentItem = item;
+        polygonSelectForm->finishPolygonButton->setEnabled(enable);
+    }
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
     ImageList* il;
@@ -200,6 +204,7 @@ public slots:
     Ui::blankForm *blankForm;
     Ui::freeSelectForm *freeSelectForm;
     Ui::polygonSelectForm *polygonSelectForm;
+    //PhotoScene::viewerTypes currentViewer;
     bool drawing = true;
     bool panning = false;
     bool ctrlPanning = false;

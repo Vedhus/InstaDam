@@ -9,11 +9,12 @@
 #include "freeDrawErase.h"
 #include "photoScene.h"
 
+class InstaDam;
 
 class AddCommand : public QUndoCommand{
  public:
     AddCommand(SelectItem *item, PhotoScene *graphicsScene,
-               QUndoCommand *parent = nullptr);
+               InstaDam *idam, QUndoCommand *parent = nullptr);
     ~AddCommand() override;
 
     void undo() override;
@@ -22,6 +23,7 @@ class AddCommand : public QUndoCommand{
  private:
     SelectItem *myItem;
     PhotoScene *myScene;
+    InstaDam *myParent;
     QPointF initialPosition;
     bool init = false;
 };
@@ -29,7 +31,7 @@ class AddCommand : public QUndoCommand{
 class DeleteCommand : public QUndoCommand {
  public:
     explicit DeleteCommand(SelectItem* item, PhotoScene *graphicsScene,
-                           QUndoCommand *parent = nullptr);
+                           InstaDam *idam, QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;
@@ -37,6 +39,7 @@ class DeleteCommand : public QUndoCommand {
  private:
     SelectItem *myItem;
     PhotoScene *myScene;
+    InstaDam *myParent;
     bool init = false;
 };
 

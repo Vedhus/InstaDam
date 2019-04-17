@@ -117,18 +117,18 @@ void SelectItem::setVertexSize(qreal size) {
 void SelectItem::sortCorners(QRectF &rect, QPointF &newPoint) {
     if (activeVertex & TOP) {
         if (activeVertex & LEFT) {
-            rect.setTopLeft(newPoint);
+            rect.setTopLeft(mapFromScene(newPoint));
         } else {
-            rect.setTopRight(newPoint);
+            rect.setTopRight(mapFromScene(newPoint));
         }
     } else if (activeVertex & BOTTOM) {
         if (activeVertex & RIGHT) {
-            rect.setBottomRight(newPoint);
+            rect.setBottomRight(mapFromScene(newPoint));
         } else {
-            rect.setBottomLeft(newPoint);
+            rect.setBottomLeft(mapFromScene(newPoint));
         }
     }
-    activePoint = newPoint;
+    activePoint = mapFromScene(newPoint);
     QPointF tlc = rect.topLeft();
     QPointF brc = rect.bottomRight();
     if (tlc.y() > brc.y()) {

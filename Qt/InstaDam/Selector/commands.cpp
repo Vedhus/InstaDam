@@ -4,6 +4,7 @@
 #include <QVector>
 
 #include "selectItem.h"
+#include "../app/instadam.h"
 /*!
   \class AddCommand
    \ingroup Selectors
@@ -26,11 +27,12 @@
   and/or redone. \a parent refers to parent QUndoCommand, if any.
 
  */
-AddCommand::AddCommand(SelectItem *item,
-                       PhotoScene *scene, QUndoCommand *parent)
+AddCommand::AddCommand(SelectItem *item, PhotoScene *scene,
+                       InstaDam *idam, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myScene = scene;
     myItem = item;
+    myParent = idam;
 }
 
 
@@ -46,6 +48,7 @@ AddCommand::~AddCommand() {
 void AddCommand::undo() {
     myItem->hide();
     myItem->mirrorHide();
+    myParent->setCurrentItem(nullptr);
     myScene->update();
     myItem->updateMirrorScene();
 }
@@ -56,6 +59,7 @@ void AddCommand::undo() {
 void AddCommand::redo() {
     if (init) {
         myItem->show();
+        myParent->setCurrentItem(myItem, (myItem->type() == SelectItem::Polygon)? true : false);
         myItem->mirrorShow();
         myScene->clearSelection();
         myScene->update();
@@ -89,16 +93,18 @@ void AddCommand::redo() {
 
  */
 DeleteCommand::DeleteCommand(SelectItem* item, PhotoScene *scene,
-                             QUndoCommand *parent)
+                             InstaDam *idam, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myScene = scene;
     myItem = item;
+    myParent = idam;
 }
 
 /*!
    \reimp
  */
 void DeleteCommand::undo() {
+    myParent->setCurrentItem(myItem, (myItem->type() == SelectItem::Polygon)? true : false);
     myItem->show();
     myItem->mirrorShow();
     myScene->update();
@@ -108,6 +114,7 @@ void DeleteCommand::undo() {
    \reimp
  */
 void DeleteCommand::redo() {
+    myParent->setCurrentItem(nullptr);
     myItem->hide();
     myScene->update();
     myItem->mirrorHide();
@@ -194,7 +201,7 @@ void MoveCommand::redo() {
  */
 MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
                                      const QPointF newPos,
-                             const int vertex, QUndoCommand *parent)
+                                     const int vertex, QUndoCommand *parent)
     : QUndoCommand(parent) {
     myItem = item;
     QPointF shift = newPos - oldPos;
@@ -207,7 +214,7 @@ MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
    \reimp
  */
 void MoveVertexCommand::undo() {
-    myItem->resizeItem(myVertex, myoldPos);
+    myItem->resizeItem(myVertex, mynewPos, myoldPos);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
@@ -217,7 +224,7 @@ void MoveVertexCommand::undo() {
 */
 void MoveVertexCommand::redo() {
     if (init) {
-        myItem->resizeItem(myVertex, mynewPos);
+        myItem->resizeItem(myVertex, myoldPos, mynewPos);
         myItem->scene()->update();
         myItem->updateMirrorScene();
     } else {

@@ -216,9 +216,10 @@ void FreeDrawSelect::read(const QJsonObject &json) {
 /*!
   \reimp
   */
-void FreeDrawSelect::resizeItem(const int vertex, QPointF &point) {
+void FreeDrawSelect::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     UNUSED(vertex);
-    UNUSED(point);
+    UNUSED(oldP);
+    UNUSED(newP);
 }
 
 /*!
