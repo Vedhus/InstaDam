@@ -187,24 +187,24 @@ void PolygonSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         moved = true;
         setMirrorMoved();
         QPointF shift = newPos - oldPos;
-        QPointF tlcShift = QGraphicsPolygonItem::boundingRect().topLeft() +
-                           shift;
-        QPointF brcShift = QGraphicsPolygonItem::boundingRect().bottomRight() +
-                           shift;
-        qreal initialMag = magnitude(shift);
-        checkPoint(tlcShift);
-        checkPoint(brcShift);
-        tlcShift -= boundingRect().topLeft();
-        brcShift -= boundingRect().bottomRight();
-        qreal tlcM = magnitude(tlcShift);
-        qreal brcM = magnitude(brcShift);
-        if (initialMag > tlcM || initialMag > brcM) {
-            if (tlcM > brcM) {
-                shift = brcShift;
-            } else {
-                shift = tlcShift;
-            }
-        }
+        //QPointF tlcShift = QGraphicsPolygonItem::boundingRect().topLeft() +
+        //                   shift;
+        //QPointF brcShift = QGraphicsPolygonItem::boundingRect().bottomRight() +
+        //                   shift;
+        //qreal initialMag = magnitude(shift);
+        //checkPoint(tlcShift);
+        //checkPoint(brcShift);
+        //tlcShift -= boundingRect().topLeft();
+        //brcShift -= boundingRect().bottomRight();
+        //qreal tlcM = magnitude(tlcShift);
+        //qreal brcM = magnitude(brcShift);
+        //if (initialMag > tlcM || initialMag > brcM) {
+        //    if (tlcM > brcM) {
+        //        shift = brcShift;
+        //    } else {
+        //        shift = tlcShift;
+        //    }
+        //}
         polygon.clear();
         for (int i = 0; i < myPoints.size(); i++) {
             myPoints[i] += shift;
@@ -302,7 +302,7 @@ void PolygonSelect::resetActiveVertex() {
   */
 void PolygonSelect::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     setActiveVertex(vertex);
-    movePoint(oldP);
+    movePoint(newP);
 }
 
 /*!
