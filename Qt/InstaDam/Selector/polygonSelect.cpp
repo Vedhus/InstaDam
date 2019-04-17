@@ -300,9 +300,9 @@ void PolygonSelect::resetActiveVertex() {
 /*!
   \reimp
   */
-void PolygonSelect::resizeItem(const int vertex, QPointF &point) {
+void PolygonSelect::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     setActiveVertex(vertex);
-    movePoint(point);
+    movePoint(oldP);
 }
 
 /*!

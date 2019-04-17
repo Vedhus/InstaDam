@@ -47,7 +47,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
                QWidget *widget = nullptr) override;
     void removeVertex(int vertex = UNSELECTED) override {UNUSED(vertex);}
     void resetActiveVertex() override {}
-    void resizeItem(const int vertex, QPointF &shift) override;
+    void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) override;
     void rotate(const QPointF &from, const QPointF &to) override {
         UNUSED(from);
         UNUSED(to);

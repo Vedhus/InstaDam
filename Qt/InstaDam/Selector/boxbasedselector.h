@@ -24,7 +24,7 @@ class BoxBasedSelector : public SelectItem {
     void clickPoint(const QPointF &point) override;
     void removeVertex(int vertex = UNSELECTED) override;
     void resetActiveVertex() override;
-    void resizeItem(const int vertex, QPointF &newPos) override;
+    void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) override;
     void rotate(const QPointF &from, const QPointF &to) override;
     void read(const QJsonObject &json) override;
     void write(QJsonObject &json) const override;

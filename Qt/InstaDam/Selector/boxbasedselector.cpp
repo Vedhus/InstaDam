@@ -118,10 +118,26 @@ void BoxBasedSelector::resetActiveVertex() {
 /*!
   \reimp
   */
-void BoxBasedSelector::resizeItem(const int vertex, QPointF &newPos) {
+void BoxBasedSelector::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     setActiveVertex(vertex);
     setMirrorVertex(getActiveVertex());
-    addPoint(newPos);
+
+    if (activeVertex & TOP) {
+        if (activeVertex & LEFT) {
+            activePoint = myRect.topLeft();
+        } else {
+            activePoint = myRect.topRight();
+        }
+    } else if (activeVertex & BOTTOM) {
+        if (activeVertex & RIGHT) {
+            activePoint = myRect.bottomRight();
+        } else {
+            activePoint = myRect.bottomLeft();
+        }
+    }
+    QPointF newPoint = mapToScene(getActivePoint()) + (newP - oldP);
+
+    addPoint(newPoint);
 }
 
 /*!

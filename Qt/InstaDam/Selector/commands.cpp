@@ -214,7 +214,7 @@ MoveVertexCommand::MoveVertexCommand(SelectItem *item, const QPointF oldPos,
    \reimp
  */
 void MoveVertexCommand::undo() {
-    myItem->resizeItem(myVertex, myoldPos);
+    myItem->resizeItem(myVertex, mynewPos, myoldPos);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 }
@@ -224,7 +224,7 @@ void MoveVertexCommand::undo() {
 */
 void MoveVertexCommand::redo() {
     if (init) {
-        myItem->resizeItem(myVertex, mynewPos);
+        myItem->resizeItem(myVertex, myoldPos, mynewPos);
         myItem->scene()->update();
         myItem->updateMirrorScene();
     } else {
