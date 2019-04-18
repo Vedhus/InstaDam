@@ -271,6 +271,7 @@ void InstaDam::on_actionNew_triggered() {
     newProject->setModal(true);
     connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
     newProject->exec();
+
 #else
     QHashIterator<QString, QColor> it(labelHash);
     while (it.hasNext()) {
@@ -378,7 +379,6 @@ void InstaDam::openFileFromJson(QJsonObject json){
     getReadyForNewProject();
     scene->update();
     maskScene->update();
-    this->serverProjectLoaded=true;
 }
 
 
@@ -1924,7 +1924,7 @@ void InstaDam::processShowHide(int state) {
 void InstaDam::on_actionSearch_triggered()
 {
     if(this->runningLocally==false){
-        if(this->serverProjectLoaded){
+        if(currentProject->numLabels()!=0){
             AddUserToProject *addUserToProjectInterface = new AddUserToProject;
             addUserToProjectInterface->projectId = this->currentProject->getId();
             addUserToProjectInterface->accessToken = this->accessToken;
@@ -1932,9 +1932,10 @@ void InstaDam::on_actionSearch_triggered()
             addUserToProjectInterface->show();
         }
         else{
-            QMessageBox msgBox;
-            msgBox.setText("Please open a project first");
-            msgBox.exec();
+            assertError("Please open a project first");
+//            QMessageBox msgBox;
+//            msgBox.setText("Please open a project first");
+//            msgBox.exec();
         }
     }
 }
