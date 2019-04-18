@@ -378,6 +378,7 @@ void InstaDam::openFileFromJson(QJsonObject json){
     getReadyForNewProject();
     scene->update();
     maskScene->update();
+    this->serverProjectLoaded=true;
 }
 
 
@@ -1923,11 +1924,18 @@ void InstaDam::processShowHide(int state) {
 void InstaDam::on_actionSearch_triggered()
 {
     if(this->runningLocally==false){
-        AddUserToProject *addUserToProjectInterface = new AddUserToProject;
-        addUserToProjectInterface->projectId = this->currentProject->getId();
-        addUserToProjectInterface->accessToken = this->accessToken;
-        addUserToProjectInterface->databaseURL = this->databaseURL;
-        addUserToProjectInterface->show();
+        if(this->serverProjectLoaded){
+            AddUserToProject *addUserToProjectInterface = new AddUserToProject;
+            addUserToProjectInterface->projectId = this->currentProject->getId();
+            addUserToProjectInterface->accessToken = this->accessToken;
+            addUserToProjectInterface->databaseURL = this->databaseURL;
+            addUserToProjectInterface->show();
+        }
+        else{
+            QMessageBox msgBox;
+            msgBox.setText("Please open a project first");
+            msgBox.exec();
+        }
     }
 }
 
@@ -1950,15 +1958,12 @@ void InstaDam::listProjects() {
         msgBox.setText("Please note that deleting a project is irreversible");
         msgBox.exec();
     }
-
     QString databaseProjectsURL = this->databaseURL+"/projects";
     QUrl dabaseLink = QUrl(databaseProjectsURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     QString loginToken = "Bearer "+this->accessToken;
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-
     rep = manager->get(req);
-
     connect(rep, &QNetworkReply::finished,
             this, &InstaDam::projectsReplyFinished);
 }

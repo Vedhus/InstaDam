@@ -49,9 +49,9 @@ void Login::on_pushButton_3_clicked() {
   Sends a request to login
   */
 void Login::on_pushButton_clicked() {
-    QString user = ui->username->toPlainText();
-    QString pass = ui->password->toPlainText();
-    this->databaseURL = ui->url->toPlainText();
+    QString user = ui->username->text();
+    QString pass = ui->password->text();
+    this->databaseURL = ui->url->text();
     QString databaseLoginURL = this->databaseURL+"/login";
     QUrl dabaseLink = QUrl(databaseLoginURL);
     QJsonObject js

@@ -47,10 +47,10 @@ void Register::on_pushButton_2_clicked() {
   Sends a request to register a new user to the database.
   */
 void Register::on_pushButton_clicked() {
-    QString em = ui->email->toPlainText();
-    QString user = ui->username->toPlainText();
-    QString pass = ui->password->toPlainText();
-    this->databaseURL = ui->url->toPlainText();
+    QString em = ui->email->text();
+    QString user = ui->username->text();
+    QString pass = ui->password->text();
+    this->databaseURL = ui->url->text();
     QString databaseRegisterURL = this->databaseURL+"/register";
     QUrl dabaseLink = QUrl(databaseRegisterURL);
     QJsonObject js
