@@ -126,7 +126,7 @@ public:
     {
         if (InstaDam->objectName().isEmpty())
             InstaDam->setObjectName(QString::fromUtf8("InstaDam"));
-        InstaDam->resize(1362, 980);
+        InstaDam->resize(1619, 978);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -299,7 +299,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QString::fromUtf8("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 638));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 560));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -444,17 +444,17 @@ public:
 
         selectControlFrame = new QFrame(frame_5);
         selectControlFrame->setObjectName(QString::fromUtf8("selectControlFrame"));
-        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy6(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
         sizePolicy6.setHorizontalStretch(0);
         sizePolicy6.setVerticalStretch(0);
         sizePolicy6.setHeightForWidth(selectControlFrame->sizePolicy().hasHeightForWidth());
         selectControlFrame->setSizePolicy(sizePolicy6);
-        selectControlFrame->setMinimumSize(QSize(0, 120));
+        selectControlFrame->setMinimumSize(QSize(859, 120));
         selectControlFrame->setSizeIncrement(QSize(0, 0));
         selectControlFrame->setFrameShape(QFrame::StyledPanel);
         selectControlFrame->setFrameShadow(QFrame::Raised);
 
-        gridLayout->addWidget(selectControlFrame, 0, 3, 4, 1);
+        gridLayout->addWidget(selectControlFrame, 0, 2, 4, 1);
 
 
         verticalLayout_5->addWidget(frame_5);
@@ -472,7 +472,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1334, 70));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1591, 88));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -562,7 +562,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1362, 20));
+        menubar->setGeometry(QRect(0, 0, 1619, 33));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);

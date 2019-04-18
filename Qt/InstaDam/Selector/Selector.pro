@@ -47,6 +47,7 @@ FORMS += \
 LIBS += -lQt5Widgets
 
 QT += core gui widgets network
+win32 {
 
 ## Change paths here depending on your system installation location
 
@@ -75,3 +76,4 @@ QT += core gui widgets network
 #   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
 #   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
 #   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+}

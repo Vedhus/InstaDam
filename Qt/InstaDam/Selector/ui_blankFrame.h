@@ -30,14 +30,17 @@ public:
     {
         if (blankForm->objectName().isEmpty())
             blankForm->setObjectName(QString::fromUtf8("blankForm"));
-        blankForm->resize(400, 300);
+        blankForm->resize(859, 300);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(blankForm->sizePolicy().hasHeightForWidth());
+        blankForm->setSizePolicy(sizePolicy);
+        blankForm->setMinimumSize(QSize(859, 152));
         horizontalLayout = new QHBoxLayout(blankForm);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         blankFrame = new QFrame(blankForm);
         blankFrame->setObjectName(QString::fromUtf8("blankFrame"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(blankFrame->sizePolicy().hasHeightForWidth());
         blankFrame->setSizePolicy(sizePolicy);
         blankFrame->setFrameShape(QFrame::NoFrame);

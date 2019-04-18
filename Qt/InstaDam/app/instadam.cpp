@@ -139,6 +139,8 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     freeSelectForm = new Ui::freeSelectForm;
     polygonSelectForm = new Ui::polygonSelectForm;
     controlLayout = new QGridLayout(ui->selectControlFrame);
+    controlLayout->setContentsMargins(0, 0, 0, 0);
+    controlLayout->setSpacing(0);
     blankWidget = new QWidget(ui->selectControlFrame);
     blankForm->setupUi(blankWidget);
     freeSelectWidget = new QWidget(ui->selectControlFrame);
