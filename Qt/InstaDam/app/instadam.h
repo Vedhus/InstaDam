@@ -242,6 +242,8 @@ public slots:
     void listProjects();
     void projectsReplyFinished();
     void fileReplyFinished();
+    void openFileFromJson(QJsonObject);
+    void getReadyForNewProject();
 };
 
 #endif  // INSTADAM_H

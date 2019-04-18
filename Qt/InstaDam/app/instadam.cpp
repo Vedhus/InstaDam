@@ -357,13 +357,8 @@ void InstaDam::on_actionOpen_triggered() {
         if (myfileName.isEmpty()) {
                 return;  // remove that part and add an alert
         } else {
-
             loadLabelFile(myfileName, PROJECT);
-            mainUndoStack->clear();
-            tempUndoStack->clear();
-            undoGroup->setActiveStack(mainUndoStack);
-            scene->clearItems();
-            maskScene->clearItems();
+            getReadyForNewProject();
             scene->update();
             maskScene->update();
         }
@@ -373,6 +368,29 @@ void InstaDam::on_actionOpen_triggered() {
         InstaDam::listProjects();
     }
 #endif
+}
+
+/*!
+    Reads label json information and updates the scene.
+  */
+void InstaDam::openFileFromJson(QJsonObject json){
+    loadLabelJson(json, PROJECT);
+    getReadyForNewProject();
+    scene->update();
+    maskScene->update();
+}
+
+
+/*!
+ Gets Instadam Ready for opening a new project by clearing the undo stacks, setting the active stack and clearing scene.
+  */
+void InstaDam::getReadyForNewProject(){
+    newProject = new newproject(this);
+    mainUndoStack->clear();
+    tempUndoStack->clear();
+    undoGroup->setActiveStack(mainUndoStack);
+    scene->clearItems();
+    maskScene->clearItems();
 }
 
 /*!
@@ -1948,10 +1966,11 @@ void InstaDam::projectsReplyFinished() {
     } else {
         QJsonObject obj = jsonReply.object();
         ProjectList *pl = new ProjectList;
-        pl->instadam = this;
         pl->useCase = this->projecListUseCase;
         pl->show();
         pl->addItems(jsonReply, this->databaseURL, this->accessToken);
+        connect(pl, &ProjectList::instadamClearAll, this, &InstaDam::getReadyForNewProject);
+        connect(pl, &ProjectList::projectJsonReceived, this, &InstaDam::openFileFromJson);
     }
 }
 

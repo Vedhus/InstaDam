@@ -106,10 +106,11 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
 
 /*!
   Waits until a reply regarding the labels request is received
-  loads the received labels to an Instadam instance
+  emits the received labels to InstaDam
   */
 void ProjectList::getLabelsReplyFinished() {
     qInfo() << "labels reply received:";
+    emit instadamClearAll();
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
@@ -118,12 +119,15 @@ void ProjectList::getLabelsReplyFinished() {
     }  else {
             qInfo() << jsonReply;
               QJsonObject jsonLabels = jsonReply.object();
-              this->instadam->loadLabelJson(jsonLabels, PROJECT);
-              this->instadam->setCurrentProjectId(selectedProject);
-              this->hide();
+              emit projectJsonReceived(jsonLabels);
+              this->close();
       }
 }
 
+/*!
+  Waits until a reply regarding the labels request is received
+  emits the received labels to InstaDam
+  */
 void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
@@ -152,5 +156,3 @@ void ProjectList::deleteReplyFinished() {
             msgBox.exec();
       }
 }
-
-

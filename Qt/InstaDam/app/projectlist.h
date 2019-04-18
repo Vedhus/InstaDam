@@ -18,13 +18,16 @@ class ProjectList : public QWidget
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     ~ProjectList();
-     InstaDam *instadam;
      QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
 public slots:
     void openProject(QListWidgetItem *);
     void deleteProject(QListWidgetItem *);
+
+signals:
+    void projectJsonReceived(QJsonObject);
+    void instadamClearAll();
 
 private:
     Ui::ProjectList *ui;
