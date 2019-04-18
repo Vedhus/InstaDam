@@ -48,7 +48,6 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     this->databaseURL = databaseURL;
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
-    qInfo() << obj;
     for(int i =0; i<projects_list.count();i++){
         QJsonValue project = projects_list.at(i);
             if(project.isObject()){
@@ -70,7 +69,6 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                             proj_details << "Annotator";
                             }
                         }
-
                     }
                ui->projectsTable->addItem(proj_details.join(" - "));
                if(this->useCase=="OPEN"){
@@ -79,10 +77,6 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                else if (this->useCase=="DELETE") {
                    connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
                 }
-            }
-            else{
-                qInfo() << "The returned object does not satisfy the requirements";
-                qInfo() << project;
             }
     }
 }
@@ -109,18 +103,14 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
   emits the received labels to InstaDam
   */
 void ProjectList::getLabelsReplyFinished() {
-    qInfo() << "labels reply received:";
     emit instadamClearAll();
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-    if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
-    }  else {
-            qInfo() << jsonReply;
-              QJsonObject jsonLabels = jsonReply.object();
-              emit projectJsonReceived(jsonLabels);
-              this->close();
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);
+    if (jsonError.error == QJsonParseError::NoError) {
+      QJsonObject jsonLabels = jsonReply.object();
+      emit projectJsonReceived(jsonLabels);
+      this->close();
       }
 }
 
@@ -149,11 +139,12 @@ void ProjectList::deleteReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        msgBox.setText("Ooops! Network error, please try again");
+        msgBox.exec();
     }  else {
             this->hide();
-            QMessageBox msgBox;
             msgBox.setText("The project has been successfully deleted");
             msgBox.exec();
       }

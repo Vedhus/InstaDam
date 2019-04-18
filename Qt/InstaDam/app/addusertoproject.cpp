@@ -29,20 +29,15 @@ AddUserToProject::~AddUserToProject()
 void AddUserToProject::on_pushButton_clicked()
 {
     QString userInfo = ui->userInfoInput->toPlainText();
-
     QString databaseLoginURL = this->databaseURL+"/users/search?q=illinois";
     QUrl databaseLink = QUrl(databaseLoginURL);
-
     QUrlQuery query;
     query.addQueryItem("q", userInfo);
-
     databaseLink.setQuery(query.query());
     QNetworkRequest req = QNetworkRequest(databaseLink);
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-
     rep = manager->get(req);
-
     connect(rep, &QNetworkReply::finished,
             this, &AddUserToProject::replyFinished);
 
@@ -103,11 +98,18 @@ void AddUserToProject::on_updatePrivilege_clicked()
 
 void AddUserToProject::updateUser()
 {
-    QListWidgetItem *item = ui->userList->selectedItems()[0];
-    this->userDetails = item->text();
-    userPrivilege->show();
-    connect(userPrivilege, SIGNAL(on_pushButton_clicked()), this, SLOT(addAsAdmin()));
-    connect(userPrivilege, SIGNAL(on_pushButton_2_clicked()), this, SLOT(addAsAnnotator()));
+    if(ui->userList->selectedItems().size()!= 0){
+        QListWidgetItem *item = ui->userList->selectedItems()[0];
+        this->userDetails = item->text();
+        userPrivilege->show();
+        connect(userPrivilege, SIGNAL(on_pushButton_clicked()), this, SLOT(addAsAdmin()));
+        connect(userPrivilege, SIGNAL(on_pushButton_2_clicked()), this, SLOT(addAsAnnotator()));
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setText("Please search and select a user first");
+        msgBox.exec();
+    }
 }
 
 void AddUserToProject::addAsAnnotator(){
@@ -125,18 +127,13 @@ void AddUserToProject::addAsAdmin(){
 void AddUserToProject::add(){
         QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
         QString privilege = this->privilege.toLower();
-
         QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
-//        QString databaseLoginURL = this->databaseURL+"/user/privilege/";
         QUrl dabaseLink = QUrl(databaseLoginURL);
-//        qInfo() << databaseLoginURL;
-
         QJsonObject js
         {
             {"access_type", privilege},
             {"username", userName}
         };
-
         QJsonDocument doc(js);
         QByteArray bytes = doc.toJson();
         QNetworkRequest req = QNetworkRequest(dabaseLink);
@@ -144,7 +141,6 @@ void AddUserToProject::add(){
         req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
         req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         rep = manager->put(req, bytes);
-
         connect(rep, &QNetworkReply::finished,
                 this, &AddUserToProject::privilegeReplyFinished);
 
@@ -154,12 +150,11 @@ void AddUserToProject::privilegeReplyFinished(){
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        msgBox.setText("Ooops! Network error, please try again");
+        msgBox.exec();
     } else {
-        QJsonObject obj = jsonReply.object();
-        qInfo() << obj;
-        QMessageBox msgBox;
         msgBox.setText("User privileges were updated successfully");
         msgBox.exec();
     }

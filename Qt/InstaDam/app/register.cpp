@@ -44,7 +44,7 @@ void Register::on_pushButton_2_clicked() {
 }
 
 /*!
-  Responds to a button being clicked.
+  Sends a request to register a new user to the database.
   */
 void Register::on_pushButton_clicked() {
     QString em = ui->email->toPlainText();
@@ -52,29 +52,24 @@ void Register::on_pushButton_clicked() {
     QString pass = ui->password->toPlainText();
     this->databaseURL = ui->url->toPlainText();
     QString databaseRegisterURL = this->databaseURL+"/register";
-
     QUrl dabaseLink = QUrl(databaseRegisterURL);
-
     QJsonObject js
     {
         {"email", em},
         {"username", user},
         {"password", pass}
     };
-
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     rep = manager->post(req, bytes);
-
     connect(rep, &QNetworkReply::finished,
             this, &Register::replyFinished);
 }
 
 /*!
-  Something.
+  Receives the reply regarding new user registration.
   */
 void Register::replyFinished() {
     QByteArray strReply = rep->readAll();
@@ -97,7 +92,7 @@ void Register::replyFinished() {
 }
 
 /*!
-  Dumps the token to a stream.
+  Lunches the main InstaDam window.
   */
 void Register::lunchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
