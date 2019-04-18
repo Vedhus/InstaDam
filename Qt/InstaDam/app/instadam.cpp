@@ -662,6 +662,10 @@ void InstaDam::on_actionOpen_File_triggered() {
    }
    else
    {
+       if (currentProject->numLabels() == 0) {
+           assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+           return;
+       }
        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
        QUrl dabaseLink = QUrl(databaseImagesURL);
 

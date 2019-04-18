@@ -2,6 +2,7 @@
 #include "enumconstants.h"
 #include <QFileDialog>
 #include <QHttpPart>
+#include <QMessageBox>
 
 
 
@@ -218,6 +219,13 @@ void ImageList::on_loadButton_clicked() {
     qInfo() << "load button clicked";
     QTableWidget* table = ui->tableWidget;
     selectedRow = table->selectedItems();
+    if(selectedRow.empty())
+    {
+        QMessageBox *messageBox = new QMessageBox;
+        messageBox->critical(nullptr, "Error", "Select an Image to Load first");
+        messageBox->setFixedSize(500, 200);
+        return;
+    }
     selectedIdIndex = selectedRow.first()->row(); //save the id index selected, used for save/back, save/next
     QTableWidgetItem* item = selectedRow.at(2); //row has path at index 2
     QString filepath = this->databaseURL + "/" + item->text();
