@@ -63,3 +63,12 @@ void StartingWidget::on_pushButton_clicked() {
 void StartingWidget::on_pushButton_2_clicked() {
     runServerVersion();
 }
+
+
+/*!
+  Exit the platform when Exit button being clicked.
+  */
+void StartingWidget::on_pushButton_3_clicked()
+{
+    close();
+}

@@ -125,9 +125,8 @@ void ProjectList::getLabelsReplyFinished() {
 }
 
 /*!
-  Waits until a reply regarding the labels request is received
-  emits the received labels to InstaDam
-  */
+  Sends a project deletion request
+ */
 void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
@@ -142,6 +141,9 @@ void ProjectList::deleteProject(QListWidgetItem *project_name) {
             this, &ProjectList::deleteReplyFinished);
 }
 
+/*!
+ Receives the reply of deleting a project from the server
+ */
 void ProjectList::deleteReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();

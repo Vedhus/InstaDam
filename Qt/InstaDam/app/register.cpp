@@ -38,7 +38,6 @@ Register::~Register() {
   Responds to the cancel button being clicked.
   */
 void Register::on_pushButton_2_clicked() {
-    qInfo() << "Cancelling and going back to the login window";
     Login *log = new Login;
     log->show();
     hide();
@@ -63,9 +62,6 @@ void Register::on_pushButton_clicked() {
         {"password", pass}
     };
 
-    qInfo() << databaseRegisterURL;
-    qInfo() << js;
-
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
@@ -75,45 +71,28 @@ void Register::on_pushButton_clicked() {
 
     connect(rep, &QNetworkReply::finished,
             this, &Register::replyFinished);
-
-    qInfo() << "waiting for the reply...";
 }
 
 /*!
   Something.
   */
 void Register::replyFinished() {
-    qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
-//    qInfo() << strReply;
-
     QJsonParseError jsonError;
-
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        msgBox.setText("Ooops! Network error, please double check your URL and try again");
+        msgBox.exec();
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains("access_token")) {
             this->accessToken = obj.value("access_token").toString();
-            qInfo() << this->accessToken;
-            this->dumpToken();
             this->lunchMainInstadam();
         } else {
-            qInfo() << obj;
+            msgBox.setText(obj.value("msg").toString());
+            msgBox.exec();
         }
-    }
-}
-
-/*!
-  Dumps the token to a stream.
-  */
-void Register::dumpToken() {
-    QFile file("token.txt");
-    if (file.open(QIODevice::ReadWrite)) {
-        QTextStream stream(&file);
-        stream << this->accessToken << endl;
     }
 }
 

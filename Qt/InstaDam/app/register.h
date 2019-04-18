@@ -26,7 +26,6 @@ private slots:
 private:
     Ui::Register *ui;
     void replyFinished();
-    void dumpToken();
     void lunchMainInstadam();
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);

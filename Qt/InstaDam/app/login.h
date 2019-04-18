@@ -27,24 +27,14 @@ private slots:
 
     void on_pushButton_4_clicked();
 
-    void on_username_selectionChanged();
-
-    void on_password_textChanged();
-
-    void on_url_textChanged();
-
 private:
     Ui::Login *ui;
     void replyFinished();
-    void dumpToken();
     void lunchMainInstadam();
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QByteArray accessToken;
     QString databaseURL;
-    bool firstUserNameModification;
-    bool firstPasswrdModification;
-    bool firstURLModification;
 };
 
 #endif // LOGIN_H

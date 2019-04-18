@@ -27,9 +27,6 @@
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
-    this->firstUserNameModification = true;
-    this->firstPasswrdModification = true;
-    this->firstURLModification = true;
 }
 
 /*!
@@ -43,57 +40,54 @@ Login::~Login() {
   Processes the X button click.
   */
 void Login::on_pushButton_3_clicked() {
-    qInfo() << "registering a new user";
     Register *reg = new Register;
     reg->show();
     hide();
 }
 
 /*!
-  Processes the Y button click.
+  Sends a request to login
   */
 void Login::on_pushButton_clicked() {
     QString user = ui->username->toPlainText();
     QString pass = ui->password->toPlainText();
     this->databaseURL = ui->url->toPlainText();
     QString databaseLoginURL = this->databaseURL+"/login";
-
     QUrl dabaseLink = QUrl(databaseLoginURL);
-
     QJsonObject js
     {
         {"username", user},
         {"password", pass}
     };
-
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     rep = manager->post(req, bytes);
-
     connect(rep, &QNetworkReply::finished,
             this, &Login::replyFinished);
-
-    qInfo() << "waiting for the reply...";
 }
 
 /*!
-  Something
+  Received the reply for login
   */
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        msgBox.setText("Ooops! Network error, please double check your URL and try again");
+        msgBox.exec();
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains("access_token")) {
             this->accessToken = obj.value("access_token").toString().toUtf8();
-            Login::dumpToken();
             Login::lunchMainInstadam();
+        }
+        else{
+            msgBox.setText(obj.value("msg").toString());
+            msgBox.exec();
         }
     }
 }
@@ -102,60 +96,26 @@ void Login::replyFinished() {
   Lists the projects.
   */
 
-void Login::lunchMainInstadam(){
+void Login::
+lunchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();
 }
 
-/*!
-  Something
-  */
-void Login::dumpToken() {
-    QFile file("token.txt");
-    if (file.open(QIODevice::ReadWrite)) {
-        QTextStream stream(&file);
-        stream << this->accessToken<< endl;
-    }
-}
 
 /*!
   Processes Z button click.
   */
 void Login::on_pushButton_2_clicked() {
-    close();
+    this->close();
 }
 
 /*!
-  Processes W button click.
+  Goes back to the starting widget when the button is clicked
   */
 void Login::on_pushButton_4_clicked() {
-//    qInfo() << "going back to the main widget";
-    StartingWidget *wid = new StartingWidget;
-    wid->show();
+    StartingWidget *startingWidget = new StartingWidget;
+    startingWidget->show();
     hide();
-}
-
-void Login::on_username_selectionChanged()
-{
-//    if(this->firstUserNameModification){
-//        ui->username->clear();
-//        this->firstUserNameModification=false;
-//    }
-}
-
-void Login::on_password_textChanged()
-{
-//    if(this->firstPasswrdModification){
-//        ui->password->clear();
-//        this->firstPasswrdModification=false;
-//    }
-}
-
-void Login::on_url_textChanged()
-{
-//    if(this->firstURLModification){
-//        ui->url->clear();
-//        this->firstURLModification=false;
-//    }
 }

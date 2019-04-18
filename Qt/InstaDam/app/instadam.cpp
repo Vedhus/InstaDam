@@ -1917,7 +1917,9 @@ void InstaDam::processShowHide(int state) {
     }
 }
 
-
+/*!
+ Starts a user search widget.
+ */
 void InstaDam::on_actionSearch_triggered()
 {
     if(this->runningLocally==false){
@@ -1929,6 +1931,9 @@ void InstaDam::on_actionSearch_triggered()
     }
 }
 
+/*!
+ Starts a user search widget.
+ */
 void InstaDam::on_actionUpdate_Privilege_triggered()
 {
     if(this->runningLocally==false){
@@ -1936,7 +1941,9 @@ void InstaDam::on_actionUpdate_Privilege_triggered()
     }
 }
 
-
+/*!
+ Sends a request to receive all the projects assoicated with a user
+ */
 void InstaDam::listProjects() {
     if(this->projecListUseCase=="DELETE"){
         QMessageBox msgBox;
@@ -1956,6 +1963,9 @@ void InstaDam::listProjects() {
             this, &InstaDam::projectsReplyFinished);
 }
 
+/*!
+ Receives the reply regarding user projects
+ */
 void InstaDam::projectsReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -1974,6 +1984,9 @@ void InstaDam::projectsReplyFinished() {
     }
 }
 
+/*!
+ Sends a request to save new project information (name) on the server
+ */
 void InstaDam::saveToServer(){
     qInfo() << "saving project to server";
     QUrl dabaseLink = QUrl(this->databaseURL+"/project");
@@ -1995,6 +2008,10 @@ void InstaDam::saveToServer(){
 
 }
 
+/*!
+ Receives the reply of saving a project name on the server
+ Sends requests to save the labels assoicated with the new project
+ */
 void InstaDam::replyFinished()
 {
     qInfo() << "reply received:";
@@ -2046,6 +2063,10 @@ void InstaDam::replyFinished()
     }
 }
 
+/*!
+ Receives the reply of saving a label on the server
+ Sets the id of the currentprject label to the id received from the backend
+ */
 void InstaDam::labelReplyFinished()
 {
     QByteArray strReply = rep->readAll();
@@ -2063,11 +2084,13 @@ void InstaDam::labelReplyFinished()
         qInfo() << label_id;
         this->currentProject->getLabel(labelIdsRecieved)->setId(label_id);
         labelIdsRecieved++;
-
     }
 }
 
 
+/*!
+ Starts a projectList widget with a use of "DELETE" to delete a project when double clicking
+ */
 void InstaDam::on_actionDelete_2_triggered()
 {
     this->projecListUseCase = "DELETE";
