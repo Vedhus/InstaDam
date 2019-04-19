@@ -16,7 +16,7 @@ class filterProperty {
  public:
     filterProperty(std::string propertyName, btnTypes bt, int propMin,
                    int propVal, int propMax, evenOdds eo,
-                   EnumConstants::threshold_or_filter thof, bool sb);
+                   EnumConstants::threshold_or_filter thof, bool sb, bool show_flag = true);
     QString name;
     btnTypes btnType;
     int max;
@@ -26,6 +26,7 @@ class filterProperty {
     EnumConstants::threshold_or_filter threshold_filter;
     bool signalBool;
     void sliderAssign(int sliderVal);
+    bool showProp;
 };
 
 class filterPropertiesMeta {

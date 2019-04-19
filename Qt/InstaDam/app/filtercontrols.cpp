@@ -31,7 +31,7 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
     qInfo("1");
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
-
+    setWindowFlags(Qt::Popup);
     QVBoxLayout *VBlayout = new QVBoxLayout(this);
     Project* currentProject = currentPro;
     for (size_t i = 0; i < numControls; i++) {
@@ -42,93 +42,109 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
         HBlayout->addWidget(name);
         EnumConstants::threshold_or_filter thof =
                 fc->properties[selectedMask]->propertylist[i]->threshold_filter;
-        switch (fc->properties[selectedMask]->propertylist[i]->btnType) {
-            case SLIDER:
-            {
-                fSlider *itemSlider = new fSlider(selectedMask,
-                                                  static_cast<int>(i), thof,
-                                                  this);
-                fSpinBox* itemNumbox = new fSpinBox(selectedMask,
-                                                    static_cast<int>(i), thof,
-                                                    this);
-                connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox,
-                        SLOT(displayValue(int)));
-                itemSlider->setOrientation(Qt::Horizontal);
-                connect(itemNumbox, SIGNAL(valueChanged(int)), itemSlider,
-                        SLOT(setValue(int)));
+        if (fc->properties[selectedMask]->propertylist[i]->showProp == true){
+            switch (fc->properties[selectedMask]->propertylist[i]->btnType) {
+                case SLIDER:
+                {
+                    fSlider *itemSlider = new fSlider(selectedMask,
+                                                      static_cast<int>(i), thof,
+                                                      this);
+                    fSpinBox* itemNumbox = new fSpinBox(selectedMask,
+                                                        static_cast<int>(i), thof,
+                                                        this);
+                    connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox,
+                            SLOT(displayValue(int)));
+                    itemSlider->setOrientation(Qt::Horizontal);
+                    connect(itemNumbox, SIGNAL(valueChanged(int)), itemSlider,
+                            SLOT(setValue(int)));
 
-                HBlayout->addWidget(itemSlider);
-                HBlayout->addWidget(itemNumbox);
+                    HBlayout->addWidget(itemSlider);
+                    HBlayout->addWidget(itemNumbox);
 
-                qInfo("max = %d", fc->properties[selectedMask]->propertylist[i]->max);
-                qInfo("3");
-                itemSlider->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
-                itemNumbox->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
-                itemSlider->setMinimum(fc->properties[selectedMask]->propertylist[i]->min);
-                itemNumbox->setMinimum(fc->properties[selectedMask]->propertylist[i]->min);
-                itemNumbox->setValue(fc->properties[selectedMask]->propertylist[i]->val);
-                itemSlider->setValue(fc->properties[selectedMask]->propertylist[i]->val);
+                    qInfo("max = %d", fc->properties[selectedMask]->propertylist[i]->max);
+                    qInfo("3");
+                    itemSlider->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
+                    itemNumbox->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
+                    itemSlider->setMinimum(fc->properties[selectedMask]->propertylist[i]->min);
+                    itemNumbox->setMinimum(fc->properties[selectedMask]->propertylist[i]->min);
+                    itemNumbox->setValue(fc->properties[selectedMask]->propertylist[i]->val);
+                    itemSlider->setValue(fc->properties[selectedMask]->propertylist[i]->val);
 
 
-                connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
-                                                              int,
-                                                              EnumConstants::threshold_or_filter)),
-                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
-                                           EnumConstants::threshold_or_filter)));
-                connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
-                                                              int,
-                                                              EnumConstants::threshold_or_filter)),
-                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
-                                           EnumConstants::threshold_or_filter)));
+                    connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
+                                                                  int,
+                                                                  EnumConstants::threshold_or_filter)),
+                            fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                               EnumConstants::threshold_or_filter)));
+                    connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
+                                                                  int,
+                                                                  EnumConstants::threshold_or_filter)),
+                            fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                               EnumConstants::threshold_or_filter)));
 
-                VBlayout->addLayout(HBlayout);
-                break;
-            }
-
-            case CHECKBOX:
-            {
-                fCheckBox *itemCBox = new fCheckBox(selectedMask,
-                                                    static_cast<int>(i), thof,
-                                                    this);
-                itemCBox->setCheckState(Qt::CheckState(fc->properties[selectedMask]->propertylist[i]->val));
-
-                connect(itemCBox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
-                                                            EnumConstants::threshold_or_filter)),
-                        fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
-                                           EnumConstants::threshold_or_filter)));
-
-                HBlayout->addWidget(itemCBox);
-                VBlayout->addLayout(HBlayout);
-
-                break;
-            }
-            case LABELLIST:
-            {
-                VBlayout->addLayout(HBlayout);
-                for (int i=0; i < currentProject->numLabels(); i++) {
-                    QSharedPointer<Label> label = currentProject->getLabel(i);
-                    LabelButtonFilter *button = new LabelButtonFilter(label);
-                    button->setText(label->getText());
-                    QPalette pal = button->palette();
-                    pal.setColor(QPalette::ButtonText, Qt::black);
-                    pal.setColor(QPalette::Button, label->getColor());
-                    button->setAutoFillBackground(true);
-                    button->setPalette(pal);
-                    button->update();
-
-                    VBlayout->addWidget(button);
-
-                    connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), fc,
-                            SLOT(setLabelMask(QSharedPointer<Label>)));
+                    VBlayout->addLayout(HBlayout);
+                    break;
                 }
-                break;
+
+                case CHECKBOX:
+                {
+                    fCheckBox *itemCBox = new fCheckBox(selectedMask,
+                                                        static_cast<int>(i), thof,
+                                                        this);
+                    itemCBox->setCheckState(Qt::CheckState(fc->properties[selectedMask]->propertylist[i]->val));
+
+                    connect(itemCBox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
+                                                                EnumConstants::threshold_or_filter)),
+                            fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                                               EnumConstants::threshold_or_filter)));
+
+                    HBlayout->addWidget(itemCBox);
+                    VBlayout->addLayout(HBlayout);
+
+                    break;
+                }
+                case LABELLIST:
+                {
+                    VBlayout->addLayout(HBlayout);
+                    for (int i=0; i < currentProject->numLabels(); i++) {
+                        QSharedPointer<Label> label = currentProject->getLabel(i);
+                        LabelButtonFilter *button = new LabelButtonFilter(label);
+                        button->setText(label->getText());
+                        QPalette pal = button->palette();
+                        pal.setColor(QPalette::ButtonText, Qt::black);
+                        pal.setColor(QPalette::Button, label->getColor());
+                        button->setAutoFillBackground(true);
+                        button->setPalette(pal);
+                        button->update();
+
+                        VBlayout->addWidget(button);
+
+                        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), fc,
+                                SLOT(setLabelMask(QSharedPointer<Label>)));
+                    }
+                    break;
+                }
             }
+            connect(fc, SIGNAL(valAssigned(EnumConstants::maskTypes, EnumConstants::threshold_or_filter)),
+                    photoViewer, SLOT(setImMask(EnumConstants::maskTypes,
+                                                EnumConstants::threshold_or_filter)));
         }
-        connect(fc, SIGNAL(valAssigned(EnumConstants::maskTypes, EnumConstants::threshold_or_filter)),
-                photoViewer, SLOT(setImMask(EnumConstants::maskTypes,
-                                            EnumConstants::threshold_or_filter)));
     }
     QDialog::show();
+}
+void filterDialog::mousePressEvent(QMouseEvent *event){
+    mpos = event->pos();
+    QDialog::mousePressEvent(event);
+}
+
+void filterDialog::mouseMoveEvent(QMouseEvent *event){
+    if (event->buttons() & Qt::LeftButton) {
+        QPoint diff = event->pos() - mpos;
+        QPoint newpos = this->pos() + diff;
+
+        this->move(newpos);
+    }
+    QDialog::mouseMoveEvent(event);
 }
 
 /*!
@@ -220,9 +236,9 @@ void filterControls::defineProperties() {
                                                      ANY, EnumConstants:: THRESH,
                                                      false));
     labelmaskProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
-                                                     60, 255, ANY,
+                                                     254, 255, ANY,
                                                      EnumConstants::THRESH,
-                                                     false));
+                                                     false, false));
     labelmaskProperties.push_back(new filterProperty("Label List", LABELLIST, 0,
                                                      2, 1, ANY,
                                                      EnumConstants::FILTER,
@@ -274,11 +290,18 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
                 QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888));
                 cv::Mat mat(image_pixmap.height(), image_pixmap.width(),
                             CV_8UC3, image_pixmap.bits());
-
+                cv::resize(mat, mat, image.size());
                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
+
             } else {
-                cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+                qInfo("Started filt");
+                cv::Mat mat(image.size(), CV_8UC3, cv::Scalar(0,0,0));
+                qInfo("Filt 1");
+                cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
+                qInfo("Filt 2");
+//                   cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             }
+
             break;
         case EnumConstants::OTHER:
             break;

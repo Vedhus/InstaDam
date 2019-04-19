@@ -18,6 +18,9 @@ class filterDialog: public QDialog {
  public:
     filterDialog(EnumConstants::maskTypes selectedMask, filterControls* fc,
                  PhotoViewer* photoViewer, Project *currentPro);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    QPoint mpos;
 };
 
 class filterControls: public QObject {
@@ -26,6 +29,7 @@ class filterControls: public QObject {
  public:
     filterControls();
     void defineProperties();
+
 
     cv::Mat img;
     cv::Mat edges;

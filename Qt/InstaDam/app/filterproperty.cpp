@@ -16,7 +16,7 @@
   */
 filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMin,
                                int propVal, int propMax, evenOdds eo,
-                               EnumConstants::threshold_or_filter thof, bool sb) {
+                               EnumConstants::threshold_or_filter thof, bool sb, bool show_flag ) {
     this->name = QString::fromStdString(propertyName);
     this->btnType = bt;
     this->val = propVal;
@@ -25,6 +25,7 @@ filterProperty::filterProperty(std::string propertyName, btnTypes bt, int propMi
     this->evenOdd = eo;
     this->threshold_filter = thof;
     this->signalBool = sb;
+    this->showProp = show_flag;
 }
 
 /*!
