@@ -446,3 +446,47 @@ void RotateCommand::redo() {
         init = true;
     }
 }
+/*!
+  Constructs an EditLabel command using the provided \a item .
+   EditLabelCommand is used to hold a reference to a SelectItem and
+   the PhotoScene to which it belongs. Using the undo() and redo()
+   commands the item can be unedited and edited
+   repeatedly..
+ */
+
+EditLabelCommand::EditLabelCommand(SelectItem *item, QSharedPointer<Label> newLabel,
+                                   QSharedPointer<Label> oldLabel,
+                                   PhotoScene *scene,InstaDam *idam,
+                                   QUndoCommand *parent)
+    : QUndoCommand(parent) {
+    myScene = scene;
+    myItem = item;
+    myParent = idam;
+    myOldLabel = oldLabel;
+    myNewLabel = newLabel;
+
+}
+
+
+/*!
+   \reimp
+ */
+void EditLabelCommand::undo() {
+    myItem->setLabel(myOldLabel);
+    myItem->getMirror()->setLabel(myOldLabel);
+    myItem->scene()->update();
+    myItem->updateMirrorScene();
+
+}
+
+/*!
+   \reimp
+ */
+void EditLabelCommand::redo() {
+    myItem->setLabel(myNewLabel);
+    myItem->getMirror()->setLabel(myNewLabel);
+    myItem->scene()->update();
+    myItem->updateMirrorScene();
+
+}
+

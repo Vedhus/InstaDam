@@ -327,8 +327,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>68</width>
-                        <height>560</height>
+                        <width>69</width>
+                        <height>635</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -698,8 +698,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1591</width>
-                    <height>88</height>
+                    <width>1589</width>
+                    <height>70</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -812,7 +812,7 @@
      <x>0</x>
      <y>0</y>
      <width>1619</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -838,6 +838,7 @@
      <string>Edit</string>
     </property>
     <addaction name="actionDelete"/>
+    <addaction name="actionEdit_Label"/>
    </widget>
    <widget class="QMenu" name="menuProject">
     <property name="title">
@@ -952,6 +953,11 @@
   <action name="actionDelete_2">
    <property name="text">
     <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionEdit_Label">
+   <property name="text">
+    <string>Edit Label Class</string>
    </property>
   </action>
  </widget>

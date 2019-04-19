@@ -151,6 +151,8 @@ class InstaDam : public QMainWindow {
 
     void on_actionDelete_triggered();
 
+    void on_actionEdit_Label_triggered();
+
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);

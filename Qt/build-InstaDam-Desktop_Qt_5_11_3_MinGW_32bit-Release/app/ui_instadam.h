@@ -54,6 +54,7 @@ public:
     QAction *actionSearch;
     QAction *actionUpdate_Privilege;
     QAction *actionDelete_2;
+    QAction *actionEdit_Label;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -173,6 +174,8 @@ public:
         actionUpdate_Privilege->setObjectName(QStringLiteral("actionUpdate_Privilege"));
         actionDelete_2 = new QAction(InstaDam);
         actionDelete_2->setObjectName(QStringLiteral("actionDelete_2"));
+        actionEdit_Label = new QAction(InstaDam);
+        actionEdit_Label->setObjectName(QStringLiteral("actionEdit_Label"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -299,7 +302,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidget = new QWidget();
         scrollAreaWidget->setObjectName(QStringLiteral("scrollAreaWidget"));
-        scrollAreaWidget->setGeometry(QRect(0, 0, 68, 560));
+        scrollAreaWidget->setGeometry(QRect(0, 0, 69, 635));
         sizePolicy.setHeightForWidth(scrollAreaWidget->sizePolicy().hasHeightForWidth());
         scrollAreaWidget->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidget);
@@ -472,7 +475,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1591, 88));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1589, 70));
         verticalLayout_7 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_6 = new QVBoxLayout();
@@ -562,7 +565,7 @@ public:
         menubar = new QMenuBar(InstaDam);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setEnabled(true);
-        menubar->setGeometry(QRect(0, 0, 1619, 33));
+        menubar->setGeometry(QRect(0, 0, 1619, 21));
         menubar->setDefaultUp(false);
         menubar->setNativeMenuBar(true);
         menu_File = new QMenu(menubar);
@@ -587,6 +590,7 @@ public:
         menu_File->addAction(actionExport_zip);
         menu_File->addSeparator();
         menuEdit->addAction(actionDelete);
+        menuEdit->addAction(actionEdit_Label);
         menuProject->addAction(actionNew);
         menuProject->addAction(actionOpen);
         menuProject->addAction(actionSave);
@@ -631,6 +635,7 @@ public:
         actionSearch->setText(QApplication::translate("InstaDam", "Search", nullptr));
         actionUpdate_Privilege->setText(QApplication::translate("InstaDam", "Update Privilege", nullptr));
         actionDelete_2->setText(QApplication::translate("InstaDam", "Delete", nullptr));
+        actionEdit_Label->setText(QApplication::translate("InstaDam", "Edit Label Class", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));

@@ -123,5 +123,21 @@ class RotateCommand : public QUndoCommand {
     bool init = false;
 };
 
+class EditLabelCommand : public QUndoCommand{
+public:
+    EditLabelCommand(SelectItem *item, QSharedPointer<Label> newLabel,
+                     QSharedPointer<Label> oldLabel,
+                     PhotoScene *scene,InstaDam *idam,
+                     QUndoCommand *parent = nullptr);
+    void undo() override;
+    void redo() override;
+    SelectItem *myItem;
+    PhotoScene *myScene;
+    InstaDam *myParent;
+    QSharedPointer<Label> myOldLabel;
+    QSharedPointer<Label> myNewLabel;
+};
+
+
 #endif /* COMMANDS_H */
 
