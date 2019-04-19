@@ -38,13 +38,13 @@ public:
     {
         if (freeSelectForm->objectName().isEmpty())
             freeSelectForm->setObjectName(QStringLiteral("freeSelectForm"));
-        freeSelectForm->resize(899, 152);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        freeSelectForm->resize(859, 152);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(2);
         sizePolicy.setHeightForWidth(freeSelectForm->sizePolicy().hasHeightForWidth());
         freeSelectForm->setSizePolicy(sizePolicy);
-        freeSelectForm->setMinimumSize(QSize(0, 0));
+        freeSelectForm->setMinimumSize(QSize(859, 152));
         gridLayout = new QGridLayout(freeSelectForm);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setHorizontalSpacing(30);

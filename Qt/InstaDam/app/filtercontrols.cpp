@@ -105,6 +105,8 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                 }
                 case LABELLIST:
                 {
+
+                    labelButtons.clear();
                     VBlayout->addLayout(HBlayout);
                     for (int i=0; i < currentProject->numLabels(); i++) {
                         QSharedPointer<Label> label = currentProject->getLabel(i);
@@ -121,8 +123,12 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
 
                         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), fc,
                                 SLOT(setLabelMask(QSharedPointer<Label>)));
+                        connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this,
+                                SLOT(checkLabel(QSharedPointer<Label>)));
+                        labelButtons.push_back(button);
                     }
                     break;
+
                 }
             }
             connect(fc, SIGNAL(valAssigned(EnumConstants::maskTypes, EnumConstants::threshold_or_filter)),
@@ -145,6 +151,17 @@ void filterDialog::mouseMoveEvent(QMouseEvent *event){
         this->move(newpos);
     }
     QDialog::mouseMoveEvent(event);
+
+}
+
+void filterDialog::checkLabel(QSharedPointer<Label> label) {
+    for (int i = 0; i < labelButtons.size(); i++) {
+        if (label != labelButtons[i]->myLabel) {
+            labelButtons[i]->setChecked(false);
+        } else {
+            labelButtons[i]->setChecked(true);
+        }
+    }
 }
 
 /*!

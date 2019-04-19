@@ -1346,6 +1346,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    const Qt::MouseButton button,
                                    const Qt::KeyboardModifiers modifiers) {
     currentButton = button;
+    selectedViewer = type;
     //currentViewer = type;
     if (button == Qt::LeftButton && QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == true)
     {
@@ -1577,6 +1578,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
         scene->update();
         maskScene->update();
     }
+
 }
 
 /*!
@@ -1593,6 +1595,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
     ui->IdmMaskViewer->setPanMode(panning);
+    selectedViewer = type;
 
 //    else if (!panning){
     if (currentItem && !currentItem->isItemAdded()) {
@@ -1693,23 +1696,8 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
     if (!currentItem) {
         return;
     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
-        if (currentItem->type() == SelectItem::Polygon &&
-            currentItem->getActiveVertex() != SelectItem::UNSELECTED) {
-            QUndoCommand *deleteVertexCommand =
-                    new DeleteVertexCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-                                                currentItem : currentItem->getMirror());
-            undoGroup->activeStack()->push(deleteVertexCommand);
+        deleteCurrentObject(type);
 
-
-        } else {
-            qInfo()<<"deleted Polygon!";
-            selectItemButton(currentItem->type());
-            QUndoCommand *deleteCommand =
-                    new DeleteCommand((type == PhotoScene::PHOTO_VIEWER_TYPE) ?
-                                          currentItem : currentItem->getMirror(),
-                                      scene, this);
-            undoGroup->activeStack()->push(deleteCommand);
-        }
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
     }
@@ -2101,4 +2089,34 @@ void InstaDam::on_actionDelete_2_triggered()
 {
     this->projecListUseCase = "DELETE";
     InstaDam::listProjects();
+}
+
+void InstaDam::on_actionDelete_triggered()
+{
+    deleteCurrentObject(selectedViewer);
+}
+void InstaDam::deleteCurrentObject(PhotoScene::viewerTypes phototype)
+{
+
+    if (currentItem != nullptr)
+    {
+        if (currentItem->type() == SelectItem::Polygon &&
+            currentItem->getActiveVertex() != SelectItem::UNSELECTED) {
+            QUndoCommand *deleteVertexCommand =
+                    new DeleteVertexCommand((phototype == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                                currentItem : currentItem->getMirror());
+            undoGroup->activeStack()->push(deleteVertexCommand);
+
+
+        } else {
+
+            selectItemButton(currentItem->type());
+            QUndoCommand *deleteCommand =
+                    new DeleteCommand((phototype == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                          currentItem : currentItem->getMirror(),
+                                      scene, this);
+            undoGroup->activeStack()->push(deleteCommand);
+        }
+    }
+
 }

@@ -88,6 +88,8 @@ class InstaDam : public QMainWindow {
     ImageList* il;
     void resetGUIclearLabels();
     void saveAndProgress(int);
+    PhotoScene::viewerTypes selectedViewer;
+    void deleteCurrentObject(PhotoScene::viewerTypes type);
 
  private slots:
     void on_addSelectionButton_clicked();
@@ -146,6 +148,8 @@ class InstaDam : public QMainWindow {
     friend class IntegrationTest;
 #endif
     void on_actionDelete_2_triggered();
+
+    void on_actionDelete_triggered();
 
 public slots:
     void resetPixmapButtons();

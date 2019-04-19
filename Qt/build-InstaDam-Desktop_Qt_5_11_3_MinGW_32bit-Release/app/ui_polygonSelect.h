@@ -30,32 +30,42 @@ public:
     {
         if (polygonSelectForm->objectName().isEmpty())
             polygonSelectForm->setObjectName(QStringLiteral("polygonSelectForm"));
-        polygonSelectForm->resize(1413, 158);
-        gridLayout = new QGridLayout(polygonSelectForm);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        insertPointButton = new QPushButton(polygonSelectForm);
-        insertPointButton->setObjectName(QStringLiteral("insertPointButton"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        polygonSelectForm->resize(888, 152);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(insertPointButton->sizePolicy().hasHeightForWidth());
-        insertPointButton->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(polygonSelectForm->sizePolicy().hasHeightForWidth());
+        polygonSelectForm->setSizePolicy(sizePolicy);
+        polygonSelectForm->setMinimumSize(QSize(859, 152));
+        polygonSelectForm->setBaseSize(QSize(0, 152));
+        gridLayout = new QGridLayout(polygonSelectForm);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(-1, 0, -1, 0);
+        insertPointButton = new QPushButton(polygonSelectForm);
+        insertPointButton->setObjectName(QStringLiteral("insertPointButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(insertPointButton->sizePolicy().hasHeightForWidth());
+        insertPointButton->setSizePolicy(sizePolicy1);
 
         gridLayout->addWidget(insertPointButton, 1, 0, 1, 1);
 
         finishPolygonButton = new QPushButton(polygonSelectForm);
         finishPolygonButton->setObjectName(QStringLiteral("finishPolygonButton"));
         finishPolygonButton->setEnabled(false);
-        sizePolicy.setHeightForWidth(finishPolygonButton->sizePolicy().hasHeightForWidth());
-        finishPolygonButton->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(finishPolygonButton->sizePolicy().hasHeightForWidth());
+        finishPolygonButton->setSizePolicy(sizePolicy1);
         finishPolygonButton->setMinimumSize(QSize(252, 36));
 
         gridLayout->addWidget(finishPolygonButton, 0, 0, 1, 1);
 
         polygonMessageBox = new QPlainTextEdit(polygonSelectForm);
         polygonMessageBox->setObjectName(QStringLiteral("polygonMessageBox"));
+        polygonMessageBox->setMinimumSize(QSize(0, 110));
         polygonMessageBox->setUndoRedoEnabled(false);
         polygonMessageBox->setReadOnly(true);
+        polygonMessageBox->setTextInteractionFlags(Qt::NoTextInteraction);
 
         gridLayout->addWidget(polygonMessageBox, 0, 1, 2, 1);
 

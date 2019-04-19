@@ -15,12 +15,16 @@
 class PhotoViewer;
 
 class filterDialog: public QDialog {
+    Q_OBJECT
  public:
     filterDialog(EnumConstants::maskTypes selectedMask, filterControls* fc,
                  PhotoViewer* photoViewer, Project *currentPro);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     QPoint mpos;
+    QVector<LabelButtonFilter *> labelButtons;
+public slots:
+    void checkLabel(QSharedPointer<Label> label);
 };
 
 class filterControls: public QObject {
@@ -45,9 +49,11 @@ class filterControls: public QObject {
     PhotoViewer *photoViewer;
     QPixmap labelMask;
 
+
  public slots:
     void assignVal(EnumConstants::maskTypes maskType, int propNum, int value,
                    EnumConstants::threshold_or_filter thof);
+
     void setLabelMask(QSharedPointer<Label> label);
  signals:
     void valAssigned(EnumConstants::maskTypes maskType,
