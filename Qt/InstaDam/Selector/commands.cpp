@@ -465,6 +465,8 @@ EditLabelCommand::EditLabelCommand(SelectItem *item, QSharedPointer<Label> newLa
     myOldLabel = oldLabel;
     myNewLabel = newLabel;
 
+
+
 }
 
 
@@ -483,8 +485,11 @@ void EditLabelCommand::undo() {
    \reimp
  */
 void EditLabelCommand::redo() {
+    myOldLabel->removeItem(myItem->getMirror()->myID);
+    myOldLabel->removeItem(myItem->myID);
     myItem->setLabel(myNewLabel);
     myItem->getMirror()->setLabel(myNewLabel);
+    myNewLabel->addItem(myItem);
     myItem->scene()->update();
     myItem->updateMirrorScene();
 

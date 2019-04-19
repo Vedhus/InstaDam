@@ -92,6 +92,31 @@ void Label::setText(const QString tx) {
 /*!
   \overload addItem()
 
+  This convenience function adds a SelectItem object to the Label
+  */
+void Label::addItem(SelectItem *item) {
+    switch(item->type())
+    {
+    case SelectItem::Rectangle:
+        rectangleObjects.insert(item->myID, (RectangleSelect*)item);
+        break;
+    case SelectItem::Ellipse:
+        ellipseObjects.insert(item->myID, (EllipseSelect*)item);
+        break;
+    case SelectItem::Polygon:
+        polygonObjects.insert(item->myID, (PolygonSelect*)item);
+        break;
+    case SelectItem::Freedraw:
+        freeDrawObjects.insert(item->myID, (FreeDrawSelect*)item);
+        break;
+
+    }
+}
+
+
+/*!
+  \overload addItem()
+
   This convenience function adds a RectangleSelect object to the Label
   */
 void Label::addItem(RectangleSelect *item) {

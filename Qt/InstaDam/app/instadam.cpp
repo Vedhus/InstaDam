@@ -2126,13 +2126,19 @@ void InstaDam::on_actionEdit_Label_triggered()
 
         if (currentItem != nullptr)
         {
+
+            if ((currentItem->type() != SelectItem::Freedraw && currentItem->type() !=
+                 SelectItem::Freeerase))
+            {
             chooseLabelDialog* chooseLabel = new chooseLabelDialog(currentProject);
             connect(chooseLabel, SIGNAL(labelPicked(QSharedPointer<Label>)),
                                         this, SLOT(editLabel(QSharedPointer<Label>)));
+            return;
+
+            }
         }
-        else {
-            assertError("Shift+select item whose label needs to be edited.");
-        }
+
+        assertError("Shift+select item whose label needs to be edited.");
 
 }
 
@@ -2142,5 +2148,8 @@ void InstaDam::editLabel(QSharedPointer<Label> newLabel)
             new EditLabelCommand((selectedViewer == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                         currentItem : currentItem->getMirror(), newLabel,
                                  currentItem->getLabel(), scene, this);
+
+
+
     undoGroup->activeStack()->push(editLabelCommand);
 }

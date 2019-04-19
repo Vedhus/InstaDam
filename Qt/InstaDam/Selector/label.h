@@ -35,7 +35,7 @@ class Label: public QEnableSharedFromThis<Label>{
     QHash<int, EllipseSelect*> ellipseObjects;
     QHash<int, PolygonSelect*> polygonObjects;
     QHash<int, FreeDrawSelect*> freeDrawObjects;
-
+    void addItem(SelectItem *item);
     void addItem(FreeDrawSelect *item);
     void addItem(RectangleSelect *item);
     void addItem(EllipseSelect *item);
