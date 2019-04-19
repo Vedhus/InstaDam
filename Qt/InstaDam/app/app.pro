@@ -29,7 +29,8 @@ SOURCES += \
     serverprojectname.cpp \
     enumconstants.cpp \
     addusertoproject.cpp \
-    userprivilege.cpp
+    userprivilege.cpp \
+    chooselabeldialog.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -55,7 +56,8 @@ HEADERS += \
         serverprojectname.h \
         enumconstants.h \
     addusertoproject.h \
-    userprivilege.h
+    userprivilege.h \
+    chooselabeldialog.h
 
 wasm: HEADERS += colordialog.h
 

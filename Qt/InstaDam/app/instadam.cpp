@@ -2124,29 +2124,23 @@ void InstaDam::deleteCurrentObject(PhotoScene::viewerTypes phototype)
 void InstaDam::on_actionEdit_Label_triggered()
 {
 
-
         if (currentItem != nullptr)
         {
-            QSharedPointer<Label> newLabel = currentProject->getLabel(0);
-            QSharedPointer<Label> oldLabel = currentItem->getLabel();
-//            qInfo()<<"A";
-//            currentItem->setLabel(newLabel);
-//            qInfo()<<"B";
-//            //mirrorItem->setLabel(newLabel);
-
-//            scene->update();
-//            maskScene->update();
-
-            QUndoCommand *editLabelCommand =
-                    new EditLabelCommand((selectedViewer == PhotoScene::PHOTO_VIEWER_TYPE) ?
-                                                currentItem : currentItem->getMirror(), newLabel,
-                                         oldLabel, scene, this);
-            undoGroup->activeStack()->push(editLabelCommand);
-
-
+            chooseLabelDialog* chooseLabel = new chooseLabelDialog(currentProject);
+            connect(chooseLabel, SIGNAL(labelPicked(QSharedPointer<Label>)),
+                                        this, SLOT(editLabel(QSharedPointer<Label>)));
         }
         else {
             assertError("Shift+select item whose label needs to be edited.");
         }
 
+}
+
+void InstaDam::editLabel(QSharedPointer<Label> newLabel)
+{
+    QUndoCommand *editLabelCommand =
+            new EditLabelCommand((selectedViewer == PhotoScene::PHOTO_VIEWER_TYPE) ?
+                                        currentItem : currentItem->getMirror(), newLabel,
+                                 currentItem->getLabel(), scene, this);
+    undoGroup->activeStack()->push(editLabelCommand);
 }

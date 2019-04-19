@@ -21,6 +21,7 @@ INPUT(
 ./release\enumconstants.o
 ./release\addusertoproject.o
 ./release\userprivilege.o
+./release\chooselabeldialog.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
@@ -37,4 +38,5 @@ INPUT(
 ./release\moc_serverprojectname.o
 ./release\moc_addusertoproject.o
 ./release\moc_userprivilege.o
+./release\moc_chooselabeldialog.o
 );

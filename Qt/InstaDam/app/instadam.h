@@ -32,6 +32,7 @@
 #include "../Selector/label.h"
 #include "labelButton.h"
 #include "enumconstants.h"
+#include "chooselabeldialog.h"
 #include "project.h"
 #include "Selector/photoScene.h"
 
@@ -157,6 +158,7 @@ public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
+    void editLabel(QSharedPointer<Label>);
 
  private:
 #ifdef WASM_BUILD

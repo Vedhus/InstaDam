@@ -66,7 +66,8 @@ SOURCES       = ..\..\InstaDam\app\main.cpp \
 		..\..\InstaDam\app\serverprojectname.cpp \
 		..\..\InstaDam\app\enumconstants.cpp \
 		..\..\InstaDam\app\addusertoproject.cpp \
-		..\..\InstaDam\app\userprivilege.cpp debug\moc_instadam.cpp \
+		..\..\InstaDam\app\userprivilege.cpp \
+		..\..\InstaDam\app\chooselabeldialog.cpp debug\moc_instadam.cpp \
 		debug\moc_photoviewer.cpp \
 		debug\moc_maskviewer.cpp \
 		debug\moc_picpushbutton.cpp \
@@ -81,7 +82,8 @@ SOURCES       = ..\..\InstaDam\app\main.cpp \
 		debug\moc_imagelist.cpp \
 		debug\moc_serverprojectname.cpp \
 		debug\moc_addusertoproject.cpp \
-		debug\moc_userprivilege.cpp
+		debug\moc_userprivilege.cpp \
+		debug\moc_chooselabeldialog.cpp
 OBJECTS       = debug/main.o \
 		debug/instadam.o \
 		debug/project.o \
@@ -104,6 +106,7 @@ OBJECTS       = debug/main.o \
 		debug/enumconstants.o \
 		debug/addusertoproject.o \
 		debug/userprivilege.o \
+		debug/chooselabeldialog.o \
 		debug/moc_instadam.o \
 		debug/moc_photoviewer.o \
 		debug/moc_maskviewer.o \
@@ -119,7 +122,8 @@ OBJECTS       = debug/main.o \
 		debug/moc_imagelist.o \
 		debug/moc_serverprojectname.o \
 		debug/moc_addusertoproject.o \
-		debug/moc_userprivilege.o
+		debug/moc_userprivilege.o \
+		debug/moc_chooselabeldialog.o
 
 DIST          =  ..\..\InstaDam\app\instadam.h \
 		..\..\InstaDam\app\project.h \
@@ -142,7 +146,8 @@ DIST          =  ..\..\InstaDam\app\instadam.h \
 		..\..\InstaDam\app\serverprojectname.h \
 		..\..\InstaDam\app\enumconstants.h \
 		..\..\InstaDam\app\addusertoproject.h \
-		..\..\InstaDam\app\userprivilege.h ..\..\InstaDam\app\main.cpp \
+		..\..\InstaDam\app\userprivilege.h \
+		..\..\InstaDam\app\chooselabeldialog.h ..\..\InstaDam\app\main.cpp \
 		..\..\InstaDam\app\instadam.cpp \
 		..\..\InstaDam\app\project.cpp \
 		..\..\InstaDam\app\maskviewer.cpp \
@@ -163,7 +168,8 @@ DIST          =  ..\..\InstaDam\app\instadam.h \
 		..\..\InstaDam\app\serverprojectname.cpp \
 		..\..\InstaDam\app\enumconstants.cpp \
 		..\..\InstaDam\app\addusertoproject.cpp \
-		..\..\InstaDam\app\userprivilege.cpp
+		..\..\InstaDam\app\userprivilege.cpp \
+		..\..\InstaDam\app\chooselabeldialog.cpp
 QMAKE_TARGET  = InstaDam
 DESTDIR        = .\ #avoid trailing-slash linebreak
 TARGET         = InstaDam.exe
@@ -183,10 +189,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) InstaDam.zip $(SOURCES) $(DIST) ..\..\InstaDam\app\app.pro D:\Qt\5.11.3\mingw53_32\mkspecs\features\spec_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\qdevice.pri D:\Qt\5.11.3\mingw53_32\mkspecs\features\device_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\common\sanitize.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\gcc-base.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\g++-base.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\angle.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\windows-vulkan.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\g++-win32.conf D:\Qt\5.11.3\mingw53_32\mkspecs\qconfig.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3drender.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axbase.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axserver.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_charts.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_core.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_core_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_datavisualization.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_datavisualization_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_dbus.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designer.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_edid_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gui.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_help.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_help_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_location.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_location_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_network.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_network_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_networkauth.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_networkauth_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_nfc.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_opengl.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioning.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioningquick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioningquick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_purchasing.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_purchasing_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_remoteobjects.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_repparser.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_repparser_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_script.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_script_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scxml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sensors.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialport.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sql.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_svg.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_testlib.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uitools.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_websockets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_widgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_winextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt_functions.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\win32-g++\qmake.conf D:\Qt\5.11.3\mingw53_32\mkspecs\features\spec_post.prf ..\.qmake.stash D:\Qt\5.11.3\mingw53_32\mkspecs\features\exclusive_builds.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\toolchain.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\default_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\default_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\resolve_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\exclusive_builds_post.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\default_post.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\build_pass.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\resources.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qtquickcompiler.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\precompile_header.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\warn_on.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\moc.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\opengl.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\uic.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qmake_use.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\file_copies.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\windows.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\testcase_targets.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\exceptions.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\yacc.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\lex.prf ..\..\InstaDam\app\app.pro D:\Qt\5.11.3\mingw53_32\lib\qtmaind.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Widgetsd.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Guid.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Networkd.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Cored.prl      D:\Qt\5.11.3\mingw53_32\mkspecs\features\data\dummy.cpp ..\..\InstaDam\app\instadam.h ..\..\InstaDam\app\project.h ..\..\InstaDam\app\photoviewer.h ..\..\InstaDam\app\maskviewer.h ..\..\InstaDam\app\pixmapops.h ..\..\InstaDam\app\filterproperty.h ..\..\InstaDam\app\picpushbutton.h ..\..\InstaDam\app\maskobjects.h ..\..\InstaDam\app\filtercontrols.h ..\..\InstaDam\app\filterproperty.h ..\..\InstaDam\app\fslider.h ..\..\InstaDam\app\newproject.h ..\..\InstaDam\app\labelButton.h ..\..\InstaDam\app\register.h ..\..\InstaDam\app\startingwidget.h ..\..\InstaDam\app\login.h ..\..\InstaDam\app\projectlist.h ..\..\InstaDam\app\imagelist.h ..\..\InstaDam\app\serverprojectname.h ..\..\InstaDam\app\enumconstants.h ..\..\InstaDam\app\addusertoproject.h ..\..\InstaDam\app\userprivilege.h  ..\..\InstaDam\app\main.cpp ..\..\InstaDam\app\instadam.cpp ..\..\InstaDam\app\project.cpp ..\..\InstaDam\app\maskviewer.cpp ..\..\InstaDam\app\photoviewer.cpp ..\..\InstaDam\app\pixmapops.cpp ..\..\InstaDam\app\filterproperty.cpp ..\..\InstaDam\app\picpushbutton.cpp ..\..\InstaDam\app\maskobjects.cpp ..\..\InstaDam\app\filtercontrols.cpp ..\..\InstaDam\app\fslider.cpp ..\..\InstaDam\app\newproject.cpp ..\..\InstaDam\app\labelButton.cpp ..\..\InstaDam\app\register.cpp ..\..\InstaDam\app\startingwidget.cpp ..\..\InstaDam\app\login.cpp ..\..\InstaDam\app\projectlist.cpp ..\..\InstaDam\app\imagelist.cpp ..\..\InstaDam\app\serverprojectname.cpp ..\..\InstaDam\app\enumconstants.cpp ..\..\InstaDam\app\addusertoproject.cpp ..\..\InstaDam\app\userprivilege.cpp ..\..\InstaDam\app\instadam.ui ..\..\InstaDam\app\newproject.ui ..\..\InstaDam\Selector\blankFrame.ui ..\..\InstaDam\Selector\polygonSelect.ui ..\..\InstaDam\Selector\freeSelect.ui ..\..\InstaDam\app\labeldialog.ui ..\..\InstaDam\app\register.ui ..\..\InstaDam\app\startingwidget.ui ..\..\InstaDam\app\login.ui ..\..\InstaDam\app\projectlist.ui ..\..\InstaDam\app\imagelist.ui ..\..\InstaDam\app\projectDialog.ui ..\..\InstaDam\app\serverprojectname.ui ..\..\InstaDam\app\addusertoproject.ui ..\..\InstaDam\app\userprivilege.ui    
+	$(ZIP) InstaDam.zip $(SOURCES) $(DIST) ..\..\InstaDam\app\app.pro D:\Qt\5.11.3\mingw53_32\mkspecs\features\spec_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\qdevice.pri D:\Qt\5.11.3\mingw53_32\mkspecs\features\device_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\common\sanitize.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\gcc-base.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\g++-base.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\angle.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\windows-vulkan.conf D:\Qt\5.11.3\mingw53_32\mkspecs\common\g++-win32.conf D:\Qt\5.11.3\mingw53_32\mkspecs\qconfig.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3drender.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axbase.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axserver.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_charts.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_core.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_core_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_datavisualization.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_datavisualization_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_dbus.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designer.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_edid_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gui.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_help.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_help_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_location.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_location_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_network.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_network_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_networkauth.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_networkauth_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_nfc.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_opengl.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioning.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioningquick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_positioningquick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_purchasing.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_purchasing_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quick.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_remoteobjects.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_repparser.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_repparser_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_script.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_script_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scxml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sensors.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialport.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sql.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_svg.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_testlib.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uitools.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_websockets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_widgets.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_winextras.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xml.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\Qt\5.11.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt_functions.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\win32-g++\qmake.conf D:\Qt\5.11.3\mingw53_32\mkspecs\features\spec_post.prf ..\.qmake.stash D:\Qt\5.11.3\mingw53_32\mkspecs\features\exclusive_builds.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\toolchain.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\default_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\default_pre.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\resolve_config.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\exclusive_builds_post.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\default_post.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\build_pass.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\resources.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qtquickcompiler.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\precompile_header.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\warn_on.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qt.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\moc.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\opengl.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\uic.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\qmake_use.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\file_copies.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\win32\windows.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\testcase_targets.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\exceptions.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\yacc.prf D:\Qt\5.11.3\mingw53_32\mkspecs\features\lex.prf ..\..\InstaDam\app\app.pro D:\Qt\5.11.3\mingw53_32\lib\qtmaind.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Widgetsd.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Guid.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Networkd.prl D:\Qt\5.11.3\mingw53_32\lib\Qt5Cored.prl      D:\Qt\5.11.3\mingw53_32\mkspecs\features\data\dummy.cpp ..\..\InstaDam\app\instadam.h ..\..\InstaDam\app\project.h ..\..\InstaDam\app\photoviewer.h ..\..\InstaDam\app\maskviewer.h ..\..\InstaDam\app\pixmapops.h ..\..\InstaDam\app\filterproperty.h ..\..\InstaDam\app\picpushbutton.h ..\..\InstaDam\app\maskobjects.h ..\..\InstaDam\app\filtercontrols.h ..\..\InstaDam\app\filterproperty.h ..\..\InstaDam\app\fslider.h ..\..\InstaDam\app\newproject.h ..\..\InstaDam\app\labelButton.h ..\..\InstaDam\app\register.h ..\..\InstaDam\app\startingwidget.h ..\..\InstaDam\app\login.h ..\..\InstaDam\app\projectlist.h ..\..\InstaDam\app\imagelist.h ..\..\InstaDam\app\serverprojectname.h ..\..\InstaDam\app\enumconstants.h ..\..\InstaDam\app\addusertoproject.h ..\..\InstaDam\app\userprivilege.h ..\..\InstaDam\app\chooselabeldialog.h  ..\..\InstaDam\app\main.cpp ..\..\InstaDam\app\instadam.cpp ..\..\InstaDam\app\project.cpp ..\..\InstaDam\app\maskviewer.cpp ..\..\InstaDam\app\photoviewer.cpp ..\..\InstaDam\app\pixmapops.cpp ..\..\InstaDam\app\filterproperty.cpp ..\..\InstaDam\app\picpushbutton.cpp ..\..\InstaDam\app\maskobjects.cpp ..\..\InstaDam\app\filtercontrols.cpp ..\..\InstaDam\app\fslider.cpp ..\..\InstaDam\app\newproject.cpp ..\..\InstaDam\app\labelButton.cpp ..\..\InstaDam\app\register.cpp ..\..\InstaDam\app\startingwidget.cpp ..\..\InstaDam\app\login.cpp ..\..\InstaDam\app\projectlist.cpp ..\..\InstaDam\app\imagelist.cpp ..\..\InstaDam\app\serverprojectname.cpp ..\..\InstaDam\app\enumconstants.cpp ..\..\InstaDam\app\addusertoproject.cpp ..\..\InstaDam\app\userprivilege.cpp ..\..\InstaDam\app\chooselabeldialog.cpp ..\..\InstaDam\app\instadam.ui ..\..\InstaDam\app\newproject.ui ..\..\InstaDam\Selector\blankFrame.ui ..\..\InstaDam\Selector\polygonSelect.ui ..\..\InstaDam\Selector\freeSelect.ui ..\..\InstaDam\app\labeldialog.ui ..\..\InstaDam\app\register.ui ..\..\InstaDam\app\startingwidget.ui ..\..\InstaDam\app\login.ui ..\..\InstaDam\app\projectlist.ui ..\..\InstaDam\app\imagelist.ui ..\..\InstaDam\app\projectDialog.ui ..\..\InstaDam\app\serverprojectname.ui ..\..\InstaDam\app\addusertoproject.ui ..\..\InstaDam\app\userprivilege.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.o debug\instadam.o debug\project.o debug\maskviewer.o debug\photoviewer.o debug\pixmapops.o debug\filterproperty.o debug\picpushbutton.o debug\maskobjects.o debug\filtercontrols.o debug\fslider.o debug\newproject.o debug\labelButton.o debug\register.o debug\startingwidget.o debug\login.o debug\projectlist.o debug\imagelist.o debug\serverprojectname.o debug\enumconstants.o debug\addusertoproject.o debug\userprivilege.o debug\moc_instadam.o debug\moc_photoviewer.o debug\moc_maskviewer.o debug\moc_picpushbutton.o debug\moc_filtercontrols.o debug\moc_fslider.o debug\moc_newproject.o debug\moc_labelButton.o debug\moc_register.o debug\moc_startingwidget.o debug\moc_login.o debug\moc_projectlist.o debug\moc_imagelist.o debug\moc_serverprojectname.o debug\moc_addusertoproject.o debug\moc_userprivilege.o
+	-$(DEL_FILE) debug\main.o debug\instadam.o debug\project.o debug\maskviewer.o debug\photoviewer.o debug\pixmapops.o debug\filterproperty.o debug\picpushbutton.o debug\maskobjects.o debug\filtercontrols.o debug\fslider.o debug\newproject.o debug\labelButton.o debug\register.o debug\startingwidget.o debug\login.o debug\projectlist.o debug\imagelist.o debug\serverprojectname.o debug\enumconstants.o debug\addusertoproject.o debug\userprivilege.o debug\chooselabeldialog.o debug\moc_instadam.o debug\moc_photoviewer.o debug\moc_maskviewer.o debug\moc_picpushbutton.o debug\moc_filtercontrols.o debug\moc_fslider.o debug\moc_newproject.o debug\moc_labelButton.o debug\moc_register.o debug\moc_startingwidget.o debug\moc_login.o debug\moc_projectlist.o debug\moc_imagelist.o debug\moc_serverprojectname.o debug\moc_addusertoproject.o debug\moc_userprivilege.o debug\moc_chooselabeldialog.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -215,9 +221,9 @@ compiler_moc_predefs_clean:
 debug/moc_predefs.h: D:/Qt/5.11.3/mingw53_32/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -W -Wextra -dM -E -o debug\moc_predefs.h D:\Qt\5.11.3\mingw53_32\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: debug/moc_instadam.cpp debug/moc_photoviewer.cpp debug/moc_maskviewer.cpp debug/moc_picpushbutton.cpp debug/moc_filtercontrols.cpp debug/moc_fslider.cpp debug/moc_newproject.cpp debug/moc_labelButton.cpp debug/moc_register.cpp debug/moc_startingwidget.cpp debug/moc_login.cpp debug/moc_projectlist.cpp debug/moc_imagelist.cpp debug/moc_serverprojectname.cpp debug/moc_addusertoproject.cpp debug/moc_userprivilege.cpp
+compiler_moc_header_make_all: debug/moc_instadam.cpp debug/moc_photoviewer.cpp debug/moc_maskviewer.cpp debug/moc_picpushbutton.cpp debug/moc_filtercontrols.cpp debug/moc_fslider.cpp debug/moc_newproject.cpp debug/moc_labelButton.cpp debug/moc_register.cpp debug/moc_startingwidget.cpp debug/moc_login.cpp debug/moc_projectlist.cpp debug/moc_imagelist.cpp debug/moc_serverprojectname.cpp debug/moc_addusertoproject.cpp debug/moc_userprivilege.cpp debug/moc_chooselabeldialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug\moc_instadam.cpp debug\moc_photoviewer.cpp debug\moc_maskviewer.cpp debug\moc_picpushbutton.cpp debug\moc_filtercontrols.cpp debug\moc_fslider.cpp debug\moc_newproject.cpp debug\moc_labelButton.cpp debug\moc_register.cpp debug\moc_startingwidget.cpp debug\moc_login.cpp debug\moc_projectlist.cpp debug\moc_imagelist.cpp debug\moc_serverprojectname.cpp debug\moc_addusertoproject.cpp debug\moc_userprivilege.cpp
+	-$(DEL_FILE) debug\moc_instadam.cpp debug\moc_photoviewer.cpp debug\moc_maskviewer.cpp debug\moc_picpushbutton.cpp debug\moc_filtercontrols.cpp debug\moc_fslider.cpp debug\moc_newproject.cpp debug\moc_labelButton.cpp debug\moc_register.cpp debug\moc_startingwidget.cpp debug\moc_login.cpp debug\moc_projectlist.cpp debug\moc_imagelist.cpp debug\moc_serverprojectname.cpp debug\moc_addusertoproject.cpp debug\moc_userprivilege.cpp debug\moc_chooselabeldialog.cpp
 debug/moc_instadam.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfile.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
@@ -478,6 +484,7 @@ debug/moc_instadam.cpp: D:/Qt/5.11.3/mingw53_32/include/QtCore/QFile \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -896,6 +903,7 @@ debug/moc_photoviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QFrame \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -1314,6 +1322,7 @@ debug/moc_maskviewer.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsVie
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -1739,6 +1748,7 @@ debug/moc_filtercontrols.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog 
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -2871,6 +2881,7 @@ debug/moc_projectlist.cpp: ../../InstaDam/app/instadam.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -3507,6 +3518,148 @@ debug/moc_userprivilege.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QWidget \
 		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
 	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/app/debug/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtNetwork -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\userprivilege.h -o debug\moc_userprivilege.cpp
 
+debug/moc_chooselabeldialog.cpp: D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtguiglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qconfig.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtcore-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsystemdetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qprocessordetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcompilerdetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtypeinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsysinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlogging.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qflags.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbasicatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qgenericatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_msvc.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qglobalstatic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmutex.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qnumeric.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qversiontagging.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtgui-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qwidget.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qwindowdefs.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobjectdefs.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qnamespace.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobject.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstring.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qchar.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbytearray.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qrefcount.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qarraydata.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringliteral.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringalgorithms.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringview.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringbuilder.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qalgorithms.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qiterator.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qhashfunctions.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qpair.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbytearraylist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringlist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qregexp.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringmatcher.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcoreevent.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qscopedpointer.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmetatype.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvarlengtharray.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcontainerfwd.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmargins.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpaintdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qrect.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsize.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qpoint.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpalette.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qcolor.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qrgb.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qrgba64.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qbrush.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvector.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qmatrix.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpolygon.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qregion.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qdatastream.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qiodevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qline.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtransform.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpainterpath.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qimage.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpixelformat.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpixmap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsharedpointer.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qshareddata.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qhash.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfont.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfontmetrics.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfontinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qcursor.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qkeysequence.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qevent.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvariant.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qdebug.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtextstream.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlocale.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qset.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcontiguouscache.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qurl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qurlquery.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfile.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		../../InstaDam/Selector/label.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qjsonobject.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QPixmap \
+		../../InstaDam/Selector/freeDrawSelect.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QHash \
+		../../InstaDam/Selector/selectItem.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsItem \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsitem.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QWidget \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QPainter \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpainter.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtextoption.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpen.h \
+		../../InstaDam/Selector/freeDrawErase.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QSet \
+		../../InstaDam/Selector/rectangleSelect.h \
+		../../InstaDam/Selector/boxbasedselector.h \
+		../../InstaDam/Selector/ellipseSelect.h \
+		../../InstaDam/Selector/polygonSelect.h \
+		../../InstaDam/app/labelButton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qicon.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
+		../../InstaDam/app/project.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
+		../../InstaDam/app/enumconstants.h \
+		../../InstaDam/app/chooselabeldialog.h \
+		debug/moc_predefs.h \
+		D:/Qt/5.11.3/mingw53_32/bin/moc.exe
+	D:\Qt\5.11.3\mingw53_32\bin\moc.exe $(DEFINES) --include "G:/My Drive/HW/CS 428/Project/InstaDam/Qt/build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/app/debug/moc_predefs.h" -ID:/Qt/5.11.3/mingw53_32/mkspecs/win32-g++ -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/app" -ID:/Qt/5.11.3/mingw53_32/include/QtZlib -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam/quazip/include" -ID:/opencv/opencv401/opencv/build/include -I"G:/My Drive/HW/CS 428/Project/InstaDam/Qt/InstaDam" -ID:/Qt/5.11.3/mingw53_32/include -ID:/Qt/5.11.3/mingw53_32/include/QtWidgets -ID:/Qt/5.11.3/mingw53_32/include/QtGui -ID:/Qt/5.11.3/mingw53_32/include/QtANGLE -ID:/Qt/5.11.3/mingw53_32/include/QtNetwork -ID:/Qt/5.11.3/mingw53_32/include/QtCore -I. -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -ID:/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -ID:/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\InstaDam\app\chooselabeldialog.h -o debug\moc_chooselabeldialog.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -3893,6 +4046,7 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -4306,6 +4460,7 @@ ui_instadam.h: ../../InstaDam/app/instadam.ui \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -4787,6 +4942,7 @@ debug/main.o: ../../InstaDam/app/main.cpp D:/Qt/5.11.3/mingw53_32/include/QtWidg
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -5090,6 +5246,7 @@ debug/instadam.o: ../../InstaDam/app/instadam.cpp ../../InstaDam/app/instadam.h 
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -5785,6 +5942,7 @@ debug/maskviewer.o: ../../InstaDam/app/maskviewer.cpp ../../InstaDam/app/maskvie
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -6200,6 +6358,7 @@ debug/photoviewer.o: ../../InstaDam/app/photoviewer.cpp ../../InstaDam/app/photo
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -6631,6 +6790,7 @@ debug/pixmapops.o: ../../InstaDam/app/pixmapops.cpp ../../InstaDam/app/pixmapops
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -6933,6 +7093,7 @@ debug/filterproperty.o: ../../InstaDam/app/filterproperty.cpp ../../InstaDam/app
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -7350,6 +7511,7 @@ debug/picpushbutton.o: ../../InstaDam/app/picpushbutton.cpp ../../InstaDam/app/p
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/opencv/opencv401/opencv/build/include/opencv2/core/core.hpp \
@@ -7659,6 +7821,7 @@ debug/filtercontrols.o: ../../InstaDam/app/filtercontrols.cpp ../../InstaDam/app
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -8195,6 +8358,7 @@ debug/newproject.o: ../../InstaDam/app/newproject.cpp ../../InstaDam/app/newproj
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -8632,6 +8796,7 @@ debug/register.o: ../../InstaDam/app/register.cpp ../../InstaDam/app/register.h 
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -9062,6 +9227,7 @@ debug/startingwidget.o: ../../InstaDam/app/startingwidget.cpp ../../InstaDam/app
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -9368,6 +9534,7 @@ debug/login.o: ../../InstaDam/app/login.cpp ../../InstaDam/app/login.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -9676,6 +9843,7 @@ debug/projectlist.o: ../../InstaDam/app/projectlist.cpp ../../InstaDam/app/proje
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qspinbox.h \
 		ui_polygonSelect.h \
 		../../InstaDam/app/labelButton.h \
+		../../InstaDam/app/chooselabeldialog.h \
 		../../InstaDam/Selector/photoScene.h \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsScene \
 		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsscene.h \
@@ -10375,6 +10543,146 @@ debug/userprivilege.o: ../../InstaDam/app/userprivilege.cpp ../../InstaDam/app/u
 		D:/Qt/5.11.3/mingw53_32/include/QtGui/qicon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\userprivilege.o ..\..\InstaDam\app\userprivilege.cpp
 
+debug/chooselabeldialog.o: ../../InstaDam/app/chooselabeldialog.cpp ../../InstaDam/app/chooselabeldialog.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QDialog \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qdialog.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtguiglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qglobal.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qconfig.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtcore-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsystemdetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qprocessordetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcompilerdetection.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtypeinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsysinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlogging.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qflags.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbasicatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qgenericatomic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qatomic_msvc.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qglobalstatic.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmutex.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qnumeric.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qversiontagging.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtgui-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qwidget.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qwindowdefs.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobjectdefs.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qnamespace.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobject.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstring.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qchar.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbytearray.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qrefcount.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qarraydata.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringliteral.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringalgorithms.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringview.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringbuilder.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qalgorithms.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qiterator.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qhashfunctions.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qpair.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qbytearraylist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringlist.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qregexp.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qstringmatcher.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcoreevent.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qscopedpointer.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmetatype.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvarlengtharray.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcontainerfwd.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmargins.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpaintdevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qrect.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsize.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qpoint.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpalette.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qcolor.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qrgb.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qrgba64.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qbrush.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvector.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qmatrix.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpolygon.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qregion.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qdatastream.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qiodevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qline.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtransform.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpainterpath.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qimage.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpixelformat.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpixmap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsharedpointer.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qshareddata.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qhash.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfont.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfontmetrics.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qfontinfo.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qcursor.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qkeysequence.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qevent.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qvariant.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qmap.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qdebug.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qtextstream.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qlocale.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qset.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qcontiguouscache.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qurl.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qurlquery.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfile.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qvector2d.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtouchdevice.h \
+		../../InstaDam/Selector/label.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QColor \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QJsonObject \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qjsonobject.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/qjsonvalue.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QPixmap \
+		../../InstaDam/Selector/freeDrawSelect.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QHash \
+		../../InstaDam/Selector/selectItem.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QGraphicsItem \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qgraphicsitem.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QWidget \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/QPainter \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpainter.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qtextoption.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qpen.h \
+		../../InstaDam/Selector/freeDrawErase.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QSet \
+		../../InstaDam/Selector/rectangleSelect.h \
+		../../InstaDam/Selector/boxbasedselector.h \
+		../../InstaDam/Selector/ellipseSelect.h \
+		../../InstaDam/Selector/polygonSelect.h \
+		../../InstaDam/app/labelButton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QPushButton \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtGui/qicon.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/QSlider \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qslider.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtWidgets/qabstractslider.h \
+		../../InstaDam/app/project.h \
+		D:/Qt/5.11.3/mingw53_32/include/QtCore/QVector \
+		../../InstaDam/app/enumconstants.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\chooselabeldialog.o ..\..\InstaDam\app\chooselabeldialog.cpp
+
 debug/moc_instadam.o: debug/moc_instadam.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_instadam.o debug\moc_instadam.cpp
 
@@ -10422,6 +10730,9 @@ debug/moc_addusertoproject.o: debug/moc_addusertoproject.cpp
 
 debug/moc_userprivilege.o: debug/moc_userprivilege.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_userprivilege.o debug\moc_userprivilege.cpp
+
+debug/moc_chooselabeldialog.o: debug/moc_chooselabeldialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_chooselabeldialog.o debug\moc_chooselabeldialog.cpp
 
 ####### Install
 

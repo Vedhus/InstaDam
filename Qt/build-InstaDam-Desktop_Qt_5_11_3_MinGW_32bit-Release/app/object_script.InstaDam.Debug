@@ -21,6 +21,7 @@ INPUT(
 ./debug\enumconstants.o
 ./debug\addusertoproject.o
 ./debug\userprivilege.o
+./debug\chooselabeldialog.o
 ./debug\moc_instadam.o
 ./debug\moc_photoviewer.o
 ./debug\moc_maskviewer.o
@@ -37,4 +38,5 @@ INPUT(
 ./debug\moc_serverprojectname.o
 ./debug\moc_addusertoproject.o
 ./debug\moc_userprivilege.o
+./debug\moc_chooselabeldialog.o
 );
