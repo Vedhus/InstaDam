@@ -144,7 +144,7 @@ void BoxBasedSelector::resizeItem(const int vertex, QPointF &oldP, QPointF &newP
   \reimp
   */
 void BoxBasedSelector::rotate(const QPointF &from, const QPointF &to) {
-    QPointF center = (br.bottomLeft() + tl.topRight()) / 2.;
+    QPointF center = (br.bottomRight() + tl.topLeft()) / 2.;
     setTransformOriginPoint(center);
     QPointF start = from - mapToScene(center);
     QPointF end = to - mapToScene(center);
@@ -159,9 +159,11 @@ void BoxBasedSelector::rotate(const QPointF &from, const QPointF &to) {
   \reimp
   */
 void BoxBasedSelector::read(const QJsonObject &json) {
-    QPointF tlc = QPointF(json[InstaDamJson::LEFT].toDouble(), json[InstaDamJson::TOP].toDouble());
-    QPointF brc = QPointF(json[InstaDamJson::RIGHT].toDouble(), json[InstaDamJson::BOTTOM].toDouble());
-    myRect = QRectF(tlc, brc);
+    QPointF center = QPointF(json[InstaDamJson::CENTERX].toDouble(), json[InstaDamJson::CENTERY].toDouble());
+    QSizeF size = QSizeF(json[InstaDamJson::WIDTH].toDouble(), json[InstaDamJson::HEIGHT].toDouble());
+    center.setX(center.x() - (size.width()/2.));
+    center.setY(center.y() - (size.height()/2.));
+    myRect = QRectF(center, size);
     myRotation = json[InstaDamJson::ROTATION].toDouble();
     myID = json[InstaDamJson::OBJECTID].toInt();
     setTransformOriginPoint(myRect.center());
@@ -174,10 +176,13 @@ void BoxBasedSelector::read(const QJsonObject &json) {
 void BoxBasedSelector::write(QJsonObject &json) const {
     json[InstaDamJson::OBJECTID] = myID;
     json[InstaDamJson::ROTATION] = myRotation;
-    json[InstaDamJson::LEFT] = myRect.left();
-    json[InstaDamJson::RIGHT] = myRect.right();
-    json[InstaDamJson::TOP] = myRect.top();
-    json[InstaDamJson::BOTTOM] = myRect.bottom();
+    QPointF ttl = mapToScene(tl.topLeft());
+    QPointF tbr = mapToScene(br.bottomRight());
+    QPointF center = (ttl + tbr) / 2.;
+    json[InstaDamJson::CENTERX] = center.x();
+    json[InstaDamJson::CENTERY] = center.y();
+    json[InstaDamJson::WIDTH] = abs(tl.topLeft().x() - br.bottomRight().x());
+    json[InstaDamJson::HEIGHT] = abs(tl.topLeft().y() - br.bottomRight().y());
 }
 
 /*-------------------------- Protected ------------------------*/
