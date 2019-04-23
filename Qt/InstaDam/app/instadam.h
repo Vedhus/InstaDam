@@ -58,7 +58,7 @@ class InstaDam : public QMainWindow {
     ~InstaDam();
     void connectFilters();
     filterControls * filterControl;
-
+    bool photoLoaded = false;
     int fileId = 0;
     QFileInfo file, oldFile;
     QString filename, oldFilename;
@@ -91,6 +91,10 @@ class InstaDam : public QMainWindow {
     void saveAndProgress(int);
     PhotoScene::viewerTypes selectedViewer;
     void deleteCurrentObject(PhotoScene::viewerTypes type);
+    int annotationDraw(PhotoScene::viewerTypes, SelectItem*, QPointF, Qt::MouseButton, Qt::KeyboardModifiers);
+    int annotationTransform(PhotoScene::viewerTypes, SelectItem*, QPointF, Qt::MouseButton, Qt::KeyboardModifiers);
+    void inactivateSceneCancelSelection();
+    void continueDrawingPolygon(QPointF);
 
  private slots:
     void on_addSelectionButton_clicked();
