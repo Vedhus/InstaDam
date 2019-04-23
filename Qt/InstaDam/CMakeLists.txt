@@ -21,7 +21,7 @@ find_package(Qt5Network CONFIG REQUIRED)
 find_package(Qt5Gui CONFIG REQUIRED)
 
 # Find the OpenCV
-find_package(OpenCV CONFIG REQUIRED)
+find_package(OpenCV 4 CONFIG REQUIRED)
 
 set(SRCS
     app/main.cpp
@@ -50,9 +50,9 @@ set(SRCS
     app/commands.cpp
     app/instadam.ui
     app/newproject.ui
-    Selector/blankFrame.ui
-    Selector/polygonSelect.ui
-    Selector/freeSelect.ui
+    app/blankFrame.ui
+    app/polygonSelect.ui
+    app/freeSelect.ui
     app/labeldialog.ui
     app/register.ui
     app/startingwidget.ui
@@ -88,12 +88,24 @@ set(SRCS
     app/chooselabeldialog.h
     app/commands.h
 )
-set(RUNTIME_OUTPUT_NAME InstaDam)
-set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/bin)
+set(CMAKE_RUNTIME_OUTPUT_NAME InstaDam)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include_directories(${CMAKE_HOME_DIRECTORY}/Selector ${CMAKE_HOME_DIRECTORY}/quazip ${CMAKE_HOME_DIRECTORY}/app)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_BINARY_DIR}/Selector ${CMAKE_BINARY_DIR}/quazip ${CMAKE_BINARY_DIR}/app)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/app ${CMAKE_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIR})
-link_directories(${CMAKE_HOME_DIRECTORY}/lib ${OpenCV_LINK_DIRECTORIES})
+link_directories(${CMAKE_BINARY_DIR}/lib ${OpenCV_LINK_DIRECTORIES})
 add_executable(InstaDam ${SRCS})
 target_link_libraries(InstaDam Qt5::Widgets Qt5::Gui Qt5::Core Qt5::Network selector quazip ${OpenCV_LIBRARIES})
+
+install(TARGETS InstaDam
+        RUNTIME DESTINATION bin)
+# report what was found
+message("  ")
+message("Using Qt version:     ${Qt5Core_VERSION}")
+message("Using OpenCV version: ${OpenCV_VERSION}")
+message("  ")
+message("Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message("  Binary path:  ${CMAKE_INSTALL_PREFIX}/bin")
+message("  Library path: ${CMAKE_INSTALL_PREFIX}/${CMAKE_SHARED_LIBRARY_PREFIX}")
+message("  ")

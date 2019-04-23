@@ -117,3 +117,21 @@ Qt/InstaDam/Test/integration/integration
 Qt/InstaDam/Test/integration_test_build/
 
 Qt/InstaDam/Test/_idpro\.zip
+
+Qt/InstaDam/CMakeFiles/
+
+Qt/InstaDam/quazip/CMakeFiles/
+
+Qt/InstaDam/quazip/cmake_install\.cmake
+
+Qt/InstaDam/Selector/CMakeFiles/
+
+Qt/InstaDam/Selector/cmake_install\.cmake
+
+Qt/InstaDam/cmake_install\.cmake
+
+Qt/InstaDam/CMakeCache\.txt
+
+Qt/InstaDam/quazip/Makefile\.Debug
+
+Qt/InstaDam/quazip/Makefile\.Release

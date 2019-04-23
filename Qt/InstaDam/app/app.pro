@@ -67,9 +67,9 @@ wasm: HEADERS += colordialog.h
 FORMS += \
         instadam.ui \
         newproject.ui \
-        ../Selector/blankFrame.ui \
-        ../Selector/polygonSelect.ui \
-        ../Selector/freeSelect.ui \
+        blankFrame.ui \
+        polygonSelect.ui \
+        freeSelect.ui \
         labeldialog.ui \
         register.ui \
         startingwidget.ui \
