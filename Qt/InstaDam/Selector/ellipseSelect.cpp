@@ -132,10 +132,13 @@ QRectF EllipseSelect::boundingRect() const {
   \reimp
   */
 bool EllipseSelect::isInside(const QPointF &point) const {
-    QPointF center = BoxBasedSelector::mapToScene((br.bottomLeft() + tl.topRight()) / 2.);
+    QPointF center = ((br.bottomLeft() + tl.topRight()) / 2.);
     QPointF myPoint = BoxBasedSelector::mapFromScene(point);
-    if ((std::pow(point.x() - center.x(), 2)/std::pow(rect().width()/2., 2)) +
-        (std::pow(point.y() - center.y(), 2)/std::pow(rect().height()/2., 2))
+    QSizeF size = QSizeF(abs(tl.topLeft().x() - br.bottomRight().x()),
+                         abs(tl.topLeft().y() - br.bottomRight().y()));
+
+    if ((std::pow(myPoint.x() - center.x(), 2)/std::pow(size.width()/2., 2)) +
+        (std::pow(myPoint.y() - center.y(), 2)/std::pow(size.height()/2., 2))
         <= 1.) {
         return true;
     } else if (active && (isInsideRect(tl, myPoint) || isInsideRect(tr, myPoint) ||
