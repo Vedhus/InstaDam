@@ -7,6 +7,7 @@ wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
 TEMPLATE = app
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
+INCLUDEPATH += ../Selector
 SOURCES += \
         main.cpp \
         instadam.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
     enumconstants.cpp \
     addusertoproject.cpp \
     userprivilege.cpp \
-    chooselabeldialog.cpp
+    chooselabeldialog.cpp \
+    commands.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -57,7 +59,8 @@ HEADERS += \
         enumconstants.h \
     addusertoproject.h \
     userprivilege.h \
-    chooselabeldialog.h
+    chooselabeldialog.h \
+    commands.h
 
 wasm: HEADERS += colordialog.h
 
@@ -81,7 +84,7 @@ FORMS += \
 win32 {
 
   CONFIG += c++1z
-   INCLUDEPATH += $${PWD}\..\quazip\include
+  INCLUDEPATH += $${PWD}\..\quazip\include
 
 ## Change paths here depending on your system installation location
 
