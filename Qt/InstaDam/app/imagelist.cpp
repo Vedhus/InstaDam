@@ -5,9 +5,6 @@
 #include <QMessageBox>
 
 
-
-
-
 /*!
   \class ImageList
   \ingroup app
@@ -25,8 +22,6 @@ ImageList::ImageList(Project* project, QWidget *parent, QString databaseUrl, QSt
     this->currentProject = project;
 
 }
-
-
 
 /*!
  * Destructor
@@ -67,7 +62,7 @@ void ImageList::addItems(QJsonObject obj)
     idList.clear();
     pathList.clear();
     foreach(const QString& key, obj.keys()) {
-        if (key.compare("project_images") != 0) {
+        if (key.compare(InstaDamJson::PROJECT_IMAGES) != 0) {
             qInfo() << "incorrect key";
             return;
         }
@@ -85,8 +80,8 @@ void ImageList::addItems(QJsonObject obj)
                 {
 
                     QJsonValue currentValue = currentObj.value(objkey);
-                    if (objkey.compare("id") == 0 || objkey.compare("name") == 0 ||
-                       objkey.compare("path") == 0) {
+                    if (objkey.compare(InstaDamJson::ID) == 0 || objkey.compare(InstaDamJson::NAME) == 0 ||
+                       objkey.compare(InstaDamJson::PATH) == 0) {
                         if (currentValue.isDouble()) {
                             idList.push_back(static_cast<int>(currentValue.toDouble()));
                             table->setItem(table->rowCount()-1, column, new QTableWidgetItem(QString::number(currentValue.toDouble())));
@@ -143,7 +138,7 @@ void ImageList::getThumbnailReplyFinished()
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QJsonObject currentObject = jsonReply.object();
-    if(jsonError.error != QJsonParseError::NoError){
+    if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
         return;
     }
@@ -152,13 +147,13 @@ void ImageList::getThumbnailReplyFinished()
     {
         QJsonValue currentValue = currentObject.value(objkey);
         //qInfo() << "Key = " << objkey << ", Value = " << currentObject.value(objkey);
-        if(objkey.compare("base64_image")==0)
+        if(objkey.compare(InstaDamJson::BASE64_IMAGE)==0)
         {
             if(currentValue.isString())
             {
                 QByteArray byteArray = QByteArray::fromBase64(currentValue.toString().toUtf8());
                 QPixmap thumbnailPixmap;
-                thumbnailPixmap.loadFromData(byteArray, currentObject.value("format").toString().toUtf8());
+                thumbnailPixmap.loadFromData(byteArray, currentObject.value(InstaDamJson::FORMAT).toString().toUtf8());
                 QTableWidgetItem *thumbnail = new QTableWidgetItem;
                 thumbnail->setData(Qt::DecorationRole, thumbnailPixmap);
                 QTableWidget* table = ui->tableWidget;

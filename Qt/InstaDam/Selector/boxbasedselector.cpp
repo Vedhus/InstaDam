@@ -159,11 +159,11 @@ void BoxBasedSelector::rotate(const QPointF &from, const QPointF &to) {
   \reimp
   */
 void BoxBasedSelector::read(const QJsonObject &json) {
-    QPointF tlc = QPointF(json["left"].toDouble(), json["top"].toDouble());
-    QPointF brc = QPointF(json["right"].toDouble(), json["bottom"].toDouble());
+    QPointF tlc = QPointF(json[InstaDamJson::LEFT].toDouble(), json[InstaDamJson::TOP].toDouble());
+    QPointF brc = QPointF(json[InstaDamJson::RIGHT].toDouble(), json[InstaDamJson::BOTTOM].toDouble());
     myRect = QRectF(tlc, brc);
-    myRotation = json["rotation"].toDouble();
-    myID = json["objectID"].toInt();
+    myRotation = json[InstaDamJson::ROTATION].toDouble();
+    myID = json[InstaDamJson::OBJECTID].toInt();
     setTransformOriginPoint(myRect.center());
     setRotation(myRotation);
 }
@@ -172,12 +172,12 @@ void BoxBasedSelector::read(const QJsonObject &json) {
   \reimp
   */
 void BoxBasedSelector::write(QJsonObject &json) const {
-    json["objectID"] = myID;
-    json["rotation"] = myRotation;
-    json["left"] = myRect.left();
-    json["right"] = myRect.right();
-    json["top"] = myRect.top();
-    json["bottom"] = myRect.bottom();
+    json[InstaDamJson::OBJECTID] = myID;
+    json[InstaDamJson::ROTATION] = myRotation;
+    json[InstaDamJson::LEFT] = myRect.left();
+    json[InstaDamJson::RIGHT] = myRect.right();
+    json[InstaDamJson::TOP] = myRect.top();
+    json[InstaDamJson::BOTTOM] = myRect.bottom();
 }
 
 /*-------------------------- Protected ------------------------*/

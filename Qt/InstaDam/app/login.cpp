@@ -56,8 +56,8 @@ void Login::on_pushButton_clicked() {
     QUrl dabaseLink = QUrl(databaseLoginURL);
     QJsonObject js
     {
-        {"username", user},
-        {"password", pass}
+        {InstaDamJson::USERNAME, user},
+        {InstaDamJson::PASSWORD, pass}
     };
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
@@ -81,8 +81,8 @@ void Login::replyFinished() {
         msgBox.exec();
     } else {
         QJsonObject obj = jsonReply.object();
-        if (obj.contains("access_token")) {
-            this->accessToken = obj.value("access_token").toString().toUtf8();
+        if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
+            this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString().toUtf8();
             Login::lunchMainInstadam();
         }
         else{

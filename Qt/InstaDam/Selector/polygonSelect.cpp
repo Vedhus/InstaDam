@@ -256,7 +256,7 @@ void PolygonSelect::paint(QPainter *painter,
   \reimp
   */
 void PolygonSelect::read(const QJsonObject &json) {
-    QJsonArray pointArray = json["points"].toArray();
+    QJsonArray pointArray = json[InstaDamJson::POINTS].toArray();
     myPoints.clear();
     myVertices.clear();
     for (int i = 0; i < pointArray.size(); i += 2) {
@@ -266,7 +266,7 @@ void PolygonSelect::read(const QJsonObject &json) {
         myVertices.push_back(makeVertex(temp));
     }
     refresh();
-    myID = json["objectID"].toInt();
+    myID = json[InstaDamJson::OBJECTID].toInt();
 }
 
 /*!
@@ -327,13 +327,13 @@ void PolygonSelect::updatePen(QPen pen) {
   \reimp
   */
 void PolygonSelect::write(QJsonObject &json) const {
-    json["objectID"] = myID;
+    json[InstaDamJson::OBJECTID] = myID;
     QJsonArray points;
     for (int i = 0; i < myPoints.size(); i++) {
         points.append(myPoints[i].x());
         points.append(myPoints[i].y());
     }
-    json["points"] = points;
+    json[InstaDamJson::POINTS] = points;
 }
 
 /*------------------------ Mirror -------------------------------*/

@@ -10,6 +10,7 @@
 #include "ui_instadam.h"
 #include "login.h"
 #include "ui_register.h"
+#include "../Selector/jsonConstants.h"
 
 /*!
   \class Register
@@ -56,8 +57,8 @@ void Register::on_pushButton_clicked() {
     QJsonObject js
     {
         {"email", em},
-        {"username", user},
-        {"password", pass}
+        {InstaDamJson::USERNAME, user},
+        {InstaDamJson::PASSWORD, pass}
     };
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
@@ -81,8 +82,8 @@ void Register::replyFinished() {
         msgBox.exec();
     } else {
         QJsonObject obj = jsonReply.object();
-        if (obj.contains("access_token")) {
-            this->accessToken = obj.value("access_token").toString();
+        if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
+            this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString();
             this->lunchMainInstadam();
         } else {
             msgBox.setText(obj.value("msg").toString());

@@ -11,7 +11,7 @@ HEADERS = \
     boxbasedselector.h \
     label.h \
     freeDrawErase.h \
-    app/photoviewer.h
+    jsonConstants.h
 
 
 SOURCES = \

@@ -31,13 +31,13 @@ Label::Label() {
   denotes whether to read the file from a server (\c true) or local file
   (\c false).
   */
-Label::Label(const QJsonObject &json, int j, bool server){
-        if(server)
-            readServer(json);
-        else {
-             read(json);
-        }
-        labelId = j;
+Label::Label(const QJsonObject &json, int j, bool server) {
+    if(server) {
+        readServer(json);
+    } else {
+        read(json);
+    }
+    labelId = j;
 }
 
 /*!
@@ -205,14 +205,14 @@ void Label::setOpacity(int val) {
 
 void Label::read(const QJsonObject &json) {
     clear();
-    setText(json["text"].toString());
-    setColor(QColor(json["color"].toString()));
-    if (json.contains("label_id")) {
-        setId(json["label_id"].toInt());
+    setText(json[InstaDamJson::TEXT].toString());
+    setColor(QColor(json[InstaDamJson::COLOR].toString()));
+    if (json.contains(InstaDamJson::LABEL_ID)) {
+        setId(json[InstaDamJson::LABEL_ID].toInt());
     }
 
-    if (json.contains("rectangles")) {
-        QJsonArray rectArray = json["rectangles"].toArray();
+    if (json.contains(InstaDamJson::RECTANGLES)) {
+        QJsonArray rectArray = json[InstaDamJson::RECTANGLES].toArray();
         for (QJsonArray::iterator it = rectArray.begin(); it != rectArray.end();
              ++it) {
             RectangleSelect *rect = new RectangleSelect(it->toObject(),
@@ -221,8 +221,8 @@ void Label::read(const QJsonObject &json) {
             addItem(rect);
         }
     }
-    if (json.contains("ellipses")) {
-        QJsonArray ellipseArray = json["ellipses"].toArray();
+    if (json.contains(InstaDamJson::ELLIPSES)) {
+        QJsonArray ellipseArray = json[InstaDamJson::ELLIPSES].toArray();
         for (QJsonArray::iterator it = ellipseArray.begin();
              it != ellipseArray.end(); ++it) {
             EllipseSelect *ellipse = new EllipseSelect(it->toObject(),
@@ -231,8 +231,8 @@ void Label::read(const QJsonObject &json) {
             addItem(ellipse);
         }
     }
-    if (json.contains("polygons")) {
-        QJsonArray polyArray = json["polygons"].toArray();
+    if (json.contains(InstaDamJson::POLYGONS)) {
+        QJsonArray polyArray = json[InstaDamJson::POLYGONS].toArray();
         for (QJsonArray::iterator it = polyArray.begin(); it != polyArray.end();
              ++it) {
             PolygonSelect *poly = new PolygonSelect(it->toObject(),
@@ -241,8 +241,8 @@ void Label::read(const QJsonObject &json) {
             addItem(poly);
         }
     }
-    if (json.contains("freedraw")) {
-        FreeDrawSelect *fd = new FreeDrawSelect(json["freedraw"].toObject(),
+    if (json.contains(InstaDamJson::FREEDRAW)) {
+        FreeDrawSelect *fd = new FreeDrawSelect(json[InstaDamJson::FREEDRAW].toObject(),
                 sharedFromThis());
         SelectItem::ID = max(SelectItem::ID, fd->myID);
         addItem(fd);
@@ -255,8 +255,8 @@ void Label::read(const QJsonObject &json) {
   */
 void Label::readServer(const QJsonObject &json) {
     clear();
-    setText(json["name"].toString());
-    setColor(QColor(json["color"].toString()));
+    setText(json[InstaDamJson::NAME].toString());
+    setColor(QColor(json[InstaDamJson::COLOR].toString()));
 }
 
 /*!
@@ -316,9 +316,9 @@ QPixmap Label::exportLabel(const QSize &rect) const {
   Writes the contents of the Label class to QJsonObject \a json.
   */
 void Label::write(QJsonObject &json) const {
-    json["text"] = text;
-    json["color"] = color.name();
-    json["label_id"] = labelId;
+    json[InstaDamJson::TEXT] = text;
+    json[InstaDamJson::COLOR] = color.name();
+    json[InstaDamJson::LABEL_ID] = labelId;
 }
 
 /*!
@@ -338,7 +338,7 @@ void Label::writeIdantn(QJsonObject &json) const {
             rit.value()->write(rect);
             rectangles.append(rect);
         }
-        json["rectangles"] = rectangles;
+        json[InstaDamJson::RECTANGLES] = rectangles;
     }
     if (!ellipseObjects.isEmpty()) {
         QJsonArray ellipses;
@@ -351,7 +351,7 @@ void Label::writeIdantn(QJsonObject &json) const {
             eit.value()->write(ellipse);
             ellipses.append(ellipse);
         }
-        json["ellipses"] = ellipses;
+        json[InstaDamJson::ELLIPSES] = ellipses;
     }
     if (!polygonObjects.isEmpty()) {
         QJsonArray polygons;
@@ -364,7 +364,7 @@ void Label::writeIdantn(QJsonObject &json) const {
             pit.value()->write(poly);
             polygons.append(poly);
         }
-        json["polygons"] = polygons;
+        json[InstaDamJson::POLYGONS] = polygons;
     }
     if (!freeDrawObjects.isEmpty()) {
         QList<FreeDrawSelect*> items;
@@ -377,7 +377,7 @@ void Label::writeIdantn(QJsonObject &json) const {
         FreeDrawSelect *item = new FreeDrawSelect(items);
         QJsonObject fdo;
         item->write(fdo);
-        json["freedraw"] = fdo;
+        json[InstaDamJson::FREEDRAW] = fdo;
     }
 }
 
