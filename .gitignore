@@ -151,3 +151,13 @@ Qt/InstaDam/app/ui_labeldialog\.h
 Qt/InstaDam/app/ui_serverprojectname\.h
 
 Qt/InstaDam/app/ui_startingwidget\.h
+
+Qt/InstaDam/app/ui_polygonSelect\.h
+
+Qt/InstaDam/app/ui_projectDialog\.h
+
+Qt/InstaDam/app/ui_projectlist\.h
+
+Qt/InstaDam/app/ui_register\.h
+
+Qt/InstaDam/app/ui_userprivilege\.h
