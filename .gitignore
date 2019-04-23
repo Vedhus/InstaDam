@@ -135,3 +135,19 @@ Qt/InstaDam/CMakeCache\.txt
 Qt/InstaDam/quazip/Makefile\.Debug
 
 Qt/InstaDam/quazip/Makefile\.Release
+
+Qt/InstaDam/app/ui_addusertoproject\.h
+
+Qt/InstaDam/app/ui_blankFrame\.h
+
+Qt/InstaDam/app/ui_freeSelect\.h
+
+Qt/InstaDam/app/ui_imagelist\.h
+
+Qt/InstaDam/app/ui_login\.h
+
+Qt/InstaDam/app/ui_labeldialog\.h
+
+Qt/InstaDam/app/ui_serverprojectname\.h
+
+Qt/InstaDam/app/ui_startingwidget\.h
