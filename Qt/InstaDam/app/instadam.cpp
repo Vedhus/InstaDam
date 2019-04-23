@@ -19,7 +19,7 @@
 #include "Selector/polygonSelect.h"
 #include "Selector/freeDrawSelect.h"
 #include "Selector/freeDrawErase.h"
-#include "Selector/commands.h"
+#include "commands.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 #include "imagelist.h"
@@ -1046,6 +1046,7 @@ void InstaDam::panButton_clicked() {
  * Slot called when the Rectangle Select button is clicked.
  */
 void InstaDam::on_rectangleSelectButton_clicked() {
+    ui->rectangleSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Rectangle)
         return;
     scene->inactiveAll();
@@ -1053,7 +1054,6 @@ void InstaDam::on_rectangleSelectButton_clicked() {
     cancelCurrentSelection();
     currentItem = nullptr;
     switch (currentSelectType) {
-        ui->rectangleSelectButton->setChecked(true);
         case SelectItem::Polygon:
             if (ui->selectControlFrame->findChild<QWidget*>("polygonSelectForm")) {
                 controlLayout->removeWidget(polygonSelectWidget);

@@ -1,0 +1,17 @@
+The following are required dependencies to build InstaDam:
+
+Qt  5.9 or better
+OpenCV 4.0 or better
+cmake 3.1.0 or better
+
+To build InstaDam:
+
+mkdir build
+cd build
+
+cmake ..
+OR
+cmake -DCMAKE_INSTALL_PREFIX=<PATH TO WHERE YOU WANT TO INSTALL> ..
+
+make
+make install

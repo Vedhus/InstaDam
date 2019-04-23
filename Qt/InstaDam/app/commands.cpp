@@ -3,8 +3,7 @@
 #include <QtWidgets>
 #include <QVector>
 
-#include "selectItem.h"
-#include "../app/instadam.h"
+#include "instadam.h"
 /*!
   \class AddCommand
    \ingroup Selectors

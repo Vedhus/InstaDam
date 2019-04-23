@@ -29,7 +29,7 @@
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
 #include "ui_polygonSelect.h"
-#include "../Selector/label.h"
+#include "Selector/label.h"
 #include "labelButton.h"
 #include "enumconstants.h"
 #include "chooselabeldialog.h"
