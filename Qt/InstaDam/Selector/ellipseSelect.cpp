@@ -204,10 +204,18 @@ void EllipseSelect::setRectUnchecked(QRectF rect) {
   \reimp
   */
 void EllipseSelect::toPixmap(QPainter *painter) {
-    painter->translate(myRect.center());
+    QPointF ttl = BoxBasedSelector::mapToScene(tl.topLeft());
+    QPointF tbr = BoxBasedSelector::mapToScene(br.bottomRight());
+    QPointF center = (ttl + tbr) / 2.;
+    QSizeF size = QSizeF(abs(tl.topLeft().x() - br.bottomRight().x()),
+                         abs(tl.topLeft().y() - br.bottomRight().y()));
+    QPointF tlc;
+    painter->translate(center);
     painter->rotate(getRotationAngle());
-    painter->translate(-myRect.center());
-    painter->drawEllipse(myRect);
+    painter->translate(-center);
+    tlc.setX(center.x() - (size.width()/2.));
+    tlc.setY(center.y() - (size.height()/2.));
+    painter->drawEllipse(QRectF(tlc, size));
     painter->resetTransform();
 }
 
