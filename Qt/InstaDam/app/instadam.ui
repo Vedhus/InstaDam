@@ -827,8 +827,8 @@
     </property>
     <addaction name="actionOpen_File"/>
     <addaction name="separator"/>
-    <addaction name="openAnnotations"/>
     <addaction name="actionSave_Annotation"/>
+    <addaction name="actionImport"/>
     <addaction name="actionExport"/>
     <addaction name="actionExport_zip"/>
     <addaction name="separator"/>
@@ -958,6 +958,11 @@
   <action name="actionEdit_Label">
    <property name="text">
     <string>Edit Label Class</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
    </property>
   </action>
  </widget>

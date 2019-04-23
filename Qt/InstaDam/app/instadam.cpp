@@ -223,6 +223,9 @@ void InstaDam::setButtonsConfiguration(){
         this->ui->menuUser->setEnabled(false);
         this->ui->actionDelete_2->setEnabled(false);
     }
+    else {
+        this->ui->actionImport->setEnabled(false);
+    }
 }
 void InstaDam::setNewProject() {
     currentProject = newProject->newPr;
@@ -814,10 +817,18 @@ void InstaDam::saveAndProgress(int num)
  \a asBuffers
   */
 void InstaDam::exportImages(bool asBuffers) {
-    QString baseName = this->filename;
+    QString baseName = this->file.baseName();
+    QString labelPath = this->path.absolutePath()+"/exports/"+baseName+"/";
+    if (!QDir(labelPath).exists()) {
+        QDir().mkpath(labelPath);
+    }
     for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
-        QString filename = baseName + "_" + label->getText() + ".png";
+
+
+        QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
+        QString filename = labelPath+labfilePrefix+"_label.png";
+        qInfo()<<filename;
         if (asBuffers) {
             QByteArray *bytes = new QByteArray();
             QBuffer *buffer = new QBuffer(bytes);
@@ -850,17 +861,15 @@ void InstaDam::assertError(std::string errorMessage) {
 void InstaDam::generateLabelFileName() {
     QString baseName = this->file.baseName();
     QString aPath = this->path.absolutePath()+"/annotations/"+baseName+"/";
-    QString exPath = this->path.absolutePath()+"/exports/"+baseName+"/";
+
     if (!QDir(aPath).exists()) {
         QDir().mkpath(aPath);
     }
-    if (!QDir(exPath).exists()) {
-        QDir().mkpath(exPath);
-    }
-    this->oldLabelPaths = this->labelPaths;
-    labelPaths.clear();
+
     this->oldAnnotationPath = this->annotationPath;
     this->annotationPath = aPath+baseName+".idantn";
+
+
     this->path = file.dir();
 }
 
@@ -1918,7 +1927,7 @@ void InstaDam::revert() {
     this->path = this->oldPath;
     this->imagesList = this->oldImagesList;
     this->annotationPath = this->oldAnnotationPath;
-    this->labelPaths = this->oldLabelPaths;
+
 }
 
 /*!
@@ -2176,4 +2185,43 @@ void InstaDam::editLabel(QSharedPointer<Label> newLabel)
 
 
     undoGroup->activeStack()->push(editLabelCommand);
+}
+
+void InstaDam::on_actionImport_triggered()
+{
+    if (!photoLoaded)
+    {
+        assertError("Please load an image first!");
+        return;
+    }
+    QString baseName = this->file.baseName();
+    QString labelPath = this->path.absolutePath()+"/labels/"+baseName+"/";
+    QString message = QString("Please copy all labels to ") + labelPath +
+                    " and name them as 00000_label.png, 00001_label.png, etc";
+    if (!QDir(labelPath).exists())
+    {
+        assertError(message.toStdString());
+        return;
+    }
+    bool foundALabel = false;
+    qInfo()<<"1";
+
+    for(int i=0; i<currentProject->numLabels(); i++){
+        QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
+        this->labelPaths.append(labelPath+labfilePrefix+"_label.png");
+        QFileInfo check_file(labelPaths[i]);
+        if (check_file.exists())
+        {
+            QPixmap pixmap = QPixmap(filename);
+            QSharedPointer<Label> lab = currentProject->getLabel(i);
+            FreeDrawSelect *fds = new FreeDrawSelect(pixmap,
+                                                     lab);
+            lab->addItem(fds);
+            foundALabel = true;
+
+
+        }
+    }
+    if(!foundALabel)
+        assertError(message.toStdString());
 }
