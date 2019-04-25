@@ -628,6 +628,7 @@ void InstaDam::imagesReplyFinished() {
           il->show();
           il->addItems(obj);
           qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
+          connect(il, &ImageList::clearGUI, this, &InstaDam::resetGUIclearLabels);
       }
 }
 

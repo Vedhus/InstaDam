@@ -228,6 +228,7 @@ void ImageList::on_loadButton_clicked() {
     rep = manager->get(req);
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::fileReplyFinished);
+    emit clearGUI();
 
     close();
 }

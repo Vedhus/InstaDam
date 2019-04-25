@@ -44,6 +44,7 @@ class ImageList : public QWidget {
  signals:
     void fileDownloaded(QString path);
     void allAnnotationsLoaded(QJsonObject,fileTypes);
+    void clearGUI();
 
 
 
