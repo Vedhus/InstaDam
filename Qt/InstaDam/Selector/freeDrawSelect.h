@@ -82,6 +82,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     QGraphicsScene* scene() const;
     bool isVisible() const {return SelectItem::isVisible();}
     QPixmap getPixmap() const {return myPixmap;}
+    void importPixmap(const QPixmap);
 
  protected:
     QPixmap myPixmap;

@@ -266,11 +266,13 @@ void Label::readServer(const QJsonObject &json) {
   */
 QPixmap Label::exportLabel(const QSize &rect) const {
     QPixmap map(rect.width(), rect.height());
+    QColor blank = QColor(0,0,0,0);
+    map.fill(blank);
     QPainter *paint = new QPainter(&map);
-    QBrush brush(Qt::black);
-    paint->setPen(Qt::black);
+    QBrush brush(getColor());
+    paint->setPen(getColor());
     paint->setBrush(brush);
-    paint->fillRect(0.,0.,rect.width(), rect.height(), Qt::white);
+    //paint->fillRect(0.,0.,rect.width(), rect.height(), Qt::white);
     if (!rectangleObjects.isEmpty()) {
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);
         while (rit.hasNext()) {
