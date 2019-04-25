@@ -27,6 +27,7 @@ public slots:
 
 signals:
     void projectJsonReceived(QJsonObject);
+    void projectIdChanged(int);
     void instadamClearAll();
 
 private:

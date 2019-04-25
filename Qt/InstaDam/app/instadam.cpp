@@ -1028,7 +1028,6 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
  \a fileType where \a fileType is either a PROJECT or ANNOTATION
  */
 bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType) {
-    currentProject = newProject->newPr;
     currentProject->resetLabels();
     clearLayout(ui->labelClassLayout);
     qInfo() << "inside loadLabelJson()";
@@ -2008,6 +2007,7 @@ void InstaDam::projectsReplyFinished() {
         pl->addItems(jsonReply, this->databaseURL, this->accessToken);
         connect(pl, &ProjectList::instadamClearAll, this, &InstaDam::getReadyForNewProject);
         connect(pl, &ProjectList::projectJsonReceived, this, &InstaDam::openFileFromJson);
+        connect(pl, &ProjectList::projectIdChanged, this, &InstaDam::setCurrentProjectId);
     }
 }
 

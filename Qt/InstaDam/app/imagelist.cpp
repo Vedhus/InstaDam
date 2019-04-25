@@ -226,7 +226,6 @@ void ImageList::on_loadButton_clicked() {
     QString filepath = this->databaseURL + "/" + item->text();
     QNetworkRequest req = QNetworkRequest(filepath);
     rep = manager->get(req);
-
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::fileReplyFinished);
 
@@ -331,6 +330,7 @@ void ImageList::on_uploadButton_clicked()
 
 void ImageList::openAnnotation()
 {
+    qInfo() << "openAnnotation project id: " << currentProject->getId();
     if(selectedRow.at(3)->text().compare("Yes")==0) //the image being loaded has annotations associated with it, load the annotations with it
     {
         qInfo() << "inside openAnnotation";
@@ -360,6 +360,7 @@ void ImageList::openAnnotation()
 
 void ImageList::annotationReplyFinished()
 {
+    qInfo() << "annotationReply project id: " << currentProject->getId();
     qInfo() << "Got an annotation";
     qInfo() << rep->request().url();
     if (rep->error()) { //http error 400 means the annotation does not exist

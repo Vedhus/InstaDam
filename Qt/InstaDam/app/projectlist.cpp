@@ -110,6 +110,7 @@ void ProjectList::getLabelsReplyFinished() {
     if (jsonError.error == QJsonParseError::NoError) {
       QJsonObject jsonLabels = jsonReply.object();
       emit projectJsonReceived(jsonLabels);
+      emit projectIdChanged(selectedProject);
       this->close();
       }
 }
