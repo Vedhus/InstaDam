@@ -379,6 +379,13 @@ void FreeDrawSelect::loadFromPixmap(const QPixmap map) {
     myPainter.end();
 }
 
+/*!
+ Imports exported pixmap
+ */
+void FreeDrawSelect::importPixmap(const QPixmap map){
+    myPixmap = map;
+}
+
 
 inline void FreeDrawSelect::setup() {
     setMirrorMap();

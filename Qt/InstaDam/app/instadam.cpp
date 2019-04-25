@@ -835,7 +835,9 @@ void InstaDam::exportImages(bool asBuffers) {
             label->exportLabel(SelectItem::myBounds).save(buffer, "PNG");
             exportFiles.insert(filename, buffer);
         } else {
-            label->exportLabel(SelectItem::myBounds).save(filename, "PNG");
+            QFile file(filename);
+            file.open(QIODevice::WriteOnly);
+            label->exportLabel(SelectItem::myBounds).save(&file, "PNG");
         }
     }
 }
@@ -2210,12 +2212,14 @@ void InstaDam::on_actionImport_triggered()
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
         this->labelPaths.append(labelPath+labfilePrefix+"_label.png");
         QFileInfo check_file(labelPaths[i]);
+         qInfo()<<"file name";
         if (check_file.exists())
         {
+            qInfo()<<"file exists";
             QPixmap pixmap = QPixmap(filename);
             QSharedPointer<Label> lab = currentProject->getLabel(i);
-            FreeDrawSelect *fds = new FreeDrawSelect(pixmap,
-                                                     lab);
+            FreeDrawSelect *fds = new FreeDrawSelect();
+            fds->importPixmap(pixmap);
             lab->addItem(fds);
             foundALabel = true;
 
