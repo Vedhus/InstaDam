@@ -3,7 +3,8 @@
 #include <QFileDialog>
 #include <QHttpPart>
 #include <QMessageBox>
-
+#include "quazip/quazip.h"
+#include "quazip/quazipfile.h"
 
 /*!
   \class ImageList
@@ -281,50 +282,157 @@ void ImageList::uploadFileReplyFinished()
     }
 }
 
+bool ImageList::zipFilesTogether(QFileInfoList files)
+{
+    QFile inFile;
+    QuaZip zip("images.zip");
+    if (!zip.open(QuaZip::mdCreate)) {
+        qInfo() << QString("testCreate(): zip.open(): %1").arg(zip.getZipError());
+        return false;
+    }
+
+    QuaZipFile outFile(&zip);
+    char c;
+    foreach(QFileInfo fileInfo, files)
+    {
+        if(!fileInfo.isFile())
+                continue;
+        qInfo() << fileInfo.filePath();
+        qInfo() << fileInfo.fileName();
+        qInfo() << fileInfo.dir();
+        QString fileNameWithRelativePath = fileInfo.filePath().remove(0, fileInfo.dir().absolutePath().length() + 1);
+
+        inFile.setFileName(fileInfo.filePath());
+        if (!inFile.open(QIODevice::ReadOnly)) {
+           qInfo() <<  QString("testCreate(): inFile.open(): %1").arg(inFile.errorString().toLocal8Bit().constData());
+           return false;
+        }
+
+        if (!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(fileNameWithRelativePath, fileInfo.filePath()))) {
+          qInfo() << QString("testCreate(): outFile.open(): %1").arg(outFile.getZipError());
+           return false;
+        }
+
+        while (inFile.getChar(&c) && outFile.putChar(c));
+
+        if (outFile.getZipError() != UNZ_OK) {
+           qInfo() << QString("testCreate(): outFile.putChar(): %1").arg(outFile.getZipError());
+           return false;
+        }
+
+        outFile.close();
+
+        if (outFile.getZipError() != UNZ_OK) {
+          qInfo() << QString("testCreate(): outFile.close(): %1").arg(outFile.getZipError());
+          return false;
+        }
+
+        inFile.close();
+    }
+
+
+   zip.close();
+
+   if (zip.getZipError() != 0) {
+      qInfo() << QString("testCreate(): zip.close(): %1").arg(zip.getZipError());
+      return false;
+   }
+   return true;
+}
+
 /*!
  * Slot Called when the upload button is clicked
  */
 void ImageList::on_uploadButton_clicked()
 {
     qInfo() << "upload button clicked";
-    QString filepath = QFileDialog::getOpenFileName(this,
+    QStringList filelist = QFileDialog::getOpenFileNames(this,
         tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
-    QFile *file = new QFile(filepath);
-    QString filename = QFileInfo(filepath).fileName();
+    if(filelist.size()==0)
+        return;
 
-    qInfo() << filename;
-    QString databaseUploadURL = this->databaseURL+"/image/upload/" + QString::number(currentProject->getId());
-    QUrl databaseLink = QUrl(databaseUploadURL);
-    qInfo() << databaseLink;
+    if(filelist.size()==1)
+    {
+        QFile *file = new QFile(filelist[0]);
+        QString filename = QFileInfo(filelist[0]).fileName();
 
-    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
-    QHttpPart imagePart;
-    imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/*"));
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\"" + filename+  "\""));
-    file->open(QIODevice::ReadOnly);
-    imagePart.setBodyDevice(file);
-    file->setParent(multiPart);
+        qInfo() << filename;
+        QString databaseUploadURL = this->databaseURL+"/image/upload/" + QString::number(currentProject->getId());
+        QUrl databaseLink = QUrl(databaseUploadURL);
+        qInfo() << databaseLink;
+
+        QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+        QHttpPart imagePart;
+        imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/*"));
+        imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\"" + filename+  "\""));
+        file->open(QIODevice::ReadOnly);
+        imagePart.setBodyDevice(file);
+        file->setParent(multiPart);
 
 
-    multiPart->append(imagePart);
+        multiPart->append(imagePart);
 
 
-    QNetworkRequest req = QNetworkRequest(databaseLink);
-    QString loginToken = "Bearer "+this->accessToken;
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+        QNetworkRequest req = QNetworkRequest(databaseLink);
+        QString loginToken = "Bearer "+this->accessToken;
+        req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
 
-    qDebug() << req.url().toString();
-    const QList<QByteArray>& rawHeaderList(req.rawHeaderList());
-    foreach (QByteArray rawHeader, rawHeaderList) {
-        qDebug() << req.rawHeader(rawHeader);
+        qDebug() << req.url().toString();
+        const QList<QByteArray>& rawHeaderList(req.rawHeaderList());
+        foreach (QByteArray rawHeader, rawHeaderList) {
+            qDebug() << req.rawHeader(rawHeader);
+        }
+
+
+        rep = manager->post(req, multiPart);
+        multiPart->setParent(rep);
+
+        connect(rep, &QNetworkReply::finished,
+                this, &ImageList::uploadFileReplyFinished);
+    }
+    else //multiple files, upload zip
+    {
+        //https://stackoverflow.com/questions/2598117/zipping-a-folder-file-using-qt
+
+        QFileInfoList files;
+        foreach(QString file, filelist)
+            files << QFileInfo(file);
+
+       if(zipFilesTogether(files))
+       {
+           qInfo() << "files successfully zipped (there were no errors)" << endl;
+           QString databaseUploadURL = this->databaseURL+"/image/upload/zip/" + QString::number(currentProject->getId());
+           QUrl databaseLink = QUrl(databaseUploadURL);
+           qInfo() << databaseLink;
+
+           QFile *file = new QFile("images.zip");
+
+           QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+           QHttpPart zipPart;
+           zipPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/zip"));
+           zipPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"zip\"; filename=\"images.zip\""));
+           qInfo() << "open: " << file->open(QIODevice::ReadOnly);
+           zipPart.setBodyDevice(file);
+           file->setParent(multiPart);
+
+
+           multiPart->append(zipPart);
+
+
+           QNetworkRequest req = QNetworkRequest(databaseLink);
+           QString loginToken = "Bearer "+this->accessToken;
+           req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+
+
+           rep = manager->post(req, multiPart);
+           multiPart->setParent(rep);
+
+           connect(rep, &QNetworkReply::finished,
+                   this, &ImageList::uploadFileReplyFinished);
+       }
+
     }
 
-
-    rep = manager->post(req, multiPart);
-    multiPart->setParent(rep);
-
-    connect(rep, &QNetworkReply::finished,
-            this, &ImageList::uploadFileReplyFinished);
 
 }
 

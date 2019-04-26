@@ -62,6 +62,7 @@ class ImageList : public QWidget {
     void getThumbnailReplyFinished();
     void imagesReplyFinished();
     void uploadFileReplyFinished();
+    bool zipFilesTogether(QFileInfoList);
     void annotationReplyFinished();
     void doRequest(QNetworkRequest);
  private slots:
