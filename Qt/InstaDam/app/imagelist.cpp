@@ -48,6 +48,11 @@ int ImageList::getSelectedIdIndex()
     return selectedIdIndex;
 }
 
+void ImageList::setAnnotated()
+{
+    annotatedList[selectedIdIndex] = true;
+}
+
 void ImageList::setSelectedIdIndex(int id)
 {
     selectedIdIndex = id;
@@ -61,6 +66,7 @@ void ImageList::addItems(QJsonObject obj)
 {
     qInfo() << obj;
     idList.clear();
+    annotatedList.clear();
     pathList.clear();
     foreach(const QString& key, obj.keys()) {
         if (key.compare(InstaDamJson::PROJECT_IMAGES) != 0) {
@@ -101,9 +107,11 @@ void ImageList::addItems(QJsonObject obj)
                         if(currentValue.toBool())
                         {
                             table->setItem(table->rowCount()-1, 4, new QTableWidgetItem("Yes"));
+                            annotatedList.push_back(true);
                         }
                         else {
                             table->setItem(table->rowCount()-1, 4, new QTableWidgetItem("No"));
+                            annotatedList.push_back(false);
                         }
                     }
                 }
@@ -440,7 +448,7 @@ void ImageList::on_uploadButton_clicked()
 void ImageList::openAnnotation()
 {
     qInfo() << "openAnnotation project id: " << currentProject->getId();
-    if(selectedRow.at(3)->text().compare("Yes")==0) //the image being loaded has annotations associated with it, load the annotations with it
+    if(annotatedList[selectedIdIndex]) //the image being loaded has annotations associated with it, load the annotations with it
     {
         qInfo() << "inside openAnnotation";
         //note that selectedRow should be defined before using this function

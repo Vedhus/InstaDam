@@ -789,7 +789,7 @@ void InstaDam::saveAndProgress(int num)
         }
         else {
             int idIndex = il->getSelectedIdIndex();
-
+            il->setAnnotated();
 
 
             QList<int> idList = il->getIdList();

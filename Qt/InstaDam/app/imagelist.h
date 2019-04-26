@@ -38,6 +38,7 @@ class ImageList : public QWidget {
     int getSelectedIdIndex();
     void setSelectedIdIndex(int id);
     void fileReplyFinished();
+    void setAnnotated();
 
 
 
@@ -50,9 +51,9 @@ class ImageList : public QWidget {
 
  private:
     QList<int> idList;
+    QList<bool> annotatedList;
     int selectedIdIndex;
     QList<QString> pathList;
-    int numAnnotationsReceived=0;
     Ui::ImageList *ui;
     QString databaseURL;
     QString accessToken;
