@@ -19,18 +19,20 @@ public:
     ~Register();
 
 private slots:
-    void on_pushButton_2_clicked();
+    void on_cancelButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_registerButton_clicked();
+    void replyFinished();
+    void replyFin(QNetworkReply* reply);
 
 private:
     Ui::Register *ui;
-    void replyFinished();
     void lunchMainInstadam();
     QNetworkReply *rep;
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager *manager;
     QString accessToken;
     QString databaseURL;
+    QByteArray bytes;
 };
 
 #endif // REGISTER_H

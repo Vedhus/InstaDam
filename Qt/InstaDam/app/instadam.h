@@ -142,7 +142,17 @@ class InstaDam : public QMainWindow {
     void on_actionUpdate_Privilege_triggered();
     void saveToServer();
     void replyFinished();
+    void replyFin(QNetworkReply*);
+    void labelReplyFin(QNetworkReply*);
     void labelReplyFinished();
+    void projectsReplyFin(QNetworkReply*);
+    void projectsReplyFinished();
+    void fileReplyFin(QNetworkReply*);
+    void fileReplyFinished();
+    void imagesReplyFin(QNetworkReply*);
+    void imagesReplyFinished();
+    void saveAnnotationReplyFin(QNetworkReply*);
+    void saveAnnotationReplyFinished();
 
 
 #ifdef TEST
@@ -239,8 +249,6 @@ public slots:
     QVector<QSharedPointer<Label> > tempLabels;
 
     QPixmap maskSelection(SelectItem *item);
-    void imagesReplyFinished();
-    void saveAnnotationReplyFinished();
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
 
@@ -248,8 +256,6 @@ public slots:
     bool loadLabelFile(QString filename, fileTypes fileType);
     void revert();
     void listProjects();
-    void projectsReplyFinished();
-    void fileReplyFinished();
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
 };

@@ -38,9 +38,7 @@ void AddUserToProject::on_pushButton_clicked()
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
-    connect(rep, &QNetworkReply::finished,
-            this, &AddUserToProject::replyFinished);
-
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
 }
 
 void AddUserToProject::on_pushButton_2_clicked()
@@ -48,6 +46,10 @@ void AddUserToProject::on_pushButton_2_clicked()
     this->hide();
 }
 
+void AddUserToProject::replyFin(QNetworkReply* reply){
+    rep = reply;
+    replyFinished();
+}
 void AddUserToProject::replyFinished()
 {
     QByteArray strReply = rep->readAll();
@@ -141,9 +143,13 @@ void AddUserToProject::add(){
         req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
         req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         rep = manager->put(req, bytes);
-        connect(rep, &QNetworkReply::finished,
-                this, &AddUserToProject::privilegeReplyFinished);
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(privilegeReplyFin(QNetworkReply*)));
 
+}
+
+void AddUserToProject::privilegeReplyFin(QNetworkReply* reply){
+    rep = reply;
+    privilegeReplyFinished();
 }
 
 void AddUserToProject::privilegeReplyFinished(){

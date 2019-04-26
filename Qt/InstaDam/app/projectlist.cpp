@@ -29,7 +29,7 @@
   Creates a ProjectList with parent QWidget \a parent, if any.
   */
 ProjectList::ProjectList(QWidget *parent) :
-    QWidget(parent), ui(new Ui::ProjectList) {
+    QDialog(parent), ui(new Ui::ProjectList) {
     ui->setupUi(this);
 }
 
@@ -94,10 +94,14 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
-    connect(rep, &QNetworkReply::finished,
-            this, &ProjectList::getLabelsReplyFinished);
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getLabelsReplyFin(QNetworkReply*)));
+
 }
 
+void ProjectList::getLabelsReplyFin(QNetworkReply* reply){
+    rep = reply;
+    getLabelsReplyFinished();
+}
 /*!
   Waits until a reply regarding the labels request is received
   emits the received labels to InstaDam
@@ -127,10 +131,15 @@ void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->deleteResource(req);
-    connect(rep, &QNetworkReply::finished,
-            this, &ProjectList::deleteReplyFinished);
+
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(deleteReplyFin(QNetworkReply*)));
+
 }
 
+void ProjectList::deleteReplyFin(QNetworkReply* reply){
+    rep = reply;
+    deleteReplyFinished();
+}
 /*!
  Receives the reply of deleting a project from the server
  */

@@ -31,6 +31,22 @@ ImageList::~ImageList() {
     delete ui;
 }
 
+void ImageList::getThumbnailReplyFin(QNetworkReply* reply){
+    rep = reply;
+    getThumbnailReplyFinished();
+}
+void ImageList::imagesReplyFin(QNetworkReply* reply){
+    rep = reply;
+    imagesReplyFinished();
+}
+void ImageList::uploadFileReplyFin(QNetworkReply* reply){
+    rep = reply;
+    uploadFileReplyFinished();
+}
+void ImageList::annotationReplyFin(QNetworkReply* reply){
+    rep = reply;
+    annotationReplyFinished();
+}
 
 QList<int> ImageList::getIdList()
 {
@@ -169,12 +185,11 @@ void ImageList::getThumbnailReplyFinished()
 void ImageList::doRequest(QNetworkRequest req)
 {
     rep = manager->get(req);
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getThumbnailReplyFin(QNetworkReply*)));
 
-    connect(rep, &QNetworkReply::finished,
-            this, &ImageList::getThumbnailReplyFinished);
     /* wait for reply because backend can't handle multiple requests at same time I think */
     QEventLoop loop;
-    connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+    connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     loop.exec();
 
 }
@@ -226,10 +241,7 @@ void ImageList::on_loadButton_clicked() {
     QString filepath = this->databaseURL + "/" + item->text();
     QNetworkRequest req = QNetworkRequest(filepath);
     rep = manager->get(req);
-
-    connect(rep, &QNetworkReply::finished,
-            this, &ImageList::fileReplyFinished);
-
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(fileReplyFin(QNetworkReply*)));
     close();
 }
 
@@ -275,9 +287,8 @@ void ImageList::uploadFileReplyFinished()
 
 
         rep = manager->get(req);
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(imagesReplyFin(QNetworkReply*)));
 
-        connect(rep, &QNetworkReply::finished,
-                this, &ImageList::imagesReplyFinished);
     }
 }
 
@@ -323,8 +334,7 @@ void ImageList::on_uploadButton_clicked()
     rep = manager->post(req, multiPart);
     multiPart->setParent(rep);
 
-    connect(rep, &QNetworkReply::finished,
-            this, &ImageList::uploadFileReplyFinished);
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(uploadFileReplyFin(QNetworkReply*)));
 
 }
 
@@ -348,11 +358,10 @@ void ImageList::openAnnotation()
             QString loginToken = "Bearer "+this->accessToken;
             annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
             rep = manager->get(annotationRequest);
-            connect(rep, &QNetworkReply::finished,
-                    this, &ImageList::annotationReplyFinished);
+            connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(annotationReplyFin(QNetworkReply*)));
 
             QEventLoop loop;
-            connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+            connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
             loop.exec();
         }
     }

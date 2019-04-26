@@ -56,7 +56,7 @@ class PhotoViewer : public QGraphicsView {
     PhotoScene::viewerTypes viewerType;
     QSize setPhotoFromFile(QString filename);
 #ifdef WASM_BUILD
-    QSize setPhotoFromByteArray(QByteArray &array, QString labelname);
+    QSize setPhotoFromByteArray(QByteArray &array);
 #endif
     void setPhotoFromPixmap(QPixmap px);
 
