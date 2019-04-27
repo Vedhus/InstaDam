@@ -223,6 +223,7 @@ void InstaDam::setButtonsConfiguration(){
     if(this->runningLocally){
         this->ui->menuUser->setEnabled(false);
         this->ui->actionDelete_2->setEnabled(false);
+        this->ui->actionSave->setEnabled(true);
     }
     else {
         this->ui->actionImport->setEnabled(false);
