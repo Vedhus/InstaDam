@@ -142,11 +142,15 @@ void ProjectList::deleteReplyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     }  else {
             this->hide();
             msgBox.setText("The project has been successfully deleted");
             msgBox.exec();
+            emit projectDeleted(selectedProject);
       }
 }

@@ -29,6 +29,7 @@ signals:
     void projectJsonReceived(QJsonObject);
     void projectIdChanged(int);
     void instadamClearAll();
+    int projectDeleted(int);
 
 private:
     Ui::ProjectList *ui;

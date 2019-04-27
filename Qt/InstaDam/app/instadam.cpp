@@ -172,6 +172,8 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     polygonSelectWidget->hide();
     controlLayout->addWidget(blankWidget);
 
+    setButtonsConfiguration();
+
 #ifdef WASM_BUILD
     addImageConnector("Load File", [&]() {
             QHtml5File::load(".jpg, .png", [&](const QByteArray &content, const QString &fileName) {
@@ -218,13 +220,13 @@ InstaDam::~InstaDam() {
   */
 
 void InstaDam::setButtonsConfiguration(){
-    qInfo() << this->runningLocally;
     if(this->runningLocally){
         this->ui->menuUser->setEnabled(false);
         this->ui->actionDelete_2->setEnabled(false);
     }
     else {
         this->ui->actionImport->setEnabled(false);
+        this->ui->actionSave->setEnabled(false);
     }
 }
 void InstaDam::setNewProject() {
@@ -232,6 +234,8 @@ void InstaDam::setNewProject() {
     setLabels();
     scene->clearItems();
     maskScene->clearItems();
+    currentProjectLoaded = true;
+    this->resetGUIclearLabels();
 }
 
 /*!
@@ -271,10 +275,17 @@ void InstaDam::setLabels() {
 void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
-#ifndef TEST
     newProject->setModal(true);
-    connect(newProject, SIGNAL(accepted()), this, SLOT(setNewProject()));
-    newProject->exec();
+    newProject->show();
+
+#ifndef TEST
+
+    if(this->runningLocally==false and this->currentProjectLoaded==false){
+        connect(newProject, SIGNAL(sendProject()), this, SLOT(on_actionSave_triggered()));
+    }
+    else{
+        connect(newProject, SIGNAL(sendProject()), this, SLOT(setNewProject()));
+    }
 
 #else
     QHashIterator<QString, QColor> it(labelHash);
@@ -283,7 +294,6 @@ void InstaDam::on_actionNew_triggered() {
         newProject->setLabel(it.key(), it.value());
     }
 #endif
-    setNewProject();
 }
 
 /*!
@@ -576,8 +586,10 @@ if(this->runningLocally){
     }
     else{
         this->sProjectName = new serverProjectName();
+//        this->sProjectName->setWindowFlags(Qt::WindowStaysOnTopHint);
         this->sProjectName->show();
         connect(this->sProjectName, SIGNAL(on_pushButton_clicked()), this, SLOT(saveToServer()));
+        connect(this->sProjectName, SIGNAL(on_pushButton_clicked()), this, SLOT(setNewProject()));
     }
 }
 
@@ -775,7 +787,6 @@ void InstaDam::saveAndProgress(int num)
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else{
 
-
         on_actionSave_Annotation_triggered();
         resetGUIclearLabels();
         if (runningLocally) {
@@ -788,24 +799,29 @@ void InstaDam::saveAndProgress(int num)
             qInfo("File opened");
         }
         else {
-            int idIndex = il->getSelectedIdIndex();
-            il->setAnnotated();
+            if(currentProjectLoaded){
+                int idIndex = il->getSelectedIdIndex();
+                il->setAnnotated();
 
+                QList<int> idList = il->getIdList();
+                int newId = ((idIndex+num)%idList.size()+idList.size())%idList.size();
+                QList<QString> pathList = il->getPathList();
+                QString filepath = this->databaseURL + "/" + pathList[newId];
+                il->setSelectedIdIndex(newId);
+                QNetworkRequest req = QNetworkRequest(filepath);
+                rep = manager->get(req);
 
-            QList<int> idList = il->getIdList();
-            int newId = ((idIndex+num)%idList.size()+idList.size())%idList.size();
-            QList<QString> pathList = il->getPathList();
-            QString filepath = this->databaseURL + "/" + pathList[newId];
-            il->setSelectedIdIndex(newId);
-            QNetworkRequest req = QNetworkRequest(filepath);
-            rep = manager->get(req);
+                connect(rep, &QNetworkReply::finished,
+                        this, &InstaDam::fileReplyFinished);
 
-            connect(rep, &QNetworkReply::finished,
-                    this, &InstaDam::fileReplyFinished);
+                QEventLoop loop;
+                connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+                loop.exec();
+            }
+            else{
+                assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+            }
 
-            QEventLoop loop;
-            connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
-            loop.exec();
         }
     }
 }
@@ -1245,7 +1261,7 @@ void InstaDam::squareBrushButtonClicked() {
 
 void InstaDam::on_filterOptions_clicked()
 {
-    if (currentProject== nullptr) {
+    if (currentProjectLoaded==false) {
         assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
     } else {
         filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask,
@@ -1897,12 +1913,12 @@ void InstaDam::on_addSelectionButton_clicked() {
 }
 
 
-/*!
-  Sets the current project to \a pr.
-  */
-void InstaDam::setCurrentProject(Project* pr) {
-    this->currentProject = pr;
-}
+///*!
+//  Sets the current project to \a pr.
+//  */
+//void InstaDam::setCurrentProject(Project* pr) {
+//    this->currentProject = pr;
+//}
 
 void InstaDam::setCurrentProjectId(int id)
 {
@@ -2011,8 +2027,23 @@ void InstaDam::projectsReplyFinished() {
         connect(pl, &ProjectList::instadamClearAll, this, &InstaDam::getReadyForNewProject);
         connect(pl, &ProjectList::projectJsonReceived, this, &InstaDam::openFileFromJson);
         connect(pl, &ProjectList::projectIdChanged, this, &InstaDam::setCurrentProjectId);
+        connect(pl, &ProjectList::projectDeleted, this, &InstaDam::currentProjectDeleted);
     }
 }
+
+/*!
+ checks if the deleted project is the currenlty open project and clears the labels if so.
+ */
+void InstaDam::currentProjectDeleted(int deletedProjectId){
+    if(deletedProjectId==this->currentProject->getId()){
+        assertError("The current project was deleted! Pleaese open or create another project");
+        this->currentProject->resetLabels();
+        clearLayout(ui->labelClassLayout);
+        this->resetGUIclearLabels();
+        currentProjectLoaded=false;
+    }
+}
+
 
 /*!
  Sends a request to save new project information (name) on the server

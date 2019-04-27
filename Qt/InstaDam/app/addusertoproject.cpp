@@ -53,10 +53,14 @@ void AddUserToProject::replyFinished()
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
         }
+    }
     else{
         QJsonObject obj = jsonReply.object();
         qInfo() << obj;
@@ -152,8 +156,11 @@ void AddUserToProject::privilegeReplyFinished(){
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         msgBox.setText("User privileges were updated successfully");
         msgBox.exec();

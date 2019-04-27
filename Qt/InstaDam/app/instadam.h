@@ -243,6 +243,7 @@ public slots:
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
     QVector<QSharedPointer<Label> > tempLabels;
+    bool currentProjectLoaded = false;
 
     QPixmap maskSelection(SelectItem *item);
     void imagesReplyFinished();
@@ -258,6 +259,7 @@ public slots:
     void fileReplyFinished();
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
+    void currentProjectDeleted(int);
 };
 
 #endif  // INSTADAM_H

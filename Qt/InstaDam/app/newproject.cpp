@@ -96,7 +96,13 @@ void newproject::colorPicked(const QColor &oldcolor) {
   */
 Project* newproject::on_buttonBox_accepted()
 {
+    emit sendProject();
     return this->newPr;
 }
 
 
+
+void newproject::on_buttonBox_rejected()
+{
+    this->close();
+}
