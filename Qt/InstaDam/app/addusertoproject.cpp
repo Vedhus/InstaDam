@@ -12,7 +12,9 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
-
+/*!
+  Constructs a AddUserToProject Widget with parent QWidget \a parent, if any.
+  */
 AddUserToProject::AddUserToProject(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddUserToProject)
@@ -20,12 +22,17 @@ AddUserToProject::AddUserToProject(QWidget *parent) :
     ui->setupUi(this);
 }
 
+/*!
+  Destructor
+  */
 AddUserToProject::~AddUserToProject()
 {
     delete ui;
 }
 
-
+/*!
+  reads the user query and sends a request to receive the search results from the server
+  */
 void AddUserToProject::on_pushButton_clicked()
 {
     QString userInfo = ui->userInfoInput->toPlainText();
@@ -42,12 +49,17 @@ void AddUserToProject::on_pushButton_clicked()
             this, &AddUserToProject::replyFinished);
 
 }
-
+/*!
+  Processes the "Cancel" Button
+  */
 void AddUserToProject::on_pushButton_2_clicked()
 {
     this->hide();
 }
 
+/*!
+    receives the reply for the search request
+  */
 void AddUserToProject::replyFinished()
 {
     QByteArray strReply = rep->readAll();
@@ -68,6 +80,9 @@ void AddUserToProject::replyFinished()
         }
 }
 
+/*!
+    Lists all the users that share a similarity with the search query as received from server
+  */
 void AddUserToProject::listUsers(QJsonObject obj)
 {
     ui->userList->clear();
@@ -88,18 +103,31 @@ void AddUserToProject::listUsers(QJsonObject obj)
     }
 }
 
+/*!
+    Adds a user to the project
+    (at this stage: it's the same whether the user is in the
+    project or not)
+  */
 void AddUserToProject::on_addToProject_clicked()
 {
     this->userInProject = false;
     this->updateUser();
 }
 
+/*!
+    Updates the privilege of an existing user in the project
+    (at this stage: it's the same whether the user is in the
+    project or not)
+  */
 void AddUserToProject::on_updatePrivilege_clicked()
 {
     this->userInProject = true;
     this->updateUser();
 }
 
+/*!
+    displays a widget to allow the user to select new user privilege and waits for respond
+  */
 void AddUserToProject::updateUser()
 {
     if(ui->userList->selectedItems().size()!= 0){
@@ -116,18 +144,25 @@ void AddUserToProject::updateUser()
     }
 }
 
+/*!
+    adds a user to a project as annotator
+  */
 void AddUserToProject::addAsAnnotator(){
     this->privilege = "r";
     this->add();
     userPrivilege->hide();
 }
-
+/*!
+    adds a user to a project as admin
+  */
 void AddUserToProject::addAsAdmin(){
     this->privilege = "rw";
     this->add();
     userPrivilege->hide();
 }
-
+/*!
+    sends the request to update the user privielge and waits for a reponse
+  */
 void AddUserToProject::add(){
         QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
         QString privilege = this->privilege.toLower();
@@ -149,7 +184,9 @@ void AddUserToProject::add(){
                 this, &AddUserToProject::privilegeReplyFinished);
 
 }
-
+/*!
+    Receives the update user privilege response from backend
+  */
 void AddUserToProject::privilegeReplyFinished(){
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;

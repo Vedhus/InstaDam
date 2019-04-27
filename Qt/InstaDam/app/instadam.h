@@ -77,7 +77,6 @@ class InstaDam : public QMainWindow {
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
-    void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
     void setButtonsConfiguration();
     void setCurrentItem(SelectItem *item, bool enable = false) {

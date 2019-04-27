@@ -215,10 +215,10 @@ InstaDam::~InstaDam() {
     delete ui;
 }
 
-/*!
-  Sets the current project to the newly created project.
-  */
 
+/*!
+  Configures different buttons for local and server versions.
+  */
 void InstaDam::setButtonsConfiguration(){
     if(this->runningLocally){
         this->ui->menuUser->setEnabled(false);
@@ -230,6 +230,10 @@ void InstaDam::setButtonsConfiguration(){
         this->ui->actionSave->setEnabled(false);
     }
 }
+
+/*!
+  Sets the current project to the newly created project.
+  */
 void InstaDam::setNewProject() {
     currentProject = newProject->newPr;
     setLabels();
@@ -280,7 +284,6 @@ void InstaDam::on_actionNew_triggered() {
     newProject->show();
 
 #ifndef TEST
-
     if(this->runningLocally==false and this->currentProjectLoaded==false){
         connect(newProject, SIGNAL(sendProject()), this, SLOT(on_actionSave_triggered()));
     }
@@ -1914,13 +1917,9 @@ void InstaDam::on_addSelectionButton_clicked() {
 }
 
 
-///*!
-//  Sets the current project to \a pr.
-//  */
-//void InstaDam::setCurrentProject(Project* pr) {
-//    this->currentProject = pr;
-//}
-
+/*!
+ Sets the id of the current project
+ */
 void InstaDam::setCurrentProjectId(int id)
 {
     this->currentProject->setId(id);
@@ -1973,9 +1972,6 @@ void InstaDam::on_actionSearch_triggered()
         }
         else{
             assertError("Please open a project first");
-//            QMessageBox msgBox;
-//            msgBox.setText("Please open a project first");
-//            msgBox.exec();
         }
     }
 }
