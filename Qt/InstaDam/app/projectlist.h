@@ -24,6 +24,7 @@ public:
 public slots:
     void openProject(QListWidgetItem *);
     void deleteProject(QListWidgetItem *);
+    void confirmProjectDeletion(QListWidgetItem *);
 
 signals:
     void projectJsonReceived(QJsonObject);

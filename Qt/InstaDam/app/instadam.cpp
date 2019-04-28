@@ -284,7 +284,7 @@ void InstaDam::on_actionNew_triggered() {
     newProject->show();
 
 #ifndef TEST
-    if(this->runningLocally==false and this->currentProjectLoaded==false){
+    if(this->runningLocally==false){
         connect(newProject, SIGNAL(sendProject()), this, SLOT(on_actionSave_triggered()));
     }
     else{
@@ -804,23 +804,28 @@ void InstaDam::saveAndProgress(int num)
         }
         else {
             if(currentProjectLoaded){
-                int idIndex = il->getSelectedIdIndex();
-                il->setAnnotated();
+                if(this->currentProject->numLabels()!=0 and imagesList.isEmpty()==false){
+                    int idIndex = il->getSelectedIdIndex();
+                    il->setAnnotated();
 
-                QList<int> idList = il->getIdList();
-                int newId = ((idIndex+num)%idList.size()+idList.size())%idList.size();
-                QList<QString> pathList = il->getPathList();
-                QString filepath = this->databaseURL + "/" + pathList[newId];
-                il->setSelectedIdIndex(newId);
-                QNetworkRequest req = QNetworkRequest(filepath);
-                rep = manager->get(req);
+                    QList<int> idList = il->getIdList();
+                    int newId = ((idIndex+num)%idList.size()+idList.size())%idList.size();
+                    QList<QString> pathList = il->getPathList();
+                    QString filepath = this->databaseURL + "/" + pathList[newId];
+                    il->setSelectedIdIndex(newId);
+                    QNetworkRequest req = QNetworkRequest(filepath);
+                    rep = manager->get(req);
 
-                connect(rep, &QNetworkReply::finished,
-                        this, &InstaDam::fileReplyFinished);
+                    connect(rep, &QNetworkReply::finished,
+                            this, &InstaDam::fileReplyFinished);
 
-                QEventLoop loop;
-                connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
-                loop.exec();
+                    QEventLoop loop;
+                    connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+                    loop.exec();
+                }
+                else{
+                    assertError("Please select an image first");
+                }
             }
             else{
                 assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
@@ -1058,6 +1063,7 @@ bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType) {
         setLabels();
         scene->clearItems();
         maskScene->clearItems();
+        currentProjectLoaded=true;
         return true;
     } else {
         return false;
@@ -1990,11 +1996,11 @@ void InstaDam::on_actionUpdate_Privilege_triggered()
  Sends a request to receive all the projects assoicated with a user
  */
 void InstaDam::listProjects() {
-    if(this->projecListUseCase=="DELETE"){
-        QMessageBox msgBox;
-        msgBox.setText("Please note that deleting a project is irreversible");
-        msgBox.exec();
-    }
+//    if(this->projecListUseCase=="DELETE"){
+//        QMessageBox msgBox;
+//        msgBox.setText("Please note that deleting a project is irreversible");
+//        msgBox.exec();
+//    }
     QString databaseProjectsURL = this->databaseURL+"/projects";
     QUrl dabaseLink = QUrl(databaseProjectsURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);

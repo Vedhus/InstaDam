@@ -17,6 +17,8 @@
 #include "newproject.h"
 #include "serverprojectname.h"
 #include "imagelist.h"
+#include "projectdeletionconfirmation.h"
+
 /*!
   \class ProjectList
   \ingroup app
@@ -50,35 +52,45 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     QJsonArray projects_list = obj.array();
     for(int i =0; i<projects_list.count();i++){
         QJsonValue project = projects_list.at(i);
-            if(project.isObject()){
-                QJsonObject subObj = project.toObject();
-                QStringList proj_details;
-                foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
-                    QJsonValue val = subObj.value(k);
-                    if(k == "id"){
-                        proj_details << QString::number(val.toInt());
+        if(project.isObject()){
+            QJsonObject subObj = project.toObject();
+            QStringList proj_details;
+            foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
+                QJsonValue val = subObj.value(k);
+                if(k == "id"){
+                    proj_details << QString::number(val.toInt());
+                    }
+                if(k == "name"){
+                    proj_details << val.toString();
+                    }
+                if(k=="is_admin"){
+                    if(val==true){
+                        proj_details << "Admin";
                         }
-                    if(k == "name"){
-                        proj_details << val.toString();
-                        }
-                    if(k=="is_admin"){
-                        if(val==true){
-                            proj_details << "Admin";
-                            }
-                        else{
-                            proj_details << "Annotator";
-                            }
+                    else{
+                        proj_details << "Annotator";
                         }
                     }
-               ui->projectsTable->addItem(proj_details.join(" - "));
-               if(this->useCase=="OPEN"){
-                    connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
                 }
-               else if (this->useCase=="DELETE") {
-                   connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
-                }
-            }
+           ui->projectsTable->addItem(proj_details.join(" - "));
+        }
     }
+    if(this->useCase=="OPEN"){
+         connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+     }
+    else if (this->useCase=="DELETE") {
+        connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(confirmProjectDeletion(QListWidgetItem *)));
+     }
+}
+
+/*!
+  Starts a wiedget to confirm project deletion.
+  */
+void ProjectList::confirmProjectDeletion(QListWidgetItem *project_name){
+    projectDeletionConfirmation *confirmation = new projectDeletionConfirmation();
+    confirmation->project_name = project_name;
+    connect(confirmation, SIGNAL(projectDeleted(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
+    confirmation->show();
 }
 
 /*!

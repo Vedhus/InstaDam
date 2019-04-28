@@ -32,7 +32,8 @@ SOURCES += \
     addusertoproject.cpp \
     userprivilege.cpp \
     chooselabeldialog.cpp \
-    commands.cpp
+    commands.cpp \
+    projectdeletionconfirmation.cpp
 
 wasm: SOURCES += colordialog.cpp
 
@@ -60,7 +61,8 @@ HEADERS += \
     addusertoproject.h \
     userprivilege.h \
     chooselabeldialog.h \
-    commands.h
+    commands.h \
+    projectdeletionconfirmation.h
 
 wasm: HEADERS += colordialog.h
 
@@ -79,7 +81,8 @@ FORMS += \
         projectDialog.ui \
         serverprojectname.ui \
     addusertoproject.ui \
-    userprivilege.ui
+    userprivilege.ui \
+    projectdeletionconfirmation.ui
 
 win32 {
 
