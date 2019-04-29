@@ -248,12 +248,11 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     value of SelectItem::UNSELECTED.
 */
 /*!
-    \fn virtual void SelectItem::resizeItem(const int vertex, QPointF &shift) = 0
+    \fn virtual void SelectItem::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) = 0
 
     This pure virtual function is used to resize the item. \a vertex indicates
-    which vertex is moving and \a shift indicates the relative shift in position
-    the object should take. It is up to the individual reimplementations to
-    determine how to do this for each derived class.
+    which vertex is moving from point \a oldP to point \a newP. It is up to the
+    individual reimplementations to determine how to do this for each derived class.
 
     \sa moveItem(), rotate()
 */
@@ -458,7 +457,7 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
     \sa wasMoved(), wasPointAdded(), wasResized(), wasRotated(), setActiveVertex(), getActiveVertex(), setInactive(), setItemActive()
 */
 /*!
-    \fn void SelectItem::setActiveVertex(int h, int v = 0)
+    \fn void SelectItem::setActiveVertex(int h, int v = NONE)
 
     Sets the activeVertex (the one currently being manipulated) to the given
     value. For rectangular based objects (RectangleSelect and EllipseSelect)
@@ -590,6 +589,32 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
 
   \sa hideMask()
   */
+
+/*!
+  \fn void SelectItem::setMoved(bool val)
+
+  Set the internal moved variable to \a val, indicating whether (\c true) or
+  not (\c false) the item was moved.
+
+  \sa wasMoved()
+  */
+
+/*!
+  \fn void SelectItem::setRotated(bool val)
+
+  Set the internal rotated variable to \a val, indicating whether (\c true) or
+  not (\c false) the item was rotated.
+
+  \sa wasRotated()
+  */
+
+/*!
+  \fn void SelectItem::setOpacity(qreal val)
+
+  Set the visual opacity of the item to \a val.
+
+  */
+
 /*!
   \enum SelectItem::SelectType
 

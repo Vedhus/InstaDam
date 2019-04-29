@@ -24,7 +24,7 @@ class chooseLabelDialog: public QDialog {
 public slots:
     void checkLabel(QSharedPointer<Label> label);
 signals:
-    void labelPicked(QSharedPointer<Label>);
+    void labelPicked(QSharedPointer<Label> label);
 };
 
 

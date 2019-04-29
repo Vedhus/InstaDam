@@ -1,6 +1,5 @@
 INPUT(
 ./debug\polygonSelect.o
-./debug\commands.o
 ./debug\ellipseSelect.o
 ./debug\photoScene.o
 ./debug\rectangleSelect.o

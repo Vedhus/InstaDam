@@ -31,7 +31,7 @@ private slots:
 
 private:
     Ui::Login *ui;
-    void lunchMainInstadam();
+    void launchMainInstadam();
     QNetworkReply *rep;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QByteArray accessToken;

@@ -19,11 +19,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief Registers a user.
-  */
+*/
 
 /*!
   Creates a Register instance with parent QWidget \a parent.
-  */
+*/
 Register::Register(QWidget *parent) :
     QWidget(parent), ui(new Ui::Register) {
     manager = new QNetworkAccessManager(this);
@@ -32,7 +32,7 @@ Register::Register(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 Register::~Register() {
     delete ui;
 }
@@ -77,7 +77,7 @@ void Register::replyFin(QNetworkReply* reply){
 }
 /*!
   Receives the reply regarding new user registration.
-  */
+*/
 void Register::replyFinished() {
     QByteArray strReply = rep->readAll();
     QString ss = QString(strReply);
@@ -85,13 +85,16 @@ void Register::replyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please double check your URL and try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
             this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString();
-            this->lunchMainInstadam();
+            this->launchMainInstadam();
         } else {
             msgBox.setText(obj.value("msg").toString());
             msgBox.exec();
@@ -101,8 +104,8 @@ void Register::replyFinished() {
 
 /*!
   Lunches the main InstaDam window.
-  */
-void Register::lunchMainInstadam(){
+*/
+void Register::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();

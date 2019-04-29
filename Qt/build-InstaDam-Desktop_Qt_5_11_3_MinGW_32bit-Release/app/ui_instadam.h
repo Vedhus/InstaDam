@@ -55,6 +55,7 @@ public:
     QAction *actionUpdate_Privilege;
     QAction *actionDelete_2;
     QAction *actionEdit_Label;
+    QAction *actionImport;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -176,6 +177,8 @@ public:
         actionDelete_2->setObjectName(QStringLiteral("actionDelete_2"));
         actionEdit_Label = new QAction(InstaDam);
         actionEdit_Label->setObjectName(QStringLiteral("actionEdit_Label"));
+        actionImport = new QAction(InstaDam);
+        actionImport->setObjectName(QStringLiteral("actionImport"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -584,8 +587,8 @@ public:
         menubar->addAction(menuUser->menuAction());
         menu_File->addAction(actionOpen_File);
         menu_File->addSeparator();
-        menu_File->addAction(openAnnotations);
         menu_File->addAction(actionSave_Annotation);
+        menu_File->addAction(actionImport);
         menu_File->addAction(actionExport);
         menu_File->addAction(actionExport_zip);
         menu_File->addSeparator();
@@ -636,6 +639,7 @@ public:
         actionUpdate_Privilege->setText(QApplication::translate("InstaDam", "Update Privilege", nullptr));
         actionDelete_2->setText(QApplication::translate("InstaDam", "Delete", nullptr));
         actionEdit_Label->setText(QApplication::translate("InstaDam", "Edit Label Class", nullptr));
+        actionImport->setText(QApplication::translate("InstaDam", "Import", nullptr));
         saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));

@@ -83,7 +83,7 @@ void FreeDrawErase::moveItem(const QPointF &oldPos, QPointF &newPos) {
   \fn void FreeDrawErase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr)
   \reimp
 
-  Empty function as FreeDrawErase objects are not painted
+  Empty function as FreeDrawErase objects are not painted.
   */
 
 /*!
@@ -97,5 +97,11 @@ void FreeDrawErase::moveItem(const QPointF &oldPos, QPointF &newPos) {
   \fn void FreeDrawErase::toPixmap(QPainter *painter)
   \reimp
 
-  Empty function as FreeDrawErase objects are not painted
+  Empty function as FreeDrawErase objects are not painted.
+  */
+
+/*!
+  \fn void FreeDrawErase::setOpacity(qreal val)
+
+  Empty function as FreeDrawErase objects are not painted. \a val is unused.
   */

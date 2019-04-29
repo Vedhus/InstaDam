@@ -18,4 +18,4 @@
 
   \value THRESH
   \value FILTER
-  */
+*/

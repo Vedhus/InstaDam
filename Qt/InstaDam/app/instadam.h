@@ -58,7 +58,7 @@ class InstaDam : public QMainWindow {
     ~InstaDam();
     void connectFilters();
     filterControls * filterControl;
-
+    bool photoLoaded = false;
     int fileId = 0;
     QFileInfo file, oldFile;
     QString filename, oldFilename;
@@ -77,7 +77,6 @@ class InstaDam : public QMainWindow {
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
-    void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
     void setButtonsConfiguration();
     void setCurrentItem(SelectItem *item, bool enable = false) {
@@ -91,6 +90,14 @@ class InstaDam : public QMainWindow {
     void saveAndProgress(int);
     PhotoScene::viewerTypes selectedViewer;
     void deleteCurrentObject(PhotoScene::viewerTypes type);
+    int annotationDraw(PhotoScene::viewerTypes type, SelectItem *item,
+                       QPointF pos, const Qt::MouseButton button,
+                       const Qt::KeyboardModifiers modifiers);
+    int annotationTransform(PhotoScene::viewerTypes type, SelectItem *item,
+                            QPointF pos, const Qt::MouseButton button,
+                            const Qt::KeyboardModifiers modifiers);
+    void inactivateSceneCancelSelection();
+    void continueDrawingPolygon(QPointF);
 
  private slots:
     void on_addSelectionButton_clicked();
@@ -163,6 +170,8 @@ class InstaDam : public QMainWindow {
     void on_actionDelete_triggered();
 
     void on_actionEdit_Label_triggered();
+
+    void on_actionImport_triggered();
 
 public slots:
     void resetPixmapButtons();
@@ -247,6 +256,7 @@ public slots:
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
     QVector<QSharedPointer<Label> > tempLabels;
+    bool currentProjectLoaded = false;
 
     QPixmap maskSelection(SelectItem *item);
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
@@ -258,6 +268,7 @@ public slots:
     void listProjects();
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
+    void currentProjectDeleted(int);
 };
 
 #endif  // INSTADAM_H

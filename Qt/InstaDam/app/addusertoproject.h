@@ -44,7 +44,7 @@ private:
     bool userInProject = false;
     QString privilege;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    void listUsers(QJsonObject);
+    void listUsers(QJsonObject obj);
     void updateUser();
     void add();
 };

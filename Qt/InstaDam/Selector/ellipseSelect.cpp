@@ -70,6 +70,7 @@ EllipseSelect::EllipseSelect(QPointF point, QSharedPointer<Label> label,
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsEllipseItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
+
 /*!
  * Sets the opacity of the label to \a val
 */

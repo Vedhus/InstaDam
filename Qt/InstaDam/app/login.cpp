@@ -19,11 +19,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief Creates a login dialog.
-  */
+*/
 
 /*!
   Creates an instance with parent QWidget \a parent, if any.
-  */
+*/
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
@@ -34,14 +34,14 @@ Login::Login(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 Login::~Login() {
     delete ui;
 }
 
 /*!
-  Processes the X button click.
-  */
+  Processes the "Register" button click.
+*/
 void Login::on_registerButton_clicked() {
     Register *reg = new Register;
     reg->show();
@@ -49,10 +49,9 @@ void Login::on_registerButton_clicked() {
 }
 
 /*!
-  Sends a request to login
-  */
+  Processes the "Login" button click: Sends a request to login.
+*/
 void Login::on_loginButton_clicked() {
-    QTextStream(stdout) << "XYZ" << endl;
     QString user = ui->username->text();
     QString pass = ui->password->text();
     this->databaseURL = ui->url->text();
@@ -79,8 +78,8 @@ void Login::replyFin(QNetworkReply* reply){
 
 
 /*!
-  Received the reply for login
-  */
+  Received the reply for Login.
+*/
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
     QString ss = QString(strReply);
@@ -88,13 +87,16 @@ void Login::replyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please double check your URL and try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
             this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString().toUtf8();
-            Login::lunchMainInstadam();
+            Login::launchMainInstadam();
         }
         else{
             msgBox.setText(obj.value("msg").toString());
@@ -104,27 +106,24 @@ void Login::replyFinished() {
 }
 
 /*!
-  Lists the projects.
-  */
-
-void Login::
-lunchMainInstadam(){
+  Lunches the main InstaDam Window after loginin in successfully.
+*/
+void Login::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();
 }
 
-
 /*!
-  Processes Z button click.
-  */
+  Processes the "Cancel" button click.
+*/
 void Login::on_exitButton_clicked() {
     this->close();
 }
 
 /*!
-  Goes back to the starting widget when the button is clicked
-  */
+  Processes the "Back" button click: Goes back to the starting widget.
+*/
 void Login::on_backButton_clicked() {
     StartingWidget *startingWidget = new StartingWidget;
     startingWidget->show();

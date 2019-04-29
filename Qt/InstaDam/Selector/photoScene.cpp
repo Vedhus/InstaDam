@@ -219,29 +219,29 @@ void PhotoScene::addLabelItem(SelectItem* item, std::string label) {
 }
 
 /*!
-  \fn void PhotoScene::pointClicked(const PhotoScene::viewerTypes type, SelectItem* item, const QPointF point, const Qt::MouseButton button)
+  \fn void PhotoScene::pointClicked(const PhotoScene::viewerTypes type, SelectItem* item, const QPointF point, const Qt::MouseButton button, const Qt::KeyboardModifiers modifiers)
 
   Triggered when a mouse button is depressed in the PhotoScene. The signal
   contains which type of viewer this is as \a type, any SelectItem that exists
-  under the mouse as \a item, the position of the mouse as \a point, and which
-  mouse button was depressed as \a button.
+  under the mouse as \a item, the position of the mouse as \a point, which
+  mouse button was depressed as \a button, and any key modifiers as \a modifiers.
   */
 
 /*!
-  \fn void PhotoScene::mouseMoved(const QPointF fromPos, const QPointF toPos)
+  \fn void PhotoScene::mouseMoved(const QPointF fromPos, const QPointF toPos, const Qt::KeyboardModifiers modifiers)
 
   Triggered when the mouse moves in the PhotoScene and a mouse button is
   depressed. The signal contains the starting (\a fromPos) and ending (\a toPos)
-  positions of the mouse.
+  positions of the mouse and any key modifiers as \a modifiers.
   */
 
 /*!
-  \fn void PhotoScene::mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos, const QPointF newPos, const Qt::MouseButton button)
+  \fn void PhotoScene::mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos, const QPointF newPos, const Qt::MouseButton button, const Qt::KeyboardModifiers modifiers)
 
   Triggered when a mouse button is released. The signal contains which type of
   viewer this is as \a type, he starting (\a oldPos) and ending (\a newPos)
-  positions of the mouse (during the time the button was depressed), and which
-  mouse button was released as \a button.
+  positions of the mouse (during the time the button was depressed), which
+  mouse button was released as \a button, and any key modifiers as \a modifiers.
   */
 
 /*!

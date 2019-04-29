@@ -22,6 +22,8 @@ INPUT(
 ./release\addusertoproject.o
 ./release\userprivilege.o
 ./release\chooselabeldialog.o
+./release\commands.o
+./release\projectdeletionconfirmation.o
 ./release\moc_instadam.o
 ./release\moc_photoviewer.o
 ./release\moc_maskviewer.o
@@ -39,4 +41,5 @@ INPUT(
 ./release\moc_addusertoproject.o
 ./release\moc_userprivilege.o
 ./release\moc_chooselabeldialog.o
+./release\moc_projectdeletionconfirmation.o
 );

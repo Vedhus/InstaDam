@@ -17,7 +17,7 @@
 
   Provides a class for creating selection regions defined by painting on the
   canvas with a brush. The region is defined by the pixels that are painted on.
-  */
+*/
 
 
 QString FreeDrawSelect::baseInstruction = QString("");
@@ -25,7 +25,7 @@ QString FreeDrawSelect::baseInstruction = QString("");
 /*!
   Constructs a FreeDwarSelect object based on the given \a map, Label \a label
   and parent \a item, if any.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label,
                                QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item) {
@@ -37,7 +37,7 @@ FreeDrawSelect::FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label,
 
 /*!
   Constructs a FreeDwarSelect object based on the given \a map and \a pen.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(const QPixmap map, QPen pen)
     : QGraphicsPixmapItem(nullptr), SelectItem(nullptr, nullptr) {
     init();
@@ -50,7 +50,7 @@ FreeDrawSelect::FreeDrawSelect(const QPixmap map, QPen pen)
 /*!
   Constructs a FreeDrawSelect object with no selected points, and a square brush
   with a size of 2 pixels.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(-1., -1.), 2,
                                                   Qt::SquareCap) {
 }
@@ -59,7 +59,7 @@ FreeDrawSelect::FreeDrawSelect() : FreeDrawSelect(QPointF(-1., -1.), 2,
   Constructs a FreeDrawSelect object by reading a QJsonObject and setting the
   internal pixel map to the values given in \a json. \a label is the Label which
   owns this object and \a item is the parent QGraphicsItem, if any.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(const QJsonObject &json,
                                QSharedPointer<Label> label, QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item) {
@@ -73,7 +73,7 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json,
   Constructor used to combine several FreeDrawSelect items given as \a items,
   into a single instance. This is done by merging all of the internal pixel maps
   into a single entity, discarding duplicate points.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items)
     : QGraphicsPixmapItem(nullptr), SelectItem(0.) {
     init();
@@ -99,7 +99,7 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items)
   \li Qt::SquareCap
   \li Qt::RoundCap
   \endlist
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
                                Qt::PenCapStyle brushMode,
                                QSharedPointer<Label> label,
@@ -122,7 +122,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
   with a QPen \a pen, \a label
   as the Label which owns this object and \a item is the parent QGraphicsItem,
   if any.
-  */
+*/
 FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
                                QSharedPointer<Label> label, QGraphicsItem *item)
     : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {
@@ -130,14 +130,14 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
 
 /*!
   Destructor
-  */
+*/
 FreeDrawSelect::~FreeDrawSelect() {
 }
 
 /*---------------------------- Overrides ------------------------*/
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::addPoint(QPointF &point, const int vertex) {
     UNUSED(point);
     UNUSED(vertex);
@@ -145,14 +145,14 @@ void FreeDrawSelect::addPoint(QPointF &point, const int vertex) {
 
 /*!
   \reimp
-  */
+*/
 QRectF FreeDrawSelect::boundingRect() const {
     return myRect;
 }
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::clickPoint(const QPointF &point) {
     UNUSED(point);
     active = true;
@@ -161,7 +161,7 @@ void FreeDrawSelect::clickPoint(const QPointF &point) {
 
 /*!
   \reimp
-  */
+*/
 bool FreeDrawSelect::isInside(const QPointF &point) const {
     UNUSED(point);
     return false;
@@ -169,7 +169,7 @@ bool FreeDrawSelect::isInside(const QPointF &point) const {
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
@@ -179,15 +179,15 @@ void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
 }
 
 /*!
-  \reimp
-  */
+ * Sets the opacity of the label to \a val
+*/
 void FreeDrawSelect::setOpacity(qreal val) {
     SelectItem::setOpacity(val);
 }
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::paint(QPainter *painter,
                            const QStyleOptionGraphicsItem *option,
                            QWidget *widget) {
@@ -199,14 +199,14 @@ void FreeDrawSelect::paint(QPainter *painter,
 
 /*!
   Sets the objects internal map to \a map without boundary checking.
-  */
+*/
 void FreeDrawSelect::setPointsUnchecked(QPixmap map) {
     myPixmap = map;
     setMirrorMap();
 }
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::read(const QJsonObject &json) {
     myID = json[InstaDamJson::OBJECTID].toInt();
     auto const encoded = json[InstaDamJson::PIXMAP].toString().toLatin1();
@@ -215,7 +215,7 @@ void FreeDrawSelect::read(const QJsonObject &json) {
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) {
     UNUSED(vertex);
     UNUSED(oldP);
@@ -224,21 +224,21 @@ void FreeDrawSelect::resizeItem(const int vertex, QPointF &oldP, QPointF &newP) 
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::toPixmap(QPainter *painter) {
     painter->drawPixmap(QPointF(0., 0.), myPixmap);
 }
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::updatePen(QPen pen) {
     myPen = pen;
 }
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::write(QJsonObject &json) const {
     json[InstaDamJson::OBJECTID] = myID;
     QBuffer buffer;
@@ -251,7 +251,7 @@ void FreeDrawSelect::write(QJsonObject &json) const {
 /*--------------------------------- Mirror ----------------------------*/
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::mirrorHide() const {
     if (mirror != nullptr)
         mirror->SelectItem::hide();
@@ -259,7 +259,7 @@ void FreeDrawSelect::mirrorHide() const {
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::mirrorShow() const {
     if (mirror != nullptr)
         mirror->SelectItem::show();
@@ -267,14 +267,14 @@ void FreeDrawSelect::mirrorShow() const {
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::setMirror(SelectItem *item) {
     mirror = dynamic_cast<FreeDrawSelect*>(item);
 }
 
 /*!
   \reimp
-  */
+*/
 void FreeDrawSelect::updateMirrorScene() const {
     if (mirror != nullptr)
         mirror->scene()->update();
@@ -284,7 +284,7 @@ void FreeDrawSelect::updateMirrorScene() const {
 
 /*!
   Adds \a points to the internal pixel map of selected points.
-  */
+*/
 void FreeDrawSelect::addPoints(QSharedPointer<QPixmap> points) {
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
@@ -297,7 +297,7 @@ void FreeDrawSelect::addPoints(QSharedPointer<QPixmap> points) {
 /*!
   Deletes points along the brush stroke defined by \a start and \a end, with
   the given \a pen, with the changes put in \a outmap.
-  */
+*/
 void FreeDrawSelect::deletePoints(const QPointF &start, const QPointF &end,
                                   QPen pen, QSharedPointer<QPixmap> outmap) {
     QPixmap temp = myPixmap.copy();
@@ -323,7 +323,7 @@ void FreeDrawSelect::deletePoints(const QPointF &start, const QPointF &end,
 
 /*!
   Returns the QGraphicsScene to which this item belongs.
-  */
+*/
 QGraphicsScene* FreeDrawSelect::scene() const {
     return SelectItem::scene();
 }
@@ -331,7 +331,7 @@ QGraphicsScene* FreeDrawSelect::scene() const {
 /*!
   \overload FreeDrawSelect::deletePoints()
   Deletes points based on the pixmap \a map with the given \a pen.
-  */
+*/
 void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map) {
     myPainter.begin(&myPixmap);
     pen.setColor(Qt::red);
@@ -348,7 +348,7 @@ void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map) {
 /*!
   Sets the bounding rectangle and pixel map of the mirror, based on the values
   of this instance.
-  */
+*/
 void FreeDrawSelect::setMirrorMap() {
     if (mirror != nullptr) {
         mirror->myPixmap = myPixmap;
@@ -357,7 +357,7 @@ void FreeDrawSelect::setMirrorMap() {
 
 /*!
   Loads QPixmap \a map into the current object.
-  */
+*/
 void FreeDrawSelect::loadFromPixmap(const QPixmap map) {
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
@@ -379,7 +379,16 @@ void FreeDrawSelect::loadFromPixmap(const QPixmap map) {
     myPainter.end();
 }
 
+/*!
+ Imports a pixmap given as \a map.
+*/
+void FreeDrawSelect::importPixmap(const QPixmap map){
+    myPixmap = map;
+}
 
+/*!
+  Common setup functions called by all consructors.
+*/
 inline void FreeDrawSelect::setup() {
     setMirrorMap();
     QGraphicsPixmapItem::prepareGeometryChange();
@@ -387,6 +396,10 @@ inline void FreeDrawSelect::setup() {
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);
 }
 
+/*!
+  Initialization used by all constructors, sets up the given
+  \a label.
+*/
 inline void FreeDrawSelect::init(QSharedPointer<Label> label) {
     setActiveVertex(0);
     mytype = SelectItem::Freedraw;
@@ -402,89 +415,89 @@ inline void FreeDrawSelect::init(QSharedPointer<Label> label) {
   \fn QString FreeDrawSelect::baseInstructions() const
 
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::insertVertex(const int vertex, const QPointF &point)
   \reimp
 
   Empty function since FreeDrawSelect items have no vertices.
-  */
+*/
 
 /*!
   \fn int FreeDrawSelect::numberOfVertices() const
   \reimp
 
   Returns 0 since FreeDrawSelect items have no vertices.
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::removeVertex(int vertex=UNSELECTED)
   \reimp
 
   Empty function since FreeDrawSelect items have no vertices.
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::resetActiveVertex()
   \reimp
 
   Empty function since FreeDrawSelect items have no vertices.
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::rotate(const QPointF &from, const QPointF &to)
   \reimp
 
   Empty function since FreeDrawSelect items cannot be rotated.
-  */
+*/
 
 /*!
   \fn FreeDrawSelect* FreeDrawSelect::getMirror() const
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::rotateMirror() const
   \reimp
 
   Empty function since FreeDrawSelect items cannot be rotated.
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::setMirrorActive() const
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::setMirrorAdded() const
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::setMirrorMoved() const
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::setMirrorResized() const
   \reimp
-  */
+*/
 
 /*!
   \fn void FreeDrawSelect::setMirrorVertex(int vertex) const
   \reimp
-  */
+*/
 
 /*!
   \fn bool FreeDrawSelect::isVisible() const
 
   Returns whether the FreeDrawSelect object is visible (\c true) on the
   QGraphicsScene or not (\c false).
-  */
+*/
 
 /*!
   \fn QPixmap FreeDrawSelect::getPixmap() const
 
   Returns the internal pixmap.
-  */
+*/

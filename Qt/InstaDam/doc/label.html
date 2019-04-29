@@ -35,13 +35,15 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="label.html#Label-1">Label</a></b>(const QJsonObject &amp;<i>json</i>, int <i>j</i>, bool <i>server</i> = false)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="label.html#dtor.Label">~Label</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem">addItem</a></b>(FreeDrawErase *<i>item</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-1">addItem</a></b>(RectangleSelect *<i>item</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-2">addItem</a></b>(EllipseSelect *<i>item</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-3">addItem</a></b>(PolygonSelect *<i>item</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-4">addItem</a></b>(FreeDrawSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-1">addItem</a></b>(FreeDrawSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-2">addItem</a></b>(RectangleSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-3">addItem</a></b>(EllipseSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-4">addItem</a></b>(PolygonSelect *<i>item</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#addItem-5">addItem</a></b>(SelectItem *<i>item</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#clear">clear</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="label.html#exportLabel">exportLabel</a></b>(const QSize &amp;<i>rect</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QColor </td><td class="memItemRight bottomAlign"><b><a href="label.html#getColor">getColor</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="label.html#getId">getId</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="label.html#getText">getText</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="label.html#readServer">readServer</a></b>(const QJsonObject &amp;<i>json</i>)</td></tr>
@@ -89,27 +91,32 @@
 <!-- @@@~Label -->
 <!-- $$$addItem[overload1]$$$addItemFreeDrawErase* -->
 <h3 class="fn" id="addItem"><a name="addItem"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="freedrawerase.html">FreeDrawErase</a></span> *<i>item</i>)</h3>
-<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not saved.</p>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> (<i>item</i>) objects are not saved.</p>
+<!-- @@@addItem -->
+<!-- $$$addItem$$$addItemFreeDrawSelect* -->
+<h3 class="fn" id="addItem-1"><a name="addItem-1"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="freedrawselect.html">FreeDrawSelect</a></span> *<i>item</i>)</h3>
+<p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
+<p>This convenience function adds a <a href="select.html#freedrawselect">FreeDrawSelect</a> object to the Label</p>
 <!-- @@@addItem -->
 <!-- $$$addItem$$$addItemRectangleSelect* -->
-<h3 class="fn" id="addItem-1"><a name="addItem-1"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="rectangleselect.html">RectangleSelect</a></span> *<i>item</i>)</h3>
+<h3 class="fn" id="addItem-2"><a name="addItem-2"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="rectangleselect.html">RectangleSelect</a></span> *<i>item</i>)</h3>
 <p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
 <p>This convenience function adds a <a href="rectangleselect.html">RectangleSelect</a> object to the Label</p>
 <!-- @@@addItem -->
 <!-- $$$addItem$$$addItemEllipseSelect* -->
-<h3 class="fn" id="addItem-2"><a name="addItem-2"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="ellipseselect.html">EllipseSelect</a></span> *<i>item</i>)</h3>
+<h3 class="fn" id="addItem-3"><a name="addItem-3"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="ellipseselect.html">EllipseSelect</a></span> *<i>item</i>)</h3>
 <p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
 <p>This convenience function adds an <a href="ellipseselect.html">EllipseSelect</a> object to the Label</p>
 <!-- @@@addItem -->
 <!-- $$$addItem$$$addItemPolygonSelect* -->
-<h3 class="fn" id="addItem-3"><a name="addItem-3"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="polygonselect.html">PolygonSelect</a></span> *<i>item</i>)</h3>
+<h3 class="fn" id="addItem-4"><a name="addItem-4"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="polygonselect.html">PolygonSelect</a></span> *<i>item</i>)</h3>
 <p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
 <p>This convenience function adds a <a href="select.html#polygonselect">PolygonSelect</a> object to the Label</p>
 <!-- @@@addItem -->
-<!-- $$$addItem$$$addItemFreeDrawSelect* -->
-<h3 class="fn" id="addItem-4"><a name="addItem-4"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="freedrawselect.html">FreeDrawSelect</a></span> *<i>item</i>)</h3>
+<!-- $$$addItem$$$addItemSelectItem* -->
+<h3 class="fn" id="addItem-5"><a name="addItem-5"></a><span class="type">void</span> Label::<span class="name">addItem</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>)</h3>
 <p>This function overloads <a href="label.html#addItem">addItem</a>().</p>
-<p>This convenience function adds a <a href="select.html#freedrawselect">FreeDrawSelect</a> object to the Label</p>
+<p>This convenience function adds a <a href="selectitem.html">SelectItem</a> object to the Label</p>
 <!-- @@@addItem -->
 <!-- $$$clear[overload1]$$$clear -->
 <h3 class="fn" id="clear"><a name="clear"></a><span class="type">void</span> Label::<span class="name">clear</span>()</h3>
@@ -123,6 +130,10 @@
 <h3 class="fn" id="getColor"><a name="getColor"></a><span class="type"><a href="http://doc.qt.io/qt-5/qcolor.html">QColor</a></span> Label::<span class="name">getColor</span>() const</h3>
 <p>Convenience function which returns the <a href="http://doc.qt.io/qt-5/qcolor.html">QColor</a> of this Label.</p>
 <!-- @@@getColor -->
+<!-- $$$getId[overload1]$$$getId -->
+<h3 class="fn" id="getId"><a name="getId"></a><span class="type">int</span> Label::<span class="name">getId</span>()</h3>
+<p>Convenience funtion for getting the id of this Label.</p>
+<!-- @@@getId -->
 <!-- $$$getText[overload1]$$$getText -->
 <h3 class="fn" id="getText"><a name="getText"></a><span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> Label::<span class="name">getText</span>() const</h3>
 <p>Convenience funtion for getting the test of this Label as a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a></p>

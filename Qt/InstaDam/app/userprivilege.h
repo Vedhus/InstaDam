@@ -18,8 +18,8 @@ public:
     QString privilege;
 
 signals:
-    bool on_pushButton_clicked();
-    bool on_pushButton_2_clicked();
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 
 private:
     Ui::UserPrivilege *ui;

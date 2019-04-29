@@ -33,14 +33,19 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="project.html#Project">Project</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="project.html#dtor.Project">~Project</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#addLabel">addLabel</a></b>(QSharedPointer&lt;Label&gt; <i>lb</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#clearAllLabels">clearAllLabels</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="project.html#getId">getId</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="project.html#getImageId">getImageId</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QSharedPointer&lt;Label&gt; </td><td class="memItemRight bottomAlign"><b><a href="project.html#getLabel">getLabel</a></b>(int <i>index</i>) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QSharedPointer&lt;Label&gt; &gt; </td><td class="memItemRight bottomAlign"><b><a href="project.html#getLabels">getLabels</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="project.html#getName">getName</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="project.html#numLabels">numLabels</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#resetLabels">resetLabels</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#setId">setId</a></b>(int <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#setImageId">setImageId</a></b>(int <i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#setLabel">setLabel</a></b>(int <i>index</i>, QSharedPointer&lt;Label&gt; <i>lb</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#setLabels">setLabels</a></b>(QVector&lt;QSharedPointer&lt;Label&gt; &gt; <i>lab</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="project.html#setName">setName</a></b>(QString <i>name</i>)</td></tr>
 </table></div>
 <a name="details"></a>
 <!-- $$$Project-description -->
@@ -53,7 +58,7 @@
 <h2>Member Function Documentation</h2>
 <!-- $$$Project[overload1]$$$Project -->
 <h3 class="fn" id="Project"><a name="Project"></a>Project::<span class="name">Project</span>()</h3>
-<p>Creates an instance</p>
+<p>Creates an instance of Project.</p>
 <!-- @@@Project -->
 <!-- $$$~Project[overload1]$$$~Project -->
 <h3 class="fn" id="dtor.Project"><a name="dtor.Project"></a>Project::<span class="name">~Project</span>()</h3>
@@ -63,17 +68,30 @@
 <h3 class="fn" id="addLabel"><a name="addLabel"></a><span class="type">void</span> Project::<span class="name">addLabel</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>lb</i>)</h3>
 <p>Adds Label <i>lb</i> to the internal list.</p>
 <!-- @@@addLabel -->
+<!-- $$$clearAllLabels[overload1]$$$clearAllLabels -->
+<h3 class="fn" id="clearAllLabels"><a name="clearAllLabels"></a><span class="type">void</span> Project::<span class="name">clearAllLabels</span>()</h3>
+<p>Clear all the labels in the Project.</p>
+<!-- @@@clearAllLabels -->
 <!-- $$$getId[overload1]$$$getId -->
 <h3 class="fn" id="getId"><a name="getId"></a><span class="type">int</span> Project::<span class="name">getId</span>()</h3>
 <p>Returns the id of this instance.</p>
 <!-- @@@getId -->
+<!-- $$$getImageId[overload1]$$$getImageId -->
+<h3 class="fn" id="getImageId"><a name="getImageId"></a><span class="type">int</span> Project::<span class="name">getImageId</span>()</h3>
+<p>Returns the image_id of the Project.</p>
+<!-- @@@getImageId -->
 <!-- $$$getLabel[overload1]$$$getLabelint -->
 <h3 class="fn" id="getLabel"><a name="getLabel"></a><span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; Project::<span class="name">getLabel</span>(<span class="type">int</span> <i>index</i>) const</h3>
 <p>Returns the Label at index <i>index</i>.</p>
 <!-- @@@getLabel -->
 <!-- $$$getLabels[overload1]$$$getLabels -->
 <h3 class="fn" id="getLabels"><a name="getLabels"></a><span class="type"><a href="http://doc.qt.io/qt-5/qvector.html">QVector</a></span>&lt;<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; &gt; Project::<span class="name">getLabels</span>() const</h3>
+<p>Returns all the Labels in the Project as a <a href="http://doc.qt.io/qt-5/qvector.html">QVector</a>.</p>
 <!-- @@@getLabels -->
+<!-- $$$getName[overload1]$$$getName -->
+<h3 class="fn" id="getName"><a name="getName"></a><span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> Project::<span class="name">getName</span>()</h3>
+<p>Returns the name of the Project.</p>
+<!-- @@@getName -->
 <!-- $$$numLabels[overload1]$$$numLabels -->
 <h3 class="fn" id="numLabels"><a name="numLabels"></a><span class="type">int</span> Project::<span class="name">numLabels</span>() const</h3>
 <p>Returns the current number of Labels in the internal list.</p>
@@ -86,13 +104,22 @@
 <h3 class="fn" id="setId"><a name="setId"></a><span class="type">void</span> Project::<span class="name">setId</span>(<span class="type">int</span> <i>id</i>)</h3>
 <p>Sets the id of this instance to <i>id</i>.</p>
 <!-- @@@setId -->
+<!-- $$$setImageId[overload1]$$$setImageIdint -->
+<h3 class="fn" id="setImageId"><a name="setImageId"></a><span class="type">void</span> Project::<span class="name">setImageId</span>(<span class="type">int</span> <i>id</i>)</h3>
+<p>Set the image_id of the Project to <i>id</i>.</p>
+<!-- @@@setImageId -->
 <!-- $$$setLabel[overload1]$$$setLabelintQSharedPointer<Label> -->
 <h3 class="fn" id="setLabel"><a name="setLabel"></a><span class="type">void</span> Project::<span class="name">setLabel</span>(<span class="type">int</span> <i>index</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>lb</i>)</h3>
 <p>Sets the label at indes <i>index</i> to <i>lb</i>.</p>
 <!-- @@@setLabel -->
 <!-- $$$setLabels[overload1]$$$setLabelsQVector<QSharedPointer<Label>> -->
 <h3 class="fn" id="setLabels"><a name="setLabels"></a><span class="type">void</span> Project::<span class="name">setLabels</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qvector.html">QVector</a></span>&lt;<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; &gt; <i>lab</i>)</h3>
+<p>Set all of the labels in the Project with the given <i>lab</i>.</p>
 <!-- @@@setLabels -->
+<!-- $$$setName[overload1]$$$setNameQString -->
+<h3 class="fn" id="setName"><a name="setName"></a><span class="type">void</span> Project::<span class="name">setName</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>name</i>)</h3>
+<p>Set the name of the Project to <i>name</i>.</p>
+<!-- @@@setName -->
 </div>
 <hr/><p class="footer"><small></small></p></body>
 </html>

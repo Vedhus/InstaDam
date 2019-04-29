@@ -11,7 +11,7 @@ namespace Ui {
 class ProjectList;
 }
 
-class ProjectList : public QDialog
+class ProjectList : public QWidget
 {
     Q_OBJECT
 
@@ -24,13 +24,17 @@ public:
 public slots:
     void openProject(QListWidgetItem *);
     void deleteProject(QListWidgetItem *);
-    void getLabelsReplyFinished();
-    void getLabelsReplyFin(QNetworkReply*);
-    void deleteReplyFinished();
-    void deleteReplyFin(QNetworkReply*);
+
 signals:
-    void projectJsonReceived(QJsonObject);
+    void projectJsonReceived(QJsonObject json);
+    void projectIdChanged(int id);
     void instadamClearAll();
+    void projectDeleted(int id);
+
+public slots:
+    void openProject(QListWidgetItem *project_name);
+    void deleteProject(QListWidgetItem *project_name);
+    void confirmProjectDeletion(QListWidgetItem *project_name);
 
 private:
     Ui::ProjectList *ui;
@@ -42,3 +46,14 @@ private:
 };
 
 #endif // PROJECTLIST_H
+
+class ProjectList : public QDialog
+{
+class ProjectList : public QWidget {
+public slots:
+    void openProject(QListWidgetItem *);
+    void deleteProject(QListWidgetItem *);
+    void getLabelsReplyFinished();
+    void getLabelsReplyFin(QNetworkReply*);
+    void deleteReplyFinished();
+    void deleteReplyFin(QNetworkReply*);

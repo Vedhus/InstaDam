@@ -27,7 +27,8 @@ private slots:
 
 private:
     Ui::Register *ui;
-    void lunchMainInstadam();
+    void replyFinished();
+    void launchMainInstadam();
     QNetworkReply *rep;
     QNetworkAccessManager *manager;
     QString accessToken;

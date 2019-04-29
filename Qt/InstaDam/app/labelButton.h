@@ -18,7 +18,7 @@ class LabelButton : public QPushButton {
     void opacity(QSharedPointer<Label> label, int op);
  public slots:
     void wasClicked();
-    void reemitValueChanged(int);
+    void reemitValueChanged(int value);
 };
 
 class LabelButtonFilter : public QPushButton {

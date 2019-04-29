@@ -38,20 +38,18 @@ class ImageList : public QWidget {
     int getSelectedIdIndex();
     void setSelectedIdIndex(int id);
     void fileReplyFinished();
-
-
+    void setAnnotated();
 
  signals:
     void fileDownloaded(QString path);
-    void allAnnotationsLoaded(QJsonObject,fileTypes);
-
-
+    void allAnnotationsLoaded(QJsonObject json,fileTypes type);
+    void clearGUI();
 
  private:
     QList<int> idList;
+    QList<bool> annotatedList;
     int selectedIdIndex;
     QList<QString> pathList;
-    int numAnnotationsReceived=0;
     Ui::ImageList *ui;
     QString databaseURL;
     QString accessToken;

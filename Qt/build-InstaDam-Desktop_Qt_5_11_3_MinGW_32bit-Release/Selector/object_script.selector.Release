@@ -1,6 +1,5 @@
 INPUT(
 ./release\polygonSelect.o
-./release\commands.o
 ./release\ellipseSelect.o
 ./release\photoScene.o
 ./release\rectangleSelect.o
