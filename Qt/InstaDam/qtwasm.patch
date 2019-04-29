@@ -1,0 +1,86 @@
+diff -ruN QtOrig/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl.cpp QtHack/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl.cpp
+--- QtOrig/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl.cpp	2019-04-09 16:58:53.000000000 -0500
++++ QtHack/friedel/Downloads/Qt13/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl.cpp	2019-04-29 16:34:23.127065375 -0500
+@@ -104,7 +104,7 @@
+     QString statusText = QString::fromStdString(xhr["statusText"].as<std::string>());
+     int readyState = xhr["readyState"].as<int>();
+
+-    if (status == 200 || status == 203) {
++    if (status == 200 || status == 201 || status == 203) {
+         QString responseString;
+         const std::string responseType = xhr["responseType"].as<std::string>();
+         if (responseType.length() == 0 || responseType == "document" || responseType == "text") {
+@@ -280,9 +280,8 @@
+     request = req;
+     url = request.url();
+     operation = op;
+-
+     q->QIODevice::open(QIODevice::ReadOnly);
+-    if (outgoingData && outgoingData->isSequential()) {
++    if (outgoingData && !outgoingData->isSequential()) {
+         bool bufferingDisallowed =
+             request.attribute(QNetworkRequest::DoNotBufferUploadDataAttribute, false).toBool();
+
+@@ -345,14 +344,17 @@
+     val dataToSend = val::null();
+     QByteArray extraData;
+
+-    if (outgoingData) // data from post request
++    if (outgoingData) { // data from post request
++        outgoingData->reset();
+         extraData = outgoingData->readAll();
++    }
+
+     if (contentType.contains("text") ||
+             contentType.contains("json") ||
+             contentType.contains("form")) {
+-        if (extraData.size() > 0)
+-            extraDataString.fromUtf8(extraData);
++        if (extraData.size() > 0){
++            extraDataString = QString::fromUtf8(extraData);
++        }
+     }
+     if (contentType.contains("json")) {
+         if (!extraDataString.isEmpty()) {
+@@ -526,12 +528,13 @@
+     qint64 bytesToBuffer = 0;
+
+     // read data into our buffer
++    bool foundData = false;   // this may be an unstable hack, but is needed for now as outgoingData->read
++                              // does not return -1 when it should, instead it returns 0
+     forever {
+         bytesToBuffer = outgoingData->bytesAvailable();
+         // unknown? just try 2 kB, this also ensures we always try to read the EOF
+         if (bytesToBuffer <= 0)
+             bytesToBuffer = 2*1024;
+-
+         char *dst = outgoingDataBuffer->reserve(bytesToBuffer);
+         bytesBuffered = outgoingData->read(dst, bytesToBuffer);
+
+@@ -544,11 +547,13 @@
+         } else if (bytesBuffered == 0) {
+             // nothing read right now, just wait until we get called again
+             outgoingDataBuffer->chop(bytesToBuffer);
+-
++            if (foundData)
++                _q_bufferOutgoingDataFinished();
+             break;
+         } else {
+             // don't break, try to read() again
+             outgoingDataBuffer->chop(bytesToBuffer - bytesBuffered);
++            foundData = true;
+         }
+     }
+ }
+diff -ruN /home/friedel/Downloads/Qttemp/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl_p.h /home/friedel/Downloads/Qt13/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl_p.h
+--- QtOrig/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl_p.h	2019-04-09 16:58:53.000000000 -0500
++++ QtHack/5.13.0/Src/qtbase/src/network/access/qnetworkreplywasmimpl_p.h	2019-04-26 11:39:39.057239841 -0500
+@@ -93,6 +93,8 @@
+     Q_PRIVATE_SLOT(d_func(), void emitReplyError(QNetworkReply::NetworkError errorCode, const QString &errorString))
+     Q_PRIVATE_SLOT(d_func(), void emitDataReadProgress(qint64 done, qint64 total))
+     Q_PRIVATE_SLOT(d_func(), void dataReceived(char *buffer, int bufferSize))
++    Q_PRIVATE_SLOT(d_func(), void _q_bufferOutgoingData())
++    Q_PRIVATE_SLOT(d_func(), void _q_bufferOutgoingDataFinished())
+
+ private:
+     QByteArray methodName() const;
