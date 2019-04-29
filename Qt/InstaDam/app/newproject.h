@@ -23,7 +23,6 @@ class newproject : public QDialog {
 
     Project *newPr;
     bool runningLocally = true;
-//    void saveToServer();
     QString databaseURL;
     QString accessToken;
 #ifdef TEST
@@ -46,6 +45,12 @@ class newproject : public QDialog {
     void nameAcceptClicked();
     void colorPicked(const QColor &color);
 #endif
+
+    void on_buttonBox_rejected();
+
+signals:
+    void sendProject();
+
  private:
     Ui::newproject *ui;
     Ui::labelDialog *labelDialog;

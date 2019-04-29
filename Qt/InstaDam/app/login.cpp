@@ -37,7 +37,7 @@ Login::~Login() {
 }
 
 /*!
-  Processes the X button click.
+  Processes the "Register" button click.
 */
 void Login::on_pushButton_3_clicked() {
     Register *reg = new Register;
@@ -46,7 +46,7 @@ void Login::on_pushButton_3_clicked() {
 }
 
 /*!
-  Sends a request to login
+  Processes the "Login" button click: Sends a request to login
 */
 void Login::on_pushButton_clicked() {
     QString user = ui->username->text();
@@ -69,7 +69,7 @@ void Login::on_pushButton_clicked() {
 }
 
 /*!
-  Received the reply for login
+  Received the reply for Login
 */
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
@@ -77,8 +77,11 @@ void Login::replyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please double check your URL and try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
@@ -93,9 +96,8 @@ void Login::replyFinished() {
 }
 
 /*!
-  Lists the projects.
+  Lunches the main InstaDam Window after loginin in successfully
 */
-
 void Login::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
@@ -103,14 +105,14 @@ void Login::launchMainInstadam(){
 }
 
 /*!
-  Processes Z button click.
+  Processes the "Cancel" button click.
 */
 void Login::on_pushButton_2_clicked() {
     this->close();
 }
 
 /*!
-  Goes back to the starting widget when the button is clicked
+  Processes the "Back" button click: Goes back to the starting widget
 */
 void Login::on_pushButton_4_clicked() {
     StartingWidget *startingWidget = new StartingWidget;

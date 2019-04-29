@@ -77,7 +77,6 @@ class InstaDam : public QMainWindow {
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
-    void setCurrentProject(Project*);
     void setCurrentProjectId(int id);
     void setButtonsConfiguration();
     void setCurrentItem(SelectItem *item, bool enable = false) {
@@ -247,6 +246,7 @@ public slots:
     Qt::MouseButton currentButton = Qt::NoButton;
     QHash<QString, QBuffer*> exportFiles;
     QVector<QSharedPointer<Label> > tempLabels;
+    bool currentProjectLoaded = false;
 
     QPixmap maskSelection(SelectItem *item);
     void imagesReplyFinished();
@@ -262,6 +262,7 @@ public slots:
     void fileReplyFinished();
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
+    void currentProjectDeleted(int);
 };
 
 #endif  // INSTADAM_H

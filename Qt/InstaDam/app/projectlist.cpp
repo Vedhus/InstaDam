@@ -17,6 +17,8 @@
 #include "newproject.h"
 #include "serverprojectname.h"
 #include "imagelist.h"
+#include "projectdeletionconfirmation.h"
+
 /*!
   \class ProjectList
   \ingroup app
@@ -68,19 +70,25 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                         proj_details << "Annotator";
                     }
                 }
-            }
-            ui->projectsTable->addItem(proj_details.join(" - "));
-            if (this->useCase=="OPEN") {
-                connect(ui->projectsTable,
-                        SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
-                        SLOT(openProject(QListWidgetItem *)));
-            } else if (this->useCase=="DELETE") {
-                connect(ui->projectsTable,
-                        SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
-                        SLOT(deleteProject(QListWidgetItem *)));
-            }
+           ui->projectsTable->addItem(proj_details.join(" - "));
         }
     }
+    if(this->useCase=="OPEN"){
+         connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+     }
+    else if (this->useCase=="DELETE") {
+        connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(confirmProjectDeletion(QListWidgetItem *)));
+     }
+}
+
+/*!
+  Starts a wiedget to confirm project deletion.
+  */
+void ProjectList::confirmProjectDeletion(QListWidgetItem *project_name){
+    projectDeletionConfirmation *confirmation = new projectDeletionConfirmation();
+    confirmation->project_name = project_name;
+    connect(confirmation, SIGNAL(projectDeleted(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
+    confirmation->show();
 }
 
 /*!
@@ -144,13 +152,17 @@ void ProjectList::deleteReplyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     }  else {
-        this->hide();
-        msgBox.setText("The project has been successfully deleted");
-        msgBox.exec();
-    }
+            this->hide();
+            msgBox.setText("The project has been successfully deleted");
+            msgBox.exec();
+            emit projectDeleted(selectedProject);
+      }
 }
 
 /*!

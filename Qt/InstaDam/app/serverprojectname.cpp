@@ -16,6 +16,7 @@ serverProjectName::serverProjectName(QWidget *parent) :
     QWidget(parent), ui(new Ui::serverProjectName) {
     ui->setupUi(this);
 }
+
 /*!
   Destructor.
  */
@@ -24,7 +25,7 @@ serverProjectName::~serverProjectName() {
 }
 
 /*!
-  Called when button is clicked
+  Hides the widget upon pressing cancel.
  */
 void serverProjectName::on_pushButton_2_clicked() {
     hide();

@@ -49,7 +49,7 @@ void newproject::nameAcceptClicked() {
 #endif
 
 /*!
-  Processes a button click.
+  Processes the add label (OK) button click.
 */
 void newproject::on_pushButton_clicked() {
 #ifndef TEST
@@ -96,7 +96,14 @@ void newproject::colorPicked(const QColor &oldcolor) {
 */
 Project* newproject::on_buttonBox_accepted()
 {
+    emit sendProject();
     return this->newPr;
 }
 
-
+/*!
+  Processes the "Cancel" button being clicked.
+  */
+void newproject::on_buttonBox_rejected()
+{
+    this->close();
+}

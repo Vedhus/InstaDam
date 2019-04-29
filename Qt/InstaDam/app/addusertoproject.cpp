@@ -36,7 +36,7 @@ AddUserToProject::~AddUserToProject() {
 }
 
 /*!
-  Called when button is clicked.
+  reads the user query and sends a request to receive the search results from the server
 */
 void AddUserToProject::on_pushButton_clicked() {
     QString userInfo = ui->userInfoInput->toPlainText();
@@ -54,22 +54,26 @@ void AddUserToProject::on_pushButton_clicked() {
 }
 
 /*!
-  Called when button is clicked.
+  Processes the "Cancel" Button
 */
 void AddUserToProject::on_pushButton_2_clicked() {
     this->hide();
 }
 
 /*!
-  Called when the http response is received.
+    receives the reply for the search request
 */
 void AddUserToProject::replyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
-
+    QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         QJsonObject obj = jsonReply.object();
         qInfo() << obj;
@@ -79,6 +83,7 @@ void AddUserToProject::replyFinished() {
 
 /*!
   Lists the users given in \a obj.
+    Lists all the users that share a similarity with the search query as received from server
 */
 void AddUserToProject::listUsers(QJsonObject obj) {
     ui->userList->clear();
@@ -100,7 +105,9 @@ void AddUserToProject::listUsers(QJsonObject obj) {
 }
 
 /*!
-  Called when button is clicked.
+    Adds a user to the project
+    (at this stage: it's the same whether the user is in the
+    project or not)
 */
 void AddUserToProject::on_addToProject_clicked() {
     this->userInProject = false;
@@ -108,7 +115,9 @@ void AddUserToProject::on_addToProject_clicked() {
 }
 
 /*!
-  Called when Update Privliges is clicked.
+    Updates the privilege of an existing user in the project
+    (at this stage: it's the same whether the user is in the
+    project or not)
 */
 void AddUserToProject::on_updatePrivilege_clicked() {
     this->userInProject = true;
@@ -116,7 +125,7 @@ void AddUserToProject::on_updatePrivilege_clicked() {
 }
 
 /*!
-  Updates the user data in the database.
+    displays a widget to allow the user to select new user privilege and waits for respond
 */
 void AddUserToProject::updateUser() {
     if (ui->userList->selectedItems().size()!= 0) {
@@ -133,7 +142,7 @@ void AddUserToProject::updateUser() {
 }
 
 /*!
-  Adds the annotator role to the user.
+    adds a user to a project as annotator
 */
 void AddUserToProject::addAsAnnotator() {
     this->privilege = "r";
@@ -142,40 +151,40 @@ void AddUserToProject::addAsAnnotator() {
 }
 
 /*!
-  Adds the admin role to the user.
+    adds a user to a project as admin
 */
 void AddUserToProject::addAsAdmin() {
     this->privilege = "rw";
     this->add();
     userPrivilege->hide();
 }
-
 /*!
-  Adds a new user to the database.
-*/
-void AddUserToProject::add() {
-    QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
-    QString privilege = this->privilege.toLower();
-    QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
-    QUrl dabaseLink = QUrl(databaseLoginURL);
-    QJsonObject js
-    {
-        {"access_type", privilege},
-        {"username", userName}
-    };
-    QJsonDocument doc(js);
-    QByteArray bytes = doc.toJson();
-    QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    rep = manager->put(req, bytes);
-    connect(rep, &QNetworkReply::finished,
-            this, &AddUserToProject::privilegeReplyFinished);
+    sends the request to update the user privielge and waits for a reponse
+  */
+void AddUserToProject::add(){
+        QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
+        QString privilege = this->privilege.toLower();
+        QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
+        QUrl dabaseLink = QUrl(databaseLoginURL);
+        QJsonObject js
+        {
+            {"access_type", privilege},
+            {"username", userName}
+        };
+        QJsonDocument doc(js);
+        QByteArray bytes = doc.toJson();
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
+        req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        rep = manager->put(req, bytes);
+        connect(rep, &QNetworkReply::finished,
+                this, &AddUserToProject::privilegeReplyFinished);
+
 }
 
 /*!
-  Called when a reply is received from a query update.
+    Receives the update user privilege response from backend
 */
 void AddUserToProject::privilegeReplyFinished() {
     QByteArray strReply = rep->readAll();
@@ -183,8 +192,11 @@ void AddUserToProject::privilegeReplyFinished() {
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
-        msgBox.setText("Ooops! Network error, please try again");
-        msgBox.exec();
+        QString message = jsonReply.object().value("msg").toString();
+        if(message!=""){
+            msgBox.setText(message);
+            msgBox.exec();
+        }
     } else {
         msgBox.setText("User privileges were updated successfully");
         msgBox.exec();

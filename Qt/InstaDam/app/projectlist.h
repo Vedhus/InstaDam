@@ -20,15 +20,16 @@ public:
      QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
-
 signals:
     void projectJsonReceived(QJsonObject json);
     void projectIdChanged(int id);
     void instadamClearAll();
+    int projectDeleted(int);
 
 public slots:
     void openProject(QListWidgetItem *project_name);
     void deleteProject(QListWidgetItem *project_name);
+    void confirmProjectDeletion(QListWidgetItem *project_name);
 
 private:
     Ui::ProjectList *ui;
