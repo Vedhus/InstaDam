@@ -36,7 +36,8 @@ AddUserToProject::~AddUserToProject() {
 }
 
 /*!
-  reads the user query and sends a request to receive the search results from the server
+  Reads the user query and sends a request to receive the search results from
+  the server.
 */
 void AddUserToProject::on_pushButton_clicked() {
     QString userInfo = ui->userInfoInput->toPlainText();
@@ -54,14 +55,14 @@ void AddUserToProject::on_pushButton_clicked() {
 }
 
 /*!
-  Processes the "Cancel" Button
+  Processes the "Cancel" Button.
 */
 void AddUserToProject::on_pushButton_2_clicked() {
     this->hide();
 }
 
 /*!
-    receives the reply for the search request
+    Receives the reply for the search request.
 */
 void AddUserToProject::replyFinished() {
     QByteArray strReply = rep->readAll();
@@ -82,8 +83,8 @@ void AddUserToProject::replyFinished() {
 }
 
 /*!
-  Lists the users given in \a obj.
-    Lists all the users that share a similarity with the search query as received from server
+  Lists all the users that share a similarity with the search query as received
+  from server as \a obj.
 */
 void AddUserToProject::listUsers(QJsonObject obj) {
     ui->userList->clear();
@@ -125,7 +126,7 @@ void AddUserToProject::on_updatePrivilege_clicked() {
 }
 
 /*!
-    displays a widget to allow the user to select new user privilege and waits for respond
+    Displays a widget to allow the user to select new user privilege and waits for respond
 */
 void AddUserToProject::updateUser() {
     if (ui->userList->selectedItems().size()!= 0) {
@@ -142,7 +143,7 @@ void AddUserToProject::updateUser() {
 }
 
 /*!
-    adds a user to a project as annotator
+    Adds a user to a project as annotator
 */
 void AddUserToProject::addAsAnnotator() {
     this->privilege = "r";
@@ -151,7 +152,7 @@ void AddUserToProject::addAsAnnotator() {
 }
 
 /*!
-    adds a user to a project as admin
+    Adds a user to a project as admin
 */
 void AddUserToProject::addAsAdmin() {
     this->privilege = "rw";
@@ -159,32 +160,31 @@ void AddUserToProject::addAsAdmin() {
     userPrivilege->hide();
 }
 /*!
-    sends the request to update the user privielge and waits for a reponse
-  */
+  Sends the request to update the user privielge and waits for a reponse
+*/
 void AddUserToProject::add(){
-        QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
-        QString privilege = this->privilege.toLower();
-        QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
-        QUrl dabaseLink = QUrl(databaseLoginURL);
-        QJsonObject js
-        {
-            {"access_type", privilege},
-            {"username", userName}
-        };
-        QJsonDocument doc(js);
-        QByteArray bytes = doc.toJson();
-        QNetworkRequest req = QNetworkRequest(dabaseLink);
-        QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-        req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-        rep = manager->put(req, bytes);
-        connect(rep, &QNetworkReply::finished,
-                this, &AddUserToProject::privilegeReplyFinished);
-
+    QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
+    QString privilege = this->privilege.toLower();
+    QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
+    QUrl dabaseLink = QUrl(databaseLoginURL);
+    QJsonObject js
+    {
+        {"access_type", privilege},
+        {"username", userName}
+    };
+    QJsonDocument doc(js);
+    QByteArray bytes = doc.toJson();
+    QNetworkRequest req = QNetworkRequest(dabaseLink);
+    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
+    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    rep = manager->put(req, bytes);
+    connect(rep, &QNetworkReply::finished,
+            this, &AddUserToProject::privilegeReplyFinished);
 }
 
 /*!
-    Receives the update user privilege response from backend
+    Receives the update user privilege response from backend.
 */
 void AddUserToProject::privilegeReplyFinished() {
     QByteArray strReply = rep->readAll();

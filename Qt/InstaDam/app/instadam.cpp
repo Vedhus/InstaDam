@@ -1919,7 +1919,7 @@ void InstaDam::on_addSelectionButton_clicked() {
 }
 
 /*!
- Sets the id of the current project
+ Sets the id of the current project to \a id.
  */
 void InstaDam::setCurrentProjectId(int id)
 {
@@ -1951,7 +1951,7 @@ void InstaDam::revert() {
 }
 
 /*!
- Toggles hiding the labels on the mask viewer.
+ Toggles hiding the labels on the mask viewer, by using \a state.
 */
 void InstaDam::processShowHide(int state) {
     for (int i = 0; i < currentProject->numLabels(); i++) {

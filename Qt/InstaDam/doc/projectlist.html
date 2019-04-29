@@ -47,6 +47,7 @@
 <a name="public-slots"></a>
 <h2 id="public-slots">Public Slots</h2>
 <div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#confirmProjectDeletion">confirmProjectDeletion</a></b>(QListWidgetItem *<i>project_name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#deleteProject">deleteProject</a></b>(QListWidgetItem *<i>project_name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#openProject">openProject</a></b>(QListWidgetItem *<i>project_name</i>)</td></tr>
 </table></div>
@@ -58,6 +59,7 @@
 <h2 id="signals">Signals</h2>
 <div class="table"><table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#instadamClearAll">instadamClearAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#projectDeleted">projectDeleted</a></b>(int <i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#projectIdChanged">projectIdChanged</a></b>(int <i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#projectJsonReceived">projectJsonReceived</a></b>(QJsonObject <i>json</i>)</td></tr>
 </table></div>
@@ -110,6 +112,10 @@
 <h3 class="fn" id="addItems"><a name="addItems"></a><span class="type">void</span> ProjectList::<span class="name">addItems</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsondocument.html">QJsonDocument</a></span> <i>obj</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>databaseURL</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>accessToken</i>)</h3>
 <p>Adds Projects to this object based on the input <i>obj</i>, <i>databaseURL</i>, and <i>accessToken</i>.</p>
 <!-- @@@addItems -->
+<!-- $$$confirmProjectDeletion[overload1]$$$confirmProjectDeletionQListWidgetItem* -->
+<h3 class="fn" id="confirmProjectDeletion"><a name="confirmProjectDeletion"></a><code>[slot] </code><span class="type">void</span> ProjectList::<span class="name">confirmProjectDeletion</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlistwidgetitem.html">QListWidgetItem</a></span> *<i>project_name</i>)</h3>
+<p>Starts a widget to confirm project deletion of <i>project_name</i>.</p>
+<!-- @@@confirmProjectDeletion -->
 <!-- $$$deleteProject[overload1]$$$deleteProjectQListWidgetItem* -->
 <h3 class="fn" id="deleteProject"><a name="deleteProject"></a><code>[slot] </code><span class="type">void</span> ProjectList::<span class="name">deleteProject</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlistwidgetitem.html">QListWidgetItem</a></span> *<i>project_name</i>)</h3>
 <p>Sends a project deletion request for <i>project_name</i>.</p>
@@ -122,6 +128,10 @@
 <h3 class="fn" id="openProject"><a name="openProject"></a><code>[slot] </code><span class="type">void</span> ProjectList::<span class="name">openProject</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlistwidgetitem.html">QListWidgetItem</a></span> *<i>project_name</i>)</h3>
 <p>Slot triggered to open the Project based on <i>project_name</i>.</p>
 <!-- @@@openProject -->
+<!-- $$$projectDeleted[overload1]$$$projectDeletedint -->
+<h3 class="fn" id="projectDeleted"><a name="projectDeleted"></a><code>[signal] </code><span class="type">void</span> ProjectList::<span class="name">projectDeleted</span>(<span class="type">int</span> <i>id</i>)</h3>
+<p>Signal sent when a project, <i>id</i>, is deleted.</p>
+<!-- @@@projectDeleted -->
 <!-- $$$projectIdChanged[overload1]$$$projectIdChangedint -->
 <h3 class="fn" id="projectIdChanged"><a name="projectIdChanged"></a><code>[signal] </code><span class="type">void</span> ProjectList::<span class="name">projectIdChanged</span>(<span class="type">int</span> <i>id</i>)</h3>
 <p>This signal is emitted when a project id is changed to <i>id</i>.</p>

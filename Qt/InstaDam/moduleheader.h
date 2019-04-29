@@ -25,6 +25,7 @@
 #include "photoviewer.h"
 #include "picpushbutton.h"
 #include "pixmapops.h"
+#include "projectdeletionconfirmation.h"
 #include "project.h"
 #include "projectlist.h"
 #include "register.h"

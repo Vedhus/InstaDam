@@ -70,19 +70,19 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
                         proj_details << "Annotator";
                     }
                 }
-           ui->projectsTable->addItem(proj_details.join(" - "));
+            }
+            ui->projectsTable->addItem(proj_details.join(" - "));
         }
     }
-    if(this->useCase=="OPEN"){
+    if (this->useCase=="OPEN") {
          connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
-     }
-    else if (this->useCase=="DELETE") {
+    } else if (this->useCase=="DELETE") {
         connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(confirmProjectDeletion(QListWidgetItem *)));
-     }
+    }
 }
 
 /*!
-  Starts a wiedget to confirm project deletion.
+  Starts a widget to confirm project deletion of \a project_name.
   */
 void ProjectList::confirmProjectDeletion(QListWidgetItem *project_name){
     projectDeletionConfirmation *confirmation = new projectDeletionConfirmation();
@@ -182,3 +182,9 @@ void ProjectList::deleteReplyFinished() {
 
   This signal is emitted when a project list is cleared.
 */
+
+/*!
+  \fn void ProjectList::projectDeleted(int id)
+  Signal sent when a project, \a id,  is deleted.
+*/
+

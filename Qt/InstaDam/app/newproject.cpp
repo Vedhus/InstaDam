@@ -107,3 +107,9 @@ void newproject::on_buttonBox_rejected()
 {
     this->close();
 }
+
+/*!
+  \fn void newproject::sendProject()
+
+  Signal emitted when a new project is sent.
+  */

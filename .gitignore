@@ -167,3 +167,5 @@ Qt/InstaDam/im2\.JPG_ggbsd\.png
 *.mem
 
 Qt/InstaDam/instadam_doc\.pdf
+
+Qt/InstaDam/app/ui_projectdeletionconfirmation\.h

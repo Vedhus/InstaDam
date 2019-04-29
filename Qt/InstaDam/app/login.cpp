@@ -46,7 +46,7 @@ void Login::on_pushButton_3_clicked() {
 }
 
 /*!
-  Processes the "Login" button click: Sends a request to login
+  Processes the "Login" button click: Sends a request to login.
 */
 void Login::on_pushButton_clicked() {
     QString user = ui->username->text();
@@ -69,7 +69,7 @@ void Login::on_pushButton_clicked() {
 }
 
 /*!
-  Received the reply for Login
+  Received the reply for Login.
 */
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
@@ -96,7 +96,7 @@ void Login::replyFinished() {
 }
 
 /*!
-  Lunches the main InstaDam Window after loginin in successfully
+  Lunches the main InstaDam Window after loginin in successfully.
 */
 void Login::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
@@ -112,7 +112,7 @@ void Login::on_pushButton_2_clicked() {
 }
 
 /*!
-  Processes the "Back" button click: Goes back to the starting widget
+  Processes the "Back" button click: Goes back to the starting widget.
 */
 void Login::on_pushButton_4_clicked() {
     StartingWidget *startingWidget = new StartingWidget;

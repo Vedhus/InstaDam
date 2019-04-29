@@ -24,7 +24,7 @@ signals:
     void projectJsonReceived(QJsonObject json);
     void projectIdChanged(int id);
     void instadamClearAll();
-    int projectDeleted(int);
+    void projectDeleted(int id);
 
 public slots:
     void openProject(QListWidgetItem *project_name);
