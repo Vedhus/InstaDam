@@ -21,9 +21,6 @@ public:
      QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
-public slots:
-    void openProject(QListWidgetItem *);
-    void deleteProject(QListWidgetItem *);
 
 signals:
     void projectJsonReceived(QJsonObject json);
@@ -35,6 +32,10 @@ public slots:
     void openProject(QListWidgetItem *project_name);
     void deleteProject(QListWidgetItem *project_name);
     void confirmProjectDeletion(QListWidgetItem *project_name);
+    void getLabelsReplyFinished();
+    void getLabelsReplyFin(QNetworkReply* reply);
+    void deleteReplyFinished();
+    void deleteReplyFin(QNetworkReply* reply);
 
 private:
     Ui::ProjectList *ui;
@@ -46,14 +47,3 @@ private:
 };
 
 #endif // PROJECTLIST_H
-
-class ProjectList : public QDialog
-{
-class ProjectList : public QWidget {
-public slots:
-    void openProject(QListWidgetItem *);
-    void deleteProject(QListWidgetItem *);
-    void getLabelsReplyFinished();
-    void getLabelsReplyFin(QNetworkReply*);
-    void deleteReplyFinished();
-    void deleteReplyFin(QNetworkReply*);
