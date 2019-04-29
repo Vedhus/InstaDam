@@ -56,16 +56,22 @@ class ImageList : public QWidget {
     QNetworkReply *rep;
     QHash<int, QNetworkReply*> annotationReplies;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    void getThumbnailReplyFinished();
-    void imagesReplyFinished();
-    void uploadFileReplyFinished();
-    bool zipFilesTogether(QFileInfoList);
-    void annotationReplyFinished();
-    void doRequest(QNetworkRequest);
+    void doRequest(QNetworkRequest req);
+    bool zipFilesTogether(QFileInfoList files);
  private slots:
     void on_loadButton_clicked();
     void on_cancelButton_clicked();
     void on_uploadButton_clicked();
+    void getThumbnailReplyFinished();
+    void imagesReplyFinished();
+    void uploadFileReplyFinished();
+    void annotationReplyFinished();
+#ifdef WASM_BUILD
+    void getThumbnailReplyFin(QNetworkReply* reply);
+    void imagesReplyFin(QNetworkReply* reply);
+    void uploadFileReplyFin(QNetworkReply* reply);
+    void annotationReplyFin(QNetworkReply* reply);
+#endif
 };
 
 #endif  // imagelist_H

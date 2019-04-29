@@ -31,8 +31,15 @@ private slots:
     void on_addToProject_clicked();
     void addAsAnnotator();
     void addAsAdmin();
+    void replyFinished();
 
     void on_updatePrivilege_clicked();
+    void privilegeReplyFinished();
+
+#ifdef WASM_BUILD
+    void privilegeReplyFin(QNetworkReply* reply);
+    void replyFin(QNetworkReply* reply);
+#endif
 
 private:
     Ui::AddUserToProject *ui;
@@ -40,11 +47,9 @@ private:
     bool userInProject = false;
     QString privilege;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    void replyFinished();
     void listUsers(QJsonObject obj);
     void updateUser();
     void add();
-    void privilegeReplyFinished();
 };
 
 #endif // ADDUSERTOPROJECT_H

@@ -27,6 +27,9 @@
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
+#ifdef WASM_BUILD
+    ui->backButton->setEnabled(false);
+#endif
 }
 
 /*!
@@ -39,7 +42,7 @@ Login::~Login() {
 /*!
   Processes the "Register" button click.
 */
-void Login::on_pushButton_3_clicked() {
+void Login::on_registerButton_clicked() {
     Register *reg = new Register;
     reg->show();
     hide();
@@ -48,7 +51,7 @@ void Login::on_pushButton_3_clicked() {
 /*!
   Processes the "Login" button click: Sends a request to login.
 */
-void Login::on_pushButton_clicked() {
+void Login::on_loginButton_clicked() {
     QString user = ui->username->text();
     QString pass = ui->password->text();
     this->databaseURL = ui->url->text();
@@ -64,15 +67,28 @@ void Login::on_pushButton_clicked() {
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     rep = manager->post(req, bytes);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(replyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &Login::replyFinished);
+#endif
 }
+
+#ifdef WASM_BUILD
+void Login::replyFin(QNetworkReply* reply){
+    rep = reply;
+    replyFinished();
+}
+#endif
 
 /*!
   Received the reply for Login.
 */
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
+    QString ss = QString(strReply);
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;
@@ -107,14 +123,14 @@ void Login::launchMainInstadam(){
 /*!
   Processes the "Cancel" button click.
 */
-void Login::on_pushButton_2_clicked() {
+void Login::on_exitButton_clicked() {
     this->close();
 }
 
 /*!
   Processes the "Back" button click: Goes back to the starting widget.
 */
-void Login::on_pushButton_4_clicked() {
+void Login::on_backButton_clicked() {
     StartingWidget *startingWidget = new StartingWidget;
     startingWidget->show();
     hide();

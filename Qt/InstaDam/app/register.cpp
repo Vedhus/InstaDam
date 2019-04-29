@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QBuffer>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QJsonObject>
@@ -25,6 +26,7 @@
 */
 Register::Register(QWidget *parent) :
     QWidget(parent), ui(new Ui::Register) {
+    manager = new QNetworkAccessManager(this);
     ui->setupUi(this);
 }
 
@@ -37,8 +39,8 @@ Register::~Register() {
 
 /*!
   Responds to the cancel button being clicked.
-*/
-void Register::on_pushButton_2_clicked() {
+  */
+void Register::on_cancelButton_clicked() {
     Login *log = new Login;
     log->show();
     hide();
@@ -46,8 +48,8 @@ void Register::on_pushButton_2_clicked() {
 
 /*!
   Sends a request to register a new user to the database.
-*/
-void Register::on_pushButton_clicked() {
+  */
+void Register::on_registerButton_clicked() {
     QString em = ui->email->text();
     QString user = ui->username->text();
     QString pass = ui->password->text();
@@ -61,19 +63,32 @@ void Register::on_pushButton_clicked() {
         {InstaDamJson::PASSWORD, pass}
     };
     QJsonDocument doc(js);
-    QByteArray bytes = doc.toJson();
+    bytes = doc.toJson(QJsonDocument::Compact);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
     rep = manager->post(req, bytes);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &Register::replyFinished);
+#endif
 }
+
+#ifdef WASM_BUILD
+void Register::replyFin(QNetworkReply* reply){
+    rep = reply;
+    replyFinished();
+}
+#endif
 
 /*!
   Receives the reply regarding new user registration.
 */
 void Register::replyFinished() {
     QByteArray strReply = rep->readAll();
+    QString ss = QString(strReply);
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
     QMessageBox msgBox;

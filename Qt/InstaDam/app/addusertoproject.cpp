@@ -50,10 +50,21 @@ void AddUserToProject::on_pushButton_clicked() {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(replyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &AddUserToProject::replyFinished);
+#endif
 }
 
+#ifdef WASMBUILD
+void AddUserToProject::replyFin(QNetworkReply* reply){
+    rep = reply;
+    replyFinished();
+}
+#endif
 /*!
   Processes the "Cancel" Button.
 */
@@ -179,9 +190,21 @@ void AddUserToProject::add(){
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     rep = manager->put(req, bytes);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(privilegeReplyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &AddUserToProject::privilegeReplyFinished);
+#endif
 }
+
+#ifdef WASM_BUILD
+void AddUserToProject::privilegeReplyFin(QNetworkReply* reply){
+    rep = reply;
+    privilegeReplyFinished();
+}
+#endif
 
 /*!
     Receives the update user privilege response from backend.

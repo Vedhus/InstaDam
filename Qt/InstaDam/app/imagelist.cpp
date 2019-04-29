@@ -36,6 +36,25 @@ ImageList::~ImageList() {
     delete ui;
 }
 
+#ifdef WASM_BUILD
+void ImageList::getThumbnailReplyFin(QNetworkReply* reply){
+    rep = reply;
+    getThumbnailReplyFinished();
+}
+void ImageList::imagesReplyFin(QNetworkReply* reply){
+    rep = reply;
+    imagesReplyFinished();
+}
+void ImageList::uploadFileReplyFin(QNetworkReply* reply){
+    rep = reply;
+    uploadFileReplyFinished();
+}
+void ImageList::annotationReplyFin(QNetworkReply* reply){
+    rep = reply;
+    annotationReplyFinished();
+}
+#endif
+
 /*!
   Returns the idList.
 */
@@ -74,8 +93,7 @@ void ImageList::setSelectedIdIndex(int id) {
 /*!
  * Adds Item QJsonObject \a obj to the ImageList.
 */
-void ImageList::addItems(QJsonObject obj)
-{
+void ImageList::addItems(QJsonObject obj) {
     qInfo() << obj;
     idList.clear();
     annotatedList.clear();
@@ -181,12 +199,20 @@ void ImageList::getThumbnailReplyFinished() {
 */
 void ImageList::doRequest(QNetworkRequest req) {
     rep = manager->get(req);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(getThumbnailReplyFin(QNetworkReply*)));
 
+    /* wait for reply because backend can't handle multiple requests at same time I think */
+    QEventLoop loop;
+    connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::getThumbnailReplyFinished);
-    /* wait for reply because backend can't handle multiple requests at same time I think*/
+    /* wait for reply because backend can't handle multiple requests at same time I think */
     QEventLoop loop;
     connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+#endif
     loop.exec();
 }
 
@@ -231,10 +257,14 @@ void ImageList::on_loadButton_clicked() {
     QString filepath = this->databaseURL + "/" + item->text();
     QNetworkRequest req = QNetworkRequest(filepath);
     rep = manager->get(req);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(fileReplyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::fileReplyFinished);
+#endif
     emit clearGUI();
-
     close();
 }
 
@@ -281,12 +311,13 @@ void ImageList::uploadFileReplyFinished() {
 
         QNetworkRequest req = QNetworkRequest(dabaseLink);
         req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
-
-
         rep = manager->get(req);
-
+#ifdef WASM_BUILD
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(imagesReplyFin(QNetworkReply*)));
+#else
         connect(rep, &QNetworkReply::finished,
                 this, &ImageList::imagesReplyFinished);
+#endif
     }
 }
 
@@ -360,7 +391,8 @@ void ImageList::on_uploadButton_clicked() {
     if(filelist.size()==0)
         return;
 
-    if(filelist.size()==1) {
+    if(filelist.size()==1)
+    {
         QFile *file = new QFile(filelist[0]);
         QString filename = QFileInfo(filelist[0]).fileName();
 
@@ -377,7 +409,9 @@ void ImageList::on_uploadButton_clicked() {
         imagePart.setBodyDevice(file);
         file->setParent(multiPart);
 
+
         multiPart->append(imagePart);
+
 
         QNetworkRequest req = QNetworkRequest(databaseLink);
         QString loginToken = "Bearer "+this->accessToken;
@@ -392,9 +426,18 @@ void ImageList::on_uploadButton_clicked() {
         rep = manager->post(req, multiPart);
         multiPart->setParent(rep);
 
+#ifdef WASM_BUILD
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+                SLOT(uploadFileReplyFin(QNetworkReply*)));
+
+#else
         connect(rep, &QNetworkReply::finished,
                 this, &ImageList::uploadFileReplyFinished);
-    } else {  //multiple files, upload zip
+#endif
+
+    }
+    else //multiple files, upload zip
+    {
         //https://stackoverflow.com/questions/2598117/zipping-a-folder-file-using-qt
 
         QFileInfoList files;
@@ -425,9 +468,13 @@ void ImageList::on_uploadButton_clicked() {
 
            rep = manager->post(req, multiPart);
            multiPart->setParent(rep);
-
+#ifdef WASM_BUILD
+           connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+                   SLOT(uploadFileReplyFin(QNetworkReply*)));
+#else
            connect(rep, &QNetworkReply::finished,
                    this, &ImageList::uploadFileReplyFinished);
+#endif
        }
     }
 }
@@ -452,11 +499,19 @@ void ImageList::openAnnotation() {
             QString loginToken = "Bearer "+this->accessToken;
             annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
             rep = manager->get(annotationRequest);
+#ifdef WASM_BUILD
+            connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+                    SLOT(annotationReplyFin(QNetworkReply*)));
+
+            QEventLoop loop;
+            connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+#else
             connect(rep, &QNetworkReply::finished,
                     this, &ImageList::annotationReplyFinished);
 
             QEventLoop loop;
             connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+#endif
             loop.exec();
         }
     }

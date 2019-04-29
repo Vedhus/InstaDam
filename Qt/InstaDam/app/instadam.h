@@ -150,6 +150,18 @@ class InstaDam : public QMainWindow {
     void saveToServer();
     void replyFinished();
     void labelReplyFinished();
+    void projectsReplyFinished();
+    void fileReplyFinished();
+    void imagesReplyFinished();
+    void saveAnnotationReplyFinished();
+#ifdef WASM_BUILD
+    void replyFin(QNetworkReply* reply);
+    void labelReplyFin(QNetworkReply* reply);
+    void projectsReplyFin(QNetworkReply* reply);
+    void fileReplyFin(QNetworkReply* reply);
+    void imagesReplyFin(QNetworkReply* reply);
+    void saveAnnotationReplyFin(QNetworkReply* reply);
+#endif
 
 
 #ifdef TEST
@@ -249,8 +261,6 @@ public slots:
     bool currentProjectLoaded = false;
 
     QPixmap maskSelection(SelectItem *item);
-    void imagesReplyFinished();
-    void saveAnnotationReplyFinished();
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
 
@@ -258,8 +268,6 @@ public slots:
     bool loadLabelFile(QString filename, fileTypes fileType);
     void revert();
     void listProjects();
-    void projectsReplyFinished();
-    void fileReplyFinished();
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
     void currentProjectDeleted(int);

@@ -62,7 +62,7 @@ void PhotoViewer::setFilterControls(filterControls *fc) {
 }
 
 #ifdef WASM_BUILD
-QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname) {
+QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array) {
     QPixmap pixmap;
     QColor whiteColor = QColor(1, 1, 1, 0);
     if (!pixmap.loadFromData(array)) {
@@ -70,17 +70,7 @@ QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array, QString labelname) {
     }
     cvImage = QPixmap2Mat(pixmap);
 
-    QPixmap white_temp = QPixmap(pixmap.size());
-    white_temp.fill(whiteColor);
-    QPixmap labelMap;
-    if (labelname.isNull()) {
-        labelMap = QPixmap(pixmap.size());
-        labelMap.fill(whiteColor);
-
-    } else {
-        labelMap = QPixmap(labelname);
-    }
-    setPhoto(pixmap, labelMap, white_temp);
+    setPhoto(pixmap);
     return pixmap.size();
 }
 #endif

@@ -187,7 +187,7 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
             QHtml5File::load(".idpro", [&](const QByteArray &content, const QString &fileName) {
                 idproFileContent = content;
                 idproFileName = fileName;
-                loadLabelFile(idproFileName);
+                loadLabelFile(idproFileName, PROJECT);
             });
         });
 
@@ -359,10 +359,10 @@ void InstaDam::clearLayout(QLayout *layout) {
  Slot for opening a project file (.idpro).
 */
 void InstaDam::on_actionOpen_triggered() {
-#ifdef WASM_BUILD
-      openIdproConnector->onActivate();
-#else
     if(this->runningLocally){
+#ifdef WASM_BUILD
+        openIdproConnector->onActivate();
+#else
         // Reading and Loading
         #ifndef TEST
             QString myfileName = QFileDialog::getOpenFileName(this,
@@ -379,12 +379,12 @@ void InstaDam::on_actionOpen_triggered() {
             scene->update();
             maskScene->update();
         }
+#endif
     }
     else{
         this->projecListUseCase = "OPEN";
         InstaDam::listProjects();
     }
-#endif
 }
 
 /*!
@@ -542,20 +542,32 @@ void InstaDam::on_actionSave_Annotation_triggered() {
 
         rep = manager->post(req, bytes);
 
-        connect(rep, &QNetworkReply::finished,
-                this, &InstaDam::saveAnnotationReplyFinished);
+#ifdef WASM_BUILD
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+                SLOT(saveAnnotationReplyFin(QNetworkReply*)));
+        connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
+#endif
+        connect(rep, &QNetworkReply::finished,
+                        this, &InstaDam::saveAnnotationReplyFinished);
         QEventLoop loop;
         connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
         loop.exec();
     }
 }
 
+#ifdef WASM_BUILD
+void InstaDam::saveAnnotationReplyFin(QNetworkReply* reply){
+    rep = reply;
+    saveAnnotationReplyFinished();
+}
+#endif
+
 /*!
  Saves the current project to disk or the server.
 */
 void InstaDam::on_actionSave_triggered() {
-    if(this->runningLocally){
+    if (this->runningLocally) {
     // Saving the file
     #ifdef WASM_BUILD
         QByteArray outFile;
@@ -661,7 +673,7 @@ void InstaDam::on_actionOpen_File_triggered() {
             tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
 #else
         QString filename_temp = imgInName;
-#endif
+#endif  // TEST
         QString ext = QFileInfo(filename_temp).suffix();
         if (!ext.compare("png", Qt::CaseInsensitive) ||
             !ext.compare("jpg", Qt::CaseInsensitive) ||
@@ -694,6 +706,7 @@ void InstaDam::on_actionOpen_File_triggered() {
         } else {
             assertError("That doesn't seem to be a valid image file.");
         }
+#endif  // WASM_BUILD
     } else {
         if (currentProject->numLabels() == 0) {
             assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
@@ -706,18 +719,23 @@ void InstaDam::on_actionOpen_File_triggered() {
 
         QNetworkRequest req = QNetworkRequest(dabaseLink);
         req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
-
         rep = manager->get(req);
-
+#ifdef WASM_BUILD
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(imagesReplyFin(QNetworkReply*)));
+#else
         connect(rep, &QNetworkReply::finished,
                 this, &InstaDam::imagesReplyFinished);
-
+#endif
         qInfo() << "waiting for the reply...";
     }
-#endif
 }
 
 #ifdef WASM_BUILD
+void InstaDam::imagesReplyFin(QNetworkReply* reply){
+    rep = reply;
+    imagesReplyFinished();
+}
+
 void InstaDam::loadRawImage() {
     openFile_and_labels();
 }
@@ -805,11 +823,18 @@ void InstaDam::saveAndProgress(int num)
                     QNetworkRequest req = QNetworkRequest(filepath);
                     rep = manager->get(req);
 
+#ifdef WASM_BUILD
+                    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(fileReplyFin(QNetworkReply*)));
+
+                    QEventLoop loop;
+                    connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+#else
                     connect(rep, &QNetworkReply::finished,
                             this, &InstaDam::fileReplyFinished);
 
                     QEventLoop loop;
                     connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
+#endif
                     loop.exec();
                 }
                 else{
@@ -819,10 +844,16 @@ void InstaDam::saveAndProgress(int num)
             else{
                 assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
             }
-
         }
     }
 }
+
+#ifdef WASM_BUILD
+void InstaDam::fileReplyFin(QNetworkReply* reply){
+    rep = reply;
+    fileReplyFinished();
+}
+#endif
 
 /*!
  Saves the current annotations as rasterized PNGs or as a buffer depending on the value of
@@ -891,13 +922,14 @@ void InstaDam::generateLabelFileName() {
  and opens the file. If annotations exist, the annotations are opened.
 */
 void InstaDam::openFile_and_labels() {
-#ifdef WASM_BUILD
-    SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent, labelNameTemp);
-#else
     // Open labels
     generateLabelFileName();
     SelectItem::myBounds = QPixmap(filename).size();
     if (runningLocally == true) {
+#ifdef WASM_BUILD
+        SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent);
+#else
+
         if (QFileInfo(this->annotationPath).isFile()) {
             QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
             QTextStream(stdout) << "\n" << this->file.baseName() << endl;
@@ -911,6 +943,8 @@ void InstaDam::openFile_and_labels() {
             revert();
             return;
         }
+#endif
+
     } else {
         connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
@@ -920,7 +954,6 @@ void InstaDam::openFile_and_labels() {
     photoLoaded = true;
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
     qInfo("my bounds set");
-#endif
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
 
     qInfo("photo viewer linked!");
@@ -2000,9 +2033,21 @@ void InstaDam::listProjects() {
     QString loginToken = "Bearer "+this->accessToken;
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(projectsReplyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &InstaDam::projectsReplyFinished);
+#endif
 }
+
+#ifdef WASM_BUILD
+void InstaDam::projectsReplyFin(QNetworkReply* reply){
+    rep = reply;
+    projectsReplyFinished();
+}
+#endif
 
 /*!
  Receives the reply regarding user projects
@@ -2060,10 +2105,20 @@ void InstaDam::saveToServer(){
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     rep = manager->post(req, bytes);
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
+#else
     connect(rep, &QNetworkReply::finished,
             this, &InstaDam::replyFinished);
-
+#endif
 }
+
+#ifdef WASM_BUILD
+void InstaDam::replyFin(QNetworkReply* reply){
+    rep = reply;
+    replyFinished();
+}
+#endif
 
 /*!
  Receives the reply of saving a project name on the server
@@ -2101,17 +2156,30 @@ void InstaDam::replyFinished() {
             reqLabel.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
             reqLabel.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
             rep = manager->post(reqLabel, bytesLabel);
+#ifdef WASM_BUILD
+            connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(labelReplyFin(QNetworkReply*)));
 
+            QEventLoop loop;
+            connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+#else
             connect(rep, &QNetworkReply::finished,
                     this, &InstaDam::labelReplyFinished);
 
             QEventLoop loop;
             connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
             loop.exec();
+#endif
         }
         labelIdsRecieved = 0;
     }
 }
+
+#ifdef WASM_BUILD
+void InstaDam::labelReplyFin(QNetworkReply* reply){
+    rep = reply;
+    labelReplyFinished();
+}
+#endif
 
 /*!
  Receives the reply of saving a label on the server

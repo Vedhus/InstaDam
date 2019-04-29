@@ -13,8 +13,7 @@ win32{SUBDIRS = \
           app \
           selector}
 
-            #quazip
-wasm: SUBDIRS += filehandler #quazip
+wasm: SUBDIRS += filehandler
 
 app.subdir = app
 

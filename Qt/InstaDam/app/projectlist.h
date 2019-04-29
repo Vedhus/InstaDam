@@ -11,7 +11,8 @@ namespace Ui {
 class ProjectList;
 }
 
-class ProjectList : public QWidget {
+class ProjectList : public QDialog
+{
     Q_OBJECT
 
 public:
@@ -20,6 +21,7 @@ public:
      QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
+
 signals:
     void projectJsonReceived(QJsonObject json);
     void projectIdChanged(int id);
@@ -30,6 +32,13 @@ public slots:
     void openProject(QListWidgetItem *project_name);
     void deleteProject(QListWidgetItem *project_name);
     void confirmProjectDeletion(QListWidgetItem *project_name);
+    void getLabelsReplyFinished();
+    void deleteReplyFinished();
+#ifdef WASM_BUILD
+    void getLabelsReplyFin(QNetworkReply* reply);
+    void deleteReplyFin(QNetworkReply* reply);
+
+#endif
 
 private:
     Ui::ProjectList *ui;
@@ -38,8 +47,6 @@ private:
     int selectedProject = -1;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkReply *rep;
-    void getLabelsReplyFinished();
-    void deleteReplyFinished();
 };
 
 #endif // PROJECTLIST_H
