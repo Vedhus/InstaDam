@@ -87,7 +87,8 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
 void ProjectList::confirmProjectDeletion(QListWidgetItem *project_name){
     projectDeletionConfirmation *confirmation = new projectDeletionConfirmation();
     confirmation->project_name = project_name;
-    connect(confirmation, SIGNAL(projectDeleted(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
+    connect(confirmation, SIGNAL(projectDeleted(QListWidgetItem *)), this,
+            SLOT(deleteProject(QListWidgetItem *)));
     confirmation->show();
 }
 
@@ -104,14 +105,22 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->get(req);
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getLabelsReplyFin(QNetworkReply*)));
-
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(getLabelsReplyFin(QNetworkReply*)));
+#else
+    connect(rep, &QNetworkReply::finished,
+            this, &ProjectList::getLabelsReplyFinished);
+#endif
 }
 
+#ifdef WASM_BUILD
 void ProjectList::getLabelsReplyFin(QNetworkReply* reply){
     rep = reply;
     getLabelsReplyFinished();
 }
+#endif
+
 /*!
   Waits until a reply regarding the labels request is received
   emits the received labels to InstaDam
@@ -142,15 +151,22 @@ void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
     req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
     rep = manager->deleteResource(req);
-
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(deleteReplyFin(QNetworkReply*)));
-
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(deleteReplyFin(QNetworkReply*)));
+#else
+    connect(rep, &QNetworkReply::finished,
+            this, &ProjectList::deleteReplyFinished);
+#endif
 }
 
+#ifdef WASM_BUILD
 void ProjectList::deleteReplyFin(QNetworkReply* reply){
     rep = reply;
     deleteReplyFinished();
 }
+#endif
+
 /*!
  Receives the reply of deleting a project from the server
 */

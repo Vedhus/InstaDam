@@ -67,15 +67,21 @@ void Login::on_loginButton_clicked() {
     QNetworkRequest req = QNetworkRequest(dabaseLink);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     rep = manager->post(req, bytes);
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
-
+#ifdef WASM_BUILD
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this,
+            SLOT(replyFin(QNetworkReply*)));
+#else
+    connect(rep, &QNetworkReply::finished,
+            this, &Login::replyFinished);
+#endif
 }
 
+#ifdef WASM_BUILD
 void Login::replyFin(QNetworkReply* reply){
     rep = reply;
     replyFinished();
 }
-
+#endif
 
 /*!
   Received the reply for Login.

@@ -149,17 +149,19 @@ class InstaDam : public QMainWindow {
     void on_actionUpdate_Privilege_triggered();
     void saveToServer();
     void replyFinished();
-    void replyFin(QNetworkReply*);
-    void labelReplyFin(QNetworkReply*);
     void labelReplyFinished();
-    void projectsReplyFin(QNetworkReply*);
     void projectsReplyFinished();
-    void fileReplyFin(QNetworkReply*);
     void fileReplyFinished();
-    void imagesReplyFin(QNetworkReply*);
     void imagesReplyFinished();
-    void saveAnnotationReplyFin(QNetworkReply*);
     void saveAnnotationReplyFinished();
+#ifdef WASM_BUILD
+    void replyFin(QNetworkReply* reply);
+    void labelReplyFin(QNetworkReply* reply);
+    void projectsReplyFin(QNetworkReply* reply);
+    void fileReplyFin(QNetworkReply* reply);
+    void imagesReplyFin(QNetworkReply* reply);
+    void saveAnnotationReplyFin(QNetworkReply* reply);
+#endif
 
 
 #ifdef TEST

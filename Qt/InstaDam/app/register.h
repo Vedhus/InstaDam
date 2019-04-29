@@ -23,7 +23,9 @@ private slots:
 
     void on_registerButton_clicked();
     void replyFinished();
+#ifdef WASM_BUILD
     void replyFin(QNetworkReply* reply);
+#endif
 
 private:
     Ui::Register *ui;

@@ -68,13 +68,21 @@ void Register::on_registerButton_clicked() {
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     rep = manager->post(req, bytes);
+#ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
+#else
+    connect(rep, &QNetworkReply::finished,
+            this, &Register::replyFinished);
+#endif
 }
 
+#ifdef WASM_BUILD
 void Register::replyFin(QNetworkReply* reply){
     rep = reply;
     replyFinished();
 }
+#endif
+
 /*!
   Receives the reply regarding new user registration.
 */

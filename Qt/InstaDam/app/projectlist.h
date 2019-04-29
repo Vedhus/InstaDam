@@ -11,7 +11,7 @@ namespace Ui {
 class ProjectList;
 }
 
-class ProjectList : public QWidget
+class ProjectList : public QDialog
 {
     Q_OBJECT
 
@@ -33,9 +33,12 @@ public slots:
     void deleteProject(QListWidgetItem *project_name);
     void confirmProjectDeletion(QListWidgetItem *project_name);
     void getLabelsReplyFinished();
-    void getLabelsReplyFin(QNetworkReply* reply);
     void deleteReplyFinished();
+#ifdef WASM_BUILD
+    void getLabelsReplyFin(QNetworkReply* reply);
     void deleteReplyFin(QNetworkReply* reply);
+
+#endif
 
 private:
     Ui::ProjectList *ui;

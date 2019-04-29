@@ -32,11 +32,14 @@ private slots:
     void addAsAnnotator();
     void addAsAdmin();
     void replyFinished();
-    void replyFin(QNetworkReply* reply);
 
     void on_updatePrivilege_clicked();
-    void privilegeReplyFin(QNetworkReply* reply);
     void privilegeReplyFinished();
+
+#ifdef WASM_BUILD
+    void privilegeReplyFin(QNetworkReply* reply);
+    void replyFin(QNetworkReply* reply);
+#endif
 
 private:
     Ui::AddUserToProject *ui;
