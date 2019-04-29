@@ -23,8 +23,8 @@ private slots:
 
 private:
     Ui::StartingWidget *ui;
-    void runLocalVersion(void);
-    void runServerVersion(void);
+    void runLocalVersion();
+    void runServerVersion();
 };
 
 #endif // STARTINGWIDGET_H

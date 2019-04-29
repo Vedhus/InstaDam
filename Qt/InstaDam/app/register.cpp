@@ -18,11 +18,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief Registers a user.
-  */
+*/
 
 /*!
   Creates a Register instance with parent QWidget \a parent.
-  */
+*/
 Register::Register(QWidget *parent) :
     QWidget(parent), ui(new Ui::Register) {
     ui->setupUi(this);
@@ -30,14 +30,14 @@ Register::Register(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 Register::~Register() {
     delete ui;
 }
 
 /*!
   Responds to the cancel button being clicked.
-  */
+*/
 void Register::on_pushButton_2_clicked() {
     Login *log = new Login;
     log->show();
@@ -46,7 +46,7 @@ void Register::on_pushButton_2_clicked() {
 
 /*!
   Sends a request to register a new user to the database.
-  */
+*/
 void Register::on_pushButton_clicked() {
     QString em = ui->email->text();
     QString user = ui->username->text();
@@ -71,7 +71,7 @@ void Register::on_pushButton_clicked() {
 
 /*!
   Receives the reply regarding new user registration.
-  */
+*/
 void Register::replyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -87,7 +87,7 @@ void Register::replyFinished() {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
             this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString();
-            this->lunchMainInstadam();
+            this->launchMainInstadam();
         } else {
             msgBox.setText(obj.value("msg").toString());
             msgBox.exec();
@@ -97,8 +97,8 @@ void Register::replyFinished() {
 
 /*!
   Lunches the main InstaDam window.
-  */
-void Register::lunchMainInstadam(){
+*/
+void Register::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();

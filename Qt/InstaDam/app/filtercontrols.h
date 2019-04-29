@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include "opencv2/core/mat.hpp"
+
 #include "fslider.h"
 #include "filterproperty.h"
 #include "Selector/label.h"

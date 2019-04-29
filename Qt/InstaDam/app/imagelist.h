@@ -40,14 +40,10 @@ class ImageList : public QWidget {
     void fileReplyFinished();
     void setAnnotated();
 
-
-
  signals:
     void fileDownloaded(QString path);
-    void allAnnotationsLoaded(QJsonObject,fileTypes);
+    void allAnnotationsLoaded(QJsonObject json,fileTypes type);
     void clearGUI();
-
-
 
  private:
     QList<int> idList;

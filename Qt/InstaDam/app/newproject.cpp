@@ -14,11 +14,11 @@
   \inmodule InstaDam
   \inherits QDialog
   \brief Creates a dialog for starting a new project.
-  */
+*/
 
 /*!
   Creates a new instance with parent QWidget \a parent, if any
-  */
+*/
 newproject::newproject(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newproject) {
@@ -33,7 +33,7 @@ newproject::newproject(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 newproject::~newproject() {
     delete ui;
 }
@@ -50,7 +50,7 @@ void newproject::nameAcceptClicked() {
 
 /*!
   Processes the add label (OK) button click.
-  */
+*/
 void newproject::on_pushButton_clicked() {
 #ifndef TEST
     QDialog *dialog = new QDialog(this);
@@ -93,7 +93,7 @@ void newproject::colorPicked(const QColor &oldcolor) {
 
 /*!
   Processes the "OK" button being clicked.
-  */
+*/
 Project* newproject::on_buttonBox_accepted()
 {
     emit sendProject();
@@ -107,3 +107,9 @@ void newproject::on_buttonBox_rejected()
 {
     this->close();
 }
+
+/*!
+  \fn void newproject::sendProject()
+
+  Signal emitted when a new project is sent.
+  */

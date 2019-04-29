@@ -36,13 +36,24 @@
 <div class="table"><table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#InstaDam">InstaDam</a></b>(QWidget *<i>parent</i> = nullptr, QString <i>databaseURL</i> = &quot;&quot;, QString <i>token</i> = &quot;&quot;)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#dtor.InstaDam">~InstaDam</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#annotationDraw">annotationDraw</a></b>(PhotoScene::viewerTypes <i>type</i>, SelectItem *<i>item</i>, QPointF <i>pos</i>, const Qt::MouseButton <i>button</i>, const Qt::KeyboardModifiers <i>modifiers</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#annotationTransform">annotationTransform</a></b>(PhotoScene::viewerTypes <i>type</i>, SelectItem *<i>item</i>, QPointF <i>pos</i>, const Qt::MouseButton <i>button</i>, const Qt::KeyboardModifiers <i>modifiers</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#assertError">assertError</a></b>(std::string <i>errorMessage</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#clearLayout">clearLayout</a></b>(QLayout *<i>layout</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#connectFilters">connectFilters</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#continueDrawingPolygon">continueDrawingPolygon</a></b>(QPointF <i>pos</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#deleteCurrentObject">deleteCurrentObject</a></b>(PhotoScene::viewerTypes <i>phototype</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#exportImages">exportImages</a></b>(bool <i>asBuffers</i> = false)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#generateLabelFileName">generateLabelFileName</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#inactivateSceneCancelSelection">inactivateSceneCancelSelection</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#openFile_and_labels">openFile_and_labels</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setCurrentProject">setCurrentProject</a></b>(Project *<i>pr</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#resetGUIclearLabels">resetGUIclearLabels</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#saveAndProgress">saveAndProgress</a></b>(int <i>num</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#selectItemButton">selectItemButton</a></b>(SelectItem::SelectType <i>type</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#selectItemButton-1">selectItemButton</a></b>(int <i>type</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setButtonsConfiguration">setButtonsConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setCurrentItem">setCurrentItem</a></b>(SelectItem *<i>item</i>, bool <i>enable</i> = false)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setCurrentProjectId">setCurrentProjectId</a></b>(int <i>id</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#setLabels">setLabels</a></b>()</td></tr>
 </table></div>
 <ul>
@@ -54,7 +65,9 @@
 <a name="public-slots"></a>
 <h2 id="public-slots">Public Slots</h2>
 <div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#editLabel">editLabel</a></b>(QSharedPointer&lt;Label&gt; <i>newLabel</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#fileDownloaded">fileDownloaded</a></b>(QString <i>path</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#loadLabelJson">loadLabelJson</a></b>(QJsonObject <i>json</i>, fileTypes <i>fileType</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#resetPixmapButtons">resetPixmapButtons</a></b>()</td></tr>
 </table></div>
 <ul>
@@ -70,10 +83,11 @@
 <tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#fileId-var">fileId</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#filename-var">filename</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> filterControls *</td><td class="memItemRight bottomAlign"><b><a href="instadam.html#filterControl-var">filterControl</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> ImageList *</td><td class="memItemRight bottomAlign"><b><a href="instadam.html#il-var">il</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#imagesList-var">imagesList</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#labelFile-var">labelFile</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#labelIdsRecieved-var">labelIdsRecieved</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QString&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#labelPaths-var">labelPaths</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QNetworkAccessManager *</td><td class="memItemRight bottomAlign"><b><a href="instadam.html#manager-var">manager</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QList&lt;PicPushButton *&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#maskButtonList-var">maskButtonList</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QList&lt;EnumConstants::maskTypes&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#maskTypeList-var">maskTypeList</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldAnnotationPath-var">oldAnnotationPath</a></b></td></tr>
@@ -83,7 +97,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QString&gt; </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldLabelPaths-var">oldLabelPaths</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QDir </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#oldPath-var">oldPath</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QDir </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#path-var">path</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#photoLoaded-var">photoLoaded</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#runningLocally-var">runningLocally</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoScene::viewerTypes </td><td class="memItemRight bottomAlign"><b><a href="instadam.html#selectedViewer-var">selectedViewer</a></b></td></tr>
 </table></div>
 <a name="static-public-members"></a>
 <h2 id="static-public-members">Static Public Members</h2>
@@ -127,6 +143,14 @@
 <h3 class="fn" id="dtor.InstaDam"><a name="dtor.InstaDam"></a><code>[virtual] </code>InstaDam::<span class="name">~InstaDam</span>()</h3>
 <p>Destructor</p>
 <!-- @@@~InstaDam -->
+<!-- $$$annotationDraw[overload1]$$$annotationDrawPhotoScene::viewerTypesSelectItem*QPointFconstQt::MouseButtonconstQt::KeyboardModifiers -->
+<h3 class="fn" id="annotationDraw"><a name="annotationDraw"></a><span class="type">int</span> InstaDam::<span class="name">annotationDraw</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, <span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>pos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a></span> <i>button</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</a></span> <i>modifiers</i>)</h3>
+<p>Draws annotations on the <a href="photoscene.html">PhotoScene</a> indicated by <i>type</i>, with <i>item</i>, position <i>pos</i>, with mouse button <i>button</i> depressed, and any keyboard modifiers given by <i>modifiers</i>.</p>
+<!-- @@@annotationDraw -->
+<!-- $$$annotationTransform[overload1]$$$annotationTransformPhotoScene::viewerTypesSelectItem*QPointFconstQt::MouseButtonconstQt::KeyboardModifiers -->
+<h3 class="fn" id="annotationTransform"><a name="annotationTransform"></a><span class="type">int</span> InstaDam::<span class="name">annotationTransform</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>type</i>, <span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>pos</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a></span> <i>button</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</a></span> <i>modifiers</i>)</h3>
+<p>Transforms an annotation, <i>item</i>, on <i>type</i>, at <i>pos</i>, with <i>button</i> depressed and keyboard modifiers <i>modifiers</i>.</p>
+<!-- @@@annotationTransform -->
 <!-- $$$assertError[overload1]$$$assertErrorstd::string -->
 <h3 class="fn" id="assertError"><a name="assertError"></a><span class="type">void</span> InstaDam::<span class="name">assertError</span>(<span class="type">std::string</span> <i>errorMessage</i>)</h3>
 <p>Displays the std::string <i>errorMessage</i> as a <a href="http://doc.qt.io/qt-5/qmessagebox.html">QMessageBox</a>.</p>
@@ -139,6 +163,18 @@
 <h3 class="fn" id="connectFilters"><a name="connectFilters"></a><span class="type">void</span> InstaDam::<span class="name">connectFilters</span>()</h3>
 <p>Connects the filter buttons to the corresponding maskType.</p>
 <!-- @@@connectFilters -->
+<!-- $$$continueDrawingPolygon[overload1]$$$continueDrawingPolygonQPointF -->
+<h3 class="fn" id="continueDrawingPolygon"><a name="continueDrawingPolygon"></a><span class="type">void</span> InstaDam::<span class="name">continueDrawingPolygon</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <i>pos</i>)</h3>
+<p>Re-enable a <a href="select.html#polygonselect">PolygonSelect</a> item for editing, at <i>pos</i>.</p>
+<!-- @@@continueDrawingPolygon -->
+<!-- $$$deleteCurrentObject[overload1]$$$deleteCurrentObjectPhotoScene::viewerTypes -->
+<h3 class="fn" id="deleteCurrentObject"><a name="deleteCurrentObject"></a><span class="type">void</span> InstaDam::<span class="name">deleteCurrentObject</span>(<span class="type"><a href="photoscene.html#viewerTypes-enum">PhotoScene::viewerTypes</a></span> <i>phototype</i>)</h3>
+<p>Deletes the current <a href="selectitem.html">SelectItem</a> on <i>phototype</i></p>
+<!-- @@@deleteCurrentObject -->
+<!-- $$$editLabel[overload1]$$$editLabelQSharedPointer<Label> -->
+<h3 class="fn" id="editLabel"><a name="editLabel"></a><code>[slot] </code><span class="type">void</span> InstaDam::<span class="name">editLabel</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>newLabel</i>)</h3>
+<p>Edit label given as <i>newLabel</i>.</p>
+<!-- @@@editLabel -->
 <!-- $$$exportImages[overload1]$$$exportImagesbool -->
 <h3 class="fn" id="exportImages"><a name="exportImages"></a><span class="type">void</span> InstaDam::<span class="name">exportImages</span>(<span class="type">bool</span> <i>asBuffers</i> = false)</h3>
 <p>Saves the current annotations as rasterized PNGs or as a buffer depending on the value of <i>asBuffers</i></p>
@@ -151,18 +187,50 @@
 <h3 class="fn" id="generateLabelFileName"><a name="generateLabelFileName"></a><span class="type">void</span> InstaDam::<span class="name">generateLabelFileName</span>()</h3>
 <p>Generates the annotation and export file names to be stored locally based on the location and name of the image files.</p>
 <!-- @@@generateLabelFileName -->
+<!-- $$$inactivateSceneCancelSelection[overload1]$$$inactivateSceneCancelSelection -->
+<h3 class="fn" id="inactivateSceneCancelSelection"><a name="inactivateSceneCancelSelection"></a><span class="type">void</span> InstaDam::<span class="name">inactivateSceneCancelSelection</span>()</h3>
+<p>Inactivates all SelectItems in the scene and calcels the current selection.</p>
+<!-- @@@inactivateSceneCancelSelection -->
+<!-- $$$loadLabelJson[overload1]$$$loadLabelJsonQJsonObjectfileTypes -->
+<h3 class="fn" id="loadLabelJson"><a name="loadLabelJson"></a><code>[slot] </code><span class="type">bool</span> InstaDam::<span class="name">loadLabelJson</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> <i>json</i>, <span class="type">fileTypes</span> <i>fileType</i>)</h3>
+<p><a href="index.html">InstaDam::loadLabelJson</a> loads the json object <i>json</i> of fileTypes <i>fileType</i> where <i>fileType</i> is either a PROJECT or ANNOTATION. Returns a <code>bool</code> indicating success (<code>true</code>) or failure (<code>false</code>) of the load.</p>
+<!-- @@@loadLabelJson -->
 <!-- $$$openFile_and_labels[overload1]$$$openFile_and_labels -->
 <h3 class="fn" id="openFile_and_labels"><a name="openFile_and_labels"></a><span class="type">void</span> InstaDam::<span class="name">openFile_and_labels</span>()</h3>
 <p>Uses defined <a href="http://doc.qt.io/qt-5/qstringlist.html">QStringList</a> of images in the path as well as the id of the current file and opens the file. If annotations exist, the annotations are opened.</p>
 <!-- @@@openFile_and_labels -->
+<!-- $$$resetGUIclearLabels[overload1]$$$resetGUIclearLabels -->
+<h3 class="fn" id="resetGUIclearLabels"><a name="resetGUIclearLabels"></a><span class="type">void</span> InstaDam::<span class="name">resetGUIclearLabels</span>()</h3>
+<p>Clears the guis and resets the labels()</p>
+<!-- @@@resetGUIclearLabels -->
 <!-- $$$resetPixmapButtons[overload1]$$$resetPixmapButtons -->
 <h3 class="fn" id="resetPixmapButtons"><a name="resetPixmapButtons"></a><code>[slot] </code><span class="type">void</span> InstaDam::<span class="name">resetPixmapButtons</span>()</h3>
 <p>Resets the pixmaps of the filter buttons.</p>
 <!-- @@@resetPixmapButtons -->
-<!-- $$$setCurrentProject[overload1]$$$setCurrentProjectProject* -->
-<h3 class="fn" id="setCurrentProject"><a name="setCurrentProject"></a><span class="type">void</span> InstaDam::<span class="name">setCurrentProject</span>(<span class="type"><a href="project.html">Project</a></span> *<i>pr</i>)</h3>
-<p>Sets the current project to <i>pr</i>.</p>
-<!-- @@@setCurrentProject -->
+<!-- $$$saveAndProgress[overload1]$$$saveAndProgressint -->
+<h3 class="fn" id="saveAndProgress"><a name="saveAndProgress"></a><span class="type">void</span> InstaDam::<span class="name">saveAndProgress</span>(<span class="type">int</span> <i>num</i>)</h3>
+<p>Save current annotations and continue. <i>num</i> is used to indicate the index of the current image.</p>
+<!-- @@@saveAndProgress -->
+<!-- $$$selectItemButton[overload1]$$$selectItemButtonSelectItem::SelectType -->
+<h3 class="fn" id="selectItemButton"><a name="selectItemButton"></a><span class="type">void</span> InstaDam::<span class="name">selectItemButton</span>(<span class="type"><a href="selectitem.html#SelectType-enum">SelectItem::SelectType</a></span> <i>type</i>)</h3>
+<p>Slot called when a selectItemButton is called with <i>type</i>, enabling the appropriate functionality.</p>
+<!-- @@@selectItemButton -->
+<!-- $$$selectItemButton$$$selectItemButtonint -->
+<h3 class="fn" id="selectItemButton-1"><a name="selectItemButton-1"></a><span class="type">void</span> InstaDam::<span class="name">selectItemButton</span>(<span class="type">int</span> <i>type</i>)</h3>
+<p>* Selects the appropriate button based on <i>type</i>.</p>
+<!-- @@@selectItemButton -->
+<!-- $$$setButtonsConfiguration[overload1]$$$setButtonsConfiguration -->
+<h3 class="fn" id="setButtonsConfiguration"><a name="setButtonsConfiguration"></a><span class="type">void</span> InstaDam::<span class="name">setButtonsConfiguration</span>()</h3>
+<p>Configures different buttons for local and server versions.</p>
+<!-- @@@setButtonsConfiguration -->
+<!-- $$$setCurrentItem[overload1]$$$setCurrentItemSelectItem*bool -->
+<h3 class="fn" id="setCurrentItem"><a name="setCurrentItem"></a><span class="type">void</span> InstaDam::<span class="name">setCurrentItem</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type">bool</span> <i>enable</i> = false)</h3>
+<p>Set <i>item</i> to be the currently active <a href="selectitem.html">SelectItem</a>. <i>enable</i> indicates whenther (<code>true</code>) or not (<code>false</code>) the finishPolygon Button needs to be enabled.</p>
+<!-- @@@setCurrentItem -->
+<!-- $$$setCurrentProjectId[overload1]$$$setCurrentProjectIdint -->
+<h3 class="fn" id="setCurrentProjectId"><a name="setCurrentProjectId"></a><span class="type">void</span> InstaDam::<span class="name">setCurrentProjectId</span>(<span class="type">int</span> <i>id</i>)</h3>
+<p>Sets the id of the current project to <i>id</i>.</p>
+<!-- @@@setCurrentProjectId -->
 <!-- $$$setLabels[overload1]$$$setLabels -->
 <h3 class="fn" id="setLabels"><a name="setLabels"></a><span class="type">void</span> InstaDam::<span class="name">setLabels</span>()</h3>
 <p>Creates sets the label buttons to the labels of the current project.</p>

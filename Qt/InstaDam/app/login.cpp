@@ -19,11 +19,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief Creates a login dialog.
-  */
+*/
 
 /*!
   Creates an instance with parent QWidget \a parent, if any.
-  */
+*/
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
@@ -31,14 +31,14 @@ Login::Login(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 Login::~Login() {
     delete ui;
 }
 
 /*!
   Processes the "Register" button click.
-  */
+*/
 void Login::on_pushButton_3_clicked() {
     Register *reg = new Register;
     reg->show();
@@ -46,8 +46,8 @@ void Login::on_pushButton_3_clicked() {
 }
 
 /*!
-  Processes the "Login" button click: Sends a request to login
-  */
+  Processes the "Login" button click: Sends a request to login.
+*/
 void Login::on_pushButton_clicked() {
     QString user = ui->username->text();
     QString pass = ui->password->text();
@@ -69,8 +69,8 @@ void Login::on_pushButton_clicked() {
 }
 
 /*!
-  Received the reply for Login
-  */
+  Received the reply for Login.
+*/
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -86,7 +86,7 @@ void Login::replyFinished() {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
             this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString().toUtf8();
-            Login::lunchMainInstadam();
+            Login::launchMainInstadam();
         }
         else{
             msgBox.setText(obj.value("msg").toString());
@@ -96,25 +96,24 @@ void Login::replyFinished() {
 }
 
 /*!
-  Lunches the main InstaDam Window after loginin in successfully
-  */
-void Login::lunchMainInstadam(){
+  Lunches the main InstaDam Window after loginin in successfully.
+*/
+void Login::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();
 }
 
-
 /*!
   Processes the "Cancel" button click.
-  */
+*/
 void Login::on_pushButton_2_clicked() {
     this->close();
 }
 
 /*!
-  Processes the "Back" button click: Goes back to the starting widget
-  */
+  Processes the "Back" button click: Goes back to the starting widget.
+*/
 void Login::on_pushButton_4_clicked() {
     StartingWidget *startingWidget = new StartingWidget;
     startingWidget->show();

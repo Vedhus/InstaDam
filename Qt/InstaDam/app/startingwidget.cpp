@@ -11,11 +11,11 @@
   \inherits QWidget
   \brief Starting widget for selecting user mode, either Local or Server.
 
-  */
+ */
 
 /*!
   Constructs a Qwidget with parent QWidget \a parent, if any.
-  */
+ */
 StartingWidget::StartingWidget(QWidget *parent) :
     QWidget(parent), ui(new Ui::StartingWidget) {
     ui->setupUi(this);
@@ -23,14 +23,14 @@ StartingWidget::StartingWidget(QWidget *parent) :
 
 /*!
   Destructor
-  */
+ */
 StartingWidget::~StartingWidget() {
     delete ui;
 }
 
 /*!
   Sets the mode to run locally.
-  */
+ */
 void StartingWidget::runLocalVersion() {
     qInfo() << "running locally";
     InstaDam *w = new InstaDam;
@@ -42,7 +42,7 @@ void StartingWidget::runLocalVersion() {
 
 /*!
   Sets the mode to run of a server.
-  */
+ */
 void StartingWidget::runServerVersion() {
     qInfo() << "running on a server";
     Login *log = new Login;
@@ -52,14 +52,14 @@ void StartingWidget::runServerVersion() {
 
 /*!
   Responds to the Local Version button being clicked.
-  */
+ */
 void StartingWidget::on_pushButton_clicked() {
     runLocalVersion();
 }
 
 /*!
   Responds to the Run from Server button being clicked.
-  */
+ */
 void StartingWidget::on_pushButton_2_clicked() {
     runServerVersion();
 }
@@ -67,8 +67,7 @@ void StartingWidget::on_pushButton_2_clicked() {
 
 /*!
   Exit the platform when Exit button being clicked.
-  */
-void StartingWidget::on_pushButton_3_clicked()
-{
+ */
+void StartingWidget::on_pushButton_3_clicked() {
     close();
 }

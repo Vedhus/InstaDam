@@ -17,7 +17,7 @@
 <li class="fn">enum <span class="name"><b><a href="http://doc.qt.io/qt-5/qpaintdevice.html#PaintDeviceMetric-enum">PaintDeviceMetric</a></b></span></li>
 <li class="fn">enum <span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#RenderFlag-enum">RenderFlag</a></b></span></li>
 <li class="fn">typedef <span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#RenderFlag-enum">RenderFlags</a></b></span></li>
-<li class="fn"><span class="name"><b><a href="imagelist.html#ImageList">ImageList</a></b></span>(QWidget *, QString , QString )</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#ImageList">ImageList</a></b></span>(Project *, QWidget *, QString , QString )</li>
 <li class="fn"><span class="name"><b><a href="imagelist.html#dtor.ImageList">~ImageList</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#acceptDrops-prop">acceptDrops</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#accessibleDescription-prop">accessibleDescription</a></b></span>() const</li>
@@ -29,6 +29,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#addActions">addActions</a></b></span>(QList&lt;QAction *&gt; )</li>
 <li class="fn"><span class="name"><b><a href="imagelist.html#addItems">addItems</a></b></span>(QJsonObject )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#adjustSize">adjustSize</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#allAnnotationsLoaded">allAnnotationsLoaded</a></b></span>(QJsonObject , fileTypes )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#autoFillBackground-prop">autoFillBackground</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#backgroundRole">backgroundRole</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#backingStore">backingStore</a></b></span>() const</li>
@@ -42,6 +43,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#childrenRect-prop">childrenRect</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#childrenRegion-prop">childrenRegion</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#clearFocus">clearFocus</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#clearGUI">clearGUI</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#clearMask">clearMask</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#close">close</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#closeEvent">closeEvent</a></b></span>(QCloseEvent *)</li>
@@ -58,6 +60,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#contextMenuPolicy-prop">contextMenuPolicy</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#create">create</a></b></span>(WId , bool , bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#createWindowContainer">createWindowContainer</a></b></span>(QWindow *, QWidget *, Qt::WindowFlags )</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#currentProject-var">currentProject</a></b></span> : Project *</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#cursor-prop">cursor</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#customContextMenuRequested">customContextMenuRequested</a></b></span>(const QPoint &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#customEvent">customEvent</a></b></span>(QEvent *)</li>
@@ -88,6 +91,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#event">event</a></b></span>(QEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#eventFilter">eventFilter</a></b></span>(QObject *, QEvent *)</li>
 <li class="fn"><span class="name"><b><a href="imagelist.html#fileDownloaded">fileDownloaded</a></b></span>(QString )</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#fileReplyFinished">fileReplyFinished</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#find">find</a></b></span>(WId )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChild">findChild</a></b></span>(const QString &amp;, Qt::FindChildOptions ) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChildren">findChildren</a></b></span>(const QString &amp;, Qt::FindChildOptions ) const</li>
@@ -109,6 +113,9 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#frameSize-prop">frameSize</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#geometry-prop">geometry</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#getContentsMargins">getContentsMargins</a></b></span>(int *, int *, int *, int *) const</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#getIdList">getIdList</a></b></span>() : QList&lt;int&gt;</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#getPathList">getPathList</a></b></span>() : QList&lt;QString&gt;</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#getSelectedIdIndex">getSelectedIdIndex</a></b></span>() : int</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#grab">grab</a></b></span>(const QRect &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#grabGesture">grabGesture</a></b></span>(Qt::GestureType , Qt::GestureFlags )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#grabKeyboard">grabKeyboard</a></b></span>()</li>
@@ -155,6 +162,8 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#isWindow">isWindow</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#windowModified-prop">isWindowModified</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#isWindowType">isWindowType</a></b></span>() const</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#json-var">json</a></b></span> : QJsonObject</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#jsonLabelArray-var">jsonLabelArray</a></b></span> : QJsonArray</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#keyPressEvent">keyPressEvent</a></b></span>(QKeyEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#keyReleaseEvent">keyReleaseEvent</a></b></span>(QKeyEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#keyboardGrabber">keyboardGrabber</a></b></span>()</li>
@@ -188,15 +197,16 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#mousePressEvent">mousePressEvent</a></b></span>(QMouseEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#mouseReleaseEvent">mouseReleaseEvent</a></b></span>(QMouseEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#pos-prop">move</a></b></span>(<i>const QPoint &amp;</i>)</li>
+</ul></td><td class="topAlign"><ul>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#moveEvent">moveEvent</a></b></span>(QMoveEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#moveToThread">moveToThread</a></b></span>(QThread *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#nativeEvent">nativeEvent</a></b></span>(const QByteArray &amp;, void *, long *)</li>
-</ul></td><td class="topAlign"><ul>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#nativeParentWidget">nativeParentWidget</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#nextInFocusChain">nextInFocusChain</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#normalGeometry-prop">normalGeometry</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#objectName-prop">objectName</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#objectNameChanged">objectNameChanged</a></b></span>(const QString &amp;)</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#openAnnotation">openAnnotation</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#overrideWindowFlags">overrideWindowFlags</a></b></span>(Qt::WindowFlags )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#paintEngine">paintEngine</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#paintEvent">paintEvent</a></b></span>(QPaintEvent *)</li>
@@ -232,11 +242,13 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#saveGeometry">saveGeometry</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#scroll">scroll</a></b></span>(int , int )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#scroll-1">scroll</a></b></span>(int , int , const QRect &amp;)</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#selectedRow-var">selectedRow</a></b></span> : QList&lt;QTableWidgetItem *&gt;</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#sender">sender</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#senderSignalIndex">senderSignalIndex</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#acceptDrops-prop">setAcceptDrops</a></b></span>(bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#accessibleDescription-prop">setAccessibleDescription</a></b></span>(const QString &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#accessibleName-prop">setAccessibleName</a></b></span>(const QString &amp;)</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#setAnnotated">setAnnotated</a></b></span>()</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setAttribute">setAttribute</a></b></span>(Qt::WidgetAttribute , bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#autoFillBackground-prop">setAutoFillBackground</a></b></span>(bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setBackgroundRole">setBackgroundRole</a></b></span>(QPalette::ColorRole )</li>
@@ -279,6 +291,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setParent">setParent</a></b></span>(QWidget *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setParent-1">setParent</a></b></span>(QWidget *, Qt::WindowFlags )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#setProperty">setProperty</a></b></span>(const char *, const QVariant &amp;)</li>
+<li class="fn"><span class="name"><b><a href="imagelist.html#setSelectedIdIndex">setSelectedIdIndex</a></b></span>(int )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setShortcutAutoRepeat">setShortcutAutoRepeat</a></b></span>(int , bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#setShortcutEnabled">setShortcutEnabled</a></b></span>(int , bool )</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qwidget.html#sizeIncrement-prop">setSizeIncrement</a></b></span>(<i>const QSize &amp;</i>)</li>

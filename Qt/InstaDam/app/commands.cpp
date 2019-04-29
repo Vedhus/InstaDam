@@ -6,7 +6,7 @@
 #include "instadam.h"
 /*!
   \class AddCommand
-   \ingroup Selectors
+   \ingroup app
    \inmodule InstaDam
    \inherits QUndoCommand
    \brief The AddCommand class provides undo and redo actions
@@ -17,13 +17,14 @@
    commands the item can be added and removed from the scene
    repeatedly.
 
-   \sa DeleteCommand, MoveCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+   \sa DeleteCommand, MoveCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
  */
 
 /*!
   Constructs an AddCommand using the provided \a item and \a scene
   so that the addition of this \a item to the \a scene can be undone
-  and/or redone. \a parent refers to parent QUndoCommand, if any.
+  and/or redone. \a idam is proveded for access to the calling InstaDam instance.
+  \a parent refers to parent QUndoCommand, if any.
 
  */
 AddCommand::AddCommand(SelectItem *item, PhotoScene *scene,
@@ -83,12 +84,13 @@ void AddCommand::redo() {
    commands the item can be added and removed from the scene
    repeatedly.
 
-   \sa AddCommand, MoveCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+   \sa AddCommand, MoveCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
  */
 /*!
   Constructs a DeleteCommand using the provided \a item and \a scene
   so that the deletion of this \a item from the \a scene can be undone
-  and/or redone. \a parent refers to parent QUndoCommand, if any.
+  and/or redone. \a idam is proveded for access to the calling InstaDam instance.
+  \a parent refers to parent QUndoCommand, if any.
 
  */
 DeleteCommand::DeleteCommand(SelectItem* item, PhotoScene *scene,
@@ -133,7 +135,7 @@ void DeleteCommand::redo() {
    commands the item can be moved and returned to it's original
    position in the scene repeatedly.
 
-   \sa AddCommand, DeleteCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+   \sa AddCommand, DeleteCommand, MoveVertexCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
 */
 /*!
   Constructs a MoveCommand using the provided \a item
@@ -190,7 +192,7 @@ void MoveCommand::redo() {
    commands the vertex can be moved from and to its original position
    in the scene repeatedly.
 
-   \sa AddCommand, MoveCommand, DeleteCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+   \sa AddCommand, MoveCommand, DeleteCommand, AddVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
  */
 /*!
   Constructs a MoveVeretxCommand using the provided \a item and \a vertex
@@ -244,7 +246,7 @@ void MoveVertexCommand::redo() {
    of the new vertex \a point. Using the undo() and redo()
    commands the vertex can removed from and to the SelectItem repeatedly.
 
-   \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand
+   \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
  */
 /*!
   Constructs an AddVeretxCommand using the provided \a item and \a point so that
@@ -297,7 +299,7 @@ void AddVertexCommand::redo() {
    activeVertex. Using the undo() and redo() commands the vertex can be added to
    and removed from the SelectItem repeatedly.
 
-   \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, AddVertexCommand, ErasePointsCommand, RotateCommand
+   \sa AddCommand, MoveCommand, DeleteCommand, MoveVertexCommand, AddVertexCommand, ErasePointsCommand, RotateCommand, EditLabelCommand
  */
 /*!
   Constructs a DeleteVeretxCommand using the provided \a item
@@ -343,7 +345,7 @@ void DeleteVertexCommand::redo() {
    commands the erasure can be undone and redone
    repeatedly.
 
-   \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, DeleteCommand, RotateCommand
+   \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, DeleteCommand, RotateCommand, EditLabelCommand
  */
 /*!
   Constructs an ErasePointsCommand using the provided \a item and it's owning
@@ -392,7 +394,7 @@ void ErasePointsCommand::redo() {
 
 /*!
   \class RotateCommand
-  \ingroup Selector
+  \ingroup app
   \inmodule InstaDam
   \inherits QUndoCommand
   \brief The RotateCommand class provides undo and redo actions
@@ -403,7 +405,7 @@ void ErasePointsCommand::redo() {
    commands the rotation of the item can be undone and redone
    repeatedly.
 
-   \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, DeleteCommand
+   \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, DeleteCommand, EditLabelCommand
  */
 /*!
   Constructs a RotateCommand using the provided \a item and the starting
@@ -445,14 +447,26 @@ void RotateCommand::redo() {
         init = true;
     }
 }
+
 /*!
-  Constructs an EditLabel command using the provided \a item .
-   EditLabelCommand is used to hold a reference to a SelectItem and
-   the PhotoScene to which it belongs. Using the undo() and redo()
-   commands the item can be unedited and edited
-   repeatedly..
+  \class EditLabelCommand
+  \ingroup app
+  \inmodule InstaDam
+  \inherits QUndoCommand
+  \brief The EditLabelCommand command is used to change the Label of the selected
+  item.
+
+   EditLabelCommand is used to change the Label of the selected
+   item. Using the undo() and redo() commands the item can be unedited and edited
+   repeatedly.
+
+   \sa AddCommand, MoveCommand, AddVertexCommand, MoveVertexCommand, DeleteVertexCommand, ErasePointsCommand, DeleteCommand
  */
 
+/*!
+  Constructs an EditLabel command using the provided \a item, \a newLabel,
+  \a oldLabel, \a scene, \a idam, and \a parent, if any.
+ */
 EditLabelCommand::EditLabelCommand(SelectItem *item, QSharedPointer<Label> newLabel,
                                    QSharedPointer<Label> oldLabel,
                                    PhotoScene *scene,InstaDam *idam,
@@ -467,7 +481,6 @@ EditLabelCommand::EditLabelCommand(SelectItem *item, QSharedPointer<Label> newLa
 
 
 }
-
 
 /*!
    \reimp
@@ -493,4 +506,3 @@ void EditLabelCommand::redo() {
     myItem->updateMirrorScene();
 
 }
-

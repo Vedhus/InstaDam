@@ -18,12 +18,12 @@
   \inmodule InstaDam
   \brief Defines a custom QDIalog based on the selected mask.
 
- */
+*/
 
 /*!
   Creates an instance based on \a selectedMask, \a fc, \a photoViewer, and
   \a currentPro.
-  */
+*/
 filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            filterControls* fc, PhotoViewer* photoViewer,
                            Project *currentPro)
@@ -138,11 +138,18 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
     }
     QDialog::show();
 }
+
+/*!
+  Called when a mouse button is pressed given by \a event.
+*/
 void filterDialog::mousePressEvent(QMouseEvent *event){
     mpos = event->pos();
     QDialog::mousePressEvent(event);
 }
 
+/*!
+  Called when the mouse moves with \a event.
+*/
 void filterDialog::mouseMoveEvent(QMouseEvent *event){
     if (event->buttons() & Qt::LeftButton) {
         QPoint diff = event->pos() - mpos;
@@ -154,6 +161,9 @@ void filterDialog::mouseMoveEvent(QMouseEvent *event){
 
 }
 
+/*!
+  Called when a Label button is checked given by \a label.
+*/
 void filterDialog::checkLabel(QSharedPointer<Label> label) {
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
@@ -174,7 +184,7 @@ void filterDialog::checkLabel(QSharedPointer<Label> label) {
 
 /*!
   Creates an instance
-  */
+*/
 filterControls::filterControls():QObject() {
     defineProperties();
 }
@@ -183,7 +193,7 @@ filterControls::filterControls():QObject() {
 /*!
   Slot that sets the int \a value
   to the appropriate property indexed by \a maskType, \a propNum and \a thof.
- */
+*/
 void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,
                                int value,
                                EnumConstants::threshold_or_filter thof) {
@@ -195,7 +205,7 @@ void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,
 /*!
  Obtains the label mask from \a label and sets it to be used as a mask
  for the LABELMASK filter operation.
- */
+*/
 void filterControls::setLabelMask(QSharedPointer<Label> label) {
     this->labelMask = label->exportLabel(SelectItem::myBounds);
     emit valAssigned(EnumConstants::LABELMASK, EnumConstants::FILTER);
@@ -203,7 +213,7 @@ void filterControls::setLabelMask(QSharedPointer<Label> label) {
 
 /*!
  Defines the properties of the different masks.
- */
+*/
 void filterControls::defineProperties() {
     std::vector<filterProperty*> cannyProperties;
 
@@ -283,7 +293,7 @@ void filterControls::defineProperties() {
 /*!
  Filters the cv::Mat \a image based on the selected maskTypes \a selectedFilter
  and returns a binary image cv::Mat.
- */
+*/
 cv::Mat filterControls::filterFunc(cv::Mat image,
                                    EnumConstants::maskTypes selectedFilter) {
     cv::Mat edge_temp;
@@ -327,7 +337,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
 }
 
 /*!
-  Sets image for the object and stores and returns filtered edges.
+  Returns a masked image based in the input \a image and \a selectedFilter.
 */
 cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
                                                EnumConstants::maskTypes selectedFilter) {
@@ -339,7 +349,7 @@ cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
 
 /*!
   Binarizes the image and converts it to a pixmap using \a selectedFilter.
- */
+*/
 void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
     cv::Mat binary;
     int invert = properties[selectedFilter]->propertylist[0]->val;
@@ -366,7 +376,7 @@ void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
 /*!
   Returns a thubnail pixmap for the filter selection bar at the bottom of
   InstaDam, based on \a thumb and \a selectedFilter.
- */
+*/
 QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
                                      EnumConstants::maskTypes selectedFilter) {
     qInfo("Enter Thumb");
@@ -388,3 +398,9 @@ QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
     qImgThumb = QPixmap::fromImage(qImgImg_temp);
     return qImgThumb;
 }
+
+/*!
+  \fn filterControls::valAssigned(EnumConstants::maskTypes maskType, EnumConstants::threshold_or_filter thof)
+
+  This signal is emitted when a value is assigned with \a maskType and \a thof.
+*/

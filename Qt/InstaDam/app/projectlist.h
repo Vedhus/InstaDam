@@ -11,8 +11,7 @@ namespace Ui {
 class ProjectList;
 }
 
-class ProjectList : public QWidget
-{
+class ProjectList : public QWidget {
     Q_OBJECT
 
 public:
@@ -21,16 +20,16 @@ public:
      QString useCase;
 
     void addItems(QJsonDocument, QString, QString);
-public slots:
-    void openProject(QListWidgetItem *);
-    void deleteProject(QListWidgetItem *);
-    void confirmProjectDeletion(QListWidgetItem *);
-
 signals:
-    void projectJsonReceived(QJsonObject);
-    void projectIdChanged(int);
+    void projectJsonReceived(QJsonObject json);
+    void projectIdChanged(int id);
     void instadamClearAll();
-    int projectDeleted(int);
+    void projectDeleted(int id);
+
+public slots:
+    void openProject(QListWidgetItem *project_name);
+    void deleteProject(QListWidgetItem *project_name);
+    void confirmProjectDeletion(QListWidgetItem *project_name);
 
 private:
     Ui::ProjectList *ui;

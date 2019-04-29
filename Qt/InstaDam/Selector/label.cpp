@@ -433,6 +433,6 @@ void Label::setMaskState(int state) {
 /*!
   \fn Label::addItem(FreeDrawErase *item)
 
-  Empty function as FreeDrawErase objects are not saved.
+  Empty function as FreeDrawErase (\a item) objects are not saved.
   */
 #endif

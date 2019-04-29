@@ -37,10 +37,10 @@
 <div class="table"><table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filterControls">filterControls</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#defineProperties">defineProperties</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filtAndGeneratePixmaps">filtAndGeneratePixmaps</a></b>(<i>int</i>, <i>EnumConstants::maskTypes</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filterFunc">filterFunc</a></b>(<i>int</i>, <i>EnumConstants::maskTypes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> cv::Mat </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filtAndGeneratePixmaps">filtAndGeneratePixmaps</a></b>(cv::Mat <i>image</i>, EnumConstants::maskTypes <i>selectedFilter</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> cv::Mat </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#filterFunc">filterFunc</a></b>(cv::Mat <i>image</i>, EnumConstants::maskTypes <i>selectedFilter</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#im2pixmap">im2pixmap</a></b>(EnumConstants::maskTypes <i>selectedFilter</i>)</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#thumb2pixmap">thumb2pixmap</a></b>(int <i>thumb</i>, EnumConstants::maskTypes <i>selectedFilter</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#thumb2pixmap">thumb2pixmap</a></b>(cv::Mat <i>thumb</i>, EnumConstants::maskTypes <i>selectedFilter</i>)</td></tr>
 </table></div>
 <ul>
 <li class="fn">31 public functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-functions">QObject</a></li>
@@ -65,11 +65,11 @@
 <a name="public-variables"></a>
 <h2 id="public-variables">Public Variables</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#edges-var">edges</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#img-var">img</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> cv::Mat </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#edges-var">edges</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> cv::Mat </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#img-var">img</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#labelMask-var">labelMask</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> PhotoViewer *</td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#photoViewer-var">photoViewer</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#properties-var">properties</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;filterPropertiesMeta *&gt; </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#properties-var">properties</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qAlpha-var">qAlpha</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qImg-var">qImg</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="filtercontrols.html#qImgThumb-var">qImgThumb</a></b></td></tr>
@@ -108,12 +108,12 @@
 <h3 class="fn" id="defineProperties"><a name="defineProperties"></a><span class="type">void</span> filterControls::<span class="name">defineProperties</span>()</h3>
 <p>Defines the properties of the different masks.</p>
 <!-- @@@defineProperties -->
-<!-- $$$filtAndGeneratePixmaps[overload1]$$$filtAndGeneratePixmapsintEnumConstants::maskTypes -->
-<h3 class="fn" id="filtAndGeneratePixmaps"><a name="filtAndGeneratePixmaps"></a><span class="type">int</span> filterControls::<span class="name">filtAndGeneratePixmaps</span>(<i>int</i>, <i>EnumConstants::maskTypes</i>)</h3>
-<p>Sets image for the object and stores and returns filtered edges.</p>
+<!-- $$$filtAndGeneratePixmaps[overload1]$$$filtAndGeneratePixmapscv::MatEnumConstants::maskTypes -->
+<h3 class="fn" id="filtAndGeneratePixmaps"><a name="filtAndGeneratePixmaps"></a><span class="type">cv::Mat</span> filterControls::<span class="name">filtAndGeneratePixmaps</span>(<span class="type">cv::Mat</span> <i>image</i>, <span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedFilter</i>)</h3>
+<p>Returns a masked image based in the input <i>image</i> and <i>selectedFilter</i>.</p>
 <!-- @@@filtAndGeneratePixmaps -->
-<!-- $$$filterFunc[overload1]$$$filterFuncintEnumConstants::maskTypes -->
-<h3 class="fn" id="filterFunc"><a name="filterFunc"></a><span class="type">int</span> filterControls::<span class="name">filterFunc</span>(<i>int</i>, <i>EnumConstants::maskTypes</i>)</h3>
+<!-- $$$filterFunc[overload1]$$$filterFunccv::MatEnumConstants::maskTypes -->
+<h3 class="fn" id="filterFunc"><a name="filterFunc"></a><span class="type">cv::Mat</span> filterControls::<span class="name">filterFunc</span>(<span class="type">cv::Mat</span> <i>image</i>, <span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedFilter</i>)</h3>
 <p>Filters the cv::Mat <i>image</i> based on the selected maskTypes <i>selectedFilter</i> and returns a binary image cv::Mat.</p>
 <!-- @@@filterFunc -->
 <!-- $$$im2pixmap[overload1]$$$im2pixmapEnumConstants::maskTypes -->
@@ -124,12 +124,13 @@
 <h3 class="fn" id="setLabelMask"><a name="setLabelMask"></a><code>[slot] </code><span class="type">void</span> filterControls::<span class="name">setLabelMask</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i>)</h3>
 <p>Obtains the label mask from <i>label</i> and sets it to be used as a mask for the LABELMASK filter operation.</p>
 <!-- @@@setLabelMask -->
-<!-- $$$thumb2pixmap[overload1]$$$thumb2pixmapintEnumConstants::maskTypes -->
-<h3 class="fn" id="thumb2pixmap"><a name="thumb2pixmap"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> filterControls::<span class="name">thumb2pixmap</span>(<span class="type">int</span> <i>thumb</i>, <span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedFilter</i>)</h3>
+<!-- $$$thumb2pixmap[overload1]$$$thumb2pixmapcv::MatEnumConstants::maskTypes -->
+<h3 class="fn" id="thumb2pixmap"><a name="thumb2pixmap"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> filterControls::<span class="name">thumb2pixmap</span>(<span class="type">cv::Mat</span> <i>thumb</i>, <span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>selectedFilter</i>)</h3>
 <p>Returns a thubnail pixmap for the filter selection bar at the bottom of <a href="index.html">InstaDam</a>, based on <i>thumb</i> and <i>selectedFilter</i>.</p>
 <!-- @@@thumb2pixmap -->
 <!-- $$$valAssigned[overload1]$$$valAssignedEnumConstants::maskTypesEnumConstants::threshold_or_filter -->
 <h3 class="fn" id="valAssigned"><a name="valAssigned"></a><code>[signal] </code><span class="type">void</span> filterControls::<span class="name">valAssigned</span>(<span class="type"><a href="enumconstants.html#maskTypes-enum">EnumConstants::maskTypes</a></span> <i>maskType</i>, <span class="type"><a href="enumconstants.html#threshold_or_filter-enum">EnumConstants::threshold_or_filter</a></span> <i>thof</i>)</h3>
+<p>This signal is emitted when a value is assigned with <i>maskType</i> and <i>thof</i>.</p>
 <!-- @@@valAssigned -->
 </div>
 <hr/><p class="footer"><small></small></p></body>
