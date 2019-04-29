@@ -17,13 +17,13 @@ class MaskViewer : public PhotoViewer {
     explicit MaskViewer(QWidget *parent = nullptr);
     void LinkToPhotoViewer(PhotoViewer *viewer);
 
-    maskObjects *maskObject;
+    //maskObjects *maskObject;
     QPixmap qImg;
     QPixmap qAlpha;
     PhotoViewer *photoViewer;
     //void setMaskPixmap();
  public slots:
-    void setImMask(EnumConstants::maskTypes);
+    void setImMask(EnumConstants::maskTypes filterName);
 
  private:
     Ui::MaskViewer *ui;

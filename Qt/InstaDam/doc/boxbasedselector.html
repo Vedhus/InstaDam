@@ -54,12 +54,12 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#removeVertex">removeVertex</a></b>(int <i>vertex</i> = UNSELECTED) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#resetActiveVertex">resetActiveVertex</a></b>() override</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>newPos</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>oldP</i>, QPointF &amp;<i>newP</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="boxbasedselector.html#write">write</a></b>(QJsonObject &amp;<i>json</i>) const override</td></tr>
 </table></div>
 <ul>
-<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">57 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
 <li class="fn">183 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
 </ul>
 <a name="protected-functions"></a>
@@ -152,8 +152,8 @@
 <h3 class="fn" id="resetActiveVertex"><a name="resetActiveVertex"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">resetActiveVertex</span>()</h3>
 <p>Reimplemented from <a href="selectitem.html#resetActiveVertex">SelectItem::resetActiveVertex</a>().</p>
 <!-- @@@resetActiveVertex -->
-<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
-<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newPos</i>)</h3>
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF&QPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> BoxBasedSelector::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldP</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newP</i>)</h3>
 <p>Reimplemented from <a href="selectitem.html#resizeItem">SelectItem::resizeItem</a>().</p>
 <!-- @@@resizeItem -->
 <!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->

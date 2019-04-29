@@ -44,23 +44,31 @@
 <p>Below is an example implementation</p>
 <pre class="cpp"><span class="type">void</span> RectangleSelect<span class="operator">::</span>moveItem(<span class="keyword">const</span> <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <span class="operator">&amp;</span>oldPos<span class="operator">,</span> <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> <span class="operator">&amp;</span>newPos) {
     <span class="comment">// if there is an active vertex then we are resizing</span>
-    <span class="keyword">if</span> (activeVertex <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>) {
+    <span class="keyword">if</span> (activeVertex <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> activeVertex <span class="operator">!</span><span class="operator">=</span> UNSELECTED) {
+        <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> newPoint <span class="operator">=</span> BoxBasedSelector<span class="operator">::</span>mapToScene(getActivePoint()) <span class="operator">+</span> (newPos <span class="operator">-</span> oldPos);
+        addPoint(newPoint);
         resized <span class="operator">=</span> <span class="keyword">true</span>;
         setMirrorResized();
-        addPoint(newPos);
+        <span class="comment">//calcCorners();</span>
+        setRect(myRect);
+        <span class="keyword">if</span> (mirror <span class="operator">!</span><span class="operator">=</span> nullptr)
+            mirror<span class="operator">-</span><span class="operator">&gt;</span>setRectUnchecked(getRect());
     } <span class="keyword">else</span> {
         <span class="comment">// otherwise we are moving the entire object</span>
+        <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> shift <span class="operator">=</span> newPos <span class="operator">-</span> oldPos;
+        <span class="comment">//QRectF temp = myRect;</span>
+        <span class="comment">//checkBoundaries(shift, temp);</span>
+        <span class="comment">//qreal x = temp.x() - myRect.x();</span>
+        <span class="comment">//qreal y = temp.y() - myRect.y();</span>
+        BoxBasedSelector<span class="operator">::</span>setTransform(<span class="type"><a href="http://doc.qt.io/qt-5/qtransform.html">QTransform</a></span><span class="operator">::</span>fromTranslate(shift<span class="operator">.</span>x()<span class="operator">,</span> shift<span class="operator">.</span>y())<span class="operator">,</span> <span class="keyword">true</span>);
+        myRect <span class="operator">=</span> getRect();
+        calcCorners();
+        <span class="keyword">if</span> (mirror <span class="operator">!</span><span class="operator">=</span> nullptr)
+            mirror<span class="operator">-</span><span class="operator">&gt;</span>BoxBasedSelector<span class="operator">::</span>setTransform(<span class="type"><a href="http://doc.qt.io/qt-5/qtransform.html">QTransform</a></span><span class="operator">::</span>fromTranslate(shift<span class="operator">.</span>x()<span class="operator">,</span> shift<span class="operator">.</span>y())<span class="operator">,</span> <span class="keyword">true</span>);
         moved <span class="operator">=</span> <span class="keyword">true</span>;
         setMirrorMoved();
-        <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> shift <span class="operator">=</span> newPos <span class="operator">-</span> oldPos;
-        checkBoundaries(shift<span class="operator">,</span> myRect);
     }
-    calcCorners();
     <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsrectitem.html">QGraphicsRectItem</a></span><span class="operator">::</span>prepareGeometryChange();
-    setRect(myRect);
-    <span class="comment">// update the mirror if there is one</span>
-    <span class="keyword">if</span> (mirror <span class="operator">!</span><span class="operator">=</span> nullptr)
-        mirror<span class="operator">-</span><span class="operator">&gt;</span>setRectUnchecked(myRect);
 }</pre>
 </div>
 <!-- @@@mirroritems.html -->

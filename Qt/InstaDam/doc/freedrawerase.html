@@ -36,6 +36,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#FreeDrawErase">FreeDrawErase</a></b>(QPointF <i>point</i>, int <i>brushSize</i>, Qt::PenCapStyle <i>brushMode</i>, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#dtor.FreeDrawErase">~FreeDrawErase</a></b>() override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QSharedPointer&lt;EraseMap&gt; </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#getMap">getMap</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#setOpacity">setOpacity</a></b>(qreal <i>val</i>)</td></tr>
 </table></div>
 <a name="reimplemented-public-functions"></a>
 <h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
@@ -46,9 +47,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawerase.html#toPixmap">toPixmap</a></b>(QPainter *<i>painter</i>) override</td></tr>
 </table></div>
 <ul>
-<li class="fn">36 public functions inherited from <a href="freedrawselect.html#public-functions">FreeDrawSelect</a></li>
+<li class="fn">38 public functions inherited from <a href="freedrawselect.html#public-functions">FreeDrawSelect</a></li>
 <li class="fn">16 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicspixmapitem.html#public-functions">QGraphicsPixmapItem</a></li>
-<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">57 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
 <li class="fn">366 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
 </ul>
 <a name="static-public-members"></a>
@@ -102,12 +103,16 @@
 <!-- $$$paint[overload1]$$$paintQPainter*constQStyleOptionGraphicsItem*QWidget* -->
 <h3 class="fn" id="paint"><a name="paint"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawErase::<span class="name">paint</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qstyleoptiongraphicsitem.html">QStyleOptionGraphicsItem</a></span> *<i>option</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qwidget.html">QWidget</a></span> *<i>widget</i> = ...)</h3>
 <p>Reimplemented from <a href="freedrawselect.html#paint">FreeDrawSelect::paint</a>().</p>
-<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted</p>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted.</p>
 <!-- @@@paint -->
+<!-- $$$setOpacity[overload1]$$$setOpacityqreal -->
+<h3 class="fn" id="setOpacity"><a name="setOpacity"></a><span class="type">void</span> FreeDrawErase::<span class="name">setOpacity</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>val</i>)</h3>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted. <i>val</i> is unused.</p>
+<!-- @@@setOpacity -->
 <!-- $$$toPixmap[overload1]$$$toPixmapQPainter* -->
 <h3 class="fn" id="toPixmap"><a name="toPixmap"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawErase::<span class="name">toPixmap</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a></span> *<i>painter</i>)</h3>
 <p>Reimplemented from <a href="freedrawselect.html#toPixmap">FreeDrawSelect::toPixmap</a>().</p>
-<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted</p>
+<p>Empty function as <a href="freedrawerase.html">FreeDrawErase</a> objects are not painted.</p>
 <!-- @@@toPixmap -->
 </div>
 <hr/><p class="footer"><small></small></p></body>

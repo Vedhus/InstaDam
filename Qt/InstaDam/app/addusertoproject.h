@@ -41,7 +41,7 @@ private:
     QString privilege;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     void replyFinished();
-    void listUsers(QJsonObject);
+    void listUsers(QJsonObject obj);
     void updateUser();
     void add();
     void privilegeReplyFinished();

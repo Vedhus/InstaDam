@@ -44,7 +44,7 @@
 <a name="public-functions"></a>
 <h2 id="public-functions">Public Functions</h2>
 <div class="table"><table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#SelectItem">SelectItem</a></b>(qreal <i>vertSize</i> = 10., QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#SelectItem">SelectItem</a></b>(qreal <i>vertSize</i> = DEFAULT_SIZE, QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#SelectItem-1">SelectItem</a></b>(QSharedPointer&lt;Label&gt; <i>label</i> = nullptr, QGraphicsItem *<i>item</i> = nullptr)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#dtor.SelectItem">~SelectItem</a></b>() override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#addPoint">addPoint</a></b>(QPointF &amp;<i>point</i>, const int <i>vertex</i> = ...) = 0</td></tr>
@@ -74,7 +74,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#removeVertex">removeVertex</a></b>(const int <i>vertex</i> = ...) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#resetActiveVertex">resetActiveVertex</a></b>() = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#resetState">resetState</a></b>()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>shift</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>oldP</i>, QPointF &amp;<i>newP</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#rotateMirror">rotateMirror</a></b>() const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QGraphicsScene *</td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#scene">scene</a></b>() const</td></tr>
@@ -89,7 +89,10 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setMirrorMoved">setMirrorMoved</a></b>() const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setMirrorResized">setMirrorResized</a></b>() const = 0</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setMirrorVertex">setMirrorVertex</a></b>(int <i>vertex</i>) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setMoved">setMoved</a></b>(bool <i>val</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setOnMaskScene">setOnMaskScene</a></b>(bool <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setOpacity">setOpacity</a></b>(qreal <i>val</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#setRotated">setRotated</a></b>(bool <i>val</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#showMask">showMask</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#sortCorners">sortCorners</a></b>(QRectF &amp;<i>rect</i>, QPointF &amp;<i>newPoint</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="selectitem.html#toPixmap">toPixmap</a></b>(QPainter *<i>painter</i>) = 0</td></tr>
@@ -206,7 +209,7 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <!-- $$$SelectItem[overload1]$$$SelectItemqrealQSharedPointer<Label>QGraphicsItem* -->
-<h3 class="fn" id="SelectItem"><a name="SelectItem"></a>SelectItem::<span class="name">SelectItem</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>vertSize</i> = 10., <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
+<h3 class="fn" id="SelectItem"><a name="SelectItem"></a>SelectItem::<span class="name">SelectItem</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>vertSize</i> = DEFAULT_SIZE, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>label</i> = nullptr, <span class="type"><a href="http://doc.qt.io/qt-5/qgraphicsitem.html#QGraphicsItem">QGraphicsItem</a></span> *<i>item</i> = nullptr)</h3>
 <p>Constructs a <a href="selectitem.html">SelectItem</a>, using <i>vertSize</i> as the vertex box size, <i>label</i> as the Label that owns this instance, and <i>item</i> as the parent <a href="http://doc.qt.io/qt-5/qgraphicsitem.html">QGraphicsItem</a>.</p>
 <!-- @@@SelectItem -->
 <!-- $$$SelectItem$$$SelectItemQSharedPointer<Label>QGraphicsItem* -->
@@ -350,9 +353,9 @@
 <p>Resets the state of the <a href="selectitem.html">SelectItem</a>, specifically sets the moved, resized, <a href="selectitem.html#pointAdded-var">pointAdded</a>, and rotated attributes to <code>false</code> (along with the mirror counterparts), and sets the <a href="selectitem.html#activeVertex-var">activeVertex</a> to <a href="selectitem.html#Vertex-enum">SelectItem::UNSELECTED</a>.</p>
 <p><b>See also </b><a href="selectitem.html#wasMoved">wasMoved</a>(), <a href="selectitem.html#wasPointAdded">wasPointAdded</a>(), <a href="selectitem.html#wasResized">wasResized</a>(), <a href="selectitem.html#wasRotated">wasRotated</a>(), <a href="selectitem.html#setActiveVertex">setActiveVertex</a>(), <a href="selectitem.html#getActiveVertex">getActiveVertex</a>(), <a href="selectitem.html#setInactive">setInactive</a>(), and <a href="selectitem.html#setItemActive">setItemActive</a>().</p>
 <!-- @@@resetState -->
-<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
-<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[pure virtual] </code><span class="type">void</span> SelectItem::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>shift</i>)</h3>
-<p>This pure virtual function is used to resize the item. <i>vertex</i> indicates which vertex is moving and <i>shift</i> indicates the relative shift in position the object should take. It is up to the individual reimplementations to determine how to do this for each derived class.</p>
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF&QPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[pure virtual] </code><span class="type">void</span> SelectItem::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldP</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newP</i>)</h3>
+<p>This pure virtual function is used to resize the item. <i>vertex</i> indicates which vertex is moving from point <i>oldP</i> to point <i>newP</i>. It is up to the individual reimplementations to determine how to do this for each derived class.</p>
 <p><b>See also </b><a href="selectitem.html#moveItem">moveItem</a>() and <a href="selectitem.html#rotate">rotate</a>().</p>
 <!-- @@@resizeItem -->
 <!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->
@@ -424,11 +427,25 @@ setActiveVertex(SelectItem<span class="operator">::</span>TOP <span class="opera
 <h3 class="fn" id="setMirrorVertex"><a name="setMirrorVertex"></a><code>[pure virtual] </code><span class="type">void</span> SelectItem::<span class="name">setMirrorVertex</span>(<span class="type">int</span> <i>vertex</i>) const</h3>
 <p>Pure virtual function which sets the active vertex of the <a href="selectitem.html">SelectItem</a>'s mirror to <i>vertex</i>.</p>
 <!-- @@@setMirrorVertex -->
+<!-- $$$setMoved[overload1]$$$setMovedbool -->
+<h3 class="fn" id="setMoved"><a name="setMoved"></a><span class="type">void</span> SelectItem::<span class="name">setMoved</span>(<span class="type">bool</span> <i>val</i>)</h3>
+<p>Set the internal moved variable to <i>val</i>, indicating whether (<code>true</code>) or not (<code>false</code>) the item was moved.</p>
+<p><b>See also </b><a href="selectitem.html#wasMoved">wasMoved</a>().</p>
+<!-- @@@setMoved -->
 <!-- $$$setOnMaskScene[overload1]$$$setOnMaskScenebool -->
 <h3 class="fn" id="setOnMaskScene"><a name="setOnMaskScene"></a><span class="type">void</span> SelectItem::<span class="name">setOnMaskScene</span>(<span class="type">bool</span> <i>value</i>)</h3>
 <p>Sets the <code>onMaskScene</code> to <i>value</i>, indicating whether (<code>true</code>) or not (<code>false</code>) the item is on the mask scene.</p>
 <p><b>See also </b><a href="selectitem.html#getFromMaskScene">getFromMaskScene</a>().</p>
 <!-- @@@setOnMaskScene -->
+<!-- $$$setOpacity[overload1]$$$setOpacityqreal -->
+<h3 class="fn" id="setOpacity"><a name="setOpacity"></a><span class="type">void</span> SelectItem::<span class="name">setOpacity</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>val</i>)</h3>
+<p>Set the visual opacity of the item to <i>val</i>.</p>
+<!-- @@@setOpacity -->
+<!-- $$$setRotated[overload1]$$$setRotatedbool -->
+<h3 class="fn" id="setRotated"><a name="setRotated"></a><span class="type">void</span> SelectItem::<span class="name">setRotated</span>(<span class="type">bool</span> <i>val</i>)</h3>
+<p>Set the internal rotated variable to <i>val</i>, indicating whether (<code>true</code>) or not (<code>false</code>) the item was rotated.</p>
+<p><b>See also </b><a href="selectitem.html#wasRotated">wasRotated</a>().</p>
+<!-- @@@setRotated -->
 <!-- $$$setVertexSize[overload1]$$$setVertexSizeqreal -->
 <h3 class="fn" id="setVertexSize"><a name="setVertexSize"></a><code>[static] </code><span class="type">void</span> SelectItem::<span class="name">setVertexSize</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>size</i>)</h3>
 <p>Determines the corners of the vertex boxes for plotting by using <i>size</i>.</p>

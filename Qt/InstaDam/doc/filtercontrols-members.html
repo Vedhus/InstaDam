@@ -38,17 +38,17 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#dumpObjectInfo">dumpObjectInfo</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#dumpObjectTree">dumpObjectTree</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#dynamicPropertyNames">dynamicPropertyNames</a></b></span>() const</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#edges-var">edges</a></b></span> : int</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#edges-var">edges</a></b></span> : cv::Mat</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#event">event</a></b></span>(QEvent *)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#eventFilter">eventFilter</a></b></span>(QObject *, QEvent *)</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#filtAndGeneratePixmaps">filtAndGeneratePixmaps</a></b></span>(<i>int</i>, <i>EnumConstants::maskTypes</i>) : int</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#filterFunc">filterFunc</a></b></span>(<i>int</i>, <i>EnumConstants::maskTypes</i>) : int</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#filtAndGeneratePixmaps">filtAndGeneratePixmaps</a></b></span>(cv::Mat , EnumConstants::maskTypes ) : cv::Mat</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#filterFunc">filterFunc</a></b></span>(cv::Mat , EnumConstants::maskTypes ) : cv::Mat</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChild">findChild</a></b></span>(const QString &amp;, Qt::FindChildOptions ) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChildren">findChildren</a></b></span>(const QString &amp;, Qt::FindChildOptions ) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChildren-1">findChildren</a></b></span>(const QRegExp &amp;, Qt::FindChildOptions ) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#findChildren-2">findChildren</a></b></span>(const QRegularExpression &amp;, Qt::FindChildOptions ) const</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#im2pixmap">im2pixmap</a></b></span>(EnumConstants::maskTypes )</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#img-var">img</a></b></span> : int</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#img-var">img</a></b></span> : cv::Mat</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#inherits">inherits</a></b></span>(const char *) const</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#installEventFilter">installEventFilter</a></b></span>(QObject *)</li>
 </ul></td><td class="topAlign"><ul>
@@ -63,7 +63,7 @@
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#objectNameChanged">objectNameChanged</a></b></span>(const QString &amp;)</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#parent">parent</a></b></span>() const</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#photoViewer-var">photoViewer</a></b></span> : PhotoViewer *</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#properties-var">properties</a></b></span> : int</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#properties-var">properties</a></b></span> : std::vector&lt;filterPropertiesMeta *&gt;</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#property">property</a></b></span>(const char *) const</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#qAlpha-var">qAlpha</a></b></span> : QPixmap</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#qImg-var">qImg</a></b></span> : QPixmap</li>
@@ -84,7 +84,7 @@
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#staticMetaObject-var">staticMetaObject</a></b></span> : const QMetaObject</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#staticQtMetaObject-var">staticQtMetaObject</a></b></span> : </li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#thread">thread</a></b></span>() const</li>
-<li class="fn"><span class="name"><b><a href="filtercontrols.html#thumb2pixmap">thumb2pixmap</a></b></span>(int , EnumConstants::maskTypes ) : QPixmap</li>
+<li class="fn"><span class="name"><b><a href="filtercontrols.html#thumb2pixmap">thumb2pixmap</a></b></span>(cv::Mat , EnumConstants::maskTypes ) : QPixmap</li>
 <li class="fn"><span class="name"><b><a href="http://doc.qt.io/qt-5/qobject.html#timerEvent">timerEvent</a></b></span>(QTimerEvent *)</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#tr">tr</a></b></span>(const char *, const char *, int ) : QString</li>
 <li class="fn"><span class="name"><b><a href="filtercontrols.html#trUtf8">trUtf8</a></b></span>(const char *, const char *, int ) : QString</li>

@@ -45,14 +45,13 @@
   InstaDam is the main window class for the InstaDam app. The class includes
   all the signals, initialization and slots of the various buttons and tools that can be
   selected from the main window.
-  */
+*/
 
 /*!
   Constructs an InstaDam window given QString \a databaseURL, Qstring \a token
   and QMainWindow \a parent, if any. The constructor connects all the buttons
   in the main window.
-  */
-
+*/
 InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent), ui(new Ui::InstaDam) {
     hide();
@@ -208,15 +207,14 @@ void InstaDam::addIdproConnector(QString text, std::function<void ()> onActivate
 
 /*!
   Destructor
-  */
+*/
 InstaDam::~InstaDam() {
     delete ui;
 }
 
 /*!
   Sets the current project to the newly created project.
-  */
-
+*/
 void InstaDam::setButtonsConfiguration(){
     qInfo() << this->runningLocally;
     if(this->runningLocally){
@@ -227,6 +225,10 @@ void InstaDam::setButtonsConfiguration(){
         this->ui->actionImport->setEnabled(false);
     }
 }
+
+/*!
+  Start a new project by clearing out the old one.
+*/
 void InstaDam::setNewProject() {
     currentProject = newProject->newPr;
     setLabels();
@@ -236,7 +238,7 @@ void InstaDam::setNewProject() {
 
 /*!
   Creates sets the label buttons to the labels of the current project.
-  */
+*/
 void InstaDam::setLabels() {
     clearLayout(ui->labelClassLayout);
     labelButtons.clear();
@@ -267,7 +269,7 @@ void InstaDam::setLabels() {
 
 /*!
  Creates a new project.
-  */
+*/
 void InstaDam::on_actionNew_triggered() {
     currentProject->resetLabels();
     newProject = new newproject(this);
@@ -288,14 +290,14 @@ void InstaDam::on_actionNew_triggered() {
 
 /*!
  Sets the \a currentLabel to the \a myLabel of the LabelButton \a button
-  */
+*/
 void InstaDam::setCurrentLabel(LabelButton *button) {
     setCurrentLabel(button->myLabel);
 }
 
 /*!
  Sets the \a currentLabel to the Label \a label and cancels the current selection
-  */
+*/
 void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
     checkLabel(label);
     cancelCurrentSelection();
@@ -303,7 +305,7 @@ void InstaDam::setCurrentLabel(QSharedPointer<Label> label) {
 
 /*!
  Sets the \a currentLabel to the Label \a label
-  */
+*/
 void InstaDam::checkLabel(QSharedPointer<Label> label) {
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
@@ -317,7 +319,7 @@ void InstaDam::checkLabel(QSharedPointer<Label> label) {
 
 /*!
  Sets the opacity of the Label \a label to \a val.
-  */
+*/
 void InstaDam::setOpacity(QSharedPointer<Label> label, int val) {
     qInfo("Instadam Opacity");
     label->setOpacity(val);
@@ -328,7 +330,7 @@ void InstaDam::setOpacity(QSharedPointer<Label> label, int val) {
 
 /*!
  Removes all items from the QLayout \a layout.
-  */
+*/
 void InstaDam::clearLayout(QLayout *layout) {
     if (!layout)
        return;
@@ -345,7 +347,7 @@ void InstaDam::clearLayout(QLayout *layout) {
 
 /*!
  Slot for opening a project file (.idpro).
-  */
+*/
 void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
       openIdproConnector->onActivate();
@@ -377,7 +379,7 @@ void InstaDam::on_actionOpen_triggered() {
 
 /*!
     Reads label json information and updates the scene.
-  */
+*/
 void InstaDam::openFileFromJson(QJsonObject json){
     loadLabelJson(json, PROJECT);
     getReadyForNewProject();
@@ -388,7 +390,7 @@ void InstaDam::openFileFromJson(QJsonObject json){
 
 /*!
  Gets Instadam Ready for opening a new project by clearing the undo stacks, setting the active stack and clearing scene.
-  */
+*/
 void InstaDam::getReadyForNewProject(){
     newProject = new newproject(this);
     mainUndoStack->clear();
@@ -400,7 +402,7 @@ void InstaDam::getReadyForNewProject(){
 
 /*!
  Toggles the mouse funciton for freeDrawSelect to drawing and not erasing.
-  */
+*/
 void InstaDam::toggleDrawing() {
     drawing = true;
     freeSelectForm->eraseButton->setChecked(false);
@@ -409,7 +411,7 @@ void InstaDam::toggleDrawing() {
 
 /*!
  Toggles the mouse funciton for freeDrawSelect to erasing and not drawing.
-  */
+*/
 void InstaDam::toggleErasing() {
     drawing = false;
     freeSelectForm->eraseButton->setChecked(true);
@@ -418,7 +420,7 @@ void InstaDam::toggleErasing() {
 
 /*!
  Connects the filter buttons to the corresponding maskType.
-  */
+*/
 void InstaDam::connectFilters() {
     for (int i = 0; i < maskButtonList.size(); ++i) {
         for (int j = 0; j < maskButtonList.size(); ++j) {
@@ -444,7 +446,7 @@ void InstaDam::connectFilters() {
 
 /*!
  Resets the pixmaps of the filter buttons.
-  */
+*/
 void InstaDam::resetPixmapButtons() {
     cv::Mat thumbnail = ui->IdmPhotoViewer->cvThumb;
     for (int i = 0; i < maskButtonList.size(); ++i) {
@@ -454,13 +456,15 @@ void InstaDam::resetPixmapButtons() {
 
 /*!
  Sets the current freedrawselect brush size to \a size.
-  */
+*/
 void InstaDam::setCurrentBrushSize(int size) {
     currentBrushSize = size;
 }
 
-void InstaDam::saveAnnotationReplyFinished()
-{
+/*!
+  Slot called when saving an annotation is complete.
+*/
+void InstaDam::saveAnnotationReplyFinished() {
     if (rep->error()) {
         qInfo() << rep->error();
         qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -471,44 +475,40 @@ void InstaDam::saveAnnotationReplyFinished()
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
 
-      if (jsonError.error != QJsonParseError::NoError) {
-            qInfo() << "Error: " << jsonError.errorString();
-      } else {
-          QJsonObject obj = jsonReply.object();
-          qInfo() << obj;
-      }
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        qInfo() << obj;
+    }
 }
 
 /*!
  Saves the current annotation to disk or the server.
-  */
-
+*/
 void InstaDam::on_actionSave_Annotation_triggered() {
     // Saving the file
-    if(runningLocally)
-    {
-        #ifdef WASM_BUILD
-            QByteArray outFile;
-        #else
-            QString outFileName = this->annotationPath;
+    if (runningLocally) {
+#ifdef WASM_BUILD
+        QByteArray outFile;
+#else
+        QString outFileName = this->annotationPath;
 
-            QFile outFile(outFileName);
-            outFile.open(QIODevice::WriteOnly);
-        #endif
-            QJsonObject json;
-            write(json, ANNOTATION);
-            QJsonDocument saveDoc(json);
-        #ifdef WASM_BUILD
-            QString strJson(saveDoc.toJson(QJsonDocument::Compact));
-            outFile.append(strJson);
-            QHtml5File::save(outFile, "myproject.idantn");
+        QFile outFile(outFileName);
+        outFile.open(QIODevice::WriteOnly);
+#endif
+        QJsonObject json;
+        write(json, ANNOTATION);
+        QJsonDocument saveDoc(json);
+#ifdef WASM_BUILD
+        QString strJson(saveDoc.toJson(QJsonDocument::Compact));
+        outFile.append(strJson);
+        QHtml5File::save(outFile, "myproject.idantn");
 
-        #else
-            outFile.write(saveDoc.toJson(QJsonDocument::Compact));
-        #endif
-    }
-    else
-    {
+#else
+        outFile.write(saveDoc.toJson(QJsonDocument::Compact));
+#endif
+    } else {
         QJsonObject json;
         write(json, ANNOTATION);
         QString annotationsURL = this->databaseURL+"/annotation/";
@@ -543,9 +543,9 @@ void InstaDam::on_actionSave_Annotation_triggered() {
 
 /*!
  Saves the current project to disk or the server.
-  */
+*/
 void InstaDam::on_actionSave_triggered() {
-if(this->runningLocally){
+    if(this->runningLocally){
     // Saving the file
     #ifdef WASM_BUILD
         QByteArray outFile;
@@ -573,8 +573,7 @@ if(this->runningLocally){
     #else  // WASM_BUILD
         outFile.write(saveDoc.toJson());
     #endif  // WASM_BUILD
-    }
-    else{
+    } else {
         this->sProjectName = new serverProjectName();
         this->sProjectName->show();
         connect(this->sProjectName, SIGNAL(on_pushButton_clicked()), this, SLOT(saveToServer()));
@@ -583,7 +582,7 @@ if(this->runningLocally){
 
 /*!
  Opens a file stored at Qstring \a path for the web-assembly version.
-  */
+*/
 void InstaDam::fileDownloaded(QString path) {
     this->oldFilename = this->filename;
     this->filename = path;
@@ -608,33 +607,32 @@ void InstaDam::fileDownloaded(QString path) {
         fileId = counter;
         openFile_and_labels();
         QTextStream(stdout) << currentProject->numLabels() << "\n";
-
     }
 }
 
 /*!
  Waits for the reply for image reception.
-  */
+*/
 void InstaDam::imagesReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);  // parse and capture the error flag
 
-      if (jsonError.error != QJsonParseError::NoError) {
-            qInfo() << "Error: " << jsonError.errorString();
-      } else {
-          QJsonObject obj = jsonReply.object();
-          il = new ImageList(currentProject, nullptr, this->databaseURL, this->accessToken);
-          il->show();
-          il->addItems(obj);
-          qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
-          connect(il, &ImageList::clearGUI, this, &InstaDam::resetGUIclearLabels);
-      }
+    if (jsonError.error != QJsonParseError::NoError) {
+        qInfo() << "Error: " << jsonError.errorString();
+    } else {
+        QJsonObject obj = jsonReply.object();
+        il = new ImageList(currentProject, nullptr, this->databaseURL, this->accessToken);
+        il->show();
+        il->addItems(obj);
+        qInfo() << connect(il, &ImageList::fileDownloaded, this, &InstaDam::fileDownloaded);
+        connect(il, &ImageList::clearGUI, this, &InstaDam::resetGUIclearLabels);
+    }
 }
 
 /*!
  Opens an image and annotation file from the disk or server.
-  */
+*/
 void InstaDam::on_actionOpen_File_triggered() {
     if (runningLocally) {
         // QTextStream(stdout)<<currentProject->numLabels()<<"\n";
@@ -680,33 +678,29 @@ void InstaDam::on_actionOpen_File_triggered() {
                 fileId = counter;
                 openFile_and_labels();
                 QTextStream(stdout)<<currentProject->numLabels()<<"\n";
+            }
+        } else {
+            assertError("That doesn't seem to be a valid image file.");
         }
-    }
-    else {
-       assertError("That doesn't seem to be a valid image file.");
-    }
-   }
-   else
-   {
-       if (currentProject->numLabels() == 0) {
-           assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
-           return;
-       }
-       QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
-       QUrl dabaseLink = QUrl(databaseImagesURL);
+    } else {
+        if (currentProject->numLabels() == 0) {
+            assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
+            return;
+        }
+        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+        QUrl dabaseLink = QUrl(databaseImagesURL);
 
-       qInfo() << databaseImagesURL;
+        qInfo() << databaseImagesURL;
 
-       QNetworkRequest req = QNetworkRequest(dabaseLink);
-       req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+        QNetworkRequest req = QNetworkRequest(dabaseLink);
+        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
 
+        rep = manager->get(req);
 
-       rep = manager->get(req);
+        connect(rep, &QNetworkReply::finished,
+                this, &InstaDam::imagesReplyFinished);
 
-       connect(rep, &QNetworkReply::finished,
-               this, &InstaDam::imagesReplyFinished);
-
-       qInfo() << "waiting for the reply...";
+        qInfo() << "waiting for the reply...";
     }
 #endif
 }
@@ -720,7 +714,7 @@ void InstaDam::loadRawImage() {
 
 /*!
  * Waits for the file to be received.
- */
+*/
 void InstaDam::fileReplyFinished() {
     qInfo() << "got a file";
     if (rep->error()) {
@@ -742,9 +736,8 @@ void InstaDam::fileReplyFinished() {
 }
 
 /*! Clears the guis and resets the labels()
- * */
-void InstaDam::resetGUIclearLabels()
-{
+ **/
+void InstaDam::resetGUIclearLabels() {
     scene->clearItems();
     maskScene->clearItems();
     currentProject->clearAllLabels();
@@ -753,29 +746,28 @@ void InstaDam::resetGUIclearLabels()
 /*!
  Saves the current annotation and opens the next image in the same folder that the current image
  is in.
-  */
+*/
 void InstaDam::on_saveAndNext_clicked() {
     saveAndProgress(1);
-
 }
 
 /*!
  Saves the current annotation and opens the previous image in the same folder that the current image
  is in.
-  */
+*/
 void InstaDam::on_saveAndBack_clicked() {
     saveAndProgress(-1);
-
 }
 
-
+/*!
+  Save current annotations and continue. \a num is used to indicate the index of
+  the current image.
+*/
 void InstaDam::saveAndProgress(int num)
 {
     if (runningLocally and imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
-    } else{
-
-
+    } else {
         on_actionSave_Annotation_triggered();
         resetGUIclearLabels();
         if (runningLocally) {
@@ -786,11 +778,9 @@ void InstaDam::saveAndProgress(int num)
 
             openFile_and_labels();
             qInfo("File opened");
-        }
-        else {
+        } else {
             int idIndex = il->getSelectedIdIndex();
             il->setAnnotated();
-
 
             QList<int> idList = il->getIdList();
             int newId = ((idIndex+num)%idList.size()+idList.size())%idList.size();
@@ -810,13 +800,10 @@ void InstaDam::saveAndProgress(int num)
     }
 }
 
-
-
-
 /*!
  Saves the current annotations as rasterized PNGs or as a buffer depending on the value of
  \a asBuffers
-  */
+*/
 void InstaDam::exportImages(bool asBuffers) {
     QString baseName = this->file.baseName();
     QString labelPath = this->path.absolutePath()+"/exports/"+baseName+"/";
@@ -845,7 +832,7 @@ void InstaDam::exportImages(bool asBuffers) {
 
 /*!
  Displays the std::string \a errorMessage as a QMessageBox.
-  */
+*/
 void InstaDam::assertError(std::string errorMessage) {
 #ifndef TEST
     QMessageBox *messageBox = new QMessageBox;
@@ -860,7 +847,7 @@ void InstaDam::assertError(std::string errorMessage) {
 /*!
  Generates the annotation and export file names to be stored locally based on the location
  and name of the image files.
-  */
+*/
 void InstaDam::generateLabelFileName() {
     QString baseName = this->file.baseName();
     QString aPath = this->path.absolutePath()+"/annotations/"+baseName+"/";
@@ -872,14 +859,13 @@ void InstaDam::generateLabelFileName() {
     this->oldAnnotationPath = this->annotationPath;
     this->annotationPath = aPath+baseName+".idantn";
 
-
     this->path = file.dir();
 }
 
 /*!
  Uses  defined QStringList of images in the path as well as the id of the current file
  and opens the file. If annotations exist, the annotations are opened.
- */
+*/
 void InstaDam::openFile_and_labels() {
 #ifdef WASM_BUILD
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromByteArray(imageFileContent, labelNameTemp);
@@ -887,8 +873,7 @@ void InstaDam::openFile_and_labels() {
     // Open labels
     generateLabelFileName();
     SelectItem::myBounds = QPixmap(filename).size();
-    if (runningLocally == true)
-    {
+    if (runningLocally == true) {
         if (QFileInfo(this->annotationPath).isFile()) {
             QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
             QTextStream(stdout) << "\n" << this->file.baseName() << endl;
@@ -902,9 +887,7 @@ void InstaDam::openFile_and_labels() {
             revert();
             return;
         }
-    }
-    else
-    {
+    } else {
         connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
     }
@@ -928,9 +911,8 @@ void InstaDam::openFile_and_labels() {
 
 /*!
  Populates the PhotoScene with the labels of the current project.
- */
-void InstaDam::populateSceneFromProjectLabels()
-{
+*/
+void InstaDam::populateSceneFromProjectLabels() {
     for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
 
@@ -1008,7 +990,7 @@ void InstaDam::populateSceneFromProjectLabels()
 /*!
  InstaDam::loadLabelFile loads the Qstring \a filename of fileTypes
  \a fileType where \a fileType is either a PROJECT or ANNOTATION
- */
+*/
 bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 #ifdef WASM_BUILD
     QByteArray saveData = idproFileContent;
@@ -1028,8 +1010,9 @@ bool InstaDam::loadLabelFile(QString filename, fileTypes fileType) {
 
 /*!
  InstaDam::loadLabelJson loads the json object \a json of fileTypes
- \a fileType where \a fileType is either a PROJECT or ANNOTATION
- */
+ \a fileType where \a fileType is either a PROJECT or ANNOTATION. Returns
+ a \c bool indicating success (\c true) or failure (\c false) of the load.
+*/
 bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType) {
     currentProject->resetLabels();
     clearLayout(ui->labelClassLayout);
@@ -1046,7 +1029,7 @@ bool InstaDam::loadLabelJson(QJsonObject json, fileTypes fileType) {
 
 /*!
  * Toggles the pan mode.
- */
+*/
 void InstaDam::panButton_clicked() {
     panning = !panning;  // !ui->panButton->isChecked();
     ui->panButton->setChecked(panning);
@@ -1056,7 +1039,7 @@ void InstaDam::panButton_clicked() {
 
 /*!
  * Slot called when the Rectangle Select button is clicked.
- */
+*/
 void InstaDam::on_rectangleSelectButton_clicked() {
     ui->rectangleSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Rectangle)
@@ -1093,8 +1076,10 @@ void InstaDam::on_rectangleSelectButton_clicked() {
     maskScene->update();
 }
 
-void InstaDam::inactivateSceneCancelSelection()
-{
+/*!
+  Inactivates all SelectItems in the scene and calcels the current selection.
+*/
+void InstaDam::inactivateSceneCancelSelection() {
     scene->inactiveAll();
     maskScene->inactiveAll();
     cancelCurrentSelection();
@@ -1103,7 +1088,7 @@ void InstaDam::inactivateSceneCancelSelection()
 
 /*!
  * Slot called when the Ellispe Select button is clicked.
- */
+*/
 void InstaDam::on_ellipseSelectButton_clicked() {
     ui->ellipseSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Ellipse)
@@ -1142,7 +1127,7 @@ void InstaDam::on_ellipseSelectButton_clicked() {
 
 /*!
  * Slot called when the Polygon Select button is clicked.
- */
+*/
 void InstaDam::on_polygonSelectButton_clicked() {
     ui->polygonSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Polygon)
@@ -1180,7 +1165,7 @@ void InstaDam::on_polygonSelectButton_clicked() {
 
 /*!
  * Slot called when the Free Select button is clicked.
- */
+*/
 void InstaDam::on_freeSelectButton_clicked() {
     ui->freeSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Freeerase ||
@@ -1219,7 +1204,7 @@ void InstaDam::on_freeSelectButton_clicked() {
 
 /*!
  * Slot called when the Free Select mode is changed to a round brush.
- */
+*/
 void InstaDam::roundBrushButtonClicked() {
     brushMode = Qt::RoundCap;
     freeSelectForm->squareBrushButton->setChecked(false);
@@ -1230,7 +1215,7 @@ void InstaDam::roundBrushButtonClicked() {
 
 /*!
  * Slot called when the Free Select mode is changed to a square brush.
- */
+*/
 void InstaDam::squareBrushButtonClicked() {
     brushMode = Qt::SquareCap;
     freeSelectForm->squareBrushButton->setChecked(true);
@@ -1241,8 +1226,7 @@ void InstaDam::squareBrushButtonClicked() {
 
 /*!
  * Slot called when the filter options button is clicked.
- */
-
+*/
 void InstaDam::on_filterOptions_clicked()
 {
     if (currentProject== nullptr) {
@@ -1257,7 +1241,7 @@ void InstaDam::on_filterOptions_clicked()
 
 /*!
  * Function to insert point between two points in the polygon.
- */
+*/
 void InstaDam::setInsert() {
     currentItem->resetState();
     insertVertex = true;
@@ -1268,14 +1252,14 @@ void InstaDam::setInsert() {
 
 /*!
  * Slot called when the export annotations option is chosen.
- */
+*/
 void InstaDam::on_actionExport_triggered() {
     exportImages();
 }
 
 /*!
  * Slot called when the export zip option is chosen.
- */
+*/
 void InstaDam::on_actionExport_zip_triggered() {
     exportImages(true);
 #ifdef WASM_BUILD
@@ -1349,7 +1333,7 @@ void InstaDam::on_actionExport_zip_triggered() {
 /*!
   Processes a point being clicked in the scene \a type, any SelectItem at \a pos
   is given by \a item, andthe button clicked is given as \a button.
- */
+*/
 void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    SelectItem *item, QPointF pos,
                                    const Qt::MouseButton button,
@@ -1372,9 +1356,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 annotationDraw(type, item, pos, button, modifiers);
             } else if((modifiers & Qt::ShiftModifier) && item != nullptr) {
                annotationTransform(type, item, pos, button, modifiers);
-
-            }
-            else {
+            } else {
                 scene->inactiveAll();
                 maskScene->inactiveAll();
                 currentItem = nullptr;
@@ -1383,6 +1365,11 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
     }
 }
 
+/*!
+  Draws annotations on the PhotoScene indicated by \a type, with \a item,
+  position \a pos, with mouse button \a button depressed, and any keyboard
+  modifiers given by \a modifiers.
+*/
 int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
                           SelectItem *item, QPointF pos,
                           const Qt::MouseButton button,
@@ -1503,6 +1490,9 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
 
 }
 
+/*!
+  Re-enable a PolygonSelect item for editing, at \a pos.
+*/
 void InstaDam::continueDrawingPolygon(QPointF pos)
 {
     polygonSelectForm->finishPolygonButton->setEnabled(true);
@@ -1523,15 +1513,18 @@ void InstaDam::continueDrawingPolygon(QPointF pos)
     maskScene->update();
 }
 
+/*!
+  Transforms an annotation, \a item, on \a type, at \a pos, with \a button depressed
+  and keyboard modifiers \a modifiers.
+*/
 int InstaDam::annotationTransform(PhotoScene::viewerTypes type,
-                               SelectItem *item, QPointF pos,
-                               const Qt::MouseButton button,
-                               const Qt::KeyboardModifiers modifiers){
+                                  SelectItem *item, QPointF pos,
+                                  const Qt::MouseButton button,
+                                  const Qt::KeyboardModifiers modifiers) {
     if (item->type() != currentSelectType) {
         if (!canDrawOnPhoto)
             return -1;
         selectItemButton(item->type());
-
     }
     currentItem = item;
     if (!canDrawOnPhoto)
@@ -1567,19 +1560,19 @@ int InstaDam::annotationTransform(PhotoScene::viewerTypes type,
     }
     scene->update();
     maskScene->update();
-
 }
-
-
-
 
 /*!
- * Selects the appropriate button based on \a item
+ * Selects the appropriate button based on \a type.
 */
-
-void InstaDam::selectItemButton(int  type){
+void InstaDam::selectItemButton(int type){
     selectItemButton(static_cast<SelectItem::SelectType>(type));
 }
+
+/*!
+  Slot called when a selectItemButton is called with \a type, enabling the
+  appropriate functionality.
+*/
 void InstaDam::selectItemButton(SelectItem::SelectType type){
     switch (type) {
         case SelectItem::Freedraw:
@@ -1599,11 +1592,11 @@ void InstaDam::selectItemButton(SelectItem::SelectType type){
 }
 
 /*!
-  Processes a mouse movement from \a fromPos to \a toPos.
- */
+  Processes a mouse movement from \a fromPos to \a toPos, with keyboard
+  modifiers \a modifiers.
+*/
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
                                  const Qt::KeyboardModifiers modifiers) {
-
     if (currentItem) {
         if (currentButton == Qt::LeftButton) {
             currentItem->moveItem(fromPos, toPos);
@@ -1619,7 +1612,7 @@ void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
 /*!
   Processes a mouse button being released from scene \a type, mouse movement
   from \a oldPos to \a newPos, and the button released \a button.
- */
+*/
 void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button,
@@ -1710,7 +1703,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
 
 /*!
  Closes the current polygon.
- */
+*/
 void InstaDam::finishPolygonButtonClicked() {
     if (currentItem) {
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
@@ -1725,7 +1718,7 @@ void InstaDam::finishPolygonButtonClicked() {
 /*!
  Defines keyboard modifier actions (delet and X) \a key for a viewerTypes of
  \a type.
- */
+*/
 void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
     if (!currentItem) {
@@ -1740,7 +1733,7 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
 /*!
   Reads a QJsonObject \a json of fileTypes \a type.
- */
+*/
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains(InstaDamJson::LABELS) && json[InstaDamJson::LABELS].isArray()) {
         QJsonArray labelArray = json[InstaDamJson::LABELS].toArray();
@@ -1813,7 +1806,7 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
 
 /*!
   Writes a QJsonObject \a json of fileTypes \a type.
- */
+*/
 void InstaDam::write(QJsonObject &json, fileTypes type) {
     QJsonArray labs;
     for (int i = 0; i < currentProject->numLabels(); i++) {
@@ -1829,8 +1822,9 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
 }
 
 /*!
- Rasterizes the selection from the mask viewer.
- */
+  Rasterizes the selection from the mask viewer, \a useCurrent determines
+  whether to use the PhotoViewer item (\c true) or MaskViewer item (\c false).
+*/
 void InstaDam::addCurrentSelection(bool useCurrent) {
     SelectItem *item;
     item = useCurrent ? currentItem : maskItem;
@@ -1858,7 +1852,7 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
 
 /*!
  Cancels the current selection.
- */
+*/
 void InstaDam::cancelCurrentSelection() {
     undoGroup->setActiveStack(mainUndoStack);
     canDrawOnPhoto = true;
@@ -1877,7 +1871,7 @@ void InstaDam::cancelCurrentSelection() {
 
 /*!
  * Conducts the pixmap operation of masking on the SelectItem*\a item.
- */
+*/
 QPixmap InstaDam::maskSelection(SelectItem *item) {
     QPixmap map(SelectItem::myBounds);
     map.fill(Qt::transparent);
@@ -1893,24 +1887,29 @@ QPixmap InstaDam::maskSelection(SelectItem *item) {
     return map;
 }
 
+/*!
+  Slot for ?
+*/
 void InstaDam::on_addSelectionButton_clicked() {
 }
 
-
 /*!
   Sets the current project to \a pr.
-  */
+*/
 void InstaDam::setCurrentProject(Project* pr) {
     this->currentProject = pr;
 }
 
-void InstaDam::setCurrentProjectId(int id)
-{
+/*!
+  Sets the current project to have Id \a id.
+*/
+void InstaDam::setCurrentProjectId(int id) {
     this->currentProject->setId(id);
 }
+
 /*!
  Gets the list of label names from QVector \a labels.
- */
+*/
 QStringList InstaDam::getLabelNames(QVector<QSharedPointer<Label> > labels) {
     QStringList labelList;
     QVectorIterator<QSharedPointer<Label> > it(labels);
@@ -1922,7 +1921,7 @@ QStringList InstaDam::getLabelNames(QVector<QSharedPointer<Label> > labels) {
 
 /*!
  Reverts to the current label list during an annotation opening conflict.
- */
+*/
 void InstaDam::revert() {
     this->filename = this->oldFilename;
     this->file = this->oldFile;
@@ -1934,7 +1933,7 @@ void InstaDam::revert() {
 
 /*!
  Toggles hiding the labels on the mask viewer.
- */
+*/
 void InstaDam::processShowHide(int state) {
     for (int i = 0; i < currentProject->numLabels(); i++) {
          currentProject->getLabel(i)->setMaskState(state);
@@ -1943,18 +1942,16 @@ void InstaDam::processShowHide(int state) {
 
 /*!
  Starts a user search widget.
- */
-void InstaDam::on_actionSearch_triggered()
-{
-    if(this->runningLocally==false){
-        if(currentProject->numLabels()!=0){
+*/
+void InstaDam::on_actionSearch_triggered() {
+    if (this->runningLocally==false) {
+        if (currentProject->numLabels()!=0){
             AddUserToProject *addUserToProjectInterface = new AddUserToProject;
             addUserToProjectInterface->projectId = this->currentProject->getId();
             addUserToProjectInterface->accessToken = this->accessToken;
             addUserToProjectInterface->databaseURL = this->databaseURL;
             addUserToProjectInterface->show();
-        }
-        else{
+        } else {
             assertError("Please open a project first");
 //            QMessageBox msgBox;
 //            msgBox.setText("Please open a project first");
@@ -1965,17 +1962,16 @@ void InstaDam::on_actionSearch_triggered()
 
 /*!
  Starts a user search widget.
- */
-void InstaDam::on_actionUpdate_Privilege_triggered()
-{
-    if(this->runningLocally==false){
+*/
+void InstaDam::on_actionUpdate_Privilege_triggered() {
+    if (this->runningLocally==false) {
         on_actionSearch_triggered();
     }
 }
 
 /*!
  Sends a request to receive all the projects assoicated with a user
- */
+*/
 void InstaDam::listProjects() {
     if(this->projecListUseCase=="DELETE"){
         QMessageBox msgBox;
@@ -1994,7 +1990,7 @@ void InstaDam::listProjects() {
 
 /*!
  Receives the reply regarding user projects
- */
+*/
 void InstaDam::projectsReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -2016,7 +2012,7 @@ void InstaDam::projectsReplyFinished() {
 
 /*!
  Sends a request to save new project information (name) on the server
- */
+*/
 void InstaDam::saveToServer(){
     qInfo() << "saving project to server";
     QUrl dabaseLink = QUrl(this->databaseURL+"/project");
@@ -2041,21 +2037,16 @@ void InstaDam::saveToServer(){
 /*!
  Receives the reply of saving a project name on the server
  Sends requests to save the labels assoicated with the new project
- */
-void InstaDam::replyFinished()
-{
+*/
+void InstaDam::replyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-    if(jsonError.error != QJsonParseError::NoError)
-    {
+    if(jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
-    }
-
-    else
-    {
+    } else {
         QJsonObject reply = jsonReply.object();
         this->currentProject->setId(reply.value("project_id").toInt());
 
@@ -2065,9 +2056,7 @@ void InstaDam::replyFinished()
         QUrl lablesDatabaseLink = QUrl(this->databaseURL+"/project/"+QString::number(this->currentProject->getId())+"/labels");
         QString loginToken = "Bearer "+this->accessToken;
 
-        for(int i=0; i<this->currentProject->numLabels();i++)
-
-        {
+        for (int i=0; i<this->currentProject->numLabels();i++) {
             QJsonObject jsLabel
             {
                 {"label_text", this->currentProject->getLabel(i)->getText()},
@@ -2096,19 +2085,15 @@ void InstaDam::replyFinished()
 /*!
  Receives the reply of saving a label on the server
  Sets the id of the currentprject label to the id received from the backend
- */
-void InstaDam::labelReplyFinished()
-{
+*/
+void InstaDam::labelReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
 
-    if(jsonError.error != QJsonParseError::NoError)
-    {
+    if(jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
-    }
-    else
-    {
+    } else {
         QJsonObject reply = jsonReply.object();
         int label_id = reply.value("label_id").toInt();
         qInfo() << label_id;
@@ -2117,35 +2102,34 @@ void InstaDam::labelReplyFinished()
     }
 }
 
-
 /*!
  Starts a projectList widget with a use of "DELETE" to delete a project when double clicking
- */
-void InstaDam::on_actionDelete_2_triggered()
-{
+*/
+void InstaDam::on_actionDelete_2_triggered() {
     this->projecListUseCase = "DELETE";
     InstaDam::listProjects();
 }
 
-void InstaDam::on_actionDelete_triggered()
-{
+/*!
+  Slot called when the delete action is called.
+*/
+void InstaDam::on_actionDelete_triggered() {
     deleteCurrentObject(selectedViewer);
 }
-void InstaDam::deleteCurrentObject(PhotoScene::viewerTypes phototype)
-{
 
-    if (currentItem != nullptr)
-    {
+/*!
+  Deletes the current SelectItem on \a phototype
+*/
+void InstaDam::deleteCurrentObject(PhotoScene::viewerTypes phototype) {
+
+    if (currentItem != nullptr) {
         if (currentItem->type() == SelectItem::Polygon &&
             currentItem->getActiveVertex() != SelectItem::UNSELECTED) {
             QUndoCommand *deleteVertexCommand =
                     new DeleteVertexCommand((phototype == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                                 currentItem : currentItem->getMirror());
             undoGroup->activeStack()->push(deleteVertexCommand);
-
-
         } else {
-
             selectItemButton(currentItem->type());
             QUndoCommand *deleteCommand =
                     new DeleteCommand((phototype == PhotoScene::PHOTO_VIEWER_TYPE) ?
@@ -2154,46 +2138,40 @@ void InstaDam::deleteCurrentObject(PhotoScene::viewerTypes phototype)
             undoGroup->activeStack()->push(deleteCommand);
         }
     }
-
 }
 
-void InstaDam::on_actionEdit_Label_triggered()
-{
-
-        if (currentItem != nullptr)
-        {
-
-            if ((currentItem->type() != SelectItem::Freedraw && currentItem->type() !=
-                 SelectItem::Freeerase))
-            {
+/*!
+  Slot called when editing a SelectItem.
+*/
+void InstaDam::on_actionEdit_Label_triggered() {
+    if (currentItem != nullptr) {
+        if ((currentItem->type() != SelectItem::Freedraw && currentItem->type() !=
+             SelectItem::Freeerase)) {
             chooseLabelDialog* chooseLabel = new chooseLabelDialog(currentProject);
             connect(chooseLabel, SIGNAL(labelPicked(QSharedPointer<Label>)),
-                                        this, SLOT(editLabel(QSharedPointer<Label>)));
+                    this, SLOT(editLabel(QSharedPointer<Label>)));
             return;
-
-            }
         }
-
-        assertError("Shift+select item whose label needs to be edited.");
-
+    }
+    assertError("Shift+select item whose label needs to be edited.");
 }
 
-void InstaDam::editLabel(QSharedPointer<Label> newLabel)
-{
+/*!
+  Edit label given as \a newLabel.
+*/
+void InstaDam::editLabel(QSharedPointer<Label> newLabel) {
     QUndoCommand *editLabelCommand =
             new EditLabelCommand((selectedViewer == PhotoScene::PHOTO_VIEWER_TYPE) ?
                                         currentItem : currentItem->getMirror(), newLabel,
                                  currentItem->getLabel(), scene, this);
-
-
-
     undoGroup->activeStack()->push(editLabelCommand);
 }
 
-void InstaDam::on_actionImport_triggered()
-{
-    if (!photoLoaded)
-    {
+/*!
+  Slot called when import is clicked.
+*/
+void InstaDam::on_actionImport_triggered() {
+    if (!photoLoaded) {
         assertError("Please load an image first!");
         return;
     }
@@ -2201,21 +2179,19 @@ void InstaDam::on_actionImport_triggered()
     QString labelPath = this->path.absolutePath()+"/labels/"+baseName+"/";
     QString message = QString("Please copy all labels to ") + labelPath +
                     " and name them as 00000_label.png, 00001_label.png, etc";
-    if (!QDir(labelPath).exists())
-    {
+    if (!QDir(labelPath).exists()) {
         assertError(message.toStdString());
         return;
     }
     bool foundALabel = false;
     qInfo()<<"1";
 
-    for(int i=0; i<currentProject->numLabels(); i++){
+    for (int i=0; i<currentProject->numLabels(); i++) {
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
         this->labelPaths.append(labelPath+labfilePrefix+"_label.png");
         QFileInfo check_file(labelPaths[i]);
          qInfo()<<"file name";
-        if (check_file.exists())
-        {
+        if (check_file.exists()) {
             qInfo()<<"file exists";
             QPixmap pixmap = QPixmap(filename);
             QSharedPointer<Label> lab = currentProject->getLabel(i);
@@ -2223,10 +2199,15 @@ void InstaDam::on_actionImport_triggered()
             fds->importPixmap(pixmap);
             lab->addItem(fds);
             foundALabel = true;
-
-
         }
     }
     if(!foundALabel)
         assertError(message.toStdString());
 }
+
+/*!
+  \fn void InstaDam::setCurrentItem(SelectItem *item, bool enable)
+
+  Set \a item to be the currently active SelectItem. \a enable indicates whenther
+  (\c true) or not (\c false) the finishPolygon Button needs to be enabled.
+  */

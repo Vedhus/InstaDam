@@ -5,9 +5,14 @@
   \class chooseLabelDialog
   \ingroup app
   \inmodule InstaDam
-  \brief Defines a custom QDIalog to pick labels from.
+  \inherits QDialog
+  \brief Defines a custom QDialog to pick labels from.
 
- */
+*/
+
+/*!
+  Creates a chooseLabelDialog instance with the given \a currentPro.
+*/
 chooseLabelDialog::chooseLabelDialog(Project *currentPro) : QDialog() {
     setWindowFlags(Qt::Popup);
     QVBoxLayout *VBlayout = new QVBoxLayout(this);
@@ -31,11 +36,17 @@ chooseLabelDialog::chooseLabelDialog(Project *currentPro) : QDialog() {
     QDialog::show();
 }
 
+/*!
+  Called when a mouse button is pressed with the given \a event.
+*/
 void chooseLabelDialog::mousePressEvent(QMouseEvent *event){
     mpos = event->pos();
     QDialog::mousePressEvent(event);
 }
 
+/*!
+  Called when the mouse moves with the given \a event.
+*/
 void chooseLabelDialog::mouseMoveEvent(QMouseEvent *event){
     if (event->buttons() & Qt::LeftButton) {
         QPoint diff = event->pos() - mpos;
@@ -47,6 +58,9 @@ void chooseLabelDialog::mouseMoveEvent(QMouseEvent *event){
 
 }
 
+/*!
+  Called when a label button is checked, given by \a label.
+*/
 void chooseLabelDialog::checkLabel(QSharedPointer<Label> label) {
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
@@ -57,3 +71,9 @@ void chooseLabelDialog::checkLabel(QSharedPointer<Label> label) {
     }
     emit labelPicked(label);
 }
+
+/*!
+  \fn chooseLabelDialog::labelPicked(QSharedPointer<Label> label)
+
+  This signal is emitted when \a label is picked.
+*/

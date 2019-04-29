@@ -40,7 +40,7 @@ class Project{
 
     int numLabels() const;
 
-    void setName(QString);
+    void setName(QString name);
 
     QString getName();
 

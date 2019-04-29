@@ -15,6 +15,8 @@
 <ul>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
 <li class="level1"><a href="#static-public-members">Static Public Members</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
@@ -45,12 +47,29 @@
 <a name="public-slots"></a>
 <h2 id="public-slots">Public Slots</h2>
 <div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#deleteProject">deleteProject</a></b>(QListWidgetItem *<i>project_name</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#openProject">openProject</a></b>(QListWidgetItem *<i>project_name</i>)</td></tr>
 </table></div>
 <ul>
 <li class="fn">19 public slots inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#public-slots">QWidget</a></li>
 <li class="fn">1 public slot inherited from <a href="http://doc.qt.io/qt-5/qobject.html#public-slots">QObject</a></li>
 </ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#instadamClearAll">instadamClearAll</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#projectIdChanged">projectIdChanged</a></b>(int <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#projectJsonReceived">projectJsonReceived</a></b>(QJsonObject <i>json</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#signals">QWidget</a></li>
+<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="projectlist.html#useCase-var">useCase</a></b></td></tr>
+</table></div>
 <a name="static-public-members"></a>
 <h2 id="static-public-members">Static Public Members</h2>
 <div class="table"><table class="alignedsummary">
@@ -65,8 +84,6 @@
 <ul>
 <li class="fn">59 properties inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#properties">QWidget</a></li>
 <li class="fn">1 property inherited from <a href="http://doc.qt.io/qt-5/qobject.html#properties">QObject</a></li>
-<li class="fn">4 signals inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#signals">QWidget</a></li>
-<li class="fn">2 signals inherited from <a href="http://doc.qt.io/qt-5/qobject.html#signals">QObject</a></li>
 <li class="fn">35 protected functions inherited from <a href="http://doc.qt.io/qt-5/qwidget.html#protected-functions">QWidget</a></li>
 <li class="fn">9 protected functions inherited from <a href="http://doc.qt.io/qt-5/qobject.html#protected-functions">QObject</a></li>
 <li class="fn">1 protected function inherited from <a href="http://doc.qt.io/qt-5/qpaintdevice.html#protected-functions">QPaintDevice</a></li>
@@ -93,10 +110,26 @@
 <h3 class="fn" id="addItems"><a name="addItems"></a><span class="type">void</span> ProjectList::<span class="name">addItems</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsondocument.html">QJsonDocument</a></span> <i>obj</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>databaseURL</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qstring.html">QString</a></span> <i>accessToken</i>)</h3>
 <p>Adds Projects to this object based on the input <i>obj</i>, <i>databaseURL</i>, and <i>accessToken</i>.</p>
 <!-- @@@addItems -->
+<!-- $$$deleteProject[overload1]$$$deleteProjectQListWidgetItem* -->
+<h3 class="fn" id="deleteProject"><a name="deleteProject"></a><code>[slot] </code><span class="type">void</span> ProjectList::<span class="name">deleteProject</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlistwidgetitem.html">QListWidgetItem</a></span> *<i>project_name</i>)</h3>
+<p>Sends a project deletion request for <i>project_name</i>.</p>
+<!-- @@@deleteProject -->
+<!-- $$$instadamClearAll[overload1]$$$instadamClearAll -->
+<h3 class="fn" id="instadamClearAll"><a name="instadamClearAll"></a><code>[signal] </code><span class="type">void</span> ProjectList::<span class="name">instadamClearAll</span>()</h3>
+<p>This signal is emitted when a project list is cleared.</p>
+<!-- @@@instadamClearAll -->
 <!-- $$$openProject[overload1]$$$openProjectQListWidgetItem* -->
 <h3 class="fn" id="openProject"><a name="openProject"></a><code>[slot] </code><span class="type">void</span> ProjectList::<span class="name">openProject</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qlistwidgetitem.html">QListWidgetItem</a></span> *<i>project_name</i>)</h3>
-<p>Opens the Project based on <i>project_name</i>.</p>
+<p>Slot triggered to open the Project based on <i>project_name</i>.</p>
 <!-- @@@openProject -->
+<!-- $$$projectIdChanged[overload1]$$$projectIdChangedint -->
+<h3 class="fn" id="projectIdChanged"><a name="projectIdChanged"></a><code>[signal] </code><span class="type">void</span> ProjectList::<span class="name">projectIdChanged</span>(<span class="type">int</span> <i>id</i>)</h3>
+<p>This signal is emitted when a project id is changed to <i>id</i>.</p>
+<!-- @@@projectIdChanged -->
+<!-- $$$projectJsonReceived[overload1]$$$projectJsonReceivedQJsonObject -->
+<h3 class="fn" id="projectJsonReceived"><a name="projectJsonReceived"></a><code>[signal] </code><span class="type">void</span> ProjectList::<span class="name">projectJsonReceived</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></span> <i>json</i>)</h3>
+<p>This signal is emitted when a new project Json object, <i>json</i>, is received.</p>
+<!-- @@@projectJsonReceived -->
 </div>
 <hr/><p class="footer"><small></small></p></body>
 </html>

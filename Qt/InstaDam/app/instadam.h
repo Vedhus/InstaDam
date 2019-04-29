@@ -91,8 +91,12 @@ class InstaDam : public QMainWindow {
     void saveAndProgress(int);
     PhotoScene::viewerTypes selectedViewer;
     void deleteCurrentObject(PhotoScene::viewerTypes type);
-    int annotationDraw(PhotoScene::viewerTypes, SelectItem*, QPointF, Qt::MouseButton, Qt::KeyboardModifiers);
-    int annotationTransform(PhotoScene::viewerTypes, SelectItem*, QPointF, Qt::MouseButton, Qt::KeyboardModifiers);
+    int annotationDraw(PhotoScene::viewerTypes type, SelectItem *item,
+                       QPointF pos, const Qt::MouseButton button,
+                       const Qt::KeyboardModifiers modifiers);
+    int annotationTransform(PhotoScene::viewerTypes type, SelectItem *item,
+                            QPointF pos, const Qt::MouseButton button,
+                            const Qt::KeyboardModifiers modifiers);
     void inactivateSceneCancelSelection();
     void continueDrawingPolygon(QPointF);
 

@@ -47,9 +47,11 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#deletePoints">deletePoints</a></b>(const QPointF &amp;<i>start</i>, const QPointF &amp;<i>end</i>, QPen <i>pen</i>, QSharedPointer&lt;QPixmap&gt; <i>outmap</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#deletePoints-1">deletePoints</a></b>(QPen &amp;<i>pen</i>, QSharedPointer&lt;QPixmap&gt; <i>map</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QPixmap </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#getPixmap">getPixmap</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#importPixmap">importPixmap</a></b>(const QPixmap <i>map</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#isVisible">isVisible</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QGraphicsScene *</td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#scene">scene</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#setMirrorMap">setMirrorMap</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#setOpacity">setOpacity</a></b>(qreal <i>val</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#setPointsUnchecked">setPointsUnchecked</a></b>(QPixmap <i>map</i>)</td></tr>
 </table></div>
 <a name="reimplemented-public-functions"></a>
@@ -70,7 +72,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#removeVertex">removeVertex</a></b>(int <i>vertex</i> = ...) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#resetActiveVertex">resetActiveVertex</a></b>() override</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>oldP</i>, QPointF &amp;<i>newP</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#rotateMirror">rotateMirror</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="freedrawselect.html#setMirror">setMirror</a></b>(SelectItem *<i>item</i>) override</td></tr>
@@ -86,7 +88,7 @@
 </table></div>
 <ul>
 <li class="fn">16 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicspixmapitem.html#public-functions">QGraphicsPixmapItem</a></li>
-<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">57 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
 <li class="fn">366 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
 </ul>
 <a name="static-public-members"></a>
@@ -191,6 +193,10 @@
 <h3 class="fn" id="getPixmap"><a name="getPixmap"></a><span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> FreeDrawSelect::<span class="name">getPixmap</span>() const</h3>
 <p>Returns the internal pixmap.</p>
 <!-- @@@getPixmap -->
+<!-- $$$importPixmap[overload1]$$$importPixmapconstQPixmap -->
+<h3 class="fn" id="importPixmap"><a name="importPixmap"></a><span class="type">void</span> FreeDrawSelect::<span class="name">importPixmap</span>(const <span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>map</i>)</h3>
+<p>Imports a pixmap given as <i>map</i>.</p>
+<!-- @@@importPixmap -->
 <!-- $$$insertVertex[overload1]$$$insertVertexconstintconstQPointF& -->
 <h3 class="fn" id="insertVertex"><a name="insertVertex"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawSelect::<span class="name">insertVertex</span>(const <span class="type">int</span> <i>vertex</i>, const <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
 <p>Reimplemented from <a href="selectitem.html#insertVertex">SelectItem::insertVertex</a>().</p>
@@ -238,8 +244,8 @@
 <p>Reimplemented from <a href="selectitem.html#resetActiveVertex">SelectItem::resetActiveVertex</a>().</p>
 <p>Empty function since <a href="select.html#freedrawselect">FreeDrawSelect</a> items have no vertices.</p>
 <!-- @@@resetActiveVertex -->
-<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
-<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawSelect::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF&QPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawSelect::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldP</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newP</i>)</h3>
 <p>Reimplemented from <a href="selectitem.html#resizeItem">SelectItem::resizeItem</a>().</p>
 <!-- @@@resizeItem -->
 <!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->
@@ -284,6 +290,10 @@
 <h3 class="fn" id="setMirrorVertex"><a name="setMirrorVertex"></a><code>[override virtual] </code><span class="type">void</span> FreeDrawSelect::<span class="name">setMirrorVertex</span>(<span class="type">int</span> <i>vertex</i>) const</h3>
 <p>Reimplemented from <a href="selectitem.html#setMirrorVertex">SelectItem::setMirrorVertex</a>().</p>
 <!-- @@@setMirrorVertex -->
+<!-- $$$setOpacity[overload1]$$$setOpacityqreal -->
+<h3 class="fn" id="setOpacity"><a name="setOpacity"></a><span class="type">void</span> FreeDrawSelect::<span class="name">setOpacity</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qtglobal.html#qreal-typedef">qreal</a></span> <i>val</i>)</h3>
+<p>* Sets the opacity of the label to <i>val</i></p>
+<!-- @@@setOpacity -->
 <!-- $$$setPointsUnchecked[overload1]$$$setPointsUncheckedQPixmap -->
 <h3 class="fn" id="setPointsUnchecked"><a name="setPointsUnchecked"></a><span class="type">void</span> FreeDrawSelect::<span class="name">setPointsUnchecked</span>(<span class="type"><a href="http://doc.qt.io/qt-5/qpixmap.html">QPixmap</a></span> <i>map</i>)</h3>
 <p>Sets the objects internal map to <i>map</i> without boundary checking.</p>

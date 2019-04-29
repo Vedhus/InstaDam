@@ -8,11 +8,11 @@
   \inmodule InstaDam
   \inherits QLabel
   \brief A PushButton.
-  */
+*/
 
 /*!
   Creates an instance with parent QWidget \a parent.
-  */
+*/
 PicPushButton::PicPushButton(QWidget *parent):QLabel(parent) {
     pixmap = testPixmap(255, 0, 0, 255);
     this->setPixmap(pixmap);
@@ -21,7 +21,7 @@ PicPushButton::PicPushButton(QWidget *parent):QLabel(parent) {
 
 /*!
   Updates the internal pixmaps.
-  */
+*/
 void PicPushButton::updatePixmap() {
     this->setPixmap(pixmap);
     resetPixmaps(pixmap);
@@ -29,14 +29,14 @@ void PicPushButton::updatePixmap() {
 
 /*!
   Sets the mask type to \a maskType.
-  */
+*/
 void PicPushButton::setMaskType(EnumConstants::maskTypes maskType) {
     filter = maskType;
 }
 
 /*!
   Something
-  */
+*/
 void PicPushButton::manualSelect() {
     check = true;
     repaint();
@@ -44,7 +44,7 @@ void PicPushButton::manualSelect() {
 
 /*!
   Resets the pixmaps based on \a pixmap_input.
-  */
+*/
 void PicPushButton::resetPixmaps(QPixmap pixmap_input) {
     pixmap_hover = testPixmap(20, 125, 200, 128);
     pixmap_pressed = testPixmap(30, 180, 200, 128);
@@ -57,7 +57,7 @@ void PicPushButton::resetPixmaps(QPixmap pixmap_input) {
 
 /*!
   Returns a QPixmap based on \a pixmap_input with \a text written on it.
-  */
+*/
 QPixmap PicPushButton::addText(QPixmap pixmap_input, QString text) {
     QPainter painter_temp(&pixmap_input);
     QFont font = painter_temp.font();
@@ -71,7 +71,7 @@ QPixmap PicPushButton::addText(QPixmap pixmap_input, QString text) {
 
 /*!
   \reimp
-  */
+*/
 void PicPushButton::paintEvent(QPaintEvent *event) {
     QPixmap pix;
     if (underMouse())
@@ -89,7 +89,7 @@ void PicPushButton::paintEvent(QPaintEvent *event) {
 
 /*!
   \reimp
-  */
+*/
 void PicPushButton::mousePressEvent(QMouseEvent* event) {
     check = true;
     emit checked(filter);
@@ -97,10 +97,16 @@ void PicPushButton::mousePressEvent(QMouseEvent* event) {
 
 /*!
   Slot for when another button is pressed taking \a type.
-  */
+*/
 void PicPushButton::otherBoxChecked(EnumConstants::maskTypes type) {
     if (check) {
         check = false;
         this->setPixmap(pixmap);
     }
 }
+
+/*!
+  \fn PicPushButton::checked(EnumConstants::maskTypes type)
+
+  This signal is emitted when something is checked indicating \a type.
+*/

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- commands.cpp -->
+  <title>EditLabelCommand Class | Instadam</title>
+<link rel="stylesheet" type="text/css" href="style/offline.css"/>
+</head>
+<body>
+<p class="header"><small>InstaDam Documentation</small></p><hr/><li>EditLabelCommand</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">EditLabelCommand Class</h1>
+<!-- $$$EditLabelCommand-brief -->
+<p>The <a href="editlabelcommand.html">EditLabelCommand</a> command is used to change the Label of the selected item. <a href="#details">More...</a></p>
+<!-- @@@EditLabelCommand -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;EditLabelCommand&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="http://doc.qt.io/qt-5/qundocommand.html">QUndoCommand</a></td></tr></table></div><ul>
+<li><a href="editlabelcommand-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#EditLabelCommand">EditLabelCommand</a></b>(SelectItem *<i>item</i>, QSharedPointer&lt;Label&gt; <i>newLabel</i>, QSharedPointer&lt;Label&gt; <i>oldLabel</i>, PhotoScene *<i>scene</i>, InstaDam *<i>idam</i>, QUndoCommand *<i>parent</i> = nullptr)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#redo">redo</a></b>() override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#undo">undo</a></b>() override</td></tr>
+</table></div>
+<ul>
+<li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qundocommand.html#public-functions">QUndoCommand</a></li>
+</ul>
+<a name="public-variables"></a>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> SelectItem *</td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#myItem-var">myItem</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSharedPointer&lt;Label&gt; </td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#myNewLabel-var">myNewLabel</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSharedPointer&lt;Label&gt; </td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#myOldLabel-var">myOldLabel</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> InstaDam *</td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#myParent-var">myParent</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> PhotoScene *</td><td class="memItemRight bottomAlign"><b><a href="editlabelcommand.html#myScene-var">myScene</a></b></td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$EditLabelCommand-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="editlabelcommand.html">EditLabelCommand</a> command is used to change the Label of the selected item.</p>
+<p><a href="editlabelcommand.html">EditLabelCommand</a> is used to change the Label of the selected item. Using the <a href="editlabelcommand.html#undo">undo</a>() and <a href="editlabelcommand.html#redo">redo</a>() commands the item can be unedited and edited repeatedly.</p>
+</div>
+<p><b>See also </b><a href="addcommand.html">AddCommand</a>, <a href="movecommand.html">MoveCommand</a>, <a href="addvertexcommand.html">AddVertexCommand</a>, <a href="movevertexcommand.html">MoveVertexCommand</a>, <a href="deletevertexcommand.html">DeleteVertexCommand</a>, <a href="erasepointscommand.html">ErasePointsCommand</a>, and <a href="deletecommand.html">DeleteCommand</a>.</p>
+<!-- @@@EditLabelCommand -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$EditLabelCommand[overload1]$$$EditLabelCommandSelectItem*QSharedPointer<Label>QSharedPointer<Label>PhotoScene*InstaDam*QUndoCommand* -->
+<h3 class="fn" id="EditLabelCommand"><a name="EditLabelCommand"></a>EditLabelCommand::<span class="name">EditLabelCommand</span>(<span class="type"><a href="selectitem.html">SelectItem</a></span> *<i>item</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>newLabel</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qsharedpointer.html">QSharedPointer</a></span>&lt;<span class="type"><a href="label.html">Label</a></span>&gt; <i>oldLabel</i>, <span class="type"><a href="photoscene.html">PhotoScene</a></span> *<i>scene</i>, <span class="type"><a href="instadam.html">InstaDam</a></span> *<i>idam</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qundocommand.html#QUndoCommand">QUndoCommand</a></span> *<i>parent</i> = nullptr)</h3>
+<p>Constructs an EditLabel command using the provided <i>item</i>, <i>newLabel</i>, <i>oldLabel</i>, <i>scene</i>, <i>idam</i>, and <i>parent</i>, if any.</p>
+<!-- @@@EditLabelCommand -->
+<!-- $$$redo[overload1]$$$redo -->
+<h3 class="fn" id="redo"><a name="redo"></a><code>[override virtual] </code><span class="type">void</span> EditLabelCommand::<span class="name">redo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#redo">QUndoCommand::redo</a>().</p>
+<!-- @@@redo -->
+<!-- $$$undo[overload1]$$$undo -->
+<h3 class="fn" id="undo"><a name="undo"></a><code>[override virtual] </code><span class="type">void</span> EditLabelCommand::<span class="name">undo</span>()</h3>
+<p>Reimplemented from <a href="http://doc.qt.io/qt-5/qundocommand.html#undo">QUndoCommand::undo</a>().</p>
+<!-- @@@undo -->
+</div>
+<hr/><p class="footer"><small></small></p></body>
+</html>

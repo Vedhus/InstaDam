@@ -1,10 +1,11 @@
 #include "imagelist.h"
-#include "enumconstants.h"
 #include <QFileDialog>
+#include <QJsonObject>
 #include <QHttpPart>
 #include <QMessageBox>
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
+#include "enumconstants.h"
 
 /*!
   \class ImageList
@@ -13,55 +14,66 @@
   \inherits QSlider
   \brief Handles list of images form the server.
 
- */
+*/
 
-ImageList::ImageList(Project* project, QWidget *parent, QString databaseUrl, QString token) :
+/*!
+  Creates an ImageList instance with \a project, \a parent, \a databaseUrl,
+  and \a token
+*/
+ImageList::ImageList(Project* project, QWidget *parent, QString databaseUrl,
+                     QString token) :
     QWidget(parent), ui(new Ui::ImageList) {
     ui->setupUi(this);
     accessToken = token;
     this->databaseURL = databaseUrl;
     this->currentProject = project;
-
 }
 
 /*!
- * Destructor
- */
-
+  Destructor
+*/
 ImageList::~ImageList() {
     delete ui;
 }
 
-
-QList<int> ImageList::getIdList()
-{
+/*!
+  Returns the idList.
+*/
+QList<int> ImageList::getIdList() {
     return idList;
 }
 
-QList<QString> ImageList::getPathList()
-{
+/*!
+  Returns the pathList.
+*/
+QList<QString> ImageList::getPathList() {
     return pathList;
 }
 
-int ImageList::getSelectedIdIndex()
-{
+/*!
+  Returns selectedIdIndex.
+*/
+int ImageList::getSelectedIdIndex() {
     return selectedIdIndex;
 }
 
-void ImageList::setAnnotated()
-{
+/*!
+  Sets the selectedIdIndex annotated flag to \c true.
+*/
+void ImageList::setAnnotated() {
     annotatedList[selectedIdIndex] = true;
 }
 
-void ImageList::setSelectedIdIndex(int id)
-{
+/*!
+  Set the selectedIdIndex ti \a id.
+*/
+void ImageList::setSelectedIdIndex(int id) {
     selectedIdIndex = id;
 }
 
 /*!
- * Adds Item \QJsonObject \a obj to the ImageList.
- */
-
+ * Adds Item QJsonObject \a obj to the ImageList.
+*/
 void ImageList::addItems(QJsonObject obj)
 {
     qInfo() << obj;
@@ -83,9 +95,7 @@ void ImageList::addItems(QJsonObject obj)
                 QJsonObject currentObj = valueArray[imageNumber].toObject();
                 table->insertRow(table->rowCount());
                 int column =0;
-                foreach(const QString& objkey, currentObj.keys()) //Everything except the thumbnail
-                {
-
+                foreach(const QString& objkey, currentObj.keys()) {  //Everything except the thumbnail
                     QJsonValue currentValue = currentObj.value(objkey);
                     if (objkey.compare(InstaDamJson::ID) == 0 || objkey.compare(InstaDamJson::NAME) == 0 ||
                        objkey.compare(InstaDamJson::PATH) == 0) {
@@ -97,19 +107,15 @@ void ImageList::addItems(QJsonObject obj)
                         }
                         column++;
                     }
-                    if(objkey.compare("path")==0)
-                    {
+                    if(objkey.compare("path")==0) {
                         pathList.push_back(currentValue.toString());
                     }
-                    if(objkey.compare("is_annotated") == 0)
-                    {
+                    if(objkey.compare("is_annotated") == 0) {
                         //back_end implementation added this, and we want to display it, but order in json messes up existing implemention, so hard code 4 for column value for now
-                        if(currentValue.toBool())
-                        {
+                        if(currentValue.toBool()) {
                             table->setItem(table->rowCount()-1, 4, new QTableWidgetItem("Yes"));
                             annotatedList.push_back(true);
-                        }
-                        else {
+                        } else {
                             table->setItem(table->rowCount()-1, 4, new QTableWidgetItem("No"));
                             annotatedList.push_back(false);
                         }
@@ -138,9 +144,10 @@ void ImageList::addItems(QJsonObject obj)
     }
 }
 
-void ImageList::getThumbnailReplyFinished()
-{
-
+/*!
+  Slot called when thumbnail is received over network
+*/
+void ImageList::getThumbnailReplyFinished() {
     QByteArray strReply = rep->readAll();
     qInfo() << rep->error();
     qInfo() << rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -152,14 +159,11 @@ void ImageList::getThumbnailReplyFinished()
         return;
     }
 
-    foreach(const QString& objkey, currentObject.keys()) //Everything except the thumbnail
-    {
+    foreach(const QString& objkey, currentObject.keys()) {//Everything except the thumbnail
         QJsonValue currentValue = currentObject.value(objkey);
         //qInfo() << "Key = " << objkey << ", Value = " << currentObject.value(objkey);
-        if(objkey.compare(InstaDamJson::BASE64_IMAGE)==0)
-        {
-            if(currentValue.isString())
-            {
+        if (objkey.compare(InstaDamJson::BASE64_IMAGE)==0) {
+            if(currentValue.isString()) {
                 QByteArray byteArray = QByteArray::fromBase64(currentValue.toString().toUtf8());
                 QPixmap thumbnailPixmap;
                 thumbnailPixmap.loadFromData(byteArray, currentObject.value(InstaDamJson::FORMAT).toString().toUtf8());
@@ -167,34 +171,28 @@ void ImageList::getThumbnailReplyFinished()
                 thumbnail->setData(Qt::DecorationRole, thumbnailPixmap);
                 QTableWidget* table = ui->tableWidget;
                 table->setItem(table->rowCount()-1, table->columnCount()-1, thumbnail);
-
             }
         }
     }
 }
 
-
-
-void ImageList::doRequest(QNetworkRequest req)
-{
+/*!
+  Performs the network request.
+*/
+void ImageList::doRequest(QNetworkRequest req) {
     rep = manager->get(req);
 
     connect(rep, &QNetworkReply::finished,
             this, &ImageList::getThumbnailReplyFinished);
-    /* wait for reply because backend can't handle multiple requests at same time I think */
+    /* wait for reply because backend can't handle multiple requests at same time I think*/
     QEventLoop loop;
     connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
-
 }
-
-
-
-
 
 /*!
  * Waits for the file to be received.
- */
+*/
 void ImageList::fileReplyFinished() {
     qInfo() << "got a file";
     if (rep->error()) {
@@ -215,16 +213,14 @@ void ImageList::fileReplyFinished() {
     emit fileDownloaded(path);
 }
 
-
 /*!
  * Slot called when the load button is clicked.
- */
+*/
 void ImageList::on_loadButton_clicked() {
     qInfo() << "load button clicked";
     QTableWidget* table = ui->tableWidget;
     selectedRow = table->selectedItems();
-    if(selectedRow.empty())
-    {
+    if(selectedRow.empty()) {
         QMessageBox *messageBox = new QMessageBox;
         messageBox->critical(nullptr, "Error", "Select an Image to Load first");
         messageBox->setFixedSize(500, 200);
@@ -242,6 +238,9 @@ void ImageList::on_loadButton_clicked() {
     close();
 }
 
+/*!
+  Slot called when images are received over the network.
+*/
 void ImageList::imagesReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -255,9 +254,10 @@ void ImageList::imagesReplyFinished() {
       }
 }
 
-
-void ImageList::uploadFileReplyFinished()
-{
+/*!
+  Slot called when file upload is completed.
+*/
+void ImageList::uploadFileReplyFinished() {
     qInfo() << "upload reply";
     if (rep->error()) { //http error 400 means the annotation does not exist
         qInfo() << rep->error();
@@ -290,8 +290,11 @@ void ImageList::uploadFileReplyFinished()
     }
 }
 
-bool ImageList::zipFilesTogether(QFileInfoList files)
-{
+/*!
+  Zips files given by \a files together, returning \c true on success and \c false
+  on error.
+*/
+bool ImageList::zipFilesTogether(QFileInfoList files) {
     QFile inFile;
     QuaZip zip("images.zip");
     if (!zip.open(QuaZip::mdCreate)) {
@@ -301,10 +304,9 @@ bool ImageList::zipFilesTogether(QFileInfoList files)
 
     QuaZipFile outFile(&zip);
     char c;
-    foreach(QFileInfo fileInfo, files)
-    {
+    foreach(QFileInfo fileInfo, files) {
         if(!fileInfo.isFile())
-                continue;
+            continue;
         qInfo() << fileInfo.filePath();
         qInfo() << fileInfo.fileName();
         qInfo() << fileInfo.dir();
@@ -350,17 +352,15 @@ bool ImageList::zipFilesTogether(QFileInfoList files)
 
 /*!
  * Slot Called when the upload button is clicked
- */
-void ImageList::on_uploadButton_clicked()
-{
+*/
+void ImageList::on_uploadButton_clicked() {
     qInfo() << "upload button clicked";
     QStringList filelist = QFileDialog::getOpenFileNames(this,
         tr("Open Image"), "../", tr("Image Files (*.jpg *.png *.JPG *PNG *jpeg *JPEG );; All Files (*)"));
     if(filelist.size()==0)
         return;
 
-    if(filelist.size()==1)
-    {
+    if(filelist.size()==1) {
         QFile *file = new QFile(filelist[0]);
         QString filename = QFileInfo(filelist[0]).fileName();
 
@@ -377,9 +377,7 @@ void ImageList::on_uploadButton_clicked()
         imagePart.setBodyDevice(file);
         file->setParent(multiPart);
 
-
         multiPart->append(imagePart);
-
 
         QNetworkRequest req = QNetworkRequest(databaseLink);
         QString loginToken = "Bearer "+this->accessToken;
@@ -391,23 +389,19 @@ void ImageList::on_uploadButton_clicked()
             qDebug() << req.rawHeader(rawHeader);
         }
 
-
         rep = manager->post(req, multiPart);
         multiPart->setParent(rep);
 
         connect(rep, &QNetworkReply::finished,
                 this, &ImageList::uploadFileReplyFinished);
-    }
-    else //multiple files, upload zip
-    {
+    } else {  //multiple files, upload zip
         //https://stackoverflow.com/questions/2598117/zipping-a-folder-file-using-qt
 
         QFileInfoList files;
         foreach(QString file, filelist)
             files << QFileInfo(file);
 
-       if(zipFilesTogether(files))
-       {
+       if (zipFilesTogether(files)) {
            qInfo() << "files successfully zipped (there were no errors)" << endl;
            QString databaseUploadURL = this->databaseURL+"/image/upload/zip/" + QString::number(currentProject->getId());
            QUrl databaseLink = QUrl(databaseUploadURL);
@@ -423,14 +417,11 @@ void ImageList::on_uploadButton_clicked()
            zipPart.setBodyDevice(file);
            file->setParent(multiPart);
 
-
            multiPart->append(zipPart);
-
 
            QNetworkRequest req = QNetworkRequest(databaseLink);
            QString loginToken = "Bearer "+this->accessToken;
            req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-
 
            rep = manager->post(req, multiPart);
            multiPart->setParent(rep);
@@ -438,28 +429,24 @@ void ImageList::on_uploadButton_clicked()
            connect(rep, &QNetworkReply::finished,
                    this, &ImageList::uploadFileReplyFinished);
        }
-
     }
-
-
 }
 
-
-void ImageList::openAnnotation()
-{
+/*!
+  Opens the annotation file.
+*/
+void ImageList::openAnnotation() {
     qInfo() << "openAnnotation project id: " << currentProject->getId();
-    if(annotatedList[selectedIdIndex]) //the image being loaded has annotations associated with it, load the annotations with it
-    {
+    if (annotatedList[selectedIdIndex]) { //the image being loaded has annotations associated with it, load the annotations with it
         qInfo() << "inside openAnnotation";
         //note that selectedRow should be defined before using this function
-        if (selectedRow.isEmpty())
+        if (selectedRow.isEmpty()) {
             qInfo()<<"Image row was never selected";
-        else {
+        } else {
             QString image_id = QString::number(idList[selectedIdIndex]);
 
             QString databaseGetAnnotationURL = this->databaseURL+"/annotation/"+image_id+"/";
             qInfo()<<databaseGetAnnotationURL;
-
 
             QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);
             QString loginToken = "Bearer "+this->accessToken;
@@ -475,8 +462,10 @@ void ImageList::openAnnotation()
     }
 }
 
-void ImageList::annotationReplyFinished()
-{
+/*!
+  Slot called when annotation is received over the network.
+*/
+void ImageList::annotationReplyFinished() {
     qInfo() << "annotationReply project id: " << currentProject->getId();
     qInfo() << "Got an annotation";
     qInfo() << rep->request().url();
@@ -491,29 +480,40 @@ void ImageList::annotationReplyFinished()
 
     if (jsonError.error != QJsonParseError::NoError) {
         qInfo() << "Error: " << jsonError.errorString();
-    }
-    else {
+    } else {
         jsonLabelArray = jsonReply.array();
         QJsonArray wrapperArray;
-        for(int i =0; i< jsonLabelArray.size();i++)
-        {
+        for (int i =0; i< jsonLabelArray.size();i++) {
             qInfo() << jsonLabelArray[i].toObject();
             wrapperArray.append(jsonLabelArray[i].toObject());
         }
         json["labels"] = wrapperArray;
         emit allAnnotationsLoaded(json, ANNOTATION);
-
     }
 }
 
-
-
-
-
-
 /*!
  * Slot called when the cancel button is clicked.
- */
+*/
 void ImageList::on_cancelButton_clicked() {
     close();
 }
+
+/*!
+  \fn void ImageList::fileDownloaded(QString path);
+
+  Emitted whne a file has been downloded, giving the \a path.
+  */
+
+/*!
+  \fn void ImageList::allAnnotationsLoaded(QJsonObject json,fileTypes type);
+
+  Emitted when all annotations have been loaded from \a json, with \a type.
+  */
+
+/*!
+  \fn void ImageList::clearGUI();
+
+  Emitted when the GUI is cleared.
+  */
+

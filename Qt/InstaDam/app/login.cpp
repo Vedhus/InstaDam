@@ -19,11 +19,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief Creates a login dialog.
-  */
+*/
 
 /*!
   Creates an instance with parent QWidget \a parent, if any.
-  */
+*/
 Login::Login(QWidget *parent) :
     QWidget(parent), ui(new Ui::Login) {
     ui->setupUi(this);
@@ -31,14 +31,14 @@ Login::Login(QWidget *parent) :
 
 /*!
   Destructor
-  */
+*/
 Login::~Login() {
     delete ui;
 }
 
 /*!
   Processes the X button click.
-  */
+*/
 void Login::on_pushButton_3_clicked() {
     Register *reg = new Register;
     reg->show();
@@ -47,7 +47,7 @@ void Login::on_pushButton_3_clicked() {
 
 /*!
   Sends a request to login
-  */
+*/
 void Login::on_pushButton_clicked() {
     QString user = ui->username->text();
     QString pass = ui->password->text();
@@ -70,7 +70,7 @@ void Login::on_pushButton_clicked() {
 
 /*!
   Received the reply for login
-  */
+*/
 void Login::replyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
@@ -83,7 +83,7 @@ void Login::replyFinished() {
         QJsonObject obj = jsonReply.object();
         if (obj.contains(InstaDamJson::ACCESS_TOKEN)) {
             this->accessToken = obj.value(InstaDamJson::ACCESS_TOKEN).toString().toUtf8();
-            Login::lunchMainInstadam();
+            Login::launchMainInstadam();
         }
         else{
             msgBox.setText(obj.value("msg").toString());
@@ -94,26 +94,24 @@ void Login::replyFinished() {
 
 /*!
   Lists the projects.
-  */
+*/
 
-void Login::
-lunchMainInstadam(){
+void Login::launchMainInstadam(){
     InstaDam *instadamWindow = new InstaDam(nullptr, this->databaseURL, this->accessToken);
     instadamWindow->show();
     hide();
 }
 
-
 /*!
   Processes Z button click.
-  */
+*/
 void Login::on_pushButton_2_clicked() {
     this->close();
 }
 
 /*!
   Goes back to the starting widget when the button is clicked
-  */
+*/
 void Login::on_pushButton_4_clicked() {
     StartingWidget *startingWidget = new StartingWidget;
     startingWidget->show();

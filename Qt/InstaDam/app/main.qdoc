@@ -6,7 +6,6 @@
   The following documentation is available:
   \list
   \li \l{All Classes}
-  \li \l{All Functions}
   \li \l{Introduction to SelectItems}
   \li \l{Mirror Items}
   \endlist
@@ -21,14 +20,4 @@
 
   \generatelist{classesbymodule InstaDam}
 
-  */
-
-/*!
-  \page functions.html
-  \title All Functions
-  \ingroup funclists
-
-  All InstaDam functions
-
-  \generatelist functionindex
   */

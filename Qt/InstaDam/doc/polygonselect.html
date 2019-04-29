@@ -16,6 +16,7 @@
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
 <li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#protected-variables">Protected Variables</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -65,7 +66,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#read">read</a></b>(const QJsonObject &amp;<i>json</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#removeVertex">removeVertex</a></b>(int <i>vertex</i> = UNSELECTED) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#resetActiveVertex">resetActiveVertex</a></b>() override</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>point</i>) override</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#resizeItem">resizeItem</a></b>(const int <i>vertex</i>, QPointF &amp;<i>oldP</i>, QPointF &amp;<i>newP</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#rotate">rotate</a></b>(const QPointF &amp;<i>from</i>, const QPointF &amp;<i>to</i>) override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#rotateMirror">rotateMirror</a></b>() const override</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#setMirror">setMirror</a></b>(SelectItem *<i>item</i>) override</td></tr>
@@ -80,7 +81,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#write">write</a></b>(QJsonObject &amp;<i>json</i>) const override</td></tr>
 </table></div>
 <ul>
-<li class="fn">54 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
+<li class="fn">57 public functions inherited from <a href="selectitem.html#public-functions">SelectItem</a></li>
 <li class="fn">11 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicspolygonitem.html#public-functions">QGraphicsPolygonItem</a></li>
 <li class="fn">183 public functions inherited from <a href="http://doc.qt.io/qt-5/qgraphicsitem.html#public-functions">QGraphicsItem</a></li>
 <li class="fn">6 public functions inherited from <a href="http://doc.qt.io/qt-5/qabstractgraphicsshapeitem.html#public-functions">QAbstractGraphicsShapeItem</a></li>
@@ -90,6 +91,12 @@
 <h2 id="public-variables">Public Variables</h2>
 <div class="table"><table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> const QString </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#baseInstruction-var">baseInstruction</a></b></td></tr>
+</table></div>
+<a name="protected-variables"></a>
+<h2 id="protected-variables">Protected Variables</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QPointF&gt; </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#myPoints-var">myPoints</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QRectF&gt; </td><td class="memItemRight bottomAlign"><b><a href="polygonselect.html#myVertices-var">myVertices</a></b></td></tr>
 </table></div>
 <h3>Additional Inherited Members</h3>
 <ul>
@@ -202,8 +209,8 @@
 <h3 class="fn" id="resetActiveVertex"><a name="resetActiveVertex"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">resetActiveVertex</span>()</h3>
 <p>Reimplemented from <a href="selectitem.html#resetActiveVertex">SelectItem::resetActiveVertex</a>().</p>
 <!-- @@@resetActiveVertex -->
-<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF& -->
-<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>point</i>)</h3>
+<!-- $$$resizeItem[overload1]$$$resizeItemconstintQPointF&QPointF& -->
+<h3 class="fn" id="resizeItem"><a name="resizeItem"></a><code>[override virtual] </code><span class="type">void</span> PolygonSelect::<span class="name">resizeItem</span>(const <span class="type">int</span> <i>vertex</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>oldP</i>, <span class="type"><a href="http://doc.qt.io/qt-5/qpointf.html">QPointF</a></span> &amp;<i>newP</i>)</h3>
 <p>Reimplemented from <a href="selectitem.html#resizeItem">SelectItem::resizeItem</a>().</p>
 <!-- @@@resizeItem -->
 <!-- $$$rotate[overload1]$$$rotateconstQPointF&constQPointF& -->

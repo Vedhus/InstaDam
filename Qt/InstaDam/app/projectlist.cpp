@@ -23,11 +23,11 @@
   \inmodule InstaDam
   \inherits QWidget
   \brief A list of projects.
-  */
+*/
 
 /*!
   Creates a ProjectList with parent QWidget \a parent, if any.
-  */
+*/
 ProjectList::ProjectList(QWidget *parent) :
     QWidget(parent), ui(new Ui::ProjectList) {
     ui->setupUi(this);
@@ -35,7 +35,7 @@ ProjectList::ProjectList(QWidget *parent) :
 
 /*!
   Destructor.
-  */
+*/
 ProjectList::~ProjectList() {
     delete ui;
 }
@@ -43,47 +43,49 @@ ProjectList::~ProjectList() {
 /*!
   Adds Projects to this object based on the input \a obj, \a databaseURL,
   and \a accessToken.
-  */
+*/
 void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString accessToken) {
     this->databaseURL = databaseURL;
     this->accessToken = accessToken;
     QJsonArray projects_list = obj.array();
-    for(int i =0; i<projects_list.count();i++){
+    for (int i = 0; i < projects_list.count(); i++) {
         QJsonValue project = projects_list.at(i);
-            if(project.isObject()){
-                QJsonObject subObj = project.toObject();
-                QStringList proj_details;
-                foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
-                    QJsonValue val = subObj.value(k);
-                    if(k == "id"){
-                        proj_details << QString::number(val.toInt());
-                        }
-                    if(k == "name"){
-                        proj_details << val.toString();
-                        }
-                    if(k=="is_admin"){
-                        if(val==true){
-                            proj_details << "Admin";
-                            }
-                        else{
-                            proj_details << "Annotator";
-                            }
-                        }
-                    }
-               ui->projectsTable->addItem(proj_details.join(" - "));
-               if(this->useCase=="OPEN"){
-                    connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
+        if (project.isObject()) {
+            QJsonObject subObj = project.toObject();
+            QStringList proj_details;
+            foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
+                QJsonValue val = subObj.value(k);
+                if (k == "id") {
+                    proj_details << QString::number(val.toInt());
                 }
-               else if (this->useCase=="DELETE") {
-                   connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(deleteProject(QListWidgetItem *)));
+                if (k == "name") {
+                    proj_details << val.toString();
+                }
+                if (k=="is_admin") {
+                    if (val==true) {
+                        proj_details << "Admin";
+                    } else {
+                        proj_details << "Annotator";
+                    }
                 }
             }
+            ui->projectsTable->addItem(proj_details.join(" - "));
+            if (this->useCase=="OPEN") {
+                connect(ui->projectsTable,
+                        SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
+                        SLOT(openProject(QListWidgetItem *)));
+            } else if (this->useCase=="DELETE") {
+                connect(ui->projectsTable,
+                        SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
+                        SLOT(deleteProject(QListWidgetItem *)));
+            }
+        }
     }
 }
 
 /*!
-  Opens the Project based on \a project_name.
-  */
+  Slot triggered to open the Project based on \a project_name.
+*/
 void ProjectList::openProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
@@ -101,23 +103,23 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
 /*!
   Waits until a reply regarding the labels request is received
   emits the received labels to InstaDam
-  */
+*/
 void ProjectList::getLabelsReplyFinished() {
     emit instadamClearAll();
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);
     if (jsonError.error == QJsonParseError::NoError) {
-      QJsonObject jsonLabels = jsonReply.object();
-      emit projectJsonReceived(jsonLabels);
-      emit projectIdChanged(selectedProject);
-      this->close();
-      }
+        QJsonObject jsonLabels = jsonReply.object();
+        emit projectJsonReceived(jsonLabels);
+        emit projectIdChanged(selectedProject);
+        this->close();
+    }
 }
 
 /*!
-  Sends a project deletion request
- */
+  Sends a project deletion request for \a project_name.
+*/
 void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
@@ -134,7 +136,7 @@ void ProjectList::deleteProject(QListWidgetItem *project_name) {
 
 /*!
  Receives the reply of deleting a project from the server
- */
+*/
 void ProjectList::deleteReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
@@ -145,8 +147,26 @@ void ProjectList::deleteReplyFinished() {
         msgBox.setText("Ooops! Network error, please try again");
         msgBox.exec();
     }  else {
-            this->hide();
-            msgBox.setText("The project has been successfully deleted");
-            msgBox.exec();
-      }
+        this->hide();
+        msgBox.setText("The project has been successfully deleted");
+        msgBox.exec();
+    }
 }
+
+/*!
+  \fn void ProjectList::projectJsonReceived(QJsonObject json)
+
+  This signal is emitted when a new project Json object, \a json, is received.
+*/
+
+/*!
+  \fn void ProjectList::projectIdChanged(int id)
+
+  This signal is emitted when a project id is changed to \a id.
+*/
+
+/*!
+  \fn void ProjectList::instadamClearAll()
+
+  This signal is emitted when a project list is cleared.
+*/
