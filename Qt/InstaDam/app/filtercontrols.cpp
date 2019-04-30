@@ -1,12 +1,10 @@
 #include "filtercontrols.h"
-
 #include <QtGlobal>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QString>
 #include <vector>
 #include <iostream>
-
 #include "pixmapops.h"
 #include "enumconstants.h"
 
@@ -17,18 +15,13 @@
   \ingroup app
   \inmodule InstaDam
   \brief Defines a custom QDIalog based on the selected mask.
-
-*/
-
-/*!
   Creates an instance based on \a selectedMask, \a fc, \a photoViewer, and
   \a currentPro.
 */
+
 filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            filterControls* fc, PhotoViewer* photoViewer,
-                           Project *currentPro)
-    : QDialog() {
-    qInfo("1");
+                           Project *currentPro): QDialog() {
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
     setWindowFlags(Qt::Popup);
@@ -37,21 +30,18 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
     for (size_t i = 0; i < numControls; i++) {
         QLabel *name = new QLabel();
         name->setText(QString(fc->properties[selectedMask]->propertylist[i]->name));
-
         QHBoxLayout *HBlayout = new QHBoxLayout();
         HBlayout->addWidget(name);
         EnumConstants::threshold_or_filter thof =
-                fc->properties[selectedMask]->propertylist[i]->threshold_filter;
+        fc->properties[selectedMask]->propertylist[i]->threshold_filter;
         if (fc->properties[selectedMask]->propertylist[i]->showProp == true){
             switch (fc->properties[selectedMask]->propertylist[i]->btnType) {
                 case SLIDER:
                 {
                     fSlider *itemSlider = new fSlider(selectedMask,
-                                                      static_cast<int>(i), thof,
-                                                      this);
+                                                      static_cast<int>(i), thof, this);
                     fSpinBox* itemNumbox = new fSpinBox(selectedMask,
-                                                        static_cast<int>(i), thof,
-                                                        this);
+                                                        static_cast<int>(i), thof, this);
                     connect(itemSlider, SIGNAL(valueChanged(int)), itemNumbox,
                             SLOT(displayValue(int)));
                     itemSlider->setOrientation(Qt::Horizontal);
@@ -61,8 +51,6 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                     HBlayout->addWidget(itemSlider);
                     HBlayout->addWidget(itemNumbox);
 
-                    qInfo("max = %d", fc->properties[selectedMask]->propertylist[i]->max);
-                    qInfo("3");
                     itemSlider->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
                     itemNumbox->setMaximum(fc->properties[selectedMask]->propertylist[i]->max);
                     itemSlider->setMinimum(fc->properties[selectedMask]->propertylist[i]->min);
@@ -71,13 +59,11 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                     itemSlider->setValue(fc->properties[selectedMask]->propertylist[i]->val);
 
 
-                    connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
-                                                                  int,
+                    connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
                                                                   EnumConstants::threshold_or_filter)),
                             fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
                                                EnumConstants::threshold_or_filter)));
-                    connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int,
-                                                                  int,
+                    connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
                                                                   EnumConstants::threshold_or_filter)),
                             fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
                                                EnumConstants::threshold_or_filter)));
@@ -89,15 +75,12 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                 case CHECKBOX:
                 {
                     fCheckBox *itemCBox = new fCheckBox(selectedMask,
-                                                        static_cast<int>(i), thof,
-                                                        this);
+                                                        static_cast<int>(i), thof, this);
                     itemCBox->setCheckState(Qt::CheckState(fc->properties[selectedMask]->propertylist[i]->val));
-
                     connect(itemCBox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
                                                                 EnumConstants::threshold_or_filter)),
                             fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
                                                EnumConstants::threshold_or_filter)));
-
                     HBlayout->addWidget(itemCBox);
                     VBlayout->addLayout(HBlayout);
 
@@ -105,7 +88,6 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                 }
                 case LABELLIST:
                 {
-
                     labelButtons.clear();
                     VBlayout->addLayout(HBlayout);
                     for (int i=0; i < currentProject->numLabels(); i++) {
@@ -118,9 +100,7 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                         button->setAutoFillBackground(true);
                         button->setPalette(pal);
                         button->update();
-
                         VBlayout->addWidget(button);
-
                         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), fc,
                                 SLOT(setLabelMask(QSharedPointer<Label>)));
                         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this,
@@ -179,13 +159,8 @@ void filterDialog::checkLabel(QSharedPointer<Label> label) {
   \ingroup app
   \inmodule InstaDam
   \brief Defines the properties of the mask and conducts the filtering operations.
-
 */
-
-/*!
-  Creates an instance
-*/
-filterControls::filterControls():QObject() {
+filterControls::filterControls():QObject(){
     defineProperties();
 }
 
@@ -194,10 +169,8 @@ filterControls::filterControls():QObject() {
   Slot that sets the int \a value
   to the appropriate property indexed by \a maskType, \a propNum and \a thof.
 */
-void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum,
-                               int value,
+void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum, int value,
                                EnumConstants::threshold_or_filter thof) {
-    qInfo("Property changed!");
     this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->sliderAssign(value);
     emit valAssigned(maskType, thof);
 }
@@ -215,8 +188,9 @@ void filterControls::setLabelMask(QSharedPointer<Label> label) {
  Defines the properties of the different masks.
 */
 void filterControls::defineProperties() {
-    std::vector<filterProperty*> cannyProperties;
 
+    /* Define canny filter default properties */
+    std::vector<filterProperty*> cannyProperties;
     cannyProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
                                                  ANY, EnumConstants::THRESH,
                                                  false));
@@ -230,6 +204,7 @@ void filterControls::defineProperties() {
     cannyProperties.push_back(new filterProperty("Kernal", SLIDER, 3, 5, 7, ODD,
                                                  EnumConstants::FILTER, false));
 
+    /* Define blur filter default properties */
     std::vector<filterProperty*> blurProperties;
 
     blurProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
@@ -248,6 +223,7 @@ void filterControls::defineProperties() {
                                                 ODD, EnumConstants::FILTER,
                                                 false));
 
+    /* Define thresholdfilter default properties */
     std::vector<filterProperty*> thresholdProperties;
     thresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
                                                      1, ANY,
@@ -282,7 +258,7 @@ void filterControls::defineProperties() {
             new filterPropertiesMeta(labelmaskProperties, 3,
                                      EnumConstants::LABELMASK);
 
-    // Order follows order of enum defined in instadam.h
+    /* Order follows order of enum defined in instadam.h */
     properties.push_back(cannyPropertiesMeta);
     properties.push_back(thresholdPropertiesMeta);
     properties.push_back(blurPropertiesMeta);
@@ -319,14 +295,10 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
                             CV_8UC3, image_pixmap.bits());
                 cv::resize(mat, mat, image.size());
                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
-
-            } else {
-                qInfo("Started filt");
+            }
+            else {
                 cv::Mat mat(image.size(), CV_8UC3, cv::Scalar(0,0,0));
-                qInfo("Filt 1");
                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
-                qInfo("Filt 2");
-//                   cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             }
 
             break;
@@ -335,6 +307,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
     }
     return edge_temp;
 }
+
 
 /*!
   Returns a masked image based in the input \a image and \a selectedFilter.
@@ -401,6 +374,5 @@ QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
 
 /*!
   \fn filterControls::valAssigned(EnumConstants::maskTypes maskType, EnumConstants::threshold_or_filter thof)
-
   This signal is emitted when a value is assigned with \a maskType and \a thof.
 */
