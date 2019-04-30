@@ -125,10 +125,10 @@ void ImageList::addItems(QJsonObject obj) {
                         }
                         column++;
                     }
-                    if(objkey.compare("path")==0) {
+                    if(objkey.compare(InstaDamJson::PATH)==0) {
                         pathList.push_back(currentValue.toString());
                     }
-                    if(objkey.compare("is_annotated") == 0) {
+                    if(objkey.compare(InstaDamJson::IS_ANNOTATED) == 0) {
                         //back_end implementation added this, and we want to display it, but order in json messes up existing implemention, so hard code 4 for column value for now
                         if(currentValue.toBool()) {
                             table->setItem(table->rowCount()-1, 4, new QTableWidgetItem("Yes"));
@@ -140,18 +140,22 @@ void ImageList::addItems(QJsonObject obj) {
                     }
                 }
                 qInfo() << idList;
-                QString databaseGetProjectURL = this->databaseURL+"/image/" + QString::number(currentObj.value("id").toDouble()) + "/thumbnail";
+                QString databaseGetProjectURL = this->databaseURL + "/" +
+                        InstaDamJson::IMAGE + "/" +
+                        QString::number(currentObj.value(InstaDamJson::ID).toDouble()) +
+                        "/" + InstaDamJson::THUMBNAIL;
                 QUrl databaseLink = QUrl(databaseGetProjectURL);
 
                 QUrlQuery query;
 
-                query.addQueryItem("size_w", "150");
-                query.addQueryItem("size_h", "50");
+                query.addQueryItem(InstaDamJson::SIZE_W, "150");
+                query.addQueryItem(InstaDamJson::SIZE_H, "50");
 
                 databaseLink.setQuery(query.query());
                 QNetworkRequest req = QNetworkRequest(databaseLink);
-                QString loginToken = "Bearer "+this->accessToken;
-                req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+                QString loginToken = InstaDamJson::BEARER + this->accessToken;
+                req.setRawHeader(InstaDamJson::AUTHORIZATION,
+                                 loginToken.QString::toUtf8());
                 doRequest(req);
             }
         } else {
@@ -304,13 +308,17 @@ void ImageList::uploadFileReplyFinished() {
     else {
         qInfo() << jsonReply;
 
-        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+        QString databaseImagesURL = this->databaseURL + "/" +
+                InstaDamJson::PROJECTS + "/" +
+                QString::number(currentProject->getId()) + "/" +
+                InstaDamJson::IMAGES;
         QUrl dabaseLink = QUrl(databaseImagesURL);
 
         qInfo() << databaseImagesURL;
 
         QNetworkRequest req = QNetworkRequest(dabaseLink);
-        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+        req.setRawHeader(InstaDamJson::AUTHORIZATION,
+                         InstaDamJson::BEARER + this->accessToken.toUtf8());
         rep = manager->get(req);
 #ifdef WASM_BUILD
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(imagesReplyFin(QNetworkReply*)));
@@ -414,8 +422,9 @@ void ImageList::on_uploadButton_clicked() {
 
 
         QNetworkRequest req = QNetworkRequest(databaseLink);
-        QString loginToken = "Bearer "+this->accessToken;
-        req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+        QString loginToken = InstaDamJson::BEARER + this->accessToken;
+        req.setRawHeader(InstaDamJson::AUTHORIZATION,
+                         loginToken.QString::toUtf8());
 
         qDebug() << req.url().toString();
         const QList<QByteArray>& rawHeaderList(req.rawHeaderList());
@@ -446,7 +455,8 @@ void ImageList::on_uploadButton_clicked() {
 
        if (zipFilesTogether(files)) {
            qInfo() << "files successfully zipped (there were no errors)" << endl;
-           QString databaseUploadURL = this->databaseURL+"/image/upload/zip/" + QString::number(currentProject->getId());
+           QString databaseUploadURL = this->databaseURL + "/image/upload/zip/" +
+                   QString::number(currentProject->getId());
            QUrl databaseLink = QUrl(databaseUploadURL);
            qInfo() << databaseLink;
 
@@ -454,7 +464,8 @@ void ImageList::on_uploadButton_clicked() {
 
            QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
            QHttpPart zipPart;
-           zipPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/zip"));
+           zipPart.setHeader(QNetworkRequest::ContentTypeHeader,
+                             QVariant(InstaDamJson::APPLICATIONJSON));
            zipPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"zip\"; filename=\"images.zip\""));
            qInfo() << "open: " << file->open(QIODevice::ReadOnly);
            zipPart.setBodyDevice(file);
@@ -463,8 +474,9 @@ void ImageList::on_uploadButton_clicked() {
            multiPart->append(zipPart);
 
            QNetworkRequest req = QNetworkRequest(databaseLink);
-           QString loginToken = "Bearer "+this->accessToken;
-           req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+           QString loginToken = InstaDamJson::BEARER + this->accessToken;
+           req.setRawHeader(InstaDamJson::AUTHORIZATION,
+                            loginToken.QString::toUtf8());
 
            rep = manager->post(req, multiPart);
            multiPart->setParent(rep);
@@ -492,12 +504,14 @@ void ImageList::openAnnotation() {
         } else {
             QString image_id = QString::number(idList[selectedIdIndex]);
 
-            QString databaseGetAnnotationURL = this->databaseURL+"/annotation/"+image_id+"/";
+            QString databaseGetAnnotationURL = this->databaseURL + "/" +
+                    InstaDamJson::ANNOTATION + "/" + image_id + "/";
             qInfo()<<databaseGetAnnotationURL;
 
             QNetworkRequest annotationRequest = QNetworkRequest(databaseGetAnnotationURL);
-            QString loginToken = "Bearer "+this->accessToken;
-            annotationRequest.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+            QString loginToken = InstaDamJson::BEARER + this->accessToken;
+            annotationRequest.setRawHeader(InstaDamJson::AUTHORIZATION,
+                                           loginToken.QString::toUtf8());
             rep = manager->get(annotationRequest);
 #ifdef WASM_BUILD
             connect(manager, SIGNAL(finished(QNetworkReply*)), this,

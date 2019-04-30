@@ -521,15 +521,16 @@ void InstaDam::on_actionSave_Annotation_triggered() {
     } else {
         QJsonObject json;
         write(json, ANNOTATION);
-        QString annotationsURL = this->databaseURL+"/annotation/";
+        QString annotationsURL = this->databaseURL + "/" +
+                InstaDamJson::ANNOTATION + "/";
 
         QUrl dabaseLink = QUrl(annotationsURL);
 
         QJsonObject js
         {
-            {"project_id", this->currentProject->getId()},
-            {"image_id", this->currentProject->getImageId()},
-            {"labels", json["labels"]}
+            {InstaDamJson::PROJECT_ID, this->currentProject->getId()},
+            {InstaDamJson::IMAGE_ID, this->currentProject->getImageId()},
+            {InstaDamJson::LABELS, json[InstaDamJson::LABELS]}
         };
 
         qInfo() << js;
@@ -537,8 +538,9 @@ void InstaDam::on_actionSave_Annotation_triggered() {
         QJsonDocument doc(js);
         QByteArray bytes = doc.toJson();
         QNetworkRequest req = QNetworkRequest(dabaseLink);
-        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+        req.setHeader(QNetworkRequest::ContentTypeHeader,
+                      InstaDamJson::APPLICATIONJSON);
+        req.setRawHeader(InstaDamJson::AUTHORIZATION, InstaDamJson::BEARER + this->accessToken.toUtf8());
 
         rep = manager->post(req, bytes);
 
@@ -712,13 +714,17 @@ void InstaDam::on_actionOpen_File_triggered() {
             assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
             return;
         }
-        QString databaseImagesURL = this->databaseURL+"/projects/" + QString::number(currentProject->getId()) + "/images";
+        QString databaseImagesURL = this->databaseURL + "/" +
+                InstaDamJson::PROJECTS + "/" +
+                QString::number(currentProject->getId()) +
+                "/" + InstaDamJson::IMAGES;
         QUrl dabaseLink = QUrl(databaseImagesURL);
 
         qInfo() << databaseImagesURL;
 
         QNetworkRequest req = QNetworkRequest(dabaseLink);
-        req.setRawHeader("Authorization", "Bearer " + this->accessToken.toUtf8());
+        req.setRawHeader(InstaDamJson::AUTHORIZATION,
+                         InstaDamJson::BEARER + this->accessToken.toUtf8());
         rep = manager->get(req);
 #ifdef WASM_BUILD
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(imagesReplyFin(QNetworkReply*)));
@@ -861,7 +867,8 @@ void InstaDam::fileReplyFin(QNetworkReply* reply){
 */
 void InstaDam::exportImages(bool asBuffers) {
     QString baseName = this->file.baseName();
-    QString labelPath = this->path.absolutePath()+"/exports/"+baseName+"/";
+    QString labelPath = this->path.absolutePath()+"/" + InstaDamJson::EXPORTS +
+            "/" + baseName + "/";
     if (!QDir(labelPath).exists()) {
         QDir().mkpath(labelPath);
     }
@@ -870,7 +877,7 @@ void InstaDam::exportImages(bool asBuffers) {
 
 
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
-        QString filename = labelPath+labfilePrefix+"_label.png";
+        QString filename = labelPath + labfilePrefix + InstaDamJson::LABEL_PNG;
         qInfo()<<filename;
         if (asBuffers) {
             QByteArray *bytes = new QByteArray();
@@ -2027,11 +2034,12 @@ void InstaDam::listProjects() {
 //        msgBox.setText("Please note that deleting a project is irreversible");
 //        msgBox.exec();
 //    }
-    QString databaseProjectsURL = this->databaseURL+"/projects";
+    QString databaseProjectsURL = this->databaseURL + "/" +
+            InstaDamJson::PROJECTS;
     QUrl dabaseLink = QUrl(databaseProjectsURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken;
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    QString loginToken = InstaDamJson::BEARER + this->accessToken;
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
     rep = manager->get(req);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,
@@ -2065,10 +2073,14 @@ void InstaDam::projectsReplyFinished() {
         pl->useCase = this->projecListUseCase;
         pl->show();
         pl->addItems(jsonReply, this->databaseURL, this->accessToken);
-        connect(pl, &ProjectList::instadamClearAll, this, &InstaDam::getReadyForNewProject);
-        connect(pl, &ProjectList::projectJsonReceived, this, &InstaDam::openFileFromJson);
-        connect(pl, &ProjectList::projectIdChanged, this, &InstaDam::setCurrentProjectId);
-        connect(pl, &ProjectList::projectDeleted, this, &InstaDam::currentProjectDeleted);
+        connect(pl, &ProjectList::instadamClearAll, this,
+                &InstaDam::getReadyForNewProject);
+        connect(pl, &ProjectList::projectJsonReceived, this,
+                &InstaDam::openFileFromJson);
+        connect(pl, &ProjectList::projectIdChanged, this,
+                &InstaDam::setCurrentProjectId);
+        connect(pl, &ProjectList::projectDeleted, this,
+                &InstaDam::currentProjectDeleted);
     }
 }
 
@@ -2091,7 +2103,7 @@ void InstaDam::currentProjectDeleted(int deletedProjectId){
 */
 void InstaDam::saveToServer(){
     qInfo() << "saving project to server";
-    QUrl dabaseLink = QUrl(this->databaseURL+"/project");
+    QUrl dabaseLink = QUrl(this->databaseURL + "/" + InstaDamJson::PROJECT);
     QString fileName = this->sProjectName->ui->projectName->toPlainText();
     this->sProjectName->hide();
     QJsonObject js
@@ -2101,9 +2113,10 @@ void InstaDam::saveToServer(){
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken;
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QString loginToken = InstaDamJson::BEARER + this->accessToken;
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader,
+                  InstaDamJson::APPLICATIONJSON);
     rep = manager->post(req, bytes);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFin(QNetworkReply*)));
@@ -2134,27 +2147,34 @@ void InstaDam::replyFinished() {
         qInfo() << "Error: " << jsonError.errorString();
     } else {
         QJsonObject reply = jsonReply.object();
-        this->currentProject->setId(reply.value("project_id").toInt());
+        this->currentProject->setId(reply.value(InstaDamJson::PROJECT_ID).toInt());
 
         // save labels
         qInfo() << "saving labels to server";
 
-        QUrl lablesDatabaseLink = QUrl(this->databaseURL+"/project/"+QString::number(this->currentProject->getId())+"/labels");
-        QString loginToken = "Bearer "+this->accessToken;
+        QUrl lablesDatabaseLink = QUrl(this->databaseURL + "/" +
+                                       InstaDamJson::PROJECT + "/" +
+                                       QString::number(this->currentProject->getId()) +
+                                       "/" + InstaDamJson::LABELS);
+        QString loginToken = InstaDamJson::BEARER + this->accessToken;
 
         for (int i=0; i<this->currentProject->numLabels();i++) {
             QJsonObject jsLabel
             {
-                {"label_text", this->currentProject->getLabel(i)->getText()},
-                {"label_color", this->currentProject->getLabel(i)->getColor().name()}
+                {InstaDamJson::LABEL_TEXT,
+                            this->currentProject->getLabel(i)->getText()},
+                {InstaDamJson::LABEL_COLOR,
+                            this->currentProject->getLabel(i)->getColor().name()}
             };
 
             QJsonDocument docLabel(jsLabel);
             QByteArray bytesLabel = docLabel.toJson();
             QNetworkRequest reqLabel = QNetworkRequest(lablesDatabaseLink);
 
-            reqLabel.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-            reqLabel.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+            reqLabel.setRawHeader(InstaDamJson::AUTHORIZATION,
+                                  loginToken.QString::toUtf8());
+            reqLabel.setHeader(QNetworkRequest::ContentTypeHeader,
+                               InstaDamJson::APPLICATIONJSON);
             rep = manager->post(reqLabel, bytesLabel);
 #ifdef WASM_BUILD
             connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(labelReplyFin(QNetworkReply*)));
@@ -2275,7 +2295,8 @@ void InstaDam::on_actionImport_triggered() {
         return;
     }
     QString baseName = this->file.baseName();
-    QString labelPath = this->path.absolutePath()+"/labels/"+baseName+"/";
+    QString labelPath = this->path.absolutePath() + "/" +
+            InstaDamJson::LABELS + "/" + baseName + "/";
     QString message = QString("Please copy all labels to ") + labelPath +
                     " and name them as 00000_label.png, 00001_label.png, etc";
     if (!QDir(labelPath).exists()) {
@@ -2287,7 +2308,7 @@ void InstaDam::on_actionImport_triggered() {
 
     for (int i=0; i<currentProject->numLabels(); i++) {
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
-        this->labelPaths.append(labelPath+labfilePrefix+"_label.png");
+        this->labelPaths.append(labelPath + labfilePrefix + InstaDamJson::LABEL_PNG);
         QFileInfo check_file(labelPaths[i]);
          qInfo()<<"file name";
         if (check_file.exists()) {
