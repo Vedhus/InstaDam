@@ -6,7 +6,6 @@
   \ingroup app
   \inmodule InstaDam
   \brief Holds the filter properties.
-
   Initializes the filter properties to the provided parameter values
 */
 
@@ -44,7 +43,6 @@ void filterProperty::sliderAssign(int sliderVal) {
   \class filterPropertiesMeta
   \ingroup app
   \inmodule InstaDam
-
   Holds information about the particular maskType \a mt including the number of controls
   and the list of properties \a fp.
 */

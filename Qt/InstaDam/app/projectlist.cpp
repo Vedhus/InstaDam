@@ -55,7 +55,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
         if (project.isObject()) {
             QJsonObject subObj = project.toObject();
             QStringList proj_details;
-            foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
+            foreach(const QString& k, subObj.keys()) {
                 QJsonValue val = subObj.value(k);
                 if (k == InstaDamJson::ID) {
                     proj_details << QString::number(val.toInt());
@@ -76,7 +76,7 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
     }
     if (this->useCase == InstaDamJson::OPEN) {
          connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
-    } else if (this->useCase == InstaDamJson::DELETE) {
+    } else if (this->useCase == InstaDamJson::IDELETE) {
         connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(confirmProjectDeletion(QListWidgetItem *)));
     }
 }
@@ -176,7 +176,7 @@ void ProjectList::deleteReplyFinished() {
     qInfo() << "reply received:";
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);
     QMessageBox msgBox;
     if (jsonError.error != QJsonParseError::NoError) {
         QString message = jsonReply.object().value("msg").toString();

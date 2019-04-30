@@ -55,11 +55,11 @@ const QString SIZE_H = "size_h";
 const QString THUMBNAIL = "thumbnail";
 const QString IS_ANNOTATED = "is_annotated";
 const QString OPEN = "OPEN";
-const QString DELETE = "DELETE";
 const QString USERS = "users";
 const QString EMAIL = "email";
 const QString PERMISSIONS = "permissions";
 const QString ACCESS_TYPE = "access_type";
+const QString IDELETE = "DELETE";
 //const QString = "";
 }
 #endif // JSONCONSTANTS_H

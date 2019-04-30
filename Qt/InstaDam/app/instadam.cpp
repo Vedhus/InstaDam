@@ -363,7 +363,7 @@ void InstaDam::on_actionOpen_triggered() {
 #ifdef WASM_BUILD
         openIdproConnector->onActivate();
 #else
-        // Reading and Loading
+        /* Reading and Loading */
         #ifndef TEST
             QString myfileName = QFileDialog::getOpenFileName(this,
                 tr("Open Project"), "../", tr("Instadam Project (*.idpro);; All Files (*)"));
@@ -372,7 +372,8 @@ void InstaDam::on_actionOpen_triggered() {
 
         #endif
         if (myfileName.isEmpty()) {
-                return;  // remove that part and add an alert
+                assertError("Project file is invalid!");
+                return;
         } else {
             loadLabelFile(myfileName, PROJECT);
             getReadyForNewProject();
@@ -2029,11 +2030,6 @@ void InstaDam::on_actionUpdate_Privilege_triggered() {
  Sends a request to receive all the projects assoicated with a user
 */
 void InstaDam::listProjects() {
-//    if(this->projecListUseCase=="DELETE"){
-//        QMessageBox msgBox;
-//        msgBox.setText("Please note that deleting a project is irreversible");
-//        msgBox.exec();
-//    }
     QString databaseProjectsURL = this->databaseURL + "/" +
             InstaDamJson::PROJECTS;
     QUrl dabaseLink = QUrl(databaseProjectsURL);
@@ -2063,11 +2059,9 @@ void InstaDam::projectsReplyFin(QNetworkReply* reply){
 void InstaDam::projectsReplyFinished() {
     QByteArray strReply = rep->readAll();
     QJsonParseError jsonError;
-    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError); // parse and capture the error flag
+    QJsonDocument jsonReply = QJsonDocument::fromJson(strReply, &jsonError);
 
-    if (jsonError.error != QJsonParseError::NoError) {
-        qInfo() << "Error: " << jsonError.errorString();
-    } else {
+    if (jsonError.error == QJsonParseError::NoError) {
         QJsonObject obj = jsonReply.object();
         ProjectList *pl = new ProjectList;
         pl->useCase = this->projecListUseCase;
@@ -2085,7 +2079,7 @@ void InstaDam::projectsReplyFinished() {
 }
 
 /*!
- checks if the deleted project is the currenlty open project and clears the labels if so.
+ Checks if the deleted project is the currenlty open project and clears the labels if so.
  */
 void InstaDam::currentProjectDeleted(int deletedProjectId){
     if(deletedProjectId==this->currentProject->getId()){
