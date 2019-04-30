@@ -2,6 +2,7 @@
 #include "userprivilege.h"
 #include "ui_addusertoproject.h"
 #include "ui_userprivilege.h"
+#include "jsonConstants.h"
 
 #include <QDebug>
 #include <QNetworkRequest>
@@ -47,8 +48,8 @@ void AddUserToProject::on_pushButton_clicked() {
     query.addQueryItem("q", userInfo);
     databaseLink.setQuery(query.query());
     QNetworkRequest req = QNetworkRequest(databaseLink);
-    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    QString loginToken = InstaDamJson::BEARER + this->accessToken.replace("\"", "");
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
     rep = manager->get(req);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,
@@ -99,16 +100,16 @@ void AddUserToProject::replyFinished() {
 */
 void AddUserToProject::listUsers(QJsonObject obj) {
     ui->userList->clear();
-    QJsonArray users_list = obj.value("users").toArray();
+    QJsonArray users_list = obj.value(InstaDamJson::USERS).toArray();
     for (int i =0; i<users_list.count();i++) {
         QJsonObject user = users_list.at(i).toObject();
         QStringList user_details;
         foreach(const QString& k, user.keys()) {
             QJsonValue val = user.value(k);
-            if (k == "username") {
+            if (k == InstaDamJson::USERNAME) {
                 user_details << val.toString();
             }
-            if (k == "email") {
+            if (k == InstaDamJson::EMAIL) {
                 user_details << val.toString();
             }
         }
@@ -176,19 +177,21 @@ void AddUserToProject::addAsAdmin() {
 void AddUserToProject::add(){
     QString userName = QString(this->userDetails.split('-')[1]).replace(" ", "");
     QString privilege = this->privilege.toLower();
-    QString databaseLoginURL = this->databaseURL+ "/project/"+QString::number(this->projectId)+"/permissions";
+    QString databaseLoginURL = this->databaseURL + "/" +
+            InstaDamJson::PROJECT + "/" + QString::number(this->projectId) + "/" +
+            InstaDamJson::PERMISSIONS;
     QUrl dabaseLink = QUrl(databaseLoginURL);
     QJsonObject js
     {
-        {"access_type", privilege},
-        {"username", userName}
+        {InstaDamJson::ACCESS_TYPE, privilege},
+        {InstaDamJson::USERNAME, userName}
     };
     QJsonDocument doc(js);
     QByteArray bytes = doc.toJson();
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QString loginToken = InstaDamJson::BEARER + this->accessToken.replace("\"", "");
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
+    req.setHeader(QNetworkRequest::ContentTypeHeader, InstaDamJson::APPLICATIONJSON);
     rep = manager->put(req, bytes);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,

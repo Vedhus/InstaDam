@@ -57,13 +57,13 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
             QStringList proj_details;
             foreach(const QString& k, subObj.keys()) { // fix the insertions inside the list based on final version of the received json
                 QJsonValue val = subObj.value(k);
-                if (k == "id") {
+                if (k == InstaDamJson::ID) {
                     proj_details << QString::number(val.toInt());
                 }
-                if (k == "name") {
+                if (k == InstaDamJson::NAME) {
                     proj_details << val.toString();
                 }
-                if (k=="is_admin") {
+                if (k == InstaDamJson::IS_ADMIN) {
                     if (val==true) {
                         proj_details << "Admin";
                     } else {
@@ -74,9 +74,9 @@ void ProjectList::addItems(QJsonDocument obj, QString databaseURL, QString acces
             ui->projectsTable->addItem(proj_details.join(" - "));
         }
     }
-    if (this->useCase=="OPEN") {
+    if (this->useCase == InstaDamJson::OPEN) {
          connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(openProject(QListWidgetItem *)));
-    } else if (this->useCase=="DELETE") {
+    } else if (this->useCase == InstaDamJson::DELETE) {
         connect(ui->projectsTable, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(confirmProjectDeletion(QListWidgetItem *)));
     }
 }
@@ -99,11 +99,12 @@ void ProjectList::openProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
     selectedProject = id.toInt();
-    QString databaseGetProjectURL = this->databaseURL+"/project/"+id+"/labels";
+    QString databaseGetProjectURL = this->databaseURL + "/" +
+            InstaDamJson::PROJECT + "/" + id + "/" + InstaDamJson::LABELS;
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    QString loginToken = InstaDamJson::BEARER + this->accessToken.replace("\"", "");
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
     rep = manager->get(req);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,
@@ -145,11 +146,12 @@ void ProjectList::deleteProject(QListWidgetItem *project_name) {
     QString id = QString(project_name->text().split('-')[0]);
     id.replace(" ", "");
     selectedProject = id.toInt();
-    QString databaseGetProjectURL = this->databaseURL+"/project/"+id;
+    QString databaseGetProjectURL = this->databaseURL + "/" +
+            InstaDamJson::PROJECT + "/" + id;
     QUrl dabaseLink = QUrl(databaseGetProjectURL);
     QNetworkRequest req = QNetworkRequest(dabaseLink);
-    QString loginToken = "Bearer "+this->accessToken.replace("\"", "");
-    req.setRawHeader(QByteArray("Authorization"), loginToken.QString::toUtf8());
+    QString loginToken = InstaDamJson::BEARER + this->accessToken.replace("\"", "");
+    req.setRawHeader(InstaDamJson::AUTHORIZATION, loginToken.QString::toUtf8());
     rep = manager->deleteResource(req);
 #ifdef WASM_BUILD
     connect(manager, SIGNAL(finished(QNetworkReply*)), this,
