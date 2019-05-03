@@ -14,7 +14,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     static QString baseInstruction;
     FreeDrawSelect();
     FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label = nullptr,
-                   QGraphicsItem *item = nullptr);
+                   QGraphicsItem *item = nullptr, bool importBool = false);
     FreeDrawSelect(const QPixmap map, QPen pen);
     FreeDrawSelect(const QJsonObject &json,
                    QSharedPointer<Label> label = nullptr,
@@ -72,7 +72,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
 
     void setMirrorMap();
     /*------------- End implemented functions*/
-
+    bool foundPixels = false;
     void addPoints(QSharedPointer<QPixmap> points);
     void deletePoints(QPen &pen, QSharedPointer<QPixmap> map);
     void deletePoints(const QPointF &start, const QPointF &end, QPen pen,
@@ -94,7 +94,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
 #endif
     FreeDrawSelect *mirror = nullptr;
     QPainter myPainter;
-    void loadFromPixmap(const QPixmap map);
+    void loadFromPixmap(const QPixmap map, bool importBool = false);
     void setup();
     void init(QSharedPointer<Label> label = nullptr);
 };

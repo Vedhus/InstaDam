@@ -4,7 +4,7 @@
 #include <QBuffer>
 #include <QGraphicsScene>
 #include <QJsonArray>
-
+#include <QDebug>
 #include "label.h"
 
 /*!
@@ -27,11 +27,11 @@ QString FreeDrawSelect::baseInstruction = QString("");
   and parent \a item, if any.
 */
 FreeDrawSelect::FreeDrawSelect(const QPixmap map, QSharedPointer<Label> label,
-                               QGraphicsItem *item)
+                               QGraphicsItem *item, bool importBool)
     : QGraphicsPixmapItem(item), SelectItem(label, item) {
     init(label);
     myPen.setWidth(1);
-    loadFromPixmap(map);
+    loadFromPixmap(map, importBool);
     setup();
 }
 
@@ -45,6 +45,13 @@ FreeDrawSelect::FreeDrawSelect(const QPixmap map, QPen pen)
     myPen.setWidth(1);
     loadFromPixmap(map);
     setup();
+}
+
+/*!
+ Imports a pixmap given as \a map.
+*/
+void FreeDrawSelect::importPixmap(const QPixmap map){
+    loadFromPixmap(map);
 }
 
 /*!
@@ -358,33 +365,42 @@ void FreeDrawSelect::setMirrorMap() {
 /*!
   Loads QPixmap \a map into the current object.
 */
-void FreeDrawSelect::loadFromPixmap(const QPixmap map) {
+void FreeDrawSelect::loadFromPixmap(const QPixmap map, bool importBool) {
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
     myRect = QRectF(0., 0., SelectItem::myBounds.width(),
                     SelectItem::myBounds.height());
+    qInfo()<<SelectItem::myBounds.width();
+    qInfo()<<SelectItem::myBounds.height();
     QImage img = map.toImage();
-    img = img.convertToFormat(QImage::Format_RGB32);
+
+    if (!importBool)
+    {
+        img = img.convertToFormat(QImage::Format_RGB32);
+    }
+
+
     QRgb *rgb;
+    int counter = 0;
     for (int y = 0; y < img.height(); y++) {
         rgb = reinterpret_cast<QRgb*>(img.scanLine(y));
         for (int x = 0; x < img.width(); x++) {
             if (qRed(rgb[x]) != 0 || qBlue(rgb[x]) != 0 || qGreen(rgb[x] != 0)) {
+
                 myPainter.drawPoint(QPoint(x, y));
+                foundPixels = true;
+                counter+=1;
             } else {
                 img.setPixelColor(x, y, Qt::transparent);
             }
         }
     }
-    myPainter.end();
+
+
+
 }
 
-/*!
- Imports a pixmap given as \a map.
-*/
-void FreeDrawSelect::importPixmap(const QPixmap map){
-    myPixmap = map;
-}
+
 
 /*!
   Common setup functions called by all consructors.

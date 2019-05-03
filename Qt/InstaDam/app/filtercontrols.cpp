@@ -239,7 +239,7 @@ void filterControls::defineProperties() {
                                                      ANY, EnumConstants:: THRESH,
                                                      false));
     labelmaskProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
-                                                     254, 255, ANY,
+                                                     1, 255, ANY,
                                                      EnumConstants::THRESH,
                                                      false, false));
     labelmaskProperties.push_back(new filterProperty("Label List", LABELLIST, 0,

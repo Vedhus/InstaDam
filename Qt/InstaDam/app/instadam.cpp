@@ -2,7 +2,7 @@
 
 #include <QByteArray>
 #include <QDialog>
-
+#include <QImageReader>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -223,6 +223,7 @@ void InstaDam::setButtonsConfiguration(){
         this->ui->menuUser->setEnabled(false);
         this->ui->actionDelete_2->setEnabled(false);
         this->ui->actionSave->setEnabled(true);
+        this->ui->actionImport->setEnabled(true);
     }
     else {
         this->ui->actionImport->setEnabled(false);
@@ -2281,13 +2282,14 @@ void InstaDam::editLabel(QSharedPointer<Label> newLabel) {
 }
 
 /*!
-  Slot called when import is clicked.
+  Slot called when import is clicked. Imports pngs.
 */
 void InstaDam::on_actionImport_triggered() {
     if (!photoLoaded) {
         assertError("Please load an image first!");
         return;
     }
+
     QString baseName = this->file.baseName();
     QString labelPath = this->path.absolutePath() + "/" +
             InstaDamJson::LABELS + "/" + baseName + "/";
@@ -2298,25 +2300,33 @@ void InstaDam::on_actionImport_triggered() {
         return;
     }
     bool foundALabel = false;
-    qInfo()<<"1";
+    qInfo()<<labelPath;
 
     for (int i=0; i<currentProject->numLabels(); i++) {
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
-        this->labelPaths.append(labelPath + labfilePrefix + InstaDamJson::LABEL_PNG);
-        QFileInfo check_file(labelPaths[i]);
-         qInfo()<<"file name";
+        QString labelFile = labelPath + labfilePrefix + InstaDamJson::LABEL_PNG;
+        QFileInfo check_file(labelFile);
         if (check_file.exists()) {
-            qInfo()<<"file exists";
-            QPixmap pixmap = QPixmap(filename);
+            qInfo()<<labelFile;
+            QPixmap pixmap = QPixmap(labelFile);
             QSharedPointer<Label> lab = currentProject->getLabel(i);
-            FreeDrawSelect *fds = new FreeDrawSelect();
-            fds->importPixmap(pixmap);
-            lab->addItem(fds);
+            undoGroup->setActiveStack(mainUndoStack);
+
+            FreeDrawSelect *fds = new FreeDrawSelect(pixmap, lab, nullptr, true);
+            qInfo()<<fds->foundPixels;
+            if (fds->foundPixels){
+                lab->addItem(fds);
+                scene->addItem(fds);
+                QUndoCommand *addCommand = new AddCommand(fds, scene, this);
+                mainUndoStack->push(addCommand);
+            }
+
             foundALabel = true;
         }
     }
     if(!foundALabel)
         assertError(message.toStdString());
+    scene->update();
 }
 
 /*!
