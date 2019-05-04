@@ -776,9 +776,12 @@ void InstaDam::fileReplyFinished() {
 /*! Clears the guis and resets the labels()
  **/
 void InstaDam::resetGUIclearLabels() {
+    qInfo()<<"Reset!";
     scene->clearItems();
     maskScene->clearItems();
     currentProject->clearAllLabels();
+    scene->update();
+    maskScene->update();
 }
 
 /*!
@@ -807,7 +810,7 @@ void InstaDam::saveAndProgress(int num)
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
         on_actionSave_Annotation_triggered();
-        resetGUIclearLabels();
+
         if (runningLocally) {
             int newId = ((fileId+num)%imagesList.size()+imagesList.size())%imagesList.size();
             fileId = newId;
@@ -914,6 +917,7 @@ void InstaDam::assertError(std::string errorMessage) {
 */
 void InstaDam::generateLabelFileName() {
     QString baseName = this->file.baseName();
+    ui->filelabel->setText(baseName);
     QString aPath = this->path.absolutePath()+"/annotations/"+baseName+"/";
 
     if (!QDir(aPath).exists()) {
@@ -940,27 +944,32 @@ void InstaDam::openFile_and_labels() {
 #else
 
         if (QFileInfo(this->annotationPath).isFile()) {
-            QTextStream(stdout) << "Loading labels\n" << this->annotationPath << endl;
-            QTextStream(stdout) << "\n" << this->file.baseName() << endl;
+            resetGUIclearLabels();
             if (!loadLabelFile(this->annotationPath, ANNOTATION)) {
                 revert();
                 return;
             }
+
             QTextStream(stdout) << "Loaded labels" << endl;;
         } else if (currentProject != nullptr && currentProject->numLabels() == 0) {
             assertError("Please create or open a project first. Projects define the label classes and the color to annotate them. You can open or create a project from the Project menu.");
             revert();
             return;
         }
+        else {
+           resetGUIclearLabels();
+        }
 #endif
 
     } else {
+        resetGUIclearLabels();
         connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
     }
 
     QTextStream(stdout) << "Loading photoX" << endl;;
     photoLoaded = true;
+
     SelectItem::myBounds = ui->IdmPhotoViewer->setPhotoFromFile(filename);
     qInfo("my bounds set");
     ui->IdmMaskViewer->LinkToPhotoViewer(ui->IdmPhotoViewer);
@@ -2335,3 +2344,10 @@ void InstaDam::on_actionImport_triggered() {
   Set \a item to be the currently active SelectItem. \a enable indicates whenther
   (\c true) or not (\c false) the finishPolygon Button needs to be enabled.
   */
+
+void InstaDam::on_actionClear_All_can_t_undo_triggered()
+{
+    this->resetGUIclearLabels();
+}
+
+

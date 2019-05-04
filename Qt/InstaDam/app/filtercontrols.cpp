@@ -275,17 +275,26 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
     cv::Mat edge_temp;
     switch (selectedFilter) {
         case EnumConstants::CANNY:
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            cv::GaussianBlur(edge_temp, edge_temp,
+                             cv::Size(properties[EnumConstants::BLUR]->propertylist[2]->val,
+                                      properties[EnumConstants::BLUR]->propertylist[3]->val),
+                                        properties[EnumConstants::BLUR]->propertylist[4]->val,
+                                        properties[EnumConstants::BLUR]->propertylist[4]->val);
             cv::Canny(image, edge_temp, properties[EnumConstants::CANNY]->propertylist[2]->val,
                                         properties[EnumConstants::CANNY]->propertylist[3]->val,
                                         properties[EnumConstants::CANNY]->propertylist[4]->val);
             break;
         case EnumConstants::BLUR:
-            cv::GaussianBlur(image, edge_temp,
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            cv::GaussianBlur(edge_temp, edge_temp,
                              cv::Size(properties[EnumConstants::BLUR]->propertylist[2]->val,
                                       properties[EnumConstants::BLUR]->propertylist[3]->val),
+                                      properties[EnumConstants::BLUR]->propertylist[4]->val,
                                       properties[EnumConstants::BLUR]->propertylist[4]->val);
             break;
         case EnumConstants::THRESHOLD:
+
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             break;
         case EnumConstants::LABELMASK:

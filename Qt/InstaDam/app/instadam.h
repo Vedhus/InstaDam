@@ -175,6 +175,10 @@ class InstaDam : public QMainWindow {
 
     void on_actionImport_triggered();
 
+    void on_actionClear_All_can_t_undo_triggered();
+
+
+
 public slots:
     void resetPixmapButtons();
     void fileDownloaded(QString path);

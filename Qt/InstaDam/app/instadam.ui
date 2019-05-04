@@ -31,6 +31,9 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="documentMode">
    <bool>true</bool>
   </property>
@@ -168,7 +171,7 @@
               </property>
               <item>
                <layout class="QGridLayout" name="gridLayout_3">
-                <item row="3" column="8">
+                <item row="4" column="11">
                  <widget class="QPushButton" name="ellipseSelectButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -190,29 +193,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="7">
-                 <widget class="QPushButton" name="polygonSelectButton">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>36</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Polygon Select</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="9">
+                <item row="4" column="4">
                  <widget class="QPushButton" name="freeSelectButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -234,7 +215,23 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="10">
+                <item row="4" column="0">
+                 <widget class="QTextBrowser" name="filelabel">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="13">
                  <widget class="QPushButton" name="panButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -259,7 +256,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="2">
+                <item row="4" column="3">
                  <spacer name="horizontalSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -272,7 +269,7 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="3" column="17">
+                <item row="4" column="20">
                  <widget class="QPushButton" name="cancelSelectionButton">
                   <property name="enabled">
                    <bool>false</bool>
@@ -300,7 +297,20 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
+                <item row="4" column="14">
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="2">
                  <widget class="QPushButton" name="saveAndNext">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -319,7 +329,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="12">
+                <item row="4" column="15">
                  <widget class="QPushButton" name="filterOptions">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -350,7 +360,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="13">
+                <item row="4" column="16">
                  <widget class="QPushButton" name="addSelectionButton">
                   <property name="enabled">
                    <bool>false</bool>
@@ -375,7 +385,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="3">
+                <item row="4" column="6">
                  <widget class="QPushButton" name="rectangleSelectButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -397,14 +407,14 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="18">
+                <item row="4" column="21">
                  <widget class="QCheckBox" name="showMaskSelections">
                   <property name="text">
                    <string>Show Selections on Mask</string>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="0">
+                <item row="4" column="1">
                  <widget class="QPushButton" name="saveAndBack">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -423,18 +433,27 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="11">
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="4" column="5">
+                 <widget class="QPushButton" name="polygonSelectButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
+                  <property name="minimumSize">
                    <size>
-                    <width>40</width>
-                    <height>20</height>
+                    <width>36</width>
+                    <height>24</height>
                    </size>
                   </property>
-                 </spacer>
+                  <property name="text">
+                   <string>Polygon Select</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -759,6 +778,9 @@
                        </item>
                        <item alignment="Qt::AlignHCenter">
                         <widget class="QLabel" name="label_5">
+                         <property name="autoFillBackground">
+                          <bool>true</bool>
+                         </property>
                          <property name="text">
                           <string>Canny</string>
                          </property>
@@ -882,6 +904,8 @@
     </property>
     <addaction name="actionDelete"/>
     <addaction name="actionEdit_Label"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear_All_can_t_undo"/>
    </widget>
    <widget class="QMenu" name="menuProject">
     <property name="title">
@@ -1006,6 +1030,11 @@
   <action name="actionImport">
    <property name="text">
     <string>Import</string>
+   </property>
+  </action>
+  <action name="actionClear_All_can_t_undo">
+   <property name="text">
+    <string>Clear All (can't undo)</string>
    </property>
   </action>
  </widget>
