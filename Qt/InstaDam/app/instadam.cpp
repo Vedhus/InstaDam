@@ -1450,7 +1450,6 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             }
         }
         if (filterOpenPickColor){
-            qInfo()<<pos;
             emit colorChanged(ui->IdmPhotoViewer->colorAtPoint(pos));
         }
     }

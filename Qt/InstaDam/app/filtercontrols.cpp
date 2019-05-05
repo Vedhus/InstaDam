@@ -22,15 +22,20 @@
 filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            filterControls* fc, PhotoViewer* photoViewer,
                            Project *currentPro): QDialog() {
-
+    this->fc = fc;
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
-    if (selectedMask != EnumConstants::COLORTHRESHOLD)
+     QVBoxLayout *VBlayout = new QVBoxLayout(this);
+    if (selectedMask != EnumConstants::COLORTHRESHOLD){
         setWindowFlags(Qt::Popup);
+    }
     else {
+        QLabel *name = new QLabel();
+        name->setText("Click on the image to select a color");
+        VBlayout->addWidget(name);
         setWindowFlags(Qt::WindowStaysOnTopHint);
     }
-    QVBoxLayout *VBlayout = new QVBoxLayout(this);
+
     Project* currentProject = currentPro;
     for (size_t i = 0; i < numControls; i++) {
         QLabel *name = new QLabel();
@@ -66,8 +71,12 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
 
                     connect(itemSlider, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
                                                                   EnumConstants::threshold_or_filter)),
-                            fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
+                            fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,\
                                                EnumConstants::threshold_or_filter)));
+
+                    connect(this, SIGNAL(changeSlider(EnumConstants::maskTypes, int, int)),
+                            itemSlider, SLOT(sliderChangedByCall(EnumConstants::maskTypes, int, int)));
+
                     connect(itemNumbox, SIGNAL(filterValueChanged(EnumConstants::maskTypes, int, int,
                                                                   EnumConstants::threshold_or_filter)),
                             fc, SLOT(assignVal(EnumConstants::maskTypes, int, int,
@@ -164,6 +173,9 @@ void filterDialog::checkLabel(QSharedPointer<Label> label) {
   Called when a point is clicked on the screen when the filter dialog box is open
   */
 void filterDialog::changeColor(cv::Scalar col){
+    for (int i = 0; i<3; i++)
+        emit changeSlider(EnumConstants::COLORTHRESHOLD, 2+i, col.val[i]);
+
 
 }
 
@@ -186,6 +198,7 @@ void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum, i
                                EnumConstants::threshold_or_filter thof) {
     this->properties[maskType]->propertylist[static_cast<size_t>(propNum)]->sliderAssign(value);
     emit valAssigned(maskType, thof);
+
 }
 
 /*!
@@ -269,7 +282,7 @@ void filterControls::defineProperties() {
                                                 ODD, EnumConstants::THRESH,
                                                 false));
     colorThresholdProperties.push_back(new filterProperty("Fuzziness", SLIDER, 0,
-                                                     20, 255, ANY,
+                                                     20, 100, ANY,
                                                      EnumConstants::THRESH,
                                                      false));
 
@@ -363,7 +376,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
                 cv::cvtColor(image, lab, cv::COLOR_RGB2Lab);
                 lab.convertTo(lab, CV_16UC3);
                 cv::cvtColor(colors, colors, cv::COLOR_RGB2Lab);
-                cv::Scalar labPoint = colors.at<uchar>(0,0);
+                cv::Scalar labPoint = cv::Scalar(colors.at<cv::Vec3b>(cv::Point(0,0)));
                 cv::absdiff(lab, labPoint, lab);
                 lab = lab.mul(lab);
                 lab = lab/3;
@@ -400,8 +413,6 @@ void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
     cv::Mat binary;
     int invert = properties[selectedFilter]->propertylist[0]->val;
 
-
-    qInfo("%d", invert);
     if (invert == 2)
         cv::threshold(edges, binary, properties[selectedFilter]->propertylist[1]->val,
                 255, cv::THRESH_BINARY_INV);

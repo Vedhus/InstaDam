@@ -42,6 +42,19 @@ void fSlider::reemitSliderReleased() {
 }
 
 /*!
+  This slot is called when the value of the slider is changed from outside(
+  */
+void fSlider::sliderChangedByCall(EnumConstants::maskTypes maskType, int propNums,
+                                 int value){
+    if( selectedMask == maskType && propNum == propNums)
+    {
+        setValue(value);
+        emit sliderReleased();
+    }
+
+}
+
+/*!
   \fn void fSlider::filterValueChanged(EnumConstants::maskTypes selectedMask, int propNum, int value, EnumConstants::threshold_or_filter thof)
 
   This signal is emitted when the filter value changes with \a selectedMask,

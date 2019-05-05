@@ -24,10 +24,15 @@ class filterDialog: public QDialog {
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     QPoint mpos;
+    filterControls *fc;
+
     QVector<LabelButtonFilter *> labelButtons;
 public slots:
     void checkLabel(QSharedPointer<Label> label);
     void changeColor(cv::Scalar);
+signals:
+    void changeSlider(EnumConstants::maskTypes maskType, int propNum, int value);
+
 
 
 };

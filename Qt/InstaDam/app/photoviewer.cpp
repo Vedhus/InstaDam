@@ -103,7 +103,11 @@ void PhotoViewer::setPhotoFromPixmap(QPixmap px) {
 cv::Scalar PhotoViewer::colorAtPoint(QPointF pos) {
     float x = limit(0,pos.x(),cvImage.cols);
     float y = limit(0,pos.y(),cvImage.rows);
-    return cvImage.at<uchar>(x,y);
+    qInfo()<<"Number of channels"<<cvImage.channels();
+    cv::Scalar col = cv::Scalar(cvImage.at<cv::Vec3b>(cv::Point(x,y)));
+    qInfo()<<"type"<<cvImage.type();
+
+    return col;
 }
 
 /*! Limits a value to \a maxval and \a minval
@@ -134,9 +138,9 @@ void PhotoViewer::setPhoto(QPixmap pixmap) {
 
         QRect viewrect = viewport()->rect();
         setImMask(selectedMask);
-        qInfo("imMask set!");
+
         this->fitInView();
-        qInfo("fit In View!");
+
         emit zoomed(zoom, 1,  mapToScene(static_cast<int>(viewrect.width()/2.0),
                                           static_cast<int>(round((viewrect.height()+1)/2.0))));
         emit loadedPhoto();
@@ -175,14 +179,14 @@ cv::Mat PhotoViewer::QPixmap2Mat(QPixmap px) const {
 void PhotoViewer::setImMask(EnumConstants::maskTypes filterName,
                             EnumConstants::threshold_or_filter thof) {
     selectedMask = filterName;
-    qInfo("SettingMask");
+
     if (hasPhoto == true) {
         switch (thof) {
             case EnumConstants::FILTER:
                 filterControl->filtAndGeneratePixmaps(cvImage, selectedMask);
                 break;
             case EnumConstants::THRESH:
-                qInfo("Case Threshold");
+
                 filterControl->im2pixmap(selectedMask);
                 break;
         }

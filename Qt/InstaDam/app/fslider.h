@@ -27,6 +27,8 @@ class fSlider : public QSlider {
  private slots:
     void reemitValueChanged(int value);
     void reemitSliderReleased();
+    void sliderChangedByCall(EnumConstants::maskTypes selectedMask, int propNum,
+                            int value);
 };
 
 class fSpinBox : public QSpinBox {
