@@ -24,7 +24,11 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            Project *currentPro): QDialog() {
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
-    setWindowFlags(Qt::Popup);
+    if (selectedMask != EnumConstants::COLORTHRESHOLD)
+        setWindowFlags(Qt::Popup);
+    else {
+        setWindowFlags(Qt::WindowStaysOnTopHint);
+    }
     QVBoxLayout *VBlayout = new QVBoxLayout(this);
     Project* currentProject = currentPro;
     for (size_t i = 0; i < numControls; i++) {
@@ -234,6 +238,9 @@ void filterControls::defineProperties() {
                                                      EnumConstants::THRESH,
                                                      false));
 
+
+
+    /* Define labelmask default properties */
     std::vector<filterProperty*> labelmaskProperties;
     labelmaskProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
                                                      ANY, EnumConstants:: THRESH,
@@ -246,6 +253,28 @@ void filterControls::defineProperties() {
                                                      2, 1, ANY,
                                                      EnumConstants::FILTER,
                                                      false));
+    /* Define color filter default properties */
+    std::vector<filterProperty*> colorThresholdProperties;
+
+    colorThresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 2,
+                                                ODD, EnumConstants::THRESH,
+                                                false));
+    colorThresholdProperties.push_back(new filterProperty("Fuzziness", SLIDER, 0,
+                                                     20, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+
+    colorThresholdProperties.push_back(new filterProperty("Red", SLIDER, 0,
+                                                60, 255, ANY, EnumConstants::FILTER, false));
+    colorThresholdProperties.push_back(new filterProperty("Blue", SLIDER, 0,
+                                                          60, 255,
+                                                ANY, EnumConstants::FILTER,
+                                                false));
+    colorThresholdProperties.push_back(new filterProperty("Green", SLIDER, 0,
+                                                          60, 255,
+                                                ANY, EnumConstants::FILTER,
+                                                false));
+
 
     filterPropertiesMeta *cannyPropertiesMeta =
             new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);
@@ -257,12 +286,16 @@ void filterControls::defineProperties() {
     filterPropertiesMeta *labelmaskPropertiesMeta =
             new filterPropertiesMeta(labelmaskProperties, 3,
                                      EnumConstants::LABELMASK);
+    filterPropertiesMeta *colorThresholdPropertiesMeta =
+            new filterPropertiesMeta(colorThresholdProperties, 5,
+                                     EnumConstants::COLORTHRESHOLD);
 
     /* Order follows order of enum defined in instadam.h */
     properties.push_back(cannyPropertiesMeta);
     properties.push_back(thresholdPropertiesMeta);
     properties.push_back(blurPropertiesMeta);
     properties.push_back(labelmaskPropertiesMeta);
+    properties.push_back(colorThresholdPropertiesMeta);
 }
 
 
@@ -311,6 +344,28 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
             }
 
             break;
+        case EnumConstants::COLORTHRESHOLD:
+            {
+                cv::Scalar color =  cv::Scalar(properties[EnumConstants::COLORTHRESHOLD]->propertylist[2]->val,
+                                   properties[EnumConstants::COLORTHRESHOLD]->propertylist[3]->val,
+                                   properties[EnumConstants::COLORTHRESHOLD]->propertylist[4]->val);
+                cv::Mat colors(1,1, CV_8UC3, color);
+                cv::Mat lab;
+                cv::cvtColor(image, lab, cv::COLOR_RGB2Lab);
+                lab.convertTo(lab, CV_16UC3);
+                cv::cvtColor(colors, colors, cv::COLOR_RGB2Lab);
+                cv::Scalar labPoint = colors.at<uchar>(0,0);
+                cv::absdiff(lab, labPoint, lab);
+                lab = lab.mul(lab);
+                lab = lab/3;
+                lab.convertTo(lab, CV_32FC3);
+                cv::transform(lab, lab, cv::Matx13f(1,1,1));
+                cv::sqrt(lab, edge_temp);
+                edge_temp.convertTo(edge_temp, CV_8U);
+
+            }
+            break;
+
         case EnumConstants::OTHER:
             break;
     }

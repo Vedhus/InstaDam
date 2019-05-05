@@ -59,9 +59,9 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     photoLoaded = false;
     filterControl = new filterControls();
     maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,
-                     EnumConstants::THRESHOLD, EnumConstants::LABELMASK};
+                     EnumConstants::THRESHOLD, EnumConstants::LABELMASK, EnumConstants::COLORTHRESHOLD};
     maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label,
-                      ui->labelmask_label};
+                      ui->labelmask_label, ui->colorthreshold_label};
     connectFilters();
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
@@ -1311,8 +1311,18 @@ void InstaDam::on_filterOptions_clicked()
         filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask,
                                                  filterControl, ui->IdmPhotoViewer,
                                                  currentProject);
+        // Connect open filter to toggle
+        // Connect close filter to toggle
+        // connect color picked to change color
         dialogs->show();
     }
+}
+
+/*!
+  Toggles the filter dialog open window
+  */
+void InstaDam::toggleFilterDialogOpen(){
+    filterOpenPickColor = !filterOpenPickColor;
 }
 
 /*!
@@ -1426,7 +1436,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             ui->IdmPhotoViewer->setPanMode(ctrlPanning);
             ui->IdmMaskViewer->setPanMode(ctrlPanning);
         }
-        if (!panning && !ctrlPanning){
+        if (!panning && !ctrlPanning && !filterLoadedColorPick){
             qInfo()<<"clicked!";
             if (!(modifiers & Qt::ShiftModifier)){
                 annotationDraw(type, item, pos, button, modifiers);
@@ -1437,6 +1447,10 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 maskScene->inactiveAll();
                 currentItem = nullptr;
             }
+        }
+        if (filterLoadedColorPick){
+            qInfo()<<pos;
+            emit coloChanged(pos);
         }
     }
 }

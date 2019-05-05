@@ -840,7 +840,7 @@
                         </widget>
                        </item>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="PicPushButton" name="colorrange_label">
+                        <widget class="PicPushButton" name="colorthreshold_label">
                          <property name="text">
                           <string>TextLabel</string>
                          </property>

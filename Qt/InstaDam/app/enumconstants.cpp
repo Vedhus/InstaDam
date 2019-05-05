@@ -8,6 +8,7 @@
   \value THRESHOLD
   \value BLUR
   \value LABELMASK
+  \value COLORTHRESHOLD
   \value OTHER
 */
 

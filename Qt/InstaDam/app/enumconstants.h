@@ -4,7 +4,7 @@
 class EnumConstants{
  public:
     EnumConstants();
-    enum maskTypes{CANNY, THRESHOLD, BLUR, LABELMASK, OTHER};
+    enum maskTypes{CANNY, THRESHOLD, BLUR, LABELMASK, COLORTHRESHOLD, OTHER};
 
     enum threshold_or_filter{THRESH, FILTER};
 

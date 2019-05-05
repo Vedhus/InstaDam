@@ -239,8 +239,9 @@ public slots:
     Ui::polygonSelectForm *polygonSelectForm;
     //PhotoScene::viewerTypes currentViewer;
     bool drawing = true;
-    bool panning = false;
-    bool ctrlPanning = false;
+    bool panning = false;       //When panning using the pan button
+    bool ctrlPanning = false;  //When panning using ctrl
+    bool filterOpenPickColor = false; //When the filter properties is open
     bool canDrawOnPhoto = true;
     int lastType = -1;
     bool insertVertex = false;

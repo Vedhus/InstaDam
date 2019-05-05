@@ -83,6 +83,7 @@ QSize PhotoViewer::setPhotoFromFile(QString filename) {
 
     cvImage = cv::imread(filename.toLocal8Bit().constData(),
                          CV_LOAD_IMAGE_COLOR);
+    cv::cvtColor(cvImage,cvImage, cv::COLOR_BGR2RGB);
 
     setPhoto(pixmap);
     return pixmap.size();
