@@ -27,6 +27,9 @@ class filterDialog: public QDialog {
     QVector<LabelButtonFilter *> labelButtons;
 public slots:
     void checkLabel(QSharedPointer<Label> label);
+    void changeColor(cv::Scalar);
+
+
 };
 
 class filterControls: public QObject {

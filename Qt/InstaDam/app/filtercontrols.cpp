@@ -22,6 +22,7 @@
 filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            filterControls* fc, PhotoViewer* photoViewer,
                            Project *currentPro): QDialog() {
+
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
     if (selectedMask != EnumConstants::COLORTHRESHOLD)
@@ -121,6 +122,7 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
         }
     }
     QDialog::show();
+
 }
 
 /*!
@@ -156,6 +158,13 @@ void filterDialog::checkLabel(QSharedPointer<Label> label) {
             labelButtons[i]->setChecked(true);
         }
     }
+}
+
+/*!
+  Called when a point is clicked on the screen when the filter dialog box is open
+  */
+void filterDialog::changeColor(cv::Scalar col){
+
 }
 
 /*!

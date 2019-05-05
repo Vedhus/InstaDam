@@ -73,6 +73,8 @@ class PhotoViewer : public QGraphicsView {
     void setPanMode(bool mode);
     void resetBrush(int size = 10, Qt::PenCapStyle capStyle_input = Qt::RoundCap);
     void setBrushMode(Qt::PenCapStyle cap);
+    cv::Scalar colorAtPoint(QPointF pos);
+    float limit(int , qreal , int );
 
     //void setMaskPixmap();
 

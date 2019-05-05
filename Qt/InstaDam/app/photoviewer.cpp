@@ -98,6 +98,29 @@ void PhotoViewer::setPhotoFromPixmap(QPixmap px) {
 }
 
 /*!
+  Returns color at a point \a px.
+*/
+cv::Scalar PhotoViewer::colorAtPoint(QPointF pos) {
+    float x = limit(0,pos.x(),cvImage.cols);
+    float y = limit(0,pos.y(),cvImage.rows);
+    return cvImage.at<uchar>(x,y);
+}
+
+/*! Limits a value to \a maxval and \a minval
+ */
+float PhotoViewer::limit(int minval, qreal x, int  maxval)
+{
+    if (x > maxval)
+        return maxval;
+    else if (x<minval)
+        return minval;
+    else {
+        return x;
+    }
+}
+
+
+/*!
   Sets the internal image based on \a pixmap.
 */
 void PhotoViewer::setPhoto(QPixmap pixmap) {

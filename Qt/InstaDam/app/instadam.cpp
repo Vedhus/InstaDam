@@ -1311,9 +1311,9 @@ void InstaDam::on_filterOptions_clicked()
         filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask,
                                                  filterControl, ui->IdmPhotoViewer,
                                                  currentProject);
-        // Connect open filter to toggle
-        // Connect close filter to toggle
-        // connect color picked to change color
+        toggleFilterDialogOpen(0);
+        connect(dialogs, SIGNAL(finished(int)), this, SLOT(toggleFilterDialogOpen(int)));
+        connect(this, SIGNAL(colorChanged(cv::Scalar)), dialogs, SLOT(changeColor(cv::Scalar)));
         dialogs->show();
     }
 }
@@ -1321,7 +1321,8 @@ void InstaDam::on_filterOptions_clicked()
 /*!
   Toggles the filter dialog open window
   */
-void InstaDam::toggleFilterDialogOpen(){
+void InstaDam::toggleFilterDialogOpen(int r){
+    qInfo()<<"Filter opened or closed!";
     filterOpenPickColor = !filterOpenPickColor;
 }
 
@@ -1436,7 +1437,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
             ui->IdmPhotoViewer->setPanMode(ctrlPanning);
             ui->IdmMaskViewer->setPanMode(ctrlPanning);
         }
-        if (!panning && !ctrlPanning && !filterLoadedColorPick){
+        if (!panning && !ctrlPanning && !filterOpenPickColor){
             qInfo()<<"clicked!";
             if (!(modifiers & Qt::ShiftModifier)){
                 annotationDraw(type, item, pos, button, modifiers);
@@ -1448,9 +1449,9 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                 currentItem = nullptr;
             }
         }
-        if (filterLoadedColorPick){
+        if (filterOpenPickColor){
             qInfo()<<pos;
-            emit coloChanged(pos);
+            emit colorChanged(ui->IdmPhotoViewer->colorAtPoint(pos));
         }
     }
 }

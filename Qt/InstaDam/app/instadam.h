@@ -184,6 +184,7 @@ public slots:
     void fileDownloaded(QString path);
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
     void editLabel(QSharedPointer<Label>);
+    void toggleFilterDialogOpen(int r=0);
 
  private:
 #ifdef WASM_BUILD
@@ -276,6 +277,8 @@ public slots:
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
     void currentProjectDeleted(int);
+signals:
+    void colorChanged(cv::Scalar);
 };
 
 #endif  // INSTADAM_H
