@@ -278,9 +278,10 @@ void filterControls::defineProperties() {
     /* Define color filter default properties */
     std::vector<filterProperty*> colorThresholdProperties;
 
-    colorThresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 2,
-                                                ODD, EnumConstants::THRESH,
-                                                false));
+    colorThresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                          1, ANY,
+                                                          EnumConstants::THRESH,
+                                                          false));
     colorThresholdProperties.push_back(new filterProperty("Fuzziness", SLIDER, 0,
                                                      20, 100, ANY,
                                                      EnumConstants::THRESH,
