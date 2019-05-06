@@ -294,9 +294,7 @@ void PhotoViewer::updateCursorCircle(){
 */
 void PhotoViewer::updateZoomFactor(int zoom_input, float factor, QPointF point){
 
-      this->currentZoomFactor  = transform().m11();
-      qInfo()<<transform().m11();
-
+    this->currentZoomFactor  = transform().m11();
     resetCursor();
 }
 

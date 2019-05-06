@@ -1241,6 +1241,7 @@ void InstaDam::connectArrowCursor(){
 void InstaDam::on_polygonSelectButton_clicked() {
 
     ui->polygonSelectButton->setChecked(true);
+    polygonSelectForm->insertPointButton->setDisabled(true);
     if (currentSelectType == SelectItem::Polygon)
         return;
     inactivateSceneCancelSelection();
@@ -1269,6 +1270,7 @@ void InstaDam::on_polygonSelectButton_clicked() {
     }
     polygonSelectWidget->show();
     polygonSelectForm->polygonMessageBox->setPlainText(polygonBaseInstruction);
+
     currentSelectType = SelectItem::Polygon;
     scene->update();
 }
@@ -1375,10 +1377,11 @@ void InstaDam::toggleFilterDialogOpen(int r){
 */
 void InstaDam::setInsert() {
     currentItem->resetState();
+    polygonSelectForm->insertPointButton->setDisabled(true);
     insertVertex = true;
     vertex1 = -1;
     vertex2 = -1;
-    polygonSelectForm->polygonMessageBox->setPlainText("Click the vertices between which you want to insert a point.");
+    polygonSelectForm->polygonMessageBox->setPlainText("Shift + click the vertices between which you want to insert a point. Shift + click the first vertex.");
 }
 
 /*!
@@ -1630,6 +1633,7 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
 void InstaDam::continueDrawingPolygon(QPointF pos)
 {
     polygonSelectForm->finishPolygonButton->setEnabled(true);
+
     if (insertVertex && vertex1 >= 0 && vertex2 >= 0) {
         if (abs(vertex2 - vertex1) == 1) {
             currentItem->insertVertex(std::min(vertex1, vertex2), pos);
@@ -1672,13 +1676,14 @@ int InstaDam::annotationTransform(PhotoScene::viewerTypes type,
     if (currentItem->type() == SelectItem::Polygon) {
 
         polygonSelectForm->finishPolygonButton->setEnabled(true);
+        polygonSelectForm->insertPointButton->setEnabled(true);
 
         if (insertVertex) {
             int vert = currentItem->getActiveVertex();
             if (vert != SelectItem::UNSELECTED) {
                 if (vertex1 < 0) {
                     vertex1 = vert;
-                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected.");
+                    polygonSelectForm->polygonMessageBox->appendPlainText("First vertex selected. Shift+select the second vertex");
                 } else if (vertex2 < 0) {
                     if (abs(vert - vertex1) != 1 && abs(vert - vertex1) !=
                         (currentItem->numberOfVertices() - 1)) {
@@ -1843,6 +1848,7 @@ void InstaDam::finishPolygonButtonClicked() {
         currentItem->setActiveVertex(SelectItem::UNSELECTED);
         currentItem->setInactive();
         polygonSelectForm->finishPolygonButton->setEnabled(false);
+        polygonSelectForm->insertPointButton->setEnabled(false);
         currentItem = nullptr;
         scene->update();
         maskScene->update();

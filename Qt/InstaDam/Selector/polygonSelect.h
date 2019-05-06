@@ -5,7 +5,7 @@
 #include <cmath>
 #include "selectItem.h"
 
-const QString polygonBaseInstruction = QString("Click points to construct a polygon. Hold the sift button down to modify. Individual points can be moved and deleted using backspace. Click 'Finish Polygon' when done.");
+const QString polygonBaseInstruction = QString("Click points to construct a polygon. Hold the shift button down and click on a vertex to modify or click on the polygon to move or activate "Insert points between". Individual points can be moved and deleted using backspace. Click 'Done Editing' when done. ");
 class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
  public:
     const QString baseInstruction = polygonBaseInstruction;
