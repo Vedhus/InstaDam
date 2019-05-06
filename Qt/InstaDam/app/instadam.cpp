@@ -1281,7 +1281,7 @@ void InstaDam::on_polygonSelectButton_clicked() {
 */
 void InstaDam::on_freeSelectButton_clicked() {
     ui->freeSelectButton->setChecked(true);
-    setRoundBrushCursor();
+    setBrushCursor();
     if (currentSelectType == SelectItem::Freeerase ||
         currentSelectType == SelectItem::Freedraw)
         return;
@@ -1325,6 +1325,7 @@ void InstaDam::roundBrushButtonClicked() {
     freeSelectForm->roundBrushButton->setChecked(true);
     ui->IdmPhotoViewer->setBrushMode(Qt::RoundCap);
     ui->IdmMaskViewer->setBrushMode(Qt::RoundCap);
+    setRoundBrushCursor();
 }
 
 /*!
@@ -1336,14 +1337,29 @@ void InstaDam::squareBrushButtonClicked() {
     freeSelectForm->roundBrushButton->setChecked(false);
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
+    setSquareBrushCursor();
 
 
 }
 
+void InstaDam::setBrushCursor(){
+    switch(brushMode){
+    case Qt::SquareCap:
+        setSquareBrushCursor();
+        break;
+    case Qt::RoundCap:
+        setRoundBrushCursor();
+        break;
+    }
+}
 void InstaDam::setRoundBrushCursor(){
-//    cursorState = ROUNDBRUSH;
     ui->IdmPhotoViewer->setRoundBrushCursor(currentBrushSize);
     ui->IdmMaskViewer->setRoundBrushCursor(currentBrushSize);
+}
+
+void InstaDam::setSquareBrushCursor(){
+    ui->IdmPhotoViewer->setSquareBrushCursor(currentBrushSize);
+    ui->IdmMaskViewer->setSquareBrushCursor(currentBrushSize);
 }
 
 /*!

@@ -189,6 +189,8 @@ public slots:
     void toggleFilterDialogOpen(int r=0);
     void setArrowCursor(bool check);
     void setRoundBrushCursor();
+    void setSquareBrushCursor();
+    void setBrushCursor();
 
  private:
 #ifdef WASM_BUILD

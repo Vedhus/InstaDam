@@ -84,8 +84,9 @@ class PhotoViewer : public QGraphicsView {
 
     cv::Mat QPixmap2Mat(QPixmap px) const;
     void setArrowCursor();
-    void updateCursorCircle();
+    void updateCursorShape(cursorStates);
     void setRoundBrushCursor(int size);
+    void setSquareBrushCursor(int size);
     QCursor brushCursor;
     QCursor previousCursor;
 

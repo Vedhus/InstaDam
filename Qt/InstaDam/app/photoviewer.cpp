@@ -267,27 +267,42 @@ void PhotoViewer::setPanMode(bool mode) {
 */
 void PhotoViewer::setRoundBrushCursor(int size){
     this->brushSize = size;
-    updateCursorCircle();
-    setCursor(brushCursor);
     cursorState = ROUNDBRUSH;
+    updateCursorShape(cursorState);
+    setCursor(brushCursor);
+
 
 }
 
 /*!
-  Updates the size of the circle brush
+  Sets the cursor to brush cursor of size \a size
 */
-void PhotoViewer::updateCursorCircle(){
-    int size = this->brushSize*this->currentZoomFactor;
+void PhotoViewer::setSquareBrushCursor(int size){
+    this->brushSize = size;
+    cursorState = SQUAREBRUSH;
+    updateCursorShape(cursorState);
+    setCursor(brushCursor);
+}
 
+/*!
+  Updates the size of the brush cursor
+*/
+void PhotoViewer::updateCursorShape(cursorStates cs){
+    int size = this->brushSize*this->currentZoomFactor;
     QPixmap pixmap(size+1, size+1);
     pixmap.fill(Qt::transparent);
     QPainter *painter = new QPainter(&pixmap);
     QPen pen = QPen(QColor(50,50,50,255));
     pen.setWidth(1);
     painter->setPen(pen);
-    painter->drawEllipse(0, 0,size, size);
+    if (cs == SQUAREBRUSH)
+        painter->drawRect(0, 0,size, size);
+    else
+        painter->drawEllipse(0, 0,size, size);
     brushCursor = QCursor(pixmap, -size, -size);
 }
+
+
 
 /*!
   Updates the zoom factor
@@ -320,7 +335,7 @@ void PhotoViewer::resetCursor(){
         setRoundBrushCursor(this->brushSize);
         break;
     case SQUAREBRUSH:
-        setRoundBrushCursor(this->brushSize);
+        setSquareBrushCursor(this->brushSize);
         break;
     }
 
