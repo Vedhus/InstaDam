@@ -20,13 +20,13 @@ class PhotoViewer;
 }
 
 enum brushTypes {PAINTBRUSH, ERASER, PAN};
-
+enum cursorStates {ARROW, ROUNDBRUSH, SQUAREBRUSH};
 class PhotoViewer : public QGraphicsView {
     Q_OBJECT
 
  public:
     explicit PhotoViewer(QWidget *parent = nullptr);
-
+    cursorStates cursorState;
     bool hasPhoto;
     bool paintMode;
     int zoom;
@@ -36,6 +36,7 @@ class PhotoViewer : public QGraphicsView {
     cv::Mat cvThumb;
     maskObjects *maskObject;
     filterControls *filterControl;
+    float currentZoomFactor = 1;
 
     brushTypes brushType;
     EnumConstants::maskTypes selectedMask;
@@ -75,12 +76,18 @@ class PhotoViewer : public QGraphicsView {
     void setBrushMode(Qt::PenCapStyle cap);
     cv::Scalar colorAtPoint(QPointF pos);
     float limit(int , qreal , int );
+    void resetCursor();
 
     //void setMaskPixmap();
 
     cv::Mat QImage2Mat(const QImage &src) const;
 
     cv::Mat QPixmap2Mat(QPixmap px) const;
+    void setArrowCursor();
+    void updateCursorCircle();
+    void setRoundBrushCursor(int size);
+    QCursor brushCursor;
+    QCursor previousCursor;
 
  signals:
     // void photoClicked(QPoint);
@@ -92,6 +99,7 @@ class PhotoViewer : public QGraphicsView {
     void zoomedInADifferentView(int zoom_input, float factor, QPointF point);
     void setImMask(EnumConstants::maskTypes filterName,
                    EnumConstants::threshold_or_filter thof = EnumConstants::FILTER);
+    void updateZoomFactor(int zoom_input, float factor, QPointF point);
 
  private:
     Ui::PhotoViewer *ui;

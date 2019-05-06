@@ -590,7 +590,7 @@
                     <widget class="QScrollArea" name="scrollArea_2">
                      <property name="maximumSize">
                       <size>
-                       <width>150</width>
+                       <width>400</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -606,7 +606,7 @@
                         <x>0</x>
                         <y>0</y>
                         <width>69</width>
-                        <height>270</height>
+                        <height>396</height>
                        </rect>
                       </property>
                       <property name="sizePolicy">
@@ -761,7 +761,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>1487</width>
-                    <height>196</height>
+                    <height>70</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">

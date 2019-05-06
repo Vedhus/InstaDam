@@ -229,6 +229,7 @@ void InstaDam::setButtonsConfiguration(){
         this->ui->actionImport->setEnabled(false);
         this->ui->actionSave->setEnabled(false);
     }
+    ui->ellipseSelectButton->setChecked(true);
 }
 /*!
   Sets the current project to the newly created project.
@@ -454,6 +455,7 @@ void InstaDam::connectFilters() {
             ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
     connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this,
             SLOT(resetPixmapButtons()));
+    connectArrowCursor();
 }
 
 /*!
@@ -471,6 +473,7 @@ void InstaDam::resetPixmapButtons() {
 */
 void InstaDam::setCurrentBrushSize(int size) {
     currentBrushSize = size;
+    setRoundBrushCursor();
 }
 
 /*!
@@ -1111,6 +1114,7 @@ void InstaDam::panButton_clicked() {
     ui->panButton->setChecked(panning);
     ui->IdmPhotoViewer->setPanMode(panning);
     ui->IdmMaskViewer->setPanMode(panning);
+
 }
 
 /*!
@@ -1201,10 +1205,41 @@ void InstaDam::on_ellipseSelectButton_clicked() {
     maskScene->update();
 }
 
+void InstaDam::setArrowCursor(bool check){
+    if (check==true)
+    {
+//        cursorState = ARROW;
+        ui->IdmPhotoViewer->setArrowCursor();
+        ui->IdmMaskViewer->setArrowCursor();
+    }
+}
+
+//void InstaDam::resetCursor(){
+//    switch (cursorState)
+//    {
+//    case ARROW:
+//        setArrowCursor(true);
+//        break;
+//    case ROUNDBRUSH:
+//        setRoundBrushCursor();
+//        break;
+//    case SQUAREBRUSH:
+//        setRoundBrushCursor();
+//        break;
+//    }
+
+//}
+void InstaDam::connectArrowCursor(){
+    connect(ui->polygonSelectButton, SIGNAL(toggled(bool)), this, SLOT(setArrowCursor(bool)));
+    connect(ui->rectangleSelectButton, SIGNAL(toggled(bool)), this, SLOT(setArrowCursor(bool)));
+    connect(ui->ellipseSelectButton, SIGNAL(toggled(bool)), this, SLOT(setArrowCursor(bool)));
+}
+
 /*!
  * Slot called when the Polygon Select button is clicked.
 */
 void InstaDam::on_polygonSelectButton_clicked() {
+
     ui->polygonSelectButton->setChecked(true);
     if (currentSelectType == SelectItem::Polygon)
         return;
@@ -1244,6 +1279,7 @@ void InstaDam::on_polygonSelectButton_clicked() {
 */
 void InstaDam::on_freeSelectButton_clicked() {
     ui->freeSelectButton->setChecked(true);
+    setRoundBrushCursor();
     if (currentSelectType == SelectItem::Freeerase ||
         currentSelectType == SelectItem::Freedraw)
         return;
@@ -1298,6 +1334,14 @@ void InstaDam::squareBrushButtonClicked() {
     freeSelectForm->roundBrushButton->setChecked(false);
     ui->IdmPhotoViewer->setBrushMode(Qt::SquareCap);
     ui->IdmMaskViewer->setBrushMode(Qt::SquareCap);
+
+
+}
+
+void InstaDam::setRoundBrushCursor(){
+//    cursorState = ROUNDBRUSH;
+    ui->IdmPhotoViewer->setRoundBrushCursor(currentBrushSize);
+    ui->IdmMaskViewer->setRoundBrushCursor(currentBrushSize);
 }
 
 /*!
@@ -1957,6 +2001,7 @@ void InstaDam::cancelCurrentSelection() {
     maskItem = nullptr;
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);
+    polygonSelectForm->insertPointButton->setDisabled(true);
 }
 
 /*!

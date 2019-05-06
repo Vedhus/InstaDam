@@ -98,6 +98,8 @@ class InstaDam : public QMainWindow {
                             const Qt::KeyboardModifiers modifiers);
     void inactivateSceneCancelSelection();
     void continueDrawingPolygon(QPointF);
+    QCursor brushCursor;
+    void connectArrowCursor();
 
  private slots:
     void on_addSelectionButton_clicked();
@@ -185,6 +187,8 @@ public slots:
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
     void editLabel(QSharedPointer<Label>);
     void toggleFilterDialogOpen(int r=0);
+    void setArrowCursor(bool check);
+    void setRoundBrushCursor();
 
  private:
 #ifdef WASM_BUILD

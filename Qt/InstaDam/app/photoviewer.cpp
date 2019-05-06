@@ -44,6 +44,7 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
     resetBrush(10, Qt::RoundCap);
     maskObject = new maskObjects();
     selectedMask = EnumConstants::CANNY;
+    connect(this, SIGNAL(zoomed(int, float , QPointF)), this, SLOT(updateZoomFactor(int, float , QPointF)));
 }
 
 /*!
@@ -251,14 +252,84 @@ void PhotoViewer::fitInView() {
   false).
 */
 void PhotoViewer::setPanMode(bool mode) {
+
     if (mode) {
-        this->brushType = PAN;
+//        setCursor(Qt::ArrowCursor);
         setDragMode(QGraphicsView::ScrollHandDrag);
     } else {
-        this->brushType = PAINTBRUSH;
         setDragMode(QGraphicsView::NoDrag);
+        resetCursor();
     }
 }
+
+/*!
+  Sets the cursor to brush cursor of size \a size
+*/
+void PhotoViewer::setRoundBrushCursor(int size){
+    this->brushSize = size;
+    updateCursorCircle();
+    setCursor(brushCursor);
+    cursorState = ROUNDBRUSH;
+
+}
+
+/*!
+  Updates the size of the circle brush
+*/
+void PhotoViewer::updateCursorCircle(){
+    int size = this->brushSize*this->currentZoomFactor;
+
+    QPixmap pixmap(size+1, size+1);
+    pixmap.fill(Qt::transparent);
+    QPainter *painter = new QPainter(&pixmap);
+    QPen pen = QPen(QColor(50,50,50,255));
+    pen.setWidth(1);
+    painter->setPen(pen);
+    painter->drawEllipse(0, 0,size, size);
+    brushCursor = QCursor(pixmap, -size, -size);
+}
+
+/*!
+  Updates the zoom factor
+*/
+void PhotoViewer::updateZoomFactor(int zoom_input, float factor, QPointF point){
+
+      this->currentZoomFactor  = transform().m11();
+      qInfo()<<transform().m11();
+
+    resetCursor();
+}
+
+
+/*!
+  Sets the cursor to arrow cursor
+*/
+void PhotoViewer::setArrowCursor(){
+    setCursor(Qt::ArrowCursor);
+    cursorState = ARROW;
+
+}
+
+/*! Resets the cursor to currentState
+ */
+void PhotoViewer::resetCursor(){
+    switch (cursorState)
+    {
+    case ARROW:
+        setArrowCursor();
+        break;
+    case ROUNDBRUSH:
+        setRoundBrushCursor(this->brushSize);
+        break;
+    case SQUAREBRUSH:
+        setRoundBrushCursor(this->brushSize);
+        break;
+    }
+
+}
+
+
+
 
 /*!
   Resets the internal brush to \a size and style \a capStyle_input.
@@ -288,7 +359,6 @@ void PhotoViewer::setBrushMode(Qt::PenCapStyle cap) {
     if (this->hasPhoto) {
         setDragMode(QGraphicsView::NoDrag);
         this->capStyle = cap;
-        this->brushType = PAINTBRUSH;
         resetBrush(this->brushSize, this->capStyle);
         this->update();
     }
