@@ -29,12 +29,12 @@
 #include "ui_blankFrame.h"
 #include "ui_freeSelect.h"
 #include "ui_polygonSelect.h"
-#include "Selector/label.h"
+#include "label.h"
 #include "labelButton.h"
 #include "enumconstants.h"
 #include "chooselabeldialog.h"
 #include "project.h"
-#include "Selector/photoScene.h"
+#include "photoScene.h"
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -100,6 +100,11 @@ class InstaDam : public QMainWindow {
     void continueDrawingPolygon(QPointF);
     QCursor brushCursor;
     void connectArrowCursor();
+
+    QTimer *timer;
+
+    int autoSaveDuration = 5000;
+
 
  private slots:
     void on_addSelectionButton_clicked();
@@ -191,6 +196,8 @@ public slots:
     void setRoundBrushCursor();
     void setSquareBrushCursor();
     void setBrushCursor();
+    //void initiate(QString databaseURL, QString token);
+    void autoSave();
 
  private:
 #ifdef WASM_BUILD
@@ -283,8 +290,10 @@ public slots:
     void openFileFromJson(QJsonObject);
     void getReadyForNewProject();
     void currentProjectDeleted(int);
+
 signals:
     void colorChanged(cv::Scalar);
+    //void beginInitiation(QString,  QString);
 };
 
 #endif  // INSTADAM_H

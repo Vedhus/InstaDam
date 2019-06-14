@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "pixmapops.h"
-#include "Selector/photoScene.h"
+#include "photoScene.h"
 #include "opencv2/imgcodecs/legacy/constants_c.h"
 #include "opencv2/imgproc/types_c.h"
 #include "opencv2/core/mat.hpp"
@@ -293,13 +293,25 @@ void PhotoViewer::updateCursorShape(cursorStates cs){
     pixmap.fill(Qt::transparent);
     QPainter *painter = new QPainter(&pixmap);
     QPen pen = QPen(QColor(50,50,50,255));
-    pen.setWidth(1);
+    pen.setWidth(2);
+    qInfo()<<"Before setpen in update cursorshape";
     painter->setPen(pen);
     if (cs == SQUAREBRUSH)
         painter->drawRect(0, 0,size, size);
+
     else
         painter->drawEllipse(0, 0,size, size);
-    brushCursor = QCursor(pixmap, -size, -size);
+
+    pen = QPen(QColor(200,200,200,255));
+    pen.setWidth(2);
+    painter->setPen(pen);
+    if (cs == SQUAREBRUSH)
+        painter->drawRect(2, 2,size-2, size-2);
+    else
+        painter->drawEllipse(0, 0,size, size);
+
+    brushCursor = QCursor(pixmap,-size, -size);
+    qInfo()<<"setpen done!";
 }
 
 
@@ -360,6 +372,7 @@ void PhotoViewer::resetBrush(int size, Qt::PenCapStyle capStyle_input) {
     pen.setCapStyle(capStyle);
     path = QPainterPath();
     brush = new QGraphicsPathItem();
+    qInfo()<<"Before set pen in resetBrush";
     brush->setPen(pen);
     scene->addItem(brush);
     paintMode = false;

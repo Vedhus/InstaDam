@@ -4,7 +4,7 @@
 #include <QPushButton>
 #include <QSlider>
 
-#include "../Selector/label.h"
+#include "label.h"
 
 class LabelButton : public QPushButton {
     Q_OBJECT

@@ -4,7 +4,7 @@
 #include <QTextStream>
 #include <QJsonDocument>
 #include "ui_newproject.h"
-#include "../Selector/label.h"
+#include "label.h"
 #include "login.h"
 #include "instadam.h"
 

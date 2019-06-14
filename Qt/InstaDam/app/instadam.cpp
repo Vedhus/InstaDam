@@ -8,17 +8,18 @@
 #include <string>
 #include <algorithm>
 
+#include "photoviewer_copy.h"
 #include "ui_instadam.h"
 #include "ui_projectDialog.h"
 #include "pixmapops.h"
 #include "filtercontrols.h"
 #include "labelButton.h"
-#include "Selector/selectItem.h"
-#include "Selector/ellipseSelect.h"
-#include "Selector/rectangleSelect.h"
-#include "Selector/polygonSelect.h"
-#include "Selector/freeDrawSelect.h"
-#include "Selector/freeDrawErase.h"
+#include "selectItem.h"
+#include "ellipseSelect.h"
+#include "rectangleSelect.h"
+#include "polygonSelect.h"
+#include "freeDrawSelect.h"
+#include "freeDrawErase.h"
 #include "commands.h"
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
@@ -54,8 +55,16 @@
 */
 InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     QMainWindow(parent), ui(new Ui::InstaDam) {
+
     hide();
+    qInfo()<<"Started instaDam";
+    qInfo()<<"Completed Constructor!";
+
+//}
+
+//void InstaDam::initiate(QString databaseURL, QString token){
     ui->setupUi(this);
+    qInfo()<<"Initiate";
     photoLoaded = false;
     filterControl = new filterControls();
     maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,
@@ -66,6 +75,7 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
+
     newProject = new newproject(this);
 
 #ifdef WASM_BUILD
@@ -86,6 +96,12 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     currentItem = nullptr;
     currentLabel = nullptr;
     currentProject = new Project();
+
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(autoSave()));
+
+
     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
                                        QPointF, const Qt::MouseButton,
                                        const Qt::KeyboardModifiers)), this,
@@ -803,6 +819,11 @@ void InstaDam::on_saveAndBack_clicked() {
     saveAndProgress(-1);
 }
 
+void InstaDam::autoSave(){
+    qInfo()<<"Auto saving";
+    on_actionSave_Annotation_triggered();
+    timer->start(autoSaveDuration);
+}
 /*!
   Save current annotations and continue. \a num is used to indicate the index of
   the current image.
@@ -812,14 +833,15 @@ void InstaDam::saveAndProgress(int num)
     if (runningLocally and imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
+        qInfo()<<"Save and next before save";
         on_actionSave_Annotation_triggered();
-
+        qInfo()<<"Save and next after save";
         if (runningLocally) {
             int newId = ((fileId+num)%imagesList.size()+imagesList.size())%imagesList.size();
             fileId = newId;
             this->filename = path.absolutePath()+"/"+imagesList[fileId];
             this->file = QFileInfo(this->filename);
-
+            qInfo()<<"Save and next before file opening";
             openFile_and_labels();
             qInfo("File opened");
         }
@@ -985,6 +1007,8 @@ void InstaDam::openFile_and_labels() {
     undoGroup->setActiveStack(mainUndoStack);
     scene->update();
     maskScene->update();
+
+    timer->start(autoSaveDuration);
 }
 
 /*!
@@ -1596,7 +1620,9 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
                 tempItem = temp;
                 mirrorItem = mirror;
                 mirrorItem->setLabel(currentLabel);
+                qInfo()<<"Mirror item pen to be udpated!";
                 mirrorItem->updatePen(temp->myPen);
+                qInfo()<<"Mirror item pen updated!";
                 tempItem->setMirror(mirrorItem);
                 mirrorItem->setMirror(tempItem);
             } else {
@@ -1622,6 +1648,7 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
     }
     if ((currentSelectType != SelectItem::Freedraw && currentSelectType !=
          SelectItem::Freeerase) || drawing) {
+        qInfo()<<"Mirror item pen to be udpated in second if block!";
         mirrorItem->setLabel(currentLabel);
         mirrorItem->updatePen(tempItem->myPen);
         scene->addItem(tempItem);
@@ -1634,11 +1661,13 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
                 currentItem = mirrorItem;
                 break;
         }
+        qInfo()<<"Mirror item pen udpated in second if block!";
         if (!canDrawOnPhoto)
             maskItem = currentItem;
     }
     scene->update();
     maskScene->update();
+    qInfo()<<"Annotation draw end!";
     return 0;
 
 }
@@ -1772,6 +1801,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
                                     QPointF oldPos, QPointF newPos,
                                     const Qt::MouseButton button,
                                     const Qt::KeyboardModifiers modifiers) {
+    qInfo()<<"Mouse released 1!";
     UNUSED(button);
     UNUSED(modifiers);
     ctrlPanning = false;
@@ -1779,6 +1809,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
     ui->IdmPhotoViewer->setPanMode(panning);
     ui->IdmMaskViewer->setPanMode(panning);
     selectedViewer = type;
+    qInfo()<<"Mouse released 2!";
 
 //    else if (!panning) {
     if (currentItem && !currentItem->isItemAdded()) {
@@ -1985,7 +2016,10 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     SelectItem *item;
     item = useCurrent ? currentItem : maskItem;
     if (item->type() == SelectItem::Polygon)
+    {
         polygonSelectForm->finishPolygonButton->setEnabled(false);
+        finishPolygonButtonClicked();
+    }
     tempUndoStack->clear();
     undoGroup->setActiveStack(mainUndoStack);
     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
@@ -2004,6 +2038,7 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);
     canDrawOnPhoto = true;
+
 }
 
 /*!
@@ -2034,6 +2069,7 @@ QPixmap InstaDam::maskSelection(SelectItem *item) {
     map.fill(Qt::transparent);
     QPainter *paint = new QPainter(&map);
     QBrush brush(currentLabel->getColor());
+    qInfo()<<"in maskSelection!";
     paint->setPen(currentLabel->getColor());
     paint->setBrush(brush);
     paint->setCompositionMode(QPainter::CompositionMode_SourceOver);

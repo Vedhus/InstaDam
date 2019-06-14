@@ -15,7 +15,7 @@
 #include <QByteArray>
 #include "project.h"
 #include "ui_imagelist.h"
-#include "../Selector/label.h"
+#include "label.h"
 namespace Ui {
 class ImageList;
 }

@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
@@ -22,42 +23,60 @@ class Ui_polygonSelectForm
 {
 public:
     QGridLayout *gridLayout;
-    QPushButton *insertPointButton;
+    QHBoxLayout *horizontalLayout;
     QPushButton *finishPolygonButton;
+    QPushButton *insertPointButton;
     QPlainTextEdit *polygonMessageBox;
 
     void setupUi(QWidget *polygonSelectForm)
     {
         if (polygonSelectForm->objectName().isEmpty())
             polygonSelectForm->setObjectName(QStringLiteral("polygonSelectForm"));
-        polygonSelectForm->resize(1413, 158);
-        gridLayout = new QGridLayout(polygonSelectForm);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        insertPointButton = new QPushButton(polygonSelectForm);
-        insertPointButton->setObjectName(QStringLiteral("insertPointButton"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(insertPointButton->sizePolicy().hasHeightForWidth());
-        insertPointButton->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(insertPointButton, 1, 0, 1, 1);
-
+        sizePolicy.setHeightForWidth(polygonSelectForm->sizePolicy().hasHeightForWidth());
+        polygonSelectForm->setSizePolicy(sizePolicy);
+        polygonSelectForm->setMinimumSize(QSize(859, 0));
+        polygonSelectForm->setMaximumSize(QSize(16777215, 26));
+        gridLayout = new QGridLayout(polygonSelectForm);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(-1, 0, -1, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(2);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         finishPolygonButton = new QPushButton(polygonSelectForm);
         finishPolygonButton->setObjectName(QStringLiteral("finishPolygonButton"));
         finishPolygonButton->setEnabled(false);
         sizePolicy.setHeightForWidth(finishPolygonButton->sizePolicy().hasHeightForWidth());
         finishPolygonButton->setSizePolicy(sizePolicy);
-        finishPolygonButton->setMinimumSize(QSize(252, 36));
+        finishPolygonButton->setMinimumSize(QSize(0, 0));
+        finishPolygonButton->setMaximumSize(QSize(16777215, 24));
 
-        gridLayout->addWidget(finishPolygonButton, 0, 0, 1, 1);
+        horizontalLayout->addWidget(finishPolygonButton);
+
+        insertPointButton = new QPushButton(polygonSelectForm);
+        insertPointButton->setObjectName(QStringLiteral("insertPointButton"));
+        sizePolicy.setHeightForWidth(insertPointButton->sizePolicy().hasHeightForWidth());
+        insertPointButton->setSizePolicy(sizePolicy);
+        insertPointButton->setMinimumSize(QSize(0, 0));
+        insertPointButton->setMaximumSize(QSize(16777215, 24));
+
+        horizontalLayout->addWidget(insertPointButton);
 
         polygonMessageBox = new QPlainTextEdit(polygonSelectForm);
         polygonMessageBox->setObjectName(QStringLiteral("polygonMessageBox"));
+        polygonMessageBox->setMinimumSize(QSize(1200, 0));
+        polygonMessageBox->setMaximumSize(QSize(10000, 24));
+        polygonMessageBox->setFrameShape(QFrame::NoFrame);
         polygonMessageBox->setUndoRedoEnabled(false);
         polygonMessageBox->setReadOnly(true);
+        polygonMessageBox->setTextInteractionFlags(Qt::NoTextInteraction);
 
-        gridLayout->addWidget(polygonMessageBox, 0, 1, 2, 1);
+        horizontalLayout->addWidget(polygonMessageBox);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
 
         retranslateUi(polygonSelectForm);
@@ -68,8 +87,8 @@ public:
     void retranslateUi(QWidget *polygonSelectForm)
     {
         polygonSelectForm->setWindowTitle(QApplication::translate("polygonSelectForm", "Form", nullptr));
-        insertPointButton->setText(QApplication::translate("polygonSelectForm", "Insert Point Between", nullptr));
         finishPolygonButton->setText(QApplication::translate("polygonSelectForm", "Done Editing", nullptr));
+        insertPointButton->setText(QApplication::translate("polygonSelectForm", "Insert Point Between", nullptr));
     } // retranslateUi
 
 };

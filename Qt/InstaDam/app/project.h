@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-#include "../Selector/label.h"
+#include "label.h"
 
 class Project{
  private:

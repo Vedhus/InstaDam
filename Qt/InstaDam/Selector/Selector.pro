@@ -11,7 +11,8 @@ HEADERS = \
     boxbasedselector.h \
     label.h \
     freeDrawErase.h \
-    jsonConstants.h
+    jsonConstants.h \
+    photoScene_copy.h
 
 
 SOURCES = \
@@ -23,7 +24,8 @@ SOURCES = \
     $$PWD/freeDrawSelect.cpp \
     boxbasedselector.cpp \
     label.cpp \
-    freeDrawErase.cpp
+    freeDrawErase.cpp \
+    photoScene_copy.cpp
 
 LIBS += -lQt5Widgets
 

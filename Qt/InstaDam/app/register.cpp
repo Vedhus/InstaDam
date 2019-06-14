@@ -11,7 +11,7 @@
 #include "ui_instadam.h"
 #include "login.h"
 #include "ui_register.h"
-#include "../Selector/jsonConstants.h"
+#include "jsonConstants.h"
 
 /*!
   \class Register

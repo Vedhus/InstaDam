@@ -9,7 +9,7 @@
 
 #include "fslider.h"
 #include "filterproperty.h"
-#include "Selector/label.h"
+#include "label.h"
 #include "labelButton.h"
 #include "project.h"
 #include "enumconstants.h"

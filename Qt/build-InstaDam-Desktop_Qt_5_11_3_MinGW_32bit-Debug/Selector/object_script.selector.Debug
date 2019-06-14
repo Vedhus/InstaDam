@@ -1,6 +1,5 @@
 INPUT(
 ./debug\polygonSelect.o
-./debug\commands.o
 ./debug\ellipseSelect.o
 ./debug\photoScene.o
 ./debug\rectangleSelect.o
@@ -9,5 +8,7 @@ INPUT(
 ./debug\boxbasedselector.o
 ./debug\label.o
 ./debug\freeDrawErase.o
+./debug\photoScene_copy.o
 ./debug\moc_photoScene.o
+./debug\moc_photoScene_copy.o
 );

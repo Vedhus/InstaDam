@@ -4,10 +4,10 @@
 #include <QUndoCommand>
 #include <QColor>
 
-#include "Selector/selectItem.h"
-#include "Selector/polygonSelect.h"
-#include "Selector/freeDrawErase.h"
-#include "Selector/photoScene.h"
+#include "selectItem.h"
+#include "polygonSelect.h"
+#include "freeDrawErase.h"
+#include "photoScene.h"
 
 class InstaDam;
 

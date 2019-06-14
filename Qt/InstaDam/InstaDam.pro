@@ -5,35 +5,33 @@ TEMPLATE = subdirs
 
 unix {SUBDIRS = \
           app \
-          selector\
             quazip
     }
 
 win32{SUBDIRS = \
-          app \
-          selector}
+          app }
 
 wasm: SUBDIRS += filehandler
 
 app.subdir = app
 
 
-selector.subdir = Selector
+
 unix{
 quazip.subdir = quazip
 }
 wasm {
     filehandler.subdir = htmlFileHandler
-    unix: app.depends = filehandler selector quazip
-    win32: app.depends = filehandler selector
+    unix: app.depends = filehandler quazip
+    win32: app.depends = filehandler
 }
 !wasm{
-    unix: app.depends = selector quazip
-    win32: app.depends = selector
+    unix: app.depends =  quazip
+
 }
 
 DISTFILES += \
     instadam.qdocconf \
-    Selector/mirrors.qdoc \
-    Selector/select.qdoc \
+    mirrors.qdoc \
+    select.qdoc \
     app/main.qdoc

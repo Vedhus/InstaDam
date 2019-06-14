@@ -21,6 +21,11 @@ StartingWidget::StartingWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
+void StartingWidget::setInstaDam(InstaDam * id)
+{
+    w = id;
+}
+
 /*!
   Destructor
  */
@@ -33,18 +38,21 @@ StartingWidget::~StartingWidget() {
  */
 void StartingWidget::runLocalVersion() {
     qInfo() << "running locally";
-    InstaDam *w = new InstaDam;
+    InstaDam *w = new InstaDam();
+    qInfo() << "InstaDam started";
     w->runningLocally = true;
     w->setButtonsConfiguration();
+
     w->show();
     close();
+
 }
 
 /*!
   Sets the mode to run of a server.
  */
 void StartingWidget::runServerVersion() {
-    qInfo() << "running on a server";
+
     Login *log = new Login;
     log->show();
     close();
@@ -54,6 +62,7 @@ void StartingWidget::runServerVersion() {
   Responds to the Local Version button being clicked.
  */
 void StartingWidget::on_pushButton_clicked() {
+    qInfo()<<"Going to run the local version";
     runLocalVersion();
 }
 

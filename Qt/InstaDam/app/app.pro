@@ -7,7 +7,7 @@ wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
 TEMPLATE = app
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
-INCLUDEPATH += ../Selector
+
 SOURCES += \
         main.cpp \
         instadam.cpp \
@@ -22,18 +22,31 @@ SOURCES += \
         fslider.cpp \
         newproject.cpp \
         labelButton.cpp \
-    register.cpp \
-    startingwidget.cpp \
-    login.cpp \
-    projectlist.cpp \
-    imagelist.cpp \
-    serverprojectname.cpp \
-    enumconstants.cpp \
-    addusertoproject.cpp \
-    userprivilege.cpp \
-    chooselabeldialog.cpp \
-    commands.cpp \
-    projectdeletionconfirmation.cpp
+        register.cpp \
+        startingwidget.cpp \
+        login.cpp \
+        projectlist.cpp \
+        imagelist.cpp \
+        serverprojectname.cpp \
+        enumconstants.cpp \
+        addusertoproject.cpp \
+        userprivilege.cpp \
+        chooselabeldialog.cpp \
+        commands.cpp \
+        projectdeletionconfirmation.cpp \
+        debuginsta.cpp \
+        photoviewer_copy.cpp \
+        polygonSelect.cpp \
+        ellipseSelect.cpp \
+        photoScene.cpp \
+        rectangleSelect.cpp \
+        selectItem.cpp \
+        freeDrawSelect.cpp \
+        boxbasedselector.cpp \
+        label.cpp \
+        freeDrawErase.cpp
+
+
 
 wasm: SOURCES += colordialog.cpp
 
@@ -62,7 +75,21 @@ HEADERS += \
     userprivilege.h \
     chooselabeldialog.h \
     commands.h \
-    projectdeletionconfirmation.h
+    projectdeletionconfirmation.h \
+    debuginsta.h \
+    photoviewer_copy.h \
+    polygonSelect.h \
+    ellipseSelect.h \
+    photoScene.h \
+    rectangleSelect.h \
+    selectItem.h \
+    freeDrawSelect.h \
+    boxbasedselector.h \
+    label.h \
+    freeDrawErase.h \
+    jsonConstants.h
+
+
 
 wasm: HEADERS += colordialog.h
 
@@ -82,7 +109,9 @@ FORMS += \
         serverprojectname.ui \
     addusertoproject.ui \
     userprivilege.ui \
-    projectdeletionconfirmation.ui
+    projectdeletionconfirmation.ui \
+    debuginsta.ui \
+    instadam_copy.ui
 
 win32 {
 
@@ -108,6 +137,7 @@ win32 {
 #   LIBS += D:\opencv-build\bin\libopencv_calib3d401.dll
 
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
+   LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/Selector
 
    INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll

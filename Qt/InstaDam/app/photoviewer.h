@@ -13,7 +13,7 @@
 
 #include "maskobjects.h"
 #include "filtercontrols.h"
-#include "Selector/photoScene.h"
+#include "photoScene.h"
 
 namespace Ui {
 class PhotoViewer;

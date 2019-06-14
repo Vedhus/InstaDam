@@ -2,7 +2,7 @@
 #define STARTINGWIDGET_H
 
 #include <QWidget>
-
+#include "instadam.h"
 namespace Ui {
 class StartingWidget;
 }
@@ -14,6 +14,8 @@ class StartingWidget : public QWidget
 public:
     explicit StartingWidget(QWidget *parent = nullptr);
     ~StartingWidget();
+    InstaDam *w;
+    void setInstaDam(InstaDam * id);
 
 private slots:
     void on_pushButton_clicked();

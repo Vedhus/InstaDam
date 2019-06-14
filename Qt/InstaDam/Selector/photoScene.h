@@ -13,11 +13,11 @@
 #include "rectangleSelect.h"
 #include "polygonSelect.h"
 
-class SelectItem;
-QT_BEGIN_NAMESPACE
-class QGraphicsSceneDragDropEvent;
-class QGraphicsViewItem;
-QT_END_NAMESPACE
+//class SelectItem;
+//QT_BEGIN_NAMESPACE
+//class QGraphicsSceneDragDropEvent;
+//class QGraphicsViewItem;
+//QT_END_NAMESPACE
 
 
 class PhotoScene : public QGraphicsScene {
@@ -42,36 +42,36 @@ class PhotoScene : public QGraphicsScene {
     void removeItem(SelectItem* item);
     void clearItems();
 
-#ifdef TEST
-    friend class TestSelect;
-    friend class IntegrationTest;
-#endif
- signals:
-    void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
-                      const QPointF point, const Qt::MouseButton button,
-                      const Qt::KeyboardModifiers modifiers);
-    void mouseMoved(const QPointF fromPos, const QPointF toPos,
-                    const Qt::KeyboardModifiers modifiers);
-    void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
-                       const QPointF newPos, const Qt::MouseButton button,
-                       const Qt::KeyboardModifiers modifiers);
-    void keyPressed(PhotoScene::viewerTypes type, const int key);
+//#ifdef TEST
+//    friend class TestSelect;
+//    friend class IntegrationTest;
+//#endif
+// signals:
+//    void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
+//                      const QPointF point, const Qt::MouseButton button,
+//                      const Qt::KeyboardModifiers modifiers);
+//    void mouseMoved(const QPointF fromPos, const QPointF toPos,
+//                    const Qt::KeyboardModifiers modifiers);
+//    void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
+//                       const QPointF newPos, const Qt::MouseButton button,
+//                       const Qt::KeyboardModifiers modifiers);
+//    void keyPressed(PhotoScene::viewerTypes type, const int key);
 
- protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
+// protected:
+//    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+//    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+//    void keyPressEvent(QKeyEvent *event) override;
 
- private:
-    QGraphicsItem *movingItem;
-    QPointF oldPos;
-    QPointF newPos;
-    std::string currentLabel;
-    bool mousePressed;
-    QList<SelectItem* > labelItems;
-    std::list<SelectItem*> currentItems;
-    std::map<std::string, std::list<SelectItem*> > labelmap;
+// private:
+//    QGraphicsItem *movingItem;
+//    QPointF oldPos;
+//    QPointF newPos;
+//    std::string currentLabel;
+//    bool mousePressed;
+//    QList<SelectItem* > labelItems;
+//    std::list<SelectItem*> currentItems;
+//    std::map<std::string, std::list<SelectItem*> > labelmap;
 };
 
 
