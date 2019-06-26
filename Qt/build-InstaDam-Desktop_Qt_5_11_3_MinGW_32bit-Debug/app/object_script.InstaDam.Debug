@@ -24,8 +24,6 @@ INPUT(
 ./debug\chooselabeldialog.o
 ./debug\commands.o
 ./debug\projectdeletionconfirmation.o
-./debug\debuginsta.o
-./debug\photoviewer_copy.o
 ./debug\polygonSelect.o
 ./debug\ellipseSelect.o
 ./debug\photoScene.o
@@ -53,7 +51,5 @@ INPUT(
 ./debug\moc_userprivilege.o
 ./debug\moc_chooselabeldialog.o
 ./debug\moc_projectdeletionconfirmation.o
-./debug\moc_debuginsta.o
-./debug\moc_photoviewer_copy.o
 ./debug\moc_photoScene.o
 );

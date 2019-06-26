@@ -8,7 +8,7 @@
 #include <string>
 #include <algorithm>
 
-#include "photoviewer_copy.h"
+//#include "photoviewer_copy.h"
 #include "ui_instadam.h"
 #include "ui_projectDialog.h"
 #include "pixmapops.h"

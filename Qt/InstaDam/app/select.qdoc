@@ -1,0 +1,164 @@
+/*!
+  \page select.html overview
+
+  \title Introduction to SelectItems
+
+  SelectItems are used to annotate regions of images. There are
+  four basic types of SelectItems:
+
+  \list
+  \li RectangleSelect for selecting rectangular regions
+  \li EllipseSelect for selecting elliptical regions
+  \li PolygonSelect for irregularly shaped regions
+  \li FreeDrawSelect for drawing regions with a brush
+  \endlist
+
+  Every selection region must be associated with a Label so that
+  it is properly annotated. The following sections describe how
+  to use each of the tools. Note: In each of the graphical demonstrations
+  a red circle around the mouse indicates a mouse button is
+  being pressed.
+
+  \section1 RectangleSelect and EllipseSelect
+
+  Both of these tools are described by an enclosing rectangular box
+  and are interacted with in the same way. Only the rendering of the
+  shape of the selected region differs between the two.
+
+  \section2 Drawing
+  In order to draw
+  either of these shapes, select a Label and the appropriate tool
+  button. Left click to define the top left corner, then drag the mouse (while
+  keeping the button depressed) to define the region, and release the button
+  to complete the selection.
+
+  \image rect.gif
+  \caption Drawing a rectangular region.
+
+  \section2 Moving
+  These items can be moved by clicking on them and dragging the mouse
+  with the left button pressed. Release to button to place the item.
+
+  \image move.gif
+  \caption Moving a rectangular region.
+
+  \section2 Resizing
+  RectangleSelect and EllipseSelect items can also be resized. This is
+  done by left clicking on one of the corners of the defining box and
+  dragging the mouse while keeping the button depressed. Release the button
+  to place the corner.
+
+  \image resize.gif
+  \caption Resizing a rectangle.
+
+  \section2 Rotating
+  These items can also be rotated about their center. This is done by right
+  clicking on the object and dragging the mouse while keeping the button
+  depressed. Release the button to place the item.
+
+  \image rotate.gif
+  \caption Rotating a rectangle.
+
+  \image ellipse.gif
+  \caption Manipulating an elliptical region.
+
+  \section1 PolygonSelect
+
+  PolygonSelect items can be used to select any region which can be
+  desribed by straight line segments.
+
+  \section2 Drawing
+  To draw a polygon region, select a Label and the Polygon button.
+  Vertices of the polygon are denoted by clicking the left mouse button.
+  Click the "Finish Polygon" button when done.
+
+  \image polygon.gif
+  \caption Defining a polygon region.
+
+  \section2 Adding Vertices
+  Vertices can be added one after another by clicking the left mouse button.
+  A vertex can also be added between two existing vertices by first
+  clicking on the "Insert Point Between" button, then clicking on the
+  two vertices which you want to insert a vertex between. Then click a
+  point to add a vertex.
+
+  \image polygon_add.gif
+  \caption Adding a vertex to a polygon.
+
+  \section2 Manipulating a Polygon
+  PolygonSelect items can be manipulated in the same way as RectangleSelect
+  and EllipseSelect items. Click and drag in the center to move, and
+  click and drag on a vertex to change its position. PolygonSelect items
+  cannot be rotated.
+
+  \image polygon_manipulate.gif
+  \caption Manipulating a polygon region.
+
+  Individual vertices can be deleted from a polygon by left clicking
+  to select the vertex, then press the backspace key to delete it.
+
+  \image polygon_delete.gif
+
+  \section1 FreeDrawSelect
+
+  FreeDrawSelect items are used to create selections based on drawing
+  with a brush. Both round and square brushes are available and the
+  brush size can be adjusted.
+
+  \section2 Drawing
+  To use this tool, select a Label and the
+  FreeDraw button. Then left click and move the mouse (while holding the
+  button down) to paint the region.
+
+  \image free_draw.gif
+  \caption Painting a selection region.
+
+  \section2 Manipulating
+  FreeDrawSelect items cannot be moved, resized, or rotated, however
+  you can use the "Erase" button to select an eraser. "Draw" on the image
+  to erase points.
+
+  \image erase.gif
+  \caption Erasing paint strokes.
+
+  \section1 Drawing on the Mask
+
+  When you draw SelectItems on the Mask (right had side), only pixels
+  which are not masked (white on the Mask) will be included in the
+  final selection. For RectangleSelect, EllipseSelect, and PolygonSelect
+  items draw on the Mask as normal, but you must click on the
+  "Add Selection" button to compute the actual pixels selected and add
+  them to the display. Once ths button is clicked the original SelectItem
+  is discarded for the new pixel selection. Clicking on the "Cancel Selection"
+  button to discard the selected region before applying it.
+
+  \image rect-mirror.gif
+  \caption Drawing a rectangle region on the Mask and applying the results.
+
+  For the FreeDrawSelect the drawing is done as it is on the image,
+  however there is no need to add the selection as the masked pixels
+  are calculated when the mouse button is released.
+
+  \image draw_mirror.gif
+  \caption Free drawing on the Mask.
+
+  \section1 Undo and Redo
+
+  Any selection action (add, move, rotate, resize, erase) can be undone
+  and redone by using the menu or the shortcut keys (Ctrl-z and Crtl-Shift-Z).
+
+  \image undo_redo.gif
+  \caption Undo and redo
+
+  In the case of drawing on the Mask, actions can be undone and redone
+  for RectangleSelect, EllipseSelect, and PolygonSelect before the
+  "Add Selection" button is clicked. Once the selection has been merged
+  with the mask the undo/redo actions will only remove or add back the
+  computed pixels.
+
+  \image undo_redo_mask.gif
+  \caption Undo/redo on the mask.
+
+  \image undo_redo_after.gif
+  \caption Undo/redo after adding.
+  */

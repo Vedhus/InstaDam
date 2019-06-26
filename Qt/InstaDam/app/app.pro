@@ -34,8 +34,6 @@ SOURCES += \
         chooselabeldialog.cpp \
         commands.cpp \
         projectdeletionconfirmation.cpp \
-        debuginsta.cpp \
-        photoviewer_copy.cpp \
         polygonSelect.cpp \
         ellipseSelect.cpp \
         photoScene.cpp \
@@ -76,8 +74,6 @@ HEADERS += \
     chooselabeldialog.h \
     commands.h \
     projectdeletionconfirmation.h \
-    debuginsta.h \
-    photoviewer_copy.h \
     polygonSelect.h \
     ellipseSelect.h \
     photoScene.h \
@@ -110,8 +106,7 @@ FORMS += \
     addusertoproject.ui \
     userprivilege.ui \
     projectdeletionconfirmation.ui \
-    debuginsta.ui \
-    instadam_copy.ui
+
 
 win32 {
 
