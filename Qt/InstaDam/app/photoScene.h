@@ -41,37 +41,39 @@ class PhotoScene : public QGraphicsScene {
     viewerTypes myViewerType;
     void removeItem(SelectItem* item);
     void clearItems();
+    void permanentRemove(SelectItem* );
 
-//#ifdef TEST
-//    friend class TestSelect;
-//    friend class IntegrationTest;
-//#endif
-// signals:
-//    void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
-//                      const QPointF point, const Qt::MouseButton button,
-//                      const Qt::KeyboardModifiers modifiers);
-//    void mouseMoved(const QPointF fromPos, const QPointF toPos,
-//                    const Qt::KeyboardModifiers modifiers);
-//    void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
-//                       const QPointF newPos, const Qt::MouseButton button,
-//                       const Qt::KeyboardModifiers modifiers);
-//    void keyPressed(PhotoScene::viewerTypes type, const int key);
 
-// protected:
-//    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-//    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-//    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-//    void keyPressEvent(QKeyEvent *event) override;
+#ifdef TEST
+    friend class TestSelect;
+    friend class IntegrationTest;
+#endif
+ signals:
+    void pointClicked(const PhotoScene::viewerTypes type, SelectItem* item,
+                      const QPointF point, const Qt::MouseButton button,
+                      const Qt::KeyboardModifiers modifiers);
+    void mouseMoved(const QPointF fromPos, const QPointF toPos,
+                    const Qt::KeyboardModifiers modifiers);
+    void mouseReleased(const PhotoScene::viewerTypes type, const QPointF oldPos,
+                       const QPointF newPos, const Qt::MouseButton button,
+                       const Qt::KeyboardModifiers modifiers);
+    void keyPressed(PhotoScene::viewerTypes type, const int key);
 
-// private:
-//    QGraphicsItem *movingItem;
-//    QPointF oldPos;
-//    QPointF newPos;
-//    std::string currentLabel;
-//    bool mousePressed;
-//    QList<SelectItem* > labelItems;
-//    std::list<SelectItem*> currentItems;
-//    std::map<std::string, std::list<SelectItem*> > labelmap;
+ protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+
+ private:
+    QGraphicsItem *movingItem;
+    QPointF oldPos;
+    QPointF newPos;
+    std::string currentLabel;
+    bool mousePressed;
+    QList<SelectItem* > labelItems;
+    std::list<SelectItem*> currentItems;
+    std::map<std::string, std::list<SelectItem*> > labelmap;
 };
 
 

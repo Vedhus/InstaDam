@@ -8,7 +8,6 @@
 #include <string>
 #include <algorithm>
 
-//#include "photoviewer_copy.h"
 #include "ui_instadam.h"
 #include "ui_projectDialog.h"
 #include "pixmapops.h"
@@ -30,6 +29,7 @@
 #include "projectlist.h"
 #include "serverprojectname.h"
 #include "ui_serverprojectname.h"
+
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
@@ -58,11 +58,6 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
 
     hide();
     qInfo()<<"Started instaDam";
-    qInfo()<<"Completed Constructor!";
-
-//}
-
-//void InstaDam::initiate(QString databaseURL, QString token){
     ui->setupUi(this);
     qInfo()<<"Initiate";
     photoLoaded = false;
@@ -75,21 +70,25 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
-
-    newProject = new newproject(this);
+    scene = ui->IdmPhotoViewer->scene;
+    maskScene = ui->IdmMaskViewer->scene;
+    maskShowStatePtr = new int(ui->showMaskSelections->checkState());
+    freeDrawMergeStack = new FreeDrawStack(maxUndoLength+1, scene, maskScene, maskShowStatePtr);
+    newProject = new newproject(this, freeDrawMergeStack);
 
 #ifdef WASM_BUILD
     ui->actionExport->setVisible(false);
 #endif
     mainUndoStack = new QUndoStack(this);
     tempUndoStack = new QUndoStack(this);
+    mainUndoStack->setUndoLimit(this->maxUndoLength);
+    tempUndoStack->setUndoLimit(this->maxUndoLength);
     undoGroup = new QUndoGroup(this);
     undoGroup->addStack(mainUndoStack);
     undoGroup->addStack(tempUndoStack);
     undoGroup->setActiveStack(mainUndoStack);
     currentSelectType = SelectItem::Ellipse;
-    scene = ui->IdmPhotoViewer->scene;
-    maskScene = ui->IdmMaskViewer->scene;
+
 
     this->databaseURL = databaseURL;
     this->accessToken = token;
@@ -178,6 +177,7 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
             SLOT(setCurrentBrushSize(int)));
     freeSelectForm->brushSizeSlider->setValue(currentBrushSize);
     freeSelectWidget->hide();
+
     polygonSelectWidget = new QWidget(ui->selectControlFrame);
     polygonSelectForm->setupUi(polygonSelectWidget);
     connect(polygonSelectForm->finishPolygonButton, SIGNAL(clicked()), this,
@@ -281,7 +281,7 @@ void InstaDam::setLabels() {
         ui->labelClassLayout->addLayout(hl);
         connect(button, SIGNAL(cclicked(QSharedPointer<Label>)), this,
                 SLOT(setCurrentLabel(QSharedPointer<Label>)));
-        button->slider->setValue(50);
+        button->slider->setValue(100);
         connect(button, SIGNAL(opacity(QSharedPointer<Label>, int)), this,
                 SLOT(setOpacity(QSharedPointer<Label>, int)));
 
@@ -338,11 +338,16 @@ void InstaDam::checkLabel(QSharedPointer<Label> label) {
     for (int i = 0; i < labelButtons.size(); i++) {
         if (label != labelButtons[i]->myLabel) {
             labelButtons[i]->setChecked(false);
+            labelButtons[i]->myLabel->sendToBack();
         } else {
             labelButtons[i]->setChecked(true);
+
         }
     }
     currentLabel = label;
+    label->bringToFront();
+    scene->update();
+    maskScene->update();
 }
 
 /*!
@@ -478,7 +483,8 @@ void InstaDam::connectFilters() {
  Resets the pixmaps of the filter buttons.
 */
 void InstaDam::resetPixmapButtons() {
-    cv::Mat thumbnail = ui->IdmPhotoViewer->cvThumb;
+    thumbnail.release();
+    thumbnail = ui->IdmPhotoViewer->cvThumb;
     for (int i = 0; i < maskButtonList.size(); ++i) {
          maskButtonList[i]->resetPixmaps(filterControl->thumb2pixmap(thumbnail, maskTypeList[i]));
     }
@@ -517,7 +523,7 @@ void InstaDam::saveAnnotationReplyFinished() {
 /*!
  Saves the current annotation to disk or the server.
 */
-void InstaDam::on_actionSave_Annotation_triggered() {
+void InstaDam::saveIdantn() {
     // Saving the file
     if (runningLocally) {
 #ifdef WASM_BUILD
@@ -576,6 +582,16 @@ void InstaDam::on_actionSave_Annotation_triggered() {
         QEventLoop loop;
         connect(rep, SIGNAL(finished()), &loop, SLOT(quit()));
         loop.exec();
+    }
+}
+
+void InstaDam::on_actionSave_Annotation_triggered(){
+
+    if (this->runningLocally){
+        saveAndProgress(0);
+    }
+    else{
+        saveIdantn();
     }
 }
 
@@ -801,6 +817,7 @@ void InstaDam::resetGUIclearLabels() {
     currentProject->clearAllLabels();
     scene->update();
     maskScene->update();
+
 }
 
 /*!
@@ -820,9 +837,9 @@ void InstaDam::on_saveAndBack_clicked() {
 }
 
 void InstaDam::autoSave(){
-    qInfo()<<"Auto saving";
-    on_actionSave_Annotation_triggered();
-    timer->start(autoSaveDuration);
+//    qInfo()<<"Auto saving";
+//    on_actionSave_Annotation_triggered();
+//    timer->start(autoSaveDuration);
 }
 /*!
   Save current annotations and continue. \a num is used to indicate the index of
@@ -834,7 +851,7 @@ void InstaDam::saveAndProgress(int num)
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
         qInfo()<<"Save and next before save";
-        on_actionSave_Annotation_triggered();
+        saveIdantn();
         qInfo()<<"Save and next after save";
         if (runningLocally) {
             int newId = ((fileId+num)%imagesList.size()+imagesList.size())%imagesList.size();
@@ -1513,7 +1530,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
                                    const Qt::MouseButton button,
                                    const Qt::KeyboardModifiers modifiers) {
 
-
+    //item->setZValue(2);
     if (photoLoaded){
         currentButton = button;
         selectedViewer = type;
@@ -1614,7 +1631,7 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
                 FreeDrawSelect *temp = new FreeDrawSelect(pos,
                                                           currentBrushSize,
                                                           brushMode,
-                                                          currentLabel);
+                                                          currentLabel, type);
                 FreeDrawSelect *mirror = new FreeDrawSelect(pos,
                                                             temp->myPen);
                 tempItem = temp;
@@ -1669,6 +1686,7 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
     maskScene->update();
     qInfo()<<"Annotation draw end!";
     return 0;
+
 
 }
 
@@ -1835,6 +1853,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
             if (ui->showMaskSelections->checkState() == Qt::Unchecked)
                 currentItem->hideMask();
         }
+
         currentItem->resetState();
         if (currentItem->type() != SelectItem::Polygon) {
             currentItem = nullptr;
@@ -1924,6 +1943,8 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains(InstaDamJson::LABELS) && json[InstaDamJson::LABELS].isArray()) {
         QJsonArray labelArray = json[InstaDamJson::LABELS].toArray();
+
+
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
         for (int i = 0; i < labelArray.size(); i++) {
@@ -1937,10 +1958,12 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
                 labelId =  labelArray[i].toObject().value("label_id").toInt();;
             }
             QSharedPointer<Label> label =
-                    QSharedPointer<Label>::create(labelArray[i].toObject(), labelId);
+                    QSharedPointer<Label>::create(labelArray[i].toObject(), labelId, freeDrawMergeStack);
             tempLabels.push_back(label);
-
+            //label->clear();
         }
+
+        // Memory consumption high before this line
         if (type == PROJECT) {
             currentProject = newProject->newPr;
             setLabels();
@@ -1950,7 +1973,6 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
             QTextStream(stdout) << currentProject->numLabels() << "\n";
         } else {
             qInfo() << "reading annotation file";
-
             QStringList current = getLabelNames(currentProject->getLabels());
             QStringList newList = getLabelNames(tempLabels);
             current.sort(Qt::CaseInsensitive);
@@ -2006,6 +2028,7 @@ void InstaDam::write(QJsonObject &json, fileTypes type) {
         labs.append(lab);
     }
     json[InstaDamJson::LABELS] = labs;
+
 }
 
 /*!
@@ -2027,17 +2050,28 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     scene->addItem(fds);
     QUndoCommand *addCommand = new AddCommand(fds, scene, this);
     mainUndoStack->push(addCommand);
-    scene->removeItem(item->getMirror());
-    maskScene->removeItem(item->getMirror());
+    //scene->removeItem(item->getMirror());
+    //maskScene->permanentRemove(item->getMirror());
     currentLabel->removeItem(item->getMirror()->myID);
     currentLabel->removeItem(item->myID);
-    currentLabel->addItem(fds);
+    qInfo()<<"Adding item to label";
+    //currentLabel->addItem(fds);
+    //scene->permanentRemove(item);
+
+    scene->removeItem(item->getMirror());
     scene->removeItem(item);
+    maskScene->removeItem(item->getMirror());
     maskScene->removeItem(item);
+
+
+    delete item->getMirror();
+    delete item;
+    currentItem = fds;
     maskItem = nullptr;
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);
     canDrawOnPhoto = true;
+
 
 }
 
@@ -2122,6 +2156,7 @@ void InstaDam::revert() {
  Toggles hiding the labels on the mask viewer, by using \a state.
 */
 void InstaDam::processShowHide(int state) {
+    *maskShowStatePtr = state;
     for (int i = 0; i < currentProject->numLabels(); i++) {
          currentProject->getLabel(i)->setMaskState(state);
     }

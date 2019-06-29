@@ -8,7 +8,7 @@
 #include "polygonSelect.h"
 #include "freeDrawErase.h"
 #include "photoScene.h"
-
+#include "freedrawstack.h"
 class InstaDam;
 
 class AddCommand : public QUndoCommand{
@@ -26,6 +26,7 @@ class AddCommand : public QUndoCommand{
     InstaDam *myParent;
     QPointF initialPosition;
     bool init = false;
+    FreeDrawStack* myStack;
 };
 
 class DeleteCommand : public QUndoCommand {

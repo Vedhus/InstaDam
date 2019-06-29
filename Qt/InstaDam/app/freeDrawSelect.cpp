@@ -81,9 +81,9 @@ FreeDrawSelect::FreeDrawSelect(const QJsonObject &json,
   into a single instance. This is done by merging all of the internal pixel maps
   into a single entity, discarding duplicate points.
 */
-FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items)
-    : QGraphicsPixmapItem(nullptr), SelectItem(0.) {
-    init();
+FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items, QSharedPointer<Label> label)
+    : QGraphicsPixmapItem(nullptr), SelectItem(label, nullptr) {
+    init(label);
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
     myPen.setWidth(1);
@@ -110,9 +110,11 @@ FreeDrawSelect::FreeDrawSelect(const QList<FreeDrawSelect*> &items)
 FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
                                Qt::PenCapStyle brushMode,
                                QSharedPointer<Label> label,
+                               PhotoScene::viewerTypes sceneType,
                                QGraphicsItem *item)
     : QGraphicsPixmapItem(item), SelectItem(label, item) {
-    init(label);
+
+    init(label, sceneType);
     myPen.setWidth(brushSize);
     myPen.setCapStyle(brushMode);
     myPen.setJoinStyle(Qt::MiterJoin);
@@ -132,7 +134,7 @@ FreeDrawSelect::FreeDrawSelect(QPointF point, int brushSize,
 */
 FreeDrawSelect::FreeDrawSelect(QPointF point, QPen pen,
                                QSharedPointer<Label> label, QGraphicsItem *item)
-    : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, item) {
+    : FreeDrawSelect(point, pen.width(), pen.capStyle(), label, PhotoScene::PHOTO_VIEWER_TYPE, item) {
 }
 
 /*!
@@ -190,6 +192,13 @@ void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
 */
 void FreeDrawSelect::setOpacity(qreal val) {
     SelectItem::setOpacity(val);
+}
+
+/*!
+ * Sets the position Z vlaue to \a val
+*/
+void FreeDrawSelect::setZValue(int val) {
+    SelectItem::setZValue(val);
 }
 
 /*!
@@ -416,11 +425,12 @@ inline void FreeDrawSelect::setup() {
   Initialization used by all constructors, sets up the given
   \a label.
 */
-inline void FreeDrawSelect::init(QSharedPointer<Label> label) {
+inline void FreeDrawSelect::init(QSharedPointer<Label> label,
+                                 PhotoScene::viewerTypes sceneType ) {
     setActiveVertex(0);
     mytype = SelectItem::Freedraw;
     active = true;
-    if (label != nullptr)
+    if (label != nullptr && sceneType == PhotoScene::PHOTO_VIEWER_TYPE)
         label->addItem(this);
     myRect = QRectF(0., 0., SelectItem::myBounds.width(),
                     SelectItem::myBounds.height());

@@ -7,6 +7,7 @@
 
 #include "freeDrawSelect.h"
 #include "freeDrawErase.h"
+#include "freedrawstack.h"
 #include "rectangleSelect.h"
 #include "ellipseSelect.h"
 #include "polygonSelect.h"
@@ -20,7 +21,7 @@ class Label: public QEnableSharedFromThis<Label>{
 
  public:
     Label();
-    Label(const QJsonObject &json, int, bool=false);
+    Label(const QJsonObject &json, int, FreeDrawStack* , bool=false);
 
     ~Label();
     void setId(int);
@@ -30,11 +31,17 @@ class Label: public QEnableSharedFromThis<Label>{
     int getId();
 
     void setText(const QString tx);
+    void setFDSstack(FreeDrawStack*);
 
     QHash<int, RectangleSelect*> rectangleObjects;
     QHash<int, EllipseSelect*> ellipseObjects;
     QHash<int, PolygonSelect*> polygonObjects;
     QHash<int, FreeDrawSelect*> freeDrawObjects;
+    FreeDrawSelect* mergedFDS;
+    void mergeFDS(FreeDrawSelect *, int);
+    FreeDrawStack* freeDrawStack;
+
+    QVector<FreeDrawSelect*> deleteFreeDrawObjects;
     void addItem(SelectItem *item);
     void addItem(FreeDrawSelect *item);
     void addItem(RectangleSelect *item);
@@ -50,6 +57,9 @@ class Label: public QEnableSharedFromThis<Label>{
     QPixmap exportLabel(const QSize &rect) const;
     void setOpacity(int val);
     void setMaskState(int state);
+    void deleteList();
+    void bringToFront();
+    void sendToBack();
 #ifdef TEST
     friend class TestSelect;
 #endif

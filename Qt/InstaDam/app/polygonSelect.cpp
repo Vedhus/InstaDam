@@ -81,6 +81,14 @@ void PolygonSelect::setOpacity(qreal val) {
     SelectItem::setOpacity(val);
 }
 
+
+/*!
+ * Sets the position Z vlaue to \a val
+*/
+void PolygonSelect::setZValue(int val) {
+    SelectItem::setZValue(val);
+}
+
 /*!
   Destructor
   */

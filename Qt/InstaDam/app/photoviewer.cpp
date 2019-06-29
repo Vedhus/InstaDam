@@ -80,14 +80,18 @@ QSize PhotoViewer::setPhotoFromByteArray(QByteArray &array) {
   Sets the internal image based on data from \a filename.
 */
 QSize PhotoViewer::setPhotoFromFile(QString filename) {
-    QPixmap pixmap = QPixmap(filename);
-
+    pixmapImage = QPixmap(filename);
+    qInfo()<<"Loaded pixmap";
+    cvImage.release();
     cvImage = cv::imread(filename.toLocal8Bit().constData(),
                          CV_LOAD_IMAGE_COLOR);
-    cv::cvtColor(cvImage,cvImage, cv::COLOR_BGR2RGB);
+    qInfo()<<"Loaded cv image";
 
-    setPhoto(pixmap);
-    return pixmap.size();
+    cv::cvtColor(cvImage, cvImage, cv::COLOR_BGR2RGB);
+    qInfo()<<"Loaded cv image";
+    setPhoto(pixmapImage);
+    qInfo()<<"Set pixmap";
+    return pixmapImage.size();
 }
 
 /*!
@@ -129,16 +133,20 @@ float PhotoViewer::limit(int minval, qreal x, int  maxval)
   Sets the internal image based on \a pixmap.
 */
 void PhotoViewer::setPhoto(QPixmap pixmap) {
+    cvThumb.release();
+    qInfo()<<"Before resize";
     cv::resize(cvImage, cvThumb, cv::Size(200, 200), CV_INTER_LINEAR);
-
+    qInfo()<<"Resize complete";
     if (pixmap.isNull() == 0) {
         if (this->viewerType == PhotoScene::PHOTO_VIEWER_TYPE) {
                 this->photo->setPixmap(pixmap);
                 this->hasPhoto = true;
+                qInfo()<<"setPhoto pixmap set";
         }
 
         QRect viewrect = viewport()->rect();
         setImMask(selectedMask);
+        qInfo()<<"setPhoto mask set";
 
         this->fitInView();
 
@@ -294,7 +302,6 @@ void PhotoViewer::updateCursorShape(cursorStates cs){
     QPainter *painter = new QPainter(&pixmap);
     QPen pen = QPen(QColor(50,50,50,255));
     pen.setWidth(2);
-    qInfo()<<"Before setpen in update cursorshape";
     painter->setPen(pen);
     if (cs == SQUAREBRUSH)
         painter->drawRect(0, 0,size, size);
@@ -311,7 +318,7 @@ void PhotoViewer::updateCursorShape(cursorStates cs){
         painter->drawEllipse(0, 0,size, size);
 
     brushCursor = QCursor(pixmap,-size, -size);
-    qInfo()<<"setpen done!";
+
 }
 
 
@@ -462,7 +469,7 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event) {
 void PhotoViewer::mouseReleaseEvent(QMouseEvent* event) {
     QGraphicsView::mouseReleaseEvent(event);
     paintMode = false;
-    update();
+    //update();
 }
 
 /*!

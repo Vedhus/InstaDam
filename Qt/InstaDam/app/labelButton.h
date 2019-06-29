@@ -13,6 +13,7 @@ class LabelButton : public QPushButton {
     explicit LabelButton(QSharedPointer<Label> label);
     QSlider *slider;
     QSharedPointer<Label> myLabel;
+    void clear();
  signals:
     void cclicked(QSharedPointer<Label> label);
     void opacity(QSharedPointer<Label> label, int op);
@@ -31,6 +32,7 @@ class LabelButtonFilter : public QPushButton {
     void cclicked(QSharedPointer<Label> label);
  public slots:
     void wasClicked();
+    void clear();
 };
 
 #endif  // LABELBUTTON_H

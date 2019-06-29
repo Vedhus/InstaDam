@@ -24,12 +24,16 @@ MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {
 */
 void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {
     hasPhoto = true;
+    qInfo()<<"Going to set photoViewer to maskViewer";
     photoViewer = viewer;
+    qInfo()<<"Going to set pixmap for mask!";
     photo->setPixmap(photoViewer->filterIm->pixmap());
+    qInfo()<<"Set pixmap for mask!";
     imMask = viewer->imMask;
     cvImage = viewer->cvImage;
     cvThumb = viewer->cvThumb;
     setImMask(selectedMask);
+    qInfo()<<"Set mask!";
     update();
     fitInView();
 }

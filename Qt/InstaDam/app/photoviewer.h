@@ -49,7 +49,7 @@ class PhotoViewer : public QGraphicsView {
 
     PhotoScene *scene;
     QGraphicsPixmapItem *filterIm;
-
+    QPixmap pixmapImage;
     QPoint lastPos;
     QPixmap currentMap;
     QPixmap pixmapFilt;

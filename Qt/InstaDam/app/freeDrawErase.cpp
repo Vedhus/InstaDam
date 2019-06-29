@@ -30,8 +30,10 @@
   */
 FreeDrawErase::FreeDrawErase(QPointF point, int brushSize,
                              Qt::PenCapStyle brushMode,
-                             QSharedPointer<Label> label, QGraphicsItem *item)
-    : FreeDrawSelect(point, brushSize, brushMode, nullptr, item) {
+                             QSharedPointer<Label> label,
+                             PhotoScene::viewerTypes sceneType,
+                             QGraphicsItem *item)
+    : FreeDrawSelect(point, brushSize, brushMode, nullptr, sceneType, item) {
     myLabel = label;
     undoMap = QSharedPointer<EraseMap>::create();
     QHashIterator<int, FreeDrawSelect*> it(myLabel->freeDrawObjects);

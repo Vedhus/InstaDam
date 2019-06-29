@@ -36,6 +36,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     void updatePen(QPen pen) override;
     void toPixmap(QPainter *painter) override;
     void setOpacity(qreal val);
+    void setZValue(int );
 
     // Mirror functions
     EllipseSelect* getMirror() const override {return mirror;}

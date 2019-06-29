@@ -103,6 +103,8 @@ void Project::clearAllLabels() {
     for (int i = 0; i < this->getLabels().size(); i++) {
         this->getLabel(i)->clear();
     }
+   // labels.clear();
+
 }
 
 /*!

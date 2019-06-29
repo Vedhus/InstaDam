@@ -6,6 +6,7 @@
 #include "project.h"
 #include "ui_labeldialog.h"
 #include <QNetworkAccessManager>
+#include "freedrawstack.h"
 #ifdef WASM_BUILD
 #include "colordialog.h"
 #endif
@@ -18,13 +19,14 @@ class newproject : public QDialog {
     Q_OBJECT
 
  public:
-    explicit newproject(QWidget *parent = nullptr);
+    explicit newproject(QWidget *parent = nullptr,FreeDrawStack* freeDrawMergeStack = nullptr);
     ~newproject();
 
     Project *newPr;
     bool runningLocally = true;
     QString databaseURL;
     QString accessToken;
+    FreeDrawStack* freeDrawMergeStack;
 #ifdef TEST
     friend class IntegrationTest;
     friend class InstaDam;

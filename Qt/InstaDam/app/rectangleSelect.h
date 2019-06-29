@@ -38,6 +38,7 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem {
     void setRectUnchecked(QRectF rect) override;
     void toPixmap(QPainter *painter) override;
     void setOpacity(qreal);
+    void setZValue(int);
 
     // Mirror
     RectangleSelect* getMirror() const override {return mirror;}

@@ -1,7 +1,7 @@
 
 QT       += core gui
 QT       += network
-
+DEFINES += QT_SHAREDPOINTER_TRACK_POINTERS
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
@@ -9,6 +9,7 @@ TEMPLATE = app
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 
 SOURCES += \
+        freedrawstack.cpp \
         main.cpp \
         instadam.cpp \
         project.cpp \
@@ -49,6 +50,7 @@ SOURCES += \
 wasm: SOURCES += colordialog.cpp
 
 HEADERS += \
+    freedrawstack.h \
         instadam.h \
         project.h \
         photoviewer.h \

@@ -18,6 +18,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QJsonObject>
+#include <QDebug>
 
 #include "jsonConstants.h"
 
@@ -69,7 +70,7 @@ class SelectItem : public QGraphicsItem {
                QGraphicsItem *item = nullptr);
     SelectItem(QSharedPointer<Label> label = nullptr,
                QGraphicsItem *item = nullptr);
-    ~SelectItem() override {}
+    virtual ~SelectItem() override {qInfo()<<"delete selectItem";}
 
     /*---------------- Virtual functions ---------------------------*/
     // manipulating the data
@@ -83,7 +84,8 @@ class SelectItem : public QGraphicsItem {
     virtual void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) = 0;
     virtual void rotate(const QPointF &from, const QPointF &to) = 0;
     virtual void updatePen(QPen pen) = 0;
-    void setOpacity(qreal val) {QGraphicsItem::setOpacity(val);}
+    void setOpacity(qreal val) {QGraphicsItem::setOpacity(val);};
+    void setZValue(int val) {QGraphicsItem::setZValue(val);};
 
     // I/O
     virtual void read(const QJsonObject &json) = 0;

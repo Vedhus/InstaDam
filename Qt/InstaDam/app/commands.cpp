@@ -33,6 +33,7 @@ AddCommand::AddCommand(SelectItem *item, PhotoScene *scene,
     myScene = scene;
     myItem = item;
     myParent = idam;
+    myStack = idam->freeDrawMergeStack;
 }
 
 
@@ -51,6 +52,9 @@ void AddCommand::undo() {
     myParent->setCurrentItem(nullptr);
     myScene->update();
     myItem->updateMirrorScene();
+    if (myItem->type() == SelectItem::Freedraw){
+        myStack->undo();
+    }
 }
 
 /*!
@@ -64,6 +68,9 @@ void AddCommand::redo() {
         myScene->clearSelection();
         myScene->update();
         myItem->updateMirrorScene();
+        if (myItem->type()==SelectItem::Freedraw){
+            myStack->redo((FreeDrawSelect*)myItem);
+        }
     } else {
         if (myItem->getMirror() != nullptr)
             myItem->itemWasAdded();

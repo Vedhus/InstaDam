@@ -79,6 +79,12 @@ void EllipseSelect::setOpacity(qreal val) {
 }
 
 /*!
+ * Sets the position Z vlaue to \a val
+*/
+void EllipseSelect::setZValue(int val) {
+    SelectItem::setZValue(val);
+}
+/*!
   Constructs an EllipseSelect object by setting all vertices to be a \a point,
   \a vertexSize indicates the size of the vertex highlight boxes, \a label is
   the Label which owns this object and \a item is the parent QGraphicsItem, if

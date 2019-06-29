@@ -4,6 +4,7 @@
 #include <QHash>
 #include <QPixmap>
 #include "selectItem.h"
+#include "photoScene.h"
 #ifdef TEST
 class TestSelect;
 
@@ -19,12 +20,13 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     FreeDrawSelect(const QJsonObject &json,
                    QSharedPointer<Label> label = nullptr,
                    QGraphicsItem *item = nullptr);
-    explicit FreeDrawSelect(const QList<FreeDrawSelect*> &items);
+    explicit FreeDrawSelect(const QList<FreeDrawSelect*> &items, QSharedPointer<Label> label = nullptr);
     FreeDrawSelect(QPointF point, QPen pen,
                    QSharedPointer<Label> label = nullptr,
                    QGraphicsItem *item = nullptr);
     FreeDrawSelect(QPointF point, int brushSize, Qt::PenCapStyle brushMode,
                    QSharedPointer<Label> label = nullptr,
+                   PhotoScene::viewerTypes sceneType = PhotoScene::PHOTO_VIEWER_TYPE,
                    QGraphicsItem *item = nullptr);
     ~FreeDrawSelect() override;
 
@@ -35,6 +37,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     }
     QRectF boundingRect() const override;
     void setOpacity(qreal val);
+    void setZValue(int);
     void clickPoint(const QPointF &point) override;
     void insertVertex(const int vertex, const QPointF &point) override {
         UNUSED(vertex);
@@ -96,6 +99,6 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     QPainter myPainter;
     void loadFromPixmap(const QPixmap map, bool importBool = false);
     void setup();
-    void init(QSharedPointer<Label> label = nullptr);
+    void init(QSharedPointer<Label> label = nullptr, PhotoScene::viewerTypes sceneType = PhotoScene::PHOTO_VIEWER_TYPE);
 };
 #endif  // POLYGONSELECT_H

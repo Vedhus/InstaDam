@@ -35,7 +35,7 @@
 #include "chooselabeldialog.h"
 #include "project.h"
 #include "photoScene.h"
-
+#include "freedrawstack.h"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc.hpp"
@@ -104,6 +104,11 @@ class InstaDam : public QMainWindow {
     QTimer *timer;
 
     int autoSaveDuration = 5000;
+    cv::Mat thumbnail;
+    int maxUndoLength = 10;
+    FreeDrawStack* freeDrawMergeStack;
+    void saveIdantn();
+    int* maskShowStatePtr;
 
 
  private slots:

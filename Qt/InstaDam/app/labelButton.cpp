@@ -39,6 +39,14 @@ void LabelButton::reemitValueChanged(int value) {
 }
 
 /*!
+  Clears the label associated with the labelbutton
+  */
+void LabelButton::clear(){
+    myLabel.clear();
+}
+
+
+/*!
   \fn void LabelButton::cclicked(QSharedPointer<Label> label)
 
   Emitted when the button is clicked, giving \a label.
@@ -75,6 +83,14 @@ LabelButtonFilter::LabelButtonFilter(QSharedPointer<Label> label)
 void LabelButtonFilter::wasClicked() {
     emit cclicked(myLabel);
 }
+
+/*!
+  Clears the label associated with the labelbutton
+  */
+void LabelButtonFilter::clear(){
+    myLabel.clear();
+}
+
 
 /*!
   \fn LabelButtonFilter::cclicked(QSharedPointer<Label> label)

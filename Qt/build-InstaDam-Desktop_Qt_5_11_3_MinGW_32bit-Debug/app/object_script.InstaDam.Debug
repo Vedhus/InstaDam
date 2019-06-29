@@ -1,4 +1,5 @@
 INPUT(
+./debug\freedrawstack.o
 ./debug\main.o
 ./debug\instadam.o
 ./debug\project.o

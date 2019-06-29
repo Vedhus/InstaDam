@@ -72,6 +72,14 @@ RectangleSelect::RectangleSelect(QPointF point, QSharedPointer<Label> label,
 void RectangleSelect::setOpacity(qreal val) {
     SelectItem::setOpacity(val);
 }
+
+/*!
+ * Sets the position Z vlaue to \a val
+*/
+void RectangleSelect::setZValue(int val) {
+    SelectItem::setZValue(val);
+}
+
 /*!
   Constructs a RectangleSelect object by setting all vertices to be a \a point,
   \a vertSize indicates the size of the vertex highlight boxes, \a label is the

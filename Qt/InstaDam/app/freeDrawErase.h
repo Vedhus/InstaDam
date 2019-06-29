@@ -16,6 +16,7 @@ class FreeDrawErase : public FreeDrawSelect {
     static QString baseInstruction;
     FreeDrawErase(QPointF point, int brushSize, Qt::PenCapStyle brushMode,
                   QSharedPointer<Label> label = nullptr,
+                  PhotoScene::viewerTypes sceneType = PhotoScene::PHOTO_VIEWER_TYPE,
                   QGraphicsItem *item = nullptr);
     ~FreeDrawErase() override;
 

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <QJsonArray>
 #include <iostream>
+#include <QDebug>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ using namespace std;
   Default constructor
   */
 Label::Label() {
+
 }
 
 /*!
@@ -31,13 +33,15 @@ Label::Label() {
   denotes whether to read the file from a server (\c true) or local file
   (\c false).
   */
-Label::Label(const QJsonObject &json, int j, bool server) {
+Label::Label(const QJsonObject &json, int j, FreeDrawStack* freeDrawMergeStack, bool server) {
+    labelId = j;
+    freeDrawStack = freeDrawMergeStack;
     if(server) {
         readServer(json);
     } else {
         read(json);
     }
-    labelId = j;
+
 }
 
 /*!
@@ -58,6 +62,13 @@ QColor Label::getColor() const {
   */
 void Label::setColor(QColor col) {
     color = col;
+}
+
+/*!
+  Convenience function to set the FDS stack \a col.
+  */
+void Label::setFDSstack(FreeDrawStack* freeDrawMergeStack) {
+        freeDrawStack = freeDrawMergeStack;
 }
 
 /*!
@@ -107,10 +118,10 @@ void Label::addItem(SelectItem *item) {
         polygonObjects.insert(item->myID, (PolygonSelect*)item);
         break;
     case SelectItem::Freedraw:
-        freeDrawObjects.insert(item->myID, (FreeDrawSelect*)item);
+        addItem((FreeDrawSelect*)item);
         break;
-
     }
+    qInfo()<<"Add labelitem";
 }
 
 
@@ -150,9 +161,43 @@ void Label::addItem(PolygonSelect *item) {
 
   */
 void Label::addItem(FreeDrawSelect *item) {
+    if (freeDrawObjects.isEmpty()){
+        mergedFDS = item;
+    }
+    else{
+        freeDrawStack->push(item);
+    }
     freeDrawObjects.insert(item->myID, item);
 }
 
+/*!
+ * \brief Label::mergeFDS
+ * \param merge
+ * removes the previous merge freeDrawSelect item from the label and adds the updated one
+ * The function is called by freeDrawStak.push();
+ */
+void Label::mergeFDS(FreeDrawSelect *merge, int bottomOfStackID){
+
+    freeDrawObjects.remove(bottomOfStackID);
+    freeDrawObjects.remove(mergedFDS->myID);
+
+    mergedFDS = merge;
+    SelectItem::ID = max(SelectItem::ID, mergedFDS->myID);
+    freeDrawObjects.insert(mergedFDS->myID, mergedFDS);
+
+}
+
+void Label::deleteList(){
+    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
+
+    for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
+    {
+        qInfo()<<"Deleting Free draw object";
+        qInfo()<<freeDrawItems.value()->myID;
+        delete freeDrawItems.value();
+    }
+
+}
 
 /*!
   Removes a SelectItem from the Label based on it's unique ID given as \a id.
@@ -170,10 +215,11 @@ void Label::removeItem(const int id) {
   Clears the label data in memory.
   */
 void Label::clear() {
+    freeDrawObjects.clear();
+    freeDrawStack->clear();
     rectangleObjects.clear();
     ellipseObjects.clear();
     polygonObjects.clear();
-    freeDrawObjects.clear();
 }
 
 /*!
@@ -194,6 +240,47 @@ void Label::setOpacity(int val) {
         ellipseItems.value()->setOpacity(normalizedValue);
     for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
         freeDrawItems.value()->setOpacity(normalizedValue);
+}
+
+/*!
+  Bring the label to the fron of the scene
+  */
+void Label::bringToFront() {
+
+    QHash<int, RectangleSelect*>::iterator rectItems;
+    QHash<int, PolygonSelect*>::iterator polygonItems;
+    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
+    QHash<int, EllipseSelect*>::iterator ellipseItems;
+
+    for (rectItems = rectangleObjects.begin(); rectItems != rectangleObjects.end(); ++rectItems)
+        rectItems.value()->setZValue(1);
+    for (polygonItems = polygonObjects.begin(); polygonItems != polygonObjects.end(); ++polygonItems)
+        polygonItems.value()->setZValue(1);
+    for (ellipseItems = ellipseObjects.begin(); ellipseItems != ellipseObjects.end(); ++ellipseItems)
+        ellipseItems.value()->setZValue(1);
+    for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
+        freeDrawItems.value()->setZValue(1);
+}
+
+/*!
+  Bring the label to the fron of the scene
+  */
+void Label::sendToBack() {
+
+    QHash<int, RectangleSelect*>::iterator rectItems;
+    QHash<int, PolygonSelect*>::iterator polygonItems;
+    QHash<int, FreeDrawSelect*>::iterator freeDrawItems;
+    QHash<int, EllipseSelect*>::iterator ellipseItems;
+
+    for (freeDrawItems = freeDrawObjects.begin(); freeDrawItems != freeDrawObjects.end(); ++freeDrawItems)
+        freeDrawItems.value()->setZValue(0.2);
+    for (rectItems = rectangleObjects.begin(); rectItems != rectangleObjects.end(); ++rectItems)
+        rectItems.value()->setZValue(0.2);
+    for (polygonItems = polygonObjects.begin(); polygonItems != polygonObjects.end(); ++polygonItems)
+        polygonItems.value()->setZValue(0.2);
+    for (ellipseItems = ellipseObjects.begin(); ellipseItems != ellipseObjects.end(); ++ellipseItems)
+        ellipseItems.value()->setZValue(0.2);
+
 }
 
 
@@ -246,6 +333,9 @@ void Label::read(const QJsonObject &json) {
                 sharedFromThis());
         SelectItem::ID = max(SelectItem::ID, fd->myID);
         addItem(fd);
+
+
+
     }
     SelectItem::ID += 1;
 }
@@ -272,7 +362,6 @@ QPixmap Label::exportLabel(const QSize &rect) const {
     QBrush brush(getColor());
     paint->setPen(getColor());
     paint->setBrush(brush);
-    //paint->fillRect(0.,0.,rect.width(), rect.height(), Qt::white);
     if (!rectangleObjects.isEmpty()) {
         QHashIterator<int, RectangleSelect*> rit(rectangleObjects);
         while (rit.hasNext()) {
@@ -380,6 +469,7 @@ void Label::writeIdantn(QJsonObject &json) const {
         QJsonObject fdo;
         item->write(fdo);
         json[InstaDamJson::FREEDRAW] = fdo;
+        delete item;
     }
 }
 

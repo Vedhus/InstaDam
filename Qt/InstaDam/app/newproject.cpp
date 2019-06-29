@@ -19,7 +19,7 @@
 /*!
   Creates a new instance with parent QWidget \a parent, if any
 */
-newproject::newproject(QWidget *parent) :
+newproject::newproject(QWidget *parent, FreeDrawStack* freeDrawStack) :
     QDialog(parent),
     ui(new Ui::newproject) {
 #ifndef TEST
@@ -29,6 +29,7 @@ newproject::newproject(QWidget *parent) :
     this->newPr = new Project();
 
 #endif
+    this->freeDrawMergeStack = freeDrawStack;
 }
 
 /*!
@@ -80,6 +81,7 @@ void newproject::colorPicked(const QColor &oldcolor) {
             QSharedPointer<Label> lb = QSharedPointer<Label>::create();
             lb->setText(tempName);
             lb->setColor(color);
+            lb->setFDSstack(freeDrawMergeStack);
             this->newPr->addLabel(lb);
 
             QTextStream(stdout) << this->newPr->getLabel(this->newPr->numLabels()-1)->getColor().name() << endl;
