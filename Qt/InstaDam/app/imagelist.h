@@ -19,7 +19,7 @@
 namespace Ui {
 class ImageList;
 }
-
+class Project;
 class ImageList : public QWidget {
     Q_OBJECT
 

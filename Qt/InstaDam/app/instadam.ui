@@ -896,7 +896,9 @@
     <addaction name="actionImport"/>
     <addaction name="actionExport"/>
     <addaction name="actionExport_zip"/>
+    <addaction name="actionExport_mat"/>
     <addaction name="separator"/>
+    <addaction name="actionTest"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -1035,6 +1037,16 @@
   <action name="actionClear_All_can_t_undo">
    <property name="text">
     <string>Clear All (can't undo)</string>
+   </property>
+  </action>
+  <action name="actionExport_mat">
+   <property name="text">
+    <string>Export .npz</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>Test</string>
    </property>
   </action>
  </widget>

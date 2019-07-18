@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-
+#include "cnpy.h"
 #include "ui_instadam.h"
 #include "ui_projectDialog.h"
 #include "pixmapops.h"
@@ -33,6 +33,7 @@
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
 #endif
+
 
 
 
@@ -73,7 +74,7 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     scene = ui->IdmPhotoViewer->scene;
     maskScene = ui->IdmMaskViewer->scene;
     maskShowStatePtr = new int(ui->showMaskSelections->checkState());
-    freeDrawMergeStack = new FreeDrawStack(maxUndoLength+1, scene, maskScene, maskShowStatePtr);
+    freeDrawMergeStack = new FreeDrawStack(maxUndoLength, scene, maskScene, maskShowStatePtr);
     newProject = new newproject(this, freeDrawMergeStack);
 
 #ifdef WASM_BUILD
@@ -351,6 +352,18 @@ void InstaDam::checkLabel(QSharedPointer<Label> label) {
 }
 
 /*!
+ Sets the \a currentLabel to the Label with \a labelid
+*/
+void InstaDam::checkLabel(int labelId) {
+    for (int i = 0; i < labelButtons.size(); i++) {
+        if (labelId == labelButtons[i]->myLabel->getId()) {
+            checkLabel(labelButtons[i]->myLabel);
+        }
+    }
+}
+
+
+/*!
  Sets the opacity of the Label \a label to \a val.
 */
 void InstaDam::setOpacity(QSharedPointer<Label> label, int val) {
@@ -495,7 +508,8 @@ void InstaDam::resetPixmapButtons() {
 */
 void InstaDam::setCurrentBrushSize(int size) {
     currentBrushSize = size;
-    setRoundBrushCursor();
+    setBrushCursor();
+
 }
 
 /*!
@@ -845,14 +859,19 @@ void InstaDam::autoSave(){
   Save current annotations and continue. \a num is used to indicate the index of
   the current image.
 */
-void InstaDam::saveAndProgress(int num)
+void InstaDam::saveAndProgress(int num, bool save)
 {
+
+    int previousID = currentLabel->getId();
     if (runningLocally and imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
-        qInfo()<<"Save and next before save";
-        saveIdantn();
-        qInfo()<<"Save and next after save";
+        if(save){
+            qInfo()<<"Save and next before save";
+            saveIdantn();
+            qInfo()<<"Save and next after save";
+        }
+
         if (runningLocally) {
             int newId = ((fileId+num)%imagesList.size()+imagesList.size())%imagesList.size();
             fileId = newId;
@@ -899,6 +918,7 @@ void InstaDam::saveAndProgress(int num)
             }
         }
     }
+    checkLabel(previousID);
 }
 
 #ifdef WASM_BUILD
@@ -922,7 +942,6 @@ void InstaDam::exportImages(bool asBuffers) {
     for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
 
-
         QString labfilePrefix = QString("%1").arg(i, 5, 10, QChar('0'));
         QString filename = labelPath + labfilePrefix + InstaDamJson::LABEL_PNG;
         qInfo()<<filename;
@@ -938,6 +957,8 @@ void InstaDam::exportImages(bool asBuffers) {
         }
     }
 }
+
+
 
 /*!
  Displays the std::string \a errorMessage as a QMessageBox.
@@ -1028,10 +1049,58 @@ void InstaDam::openFile_and_labels() {
     timer->start(autoSaveDuration);
 }
 
+void InstaDam::populateItem(SelectItem* item, QSharedPointer<Label> label){
+    SelectItem* mirror = nullptr;
+    switch (item->type()){
+        case SelectItem::Rectangle:{
+            RectangleSelect *mirrorTempR = new RectangleSelect();
+            mirror = (SelectItem*) mirrorTempR;
+            break;
+        }
+        case SelectItem::Ellipse:{
+
+            EllipseSelect *mirrorTempE = new EllipseSelect();
+            mirror = (SelectItem*) mirrorTempE;
+            break;
+        }
+        case SelectItem::Polygon:{
+            PolygonSelect *mirrorTempP = new PolygonSelect();
+            mirror = (SelectItem*) mirrorTempP;
+            break;
+        }
+        case SelectItem::Freedraw:{
+            FreeDrawSelect *mirrorTempF = new FreeDrawSelect();
+            mirror = (SelectItem*) mirrorTempF;
+            break;
+        }
+    }
+    item->setLabel(label);
+    mirror->setLabel(label);
+    mirror->updatePen(mirror->myPen);
+    item->setMirror(mirror);
+    mirror->setMirror(item);
+    switch (item->type()){
+        case SelectItem::Rectangle:
+        case SelectItem::Ellipse:
+            mirror->setInitial(item->getRect(), SelectItem::UNSELECTED);
+            break;
+        case SelectItem::Polygon:
+        case SelectItem::Freedraw:
+            item->setInitial(item->getRect(), SelectItem::UNSELECTED);
+            break;
+    }
+
+    item->rotateMirror();
+    scene->addItem(item);
+    maskScene->addItem(mirror);
+    item->itemWasAdded();
+    mirror->itemWasAdded();
+}
 /*!
  Populates the PhotoScene with the labels of the current project.
 */
 void InstaDam::populateSceneFromProjectLabels() {
+
     for (int i = 0; i < currentProject->numLabels(); i++) {
         QSharedPointer<Label> label = currentProject->getLabel(i);
 
@@ -1039,68 +1108,27 @@ void InstaDam::populateSceneFromProjectLabels() {
             QHashIterator<int, RectangleSelect*> rit(label->rectangleObjects);
             while (rit.hasNext()) {
                 rit.next();
-                RectangleSelect *mirror = new RectangleSelect();
-                rit.value()->setLabel(label);
-                mirror->setLabel(label);
-                mirror->updatePen(mirror->myPen);
-                rit.value()->setMirror(mirror);
-                mirror->setMirror(rit.value());
-                mirror->setRectUnchecked(rit.value()->getRect());
-                rit.value()->rotateMirror();
-                scene->addItem(rit.value());
-                maskScene->addItem(mirror);
-                rit.value()->itemWasAdded();
-                mirror->itemWasAdded();
+                populateItem((SelectItem*)rit.value(), label);
             }
         }
         if (!label->ellipseObjects.isEmpty()) {
             QHashIterator<int, EllipseSelect*> eit(label->ellipseObjects);
             while (eit.hasNext()) {
                 eit.next();
-                EllipseSelect *mirror = new EllipseSelect();
-                eit.value()->setLabel(label);
-                mirror->setLabel(label);
-                mirror->updatePen(mirror->myPen);
-                eit.value()->setMirror(mirror);
-                mirror->setMirror(eit.value());
-                mirror->setRectUnchecked(eit.value()->getRect());
-                eit.value()->rotateMirror();
-                scene->addItem(eit.value());
-                maskScene->addItem(mirror);
-                eit.value()->itemWasAdded();
-                mirror->itemWasAdded();
+                populateItem((SelectItem*)eit.value(), label);
+
             }
         }
         if (!label->polygonObjects.isEmpty()) {
             QHashIterator<int, PolygonSelect*> pit(label->polygonObjects);
             while (pit.hasNext()) {
                 pit.next();
-                PolygonSelect *mirror = new PolygonSelect();
-                pit.value()->setLabel(label);
-                mirror->setLabel(label);
-                mirror->updatePen(mirror->myPen);
-                pit.value()->setMirror(mirror);
-                mirror->setMirror(pit.value());
-                pit.value()->setMirrorPolygon(SelectItem::UNSELECTED);
-                scene->addItem(pit.value());
-                maskScene->addItem(mirror);
-                pit.value()->itemWasAdded();
-                mirror->itemWasAdded();
+                populateItem((SelectItem*)pit.value(), label);
             }
         }
         if (!label->freeDrawObjects.isEmpty()) {
             FreeDrawSelect *item = label->freeDrawObjects.values()[0];
-            FreeDrawSelect *mirror = new FreeDrawSelect();
-            item->setLabel(label);
-            mirror->setLabel(label);
-            mirror->updatePen(mirror->myPen);
-            item->setMirror(mirror);
-            mirror->setMirror(item);
-            item->setMirrorMap();
-            scene->addItem(item);
-            maskScene->addItem(mirror);
-            item->itemWasAdded();
-            mirror->itemWasAdded();
+            populateItem((SelectItem*)item, label);
         }
         label->setMaskState(ui->showMaskSelections->checkState());
     }
@@ -1645,6 +1673,7 @@ int InstaDam::annotationDraw(PhotoScene::viewerTypes type,
             } else {
                 myErase = new FreeDrawErase(pos, currentBrushSize,
                                             brushMode, currentLabel);
+                //freeDrawMergeStack->push(myErase);
                 currentItem = myErase;
             }
         }
@@ -1838,7 +1867,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
 
         } else if (currentItem->type() == SelectItem::Freeerase) {
             QUndoCommand *eraseCommand = new ErasePointsCommand(myErase, scene,
-                                                                maskScene);
+                                                                maskScene, freeDrawMergeStack);
             undoGroup->activeStack()->push(eraseCommand);
         } else {
             QUndoCommand *addCommand =
@@ -1927,6 +1956,14 @@ void InstaDam::finishPolygonButtonClicked() {
 */
 void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
+    if ((key == Qt::Key_S)  && QApplication::keyboardModifiers() && Qt::ControlModifier){
+        this->on_actionSave_Annotation_triggered();
+    }
+    else if ((key == Qt::Key_O)  && QApplication::keyboardModifiers() && Qt::ControlModifier){
+        on_actionOpen_File_triggered();
+    }
+
+
     if (!currentItem) {
         return;
     } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
@@ -1943,7 +1980,6 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 bool InstaDam::read(const QJsonObject &json, fileTypes type) {
     if (json.contains(InstaDamJson::LABELS) && json[InstaDamJson::LABELS].isArray()) {
         QJsonArray labelArray = json[InstaDamJson::LABELS].toArray();
-
 
         tempLabels.clear();
         tempLabels.reserve(labelArray.size());
@@ -1966,10 +2002,10 @@ bool InstaDam::read(const QJsonObject &json, fileTypes type) {
         // Memory consumption high before this line
         if (type == PROJECT) {
             currentProject = newProject->newPr;
-            setLabels();
             scene->clearItems();
             maskScene->clearItems();
             currentProject->setLabels(tempLabels);
+
             QTextStream(stdout) << currentProject->numLabels() << "\n";
         } else {
             qInfo() << "reading annotation file";
@@ -2047,21 +2083,22 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     undoGroup->setActiveStack(mainUndoStack);
     FreeDrawSelect *fds = new FreeDrawSelect(maskSelection(item),
                                              currentLabel);
-    scene->addItem(fds);
+
+    populateItem(fds, currentLabel);
+    currentLabel->setMaskState(ui->showMaskSelections->checkState());
     QUndoCommand *addCommand = new AddCommand(fds, scene, this);
     mainUndoStack->push(addCommand);
-    //scene->removeItem(item->getMirror());
-    //maskScene->permanentRemove(item->getMirror());
+
     currentLabel->removeItem(item->getMirror()->myID);
     currentLabel->removeItem(item->myID);
     qInfo()<<"Adding item to label";
-    //currentLabel->addItem(fds);
-    //scene->permanentRemove(item);
 
     scene->removeItem(item->getMirror());
     scene->removeItem(item);
     maskScene->removeItem(item->getMirror());
     maskScene->removeItem(item);
+
+
 
 
     delete item->getMirror();
@@ -2071,6 +2108,7 @@ void InstaDam::addCurrentSelection(bool useCurrent) {
     ui->addSelectionButton->setDisabled(true);
     ui->cancelSelectionButton->setDisabled(true);
     canDrawOnPhoto = true;
+    maskScene->update();
 
 
 }
@@ -2503,3 +2541,33 @@ void InstaDam::on_actionClear_All_can_t_undo_triggered()
 }
 
 
+
+void InstaDam::on_actionExport_mat_triggered()
+{
+    QVector<int> originalLabIds(28);
+    QVector<int> newLabIds(28);
+    for (int i = 0; i<originalLabIds.size(); i++){
+        originalLabIds[i] = i;
+        newLabIds[i] = 0;
+    }
+    // Cracks
+    std::vector<int> cracks = {0, 1, 2, 3, 8, 9,12,19};
+    for (int i = 0; i<cracks.size(); i++){
+        newLabIds[cracks[i]] = 1;
+    }
+    std::vector<int> spall = {4,7,10,11,20};
+    for (int i = 0; i<spall.size(); i++){
+        newLabIds[spall[i]] = 2;
+    }
+    std::vector<int> rebar = {5};
+    for (int i = 0; i<rebar.size(); i++){
+        newLabIds[rebar[i]] = 3;
+    }
+
+    QStringList classes = {"cracks","spall","rebar","image"};
+
+    currentProject->exportNpzLocal(originalLabIds,\
+                                   newLabIds,
+                                   classes,\
+                                   this);
+}

@@ -126,7 +126,7 @@ void PolygonSelect::addPoint(QPointF &point, const int vertex) {
     }
     QGraphicsPolygonItem::prepareGeometryChange();
     setPolygon(polygon);
-    setMirrorPolygon(activeVertex);
+    setInitial(myRect, activeVertex);
     myRect = QGraphicsPolygonItem::boundingRect();
 }
 
@@ -168,7 +168,7 @@ void PolygonSelect::insertVertex(const int vertex, const QPointF &point) {
     pointAdded = true;
     setActiveVertex(vertex + 1);
     activePoint = point;
-    setMirrorPolygon(vertex + 1);
+    setInitial(myRect, vertex + 1);
 }
 
 /*!
@@ -204,7 +204,7 @@ void PolygonSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         }
         QGraphicsPolygonItem::prepareGeometryChange();
         setPolygon(polygon);
-        setMirrorPolygon(UNSELECTED);
+        setInitial(myRect, UNSELECTED);
     } else {
         resized = true;
         setMirrorResized();
@@ -277,7 +277,7 @@ void PolygonSelect::removeVertex(int vertex) {
     refresh();
     setActiveVertex(UNSELECTED);
     activePoint = QPointF(0., 0.);
-    setMirrorPolygon(UNSELECTED);
+    setInitial(myRect, UNSELECTED);
 }
 
 /*!
@@ -428,7 +428,7 @@ void PolygonSelect::movePoint(const QPointF &point) {
     }
     QGraphicsPolygonItem::prepareGeometryChange();
     setPolygon(polygon);
-    setMirrorPolygon(activeVertex);
+    setInitial(myRect, activeVertex);
 }
 
 /*!
@@ -465,7 +465,7 @@ void PolygonSelect::refresh() {
 /*!
   Updates the mirror object and sets \a actVert as the active vertex.
   */
-void PolygonSelect::setMirrorPolygon(int actVert) {
+void PolygonSelect::setInitial(QRectF rect, int actVert) {
     if (mirror != nullptr) {
         mirror->setPolygon(polygon);
         mirror->setActiveVertex(actVert);

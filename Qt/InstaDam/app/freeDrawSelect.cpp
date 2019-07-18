@@ -184,7 +184,7 @@ void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     myPainter.setPen(myPen);
     myPainter.drawLine(oldPos, newPos);
     myPainter.end();
-    setMirrorMap();
+    setInitial();
 }
 
 /*!
@@ -218,7 +218,7 @@ void FreeDrawSelect::paint(QPainter *painter,
 */
 void FreeDrawSelect::setPointsUnchecked(QPixmap map) {
     myPixmap = map;
-    setMirrorMap();
+    setInitial();
 }
 /*!
   \reimp
@@ -307,7 +307,7 @@ void FreeDrawSelect::addPoints(QSharedPointer<QPixmap> points) {
     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
     myPainter.drawPixmap(QPointF(0., 0.), (*points.data()));
     myPainter.end();
-    setMirrorMap();
+    setInitial();
 }
 
 /*!
@@ -334,7 +334,7 @@ void FreeDrawSelect::deletePoints(const QPointF &start, const QPointF &end,
     myPainter.drawPixmap(QPointF(0., 0.), temp);
     myPainter.end();
 
-    setMirrorMap();
+    setInitial();
 }
 
 /*!
@@ -355,7 +355,7 @@ void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map) {
     myPainter.setCompositionMode(QPainter::CompositionMode_DestinationOut);
     myPainter.drawPixmap(QPointF(0., 0.), (*map.data()));
     myPainter.end();
-    setMirrorMap();
+    setInitial();
 }
 
 
@@ -365,7 +365,7 @@ void FreeDrawSelect::deletePoints(QPen &pen, QSharedPointer<QPixmap> map) {
   Sets the bounding rectangle and pixel map of the mirror, based on the values
   of this instance.
 */
-void FreeDrawSelect::setMirrorMap() {
+void FreeDrawSelect::setInitial(QRectF rect, int actVertex) {
     if (mirror != nullptr) {
         mirror->myPixmap = myPixmap;
     }
@@ -415,7 +415,7 @@ void FreeDrawSelect::loadFromPixmap(const QPixmap map, bool importBool) {
   Common setup functions called by all consructors.
 */
 inline void FreeDrawSelect::setup() {
-    setMirrorMap();
+    setInitial();
     QGraphicsPixmapItem::prepareGeometryChange();
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsSelectable);
     QGraphicsPixmapItem::setFlag(QGraphicsItem::ItemIsMovable);

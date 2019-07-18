@@ -49,6 +49,26 @@ QPixmap joinPixmaps(QPixmap p1, QPixmap p2,
 }
 
 
+/*!
+  Returns a QPixmap of \a p1 and \a p2 merged using \a mode.
+*/
+QPixmap joinSharedPointerPixmaps(QSharedPointer<QPixmap> p1, QSharedPointer<QPixmap> p2,
+                    QPainter::CompositionMode mode) {
+    QPixmap result =  QPixmap(p1->size().expandedTo(p2->size()));
+    result.fill(Qt::transparent);
+    QPainter painter;
+    painter.begin(&result);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.drawPixmap(QPoint(), *(p1.data()));
+    painter.setCompositionMode(mode);
+    painter.drawPixmap(result.rect(), *(p2.data()), p2->rect());
+    painter.end();
+    return result;
+    //QSharedPointer<QPixmap> sharedPointerPixmap(&result);
+    //return sharedPointerPixmap;
+}
+
+
 // Source: https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap/
 // If inImage exists for the lifetime of the resulting cv::Mat, pass false to inCloneImageData to share inImage's
 // data with the cv::Mat directly

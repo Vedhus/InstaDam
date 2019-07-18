@@ -57,8 +57,9 @@ class PolygonSelect : public SelectItem, public QGraphicsPolygonItem {
     void setMirrorResized() const override;
     void setMirrorVertex(int vertex) const override;
     void updateMirrorScene() const override;
+    void setInitial(QRectF rect, int) override;
 
-    void setMirrorPolygon(int actVert);
+    //void setMirrorPolygon(int actVert);
     /*------------- End implemented functions*/
 
     void checkPoint(QPointF &point);

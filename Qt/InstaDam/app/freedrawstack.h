@@ -14,13 +14,17 @@ public:
     PhotoScene* photoScene;
     PhotoScene* maskScene;
     QList<FreeDrawSelect*> stack;
+    QList<FreeDrawSelect*> tempUndoStack;
     void push(FreeDrawSelect*);
+    void trimUndoStack();
     int maxLength;
     void merge();
     void clear();
     void undo();
-    void redo(FreeDrawSelect* );
+    void redo(SelectItem * );
     int* showMirrorPtr;
+    void clearUndoStack();
+    void mergeErase(SelectItem* , FreeDrawSelect*, FreeDrawSelect* );
 
 
 };

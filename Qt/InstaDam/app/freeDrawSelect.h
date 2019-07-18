@@ -73,7 +73,8 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     void setMirrorVertex(int vertex) const override {UNUSED(vertex);}
     void updateMirrorScene() const override;
 
-    void setMirrorMap();
+    void setInitial(QRectF rect = QRectF(0,0,0,0),
+                    int actVertex = SelectItem::UNSELECTED) override;
     /*------------- End implemented functions*/
     bool foundPixels = false;
     void addPoints(QSharedPointer<QPixmap> points);
@@ -86,9 +87,10 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     bool isVisible() const {return SelectItem::isVisible();}
     QPixmap getPixmap() const {return myPixmap;}
     void importPixmap(const QPixmap);
+    QPixmap myPixmap;
 
  protected:
-    QPixmap myPixmap;
+
     QPoint lastPoint;
 
  private:

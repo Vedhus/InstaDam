@@ -63,6 +63,7 @@ class SelectItem : public QGraphicsItem {
     static QPointF xoffset;
     static QPointF yoffset;
     int myID;
+    bool inUndoQ = false; //The is for freeDrawStack
     QPen highlightPen, myPen;
 
     SelectItem(qreal vertSize = DEFAULT_SIZE,
@@ -108,12 +109,16 @@ class SelectItem : public QGraphicsItem {
     virtual void setMirrorResized() const = 0;
     virtual void setMirrorVertex(int vertex) const = 0;
     virtual void updateMirrorScene() const = 0;
-    /*-------------- End virtual functions-------------------------*/
 
+    virtual void setInitial(QRectF rect, int) = 0;
+    QRectF getRect() const {return myRect;};;
+
+    /*-------------- End virtual functions-------------------------*/
+    void setLabel(QSharedPointer<Label> label, bool init = false);
     QGraphicsItem* getParentItem() const;
     void invertColorForPen();
     QGraphicsScene* scene() const;
-    void setLabel(QSharedPointer<Label> label, bool init = false);
+
     QSharedPointer<Label> getLabel() const {return myLabel;}
     static void setVertexSize(qreal size);
     void sortCorners(QRectF &rect, QPointF &newPoint);
@@ -132,6 +137,7 @@ class SelectItem : public QGraphicsItem {
     int getActiveVertex() const {return activeVertex;}
     bool isItemActive()const {return active;}
     bool isItemAdded()const {return hasBeenAdded;}
+
     void itemWasAdded() {
         setMirrorAdded();
         hasBeenAdded = true;

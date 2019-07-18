@@ -483,6 +483,22 @@ bool SelectItem::isInsideRect(const QRectF &rect, const QPointF &point) const {
 
     \sa getActiveVertex(), resetState()
 */
+
+/*!
+  \fn virtual void SelectItem::setInitial(QRectF rect, int actVertex) = 0;
+
+  Pure virtual function that has different roles depending on the inherited type
+  For box based selectors, it is used to set the internal rectangle of the BoxBasedSelector to
+  \a rect without checking to see if it completely fits in the QGraphicsScene.
+  This is used when setting the internal rectangle of the mirror after checking
+  has been done in this instance.
+  */
+/*!
+  \fn QRectF SelectItem::getRect() const
+
+  Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
+  */
+
 /*!
     \fn void SelectItem::setInactive()
 

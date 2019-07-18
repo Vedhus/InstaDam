@@ -68,8 +68,10 @@ void AddCommand::redo() {
         myScene->clearSelection();
         myScene->update();
         myItem->updateMirrorScene();
-        if (myItem->type()==SelectItem::Freedraw){
-            myStack->redo((FreeDrawSelect*)myItem);
+
+        if (myItem->type()==SelectItem::Freedraw ||
+                myItem->type()==SelectItem::Freeerase){
+            myStack->redo(myItem);
         }
     } else {
         if (myItem->getMirror() != nullptr)
@@ -362,11 +364,13 @@ void DeleteVertexCommand::redo() {
  */
 ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene,
                                        PhotoScene *maskScene,
+                                       FreeDrawStack* freeDrawMergeStack,
                                        QUndoCommand *parent)
     : QUndoCommand(parent) {
     myItem = item;
     myScene = scene;
     myMask = maskScene;
+    myStack = freeDrawMergeStack;
     myPen.setColor(Qt::transparent);
 }
 
@@ -374,11 +378,15 @@ ErasePointsCommand::ErasePointsCommand(FreeDrawErase *item, PhotoScene *scene,
    \reimp
  */
 void ErasePointsCommand::undo() {
+    qInfo()<<"In erase undo!";
     EraseMapIterator it((*myItem->getMap()));
+    qInfo()<<"Iterator defined!";
     while (it.hasNext()) {
         it.next();
         it.key()->addPoints(it.value());
+        qInfo()<<"Added points!";
     }
+    myStack->undo();
     myScene->update();
     myMask->update();
 }
@@ -395,6 +403,7 @@ void ErasePointsCommand::redo() {
     } else {
         init = true;
     }
+    myStack->redo((FreeDrawErase*)myItem);
     myScene->update();
     myMask->update();
 }

@@ -100,7 +100,7 @@ class DeleteVertexCommand : public QUndoCommand {
 class ErasePointsCommand : public QUndoCommand {
  public:
     ErasePointsCommand(FreeDrawErase *item, PhotoScene *graphicsScene,
-                       PhotoScene *maskScene, QUndoCommand *parent = nullptr);
+                       PhotoScene *maskScene, FreeDrawStack* ,QUndoCommand *parent = nullptr);
     void undo() override;
     void redo() override;
  private:
@@ -108,6 +108,7 @@ class ErasePointsCommand : public QUndoCommand {
     PhotoScene *myScene;
     PhotoScene *myMask;
     bool init = false;
+    FreeDrawStack* myStack;
     QPen myPen;
 };
 

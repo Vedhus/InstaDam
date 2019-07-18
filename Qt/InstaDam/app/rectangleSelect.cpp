@@ -117,7 +117,7 @@ void RectangleSelect::addPoint(QPointF &point, const int vertex) {
     QGraphicsRectItem::prepareGeometryChange();
     setRect(myRect);
     if (mirror != nullptr)
-        mirror->setRectUnchecked(myRect);
+        mirror->setInitial(myRect, SelectItem::UNSELECTED);
 }
 
 /*!
@@ -148,7 +148,7 @@ void RectangleSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         //calcCorners();
         setRect(myRect);
         if (mirror != nullptr)
-            mirror->setRectUnchecked(getRect());
+            mirror->setInitial(getRect(), SelectItem::UNSELECTED);
     } else {
         // otherwise we are moving the entire object
         QPointF shift = newPos - oldPos;
@@ -199,7 +199,7 @@ void RectangleSelect::updatePen(QPen pen) {
 /*!
   \reimp
   */
-void RectangleSelect::setRectUnchecked(QRectF rect) {
+void RectangleSelect::setInitial(QRectF rect, int actVertex) {
     QGraphicsRectItem::prepareGeometryChange();
     myRect = rect;
     setRect(myRect);

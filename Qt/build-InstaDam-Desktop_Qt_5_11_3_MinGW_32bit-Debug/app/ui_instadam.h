@@ -58,6 +58,8 @@ public:
     QAction *actionEdit_Label;
     QAction *actionImport;
     QAction *actionClear_All_can_t_undo;
+    QAction *actionExport_mat;
+    QAction *actionTest;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
@@ -184,6 +186,10 @@ public:
         actionImport->setObjectName(QStringLiteral("actionImport"));
         actionClear_All_can_t_undo = new QAction(InstaDam);
         actionClear_All_can_t_undo->setObjectName(QStringLiteral("actionClear_All_can_t_undo"));
+        actionExport_mat = new QAction(InstaDam);
+        actionExport_mat->setObjectName(QStringLiteral("actionExport_mat"));
+        actionTest = new QAction(InstaDam);
+        actionTest->setObjectName(QStringLiteral("actionTest"));
         centralwidget = new QWidget(InstaDam);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -597,7 +603,9 @@ public:
         menu_File->addAction(actionImport);
         menu_File->addAction(actionExport);
         menu_File->addAction(actionExport_zip);
+        menu_File->addAction(actionExport_mat);
         menu_File->addSeparator();
+        menu_File->addAction(actionTest);
         menuEdit->addAction(actionDelete);
         menuEdit->addAction(actionEdit_Label);
         menuEdit->addSeparator();
@@ -649,6 +657,8 @@ public:
         actionEdit_Label->setText(QApplication::translate("InstaDam", "Edit Label Class", nullptr));
         actionImport->setText(QApplication::translate("InstaDam", "Import", nullptr));
         actionClear_All_can_t_undo->setText(QApplication::translate("InstaDam", "Clear All (can't undo)", nullptr));
+        actionExport_mat->setText(QApplication::translate("InstaDam", "Export .npz", nullptr));
+        actionTest->setText(QApplication::translate("InstaDam", "Test", nullptr));
         ellipseSelectButton->setText(QApplication::translate("InstaDam", "EllipseSelect", nullptr));
         freeSelectButton->setText(QApplication::translate("InstaDam", "Free Select", nullptr));
         panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));

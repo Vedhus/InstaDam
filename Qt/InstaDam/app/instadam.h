@@ -45,7 +45,8 @@
 
 class filterControls;
 class PicPushButton;
-
+class newproject;
+class ImageList;
 namespace Ui {
 class InstaDam;
 }
@@ -87,7 +88,7 @@ class InstaDam : public QMainWindow {
     QList<PicPushButton*> maskButtonList;
     ImageList* il;
     void resetGUIclearLabels();
-    void saveAndProgress(int);
+    void saveAndProgress(int, bool save = true);
     PhotoScene::viewerTypes selectedViewer;
     void deleteCurrentObject(PhotoScene::viewerTypes type);
     int annotationDraw(PhotoScene::viewerTypes type, SelectItem *item,
@@ -105,10 +106,12 @@ class InstaDam : public QMainWindow {
 
     int autoSaveDuration = 5000;
     cv::Mat thumbnail;
-    int maxUndoLength = 10;
+    int maxUndoLength = 8;
     FreeDrawStack* freeDrawMergeStack;
     void saveIdantn();
+    void populateItem(SelectItem* item,QSharedPointer<Label>);
     int* maskShowStatePtr;
+    QVector<QPixmap> exportNpz(QVector<int> , QVector<int>);
 
 
  private slots:
@@ -131,6 +134,7 @@ class InstaDam : public QMainWindow {
     void toggleDrawing();
     void toggleErasing();
     void checkLabel(QSharedPointer<Label> label);
+    void checkLabel(int);
     void setCurrentLabel(QSharedPointer<Label> label);
     void setCurrentLabel(LabelButton *button);
     void setOpacity(QSharedPointer<Label>, int val);
@@ -191,10 +195,13 @@ class InstaDam : public QMainWindow {
 
 
 
+    void on_actionExport_mat_triggered();
+
 public slots:
+    bool loadLabelJson(QJsonObject json, fileTypes fileType);
     void resetPixmapButtons();
     void fileDownloaded(QString path);
-    bool loadLabelJson(QJsonObject json, fileTypes fileType);
+
     void editLabel(QSharedPointer<Label>);
     void toggleFilterDialogOpen(int r=0);
     void setArrowCursor(bool check);
@@ -203,6 +210,7 @@ public slots:
     void setBrushCursor();
     //void initiate(QString databaseURL, QString token);
     void autoSave();
+    bool loadLabelFile(QString filename, fileTypes fileType);
 
  private:
 #ifdef WASM_BUILD
@@ -285,14 +293,16 @@ public slots:
     bool currentProjectLoaded = false;
 
     QPixmap maskSelection(SelectItem *item);
+
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
-
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
-    bool loadLabelFile(QString filename, fileTypes fileType);
+
+    void openFileFromJson(QJsonObject);
+
     void revert();
     void listProjects();
-    void openFileFromJson(QJsonObject);
+
     void getReadyForNewProject();
     void currentProjectDeleted(int);
 

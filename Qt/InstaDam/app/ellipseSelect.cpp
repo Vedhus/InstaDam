@@ -124,7 +124,7 @@ void EllipseSelect::addPoint(QPointF &point, const int vertex) {
     setRect(myRect);
 
     if (mirror != nullptr)
-        mirror->setRectUnchecked(myRect);
+        mirror->setInitial(myRect, SelectItem::UNSELECTED);
 }
 
 /*!
@@ -168,7 +168,7 @@ void EllipseSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
         //calcCorners();
         setRect(myRect);
         if (mirror != nullptr)
-            mirror->setRectUnchecked(myRect);
+            mirror->setInitial(myRect, SelectItem::UNSELECTED);
     } else {
         // otherwise we are moving the entire object
         QPointF shift = newPos - oldPos;
@@ -203,7 +203,7 @@ void EllipseSelect::paint(QPainter *painter,
 /*!
   \reimp
   */
-void EllipseSelect::setRectUnchecked(QRectF rect) {
+void EllipseSelect::setInitial(QRectF rect, int actVertex) {
     QGraphicsEllipseItem::prepareGeometryChange();
     myRect = rect;
     setRect(myRect);

@@ -7,6 +7,7 @@ wasm: DEFINES += WASM_BUILD
 TARGET = ../InstaDam
 TEMPLATE = app
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
+#INCLUDEPATH += D:\PythonQt\PythonQt\include\PythonQt\
 
 SOURCES += \
         freedrawstack.cpp \
@@ -52,6 +53,8 @@ wasm: SOURCES += colordialog.cpp
 HEADERS += \
     freedrawstack.h \
         instadam.h \
+    mat.h \
+    matrix.h \
         project.h \
         photoviewer.h \
         maskviewer.h \
@@ -72,6 +75,7 @@ HEADERS += \
         serverprojectname.h \
         enumconstants.h \
     addusertoproject.h \
+    tmwtypes.h \
     userprivilege.h \
     chooselabeldialog.h \
     commands.h \
@@ -114,7 +118,8 @@ win32 {
 
   CONFIG += c++1z
   INCLUDEPATH += $${PWD}\..\quazip\include
-
+  INCLUDEPATH += D:\cnpy\install\include
+  INCLUDEPATH += D:\zlib1211\zlib-install\include
 ## Change paths here depending on your system installation location
 
 #   INCLUDEPATH += C:\opencv\opencv\build\include $${PWD}/..
@@ -143,14 +148,19 @@ win32 {
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+   LIBS += D:\cnpy\install\bin\libcnpy.dll
+   LIBS += D:/zlib1211/zlib-install/bin/libzlib.dll
+#   LIBS += D:\PythonQt\PythonQt\bin\libPythonQt.dll
 ##End change paths
 
   LIBS += -L$${PWD}\..\quazip\lib
-  LIBS += -lquazip -lz
+  LIBS += -LD:\cnpy\install\lib
+  LIBS += -lquazip -lcnpy -lz #-lpythoqt
   DEFINES+=ZLIB_WINAPI
   LIBS += -L$${PWD}/..
+#  LIBS += -LD:\PythonQt\PythonQt\lib
 
-  LIBS +=  -lselector
+#  LIBS +=  -lselector
 
 wasm: LIBS += -L$${PWD}/../htmlFileHandler -lhtmlFileHandler -L/usr/lib/emscripten
 }
@@ -161,6 +171,7 @@ unix {
   LIBS += -L$${PWD}/.. -lselector -lquazip
 wasm: LIBS += -lhtmlFileHandler -L/usr/lib/emscripten
   INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
+#  INCLUDEPATH += C:/Users/hoskere2/AppData/Local/Programs/Python/Python37-32/include/
 
 }
 

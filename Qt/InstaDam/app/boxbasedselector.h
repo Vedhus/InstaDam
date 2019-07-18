@@ -17,7 +17,7 @@ class BoxBasedSelector : public SelectItem {
     /*---------------- Virtual functions ---------------------------*/
     virtual void setMirrorCorners(QRectF tlc, QRectF blc, QRectF trc,
                                   QRectF brc) const = 0;
-    virtual void setRectUnchecked(QRectF rect) = 0;
+
     /*-------------- End virtual functions-------------------------*/
 
     /*-------------- Implemented functions from SelectItem ---------*/
@@ -38,7 +38,8 @@ class BoxBasedSelector : public SelectItem {
 
     void setRotationAngle(qreal angle) {myRotation = angle;}
     qreal getRotationAngle() const {return myRotation;}
-    QRectF getRect() const {return myRect;}
+    //void setInitial(QRectF rect, int);
+
 
  protected:
     QRectF tl, bl, tr, br;

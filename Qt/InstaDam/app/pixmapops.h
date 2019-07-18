@@ -11,6 +11,7 @@ QPixmap joinPixmaps(QPixmap p1, QPixmap p2,
 cv::Mat QImageToCvMat(QImage inImage, bool inCloneImageData = true);
 
 //cv::Mat QPixmapToCvMat(QPixmap, bool);
-
+QPixmap joinSharedPointerPixmaps(QSharedPointer<QPixmap> p1, QSharedPointer<QPixmap> p2,
+                    QPainter::CompositionMode mode = QPainter::CompositionMode_SourceOver);
 
 #endif  // PIXMAPOPS_H

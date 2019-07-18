@@ -213,14 +213,7 @@ void BoxBasedSelector::calcCorners(bool mir) {
   top-right corner, and \a brc is the bottom right corner.
   */
 
-/*!
-  \fn virtual void BoxBasedSelector::setRectUnchecked(QRectF rect) = 0;
 
-  Pure virtual function to set the internal rectangle of the BoxBasedSelector to
-  \a rect without checking to see if it completely fits in the QGraphicsScene.
-  This is used when setting the internal rectangle of the mirror after checking
-  has been done in this instance.
-  */
 
 /*!
   \fn void BoxBasedSelector::insertVertex(const int vertex, const QPointF &point)
@@ -237,6 +230,12 @@ void BoxBasedSelector::calcCorners(bool mir) {
 
   Always returns 2, as this and any derived classes can have two, and only two
   vertices.
+  */
+
+/*!
+  \fn void BoxBasedSelector::setInitial(QRectF rect, int actVertex)
+  \reimp
+
   */
 
 /*!
@@ -257,8 +256,4 @@ void BoxBasedSelector::calcCorners(bool mir) {
   \sa setRotationAngle()
   */
 
-/*!
-  \fn QRectF BoxBasedSelector::getRect() const
 
-  Returns a QRectF which denotes the bounding rectanlge of the BoxBasedSelector.
-  */

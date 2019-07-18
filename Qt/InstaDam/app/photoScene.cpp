@@ -1,5 +1,5 @@
 #include "photoScene.h"
-
+#include "label.h"
 #include <QtWidgets>
 #include <map>
 #include <string>
@@ -71,8 +71,9 @@ void PhotoScene::removeItem(SelectItem* item) {
     currentItems.remove(item);
     QGraphicsScene::removeItem(item);
     labelItems.removeOne(item);
+    QString labelName = item->getLabel()->getText();
+    labelmap[labelName.toStdString()].remove(item);
 }
-
 /*!
  * Permanently delete \a item
  * */

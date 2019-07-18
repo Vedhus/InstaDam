@@ -2,9 +2,10 @@
 #define PROJECT_H
 
 #include <QVector>
-
+#include "instadam.h"
 #include "label.h"
 
+class InstaDam;
 class Project{
  private:
     QVector<QSharedPointer<Label> > labels;
@@ -45,6 +46,13 @@ class Project{
     QString getName();
 
     void clearAllLabels();
+
+    void exportNpzLocal(QVector<int>,\
+                        QVector<int>,\
+                        QStringList, \
+                        InstaDam*);
+    void exportNpz(QVector<int> originalLabels, QVector<int> newLabels,
+                   std::string, QStringList, QPixmap);
 
 #ifdef TEST
     friend class IntegrationTest;

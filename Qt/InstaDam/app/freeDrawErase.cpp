@@ -1,5 +1,5 @@
 #include "freeDrawErase.h"
-
+#include "pixmapops.h"
 #include "label.h"
 
 /*!
@@ -43,11 +43,48 @@ FreeDrawErase::FreeDrawErase(QPointF point, int brushSize,
         QSharedPointer<QPixmap> delHash =
                 QSharedPointer<QPixmap>::create(SelectItem::myBounds);
         delHash->fill(Qt::transparent);
+        qInfo()<<"In FreeDrawErase";
+        qInfo()<<it.key();
         it.value()->deletePoints(point, point, myPen, delHash);
         undoMap->insert(it.value(), delHash);
+
     }
     deleteList = QVector<int>();
     mytype = SelectItem::Freeerase;
+}
+
+/* This function removes pastmerged items from the undo stack from the erase map
+ * and adds new merged items */
+FreeDrawErase::addToMap(FreeDrawSelect* pastMerged, FreeDrawSelect* stack0, FreeDrawSelect* merged){
+
+
+    QSharedPointer<QPixmap> hash0 = QSharedPointer<QPixmap>::create(SelectItem::myBounds);
+    hash0->fill(Qt::transparent);
+    QSharedPointer<QPixmap> hashPastMerged = QSharedPointer<QPixmap>::create(SelectItem::myBounds);
+    hashPastMerged->fill(Qt::transparent);
+
+
+    QMap<FreeDrawSelect*, QSharedPointer<QPixmap>>::iterator eraseMap0 = undoMap->find(pastMerged);
+
+    if (eraseMap0!= undoMap->constEnd()){
+        hash0 = eraseMap0.value();
+        undoMap->remove(pastMerged);
+    }
+    merged->deletePoints(myPen, hash0);
+    QMap<FreeDrawSelect*, QSharedPointer<QPixmap>>::iterator eraseMapMerged = undoMap->find(stack0);
+
+    if (eraseMapMerged!= undoMap->constEnd()){
+        hashPastMerged = eraseMapMerged.value();
+        undoMap->remove(stack0);
+    }
+
+    merged->deletePoints(myPen, hashPastMerged);
+    QPixmap hashMergedPixmap = joinSharedPointerPixmaps(hashPastMerged, hash0);
+    QSharedPointer<QPixmap> hashMerged =
+            QSharedPointer<QPixmap>::create(hashMergedPixmap);
+    undoMap->insert(merged, hashMerged);
+
+
 }
 
 /*!

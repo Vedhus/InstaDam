@@ -32,7 +32,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     void moveItem(const QPointF &oldPos, QPointF &newPos) override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
-    void setRectUnchecked(QRectF rect) override;
+    void setInitial(QRectF rect, int)  override;
     void updatePen(QPen pen) override;
     void toPixmap(QPainter *painter) override;
     void setOpacity(qreal val);

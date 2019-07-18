@@ -163,6 +163,8 @@ void Label::addItem(PolygonSelect *item) {
 void Label::addItem(FreeDrawSelect *item) {
     if (freeDrawObjects.isEmpty()){
         mergedFDS = item;
+        qInfo()<<mergedFDS->myID;
+        qInfo()<<mergedFDS->myID;
     }
     else{
         freeDrawStack->push(item);
@@ -177,8 +179,8 @@ void Label::addItem(FreeDrawSelect *item) {
  * The function is called by freeDrawStak.push();
  */
 void Label::mergeFDS(FreeDrawSelect *merge, int bottomOfStackID){
-
     freeDrawObjects.remove(bottomOfStackID);
+    qInfo()<<mergedFDS->myID;
     freeDrawObjects.remove(mergedFDS->myID);
 
     mergedFDS = merge;

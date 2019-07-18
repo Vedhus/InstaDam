@@ -35,7 +35,7 @@ class RectangleSelect : public BoxBasedSelector, public QGraphicsRectItem {
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
     void updatePen(QPen pen) override;
-    void setRectUnchecked(QRectF rect) override;
+    void setInitial(QRectF rect,  int)  override;
     void toPixmap(QPainter *painter) override;
     void setOpacity(qreal);
     void setZValue(int);

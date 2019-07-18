@@ -10,6 +10,7 @@
 #ifdef WASM_BUILD
 #include "colordialog.h"
 #endif
+class Project;
 
 namespace Ui {
 class newproject;
