@@ -309,7 +309,7 @@ void PolygonSelect::toPixmap(QPainter *painter) {
 void PolygonSelect::updatePen(QPen pen) {
     setPen(pen);
     QColor col = pen.color();
-    col.setAlphaF(0.25);
+    col.setAlphaF(0.75);
     QBrush brush(col);
     setBrush(brush);
 }

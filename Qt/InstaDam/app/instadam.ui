@@ -898,7 +898,6 @@
     <addaction name="actionExport_zip"/>
     <addaction name="actionExport_mat"/>
     <addaction name="separator"/>
-    <addaction name="actionTest"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">

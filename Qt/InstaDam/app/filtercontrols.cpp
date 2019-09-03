@@ -207,6 +207,25 @@ void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum, i
 */
 void filterControls::setLabelMask(QSharedPointer<Label> label) {
     this->labelMask = label->exportLabel(SelectItem::myBounds);
+
+//    QFile file("yourFile.png");
+
+//    QByteArray bArray;
+//    QBuffer buffer(&bArray);
+//    buffer.open(QIODevice::WriteOnly);
+//    this->labelMask(&buffer, "PNG");
+
+
+//    //tmp(src.height(),src.width(), CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
+
+//    // Create a Size(1, nSize) Mat object of 8-bit, single-byte elements
+//    Mat rawData( 1, nSize, CV_8UC1, (void*)pcBuffer );
+
+//    Mat decodedImage  =  imdecode( rawData )
+
+
+
+
     emit valAssigned(EnumConstants::LABELMASK, EnumConstants::FILTER);
 }
 
@@ -355,9 +374,10 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
             break;
         case EnumConstants::LABELMASK:
             if (!this->labelMask.isNull()) {
-                QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888));
+                QImage image_pixmap(this->labelMask.toImage().convertToFormat(QImage::Format_RGB888
+                                                                              ));
                 cv::Mat mat(image_pixmap.height(), image_pixmap.width(),
-                            CV_8UC3, image_pixmap.bits());
+                            CV_8UC3, (uchar*)image_pixmap.bits(),image_pixmap.bytesPerLine());
                 cv::resize(mat, mat, image.size());
                 cv::cvtColor(mat, edge_temp, cv::COLOR_RGB2GRAY);
             }

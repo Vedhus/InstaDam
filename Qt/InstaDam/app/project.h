@@ -52,7 +52,7 @@ class Project{
                         QStringList, \
                         InstaDam*);
     void exportNpz(QVector<int> originalLabels, QVector<int> newLabels,
-                   std::string, QStringList, QPixmap);
+                   std::string, QStringList, QPixmap, int imbool = 0);
 
 #ifdef TEST
     friend class IntegrationTest;

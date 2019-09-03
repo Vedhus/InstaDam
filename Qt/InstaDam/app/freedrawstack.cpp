@@ -15,18 +15,25 @@ FreeDrawStack::FreeDrawStack(int maxStackLength, PhotoScene* scene, PhotoScene* 
     maskScene = mScene;
     showMirrorPtr = showMirror;
     stack.reserve(maxStackLength);
+    isClear = true;
 
 }
 
 void FreeDrawStack::push(FreeDrawSelect* fdsInput){
     stack.push_back(fdsInput);
+    isClear = false;
 
     merge();
 }
 
 void FreeDrawStack::clear(){
-    stack.clear();
-    tempUndoStack.clear();
+    if (isClear == false){
+        stack.clear();
+        tempUndoStack.clear();
+    }
+    isClear = true;
+
+
 }
 
 void FreeDrawStack::undo(){
@@ -62,6 +69,7 @@ void FreeDrawStack::undo(){
 
 void FreeDrawStack::redo(SelectItem* last){
     stack.push_back((FreeDrawSelect*)last);
+    isClear = false;
     tempUndoStack.removeOne((FreeDrawSelect*)last);
     merge();
 //    if (last->type() == SelectItem::Freeerase){

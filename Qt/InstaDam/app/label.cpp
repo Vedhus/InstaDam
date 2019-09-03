@@ -218,7 +218,6 @@ void Label::removeItem(const int id) {
   */
 void Label::clear() {
     freeDrawObjects.clear();
-    freeDrawStack->clear();
     rectangleObjects.clear();
     ellipseObjects.clear();
     polygonObjects.clear();

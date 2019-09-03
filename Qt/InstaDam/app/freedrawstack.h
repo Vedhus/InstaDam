@@ -25,6 +25,7 @@ public:
     int* showMirrorPtr;
     void clearUndoStack();
     void mergeErase(SelectItem* , FreeDrawSelect*, FreeDrawSelect* );
+    bool isClear;
 
 
 };

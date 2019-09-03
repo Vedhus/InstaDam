@@ -167,7 +167,7 @@ void Project::exportNpzLocal(QVector<int> originalLabelIds,\
 */
 void Project::exportNpz(QVector<int> originalLabels, QVector<int> newLabels,
                         std::string saveName, QStringList classNames,
-                        QPixmap photo) {
+                        QPixmap photo, int imbool) {
     int max = *std::max_element(newLabels.constBegin(), newLabels.constEnd());
     QVector<QPixmap> exportPixmaps(max);
     exportPixmaps.reserve(max);
@@ -188,7 +188,7 @@ void Project::exportNpz(QVector<int> originalLabels, QVector<int> newLabels,
     }
     //std::vector<uchar> dataBlock;
 
-    for (int i = 0; i<exportPixmaps.size()+1; i++){
+    for (int i = 0; i<exportPixmaps.size()+imbool; i++){
         int k;
         QImage image_pixmap;
 
@@ -201,7 +201,7 @@ void Project::exportNpz(QVector<int> originalLabels, QVector<int> newLabels,
         }
 
         cv::Mat mat3(image_pixmap.height(), image_pixmap.width(),
-                    CV_8UC3, image_pixmap.bits());
+                    CV_8UC3, (uchar*)image_pixmap.bits(),image_pixmap.bytesPerLine());
         cv::Mat mat;
         cv::cvtColor(mat3, mat, cv::COLOR_RGB2GRAY);
         cv::threshold(mat, mat, 1,255, cv::THRESH_BINARY);

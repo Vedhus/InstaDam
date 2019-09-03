@@ -829,6 +829,8 @@ void InstaDam::resetGUIclearLabels() {
     scene->clearItems();
     maskScene->clearItems();
     currentProject->clearAllLabels();
+    freeDrawMergeStack->clear();
+
     scene->update();
     maskScene->update();
 
@@ -2544,27 +2546,30 @@ void InstaDam::on_actionClear_All_can_t_undo_triggered()
 
 void InstaDam::on_actionExport_mat_triggered()
 {
-    QVector<int> originalLabIds(28);
-    QVector<int> newLabIds(28);
+    QVector<int> originalLabIds(currentProject->numLabels());
+    QVector<int> newLabIds(currentProject->numLabels());
+    QStringList classes; // = {"cracks","spall","rebar","image"};
+
     for (int i = 0; i<originalLabIds.size(); i++){
         originalLabIds[i] = i;
-        newLabIds[i] = 0;
+        newLabIds[i] = i+1;
+        classes.append(currentProject->getLabel(i)->getText());
     }
-    // Cracks
-    std::vector<int> cracks = {0, 1, 2, 3, 8, 9,12,19};
-    for (int i = 0; i<cracks.size(); i++){
-        newLabIds[cracks[i]] = 1;
-    }
-    std::vector<int> spall = {4,7,10,11,20};
-    for (int i = 0; i<spall.size(); i++){
-        newLabIds[spall[i]] = 2;
-    }
-    std::vector<int> rebar = {5};
-    for (int i = 0; i<rebar.size(); i++){
-        newLabIds[rebar[i]] = 3;
-    }
+//    // Cracks
+//    std::vector<int> cracks = {0, 1, 2, 3, 8, 9,12,19};
+//    for (int i = 0; i<cracks.size(); i++){
+//        newLabIds[cracks[i]] = 1;
+//    }
+//    std::vector<int> spall = {4,7,10,11,20};
+//    for (int i = 0; i<spall.size(); i++){
+//        newLabIds[spall[i]] = 2;
+//    }
+//    std::vector<int> rebar = {5};
+//    for (int i = 0; i<rebar.size(); i++){
+//        newLabIds[rebar[i]] = 3;
+//    }
 
-    QStringList classes = {"cracks","spall","rebar","image"};
+
 
     currentProject->exportNpzLocal(originalLabIds,\
                                    newLabIds,

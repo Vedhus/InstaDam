@@ -605,7 +605,6 @@ public:
         menu_File->addAction(actionExport_zip);
         menu_File->addAction(actionExport_mat);
         menu_File->addSeparator();
-        menu_File->addAction(actionTest);
         menuEdit->addAction(actionDelete);
         menuEdit->addAction(actionEdit_Label);
         menuEdit->addSeparator();
