@@ -1893,6 +1893,7 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
         }
     } else if (currentItem && (currentItem->wasMoved() ||
                                currentItem->wasResized() ||
+                              (currentItem->wasResized() && currentItem->type() != SelectItem::Polygon) ||
                                currentItem->wasRotated())) {
 
         if (currentItem->wasMoved()) {
