@@ -167,6 +167,7 @@ void RectangleSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     QGraphicsRectItem::prepareGeometryChange();
 }
 
+
 /*!
   \reimp
   */

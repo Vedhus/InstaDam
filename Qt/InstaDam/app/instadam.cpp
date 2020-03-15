@@ -120,6 +120,8 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
                                       const Qt::KeyboardModifiers)));
     connect(scene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
+    connect(scene,SIGNAL(keyReleased(PhotoScene::viewerTypes, const int)), this,
+            SLOT(processKeyReleased(PhotoScene:: viewerTypes, const int)));
     connect(maskScene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
                                            QPointF, const Qt::MouseButton,
                                            const Qt::KeyboardModifiers)), this,
@@ -138,6 +140,8 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
                                       const Qt::KeyboardModifiers)));
     connect(maskScene, SIGNAL(keyPressed(PhotoScene::viewerTypes, const int)), this,
             SLOT(processKeyPressed(PhotoScene::viewerTypes, const int)));
+
+
 
     connect(ui->showMaskSelections, SIGNAL(stateChanged(int)), this,
             SLOT(processShowHide(int)));
@@ -1573,7 +1577,7 @@ void InstaDam::processPointClicked(PhotoScene::viewerTypes type,
         }
         if (!panning && !ctrlPanning && !filterOpenPickColor){
             qInfo()<<"clicked!";
-            if (!(modifiers & Qt::ShiftModifier)){
+            if (!(modifiers & Qt::ShiftModifier) || ((modifiers & Qt::ShiftModifier) && currentSelectType == SelectItem::Freedraw)){
                 annotationDraw(type, item, pos, button, modifiers);
             } else if((modifiers & Qt::ShiftModifier) && item != nullptr) {
                annotationTransform(type, item, pos, button, modifiers);
@@ -1831,10 +1835,20 @@ void InstaDam::selectItemButton(SelectItem::SelectType type){
 void InstaDam::processMouseMoved(QPointF fromPos, QPointF toPos,
                                  const Qt::KeyboardModifiers modifiers) {
     if (currentItem) {
-        if (currentButton == Qt::LeftButton) {
+        if (currentButton == Qt::LeftButton && !((currentSelectType == SelectItem::Freedraw) && (modifiers & Qt::ShiftModifier))) {
             currentItem->moveItem(fromPos, toPos);
-        } else {
+        } else if ( currentButton == Qt::LeftButton && (currentSelectType == SelectItem::Freedraw)) {
+            qInfo()<<"called moveItem2";
+            if(startpos.isNull() == true ){
+                startpos = fromPos;
+            } else{
+                currentItem->moveItem2(startpos, toPos);
+
+            }
+        }
+        else {
             currentItem->rotate(fromPos, toPos);
+
         }
         scene->update();
         maskScene->update();
@@ -1892,7 +1906,6 @@ void InstaDam::processMouseReleased(PhotoScene::viewerTypes type,
             currentItem->setActiveVertex(SelectItem::UNSELECTED);
         }
     } else if (currentItem && (currentItem->wasMoved() ||
-                               currentItem->wasResized() ||
                               (currentItem->wasResized() && currentItem->type() != SelectItem::Polygon) ||
                                currentItem->wasRotated())) {
 
@@ -1966,6 +1979,11 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
         on_actionOpen_File_triggered();
     }
 
+    // add current line while pressing shift
+    if(key == Qt::Key_Shift){
+        processmouseReleased(selectedViewer, oldPos, newPos, event->button(),
+                             event->modifiers());
+    }
 
     if (!currentItem) {
         return;
@@ -1974,6 +1992,13 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
 
     } else if (key == Qt::Key_X || key == Qt::Key_X + Qt::Key_Shift) {
         currentItem = nullptr;
+    }
+}
+
+
+void InstaDam::processKeyReleased(PhotoScene::viewerTypes type, const int key){
+    if(key == Qt::Key_Shift){
+        startpos = QPointF();
     }
 }
 

@@ -214,6 +214,7 @@ void PolygonSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     }
 }
 
+
 /*!
   \reimp
   */

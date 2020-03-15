@@ -157,6 +157,7 @@ class InstaDam : public QMainWindow {
                               QPointF newPos, const Qt::MouseButton button,
                               const Qt::KeyboardModifiers modifiers);
     void processKeyPressed(PhotoScene::viewerTypes type, const int key);
+    void processKeyReleased(PhotoScene::viewerTypes type, const int key);
     void processShowHide(int state);
 
     void on_filterOptions_clicked();
@@ -288,6 +289,7 @@ public slots:
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     Qt::PenCapStyle brushMode = Qt::RoundCap;
     Qt::MouseButton currentButton = Qt::NoButton;
+    QPointF startpos = QPointF();
     QHash<QString, QBuffer*> exportFiles;
     QVector<QSharedPointer<Label> > tempLabels;
     bool currentProjectLoaded = false;

@@ -110,6 +110,14 @@ void PhotoScene::keyPressEvent(QKeyEvent *event) {
     emit keyPressed(myViewerType, event->key());
     QGraphicsScene::keyPressEvent(event);
 }
+
+void PhotoScene::keyReleaseEvent(QKeyEvent *event) {
+    emit keyReleased(myViewerType, event->key());
+    QGraphicsScene::keyReleaseEvent(event);
+}
+
+
+
 /*!
   \overload mousePressEvent()
 

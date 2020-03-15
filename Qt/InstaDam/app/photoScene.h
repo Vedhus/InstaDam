@@ -58,12 +58,14 @@ class PhotoScene : public QGraphicsScene {
                        const QPointF newPos, const Qt::MouseButton button,
                        const Qt::KeyboardModifiers modifiers);
     void keyPressed(PhotoScene::viewerTypes type, const int key);
+    void keyReleased(PhotoScene::viewerTypes type, const int key);
 
  protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
  private:
     QGraphicsItem *movingItem;

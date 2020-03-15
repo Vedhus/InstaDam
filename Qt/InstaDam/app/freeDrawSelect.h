@@ -45,6 +45,8 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     }
     bool isInside(const QPointF &point) const override;
     void moveItem(const QPointF &oldPos, QPointF &newPos) override;
+    void moveItem2(const QPointF &oldPos, QPointF &newPos);
+
     int numberOfVertices() const override {return 0;}
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
@@ -88,6 +90,7 @@ class FreeDrawSelect : public QGraphicsPixmapItem, public SelectItem {
     QPixmap getPixmap() const {return myPixmap;}
     void importPixmap(const QPixmap);
     QPixmap myPixmap;
+    QPixmap nullPixmap = QPixmap();
 
  protected:
 

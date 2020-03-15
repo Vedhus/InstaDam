@@ -30,6 +30,7 @@ class EllipseSelect : public QGraphicsEllipseItem, public BoxBasedSelector {
     QRectF boundingRect() const override;
     bool isInside(const QPointF &point) const override;
     void moveItem(const QPointF &oldPos, QPointF &newPos) override;
+    void moveItem2(const QPointF &oldPos, QPointF &newPos) override {}
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
     void setInitial(QRectF rect, int)  override;

@@ -80,6 +80,7 @@ class SelectItem : public QGraphicsItem {
     virtual void clickPoint(const QPointF &point) = 0;
     virtual void insertVertex(const int vertex, const QPointF &point) = 0;
     virtual void moveItem(const QPointF &oldPos, QPointF &newPos) = 0;
+    virtual void moveItem2(const QPointF &oldPos, QPointF &newPos) = 0;
     virtual void removeVertex(const int vertex = UNSELECTED) = 0;
     virtual void resetActiveVertex() = 0;
     virtual void resizeItem(const int vertex, QPointF &oldP, QPointF &newP) = 0;

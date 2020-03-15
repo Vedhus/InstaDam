@@ -184,6 +184,7 @@ void EllipseSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
     QGraphicsEllipseItem::prepareGeometryChange();
 }
 
+
 /*!
   \reimp
   */

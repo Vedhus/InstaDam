@@ -6,6 +6,11 @@
 #include <QJsonArray>
 #include <QDebug>
 #include "label.h"
+#include <QApplication>
+
+#include <QMouseEvent>
+
+
 
 /*!
   \class FreeDrawSelect
@@ -180,11 +185,30 @@ bool FreeDrawSelect::isInside(const QPointF &point) const {
   \reimp
 */
 void FreeDrawSelect::moveItem(const QPointF &oldPos, QPointF &newPos) {
+
     myPainter.begin(&myPixmap);
     myPainter.setPen(myPen);
     myPainter.drawLine(oldPos, newPos);
     myPainter.end();
     setInitial();
+
+
+}
+
+/*!
+ * \brief clears the pixmap before drawing. Used for drawing straight lines.
+ * \param oldPos fixed start position
+ * \param newPos
+ */
+void FreeDrawSelect::moveItem2(const QPointF &oldPos, QPointF &newPos) {
+
+    myPixmap.fill(Qt::transparent);
+    myPainter.begin(&myPixmap);
+    myPainter.setPen(myPen);
+    myPainter.drawLine(oldPos, newPos);
+    myPainter.end();
+    setInitial();
+
 }
 
 /*!
