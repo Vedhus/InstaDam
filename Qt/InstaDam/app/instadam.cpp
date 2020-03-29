@@ -29,6 +29,7 @@
 #include "projectlist.h"
 #include "serverprojectname.h"
 #include "ui_serverprojectname.h"
+#include <fstream>
 
 #ifdef WASM_BUILD
 #include "htmlFileHandler/qhtml5file.h"
@@ -63,10 +64,12 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     qInfo()<<"Initiate";
     photoLoaded = false;
     filterControl = new filterControls();
-    maskTypeList = { EnumConstants::BLUR, EnumConstants::CANNY,
-                     EnumConstants::THRESHOLD, EnumConstants::LABELMASK, EnumConstants::COLORTHRESHOLD};
+    maskTypeList = {EnumConstants::BLUR, EnumConstants::CANNY,
+                     EnumConstants::THRESHOLD, EnumConstants::COLORTHRESHOLD,EnumConstants::OTSU, EnumConstants::LAT,  EnumConstants::LABELMASK};
     maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label,
-                      ui->labelmask_label, ui->colorthreshold_label};
+                       ui->colorthreshold_label,ui->otsu_label,ui->lat_label, ui->labelmask_label};
+    maskTextList = {ui->blurText, ui->cannyText, ui->thresholdText,
+                       ui->colorthresholdText,ui->otsuText,ui->latText, ui->labelmaskText};
     connectFilters();
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
@@ -98,8 +101,11 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     currentProject = new Project();
 
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(autoSave()));
+    instaTimer = new QElapsedTimer();
+    displayTimer = new QTimer();
+    connect(displayTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+
+    //connect(timer, SIGNAL(timeout()), this, SLOT(autoSave()));
 
 
     connect(scene, SIGNAL(pointClicked(PhotoScene::viewerTypes, SelectItem*,
@@ -399,6 +405,8 @@ void InstaDam::clearLayout(QLayout *layout) {
  Slot for opening a project file (.idpro).
 */
 void InstaDam::on_actionOpen_triggered() {
+
+
     if(this->runningLocally){
 #ifdef WASM_BUILD
         openIdproConnector->onActivate();
@@ -493,6 +501,14 @@ void InstaDam::connectFilters() {
             ui->IdmPhotoViewer, SLOT(zoomedInADifferentView(int, float, QPointF)));
     connect(ui->IdmPhotoViewer, SIGNAL(loadedPhoto()), this,
             SLOT(resetPixmapButtons()));
+
+    connect(ui->IdmPhotoViewer, SIGNAL(newTime(float)), this,
+            SLOT(updatePhotoTimes(float)));
+    connect(ui->IdmMaskViewer, SIGNAL(newTime(float)), this,
+            SLOT(updateMaskTimes(float)));
+
+
+
     connectArrowCursor();
 }
 
@@ -554,6 +570,8 @@ void InstaDam::saveIdantn() {
 #endif
         QJsonObject json;
         write(json, ANNOTATION);
+        writeTimes();
+
         QJsonDocument saveDoc(json);
 #ifdef WASM_BUILD
         QString strJson(saveDoc.toJson(QJsonDocument::Compact));
@@ -562,6 +580,7 @@ void InstaDam::saveIdantn() {
 
 #else
         outFile.write(saveDoc.toJson(QJsonDocument::Compact));
+
 #endif
     } else {
         QJsonObject json;
@@ -829,7 +848,8 @@ void InstaDam::fileReplyFinished() {
 /*! Clears the guis and resets the labels()
  **/
 void InstaDam::resetGUIclearLabels() {
-    qInfo()<<"Reset!";
+    qInfo()<<"Reset!\n\n\n\n\n\n\n";
+
     scene->clearItems();
     maskScene->clearItems();
     currentProject->clearAllLabels();
@@ -872,11 +892,14 @@ void InstaDam::saveAndProgress(int num, bool save)
     if (runningLocally and imagesList.empty()) {
             assertError("No file loaded! Please go to File->Open File and select an image to open");
     } else {
+
+
         if(save){
             qInfo()<<"Save and next before save";
             saveIdantn();
             qInfo()<<"Save and next after save";
         }
+
 
         if (runningLocally) {
             int newId = ((fileId+num)%imagesList.size()+imagesList.size())%imagesList.size();
@@ -884,7 +907,7 @@ void InstaDam::saveAndProgress(int num, bool save)
             this->filename = path.absolutePath()+"/"+imagesList[fileId];
             this->file = QFileInfo(this->filename);
             qInfo()<<"Save and next before file opening";
-            openFile_and_labels();
+            openFile_and_labels(num);
             qInfo("File opened");
         }
         else {
@@ -995,6 +1018,7 @@ void InstaDam::generateLabelFileName() {
 
     this->oldAnnotationPath = this->annotationPath;
     this->annotationPath = aPath+baseName+".idantn";
+    this->pathNoExtension = aPath+baseName;
 
     this->path = file.dir();
 }
@@ -1003,9 +1027,10 @@ void InstaDam::generateLabelFileName() {
  Uses  defined QStringList of images in the path as well as the id of the current file
  and opens the file. If annotations exist, the annotations are opened.
 */
-void InstaDam::openFile_and_labels() {
+void InstaDam::openFile_and_labels(int num) {
     // Open labels
     generateLabelFileName();
+
     SelectItem::myBounds = QPixmap(filename).size();
     if (runningLocally == true) {
 #ifdef WASM_BUILD
@@ -1035,7 +1060,9 @@ void InstaDam::openFile_and_labels() {
         connect(il, &ImageList::allAnnotationsLoaded, this, &InstaDam::loadLabelJson);
         il->openAnnotation();
     }
-
+    if (num!=0){
+        resetTime();
+    }
     QTextStream(stdout) << "Loading photoX" << endl;;
     photoLoaded = true;
 
@@ -1052,7 +1079,7 @@ void InstaDam::openFile_and_labels() {
     scene->update();
     maskScene->update();
 
-    timer->start(autoSaveDuration);
+
 }
 
 void InstaDam::populateItem(SelectItem* item, QSharedPointer<Label> label){
@@ -1447,14 +1474,49 @@ void InstaDam::on_filterOptions_clicked()
     } else {
         filterDialog* dialogs = new filterDialog(ui->IdmPhotoViewer->selectedMask,
                                                  filterControl, ui->IdmPhotoViewer,
-                                                 currentProject);
+                                                 currentProject, measure);
         toggleFilterDialogOpen(0);
         connect(dialogs, SIGNAL(finished(int)), this, SLOT(toggleFilterDialogOpen(int)));
         connect(this, SIGNAL(colorChanged(cv::Scalar)), dialogs, SLOT(changeColor(cv::Scalar)));
+        connect(dialogs, SIGNAL(newTime(float)), this, SLOT(updateFilterTimes(float)));
+        connect(this, SIGNAL(newFilterTime()), this,
+                SLOT(updateTimeDisplay()));
+        connect(this, SIGNAL(timeClicked(bool)), dialogs, SLOT(updateMeasure(bool)));
+
         dialogs->show();
+
     }
 }
 
+/*!
+  *Slot called when fitler times are updated
+  *
+*/
+void InstaDam::updateFilterTimes(float deltaFilterTimes)
+{
+    filterTimes += deltaFilterTimes;
+    filterTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[0] += deltaFilterTimes;
+    int toolID = currentSelectType - SelectItem::Rectangle +1;
+    qInfo()<<toolID;
+    filterTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[toolID] += deltaFilterTimes;
+    updateTimeDisplay();
+}
+
+void InstaDam::updatePhotoTimes(float deltaTimes)
+{
+    photoTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[0] += deltaTimes;
+    int toolID = currentSelectType - SelectItem::Rectangle +1;
+    photoTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[toolID]  += deltaTimes;
+    updateTimeDisplay();
+}
+
+void InstaDam::updateMaskTimes(float deltaTimes)
+{
+    maskTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[0] += deltaTimes;
+    int toolID = currentSelectType - SelectItem::Rectangle +1;
+    maskTimesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[toolID]  += deltaTimes;
+    updateTimeDisplay();
+}
 /*!
   Toggles the filter dialog open window
   */
@@ -1980,9 +2042,30 @@ void InstaDam::processKeyPressed(PhotoScene::viewerTypes type, const int key) {
     }
 
     // add current line while pressing shift
-    if(key == Qt::Key_Shift){
-        processmouseReleased(selectedViewer, oldPos, newPos, event->button(),
-                             event->modifiers());
+//    if(key == Qt::Key_Shift){
+//        processmouseReleased(selectedViewer, oldPos, newPos, event->button(),
+//                             event->modifiers());
+//    }
+    if (key == Qt::Key_BracketLeft)  {
+        freeSelectForm->brushSizeSpinner->setValue(freeSelectForm->brushSizeSpinner->value()-1);
+    }
+    if (key == Qt::Key_BracketRight)  {
+        freeSelectForm->brushSizeSpinner->setValue(freeSelectForm->brushSizeSpinner->value()+1);
+    }
+    if (key == Qt::Key_E)  {
+        toggleErasing();
+    }
+    if (key == Qt::Key_D)  {
+        toggleDrawing();
+    }
+    if (key == Qt::Key_B)  {
+        on_freeSelectButton_clicked();
+    }
+    if (key == Qt::Key_P)  {
+        on_polygonSelectButton_clicked();
+    }
+    if (key == Qt::Key_T)  {
+        on_time_clicked();
     }
 
     if (!currentItem) {
@@ -2602,3 +2685,162 @@ void InstaDam::on_actionExport_mat_triggered()
                                    classes,\
                                    this);
 }
+
+void InstaDam::checkTime(){
+    if (measure){
+        times = times+instaTimer->elapsed();
+        timesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[0] += instaTimer->elapsed();
+        int toolID = currentSelectType - SelectItem::Rectangle +1;
+        qInfo()<<"ToolID: "<<toolID;
+        timesMat.at<cv::Vec6f>(currentLabel->getId(),ui->IdmPhotoViewer->selectedMask)[toolID]  += instaTimer->elapsed();
+        instaTimer->restart();
+        updateTimeDisplay();
+        qInfo()<<times;
+    }
+    else {
+        instaTimer->restart();
+    }
+}
+
+
+void InstaDam::enterEvent(QEvent *event){
+    QMainWindow::enterEvent(event);
+    instaTimer->restart();
+    displayTimer->start(250);
+}
+
+void InstaDam::leaveEvent(QEvent *event){
+    QMainWindow::leaveEvent(event);
+    checkTime();
+    displayTimer->stop();
+}
+
+
+void InstaDam::on_time_clicked()
+{
+    measure=!measure;
+    emit timeClicked(measure);
+    ui->time->setChecked(measure);
+    ui->IdmPhotoViewer->measure = measure;
+    ui->IdmMaskViewer->measure = measure;
+    updateTimeDisplay();
+
+
+}
+
+void InstaDam::resetTime()
+{
+    times = 0;
+    ui->IdmMaskViewer->times = 0;
+    ui->IdmPhotoViewer->times = 0;
+    filterTimes = 0;
+    updateTimeDisplay();
+
+    timesMat = cv::Mat::zeros(currentProject->numLabels(),EnumConstants::numFilters, CV_64FC(6));
+    filterTimesMat = cv::Mat::zeros(currentProject->numLabels(),EnumConstants::numFilters, CV_64FC(6));
+    photoTimesMat = cv::Mat::zeros(currentProject->numLabels(),EnumConstants::numFilters, CV_64FC(6));
+    maskTimesMat = cv::Mat::zeros(currentProject->numLabels(),EnumConstants::numFilters, CV_64FC(6));
+}
+
+void InstaDam::updateTimeDisplay()
+{
+
+    ui->totalTime->setText(QString::number(int(times/1000)));
+    ui->photoViewTime->setText(QString::number(int(ui->IdmPhotoViewer->times/1000)));
+    ui->maskViewTime->setText(QString::number(int(ui->IdmMaskViewer->times/1000)));
+    ui->filterTime->setText(QString::number(int(filterTimes/1000)));
+}
+
+void InstaDam::writeTimes()
+{
+    QJsonObject timeObject;
+    qInfo()<<"write!";
+    timeObject.insert("Annotation Time (AT = PT+MT+WT)", QJsonValue::fromVariant(int(times/1000)));
+    timeObject.insert("Photo Time (PT)", QJsonValue::fromVariant(int(ui->IdmPhotoViewer->times/1000)));
+    timeObject.insert("Mask Time (MT)", QJsonValue::fromVariant(int(ui->IdmMaskViewer->times/1000)));
+    timeObject.insert("Window Time (WT)", QJsonValue::fromVariant(int((times-(ui->IdmMaskViewer->times+ui->IdmPhotoViewer->times))/1000)));
+    timeObject.insert("Filter Properties Time (FP)", QJsonValue::fromVariant(int(filterTimes/1000)));
+    timeObject.insert("Total Time (AT+FP)", QJsonValue::fromVariant(int((times+filterTimes)/1000)));
+    QJsonDocument document(timeObject);
+    QDateTime now = QDateTime::currentDateTime();
+    QString timestamp = now.toString(QLatin1String("yyyyMMdd-hhmmss"));
+    QString timeFileName(pathNoExtension+timestamp+".json");
+    QString timeATName(pathNoExtension+"_AT_"+timestamp+".csv");
+    QString timeFPName(pathNoExtension+"_FP_"+timestamp+".csv");
+    QString timeMTName(pathNoExtension+"_MT_"+timestamp+".csv");
+    QString timePTName(pathNoExtension+"_PT_"+timestamp+".csv");
+    qInfo()<<timeFileName;
+    QFile jsonFile(timeFileName);
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(document.toJson());
+
+    writeCSV(timeATName, timesMat, "AT");
+    writeCSV(timeATName, filterTimesMat, "FP");
+    writeCSV(timeATName, maskTimesMat, "MP");
+    writeCSV(timeATName, photoTimesMat, "PT");
+
+
+
+
+}
+
+void InstaDam::writeCSV(QString filename, cv::Mat m, QString timeType)
+{
+   QFile file(filename);
+   QList<QString> toolNames = {"Total", "Rectangle", "Ellipse", "Polygon", "Draw", "Erase"};
+  if(file.open(QIODevice::WriteOnly |  QIODevice::Append | QIODevice::Text))
+         {
+        qInfo()<<"Inside writeCSV";
+             // We're going to streaming text to the file
+
+             QTextStream stream(&file);
+             for (int k= 0; k<6 ; k++){
+
+
+                 stream <<timeType<<" "<<toolNames[k]<<", ";
+                 for(int j=0; j<m.cols; j++)
+                     stream <<QString(maskTextList[j]->text())<<", ";
+                 stream<<"\n";
+                 for(int i=0; i<m.rows; i++)
+                 {
+                     stream <<currentProject->getLabel(i)->getText()<<", ";
+                     for(int j=0; j<m.cols; j++)
+                     {
+                         stream <<int(m.at<cv::Vec6f>(i,j)[k])/1000.0 << ", ";
+                     }
+                     stream <<"\n";
+
+                 }
+             }
+             stream <<"\n";
+
+            file.close();
+  }
+}
+
+//void InstaDam::writeCSVSingle(QString filename, cv::Mat m, QString timeType)
+//{
+//   QFile file(filename);
+//  if(file.open(QIODevice::WriteOnly |  QIODevice::Text))
+//         {
+//        qInfo()<<"Inside writeCSV";
+//             // We're going to streaming text to the file
+//             QTextStream stream(&file);
+//             stream <<timeType<<", ";
+//             for(int j=0; j<m.cols; j++)
+//                 stream <<QString(maskTextList[j]->text())<<", ";
+//             stream<<"\n";
+//             for(int i=0; i<m.rows; i++)
+//             {
+//                 stream <<currentProject->getLabel(i)->getText()<<", ";
+//                 for(int j=0; j<m.cols; j++)
+//                 {
+//                     stream <<int(m.at<float>(i,j))/1000.0 << ", ";
+//                 }
+//                 stream <<"\n\n";
+
+//             }
+
+//            file.close();
+//  }
+//}

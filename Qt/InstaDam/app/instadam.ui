@@ -171,51 +171,61 @@
               </property>
               <item>
                <layout class="QGridLayout" name="gridLayout_3">
-                <item row="4" column="11">
-                 <widget class="QPushButton" name="ellipseSelectButton">
+                <item row="6" column="26">
+                 <widget class="QPushButton" name="addSelectionButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="minimumSize">
+                  <property name="maximumSize">
                    <size>
-                    <width>36</width>
-                    <height>24</height>
+                    <width>16777215</width>
+                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="text">
-                   <string>EllipseSelect</string>
+                   <string>Add Selection</string>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                  <property name="flat">
+                   <bool>false</bool>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="4">
-                 <widget class="QPushButton" name="freeSelectButton">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+                <item row="6" column="23">
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="minimumSize">
+                  <property name="sizeHint" stdset="0">
                    <size>
-                    <width>36</width>
-                    <height>24</height>
+                    <width>40</width>
+                    <height>20</height>
                    </size>
                   </property>
-                  <property name="text">
-                   <string>Free Select</string>
+                 </spacer>
+                </item>
+                <item row="6" column="18">
+                 <widget class="QTextBrowser" name="totalTime">
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>22</height>
+                   </size>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="0">
+                <item row="6" column="0">
                  <widget class="QTextBrowser" name="filelabel">
                   <property name="maximumSize">
                    <size>
@@ -231,8 +241,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="13">
-                 <widget class="QPushButton" name="panButton">
+                <item row="6" column="6">
+                 <widget class="QPushButton" name="rectangleSelectButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -242,34 +252,18 @@
                   <property name="minimumSize">
                    <size>
                     <width>36</width>
-                    <height>0</height>
+                    <height>24</height>
                    </size>
                   </property>
                   <property name="text">
-                   <string>Pan</string>
+                   <string>Box Select</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
                   </property>
-                  <property name="checked">
-                   <bool>false</bool>
-                  </property>
                  </widget>
                 </item>
-                <item row="4" column="3">
-                 <spacer name="horizontalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="4" column="20">
+                <item row="6" column="30">
                  <widget class="QPushButton" name="cancelSelectionButton">
                   <property name="enabled">
                    <bool>false</bool>
@@ -297,20 +291,54 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="14">
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="6" column="5">
+                 <widget class="QPushButton" name="polygonSelectButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
+                  <property name="minimumSize">
                    <size>
-                    <width>40</width>
-                    <height>20</height>
+                    <width>36</width>
+                    <height>24</height>
                    </size>
                   </property>
-                 </spacer>
+                  <property name="text">
+                   <string>Polygon Select</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
-                <item row="4" column="2">
+                <item row="6" column="13">
+                 <widget class="QPushButton" name="panButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>36</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Pan</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="2">
                  <widget class="QPushButton" name="saveAndNext">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -329,7 +357,39 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="15">
+                <item row="6" column="3">
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QPushButton" name="saveAndBack">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>36</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Save and Back</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="24">
                  <widget class="QPushButton" name="filterOptions">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -360,33 +420,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="16">
-                 <widget class="QPushButton" name="addSelectionButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Add Selection</string>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="6">
-                 <widget class="QPushButton" name="rectangleSelectButton">
+                <item row="6" column="4">
+                 <widget class="QPushButton" name="freeSelectButton">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -400,58 +435,112 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>Box Select</string>
+                   <string>Free Select</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="21">
+                <item row="6" column="17">
+                 <widget class="QPushButton" name="time">
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Time</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="11">
+                 <widget class="QPushButton" name="ellipseSelectButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>36</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>EllipseSelect</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="31">
                  <widget class="QCheckBox" name="showMaskSelections">
                   <property name="text">
                    <string>Show Selections on Mask</string>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="1">
-                 <widget class="QPushButton" name="saveAndBack">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                <item row="6" column="19">
+                 <widget class="QTextBrowser" name="photoViewTime">
                   <property name="minimumSize">
                    <size>
-                    <width>36</width>
+                    <width>1</width>
                     <height>0</height>
                    </size>
                   </property>
-                  <property name="text">
-                   <string>Save and Back</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>1</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="5">
-                 <widget class="QPushButton" name="polygonSelectButton">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                <item row="6" column="21">
+                 <widget class="QTextBrowser" name="maskViewTime">
                   <property name="minimumSize">
                    <size>
-                    <width>36</width>
-                    <height>24</height>
+                    <width>0</width>
+                    <height>0</height>
                    </size>
                   </property>
-                  <property name="text">
-                   <string>Polygon Select</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>1</width>
+                    <height>22</height>
+                   </size>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="25">
+                 <widget class="QTextBrowser" name="filterTime">
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
                   </property>
                  </widget>
                 </item>
@@ -770,14 +859,14 @@
                      <item>
                       <layout class="QHBoxLayout" name="horizontalLayout_8">
                        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                        <widget class="QLabel" name="label_6">
+                        <widget class="QLabel" name="blurText">
                          <property name="text">
                           <string>Blur</string>
                          </property>
                         </widget>
                        </item>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="QLabel" name="label_5">
+                        <widget class="QLabel" name="cannyText">
                          <property name="autoFillBackground">
                           <bool>true</bool>
                          </property>
@@ -787,23 +876,46 @@
                         </widget>
                        </item>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="QLabel" name="label_4">
+                        <widget class="QLabel" name="thresholdText">
                          <property name="text">
                           <string>Threshold</string>
                          </property>
                         </widget>
                        </item>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="QLabel" name="label_2">
+                        <widget class="QLabel" name="colorthresholdText">
                          <property name="text">
-                          <string>Label Mask</string>
+                          <string>Color Range</string>
                          </property>
                         </widget>
                        </item>
-                       <item alignment="Qt::AlignHCenter">
-                        <widget class="QLabel" name="label_3">
+                       <item>
+                        <widget class="QLabel" name="otsuText">
                          <property name="text">
-                          <string>Color Range</string>
+                          <string>Otsu</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="latText">
+                         <property name="text">
+                          <string>Local Adaptive</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelmaskText">
+                         <property name="text">
+                          <string>Label Mask</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -833,16 +945,39 @@
                         </widget>
                        </item>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="PicPushButton" name="labelmask_label">
+                        <widget class="PicPushButton" name="colorthreshold_label">
                          <property name="text">
                           <string>TextLabel</string>
                          </property>
                         </widget>
                        </item>
-                       <item alignment="Qt::AlignHCenter">
-                        <widget class="PicPushButton" name="colorthreshold_label">
+                       <item>
+                        <widget class="PicPushButton" name="otsu_label">
                          <property name="text">
                           <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="PicPushButton" name="lat_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="PicPushButton" name="labelmask_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
                          </property>
                         </widget>
                        </item>

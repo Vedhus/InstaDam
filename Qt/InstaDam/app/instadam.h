@@ -17,7 +17,7 @@
 #include <QMenu>
 #include <QBuffer>
 #include <QUndoStack>
-
+#include <QElapsedTimer>
 #include <QWidget>
 #include <QtNetwork/QNetworkReply>
 
@@ -67,14 +67,15 @@ class InstaDam : public QMainWindow {
     bool runningLocally = false;
     int labelIdsRecieved = 0;
     QVector<QString> labelPaths, oldLabelPaths;
-    QString annotationPath, oldAnnotationPath;
+    QString annotationPath, oldAnnotationPath, pathNoExtension;
     QStringList imagesList, oldImagesList;
     QDir path, oldPath;
-    void openFile_and_labels();
+    void openFile_and_labels(int num = 2);
     void setLabels();
     void selectItemButton(SelectItem::SelectType);
     void selectItemButton(int  type);
     void generateLabelFileName();
+
     void assertError(std::string errorMessage);
     void exportImages(bool asBuffers = false);
     void clearLayout(QLayout * layout);
@@ -86,6 +87,7 @@ class InstaDam : public QMainWindow {
     }
     QList<EnumConstants::maskTypes> maskTypeList;
     QList<PicPushButton*> maskButtonList;
+    QList<QLabel*> maskTextList;
     ImageList* il;
     void resetGUIclearLabels();
     void saveAndProgress(int, bool save = true);
@@ -112,6 +114,21 @@ class InstaDam : public QMainWindow {
     void populateItem(SelectItem* item,QSharedPointer<Label>);
     int* maskShowStatePtr;
     QVector<QPixmap> exportNpz(QVector<int> , QVector<int>);
+    bool measure = false;
+    float times = 0;
+    float filterTimes = 0;
+    QElapsedTimer *instaTimer;
+    QTimer *displayTimer;
+    void resetTime();
+
+    cv::Mat timesMat;
+    cv::Mat filterTimesMat;
+    cv::Mat photoTimesMat;
+    cv::Mat maskTimesMat;
+    void writeCSV(QString filename, cv::Mat m, QString);
+
+
+
 
 
  private slots:
@@ -198,6 +215,10 @@ class InstaDam : public QMainWindow {
 
     void on_actionExport_mat_triggered();
 
+    void on_time_clicked();
+
+
+
 public slots:
     bool loadLabelJson(QJsonObject json, fileTypes fileType);
     void resetPixmapButtons();
@@ -212,7 +233,12 @@ public slots:
     //void initiate(QString databaseURL, QString token);
     void autoSave();
     bool loadLabelFile(QString filename, fileTypes fileType);
+    void updateTimeDisplay();
 
+    void checkTime();
+    void updateFilterTimes(float);
+    void updatePhotoTimes(float);
+    void updateMaskTimes(float);
  private:
 #ifdef WASM_BUILD
     struct MyConnector{
@@ -298,6 +324,7 @@ public slots:
 
     bool read(const QJsonObject &json, fileTypes type = PROJECT);
     void write(QJsonObject &json, fileTypes type = PROJECT);
+    void writeTimes();
     QStringList getLabelNames(QVector<QSharedPointer<Label> > labels);
 
     void openFileFromJson(QJsonObject);
@@ -310,7 +337,15 @@ public slots:
 
 signals:
     void colorChanged(cv::Scalar);
+    void newFilterTime();
+    void timeClicked(bool);
     //void beginInitiation(QString,  QString);
+
+
+protected:
+   void enterEvent(QEvent *event);
+   void leaveEvent(QEvent *event);
+
 };
 
 #endif  // INSTADAM_H

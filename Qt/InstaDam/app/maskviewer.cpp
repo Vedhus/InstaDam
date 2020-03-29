@@ -16,7 +16,7 @@ MaskViewer::MaskViewer(QWidget *parent):PhotoViewer(parent) {
     hasPhoto = false;
     viewerType = PhotoScene::MASK_VIEWER_TYPE;
     scene->myViewerType = viewerType;
-    selectedMask = EnumConstants::CANNY;
+    selectedMask = EnumConstants::THRESHOLD;
 }
 
 /*!
@@ -42,6 +42,7 @@ void MaskViewer::LinkToPhotoViewer(PhotoViewer *viewer) {
   Sets the image mask to \a filterName.
 */
 void MaskViewer::setImMask(EnumConstants::maskTypes filterName) {
+
     selectedMask = filterName;
     if (hasPhoto == true) {
         pixmapFilt = filterControl->qImg.copy();

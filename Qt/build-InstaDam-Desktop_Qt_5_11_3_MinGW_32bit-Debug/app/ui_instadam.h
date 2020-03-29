@@ -70,20 +70,23 @@ public:
     QFrame *frame_4;
     QVBoxLayout *verticalLayout_8;
     QGridLayout *gridLayout_3;
+    QPushButton *addSelectionButton;
+    QTextBrowser *photoViewTime;
+    QPushButton *polygonSelectButton;
+    QTextBrowser *filelabel;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *saveAndBack;
     QPushButton *ellipseSelectButton;
     QPushButton *freeSelectButton;
-    QTextBrowser *filelabel;
-    QPushButton *panButton;
-    QSpacerItem *horizontalSpacer;
     QPushButton *cancelSelectionButton;
+    QTextBrowser *maskViewTime;
+    QPushButton *panButton;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *saveAndNext;
-    QPushButton *filterOptions;
-    QPushButton *addSelectionButton;
-    QPushButton *rectangleSelectButton;
     QCheckBox *showMaskSelections;
-    QPushButton *saveAndBack;
-    QPushButton *polygonSelectButton;
+    QPushButton *filterOptions;
+    QPushButton *rectangleSelectButton;
+    QPushButton *time;
     QFrame *selectControlFrame;
     QFrame *frame_6;
     QHBoxLayout *horizontalLayout;
@@ -238,6 +241,53 @@ public:
         verticalLayout_8->setContentsMargins(1, 1, 1, 1);
         gridLayout_3 = new QGridLayout();
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        addSelectionButton = new QPushButton(frame_4);
+        addSelectionButton->setObjectName(QStringLiteral("addSelectionButton"));
+        addSelectionButton->setEnabled(false);
+        sizePolicy.setHeightForWidth(addSelectionButton->sizePolicy().hasHeightForWidth());
+        addSelectionButton->setSizePolicy(sizePolicy);
+        addSelectionButton->setMaximumSize(QSize(16777215, 16777215));
+        addSelectionButton->setFlat(false);
+
+        gridLayout_3->addWidget(addSelectionButton, 6, 23, 1, 1);
+
+        photoViewTime = new QTextBrowser(frame_4);
+        photoViewTime->setObjectName(QStringLiteral("photoViewTime"));
+        photoViewTime->setMinimumSize(QSize(0, 0));
+        photoViewTime->setMaximumSize(QSize(85, 22));
+        photoViewTime->setFrameShape(QFrame::NoFrame);
+
+        gridLayout_3->addWidget(photoViewTime, 6, 18, 1, 1);
+
+        polygonSelectButton = new QPushButton(frame_4);
+        polygonSelectButton->setObjectName(QStringLiteral("polygonSelectButton"));
+        sizePolicy.setHeightForWidth(polygonSelectButton->sizePolicy().hasHeightForWidth());
+        polygonSelectButton->setSizePolicy(sizePolicy);
+        polygonSelectButton->setMinimumSize(QSize(36, 24));
+        polygonSelectButton->setCheckable(true);
+
+        gridLayout_3->addWidget(polygonSelectButton, 6, 5, 1, 1);
+
+        filelabel = new QTextBrowser(frame_4);
+        filelabel->setObjectName(QStringLiteral("filelabel"));
+        filelabel->setMaximumSize(QSize(16777215, 22));
+        filelabel->setFrameShape(QFrame::NoFrame);
+        filelabel->setFrameShadow(QFrame::Plain);
+
+        gridLayout_3->addWidget(filelabel, 6, 0, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer, 6, 3, 1, 1);
+
+        saveAndBack = new QPushButton(frame_4);
+        saveAndBack->setObjectName(QStringLiteral("saveAndBack"));
+        sizePolicy.setHeightForWidth(saveAndBack->sizePolicy().hasHeightForWidth());
+        saveAndBack->setSizePolicy(sizePolicy);
+        saveAndBack->setMinimumSize(QSize(36, 0));
+
+        gridLayout_3->addWidget(saveAndBack, 6, 1, 1, 1);
+
         ellipseSelectButton = new QPushButton(frame_4);
         ellipseSelectButton->setObjectName(QStringLiteral("ellipseSelectButton"));
         sizePolicy.setHeightForWidth(ellipseSelectButton->sizePolicy().hasHeightForWidth());
@@ -245,7 +295,7 @@ public:
         ellipseSelectButton->setMinimumSize(QSize(36, 24));
         ellipseSelectButton->setCheckable(true);
 
-        gridLayout_3->addWidget(ellipseSelectButton, 4, 11, 1, 1);
+        gridLayout_3->addWidget(ellipseSelectButton, 6, 11, 1, 1);
 
         freeSelectButton = new QPushButton(frame_4);
         freeSelectButton->setObjectName(QStringLiteral("freeSelectButton"));
@@ -254,29 +304,7 @@ public:
         freeSelectButton->setMinimumSize(QSize(36, 24));
         freeSelectButton->setCheckable(true);
 
-        gridLayout_3->addWidget(freeSelectButton, 4, 4, 1, 1);
-
-        filelabel = new QTextBrowser(frame_4);
-        filelabel->setObjectName(QStringLiteral("filelabel"));
-        filelabel->setMaximumSize(QSize(16777215, 22));
-        filelabel->setFrameShape(QFrame::NoFrame);
-        filelabel->setFrameShadow(QFrame::Plain);
-
-        gridLayout_3->addWidget(filelabel, 4, 0, 1, 1);
-
-        panButton = new QPushButton(frame_4);
-        panButton->setObjectName(QStringLiteral("panButton"));
-        sizePolicy.setHeightForWidth(panButton->sizePolicy().hasHeightForWidth());
-        panButton->setSizePolicy(sizePolicy);
-        panButton->setMinimumSize(QSize(36, 0));
-        panButton->setCheckable(true);
-        panButton->setChecked(false);
-
-        gridLayout_3->addWidget(panButton, 4, 13, 1, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_3->addItem(horizontalSpacer, 4, 3, 1, 1);
+        gridLayout_3->addWidget(freeSelectButton, 6, 4, 1, 1);
 
         cancelSelectionButton = new QPushButton(frame_4);
         cancelSelectionButton->setObjectName(QStringLiteral("cancelSelectionButton"));
@@ -287,11 +315,29 @@ public:
         cancelSelectionButton->setCheckable(true);
         cancelSelectionButton->setChecked(false);
 
-        gridLayout_3->addWidget(cancelSelectionButton, 4, 20, 1, 1);
+        gridLayout_3->addWidget(cancelSelectionButton, 6, 27, 1, 1);
+
+        maskViewTime = new QTextBrowser(frame_4);
+        maskViewTime->setObjectName(QStringLiteral("maskViewTime"));
+        maskViewTime->setMaximumSize(QSize(85, 22));
+        maskViewTime->setFrameShape(QFrame::NoFrame);
+        maskViewTime->setFrameShadow(QFrame::Plain);
+
+        gridLayout_3->addWidget(maskViewTime, 6, 19, 1, 1);
+
+        panButton = new QPushButton(frame_4);
+        panButton->setObjectName(QStringLiteral("panButton"));
+        sizePolicy.setHeightForWidth(panButton->sizePolicy().hasHeightForWidth());
+        panButton->setSizePolicy(sizePolicy);
+        panButton->setMinimumSize(QSize(36, 0));
+        panButton->setCheckable(true);
+        panButton->setChecked(false);
+
+        gridLayout_3->addWidget(panButton, 6, 13, 1, 1);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(horizontalSpacer_2, 4, 14, 1, 1);
+        gridLayout_3->addItem(horizontalSpacer_2, 6, 21, 1, 1);
 
         saveAndNext = new QPushButton(frame_4);
         saveAndNext->setObjectName(QStringLiteral("saveAndNext"));
@@ -299,7 +345,12 @@ public:
         saveAndNext->setSizePolicy(sizePolicy);
         saveAndNext->setMinimumSize(QSize(36, 0));
 
-        gridLayout_3->addWidget(saveAndNext, 4, 2, 1, 1);
+        gridLayout_3->addWidget(saveAndNext, 6, 2, 1, 1);
+
+        showMaskSelections = new QCheckBox(frame_4);
+        showMaskSelections->setObjectName(QStringLiteral("showMaskSelections"));
+
+        gridLayout_3->addWidget(showMaskSelections, 6, 28, 1, 1);
 
         filterOptions = new QPushButton(frame_4);
         filterOptions->setObjectName(QStringLiteral("filterOptions"));
@@ -313,17 +364,7 @@ public:
         filterOptions->setText(QStringLiteral("Filter Options"));
         filterOptions->setIconSize(QSize(200, 200));
 
-        gridLayout_3->addWidget(filterOptions, 4, 15, 1, 1);
-
-        addSelectionButton = new QPushButton(frame_4);
-        addSelectionButton->setObjectName(QStringLiteral("addSelectionButton"));
-        addSelectionButton->setEnabled(false);
-        sizePolicy.setHeightForWidth(addSelectionButton->sizePolicy().hasHeightForWidth());
-        addSelectionButton->setSizePolicy(sizePolicy);
-        addSelectionButton->setMaximumSize(QSize(16777215, 16777215));
-        addSelectionButton->setFlat(false);
-
-        gridLayout_3->addWidget(addSelectionButton, 4, 16, 1, 1);
+        gridLayout_3->addWidget(filterOptions, 6, 22, 1, 1);
 
         rectangleSelectButton = new QPushButton(frame_4);
         rectangleSelectButton->setObjectName(QStringLiteral("rectangleSelectButton"));
@@ -332,29 +373,14 @@ public:
         rectangleSelectButton->setMinimumSize(QSize(36, 24));
         rectangleSelectButton->setCheckable(true);
 
-        gridLayout_3->addWidget(rectangleSelectButton, 4, 6, 1, 1);
+        gridLayout_3->addWidget(rectangleSelectButton, 6, 6, 1, 1);
 
-        showMaskSelections = new QCheckBox(frame_4);
-        showMaskSelections->setObjectName(QStringLiteral("showMaskSelections"));
+        time = new QPushButton(frame_4);
+        time->setObjectName(QStringLiteral("time"));
+        time->setMaximumSize(QSize(35, 16777215));
+        time->setCheckable(true);
 
-        gridLayout_3->addWidget(showMaskSelections, 4, 21, 1, 1);
-
-        saveAndBack = new QPushButton(frame_4);
-        saveAndBack->setObjectName(QStringLiteral("saveAndBack"));
-        sizePolicy.setHeightForWidth(saveAndBack->sizePolicy().hasHeightForWidth());
-        saveAndBack->setSizePolicy(sizePolicy);
-        saveAndBack->setMinimumSize(QSize(36, 0));
-
-        gridLayout_3->addWidget(saveAndBack, 4, 1, 1, 1);
-
-        polygonSelectButton = new QPushButton(frame_4);
-        polygonSelectButton->setObjectName(QStringLiteral("polygonSelectButton"));
-        sizePolicy.setHeightForWidth(polygonSelectButton->sizePolicy().hasHeightForWidth());
-        polygonSelectButton->setSizePolicy(sizePolicy);
-        polygonSelectButton->setMinimumSize(QSize(36, 24));
-        polygonSelectButton->setCheckable(true);
-
-        gridLayout_3->addWidget(polygonSelectButton, 4, 5, 1, 1);
+        gridLayout_3->addWidget(time, 6, 17, 1, 1);
 
 
         verticalLayout_8->addLayout(gridLayout_3);
@@ -658,16 +684,17 @@ public:
         actionClear_All_can_t_undo->setText(QApplication::translate("InstaDam", "Clear All (can't undo)", nullptr));
         actionExport_mat->setText(QApplication::translate("InstaDam", "Export .npz", nullptr));
         actionTest->setText(QApplication::translate("InstaDam", "Test", nullptr));
+        addSelectionButton->setText(QApplication::translate("InstaDam", "Add Selection", nullptr));
+        polygonSelectButton->setText(QApplication::translate("InstaDam", "Polygon Select", nullptr));
+        saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
         ellipseSelectButton->setText(QApplication::translate("InstaDam", "EllipseSelect", nullptr));
         freeSelectButton->setText(QApplication::translate("InstaDam", "Free Select", nullptr));
-        panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
         cancelSelectionButton->setText(QApplication::translate("InstaDam", "Cancel Selection", nullptr));
+        panButton->setText(QApplication::translate("InstaDam", "Pan", nullptr));
         saveAndNext->setText(QApplication::translate("InstaDam", "Save and Next", nullptr));
-        addSelectionButton->setText(QApplication::translate("InstaDam", "Add Selection", nullptr));
-        rectangleSelectButton->setText(QApplication::translate("InstaDam", "Box Select", nullptr));
         showMaskSelections->setText(QApplication::translate("InstaDam", "Show Selections on Mask", nullptr));
-        saveAndBack->setText(QApplication::translate("InstaDam", "Save and Back", nullptr));
-        polygonSelectButton->setText(QApplication::translate("InstaDam", "Polygon Select", nullptr));
+        rectangleSelectButton->setText(QApplication::translate("InstaDam", "Box Select", nullptr));
+        time->setText(QApplication::translate("InstaDam", "Time", nullptr));
         label_6->setText(QApplication::translate("InstaDam", "Blur", nullptr));
         label_5->setText(QApplication::translate("InstaDam", "Canny", nullptr));
         label_4->setText(QApplication::translate("InstaDam", "Threshold", nullptr));

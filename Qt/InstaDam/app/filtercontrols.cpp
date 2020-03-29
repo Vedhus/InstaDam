@@ -21,8 +21,9 @@
 
 filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                            filterControls* fc, PhotoViewer* photoViewer,
-                           Project *currentPro): QDialog() {
+                           Project *currentPro, bool measureFlag): QDialog() {
     this->fc = fc;
+    measure = measureFlag;
     size_t numControls = static_cast<size_t>(fc->properties[selectedMask]->numControls);
     this->setWindowTitle("Filter Options");
      QVBoxLayout *VBlayout = new QVBoxLayout(this);
@@ -130,6 +131,10 @@ filterDialog::filterDialog(EnumConstants::maskTypes selectedMask,
                                                 EnumConstants::threshold_or_filter)));
         }
     }
+    timer = new QElapsedTimer();
+    displayTimer = new QTimer();
+    connect(displayTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+
     QDialog::show();
 
 }
@@ -149,11 +154,37 @@ void filterDialog::mouseMoveEvent(QMouseEvent *event){
     if (event->buttons() & Qt::LeftButton) {
         QPoint diff = event->pos() - mpos;
         QPoint newpos = this->pos() + diff;
-
         this->move(newpos);
     }
     QDialog::mouseMoveEvent(event);
 
+}
+
+/*!
+ * \brief PhotoViewer::checkTime
+ */
+
+void filterDialog::checkTime(){
+    if (measure){
+        emit newTime(timer->elapsed());
+        timer->restart();
+    }
+}
+
+void filterDialog::updateMeasureFlag(bool measureFlag){
+    measure = measureFlag;
+}
+
+void filterDialog::enterEvent(QEvent *event){
+    QDialog::enterEvent(event);
+    timer->restart();
+    displayTimer->start(250);
+}
+
+void filterDialog::leaveEvent(QEvent *event){
+    QDialog::leaveEvent(event);
+    checkTime();
+    displayTimer->stop();
 }
 
 /*!
@@ -208,23 +239,6 @@ void filterControls::assignVal(EnumConstants::maskTypes maskType, int propNum, i
 void filterControls::setLabelMask(QSharedPointer<Label> label) {
     this->labelMask = label->exportLabel(SelectItem::myBounds);
 
-//    QFile file("yourFile.png");
-
-//    QByteArray bArray;
-//    QBuffer buffer(&bArray);
-//    buffer.open(QIODevice::WriteOnly);
-//    this->labelMask(&buffer, "PNG");
-
-
-//    //tmp(src.height(),src.width(), CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
-
-//    // Create a Size(1, nSize) Mat object of 8-bit, single-byte elements
-//    Mat rawData( 1, nSize, CV_8UC1, (void*)pcBuffer );
-
-//    Mat decodedImage  =  imdecode( rawData )
-
-
-
 
     emit valAssigned(EnumConstants::LABELMASK, EnumConstants::FILTER);
 }
@@ -233,6 +247,7 @@ void filterControls::setLabelMask(QSharedPointer<Label> label) {
  Defines the properties of the different masks.
 */
 void filterControls::defineProperties() {
+    /* To define a new filter, define the filter properties, map and fitlermetaproperties in this function */
 
     /* Define canny filter default properties */
     std::vector<filterProperty*> cannyProperties;
@@ -242,31 +257,55 @@ void filterControls::defineProperties() {
     cannyProperties.push_back(new filterProperty("Threshold min", SLIDER, 0, 60,
                                                  255, ANY, EnumConstants::THRESH,
                                                  false));
+    cannyProperties.push_back(new filterProperty("Threshold max", SLIDER, 0, 255,
+                                                 255, ANY, EnumConstants::THRESH,
+                                                 false));
     cannyProperties.push_back(new filterProperty("Low", SLIDER, 3, 5, 801, ODD,
                                                  EnumConstants::FILTER, false));
     cannyProperties.push_back(new filterProperty("High", SLIDER, 3, 5, 801, ODD,
                                                  EnumConstants::FILTER, false));
     cannyProperties.push_back(new filterProperty("Kernal", SLIDER, 3, 5, 7, ODD,
                                                  EnumConstants::FILTER, false));
+    QMap<QString, int> cannyMap;
+    cannyMap["invert"] = 0;
+    cannyMap["threshMin"] = 1;
+    cannyMap["threshMax"] = 2;
+    cannyMap["low"] = 3;
+    cannyMap["high"] = 4;
+    cannyMap["K"] = 5;
 
     /* Define blur filter default properties */
     std::vector<filterProperty*> blurProperties;
 
     blurProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2, 1,
-                                                ODD, EnumConstants::THRESH,
+                                                ANY, EnumConstants::THRESH,
                                                 false));
     blurProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
                                                 60, 255, ANY,
                                                 EnumConstants::THRESH, false));
-    blurProperties.push_back(new filterProperty("Kernel X", SLIDER, 3, 15, 51,
+    blurProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                255, 255, ANY,
+                                                EnumConstants::THRESH, false));
+    blurProperties.push_back(new filterProperty("Blur amount", SLIDER, 3, 15, 51,
                                                 ODD, EnumConstants::FILTER,
                                                 false));
-    blurProperties.push_back(new filterProperty("Kernel Y", SLIDER, 3, 15, 51,
-                                                ODD, EnumConstants::FILTER,
-                                                false));
-    blurProperties.push_back(new filterProperty("Sigma", SLIDER, 3, 5, 55,
-                                                ODD, EnumConstants::FILTER,
-                                                false));
+//    blurProperties.push_back(new filterProperty("Kernel X", SLIDER, 3, 15, 51,
+//                                                ODD, EnumConstants::FILTER,
+//                                                false));
+//    blurProperties.push_back(new filterProperty("Kernel Y", SLIDER, 3, 15, 51,
+//                                                ODD, EnumConstants::FILTER,
+//                                                false));
+//    blurProperties.push_back(new filterProperty("Sigma", SLIDER, 3, 5, 55,
+//                                                ODD, EnumConstants::FILTER,
+//                                                false));
+    QMap<QString, int> blurMap;
+    blurMap["invert"] = 0;
+    blurMap["threshMin"] = 1;
+    blurMap["threshMax"] = 2;
+    blurMap["amount"] = 3;
+//    blurMap["KX"] = 3;
+//    blurMap["KY"] = 4;
+//    blurMap["sigma"] = 5;
 
     /* Define thresholdfilter default properties */
     std::vector<filterProperty*> thresholdProperties;
@@ -278,6 +317,103 @@ void filterControls::defineProperties() {
                                                      60, 255, ANY,
                                                      EnumConstants::THRESH,
                                                      false));
+    thresholdProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+
+    QMap<QString, int> threshMap;
+    threshMap["invert"] = 0;
+    threshMap["threshMin"] = 1;
+    threshMap["threshMax"] = 2;
+
+    /* Define otsufilter default properties */
+    std::vector<filterProperty*> otsuProperties;
+    otsuProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    otsuProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    otsuProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    QMap<QString, int> otsuMap;
+    otsuMap["invert"] = 0;
+    otsuMap["threshMin"] = 1;
+    otsuMap["threshMax"] = 2;
+
+
+
+    /* Define local adaptive threishol filter default properties */
+    std::vector<filterProperty*> latProperties;
+    latProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    latProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    latProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    latProperties.push_back(new filterProperty("Gaussian", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    latProperties.push_back(new filterProperty("Strength", SLIDER, 3, 3, 25,
+                                                ODD, EnumConstants::FILTER,
+                                                false));
+    latProperties.push_back(new filterProperty("Detail", SLIDER, 1, 5, 25,
+                                                ODD, EnumConstants::FILTER,
+                                                false));
+
+    QMap<QString, int> latMap;
+    latMap["invert"] = 0;
+    latMap["threshMin"] = 1;
+    latMap["threshMax"] = 2;
+    latMap["gauss"] = 3;
+    latMap["K"] = 4;
+    latMap["C"] = 5;
+
+    /* Define color filter default properties */
+    std::vector<filterProperty*> colorThresholdProperties;
+
+    colorThresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                          1, ANY,
+                                                          EnumConstants::THRESH,
+                                                          false));
+    colorThresholdProperties.push_back(new filterProperty("Fuzziness", SLIDER, 0,
+                                                     20, 100, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    colorThresholdProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255,255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+
+    colorThresholdProperties.push_back(new filterProperty("Red", SLIDER, 0,
+                                                60, 255, ANY, EnumConstants::FILTER, false));
+    colorThresholdProperties.push_back(new filterProperty("Blue", SLIDER, 0,
+                                                          60, 255,
+                                                ANY, EnumConstants::FILTER,
+                                                false));
+    colorThresholdProperties.push_back(new filterProperty("Green", SLIDER, 0,
+                                                          60, 255,
+                                                ANY, EnumConstants::FILTER,
+                                                false));
+    QMap<QString, int> colorMap;
+    colorMap["invert"] = 0;
+    colorMap["threshMin"] = 1;
+    colorMap["threshMax"] = 2;
+    colorMap["R"] = 3;
+    colorMap["B"] = 4;
+    colorMap["G"] = 5;
 
 
 
@@ -290,54 +426,67 @@ void filterControls::defineProperties() {
                                                      1, 255, ANY,
                                                      EnumConstants::THRESH,
                                                      false, false));
+    labelmaskProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
     labelmaskProperties.push_back(new filterProperty("Label List", LABELLIST, 0,
                                                      2, 1, ANY,
                                                      EnumConstants::FILTER,
                                                      false));
-    /* Define color filter default properties */
-    std::vector<filterProperty*> colorThresholdProperties;
 
-    colorThresholdProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
-                                                          1, ANY,
-                                                          EnumConstants::THRESH,
-                                                          false));
-    colorThresholdProperties.push_back(new filterProperty("Fuzziness", SLIDER, 0,
-                                                     20, 100, ANY,
-                                                     EnumConstants::THRESH,
-                                                     false));
+    QMap<QString, int> labelMap;
+    labelMap["invert"] = 0;
+    labelMap["threshMin"] = 1;
+    labelMap["threshMax"] = 2;
+    labelMap["LL"] = 3;
 
-    colorThresholdProperties.push_back(new filterProperty("Red", SLIDER, 0,
-                                                60, 255, ANY, EnumConstants::FILTER, false));
-    colorThresholdProperties.push_back(new filterProperty("Blue", SLIDER, 0,
-                                                          60, 255,
-                                                ANY, EnumConstants::FILTER,
-                                                false));
-    colorThresholdProperties.push_back(new filterProperty("Green", SLIDER, 0,
-                                                          60, 255,
-                                                ANY, EnumConstants::FILTER,
-                                                false));
 
 
     filterPropertiesMeta *cannyPropertiesMeta =
-            new filterPropertiesMeta(cannyProperties, 5, EnumConstants::CANNY);
+            new filterPropertiesMeta(cannyProperties, 6, EnumConstants::CANNY);
     filterPropertiesMeta *blurPropertiesMeta =
-            new filterPropertiesMeta(blurProperties, 5, EnumConstants::BLUR);
+            new filterPropertiesMeta(blurProperties, 4, EnumConstants::BLUR);
     filterPropertiesMeta *thresholdPropertiesMeta =
-            new filterPropertiesMeta(thresholdProperties, 2,
+            new filterPropertiesMeta(thresholdProperties, 3,
                                      EnumConstants::THRESHOLD);
-    filterPropertiesMeta *labelmaskPropertiesMeta =
-            new filterPropertiesMeta(labelmaskProperties, 3,
-                                     EnumConstants::LABELMASK);
+
     filterPropertiesMeta *colorThresholdPropertiesMeta =
-            new filterPropertiesMeta(colorThresholdProperties, 5,
+            new filterPropertiesMeta(colorThresholdProperties, 6,
                                      EnumConstants::COLORTHRESHOLD);
 
-    /* Order follows order of enum defined in instadam.h */
+    filterPropertiesMeta *latPropertiesMeta =
+            new filterPropertiesMeta(latProperties, 6,
+                                     EnumConstants::LAT);
+
+    filterPropertiesMeta *otsuPropertiesMeta =
+            new filterPropertiesMeta(otsuProperties, 3,
+                                     EnumConstants::OTSU);
+    filterPropertiesMeta *labelmaskPropertiesMeta =
+            new filterPropertiesMeta(labelmaskProperties, 4,
+                                     EnumConstants::LABELMASK);
+
+
+    /* Order follows order of enum defined in enumconstants.h */
+
+
+    properties.push_back(blurPropertiesMeta);
     properties.push_back(cannyPropertiesMeta);
     properties.push_back(thresholdPropertiesMeta);
-    properties.push_back(blurPropertiesMeta);
-    properties.push_back(labelmaskPropertiesMeta);
     properties.push_back(colorThresholdPropertiesMeta);
+    properties.push_back(otsuPropertiesMeta);
+    properties.push_back(latPropertiesMeta);
+    properties.push_back(labelmaskPropertiesMeta);
+
+
+    maps.push_back(blurMap);
+    maps.push_back(cannyMap);
+    maps.push_back(threshMap);
+    maps.push_back(colorMap);
+    maps.push_back(otsuMap);
+    maps.push_back(latMap);
+    maps.push_back(labelMap);
+
 }
 
 
@@ -352,21 +501,21 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
         case EnumConstants::CANNY:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             cv::GaussianBlur(edge_temp, edge_temp,
-                             cv::Size(properties[EnumConstants::BLUR]->propertylist[2]->val,
-                                      properties[EnumConstants::BLUR]->propertylist[3]->val),
-                                        properties[EnumConstants::BLUR]->propertylist[4]->val,
-                                        properties[EnumConstants::BLUR]->propertylist[4]->val);
-            cv::Canny(image, edge_temp, properties[EnumConstants::CANNY]->propertylist[2]->val,
-                                        properties[EnumConstants::CANNY]->propertylist[3]->val,
-                                        properties[EnumConstants::CANNY]->propertylist[4]->val);
+                             cv::Size(properties[EnumConstants::BLUR]->propertylist[maps[EnumConstants::BLUR]["amount"]]->val,
+                                      properties[EnumConstants::BLUR]->propertylist[maps[EnumConstants::BLUR]["amount"]]->val),
+                                        properties[EnumConstants::BLUR]->propertylist[maps[EnumConstants::BLUR]["amount"]]->val,
+                                        properties[EnumConstants::BLUR]->propertylist[maps[EnumConstants::BLUR]["amount"]]->val);
+            cv::Canny(edge_temp, edge_temp, properties[selectedFilter]->propertylist[maps[selectedFilter]["low"]]->val,
+                                        properties[selectedFilter]->propertylist[maps[selectedFilter]["high"]]->val,
+                                        properties[selectedFilter]->propertylist[maps[selectedFilter]["K"]]->val);
             break;
         case EnumConstants::BLUR:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             cv::GaussianBlur(edge_temp, edge_temp,
-                             cv::Size(properties[EnumConstants::BLUR]->propertylist[2]->val,
-                                      properties[EnumConstants::BLUR]->propertylist[3]->val),
-                                      properties[EnumConstants::BLUR]->propertylist[4]->val,
-                                      properties[EnumConstants::BLUR]->propertylist[4]->val);
+                             cv::Size(properties[selectedFilter]->propertylist[maps[selectedFilter]["amount"]]->val,
+                                      properties[selectedFilter]->propertylist[maps[selectedFilter]["amount"]]->val),
+                                        properties[selectedFilter]->propertylist[maps[selectedFilter]["amount"]]->val,
+                                        properties[selectedFilter]->propertylist[maps[selectedFilter]["amount"]]->val);
             break;
         case EnumConstants::THRESHOLD:
 
@@ -389,9 +538,9 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
             break;
         case EnumConstants::COLORTHRESHOLD:
             {
-                cv::Scalar color =  cv::Scalar(properties[EnumConstants::COLORTHRESHOLD]->propertylist[2]->val,
-                                   properties[EnumConstants::COLORTHRESHOLD]->propertylist[3]->val,
-                                   properties[EnumConstants::COLORTHRESHOLD]->propertylist[4]->val);
+                cv::Scalar color =  cv::Scalar(properties[selectedFilter]->propertylist[(maps[selectedFilter].value("R"))]->val,
+                                   properties[selectedFilter]->propertylist[maps[selectedFilter].value("G")]->val,
+                                   properties[selectedFilter]->propertylist[maps[selectedFilter].value("B")]->val);
                 cv::Mat colors(1,1, CV_8UC3, color);
                 cv::Mat lab;
                 cv::cvtColor(image, lab, cv::COLOR_RGB2Lab);
@@ -408,7 +557,27 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
 
             }
             break;
+        case EnumConstants::OTSU:
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            cv::threshold(edge_temp, edge_temp,  0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
+            break;
 
+            break;
+        case EnumConstants::LAT:
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            qInfo()<<properties[selectedFilter]->propertylist[maps[selectedFilter]["gauss"]]->val;
+            if (properties[selectedFilter]->propertylist[maps[selectedFilter]["gauss"]]->val == 2)
+            {
+                adaptiveThreshold(edge_temp, edge_temp, 200, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY,
+                                  properties[selectedFilter]->propertylist[maps[selectedFilter]["K"]]->val,
+                                  properties[selectedFilter]->propertylist[maps[selectedFilter]["C"]]->val);
+            }
+            else {
+                adaptiveThreshold(edge_temp, edge_temp, 200, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY,
+                                  properties[selectedFilter]->propertylist[maps[selectedFilter]["K"]]->val,
+                                  properties[selectedFilter]->propertylist[maps[selectedFilter]["C"]]->val);
+            }
+            break;
         case EnumConstants::OTHER:
             break;
     }
@@ -427,19 +596,56 @@ cv::Mat filterControls::filtAndGeneratePixmaps(cv::Mat image,
         return edges;
 }
 
+/* Compute Thresholded images */
+cv::Mat filterControls::conductThreshold(cv::Mat edgImg, EnumConstants::maskTypes selectedFilter){
+    cv::Mat binary1;
+    cv::Mat binary2;
+    cv::Mat binaryImg;
+    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
+    qInfo()<< invert;
+    cv::threshold(edgImg, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
+            255, cv::THRESH_BINARY);
+    cv::threshold(edgImg, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
+            255, cv::THRESH_BINARY);
+    cv::subtract(binary1, binary2, binaryImg);
+
+    if (invert == 2)
+    {
+        cv::subtract(255, binaryImg, binaryImg);
+    }
+
+    return binaryImg;
+
+}
+
 /*!
   Binarizes the image and converts it to a pixmap using \a selectedFilter.
 */
 void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
-    cv::Mat binary;
-    int invert = properties[selectedFilter]->propertylist[0]->val;
 
-    if (invert == 2)
-        cv::threshold(edges, binary, properties[selectedFilter]->propertylist[1]->val,
-                255, cv::THRESH_BINARY_INV);
-    else
-        cv::threshold(edges, binary, properties[selectedFilter]->propertylist[1]->val,
-                255, cv::THRESH_BINARY);
+    cv::Mat binary;
+    cv::Mat binary1;
+    cv::Mat binary2;
+    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
+
+//    if (invert == 2)
+//    {
+//        cv::threshold(edges, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
+//                255, cv::THRESH_BINARY_INV);
+//        cv::threshold(edges, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
+//                255, cv::THRESH_BINARY_INV);
+//    }
+//    else
+//    {
+//        cv::threshold(edges, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
+//                255, cv::THRESH_BINARY);
+//        cv::threshold(edges, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
+//                255, cv::THRESH_BINARY);
+
+//    }
+//    cv::subtract(binary2, binary1, binary);
+
+    binary = conductThreshold(edges,selectedFilter );
 
     QImage qImgImg = QImage(reinterpret_cast<uchar*>(binary.data), binary.cols,
                             binary.rows, static_cast<int>(binary.step),
@@ -461,14 +667,8 @@ QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
     cv::Mat thumbEdges = this->filterFunc(thumb, selectedFilter);
     qInfo("Filtered thumbnail!");
     cv::Mat binaryThumb;
-    int invert = properties[selectedFilter]->propertylist[0]->val;
+    binaryThumb =conductThreshold(thumbEdges,selectedFilter);
 
-    if (invert == 2)
-        cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]->propertylist[1]->val,
-                255, cv::THRESH_BINARY_INV);
-    else
-        cv::threshold(thumbEdges, binaryThumb, properties[selectedFilter]->propertylist[1]->val,
-                255, cv::THRESH_BINARY);
     QImage qImgImg_temp = QImage(reinterpret_cast<uchar*>(binaryThumb.data),
                                  binaryThumb.cols, binaryThumb.rows,
                                  static_cast<int>(binaryThumb.step),

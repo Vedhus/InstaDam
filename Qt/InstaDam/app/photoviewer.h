@@ -1,6 +1,6 @@
 #ifndef PHOTOVIEWER_H
 #define PHOTOVIEWER_H
-
+#include <QElapsedTimer>
 #include <QFrame>
 #include <QGraphicsView>
 #include <QMainWindow>
@@ -56,6 +56,14 @@ class PhotoViewer : public QGraphicsView {
 
     PhotoScene::viewerTypes viewerType;
     QSize setPhotoFromFile(QString filename);
+    QElapsedTimer *timer;
+    QTimer *displayTimer;
+    bool measure = false;
+    float times = 0;
+
+    cv::Mat timesMat;
+    cv::Mat filterTimesMat;
+
 #ifdef WASM_BUILD
     QSize setPhotoFromByteArray(QByteArray &array);
 #endif
@@ -68,6 +76,7 @@ class PhotoViewer : public QGraphicsView {
     void wheelEvent(QWheelEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+
     void mouseReleaseEvent(QMouseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void setFilterControls(filterControls *event);
@@ -76,6 +85,7 @@ class PhotoViewer : public QGraphicsView {
     void setBrushMode(Qt::PenCapStyle cap);
     cv::Scalar colorAtPoint(QPointF pos);
     float limit(int , qreal , int );
+
     void resetCursor();
 
     //void setMaskPixmap();
@@ -95,15 +105,21 @@ class PhotoViewer : public QGraphicsView {
     void zoomed(int i, float a, QPointF point);
     void changedMask(EnumConstants::maskTypes type);
     void loadedPhoto();
+    void newTime(float);
+
 
  public slots:
     void zoomedInADifferentView(int zoom_input, float factor, QPointF point);
     void setImMask(EnumConstants::maskTypes filterName,
                    EnumConstants::threshold_or_filter thof = EnumConstants::FILTER);
     void updateZoomFactor(int zoom_input, float factor, QPointF point);
+    void checkTime();
 
  private:
     Ui::PhotoViewer *ui;
+ protected:
+    void enterEvent(QEvent *event);
+    void leaveEvent(QEvent *event);
 };
 
 #endif  // PHOTOVIEWER_H

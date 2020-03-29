@@ -60,6 +60,7 @@ class Label: public QEnableSharedFromThis<Label>{
     void deleteList();
     void bringToFront();
     void sendToBack();
+
 #ifdef TEST
     friend class TestSelect;
 #endif

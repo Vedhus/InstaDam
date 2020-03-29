@@ -21,6 +21,7 @@
   Craetes an instance with parent QWidget \a parent.
 */
 PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
+    setMouseTracking(true);
     viewerType = PhotoScene::PHOTO_VIEWER_TYPE;
     scene = new PhotoScene(viewerType, this);
     photo = new QGraphicsPixmapItem();
@@ -43,8 +44,12 @@ PhotoViewer::PhotoViewer(QWidget *parent):QGraphicsView(parent) {
     setDragMode(QGraphicsView::NoDrag);
     resetBrush(10, Qt::RoundCap);
     maskObject = new maskObjects();
-    selectedMask = EnumConstants::CANNY;
+    selectedMask = EnumConstants::THRESHOLD;
     connect(this, SIGNAL(zoomed(int, float , QPointF)), this, SLOT(updateZoomFactor(int, float , QPointF)));
+    timer = new QElapsedTimer();
+    displayTimer = new QTimer();
+    connect(displayTimer, SIGNAL(timeout()), this, SLOT(checkTime()));
+
 }
 
 /*!
@@ -452,6 +457,8 @@ void PhotoViewer::mousePressEvent(QMouseEvent* event) {
   \reimp
 */
 void PhotoViewer::mouseMoveEvent(QMouseEvent* event) {
+
+
     if (hasPhoto) {
         if (!paintMode) {
             QRect viewrect = viewport()->rect();
@@ -461,6 +468,29 @@ void PhotoViewer::mouseMoveEvent(QMouseEvent* event) {
         }
     }
     QGraphicsView::mouseMoveEvent(event);
+
+}
+void PhotoViewer::checkTime(){
+    if (measure){
+        times = times+timer->elapsed();
+        emit newTime(timer->elapsed());
+        timer->restart();
+
+    }
+}
+
+
+
+void PhotoViewer::enterEvent(QEvent *event){
+    QGraphicsView::enterEvent(event);
+    timer->restart();
+    displayTimer->start(250);
+}
+
+void PhotoViewer::leaveEvent(QEvent *event){
+    QGraphicsView::leaveEvent(event);
+    checkTime();
+    displayTimer->stop();
 }
 
 /*!

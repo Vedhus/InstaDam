@@ -32,6 +32,7 @@ PhotoScene::PhotoScene(viewerTypes type, QObject *parent)
     qInfo()<<"Scene";
 }
 
+
 // NEED TO MAKE SURE DRAWING DOES NOT GO BEYOND BOUNDARY
 /*!
   Sets all SelectItems in the PhotoScene to inactive.
