@@ -4,8 +4,8 @@
 class EnumConstants{
  public:
     EnumConstants();
-    enum maskTypes{ BLUR, CANNY, THRESHOLD, COLORTHRESHOLD, OTSU, LAT, LABELMASK, OTHER};
-    static const int numFilters = 7;
+    enum maskTypes{ BLUR, CANNY, THRESHOLD, COLORTHRESHOLD, OTSU, LAT, RIDGE, MORPH, GUIDED, LABELMASK, OTHER};
+    static const int numFilters = 10;
 
     enum threshold_or_filter{THRESH, FILTER};
 

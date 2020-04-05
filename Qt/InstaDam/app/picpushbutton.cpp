@@ -91,6 +91,10 @@ void PicPushButton::paintEvent(QPaintEvent *event) {
   \reimp
 */
 void PicPushButton::mousePressEvent(QMouseEvent* event) {
+    checkbutton();
+}
+
+void PicPushButton::checkbutton() {
     check = true;
     emit checked(filter);
 }

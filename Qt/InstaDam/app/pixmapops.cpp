@@ -5,7 +5,7 @@
   Testing withn QColor based on \a r, \a g, \a b, \a a.
 */
 QPixmap testPixmap(int r = 255, int g = 0, int b = 0, int a = 255) {
-    QPixmap px = QPixmap(200, 200);
+    QPixmap px = QPixmap(PhotoViewer::thumbSize, PhotoViewer::thumbSize);
     QColor color  = QColor(r, g, b, a);
     px.fill(color);
     return px;

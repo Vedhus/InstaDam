@@ -141,13 +141,15 @@ win32 {
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Release/Selector
    LIBS += -L$${PWD}/../../build-InstaDam-Desktop_Qt_5_11_3_MinGW_32bit-Debug/Selector
 
-   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include $${PWD}/..
+   INCLUDEPATH += D:\opencv\opencv401\opencv-build\install\include $${PWD}/..
+   INCLUDEPATH += D:\opencv\opencv401\opencv\build\include
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_core401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_highgui401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgcodecs401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_imgproc401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_features2d401.dll
    LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_calib3d401.dll
+   LIBS += D:\opencv\opencv401\opencv-build\bin\libopencv_ximgproc401.dll
    LIBS += D:\cnpy\install\bin\libcnpy.dll
    LIBS += D:/zlib1211/zlib-install/bin/libzlib.dll
 #   LIBS += D:\PythonQt\PythonQt\bin\libPythonQt.dll
@@ -170,8 +172,9 @@ unix {
   LIBS += -lopencv_imgproc -lopencv_features2d -lopencv_calib3d -lopencv_highgui -lopencv_core
   LIBS += -L$${PWD}/.. -lselector -lquazip
 wasm: LIBS += -lhtmlFileHandler -L/usr/lib/emscripten
-  INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
+#  INCLUDEPATH += /usr/include/opencv4 $${PWD}/..
 #  INCLUDEPATH += C:/Users/hoskere2/AppData/Local/Programs/Python/Python37-32/include/
+# INCLUDEPATH += D:\opencv\opencv401\opencv-build\install\include\
 
 }
 

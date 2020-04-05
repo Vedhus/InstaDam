@@ -7,6 +7,7 @@
 #include <QElapsedTimer>
 #include <QTimer>
 #include "opencv2/core/mat.hpp"
+#include "opencv2/ximgproc/ridgefilter.hpp"
 
 #include "fslider.h"
 #include "filterproperty.h"

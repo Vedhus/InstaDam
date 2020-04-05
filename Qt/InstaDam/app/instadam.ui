@@ -910,6 +910,36 @@
                         </widget>
                        </item>
                        <item>
+                        <widget class="QLabel" name="ridgeText">
+                         <property name="text">
+                          <string>Ridge</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="guidedText">
+                         <property name="text">
+                          <string>Guided</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="morphText">
+                         <property name="text">
+                          <string>Morphology</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
                         <widget class="QLabel" name="labelmaskText">
                          <property name="text">
                           <string>Label Mask</string>
@@ -963,6 +993,36 @@
                        </item>
                        <item>
                         <widget class="PicPushButton" name="lat_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="PicPushButton" name="ridge_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="PicPushButton" name="guided_label">
+                         <property name="text">
+                          <string>TextLabel</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="PicPushButton" name="morph_label">
                          <property name="text">
                           <string>TextLabel</string>
                          </property>
@@ -1198,7 +1258,7 @@
   <customwidget>
    <class>PicPushButton</class>
    <extends>QLabel</extends>
-   <header>picpushbutton.h</header>
+   <header location="global">picpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

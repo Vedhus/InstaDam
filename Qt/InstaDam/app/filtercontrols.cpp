@@ -7,6 +7,7 @@
 #include <iostream>
 #include "pixmapops.h"
 #include "enumconstants.h"
+#include "opencv2/ximgproc/edge_filter.hpp"
 
 #define CONNECTCAST(OBJECT, TYPE, FUNC) static_cast<void(OBJECT::*)(TYPE)>(&OBJECT::FUNC)
 
@@ -346,6 +347,110 @@ void filterControls::defineProperties() {
     otsuMap["threshMin"] = 1;
     otsuMap["threshMax"] = 2;
 
+    /* Define ridge filter default properties */
+    std::vector<filterProperty*> ridgeProperties;
+    ridgeProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    ridgeProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    ridgeProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false, false));
+    ridgeProperties.push_back(new filterProperty("Scale", SLIDER, 1,25, 100, ANY,
+                                                 EnumConstants::FILTER, false));
+
+
+    QMap<QString, int> ridgeMap;
+    ridgeMap["invert"] = 0;
+    ridgeMap["threshMin"] = 1;
+    ridgeMap["threshMax"] = 2;
+    ridgeMap["scale"] = 3;
+
+
+    /* Define morph filter default properties */
+    std::vector<filterProperty*> morphProperties;
+    morphProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    morphProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
+                                                     60, 255, ANY,
+                                                     EnumConstants::FILTER,
+                                                     false));
+    morphProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::FILTER,
+                                                     false));
+    morphProperties.push_back(new filterProperty("Kernel", SLIDER, 1,
+                                                     1, 11, ODD,
+                                                     EnumConstants::FILTER,false));
+
+    morphProperties.push_back(new filterProperty("Erode", CHECKBOX, 0, 2, 1, ANY,
+                                                           EnumConstants::FILTER,
+                                                           false));
+    morphProperties.push_back(new filterProperty("Dilate", CHECKBOX, 0, 2,
+                                                             1, ANY,
+                                                             EnumConstants::FILTER,
+                                                             false));
+    morphProperties.push_back(new filterProperty("Open", CHECKBOX, 0, 2,
+                                                             1, ANY,
+                                                             EnumConstants::FILTER,
+                                                             false));
+    morphProperties.push_back(new filterProperty("Close", CHECKBOX, 0, 2,
+                                                             1, ANY,
+                                                             EnumConstants::FILTER,
+                                                             false));
+    QMap<QString, int> morphMap;
+    morphMap["invert"] = 0;
+    morphMap["threshMin"] = 1;
+    morphMap["threshMax"] = 2;
+    morphMap["K1"] = 3;
+    morphMap["Erode"] = 4;
+    morphMap["Dilate"] = 5;
+    morphMap["Open"] = 6;
+    morphMap["Close"] = 7;
+
+
+    /* Define guided filter default properties */
+    std::vector<filterProperty*> guidedProperties;
+    guidedProperties.push_back(new filterProperty("Invert", CHECKBOX, 0, 2,
+                                                     1, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    guidedProperties.push_back(new filterProperty("Threshold min", SLIDER, 0,
+                                                     60, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+    guidedProperties.push_back(new filterProperty("Threshold max", SLIDER, 0,
+                                                     255, 255, ANY,
+                                                     EnumConstants::THRESH,
+                                                     false));
+//    guidedProperties.push_back(new filterProperty("Radius", SLIDER, 0,
+//                                                     4, 24, ANY,
+//                                                     EnumConstants::FILTER,
+//                                                     false));
+//    guidedProperties.push_back(new filterProperty("Eps", SLIDER, 1,25, 100, ANY,
+//                                                 EnumConstants::FILTER, false));
+
+    guidedProperties.push_back(new filterProperty("Diameter", SLIDER, 3, 7, 25,
+                                                ODD, EnumConstants::FILTER,
+                                                false));
+    guidedProperties.push_back(new filterProperty("Sigma", SLIDER, 1, 51, 100,
+                                                ODD, EnumConstants::FILTER,
+                                                false));
+    QMap<QString, int> guidedMap;
+    guidedMap["invert"] = 0;
+    guidedMap["threshMin"] = 1;
+    guidedMap["threshMax"] = 2;
+    guidedMap["d"] = 3;
+    guidedMap["sigma"] = 4;
+
+
 
 
     /* Define local adaptive threishol filter default properties */
@@ -462,6 +567,16 @@ void filterControls::defineProperties() {
     filterPropertiesMeta *otsuPropertiesMeta =
             new filterPropertiesMeta(otsuProperties, 3,
                                      EnumConstants::OTSU);
+    filterPropertiesMeta *ridgePropertiesMeta =
+            new filterPropertiesMeta(ridgeProperties, ridgeMap.size(),
+                                     EnumConstants::RIDGE);
+    filterPropertiesMeta *morphPropertiesMeta =
+            new filterPropertiesMeta(morphProperties, morphMap.size(),
+                                     EnumConstants::MORPH);
+    filterPropertiesMeta *guidedPropertiesMeta =
+            new filterPropertiesMeta(guidedProperties, guidedMap.size(),
+                                     EnumConstants::GUIDED);
+
     filterPropertiesMeta *labelmaskPropertiesMeta =
             new filterPropertiesMeta(labelmaskProperties, 4,
                                      EnumConstants::LABELMASK);
@@ -476,6 +591,9 @@ void filterControls::defineProperties() {
     properties.push_back(colorThresholdPropertiesMeta);
     properties.push_back(otsuPropertiesMeta);
     properties.push_back(latPropertiesMeta);
+    properties.push_back(ridgePropertiesMeta);
+    properties.push_back(morphPropertiesMeta);
+    properties.push_back(guidedPropertiesMeta);
     properties.push_back(labelmaskPropertiesMeta);
 
 
@@ -485,6 +603,9 @@ void filterControls::defineProperties() {
     maps.push_back(colorMap);
     maps.push_back(otsuMap);
     maps.push_back(latMap);
+    maps.push_back(ridgeMap);
+    maps.push_back(morphMap);
+    maps.push_back(guidedMap);
     maps.push_back(labelMap);
 
 }
@@ -508,6 +629,7 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
             cv::Canny(edge_temp, edge_temp, properties[selectedFilter]->propertylist[maps[selectedFilter]["low"]]->val,
                                         properties[selectedFilter]->propertylist[maps[selectedFilter]["high"]]->val,
                                         properties[selectedFilter]->propertylist[maps[selectedFilter]["K"]]->val);
+
             break;
         case EnumConstants::BLUR:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
@@ -562,7 +684,86 @@ cv::Mat filterControls::filterFunc(cv::Mat image,
             cv::threshold(edge_temp, edge_temp,  0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
             break;
 
+        case EnumConstants::RIDGE:
+            {
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            float scale = properties[selectedFilter]->propertylist[maps[selectedFilter]["scale"]]->val/25.0;
+            cv::Ptr<cv::ximgproc::RidgeDetectionFilter> retval =
+                    cv::ximgproc::RidgeDetectionFilter::create(CV_32FC1,
+                                            1,1, 3, CV_8UC1, scale);
+            qInfo()<<"Filter created";
+                    qInfo()<<"Filter filtered";
+            cv::Mat edges;
+            cv::Mat3f fsrc;
+            image.convertTo(fsrc, CV_32F, 1.0 / 255.0);
+
+            //
+            retval->getRidgeFilteredImage(edge_temp, edge_temp);
+            qInfo()<<"Filter filtered";
+
+
+            //cv::threshold(edge_temp, edge_temp,  0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
+            }
             break;
+
+        case EnumConstants::MORPH:
+            {
+            cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
+            //cv::ximgproc::FastmorphSolverFilter::filter(image, edge_temp, 1);
+            edge_temp = conductThreshold(edge_temp,selectedFilter);
+            int K1 = properties[selectedFilter]->propertylist[maps[selectedFilter]["K1"]]->val;
+            cv::Mat kernel = cv::Mat::ones(K1, K1, CV_32FC1);
+            cv::Mat element = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(K1, K1), cv::Point((K1-1)/2, (K1-1)/2) );
+
+            if (properties[selectedFilter]->propertylist[maps[selectedFilter]["Open"]]->val == 2)
+            {
+
+               cv:: morphologyEx(edge_temp, edge_temp, cv::MORPH_OPEN, kernel);
+            }
+            if (properties[selectedFilter]->propertylist[maps[selectedFilter]["Close"]]->val == 2)
+            {
+
+                cv::morphologyEx(edge_temp, edge_temp, cv::MORPH_CLOSE, kernel);
+            }
+            if (properties[selectedFilter]->propertylist[maps[selectedFilter]["Erode"]]->val == 2)
+            {
+
+               cv::erode(edge_temp, edge_temp, element);
+            }
+            if (properties[selectedFilter]->propertylist[maps[selectedFilter]["Dilate"]]->val == 2)
+            {
+
+               cv::dilate(edge_temp, edge_temp, element);
+            }
+
+
+            }
+            break;
+
+        case EnumConstants::GUIDED:
+            {
+            qInfo()<<"Guided";
+
+            int d =  properties[selectedFilter]->propertylist[maps[selectedFilter]["d"]]->val;
+            int sigma =  properties[selectedFilter]->propertylist[maps[selectedFilter]["sigma"]]->val;
+
+
+//            adaptiveThreshold(edge_temp, edge_temp, 200, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY,
+//                              properties[selectedFilter]->propertylist[maps[selectedFilter]["K"]]->val,
+//                              properties[selectedFilter]->propertylist[maps[selectedFilter]["C"]]->val);
+//            cv::ximgproc::createFastGlobalSmootherFilter (edge_temp, double lambda, double sigma_color, double lambda_attenuation=0.25, int num_iter=3)
+//            cv::ximgproc::guidedFilter(edge_temp,edge_temp, edge_temp, rad,eps);
+            //image.convertTo(Temp, CV_8U)
+
+            //edge_temp.convertTo(edge_temp, CV_8UC3);
+            cv::bilateralFilter(image, edge_temp, d, sigma, sigma);
+            cv::cvtColor(edge_temp, edge_temp, cv::COLOR_RGB2GRAY);
+
+
+            }
+            break;
+
+
         case EnumConstants::LAT:
             cv::cvtColor(image, edge_temp, cv::COLOR_RGB2GRAY);
             qInfo()<<properties[selectedFilter]->propertylist[maps[selectedFilter]["gauss"]]->val;
@@ -601,18 +802,14 @@ cv::Mat filterControls::conductThreshold(cv::Mat edgImg, EnumConstants::maskType
     cv::Mat binary1;
     cv::Mat binary2;
     cv::Mat binaryImg;
-    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
-    qInfo()<< invert;
+
+
     cv::threshold(edgImg, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
             255, cv::THRESH_BINARY);
     cv::threshold(edgImg, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
             255, cv::THRESH_BINARY);
     cv::subtract(binary1, binary2, binaryImg);
 
-    if (invert == 2)
-    {
-        cv::subtract(255, binaryImg, binaryImg);
-    }
 
     return binaryImg;
 
@@ -626,26 +823,16 @@ void filterControls::im2pixmap(EnumConstants::maskTypes selectedFilter) {
     cv::Mat binary;
     cv::Mat binary1;
     cv::Mat binary2;
-    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
-
-//    if (invert == 2)
-//    {
-//        cv::threshold(edges, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
-//                255, cv::THRESH_BINARY_INV);
-//        cv::threshold(edges, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
-//                255, cv::THRESH_BINARY_INV);
-//    }
-//    else
-//    {
-//        cv::threshold(edges, binary1, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMax"]]->val,
-//                255, cv::THRESH_BINARY);
-//        cv::threshold(edges, binary2, properties[selectedFilter]->propertylist[maps[selectedFilter]["threshMin"]]->val,
-//                255, cv::THRESH_BINARY);
-
-//    }
-//    cv::subtract(binary2, binary1, binary);
 
     binary = conductThreshold(edges,selectedFilter );
+    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
+    if (invert == 2)
+    {
+        cv::subtract(255, binary, binary);
+    }
+
+
+
 
     QImage qImgImg = QImage(reinterpret_cast<uchar*>(binary.data), binary.cols,
                             binary.rows, static_cast<int>(binary.step),
@@ -668,6 +855,11 @@ QPixmap filterControls::thumb2pixmap(cv::Mat thumb,
     qInfo("Filtered thumbnail!");
     cv::Mat binaryThumb;
     binaryThumb =conductThreshold(thumbEdges,selectedFilter);
+    int invert = properties[selectedFilter]->propertylist[maps[selectedFilter]["invert"]]->val;
+    if (invert == 2)
+    {
+        cv::subtract(255, binaryThumb, binaryThumb);
+    }
 
     QImage qImgImg_temp = QImage(reinterpret_cast<uchar*>(binaryThumb.data),
                                  binaryThumb.cols, binaryThumb.rows,

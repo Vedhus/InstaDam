@@ -27,7 +27,7 @@ class PicPushButton : public QLabel {
     void paintEvent(QPaintEvent *event) override;
     void manualSelect();
     void mousePressEvent(QMouseEvent *event) override;
-
+    void checkbutton();
  signals:
     void checked(EnumConstants::maskTypes type);
 

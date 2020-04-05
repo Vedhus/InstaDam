@@ -140,7 +140,7 @@ float PhotoViewer::limit(int minval, qreal x, int  maxval)
 void PhotoViewer::setPhoto(QPixmap pixmap) {
     cvThumb.release();
     qInfo()<<"Before resize";
-    cv::resize(cvImage, cvThumb, cv::Size(200, 200), CV_INTER_LINEAR);
+    cv::resize(cvImage, cvThumb, cv::Size(thumbSize, thumbSize), CV_INTER_LINEAR);
     qInfo()<<"Resize complete";
     if (pixmap.isNull() == 0) {
         if (this->viewerType == PhotoScene::PHOTO_VIEWER_TYPE) {

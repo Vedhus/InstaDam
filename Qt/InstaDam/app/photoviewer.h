@@ -25,6 +25,7 @@ class PhotoViewer : public QGraphicsView {
     Q_OBJECT
 
  public:
+    static const int thumbSize = 150;
     explicit PhotoViewer(QWidget *parent = nullptr);
     cursorStates cursorState;
     bool hasPhoto;

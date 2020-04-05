@@ -65,12 +65,16 @@ InstaDam::InstaDam(QWidget *parent, QString databaseURL, QString token) :
     photoLoaded = false;
     filterControl = new filterControls();
     maskTypeList = {EnumConstants::BLUR, EnumConstants::CANNY,
-                     EnumConstants::THRESHOLD, EnumConstants::COLORTHRESHOLD,EnumConstants::OTSU, EnumConstants::LAT,  EnumConstants::LABELMASK};
+                     EnumConstants::THRESHOLD, EnumConstants::COLORTHRESHOLD,EnumConstants::OTSU,
+                    EnumConstants::LAT,EnumConstants::RIDGE, EnumConstants::MORPH, EnumConstants::GUIDED,
+                    EnumConstants::LABELMASK};
     maskButtonList = {ui->blur_label, ui->canny_label, ui->threshold_label,
-                       ui->colorthreshold_label,ui->otsu_label,ui->lat_label, ui->labelmask_label};
+                       ui->colorthreshold_label, ui->otsu_label, ui->lat_label, ui->ridge_label,
+                      ui->morph_label, ui->guided_label, ui->labelmask_label};
     maskTextList = {ui->blurText, ui->cannyText, ui->thresholdText,
-                       ui->colorthresholdText,ui->otsuText,ui->latText, ui->labelmaskText};
+                       ui->colorthresholdText,ui->otsuText,ui->latText, ui->otsuText,ui->ridgeText, ui->morphText,ui->guidedText,ui->labelmaskText};
     connectFilters();
+    ui->threshold_label->checkbutton();
     qInfo("Connected Filters");
     ui->IdmPhotoViewer->setFilterControls(filterControl);
     ui->IdmMaskViewer->setFilterControls(filterControl);
